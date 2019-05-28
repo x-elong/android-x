@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:background="@color/title_background">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tv_title_back"
+            android:background="@drawable/ic_back_xml"
+            android:textSize="@dimen/font_tv_normal_18"/>
+    <TextView
+            android:text="éæ±ç±»å"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="5dp" tools:layout_editor_absoluteX="1dp"
+            android:id="@+id/tv_title_title1" android:textSize="@dimen/font_tv_normal_20"
+            android:textColor="@android:color/black"
+            android:layout_weight="1" android:gravity="center"/>
+</LinearLayout>
