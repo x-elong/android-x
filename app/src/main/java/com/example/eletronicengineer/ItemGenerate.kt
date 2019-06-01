@@ -162,11 +162,11 @@ class ItemGenerate
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,inputSingleTitle)
                     data.add(multiStyleItem)
                 }
-                "SELECT_RANGE"->
+                "INPUT_RANGE"->
                 {
                     val inputRangeTitle=jsonObject.getString("inputRangeTitle")
                     val inputRangeUnit=jsonObject.getString("inputRangeUnit")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SELECT_RANGE,inputRangeTitle,inputRangeUnit)
+                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_RANGE,inputRangeTitle,inputRangeUnit)
                     data.add(multiStyleItem)
                 }
                 "INPUT_WITH_UNIT"->

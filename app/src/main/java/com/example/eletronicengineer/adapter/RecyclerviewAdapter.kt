@@ -25,7 +25,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val TITLE_TYPE:Int=1
         const val SELECT_DIALOG_TYPE:Int=2
         const val SINGLE_INPUT_TYPE:Int=3
-        const val SELECT_RANGE_TYPE:Int=4
+        const val INPUT_RANGE_TYPE:Int=4
         const val INPUT_WITH_UNIT_TYPE=5
 
         const val MULTI_BUTTON_TYPE:Int=6
@@ -115,7 +115,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     tvSingleInputTitle=v.tv_input_title
                 }
-                SELECT_RANGE_TYPE->
+                INPUT_RANGE_TYPE->
                 {
                     tvRangeTitle=v.tv_range_title
                     tvRangeUnit1=v.tv_range_unit1
@@ -175,7 +175,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.SINGLE_INPUT->return SINGLE_INPUT_TYPE
             MultiStyleItem.Options.INPUT_WITH_UNIT->return INPUT_WITH_UNIT_TYPE
             MultiStyleItem.Options.SELECT_DIALOG->return SELECT_DIALOG_TYPE
-            MultiStyleItem.Options.SELECT_RANGE->return SELECT_RANGE_TYPE
+            MultiStyleItem.Options.INPUT_RANGE->return INPUT_RANGE_TYPE
             MultiStyleItem.Options.MULTI_RADIO_BUTTON->return MULTI_RADIO_BUTTON_TYPE
             MultiStyleItem.Options.MULTI_CHECKBOX->return MULTI_CHECKBOX_TYPE
             MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG->return TWO_OPTIONS_SELECT_DIALOG_TYPE
@@ -197,6 +197,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_BUTTON_TYPE->
             {
                 vh.multiTitle.text=mData[position].buttonTitle
+                if (vh.llContainer.childCount>1)
+                    return
                 for (name:String in mData[position].buttonName)
                 {
                     val btnItem= Button(vh.itemView.context)
@@ -213,6 +215,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_RADIO_BUTTON_TYPE->
             {
                 val context=vh.itemView.context
+                if (vh.llContainer.childCount>1)
+                    return
                 vh.multiTitle.text=mData[position].radioButtonTitle
                 val radioGroup=RadioGroup(vh.itemView.context)
                 radioGroup.orientation=LinearLayout.HORIZONTAL
@@ -231,12 +235,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_CHECKBOX_TYPE->
             {
                 val context=vh.itemView.context
+                if (vh.llContainer.childCount>1)
+                    return
                 vh.multiTitle.text=mData[position].checkboxTitle
                 for (name in mData[position].checkboxNameList)
                 {
                     val checkboxItem=CheckBox(context)
                     checkboxItem.text=name
-                    checkboxItem.textSize=context.resources.getDimension(R.dimen.font_tv_hint_15)
+                    checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     vh.llContainer.addView(checkboxItem)
                     val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
                     params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
@@ -246,6 +252,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_HYBRID->
             {
                 val context=vh.itemView.context
+                if (vh.llContainer.childCount>1)
+                    return
                 vh.multiTitle.text=mData[position].hybridTitle
                 for (checkboxName in mData[position].hybridCheckBoxName)
                 {
@@ -306,7 +314,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.btnSubmit.text=mData[position].submitContent
             }
-
+            INPUT_RANGE_TYPE->
+            {
+                vh.tvRangeTitle.text=mData[position].inputRangeTitle
+                vh.tvRangeUnit1.text=mData[position].inputRangeUnit
+            }
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VH {
@@ -348,7 +360,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_unit,viewGroup,false)
                 return VH(root, viewType)
             }
-            SELECT_RANGE_TYPE->
+            INPUT_RANGE_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_range,viewGroup,false)
                 return VH(root, viewType)

@@ -36,9 +36,9 @@
     "inputUnit":"(年)"
   },
   {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"年龄要求",
-    "inputUnit":"(至)"
+    "type":"INPUT_RANGE",
+    "inputRangeTitle":"年龄要求",
+    "inputRangeUnit":"(至)"
   },
   {
     "type":"SINGLE_INPUT",
