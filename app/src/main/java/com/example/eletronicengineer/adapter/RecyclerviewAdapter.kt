@@ -89,6 +89,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 TITLE_TYPE->
                 {
+                    //root root.findViewById(R,id.tv_title_title1)
                     tvTitle1=v.tv_title_title1
                 }
                 MULTI_BUTTON_TYPE->
@@ -192,6 +193,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         {
             TITLE_TYPE->
             {
+                //vh.tvTitle1.setText(mData[position].getTitle1())
                 vh.tvTitle1.text=mData[position].title1
             }
             MULTI_BUTTON_TYPE->
@@ -205,7 +207,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     btnItem.text=name
                     btnItem.setBackgroundResource(R.drawable.btn_style1)
                     vh.llContainer.addView(btnItem)
-                    vh.multiTitle.text=mData[position].buttonTitle
                     val params:ViewGroup.MarginLayoutParams= btnItem.layoutParams as ViewGroup.MarginLayoutParams
                     params.leftMargin=vh.itemView.resources.getDimension(R.dimen.general_20).toInt()
                     btnItem.layoutParams=params
@@ -227,7 +228,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     radioItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     radioGroup.addView(radioItem)
                     val params=radioItem.layoutParams as ViewGroup.MarginLayoutParams
-                    params.leftMargin=context.resources.getDimension(R.dimen.general_20).toInt()
+                    params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
                     radioItem.layoutParams=params
                 }
                 vh.llContainer.addView(radioGroup)
@@ -255,16 +256,51 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if (vh.llContainer.childCount>1)
                     return
                 vh.multiTitle.text=mData[position].hybridTitle
-                for (checkboxName in mData[position].hybridCheckBoxName)
+                val radioGroup=RadioGroup(context)
+                if (mData[position].hybridCheckBoxName.size>0)
                 {
-                    val checkboxItem=CheckBox(context)
-                    checkboxItem.text=checkboxName
-                    checkboxItem.textSize=context.resources.getDimension(R.dimen.font_tv_hint_15)
-                    vh.llContainer.addView(checkboxItem)
-                    val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
-                    params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
-                    checkboxItem.layoutParams=params
+                    for (checkboxName in mData[position].hybridCheckBoxName)
+                    {
+                        val checkboxItem=CheckBox(context)
+                        checkboxItem.text=checkboxName
+                        checkboxItem.textSize=context.resources.getDimension(R.dimen.font_tv_hint_15)
+                        vh.llContainer.addView(checkboxItem)
+                        val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
+                        params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
+                        checkboxItem.layoutParams=params
+                    }
                 }
+                if (mData[position].hybridRadioButtonName.size>0)
+                {
+                    radioGroup.orientation=LinearLayout.HORIZONTAL
+                    for (name:String in mData[position].hybridRadioButtonName)
+                    {
+                        val radioItem=RadioButton(context)
+                        radioItem.text=name
+                        radioItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                        radioGroup.addView(radioItem)
+                        val params=radioItem.layoutParams as ViewGroup.MarginLayoutParams
+                        params.leftMargin=context.resources.getDimension(R.dimen.general_20).toInt()
+                        radioItem.layoutParams=params
+                    }
+                    vh.llContainer.addView(radioGroup)
+                }
+                if (mData[position].hybridButtonName.size>0)
+                {
+                    for (name:String in mData[position].hybridButtonName)
+                    {
+                        val btnItem= Button(vh.itemView.context)
+                        btnItem.text=name
+                        btnItem.setBackgroundResource(R.drawable.btn_style1)
+                        vh.llContainer.addView(btnItem)
+                        val params:ViewGroup.MarginLayoutParams= btnItem.layoutParams as ViewGroup.MarginLayoutParams
+                        params.leftMargin=vh.itemView.resources.getDimension(R.dimen.general_20).toInt()
+                        btnItem.layoutParams=params
+                        vh.btnList.add(btnItem)
+                    }
+                }
+
+
             }
             SINGLE_INPUT_TYPE->
             {
@@ -274,6 +310,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
+            }
+            INPUT_RANGE_TYPE->
+            {
+                vh.tvRangeTitle.text=mData[position].inputRangeTitle
+                vh.tvRangeUnit1.text=mData[position].inputRangeUnit
+            }
+            INPUT_WITH_TEXTAREA->
+            {
+                vh.tvTextAreaTitle.text=mData[position].textAreaTitle
             }
             SELECT_DIALOG_TYPE->
             {
@@ -314,11 +359,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.btnSubmit.text=mData[position].submitContent
             }
-            INPUT_RANGE_TYPE->
-            {
-                vh.tvRangeTitle.text=mData[position].inputRangeTitle
-                vh.tvRangeUnit1.text=mData[position].inputRangeUnit
-            }
+
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VH {
@@ -363,6 +404,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             INPUT_RANGE_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_range,viewGroup,false)
+                return VH(root, viewType)
+            }
+            INPUT_WITH_TEXTAREA->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_textarea,viewGroup,false)
                 return VH(root, viewType)
             }
             SELECT_DIALOG_TYPE->

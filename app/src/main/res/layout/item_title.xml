@@ -10,7 +10,6 @@
             android:background="@drawable/ic_back_xml"
             android:textSize="@dimen/font_tv_normal_18"/>
     <TextView
-            android:text="éæ±ç±»å"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" tools:layout_editor_absoluteY="5dp" tools:layout_editor_absoluteX="1dp"
             android:id="@+id/tv_title_title1" android:textSize="@dimen/font_tv_normal_20"

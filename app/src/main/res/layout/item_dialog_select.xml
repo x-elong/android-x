@@ -4,17 +4,15 @@
               android:layout_height="wrap_content" android:background="@drawable/item_background">
 
     <TextView
-            android:text="éæ±ç±»å«"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_title" android:layout_weight="1"
             android:layout_margin="@dimen/general_10" android:textSize="@dimen/font_tv_hint_15"
             android:textColor="@android:color/black"/>
     <TextView
-            android:text="ç¹ç§ä½ä¸"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_item" android:layout_weight="2"
             android:layout_margin="@dimen/general_10" android:textSize="@dimen/font_tv_hint_15"
-            android:textColor="@color/text_hint_gray"/>
+            android:textColor="@color/text_hint_gray" android:gravity="right"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_show"

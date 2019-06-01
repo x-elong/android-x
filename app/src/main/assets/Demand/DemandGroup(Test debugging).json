@@ -74,9 +74,10 @@
     "checkboxNameList":["配电","变电","发电厂"]
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"薪资标准",
-    "radioButtonName":["清工薪资","清单报价"]
+    "type":"MULTI_HYBRID",
+    "hybridTitle":"薪资标准",
+    "hybridRadioButtonName":["清工薪资","清单报价"],
+    "hybridButtonName":["编制标准"]
   },
   {
     "type":"SINGLE_INPUT",
@@ -86,5 +87,9 @@
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"机械设备",
     "radioButtonName":["施工队全部提供","施工队不需提供"]
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加信息"
   }
 ]

@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_need.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var mData:List<MultiStyleItem>
+    //List<MultiStyleItem> mData=new ArrayList<>()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)

@@ -12,6 +12,7 @@ import java.lang.StringBuilder
 class ItemGenerate
 {
     var buttonListeners:MutableList<View.OnClickListener> =ArrayList()
+    var hybridButtonListener:MutableList<View.OnClickListener> =ArrayList()
     lateinit var submitListener: View.OnClickListener
     lateinit var context:Context
     fun getJsonFromAsset(path:String):List<MultiStyleItem>
@@ -36,10 +37,20 @@ class ItemGenerate
     fun GenerateFromJsonArray(json:String):List<MultiStyleItem>
     {
         val jsonArray=JSONArray(json)
+        //
         val data:MutableList<MultiStyleItem> =ArrayList()
+        //for(int i=0;i<jsonArray.length;i++)
         for (i in 0 until jsonArray.length())
         {
+            /*
+            *
+            * {
+                "type":"TITLE",
+                "title1":"需求团队"
+              }
+            * */
             val jsonObject=jsonArray.getJSONObject(i)
+            //fun("type")
             when(jsonObject.getString("type"))
             {
                 "TITLE"->
@@ -76,6 +87,44 @@ class ItemGenerate
                         radioName.add(array[j].toString())
                     }
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_RADIO_BUTTON,radioName,jsonObject.getString("radioButtonTitle"))
+                    data.add(multiStyleItem)
+                }
+                "MULTI_HYBRID"->
+                {
+                    val buttonArray=jsonObject.optJSONArray("hybridButtonName")
+                    val checkboxArray=jsonObject.optJSONArray("hybridCheckBoxName")
+                    val radioButtonArray=jsonObject.optJSONArray("hybridRadioButtonName")
+                    val hybridButtonName:MutableList<String> =ArrayList()
+                    val hybridCheckBoxName:MutableList<String> =ArrayList()
+                    val hybridRadioButtonName:MutableList<String> =ArrayList()
+                    val hybridTitle=jsonObject.getString("hybridTitle")
+                    if (buttonArray!=null)
+                    {
+                        for (j in 0 until buttonArray.length())
+                        {
+                            hybridButtonName.add(buttonArray.getString(j))
+                        }
+                    }
+                    if(checkboxArray!=null)
+                    {
+                        for (j in 0 until checkboxArray.length())
+                        {
+                            hybridCheckBoxName.add(checkboxArray.getString(j))
+                        }
+                    }
+                    if(radioButtonArray!=null)
+                    {
+                        for (j in 0 until radioButtonArray.length())
+                        {
+                            hybridRadioButtonName.add(radioButtonArray.getString(j))
+                        }
+                    }
+                    val multiStyleItem=if(hybridButtonListener.size>0)
+                    {
+                        MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,hybridButtonListener)
+                    }
+                    else
+                        MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,ArrayList())
                     data.add(multiStyleItem)
                 }
                 "MULTI_CHECKBOX" ->
