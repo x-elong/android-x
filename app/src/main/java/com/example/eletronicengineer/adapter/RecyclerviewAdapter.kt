@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.adapter
 
+import android.animation.ValueAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,9 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
 import kotlinx.android.synthetic.main.item_confirm.view.*
+import kotlinx.android.synthetic.main.item_expand.view.*
 import kotlinx.android.synthetic.main.item_hint.view.*
+import kotlinx.android.synthetic.main.item_input_with_multi_unit.view.*
 import kotlinx.android.synthetic.main.item_input_with_textarea.view.*
 
 class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
@@ -27,21 +30,26 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val SINGLE_INPUT_TYPE:Int=3
         const val INPUT_RANGE_TYPE:Int=4
         const val INPUT_WITH_UNIT_TYPE=5
+        const val INPUT_WITH_MULTI_UNIT_TYPE=16
 
         const val MULTI_BUTTON_TYPE:Int=6
         const val MULTI_RADIO_BUTTON_TYPE:Int=7
         const val MULTI_CHECKBOX_TYPE=8
-        const val MULTI_HYBRID=14
+        const val MULTI_HYBRID_TYPE=14
         const val TWO_OPTIONS_SELECT_DIALOG_TYPE=9
         const val THREE_OPTIONS_SELECT_DIALOG_TYPE=10
 
-        const val INPUT_WITH_TEXTAREA=11
-        const val HINT=12
-        const val SUBMIT=13
+        const val INPUT_WITH_TEXTAREA_TYPE=11
+        const val HINT_TYPE=12
+        const val SUBMIT_TYPE=13
+        const val EXPAND_TYPE=15
 
         const val MESSAGE_SELECT_OK:Int=100
     }
     var mData:List<MultiStyleItem>
+    var expandList:MutableList<VH> =ArrayList()
+    var expandPosition:Int=-1
+    val VHList:MutableList<VH> =ArrayList()
      inner class VH:RecyclerView.ViewHolder
     {
         lateinit var tvTitle1:TextView
@@ -59,6 +67,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvInputUnit: TextView
         lateinit var tvInputUnitTitle:TextView
 
+        lateinit var spMultiInputUnit:Spinner
+        lateinit var tvMultiInputUnitTitle:TextView
+
+
         lateinit var tvDialogSelectTitle:TextView
         lateinit var tvDialogSelectItem:TextView
         lateinit var tvDialogSelectShow:TextView
@@ -69,6 +81,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvHint:TextView
 
         lateinit var btnSubmit:Button
+
+        lateinit var tvExpandTitle:TextView
+        lateinit var tvExpandContent:TextView
+        lateinit var tvExpandButton:TextView
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
             {
@@ -107,7 +123,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     llContainer=v.cl_multi_container
                     multiTitle=v.tv_multi_title
                 }
-                MULTI_HYBRID->
+                MULTI_HYBRID_TYPE->
                 {
                     llContainer=v.cl_multi_container
                     multiTitle=v.tv_multi_title
@@ -127,6 +143,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvInputUnitTitle=v.tv_input_unit_title
                     tvInputUnit=v.tv_input_unit
                 }
+                INPUT_WITH_MULTI_UNIT_TYPE->
+                {
+                    spMultiInputUnit=v.sp_input_multi_unit_unit
+                    tvMultiInputUnitTitle=v.tv_input_multi_unit_title
+                }
                 SELECT_DIALOG_TYPE->
                 {
                     tvDialogSelectTitle=v.tv_dialog_select_title
@@ -145,21 +166,25 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvDialogSelectItem=v.tv_dialog_select_item
                     tvDialogSelectShow=v.tv_dialog_select_show
                 }
-                INPUT_WITH_TEXTAREA->
+                INPUT_WITH_TEXTAREA_TYPE->
                 {
                     tvTextAreaTitle=v.tv_textarea_title
                     etTextAreaContent=v.et_textarea_content
                 }
-                HINT->
+                HINT_TYPE->
                 {
                     tvHint=v.tv_hint_content
                 }
-                SUBMIT->
+                SUBMIT_TYPE->
                 {
                     btnSubmit=v.btn_confirm_submit
                 }
-
-
+                EXPAND_TYPE->
+                {
+                    tvExpandButton=v.tv_expand_button
+                    tvExpandTitle=v.tv_expand_title
+                    tvExpandContent=v.tv_expand_content
+                }
             }
         }
     }
@@ -175,21 +200,23 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.MULTI_BUTTON->return MULTI_BUTTON_TYPE
             MultiStyleItem.Options.SINGLE_INPUT->return SINGLE_INPUT_TYPE
             MultiStyleItem.Options.INPUT_WITH_UNIT->return INPUT_WITH_UNIT_TYPE
+            MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT->return INPUT_WITH_MULTI_UNIT_TYPE
             MultiStyleItem.Options.SELECT_DIALOG->return SELECT_DIALOG_TYPE
             MultiStyleItem.Options.INPUT_RANGE->return INPUT_RANGE_TYPE
             MultiStyleItem.Options.MULTI_RADIO_BUTTON->return MULTI_RADIO_BUTTON_TYPE
             MultiStyleItem.Options.MULTI_CHECKBOX->return MULTI_CHECKBOX_TYPE
             MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG->return TWO_OPTIONS_SELECT_DIALOG_TYPE
             MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->return THREE_OPTIONS_SELECT_DIALOG_TYPE
-            MultiStyleItem.Options.INPUT_WITH_TEXTAREA->return INPUT_WITH_TEXTAREA
-            MultiStyleItem.Options.HINT->return HINT
-            MultiStyleItem.Options.SUBMIT->return SUBMIT
-            MultiStyleItem.Options.MULTI_HYBRID-> return MULTI_HYBRID
+            MultiStyleItem.Options.INPUT_WITH_TEXTAREA->return INPUT_WITH_TEXTAREA_TYPE
+            MultiStyleItem.Options.HINT->return HINT_TYPE
+            MultiStyleItem.Options.SUBMIT->return SUBMIT_TYPE
+            MultiStyleItem.Options.MULTI_HYBRID-> return MULTI_HYBRID_TYPE
+            MultiStyleItem.Options.EXPAND->return EXPAND_TYPE
         }
     }
     override fun onBindViewHolder(vh: VH, position: Int) {
-        val viewType=getItemViewType(position)
-        when(viewType)
+        VHList.add(vh)
+        when(getItemViewType(position))
         {
             TITLE_TYPE->
             {
@@ -199,7 +226,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_BUTTON_TYPE->
             {
                 vh.multiTitle.text=mData[position].buttonTitle
-                if (vh.llContainer.childCount>1)
+                if (vh.llContainer.childCount>0)
                     return
                 for (name:String in mData[position].buttonName)
                 {
@@ -216,7 +243,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_RADIO_BUTTON_TYPE->
             {
                 val context=vh.itemView.context
-                if (vh.llContainer.childCount>1)
+                if (vh.llContainer.childCount>0)
                     return
                 vh.multiTitle.text=mData[position].radioButtonTitle
                 val radioGroup=RadioGroup(vh.itemView.context)
@@ -236,7 +263,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_CHECKBOX_TYPE->
             {
                 val context=vh.itemView.context
-                if (vh.llContainer.childCount>1)
+                if (vh.llContainer.childCount>0)
                     return
                 vh.multiTitle.text=mData[position].checkboxTitle
                 for (name in mData[position].checkboxNameList)
@@ -250,7 +277,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     checkboxItem.layoutParams=params
                 }
             }
-            MULTI_HYBRID->
+            MULTI_HYBRID_TYPE->
             {
                 val context=vh.itemView.context
                 if (vh.llContainer.childCount>1)
@@ -266,6 +293,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         checkboxItem.textSize=context.resources.getDimension(R.dimen.font_tv_hint_15)
                         vh.llContainer.addView(checkboxItem)
                         val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
+                        params.topMargin=context.resources.getDimension(R.dimen.top_5).toInt()
                         params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
                         checkboxItem.layoutParams=params
                     }
@@ -280,6 +308,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         radioItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                         radioGroup.addView(radioItem)
                         val params=radioItem.layoutParams as ViewGroup.MarginLayoutParams
+                        params.topMargin=context.resources.getDimension(R.dimen.top_5).toInt()
                         params.leftMargin=context.resources.getDimension(R.dimen.general_20).toInt()
                         radioItem.layoutParams=params
                     }
@@ -311,12 +340,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
             }
+            INPUT_WITH_MULTI_UNIT_TYPE->
+            {
+                val context=vh.itemView.context
+                vh.tvMultiInputUnitTitle.text=mData[position].inputMultiUnitTitle
+                val adapter=ArrayAdapter(context,R.layout.item_dropdown,mData[position].inputMultiUnit)
+                adapter.setDropDownViewResource(R.layout.item_dropdown)
+                vh.spMultiInputUnit.adapter=adapter
+            }
             INPUT_RANGE_TYPE->
             {
                 vh.tvRangeTitle.text=mData[position].inputRangeTitle
                 vh.tvRangeUnit1.text=mData[position].inputRangeUnit
             }
-            INPUT_WITH_TEXTAREA->
+            INPUT_WITH_TEXTAREA_TYPE->
             {
                 vh.tvTextAreaTitle.text=mData[position].textAreaTitle
             }
@@ -347,17 +384,55 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     selectDialog.show()
                 }
             }
-            INPUT_WITH_TEXTAREA->
-            {
-                vh.tvTextAreaTitle.text=mData[position].textAreaTitle
-            }
-            HINT->
+            HINT_TYPE->
             {
                 vh.tvHint.text=mData[position].hintContent
             }
-            SUBMIT->
+            SUBMIT_TYPE->
             {
                 vh.btnSubmit.text=mData[position].submitContent
+            }
+            EXPAND_TYPE->
+            {
+                vh.tvExpandTitle.text=mData[position].expandTitle
+                vh.tvExpandContent.text=mData[position].expandContent
+                vh.itemView.setOnClickListener{it->
+                    if (expandPosition!=-1)
+                    {
+                        val valueAnimator=ValueAnimator.ofFloat(90f,0f)
+                        valueAnimator.duration=200
+                        val positionTemp=expandPosition
+                        valueAnimator.addUpdateListener {
+                            expandList[positionTemp].tvExpandButton.rotation=it.animatedValue.toString().toFloat()
+                            if (expandList[positionTemp].tvExpandButton.rotation==90f)
+                            {
+                                expandList[positionTemp].tvExpandContent.visibility=View.GONE
+                            }
+                        }
+                        valueAnimator.start()
+                    }
+                    if (expandList.indexOf(vh)!=expandPosition)
+                    {
+
+                        val valueAnimator2=ValueAnimator.ofFloat(0.toFloat(),90.toFloat())
+                        valueAnimator2.duration=200
+                        valueAnimator2.addUpdateListener {
+                            vh.tvExpandButton.rotation=it.animatedValue.toString().toFloat()
+                            if (vh.tvExpandButton.rotation==90f)
+                            {
+                                vh.tvExpandContent.visibility = View.VISIBLE
+                            }
+                        }
+                        valueAnimator2.start()
+                        vh.tvExpandButton.rotation = "90".toFloat()
+                        expandPosition=expandList.indexOf(vh)
+                    }
+                    else
+                    {
+                        expandPosition=-1
+                    }
+                }
+                expandList.add(vh)
             }
 
         }
@@ -386,7 +461,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_multi,viewGroup,false)
                 return VH(root,viewType)
             }
-            MULTI_HYBRID->
+            MULTI_HYBRID_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_multi,viewGroup,false)
                 return VH(root,viewType)
@@ -401,12 +476,17 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_unit,viewGroup,false)
                 return VH(root, viewType)
             }
+            INPUT_WITH_MULTI_UNIT_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_multi_unit,viewGroup,false)
+                return VH(root, viewType)
+            }
             INPUT_RANGE_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_range,viewGroup,false)
                 return VH(root, viewType)
             }
-            INPUT_WITH_TEXTAREA->
+            INPUT_WITH_TEXTAREA_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_textarea,viewGroup,false)
                 return VH(root, viewType)
@@ -426,14 +506,19 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_dialog_select,viewGroup,false)
                 return VH(root, viewType)
             }
-            HINT->
+            HINT_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_hint,viewGroup,false)
                 return VH(root, viewType)
             }
-            SUBMIT->
+            SUBMIT_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_confirm,viewGroup,false)
+                return VH(root, viewType)
+            }
+            EXPAND_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_expand,viewGroup,false)
                 return VH(root, viewType)
             }
         }

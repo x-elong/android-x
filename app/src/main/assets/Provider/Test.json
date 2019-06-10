@@ -1,0 +1,7 @@
+[
+  {
+    "type":"INPUT_WITH_MULTI_UNIT",
+    "inputMultiUnitTitle":"工资",
+    "inputMultiUnit":["元/日","元/月","元/年"]
+  }
+]

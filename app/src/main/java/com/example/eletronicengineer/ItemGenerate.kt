@@ -89,7 +89,7 @@ class ItemGenerate
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_RADIO_BUTTON,radioName,jsonObject.getString("radioButtonTitle"))
                     data.add(multiStyleItem)
                 }
-                "MULTI_HYBRID"->
+                "MULTI_HYBRID_TYPE"->
                 {
                     val buttonArray=jsonObject.optJSONArray("hybridButtonName")
                     val checkboxArray=jsonObject.optJSONArray("hybridCheckBoxName")
@@ -225,22 +225,41 @@ class ItemGenerate
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_UNIT,inputUnitTitle,inputUnit)
                     data.add(multiStyleItem)
                 }
-                "INPUT_WITH_TEXTAREA"->
+                "INPUT_WITH_MULTI_UNIT"->
+                {
+                    val inputMultiUnitTitle=jsonObject.getString("inputMultiUnitTitle")
+                    val inputMultiUnit=jsonObject.getJSONArray("inputMultiUnit")
+                    val unitList:MutableList<String> =ArrayList()
+                    for (j in 0 until inputMultiUnit.length())
+                    {
+                        unitList.add(inputMultiUnit.getString(j))
+                    }
+                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT,unitList,inputMultiUnitTitle)
+                    data.add(multiStyleItem)
+                }
+                "INPUT_WITH_TEXTAREA_TYPE"->
                 {
                     val textAreaTitle=jsonObject.getString("textAreaTitle")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle)
                     data.add(multiStyleItem)
                 }
-                "HINT"->
+                "HINT_TYPE"->
                 {
                     val hintContent=jsonObject.getString("hintContent")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.HINT,hintContent)
                     data.add(multiStyleItem)
                 }
-                "SUBMIT"->
+                "SUBMIT_TYPE"->
                 {
                     val submitContent=jsonObject.getString("submitContent")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SUBMIT,submitContent)
+                    data.add(multiStyleItem)
+                }
+                "EXPAND"->
+                {
+                    val expandTitle=jsonObject.getString("expandTitle")
+                    val expandContent=jsonObject.getString("expandContent")
+                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.EXPAND,expandTitle,expandContent)
                     data.add(multiStyleItem)
                 }
             }
