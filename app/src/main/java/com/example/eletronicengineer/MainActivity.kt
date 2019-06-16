@@ -1,46 +1,74 @@
 package com.example.eletronicengineer
 
-import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
-import android.util.TypedValue
-import android.widget.TextView
-import android.widget.Toast
-import com.bin.david.form.annotation.ColumnType
-import com.bin.david.form.core.TableConfig
+import android.view.View
 import com.bin.david.form.data.Column
 import com.bin.david.form.data.table.TableData
 import com.electric.engineering.model.MultiStyleItem
 import com.electric.engineering.utils.ItemGenerate
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
-import com.example.eletronicengineer.utils.DisplayHelper
+import com.example.eletronicengineer.utils.ObserverFactory
+import com.example.eletronicengineer.utils.PermissionHelper
+import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.downloadFile
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_need.*
-import java.util.*
+import okhttp3.FormBody
+import okhttp3.RequestBody
+import java.io.File
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var mData:List<MultiStyleItem>
+    lateinit var multiButtonListeners:MutableList<View.OnClickListener>
     //List<MultiStyleItem> mData=new ArrayList<>()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        PermissionHelper.getPermission(this@MainActivity,1)
         initData()
     }
+
     fun initData()
     {
         supportActionBar?.hide()
+        multiButtonListeners=ArrayList()
         val itemGenerate=ItemGenerate()
         itemGenerate.context=this@MainActivity
+        val uploadListener= View.OnClickListener {
+            val intent=Intent(Intent.ACTION_GET_CONTENT)
+            intent.type="image/*"
+            startActivityForResult(intent,Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+        }
+        multiButtonListeners.add(uploadListener)
         //Demand/DemandGroup(Test debugging).json
-        mData=itemGenerate.getJsonFromAsset("Provider/Test.json")
-        val recyclerviewAdapter=RecyclerviewAdapter(mData)
-        rv_main_content.adapter=recyclerviewAdapter
+        mData=itemGenerate.getJsonFromAsset("Demand/DemandGroup(Test debugging).json")
+
+        //mData[4].buttonListener=multiButtonListeners
+        val adapter=RecyclerviewAdapter(mData)
+/*
+        adapter.adapterObserver=object:ObserverFactory.RecyclerviewAdapterObserver{
+            override fun onBindComplete() {
+            }
+            override fun onBindRunning() {
+                if (adapter.VHList.size==20)
+                {
+                    adapter.VHList[19].etInputUnitValue.hint = "1-92"
+                }
+            }
+        }*/
+        rv_main_content.adapter=adapter
         rv_main_content.layoutManager=LinearLayoutManager(this@MainActivity)
     }
     fun initTable()
@@ -58,4 +86,43 @@ class MainActivity : AppCompatActivity() {
         st_main_table.tableData=tableData
         st_main_table.setZoom(true)
     }
+    fun initRetrofit(targetPath:String,targetFileName:String,webFileName:String,baseUrl:String)
+    {
+        downloadFile(targetPath,targetFileName,webFileName,baseUrl)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode==Activity.RESULT_OK)
+        {
+            when(requestCode)
+            {
+                Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
+                {
+                    val uri=data!!.data
+
+                }
+                Constants.RequestCode.REQUEST_PICK_FILE.ordinal->
+                {
+                    val uri=data!!.data
+                    val path=getRealPathFromURI(uri!!)
+                    //val resultFile= File()
+                }
+            }
+        }
+    }
+    fun getRealPathFromURI(contentUri: Uri):String?
+    {
+        var res:String?=null
+        val projection:Array<String> =Array(1){ MediaStore.Images.Media.DATA}
+        val cursor=contentResolver.query(contentUri,projection,null,null,null)
+        if (cursor!=null&&cursor.moveToFirst())
+        {
+            val column=cursor.getColumnIndexOrThrow(projection[0])
+            res=cursor.getString(column)
+            cursor.close()
+        }
+        return res
+    }
+
 }

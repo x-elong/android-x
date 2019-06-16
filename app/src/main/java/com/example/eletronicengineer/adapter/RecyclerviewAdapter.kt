@@ -17,20 +17,25 @@ import android.util.TypedValue
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
+import com.example.eletronicengineer.utils.ObserverFactory
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
 import kotlinx.android.synthetic.main.item_hint.view.*
 import kotlinx.android.synthetic.main.item_input_with_multi_unit.view.*
 import kotlinx.android.synthetic.main.item_input_with_textarea.view.*
+import kotlinx.android.synthetic.main.item_shift_input.view.*
 
 class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     companion object {
         const val TITLE_TYPE:Int=1
         const val SELECT_DIALOG_TYPE:Int=2
+
         const val SINGLE_INPUT_TYPE:Int=3
         const val INPUT_RANGE_TYPE:Int=4
         const val INPUT_WITH_UNIT_TYPE=5
         const val INPUT_WITH_MULTI_UNIT_TYPE=16
+        const val INPUT_WITH_TEXTAREA_TYPE=11
+        const val SHIFT_INPUT_TYPE=17
 
         const val MULTI_BUTTON_TYPE:Int=6
         const val MULTI_RADIO_BUTTON_TYPE:Int=7
@@ -39,7 +44,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val TWO_OPTIONS_SELECT_DIALOG_TYPE=9
         const val THREE_OPTIONS_SELECT_DIALOG_TYPE=10
 
-        const val INPUT_WITH_TEXTAREA_TYPE=11
         const val HINT_TYPE=12
         const val SUBMIT_TYPE=13
         const val EXPAND_TYPE=15
@@ -47,6 +51,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val MESSAGE_SELECT_OK:Int=100
     }
     var mData:List<MultiStyleItem>
+    var adapterObserver:ObserverFactory.RecyclerviewAdapterObserver?=null
     var expandList:MutableList<VH> =ArrayList()
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
@@ -59,16 +64,25 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         var btnList:MutableList<Button> = mutableListOf()
 
         lateinit var tvSingleInputTitle:TextView
+        lateinit var etSingleInputContent:EditText
 
         lateinit var tvRangeTitle:TextView
         lateinit var tvRangeUnit1:TextView
         lateinit var tvRangeUnit2:TextView
+        lateinit var etRangeValue1:EditText
+        lateinit var etRangeValue2:EditText
 
         lateinit var tvInputUnit: TextView
         lateinit var tvInputUnitTitle:TextView
+        lateinit var etInputUnitValue:EditText
+
+        lateinit var tvShiftInputTitle:TextView
+        lateinit var tvShiftInputContent:TextView
+        lateinit var tvShiftInputShow:TextView
 
         lateinit var spMultiInputUnit:Spinner
         lateinit var tvMultiInputUnitTitle:TextView
+        lateinit var etMultiInputContent:EditText
 
 
         lateinit var tvDialogSelectTitle:TextView
@@ -131,22 +145,33 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 SINGLE_INPUT_TYPE->
                 {
                     tvSingleInputTitle=v.tv_input_title
+                    etSingleInputContent=v.et_input_content
                 }
                 INPUT_RANGE_TYPE->
                 {
                     tvRangeTitle=v.tv_range_title
                     tvRangeUnit1=v.tv_range_unit1
                     tvRangeUnit2=v.tv_range_unit2
+                    etRangeValue1=v.et_range_value1
+                    etRangeValue2=v.et_range_value2
                 }
                 INPUT_WITH_UNIT_TYPE->
                 {
                     tvInputUnitTitle=v.tv_input_unit_title
                     tvInputUnit=v.tv_input_unit
+                    etInputUnitValue=v.et_input_unit_value
                 }
                 INPUT_WITH_MULTI_UNIT_TYPE->
                 {
                     spMultiInputUnit=v.sp_input_multi_unit_unit
                     tvMultiInputUnitTitle=v.tv_input_multi_unit_title
+                    etMultiInputContent=v.et_input_multi_unit_content
+                }
+                SHIFT_INPUT_TYPE->
+                {
+                    tvShiftInputTitle=v.tv_shift_input_title
+                    tvShiftInputContent=v.tv_shift_input_item
+                    tvShiftInputShow=v.tv_shift_input_show
                 }
                 SELECT_DIALOG_TYPE->
                 {
@@ -186,6 +211,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvExpandContent=v.tv_expand_content
                 }
             }
+            VHList.add(this)
         }
     }
     constructor(data:List<MultiStyleItem>)
@@ -203,6 +229,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT->return INPUT_WITH_MULTI_UNIT_TYPE
             MultiStyleItem.Options.SELECT_DIALOG->return SELECT_DIALOG_TYPE
             MultiStyleItem.Options.INPUT_RANGE->return INPUT_RANGE_TYPE
+            MultiStyleItem.Options.SHIFT_INPUT->return SHIFT_INPUT_TYPE
             MultiStyleItem.Options.MULTI_RADIO_BUTTON->return MULTI_RADIO_BUTTON_TYPE
             MultiStyleItem.Options.MULTI_CHECKBOX->return MULTI_CHECKBOX_TYPE
             MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG->return TWO_OPTIONS_SELECT_DIALOG_TYPE
@@ -215,7 +242,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         }
     }
     override fun onBindViewHolder(vh: VH, position: Int) {
-        VHList.add(vh)
+        if (adapterObserver!=null)
+        {
+            if (position==mData.size-1)
+            {
+                adapterObserver!!.onBindComplete()
+            }
+            adapterObserver!!.onBindRunning()
+        }
         when(getItemViewType(position))
         {
             TITLE_TYPE->
@@ -230,8 +264,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     return
                 for (name:String in mData[position].buttonName)
                 {
+                    val index=mData[position].buttonName.indexOf(name)
                     val btnItem= Button(vh.itemView.context)
                     btnItem.text=name
+                    if (index<=mData[position].buttonListener.size-1)
+                    {
+                        btnItem.setOnClickListener(mData[position].buttonListener[index])
+                    }
                     btnItem.setBackgroundResource(R.drawable.btn_style1)
                     vh.llContainer.addView(btnItem)
                     val params:ViewGroup.MarginLayoutParams= btnItem.layoutParams as ViewGroup.MarginLayoutParams
@@ -318,9 +357,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     for (name:String in mData[position].hybridButtonName)
                     {
+                        val index=mData[position].hybridButtonName.indexOf(name)
                         val btnItem= Button(vh.itemView.context)
                         btnItem.text=name
                         btnItem.setBackgroundResource(R.drawable.btn_style1)
+                        if (index<=mData[position].hybridButtonListeners.size-1)
+                        {
+                            btnItem.setOnClickListener(mData[position].hybridButtonListeners[index])
+                        }
                         vh.llContainer.addView(btnItem)
                         val params:ViewGroup.MarginLayoutParams= btnItem.layoutParams as ViewGroup.MarginLayoutParams
                         params.leftMargin=vh.itemView.resources.getDimension(R.dimen.general_20).toInt()
@@ -328,8 +372,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         vh.btnList.add(btnItem)
                     }
                 }
-
-
             }
             SINGLE_INPUT_TYPE->
             {
@@ -356,6 +398,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             INPUT_WITH_TEXTAREA_TYPE->
             {
                 vh.tvTextAreaTitle.text=mData[position].textAreaTitle
+            }
+            SHIFT_INPUT_TYPE->
+            {
+                vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             SELECT_DIALOG_TYPE->
             {
@@ -413,7 +467,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     }
                     if (expandList.indexOf(vh)!=expandPosition)
                     {
-
                         val valueAnimator2=ValueAnimator.ofFloat(0.toFloat(),90.toFloat())
                         valueAnimator2.duration=200
                         valueAnimator2.addUpdateListener {
@@ -489,6 +542,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             INPUT_WITH_TEXTAREA_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_input_with_textarea,viewGroup,false)
+                return VH(root, viewType)
+            }
+            SHIFT_INPUT_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_shift_input,viewGroup,false)
                 return VH(root, viewType)
             }
             SELECT_DIALOG_TYPE->

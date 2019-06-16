@@ -84,9 +84,10 @@
     "inputSingleTitle":"车辆数"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"机械设备",
-    "radioButtonName":["施工队全部提供","施工队不需提供"]
+    "type":"MULTI_HYBRID",
+    "hybridTitle":"机械设备",
+    "hybridRadioButtonName":["施工队全部提供","施工队不需提供"],
+    "hybridButtonName":["上传清册"]
   },
   {
     "type":"SINGLE_INPUT",
@@ -99,5 +100,9 @@
   {
     "type":"HINT",
     "hintContent":"附加:有不良记录者请勿联系"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认并提交"
   }
 ]

@@ -89,7 +89,7 @@ class ItemGenerate
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_RADIO_BUTTON,radioName,jsonObject.getString("radioButtonTitle"))
                     data.add(multiStyleItem)
                 }
-                "MULTI_HYBRID_TYPE"->
+                "MULTI_HYBRID"->
                 {
                     val buttonArray=jsonObject.optJSONArray("hybridButtonName")
                     val checkboxArray=jsonObject.optJSONArray("hybridCheckBoxName")
@@ -237,19 +237,26 @@ class ItemGenerate
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT,unitList,inputMultiUnitTitle)
                     data.add(multiStyleItem)
                 }
-                "INPUT_WITH_TEXTAREA_TYPE"->
+                "INPUT_WITH_TEXTAREA"->
                 {
                     val textAreaTitle=jsonObject.getString("textAreaTitle")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle)
                     data.add(multiStyleItem)
                 }
-                "HINT_TYPE"->
+                "SHIFT_INPUT"->
+                {
+                    val shiftInputTitle=jsonObject.getString("shiftInputTitle")
+                    val necessary=jsonObject.getBoolean("necessary")
+                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,shiftInputTitle,necessary)
+                    data.add(multiStyleItem)
+                }
+                "HINT"->
                 {
                     val hintContent=jsonObject.getString("hintContent")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.HINT,hintContent)
                     data.add(multiStyleItem)
                 }
-                "SUBMIT_TYPE"->
+                "SUBMIT"->
                 {
                     val submitContent=jsonObject.getString("submitContent")
                     val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SUBMIT,submitContent)

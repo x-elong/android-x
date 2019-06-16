@@ -18,12 +18,11 @@
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"项目名称"
-  }
-,
+  },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"工程量清册",
-    "buttonName":["在线编辑","拍照","上传附件"]
+    "buttonName":["上传附件","拍照"]
   },
   {
     "type":"INPUT_WITH_UNIT",
@@ -33,6 +32,7 @@
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"工作经验",
+    "key":"workExperience",
     "inputUnit":"(年)"
   },
   {
@@ -65,23 +65,24 @@
   },
   {
     "type":"MULTI_RADIO_BUTTON",
-    "checkboxTitle":"跨越架材料",
-    "checkboxNameList":["钢管","竹木"]
+    "radioButtonTitle":"跨越架材料",
+    "radioButtonName":["钢管","竹木"]
   },
   {
     "type":"MULTI_HYBRID",
     "hybridTitle":"薪资标准",
     "hybridRadioButtonName":["清工薪资","清单报价"],
-    "hybridButtonName":["编制标准"]
+    "hybridButtonName":["下载模板","上传清册"]
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"车辆数"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"机械设备",
-    "radioButtonName":["施工队全部提供","施工队不需提供"]
+    "type":"MULTI_HYBRID",
+    "hybridTitle":"机械设备",
+    "hybridRadioButtonName":["施工队全部提供","施工队不需提供"],
+    "hybridButtonName":["下载模板","上传清册"]
   },
   {
     "type":"SINGLE_INPUT",
@@ -92,7 +93,16 @@
     "inputSingleTitle":"联系电话"
   },
   {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)"
+  },
+  {
     "type":"HINT",
     "hintContent":"附加:有不良记录者请勿联系"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认并提交"
   }
 ]

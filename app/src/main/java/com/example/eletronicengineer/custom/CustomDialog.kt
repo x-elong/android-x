@@ -34,6 +34,7 @@ class CustomDialog {
                 val v=LayoutInflater.from(context).inflate(R.layout.dialog_select,null,false)
                 val wheelView=v.wv_dialog_select_container
                 wheelView.adapter=ArrayWheelAdapter(contentList)
+                wheelView.setCyclic(false)
                 val builder=AlertDialog.Builder(context).setView(v)
                 builder.setPositiveButton("确认") { dialog, which ->
                     selectContent=contentList[wheelView.currentItem]
