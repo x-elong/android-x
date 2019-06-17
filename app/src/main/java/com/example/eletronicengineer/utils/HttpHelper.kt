@@ -22,7 +22,6 @@ interface HttpHelper
 {
     @POST("/excel/downloadexcel/{filename}")
     fun downloadExcel(@Path("filename") filename:String):Call<ResponseBody>
-
     fun sendMessage(keys:Array<String>,values:Array<String>):Observable<ResponseBody>
 }
 internal fun startSendMessage(keys:Array<String>,values:Array<String>)

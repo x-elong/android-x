@@ -1,7 +1,7 @@
 [
   {
     "type":"SHIFT_INPUT",
-    "shiftInputTitle":"Test",
-    "necessary":true
+    "shiftInputTitle":"专业证书附件上传",
+    "necessary":false
   }
 ]

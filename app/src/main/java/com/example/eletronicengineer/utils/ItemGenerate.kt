@@ -37,26 +37,19 @@ class ItemGenerate
     fun GenerateFromJsonArray(json:String):List<MultiStyleItem>
     {
         val jsonArray=JSONArray(json)
-        //
         val data:MutableList<MultiStyleItem> =ArrayList()
-        //for(int i=0;i<jsonArray.length;i++)
         for (i in 0 until jsonArray.length())
         {
-            /*
-            *
-            * {
-                "type":"TITLE",
-                "title1":"需求团队"
-              }
-            * */
+            var multiStyleItem:MultiStyleItem= MultiStyleItem()
             val jsonObject=jsonArray.getJSONObject(i)
             //fun("type")
+            multiStyleItem.key=jsonObject.optString("key")
             when(jsonObject.getString("type"))
             {
                 "TITLE"->
                 {
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE,jsonObject.getString("title1"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE,jsonObject.getString("title1"))
+                    
                 }
                 "MULTI_BUTTON"->
                 {
@@ -66,17 +59,15 @@ class ItemGenerate
                     {
                         buttonName.add(array[j].toString())
                     }
-                    val multiStyleItem=if (buttonListeners.size>0)
+                    if (buttonListeners.size>0)
                     {
-                        val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_BUTTON,jsonObject.getString("buttonTitle"),buttonName,buttonListeners)
-                        multiStyleItem
+                        multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_BUTTON,jsonObject.getString("buttonTitle"),buttonName,buttonListeners)
                     }
                     else
                     {
-                        val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_BUTTON,jsonObject.getString("buttonTitle"),buttonName,ArrayList())
-                        multiStyleItem
+                        multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_BUTTON,jsonObject.getString("buttonTitle"),buttonName,ArrayList())
                     }
-                    data.add(multiStyleItem)
+                    
                 }
                 "MULTI_RADIO_BUTTON"->
                 {
@@ -86,8 +77,8 @@ class ItemGenerate
                     {
                         radioName.add(array[j].toString())
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_RADIO_BUTTON,radioName,jsonObject.getString("radioButtonTitle"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_RADIO_BUTTON,radioName,jsonObject.getString("radioButtonTitle"))
+                    
                 }
                 "MULTI_HYBRID"->
                 {
@@ -119,13 +110,13 @@ class ItemGenerate
                             hybridRadioButtonName.add(radioButtonArray.getString(j))
                         }
                     }
-                    val multiStyleItem=if(hybridButtonListener.size>0)
+                    if(hybridButtonListener.size>0)
                     {
-                        MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,hybridButtonListener)
+                        multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,hybridButtonListener)
                     }
                     else
-                        MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,ArrayList())
-                    data.add(multiStyleItem)
+                        multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_HYBRID,hybridTitle,hybridButtonName,hybridRadioButtonName,hybridCheckBoxName,ArrayList())
+                    
                 }
                 "MULTI_CHECKBOX" ->
                 {
@@ -135,8 +126,8 @@ class ItemGenerate
                     {
                         checkboxName.add(array[j].toString())
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_CHECKBOX,checkboxName,jsonObject.getString("checkboxTitle"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_CHECKBOX,checkboxName,jsonObject.getString("checkboxTitle"))
+                    
                 }
                 "SELECT_DIALOG"->
                 {
@@ -146,8 +137,8 @@ class ItemGenerate
                     {
                         selectOption1Items.add(array[j].toString())
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SELECT_DIALOG,selectOption1Items,jsonObject.getString("selectTitle"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SELECT_DIALOG,selectOption1Items,jsonObject.getString("selectTitle"))
+                    
                 }
                 "TWO_OPTIONS_SELECT_DIALOG"->
                 {
@@ -167,8 +158,8 @@ class ItemGenerate
                             selectOption2Items[j].add(array2.getJSONArray(j).getString(k))
                         }
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG,selectOption1Items,selectOption2Items,ArrayList(),jsonObject.getString("selectTitle"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG,selectOption1Items,selectOption2Items,ArrayList(),jsonObject.getString("selectTitle"))
+                    
                 }
                 "THREE_OPTIONS_SELECT_DIALOG"->
                 {
@@ -202,28 +193,28 @@ class ItemGenerate
                             }
                         }
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG,selectOption1Items,selectOption2Items,selectOption3Items,jsonObject.getString("selectTitle"))
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG,selectOption1Items,selectOption2Items,selectOption3Items,jsonObject.getString("selectTitle"))
+                    
                 }
                 "SINGLE_INPUT"->
                 {
                     val inputSingleTitle=jsonObject.getString("inputSingleTitle")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,inputSingleTitle)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,inputSingleTitle)
+                    
                 }
                 "INPUT_RANGE"->
                 {
                     val inputRangeTitle=jsonObject.getString("inputRangeTitle")
                     val inputRangeUnit=jsonObject.getString("inputRangeUnit")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_RANGE,inputRangeTitle,inputRangeUnit)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_RANGE,inputRangeTitle,inputRangeUnit)
+                    
                 }
                 "INPUT_WITH_UNIT"->
                 {
                     val inputUnitTitle=jsonObject.getString("inputUnitTitle")
                     val inputUnit=jsonObject.getString("inputUnit")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_UNIT,inputUnitTitle,inputUnit)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_UNIT,inputUnitTitle,inputUnit)
+                    
                 }
                 "INPUT_WITH_MULTI_UNIT"->
                 {
@@ -234,42 +225,47 @@ class ItemGenerate
                     {
                         unitList.add(inputMultiUnit.getString(j))
                     }
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT,unitList,inputMultiUnitTitle)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT,unitList,inputMultiUnitTitle)
+                    
                 }
                 "INPUT_WITH_TEXTAREA"->
                 {
                     val textAreaTitle=jsonObject.getString("textAreaTitle")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle)
+                    
                 }
                 "SHIFT_INPUT"->
                 {
                     val shiftInputTitle=jsonObject.getString("shiftInputTitle")
                     val necessary=jsonObject.getBoolean("necessary")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,shiftInputTitle,necessary)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,shiftInputTitle,necessary)
+                    
                 }
                 "HINT"->
                 {
                     val hintContent=jsonObject.getString("hintContent")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.HINT,hintContent)
-                    data.add(multiStyleItem)
+                    val customFontColor=jsonObject.optString("customFontColor")
+                    val startPosition=jsonObject.optInt("startPosition")
+                    val endPosition=jsonObject.optInt("endPosition")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.HINT,hintContent)
+                    multiStyleItem.customFontColor=customFontColor
+                    multiStyleItem.startPosition=startPosition
+                    multiStyleItem.endPosition=endPosition
                 }
                 "SUBMIT"->
                 {
                     val submitContent=jsonObject.getString("submitContent")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SUBMIT,submitContent)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SUBMIT,submitContent)
+                    
                 }
                 "EXPAND"->
                 {
                     val expandTitle=jsonObject.getString("expandTitle")
                     val expandContent=jsonObject.getString("expandContent")
-                    val multiStyleItem=MultiStyleItem(MultiStyleItem.Options.EXPAND,expandTitle,expandContent)
-                    data.add(multiStyleItem)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.EXPAND,expandTitle,expandContent)
                 }
             }
+            data.add(multiStyleItem)
         }
         return data
     }

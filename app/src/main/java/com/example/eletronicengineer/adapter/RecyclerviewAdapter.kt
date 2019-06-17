@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.adapter
 
 import android.animation.ValueAnimator
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,16 @@ import kotlinx.android.synthetic.main.item_multi.view.*
 import kotlinx.android.synthetic.main.item_single_input.view.*
 import kotlinx.android.synthetic.main.item_title.view.*
 import android.os.Handler
+import android.provider.SyncStateContract
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
+import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.ObserverFactory
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
@@ -440,7 +446,19 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             HINT_TYPE->
             {
-                vh.tvHint.text=mData[position].hintContent
+                if (mData[position].customFontColor==null)
+                {
+                    vh.tvHint.text=mData[position].hintContent
+                }
+                else
+                {
+                    val style=SpannableStringBuilder(mData[position].hintContent)
+                    style.setSpan(ForegroundColorSpan(Color.parseColor(mData[position].customFontColor!!))
+                        ,mData[position].startPosition!!
+                        ,mData[position].endPosition!!
+                        ,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    vh.tvHint.text=style
+                }
             }
             SUBMIT_TYPE->
             {

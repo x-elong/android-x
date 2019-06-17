@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.bin.david.form.data.Column
 import com.bin.david.form.data.table.TableData
@@ -18,14 +19,13 @@ import com.electric.engineering.utils.ItemGenerate
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
-import com.example.eletronicengineer.utils.ObserverFactory
-import com.example.eletronicengineer.utils.PermissionHelper
-import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.downloadFile
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.FormBody
 import okhttp3.RequestBody
 import java.io.File
+import java.lang.Exception
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -44,30 +44,11 @@ class MainActivity : AppCompatActivity() {
     {
         supportActionBar?.hide()
         multiButtonListeners=ArrayList()
-        val itemGenerate=ItemGenerate()
-        itemGenerate.context=this@MainActivity
-        val uploadListener= View.OnClickListener {
-            val intent=Intent(Intent.ACTION_GET_CONTENT)
-            intent.type="image/*"
-            startActivityForResult(intent,Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        multiButtonListeners.add(uploadListener)
-        //Demand/DemandGroup(Test debugging).json
-        mData=itemGenerate.getJsonFromAsset("Demand/DemandGroup(Test debugging).json")
+        val adapterGenerate=AdapterGenerate()
+        adapterGenerate.context=this@MainActivity
+        adapterGenerate.activity=this@MainActivity
 
-        //mData[4].buttonListener=multiButtonListeners
-        val adapter=RecyclerviewAdapter(mData)
-/*
-        adapter.adapterObserver=object:ObserverFactory.RecyclerviewAdapterObserver{
-            override fun onBindComplete() {
-            }
-            override fun onBindRunning() {
-                if (adapter.VHList.size==20)
-                {
-                    adapter.VHList[19].etInputUnitValue.hint = "1-92"
-                }
-            }
-        }*/
+        val adapter=adapterGenerate.DemandGroupCrossingFrame()
         rv_main_content.adapter=adapter
         rv_main_content.layoutManager=LinearLayoutManager(this@MainActivity)
     }
@@ -100,12 +81,22 @@ class MainActivity : AppCompatActivity() {
                 Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
                 {
                     val uri=data!!.data
-
+                    val path=getRealPathFromURI(uri!!)
+                    Log.i("path",path)
                 }
                 Constants.RequestCode.REQUEST_PICK_FILE.ordinal->
                 {
                     val uri=data!!.data
-                    val path=getRealPathFromURI(uri!!)
+                    if (uri!!.toString().contains("content"))
+                    {
+                        val path=getRealPathFromURI(uri)
+                        Log.i("path",path)
+                    }
+                    val file=File(uri.toString())
+                    if (file.exists())
+                    {
+                        Log.i("file",file.name)
+                    }
                     //val resultFile= File()
                 }
             }
@@ -114,14 +105,38 @@ class MainActivity : AppCompatActivity() {
     fun getRealPathFromURI(contentUri: Uri):String?
     {
         var res:String?=null
-        val projection:Array<String> =Array(1){ MediaStore.Images.Media.DATA}
-        val cursor=contentResolver.query(contentUri,projection,null,null,null)
-        if (cursor!=null&&cursor.moveToFirst())
+        val projection:Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var cursor=contentResolver.query(contentUri,projection,null,null,null)
+        try
         {
-            val column=cursor.getColumnIndexOrThrow(projection[0])
-            res=cursor.getString(column)
-            cursor.close()
+            if (cursor!=null)
+            {
+                val column=cursor.getColumnIndexOrThrow(projection[0])
+                if(cursor.moveToFirst())
+                {
+                    res=cursor.getString(column)
+                }
+                cursor.close()
+            }
+            if (res==null)
+            {
+                cursor=contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,projection,null,null,null)
+                if (cursor!=null)
+                {
+                    val column=cursor.getColumnIndexOrThrow(projection[0])
+                    if(cursor.moveToFirst())
+                    {
+                        res=cursor.getString(column)
+                    }
+                    cursor.close()
+                }
+            }
         }
+        catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
+
         return res
     }
 

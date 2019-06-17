@@ -61,7 +61,8 @@
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"需要人数"
+    "inputSingleTitle":"需要人数",
+    "key":"needPileFoundationEquipment"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
@@ -72,17 +73,16 @@
     "type":"MULTI_HYBRID",
     "hybridTitle":"薪资标准",
     "hybridRadioButtonName":["清工薪资","清单报价"],
-    "hybridButtonName":["下载模板","上传清册"]
+    "hybridButtonName":["编制标准"]
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"车辆数"
   },
   {
-    "type":"MULTI_HYBRID",
-    "hybridTitle":"机械设备",
-    "hybridRadioButtonName":["施工队全部提供","施工队不需提供"],
-    "hybridButtonName":["下载模板","上传清册"]
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonTitle":"机械设备",
+    "radioButtonName":["施工队全部提供","施工队不需提供"]
   },
   {
     "type":"SINGLE_INPUT",
@@ -98,8 +98,15 @@
     "inputUnit":"(天)"
   },
   {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加:有不良记录者请勿联系"
+  },
+  {
     "type":"HINT",
-    "hintContent":"附加:有不良记录者请勿联系"
+    "hintContent":"附加:有不良记录者请勿联系",
+    "customFontColor":"#FFFF0000",
+    "startPosition":0,
+    "endPosition":6
   },
   {
     "type":"SUBMIT",

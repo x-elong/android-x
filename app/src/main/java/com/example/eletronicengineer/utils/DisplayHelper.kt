@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable
 import android.widget.Toast
 import com.example.eletronicengineer.R
 
+
+//
 /**
  * 显示助手 提供dp px sp互相转换的函数
  */
@@ -16,7 +18,7 @@ class DisplayHelper
     {
         fun addWaterCaption(context: Context,bmp: Bitmap, vararg content:String): Drawable
         {
-            val canvas= Canvas(bmp)
+            val canvas= Canvas(bmp)//
             val contentPaint= Paint()
 
             contentPaint.textSize=context.resources.getDimensionPixelSize(R.dimen.font_tv_normal_16).toFloat()

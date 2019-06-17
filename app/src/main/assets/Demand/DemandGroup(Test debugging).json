@@ -90,6 +90,11 @@
     "hybridButtonName":["上传清册"]
   },
   {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)"
+  },
+  {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"联系人"
   },

@@ -2,6 +2,7 @@ package com.example.eletronicengineer.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.app.ActivityCompat
@@ -16,10 +17,11 @@ class PermissionHelper
         )
         fun getPermission(activity:Activity,requestCode:Int)
         {
-            if (Build.VERSION.SDK_INT>Build.VERSION_CODES.M)
+            if (Build.VERSION.SDK_INT>Build.VERSION_CODES.M)//Marllshow
             {
                 for (permission in PermissionList)
                 {
+
                     if (activity.checkSelfPermission(permission)!=PackageManager.PERMISSION_GRANTED)
                     {
                         activity.requestPermissions(PermissionList.toTypedArray(),requestCode)

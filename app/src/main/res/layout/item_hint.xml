@@ -7,6 +7,6 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" tools:layout_editor_absoluteY="7dp" tools:layout_editor_absoluteX="7dp"
-            android:id="@+id/tv_hint_content" android:minHeight="@dimen/general_200"
+            android:id="@+id/tv_hint_content" android:minHeight="@dimen/general_80"
             android:textSize="@dimen/font_tv_hint_15"/>
 </LinearLayout>

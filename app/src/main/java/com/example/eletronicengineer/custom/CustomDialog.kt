@@ -60,8 +60,7 @@ class CustomDialog {
         {
             Options.TWO_OPTIONS_SELECT_DIALOG->
             {
-                val picker=OptionsPickerBuilder(context,{
-                        options1, options2, options3, v ->
+                val picker=OptionsPickerBuilder(context) { options1, options2, _, _ ->
                     selectContent=option1Items[options1]+" "+option2Items[options1][options2]
                     val msg=mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
                     val data= Bundle()
@@ -69,7 +68,7 @@ class CustomDialog {
                     msg.data=data
                     mHandler.sendMessage(msg)
 
-                }).build<String>()
+                }.build<String>()
                 picker.setPicker(option1Items,option2Items)
                 this.multiDialog=picker
             }

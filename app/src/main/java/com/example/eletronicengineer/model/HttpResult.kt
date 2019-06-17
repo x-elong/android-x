@@ -6,3 +6,6 @@ class HttpResult
     lateinit var desc:String
     lateinit var message:String
 }
+//okhttp
+
+//retrofit okhttp rxjava GsonConverter
