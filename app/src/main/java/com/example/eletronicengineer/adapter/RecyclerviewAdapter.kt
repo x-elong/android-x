@@ -14,10 +14,13 @@ import kotlinx.android.synthetic.main.item_multi.view.*
 import kotlinx.android.synthetic.main.item_single_input.view.*
 import kotlinx.android.synthetic.main.item_title.view.*
 import android.os.Handler
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
@@ -25,14 +28,18 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.activity.MainActivity
 import com.example.eletronicengineer.utils.ObserverFactory
 import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.startSendMessage
 import com.example.eletronicengineer.utils.startSendMultiPartMessage
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
+import kotlinx.android.synthetic.main.item_expand_list.view.*
 import kotlinx.android.synthetic.main.item_hint.view.*
 import kotlinx.android.synthetic.main.item_input_with_multi_unit.view.*
 import kotlinx.android.synthetic.main.item_input_with_textarea.view.*
 import kotlinx.android.synthetic.main.item_shift_input.view.*
 import kotlinx.android.synthetic.main.item_single_display.view.*
+import kotlinx.android.synthetic.main.item_three_display.view.*
+import kotlinx.android.synthetic.main.item_two_column_display.view.*
 import kotlinx.android.synthetic.main.item_two_pair_input.view.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -62,6 +69,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val SUBMIT_TYPE=13
         const val EXPAND_TYPE=15
         const val SINGLE_DISPLAY_TYPE=19
+
+        const val THREE_DISPLAY_TYPE=20
+        const val TWO_COLUMN_DISPLAY_TYPE=21
+        const val EXPAND_LIST_TYPE=22
+        const val EXPAND_LIST_DISPLAY_TYPE=23
 
         const val MESSAGE_SELECT_OK:Int=100
     }
@@ -143,7 +155,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
     inner class VH:RecyclerView.ViewHolder
     {
-        var hasInitialize=false
+        var itemPosition=-1
         lateinit var tvTitle1:TextView
         lateinit var tvBack:TextView
 
@@ -174,6 +186,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvTwoPairInputItem3:TextView
         lateinit var etTwoPairInputValue1:EditText
         lateinit var etTwoPairInputValue2:EditText
+
+        lateinit var tvThreeDisplayTitle:TextView
+        lateinit var tvThreeDisplayItem1:TextView
+        lateinit var tvThreeDisplayItem2:TextView
+        lateinit var tvThreeDisplayItem3:TextView
+
+        lateinit var tvTwoColumnDisplayTitle1:TextView
+        lateinit var tvTwoColumnDisplayContent1:TextView
+        lateinit var tvTwoColumnDisplayTitle2:TextView
+        lateinit var tvTwoColumnDisplayContent2:TextView
+
+        lateinit var tvExpandListTitle:TextView
+        lateinit var rvExpandListContent:RecyclerView
+        lateinit var tvExpandListButton:TextView
 
         lateinit var spMultiInputUnit:Spinner
         lateinit var tvMultiInputUnitTitle:TextView
@@ -210,6 +236,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     }else{
                         etDialogSelectItem.isEnabled=false
                         etDialogSelectItem.text=selectContent
+                        mData[itemPosition].selectContent=selectContent!!
                     }
                     false
                 }
@@ -263,6 +290,28 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     etTwoPairInputValue1=v.et_two_pair_input_value1
                     etTwoPairInputValue2=v.et_two_pair_input_value2
                 }
+
+                THREE_DISPLAY_TYPE->
+                {
+                    tvThreeDisplayTitle=v.tv_three_display_title
+                    tvThreeDisplayItem1=v.tv_three_display_item1
+                    tvThreeDisplayItem2=v.tv_three_display_item2
+                    tvThreeDisplayItem3=v.tv_three_display_item3
+                }
+                TWO_COLUMN_DISPLAY_TYPE->
+                {
+                    tvTwoColumnDisplayTitle1=v.tv_two_column_display_title1
+                    tvTwoColumnDisplayContent1=v.tv_two_column_display_item1
+                    tvTwoColumnDisplayTitle2=v.tv_two_column_display_title2
+                    tvTwoColumnDisplayContent2=v.tv_two_column_display_item2
+                }
+                EXPAND_LIST_TYPE->
+                {
+                    tvExpandListTitle=v.tv_expand_list_title
+                    tvExpandListButton=v.tv_expand_list_button
+                    rvExpandListContent=v.rv_expand_list_content
+                }
+
                 INPUT_RANGE_TYPE->
                 {
                     tvRangeTitle=v.tv_range_title
@@ -288,10 +337,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvShiftInputTitle=v.tv_shift_input_title
                     tvShiftInputContent=v.et_shift_input_item
                     tvShiftInputShow=v.tv_shift_input_show
-//                    tvShiftInputShow.setOnClickListener {
-//                        val intent = Intent(v.context,MainActivity::class.java)
-//                        v.context.startActivity(intent)
-//                    }
                 }
                 SELECT_DIALOG_TYPE->
                 {
@@ -330,6 +375,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvExpandTitle=v.tv_expand_title
                     tvExpandContent=v.tv_expand_content
                 }
+                EXPAND_LIST_TYPE->
+                {
+                    tvExpandListTitle=v.tv_expand_list_title
+                    tvExpandListButton=v.tv_expand_list_button
+                    rvExpandListContent=v.rv_expand_list_content
+                }
                 SINGLE_DISPLAY_TYPE->
                 {
                     tvSingleDisplayTitle=v.tv_single_display_title
@@ -366,13 +417,19 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.EXPAND->return EXPAND_TYPE
             MultiStyleItem.Options.TWO_PAIR_INPUT->return TWO_PAIR_INPUT_TYPE
             MultiStyleItem.Options.SINGLE_DISPLAY->return SINGLE_DISPLAY_TYPE
+            MultiStyleItem.Options.THREE_DISPLAY->return THREE_DISPLAY_TYPE
+            MultiStyleItem.Options.TWO_COLUMN_DISPLAY->return TWO_COLUMN_DISPLAY_TYPE
+            MultiStyleItem.Options.EXPAND_LIST->return EXPAND_LIST_TYPE
             else->
             {
                 return TITLE_TYPE
             }
         }
     }
+    var time=0
     override fun onBindViewHolder(vh: VH, position: Int) {
+        vh.itemPosition=position
+        vh.setIsRecyclable(false)
         if (adapterObserver!=null)
         {
             if (position==mData.size-1)
@@ -381,8 +438,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             adapterObserver!!.onBindRunning()
         }
-        if (vh.hasInitialize)
-            return
         when(getItemViewType(position))
         {
             TITLE_TYPE->
@@ -397,8 +452,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_BUTTON_TYPE->
             {
                 vh.multiTitle.text=mData[position].buttonTitle
-                if (vh.llContainer.childCount>0)
-                    return
                 for (name:String in mData[position].buttonName)
                 {
                     val index=mData[position].buttonName.indexOf(name)
@@ -419,8 +472,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MULTI_RADIO_BUTTON_TYPE->
             {
                 val context=vh.itemView.context
-                if (vh.llContainer.childCount>0)
-                    return
                 vh.multiTitle.text=mData[position].radioButtonTitle
                 val radioGroup=RadioGroup(vh.itemView.context)
                 radioGroup.orientation=LinearLayout.HORIZONTAL
@@ -429,18 +480,29 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val radioItem=RadioButton(context)
                     radioItem.text=name
                     radioItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    radioItem.setOnCheckedChangeListener{
+                            compoundButton, bool ->
+                        if (bool)
+                        {
+                            val index=mData[position].radioButtonName.indexOf(compoundButton.text.toString())
+                            mData[position].radioButtonValue=(1-index).toString()
+                        }
+                    }
                     radioGroup.addView(radioItem)
                     val params=radioItem.layoutParams as ViewGroup.MarginLayoutParams
                     params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
                     radioItem.layoutParams=params
+                }
+                if (mData[position].radioButtonValue!="")
+                {
+                    val item=radioGroup.getChildAt(1-mData[position].radioButtonValue.toInt()) as RadioButton
+                    item.isChecked=true
                 }
                 vh.llContainer.addView(radioGroup)
             }
             MULTI_CHECKBOX_TYPE->
             {
                 val context=vh.itemView.context
-                if (vh.llContainer.childCount>0)
-                    return
                 vh.multiTitle.text=mData[position].checkboxTitle
                 for (name in mData[position].checkboxNameList)
                 {
@@ -448,16 +510,33 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     checkboxItem.text=name
                     checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     vh.llContainer.addView(checkboxItem)
+                    mData[position].checkboxValueList=ArrayList(mData[position].checkboxNameList.size)
+                    mData[position].checkboxValueList.add(false)
+                    checkboxItem.setOnCheckedChangeListener{
+                            compoundButton, bool ->
+                        val index=mData[position].checkboxNameList.indexOf(compoundButton.text)
+                        if (bool)
+                        {
+                            mData[position].checkboxValueList.set(index,true)
+                        }
+                        else
+                        {
+                            mData[position].checkboxValueList.set(index,false)
+                        }
+                    }
                     val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
                     params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
                     checkboxItem.layoutParams=params
+                }
+                for (i in 0 until vh.llContainer.childCount-1)
+                {
+                    val item=vh.llContainer.getChildAt(i) as CheckBox
+                    item.isChecked=mData[position].checkboxValueList[i]
                 }
             }
             MULTI_HYBRID_TYPE->
             {
                 val context=vh.itemView.context
-                if (vh.llContainer.childCount>1)
-                    return
                 vh.multiTitle.text=mData[position].hybridTitle
                 val radioGroup=RadioGroup(context)
                 if (mData[position].hybridCheckBoxName.size>0)
@@ -468,6 +547,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         checkboxItem.text=checkboxName
                         checkboxItem.textSize=context.resources.getDimension(R.dimen.font_tv_hint_15)
                         vh.llContainer.addView(checkboxItem)
+                        checkboxItem.setOnCheckedChangeListener{
+                                compoundButton, bool ->
+                            val index=mData[position].checkboxNameList.indexOf(compoundButton.text)
+                            if (bool)
+                            {
+                                mData[position].checkboxValueList.set(index,true)
+                            }
+                            else
+                            {
+                                mData[position].checkboxValueList.set(index,false)
+                            }
+                        }
                         val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
                         params.topMargin=context.resources.getDimension(R.dimen.top_5).toInt()
                         params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
@@ -483,6 +574,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         radioItem.text=name
                         radioItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                         radioGroup.addView(radioItem)
+                        radioItem.setOnCheckedChangeListener{
+                                compoundButton, bool ->
+                            if (bool)
+                            {
+                                val index=mData[position].radioButtonName.indexOf(compoundButton.text.toString())
+                                mData[position].radioButtonValue=(1-index).toString()
+                            }
+                        }
                         val params=radioItem.layoutParams as ViewGroup.MarginLayoutParams
                         params.topMargin=context.resources.getDimension(R.dimen.top_5).toInt()
                         params.leftMargin=context.resources.getDimension(R.dimen.general_20).toInt()
@@ -513,6 +612,22 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SINGLE_INPUT_TYPE->
             {
                 vh.tvSingleInputTitle.text=mData[position].inputSingleTitle
+                vh.etSingleInputContent.addTextChangedListener(object: TextWatcher {
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputSingleContent=p0.toString()
+                    }
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+                })
+                if (mData[position].inputSingleContent!="")
+                {
+                    vh.etSingleInputContent.setText(mData[position].inputSingleContent)
+                }
                 if(mData[position].inputSingleTitle.equals("类别")){
                     vh.tvShiftInputContent.hint="规格/型号状态"
                 }
@@ -521,6 +636,23 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
+                vh.etInputUnitValue.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputUnitContent=p0.toString()
+                    }
+                })
+                if (mData[position].inputUnitContent!="")
+                {
+                    vh.etInputUnitValue.setText(mData[position].inputUnitContent)
+                }
             }
             TWO_PAIR_INPUT_TYPE->
             {
@@ -528,6 +660,58 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvTwoPairInputItem1.text=mData[position].twoPairInputItem1
                 vh.tvTwoPairInputItem2.text=mData[position].twoPairInputItem2
                 vh.tvTwoPairInputItem3.text=mData[position].twoPairInputItem3
+                vh.etTwoPairInputValue1.addTextChangedListener(object:TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].twoPairInputValue1=p0.toString()
+                    }
+                })
+                vh.etTwoPairInputValue2.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].twoPairInputValue2=p0.toString()
+                    }
+                })
+            }
+            THREE_DISPLAY_TYPE->
+            {
+                vh.tvThreeDisplayTitle.text=mData[position].threeDisplayTitle
+                vh.tvThreeDisplayItem1.text=mData[position].threeDisplayContent1
+                vh.tvThreeDisplayItem2.text=mData[position].threeDisplayContent2
+                vh.tvThreeDisplayItem3.text=mData[position].threeDisplayContent3
+
+                if (mData[position].threeDisplayContent2.equals("详情"))
+                {
+                    vh.tvThreeDisplayItem2.setBackgroundResource(R.drawable.btn_style2)
+                    vh.tvThreeDisplayItem2.setOnClickListener(mData[position].threeDisplayListener)
+                }
+                if (mData[position].threeDisplayContent3.equals("详情"))
+                {
+                    vh.tvThreeDisplayItem3.setBackgroundResource(R.drawable.btn_style2)
+                    vh.tvThreeDisplayItem3.setOnClickListener(mData[position].threeDisplayListener)
+                }
+            }
+
+            TWO_COLUMN_DISPLAY_TYPE->
+            {
+                vh.tvTwoColumnDisplayTitle1.text=mData[position].twoColumnDisplayTitle1
+                vh.tvTwoColumnDisplayContent1.text=mData[position].twoColumnDisplayContent1
+                vh.tvTwoColumnDisplayTitle2.text=mData[position].twoColumnDisplayTitle2
+                vh.tvTwoColumnDisplayContent2.text=mData[position].twoColumnDisplayContent2
             }
             INPUT_WITH_MULTI_UNIT_TYPE->
             {
@@ -535,6 +719,35 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvMultiInputUnitTitle.text=mData[position].inputMultiUnitTitle
                 val adapter=ArrayAdapter(context,R.layout.item_dropdown,mData[position].inputMultiUnit)
                 adapter.setDropDownViewResource(R.layout.item_dropdown)
+                vh.etMultiInputContent.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputMultiContent=p0.toString()
+                    }
+                })
+                vh.spMultiInputUnit.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        mData[position].inputMultiSelectUnit=adapter.getItem(p2).toString()
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
+                }
+                if (mData[position].inputMultiContent!="")
+                {
+                    vh.etMultiInputContent.setText(mData[position].inputMultiContent)
+                }
+                if (mData[position].inputMultiSelectUnit!="")
+                {
+                    val position=adapter.getPosition(mData[position].inputMultiSelectUnit)
+                    vh.spMultiInputUnit.setSelection(position)
+                }
                 vh.spMultiInputUnit.adapter=adapter
                 vh.spMultiInputUnit.setSelection(1)
             }
@@ -542,10 +755,53 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvRangeTitle.text=mData[position].inputRangeTitle
                 vh.tvRangeUnit1.text=mData[position].inputRangeUnit
+                vh.etRangeValue1.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputRangeValue1=p0.toString()
+                    }
+                })
+                vh.etRangeValue2.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputRangeValue2=p0.toString()
+                    }
+                })
+                if (mData[position].inputRangeValue1!="")
+                {
+                    vh.etRangeValue1.setText(mData[position].inputRangeValue1)
+                }
+                if (mData[position].inputRangeValue2!="")
+                {
+                    vh.etRangeValue2.setText(mData[position].inputRangeValue2)
+                }
+
             }
             INPUT_WITH_TEXTAREA_TYPE->
             {
                 vh.tvTextAreaTitle.text=mData[position].textAreaTitle
+                vh.etTextAreaContent.addTextChangedListener(object:TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].textAreaContent=p0.toString()
+                    }
+                })
+                if (mData[position].textAreaContent!="")
+                {
+                    vh.etTextAreaContent.setText(mData[position].textAreaContent)
+                }
+
             }
             SHIFT_INPUT_TYPE->
             {
@@ -565,6 +821,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
+                mData[position].selectContent=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener{
                     val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.itemView.context,mData[position].selectOption1Items,vh.mHandler).dialog
                     selectDialog.show()
@@ -578,6 +835,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
+                if (mData[position].selectContent!="")
+                {
+                    vh.etDialogSelectItem.text=mData[position].selectContent
+                }
                 vh.tvDialogSelectShow.setOnClickListener {
                     val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
                     selectDialog.show()
@@ -594,6 +855,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvDialogSelectShow.setOnClickListener {
                     val selectDialog=CustomDialog(CustomDialog.Options.THREE_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items,mData[position].selectOption3Items).multiDialog
                     selectDialog.show()
+                }
+                if (mData[position].selectContent!="")
+                {
+                    vh.etDialogSelectItem.text=mData[position].selectContent
                 }
                 if(mData[position].selectListener!=null)
                 {
@@ -619,91 +884,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SUBMIT_TYPE->
             {
                 vh.btnSubmit.text=mData[position].submitContent
-//                vh.btnSubmit.setOnClickListener{
-//                    val map=HashMap<String,String>(mData.size)
-//                    for (i in 0 until mData.size)
-//                    {
-//                        val multiStyleItem=mData[i]
-//                        val viewHolder=VHList[i]
-//                        when(getItemViewType(i))
-//                        {
-//                            TITLE_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.tvTitle1.text.toString()
-//                            }
-//                            SINGLE_INPUT_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.etSingleInputContent.text.toString()
-//                            }
-//                            INPUT_WITH_UNIT_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.etInputUnitValue.text.toString()
-//                            }
-//                            INPUT_WITH_MULTI_UNIT_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.etMultiInputContent.text.toString()
-//                            }
-//                            INPUT_RANGE_TYPE->
-//                            {
-//                                val keys=multiStyleItem.key.split(" ")
-//                                map[keys[0]]=viewHolder.etRangeValue1.text.toString()
-//                                map[keys[1]]=viewHolder.etRangeValue2.text.toString()
-//                            }
-//                            INPUT_WITH_TEXTAREA_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.etTextAreaContent.text.toString()
-//                            }
-//                            TWO_PAIR_INPUT_TYPE->
-//                            {
-//                                val keys=multiStyleItem.key.split(" ")
-//                                map[keys[0]]=viewHolder.etTwoPairInputValue1.text.toString()
-//                                map[keys[1]]=viewHolder.etTwoPairInputValue2.text.toString()
-//                            }
-//                            SHIFT_INPUT_TYPE->
-//                            {
-//
-//                            }
-//                            SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
-//                            {
-//                                map[multiStyleItem.key]=viewHolder.etDialogSelectItem.text.toString()
-//                            }
-//                            MULTI_RADIO_BUTTON_TYPE->
-//                            {
-//                                var value=1
-//                                for (j in 0 until vh.llContainer.childCount)
-//                                {
-//                                    val radioButton=vh.llContainer.getChildAt(j) as RadioButton
-//                                    if (radioButton.isChecked)
-//                                    {
-//                                        map[multiStyleItem.key]=value.toString()
-//                                        break
-//                                    }
-//                                    else
-//                                        value--
-//                                }
-//                            }
-//                        }//end when
-//                    }//end for
-//                    val finalMap=HashMap<String,RequestBody>(map.size)
-//                    for (i in 0 until UnSerializeDataBase.fileList.size)
-//                    {
-//                        val fileMap=UnSerializeDataBase.fileList[i]
-//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),fileMap.file)
-//                        finalMap[fileMap.key] = requestBody
-//                    }
-//                    for (i in 0 until UnSerializeDataBase.imgList.size)
-//                    {
-//                        val imgMap=UnSerializeDataBase.imgList[i]
-//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), File(imgMap.path))
-//                        finalMap[imgMap.key] = requestBody
-//                    }
-//                    for (i in map.keys)
-//                    {
-//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), map[i])
-//                        finalMap[i]=requestBody
-//                    }
-//                    startSendMultiPartMessage(finalMap,"")
-//                }//end listener
+                vh.btnSubmit.setOnClickListener{
+                    val map=saveSimpleData()
+                    val filesDir=it.context.filesDir.absolutePath
+                    //downloadFile(filesDir,"工程量清册.xlsx","工程量清册模板","http://10.1.5.90:8012")
+                    startSendMessage(map,"http://10.1.5.90:8012")
+                }
+
             }
             EXPAND_TYPE->
             {
@@ -746,6 +933,48 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 expandList.add(vh)
             }
+            EXPAND_LIST_TYPE->
+            {
+                vh.tvExpandListTitle.text=mData[position].expandListTitle
+                vh.rvExpandListContent.adapter=mData[position].expandListAdapter
+                vh.rvExpandListContent.layoutManager=LinearLayoutManager(vh.itemView.context)
+                vh.itemView.setOnClickListener{it->
+                    if (expandPosition!=-1)
+                    {
+                        val valueAnimator=ValueAnimator.ofFloat(90f,0f)
+                        valueAnimator.duration=200
+                        val positionTemp=expandPosition
+                        valueAnimator.addUpdateListener {
+                            expandList[positionTemp].tvExpandListButton.rotation=it.animatedValue.toString().toFloat()
+                            if (expandList[positionTemp].tvExpandListButton.rotation==90f)
+                            {
+                                expandList[positionTemp].rvExpandListContent.visibility=View.GONE
+                            }
+                        }
+                        valueAnimator.start()
+                    }
+                    if (expandList.indexOf(vh)!=expandPosition)
+                    {
+                        val valueAnimator2=ValueAnimator.ofFloat(0.toFloat(),90.toFloat())
+                        valueAnimator2.duration=200
+                        valueAnimator2.addUpdateListener {
+                            vh.tvExpandListButton.rotation=it.animatedValue.toString().toFloat()
+                            if (vh.tvExpandListButton.rotation==90f)
+                            {
+                                vh.rvExpandListContent.visibility = View.VISIBLE
+                            }
+                        }
+                        valueAnimator2.start()
+                        vh.tvExpandListButton.rotation = "90".toFloat()
+                        expandPosition=expandList.indexOf(vh)
+                    }
+                    else
+                    {
+                        expandPosition=-1
+                    }
+                }
+                expandList.add(vh)
+            }
             SINGLE_DISPLAY_TYPE->
             {
                 vh.tvSingleDisplayTitle.text=mData[position].singleDisplayTitle
@@ -753,7 +982,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
             }
         }
-        vh.hasInitialize=true
+        mData[position].viewHolderInitialize=true
         //VHList.add(vh)
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VH {
@@ -794,6 +1023,27 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_two_pair_input,viewGroup,false)
                 return VH(root,viewType)
+            }
+
+            THREE_DISPLAY_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_three_display,viewGroup,false)
+                return VH(root,viewType)
+            }
+            TWO_COLUMN_DISPLAY_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_two_column_display,viewGroup,false)
+                return VH(root,viewType)
+            }
+            EXPAND_LIST_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_expand_list,viewGroup,false)
+                return VH(root, viewType)
+            }
+            EXPAND_LIST_DISPLAY_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_single_display_expand,viewGroup,false)
+                return VH(root, viewType)
             }
             INPUT_WITH_UNIT_TYPE->
             {
@@ -863,55 +1113,88 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         return mData.size
     }
 
-    fun insertData(position: Int,multiStyleItem: MultiStyleItem) {
-        val mutable:MutableList<MultiStyleItem> =mData.toMutableList()
-        mutable.add(multiStyleItem)
-        for (i in mData.size downTo position-1){
-            mutable[i]=mutable[i-1]
-        }
-        mutable[position]=multiStyleItem
-        mData=mutable
-    }
     fun saveSimpleData():HashMap<String,String>
     {
         val map=HashMap<String,String>(mData.size)
-        for (i in 0 until mData.size)
+        for (i in 0 until mData.size-1)
         {
             val multiStyleItem=mData[i]
             val viewHolder=VHList[i]
-            when(getItemViewType(i))
+            if (multiStyleItem.key=="")
+                continue
+            when(viewHolder.itemViewType)
             {
                 TITLE_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.tvTitle1.text.toString()
+
+                    map[multiStyleItem.key]=if (multiStyleItem.title1!="")
+                    {
+                        multiStyleItem.title1
+                    }
+                    else
+                    {
+                        ""
+                    }
                 }
                 SINGLE_INPUT_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.etSingleInputContent.text.toString()
+
+                    map[multiStyleItem.key]=if (multiStyleItem.inputSingleContent!="")
+                    {
+                        multiStyleItem.inputSingleContent
+                    }
+                    else
+                        ""
                 }
                 INPUT_WITH_UNIT_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.etInputUnitValue.text.toString()
+
+                    map[multiStyleItem.key]=if (multiStyleItem.inputUnitContent!="")
+                        multiStyleItem.inputUnitContent
+                    else
+                        ""
                 }
                 INPUT_WITH_MULTI_UNIT_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.etMultiInputContent.text.toString()
+                    map[multiStyleItem.key]=if (multiStyleItem.inputMultiContent!="")
+                        multiStyleItem.inputMultiContent
+                    else
+                        ""
                 }
                 INPUT_RANGE_TYPE->
                 {
                     val keys=multiStyleItem.key.split(" ")
-                    map[keys[0]]=viewHolder.etRangeValue1.text.toString()
-                    map[keys[1]]=viewHolder.etRangeValue2.text.toString()
+
+                    map[keys[0]]=if (multiStyleItem.inputRangeValue1!="")
+                        multiStyleItem.inputRangeValue1
+                    else
+                        ""
+
+                    map[keys[1]]=if (multiStyleItem.inputRangeValue2!="")
+                        multiStyleItem.inputRangeValue2
+                    else
+                        ""
                 }
                 INPUT_WITH_TEXTAREA_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.etTextAreaContent.text.toString()
+
+                    map[multiStyleItem.key]=if (multiStyleItem.textAreaContent!="")
+                        multiStyleItem.textAreaContent
+                    else
+                        ""
                 }
                 TWO_PAIR_INPUT_TYPE->
                 {
                     val keys=multiStyleItem.key.split(" ")
-                    map[keys[0]]=viewHolder.etTwoPairInputValue1.text.toString()
-                    map[keys[1]]=viewHolder.etTwoPairInputValue2.text.toString()
+
+                    map[keys[0]]=if (multiStyleItem.twoPairInputValue1!="")
+                        multiStyleItem.twoPairInputValue1
+                    else
+                        ""
+                    map[keys[1]]=if (multiStyleItem.twoPairInputValue2!="")
+                        multiStyleItem.twoPairInputValue2
+                    else
+                        ""
                 }
                 SHIFT_INPUT_TYPE->
                 {
@@ -919,21 +1202,38 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
                 {
-                    map[multiStyleItem.key]=viewHolder.etDialogSelectItem.text.toString()
+
+                    map[multiStyleItem.key]=if (multiStyleItem.selectContent!="")
+                        multiStyleItem.selectContent
+                    else
+                        ""
                 }
                 MULTI_RADIO_BUTTON_TYPE->
                 {
-                    var value=1
-                    for (j in 0 until viewHolder.llContainer.childCount)
+                    map[multiStyleItem.key]=if (multiStyleItem.radioButtonValue!="")
                     {
-                        val radioButton=viewHolder.llContainer.getChildAt(j) as RadioButton
-                        if (radioButton.isChecked)
+                        multiStyleItem.radioButtonValue
+                    }
+                    else
+                        ""
+                }
+                MULTI_CHECKBOX_TYPE->
+                {
+                    var checkNum=0
+                    for (j in 0 until multiStyleItem.checkboxValueList.size-1)
+                    {
+                        if (multiStyleItem.checkboxValueList[j])
                         {
-                            map[multiStyleItem.key]=value.toString()
-                            break
+                            checkNum++
+                            if (checkNum>=2)
+                            {
+                                map[multiStyleItem.key]="-1"
+                            }
+                            else
+                            {
+                                map[multiStyleItem.key]=(1-j).toString()
+                            }
                         }
-                        else
-                            value--
                     }
                 }
             }//end when
