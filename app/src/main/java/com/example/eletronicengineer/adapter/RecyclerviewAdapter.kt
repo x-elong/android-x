@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.adapter
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -13,23 +14,29 @@ import kotlinx.android.synthetic.main.item_multi.view.*
 import kotlinx.android.synthetic.main.item_single_input.view.*
 import kotlinx.android.synthetic.main.item_title.view.*
 import android.os.Handler
-import android.provider.SyncStateContract
-import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
-import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.activity.MainActivity
 import com.example.eletronicengineer.utils.ObserverFactory
+import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.startSendMultiPartMessage
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
 import kotlinx.android.synthetic.main.item_hint.view.*
 import kotlinx.android.synthetic.main.item_input_with_multi_unit.view.*
 import kotlinx.android.synthetic.main.item_input_with_textarea.view.*
 import kotlinx.android.synthetic.main.item_shift_input.view.*
+import kotlinx.android.synthetic.main.item_single_display.view.*
+import kotlinx.android.synthetic.main.item_two_pair_input.view.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import java.io.File
 
 class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     companion object {
@@ -42,6 +49,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val INPUT_WITH_MULTI_UNIT_TYPE=16
         const val INPUT_WITH_TEXTAREA_TYPE=11
         const val SHIFT_INPUT_TYPE=17
+        const val TWO_PAIR_INPUT_TYPE=18
 
         const val MULTI_BUTTON_TYPE:Int=6
         const val MULTI_RADIO_BUTTON_TYPE:Int=7
@@ -53,17 +61,91 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val HINT_TYPE=12
         const val SUBMIT_TYPE=13
         const val EXPAND_TYPE=15
+        const val SINGLE_DISPLAY_TYPE=19
 
         const val MESSAGE_SELECT_OK:Int=100
+    }
+    fun dataToMap(adapter: RecyclerviewAdapter):Map<String,String>
+    {
+        val result=HashMap<String,String>()
+        val mData=adapter.mData
+        val VHList=adapter.VHList
+        for (i in 0 until mData.size)
+        {
+            val multiStyleItem=mData[i]
+            val viewHolder=VHList[i]
+            when(viewHolder.itemViewType)
+            {
+                TITLE_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.tvTitle1.text.toString()
+                }
+                SINGLE_INPUT_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.etSingleInputContent.text.toString()
+                }
+                INPUT_WITH_UNIT_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.etInputUnitValue.text.toString()
+                }
+                INPUT_WITH_MULTI_UNIT_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.etMultiInputContent.text.toString()
+                }
+                INPUT_RANGE_TYPE->
+                {
+                    val keys=multiStyleItem.key.split(" ")
+                    result[keys[0]]=viewHolder.etRangeValue1.text.toString()
+                    result[keys[1]]=viewHolder.etRangeValue2.text.toString()
+                }
+                INPUT_WITH_TEXTAREA_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.etTextAreaContent.text.toString()
+                }
+                TWO_PAIR_INPUT_TYPE->
+                {
+                    val keys = multiStyleItem.key.split(" ")
+                    result[keys[0]] = viewHolder.etTwoPairInputValue1.text.toString()
+                    result[keys[1]] = viewHolder.etTwoPairInputValue2.text.toString()
+                }
+                SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
+                {
+                    result[multiStyleItem.key]=viewHolder.etDialogSelectItem.text.toString()
+                }
+                SHIFT_INPUT_TYPE->
+                {
+
+                }
+                MULTI_RADIO_BUTTON_TYPE->
+                {
+                    var value=1
+                    for (j in 0 until viewHolder.llContainer.childCount)
+                    {
+                        val radioButton=viewHolder.llContainer.getChildAt(j) as RadioButton
+                        if (radioButton.isChecked)
+                        {
+                            result[multiStyleItem.key]=value.toString()
+                            break
+                        }
+                        else
+                            value--
+                    }
+                }
+            }//end when
+        }//end for
+        return result
     }
     var mData:List<MultiStyleItem>
     var adapterObserver:ObserverFactory.RecyclerviewAdapterObserver?=null
     var expandList:MutableList<VH> =ArrayList()
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
-     inner class VH:RecyclerView.ViewHolder
+
+    inner class VH:RecyclerView.ViewHolder
     {
+        var hasInitialize=false
         lateinit var tvTitle1:TextView
+        lateinit var tvBack:TextView
 
         lateinit var multiTitle:TextView
         lateinit var llContainer: LinearLayout
@@ -86,13 +168,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvShiftInputContent:TextView
         lateinit var tvShiftInputShow:TextView
 
+        lateinit var tvTwoPairInputTitle:TextView
+        lateinit var tvTwoPairInputItem1:TextView
+        lateinit var tvTwoPairInputItem2:TextView
+        lateinit var tvTwoPairInputItem3:TextView
+        lateinit var etTwoPairInputValue1:EditText
+        lateinit var etTwoPairInputValue2:EditText
+
         lateinit var spMultiInputUnit:Spinner
         lateinit var tvMultiInputUnitTitle:TextView
         lateinit var etMultiInputContent:EditText
 
 
         lateinit var tvDialogSelectTitle:TextView
-        lateinit var tvDialogSelectItem:TextView
+        lateinit var etDialogSelectItem:TextView
         lateinit var tvDialogSelectShow:TextView
 
         lateinit var tvTextAreaTitle:TextView
@@ -105,12 +194,23 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvExpandTitle:TextView
         lateinit var tvExpandContent:TextView
         lateinit var tvExpandButton:TextView
+
+        lateinit var tvSingleDisplayTitle:TextView
+        lateinit var tvSingleDisplayContent:TextView
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
             {
-                MESSAGE_SELECT_OK->{
+                MESSAGE_SELECT_OK->
+                {
                     val selectContent=it.data.getString("selectContent")
-                    tvDialogSelectItem.text=selectContent
+                    if(selectContent.equals("自定义") || selectContent.equals("其他") ||selectContent.equals("填写")){
+                        etDialogSelectItem.isEnabled=true
+                        etDialogSelectItem.hint="请输入"
+                        etDialogSelectItem.text=""
+                    }else{
+                        etDialogSelectItem.isEnabled=false
+                        etDialogSelectItem.text=selectContent
+                    }
                     false
                 }
                 else->
@@ -127,6 +227,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     //root root.findViewById(R,id.tv_title_title1)
                     tvTitle1=v.tv_title_title1
+                    tvBack=v.tv_title_back
                 }
                 MULTI_BUTTON_TYPE->
                 {
@@ -153,6 +254,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvSingleInputTitle=v.tv_input_title
                     etSingleInputContent=v.et_input_content
                 }
+                TWO_PAIR_INPUT_TYPE->
+                {
+                    tvTwoPairInputTitle=v.tv_two_pair_input_title
+                    tvTwoPairInputItem1=v.tv_two_pair_input_item1
+                    tvTwoPairInputItem2=v.tv_two_pair_input_item2
+                    tvTwoPairInputItem3=v.tv_two_pair_input_item3
+                    etTwoPairInputValue1=v.et_two_pair_input_value1
+                    etTwoPairInputValue2=v.et_two_pair_input_value2
+                }
                 INPUT_RANGE_TYPE->
                 {
                     tvRangeTitle=v.tv_range_title
@@ -176,25 +286,29 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 SHIFT_INPUT_TYPE->
                 {
                     tvShiftInputTitle=v.tv_shift_input_title
-                    tvShiftInputContent=v.tv_shift_input_item
+                    tvShiftInputContent=v.et_shift_input_item
                     tvShiftInputShow=v.tv_shift_input_show
+//                    tvShiftInputShow.setOnClickListener {
+//                        val intent = Intent(v.context,MainActivity::class.java)
+//                        v.context.startActivity(intent)
+//                    }
                 }
                 SELECT_DIALOG_TYPE->
                 {
                     tvDialogSelectTitle=v.tv_dialog_select_title
-                    tvDialogSelectItem=v.tv_dialog_select_item
+                    etDialogSelectItem=v.et_dialog_select_item
                     tvDialogSelectShow=v.tv_dialog_select_show
                 }
                 TWO_OPTIONS_SELECT_DIALOG_TYPE->
                 {
                     tvDialogSelectTitle=v.tv_dialog_select_title
-                    tvDialogSelectItem=v.tv_dialog_select_item
+                    etDialogSelectItem=v.et_dialog_select_item
                     tvDialogSelectShow=v.tv_dialog_select_show
                 }
                 THREE_OPTIONS_SELECT_DIALOG_TYPE->
                 {
                     tvDialogSelectTitle=v.tv_dialog_select_title
-                    tvDialogSelectItem=v.tv_dialog_select_item
+                    etDialogSelectItem=v.et_dialog_select_item
                     tvDialogSelectShow=v.tv_dialog_select_show
                 }
                 INPUT_WITH_TEXTAREA_TYPE->
@@ -215,6 +329,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvExpandButton=v.tv_expand_button
                     tvExpandTitle=v.tv_expand_title
                     tvExpandContent=v.tv_expand_content
+                }
+                SINGLE_DISPLAY_TYPE->
+                {
+                    tvSingleDisplayTitle=v.tv_single_display_title
+                    tvSingleDisplayContent=v.tv_single_display_content
                 }
             }
             VHList.add(this)
@@ -245,6 +364,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.SUBMIT->return SUBMIT_TYPE
             MultiStyleItem.Options.MULTI_HYBRID-> return MULTI_HYBRID_TYPE
             MultiStyleItem.Options.EXPAND->return EXPAND_TYPE
+            MultiStyleItem.Options.TWO_PAIR_INPUT->return TWO_PAIR_INPUT_TYPE
+            MultiStyleItem.Options.SINGLE_DISPLAY->return SINGLE_DISPLAY_TYPE
+            else->
+            {
+                return TITLE_TYPE
+            }
         }
     }
     override fun onBindViewHolder(vh: VH, position: Int) {
@@ -256,12 +381,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             adapterObserver!!.onBindRunning()
         }
+        if (vh.hasInitialize)
+            return
         when(getItemViewType(position))
         {
             TITLE_TYPE->
             {
                 //vh.tvTitle1.setText(mData[position].getTitle1())
                 vh.tvTitle1.text=mData[position].title1
+                if (mData[position].backListener!=null)
+                {
+                    vh.tvBack.setOnClickListener(mData[position].backListener)
+                }
             }
             MULTI_BUTTON_TYPE->
             {
@@ -382,11 +513,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SINGLE_INPUT_TYPE->
             {
                 vh.tvSingleInputTitle.text=mData[position].inputSingleTitle
+                if(mData[position].inputSingleTitle.equals("类别")){
+                    vh.tvShiftInputContent.hint="规格/型号状态"
+                }
             }
             INPUT_WITH_UNIT_TYPE->
             {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
+            }
+            TWO_PAIR_INPUT_TYPE->
+            {
+                vh.tvTwoPairInputTitle.text=mData[position].twoPairInputTitle
+                vh.tvTwoPairInputItem1.text=mData[position].twoPairInputItem1
+                vh.tvTwoPairInputItem2.text=mData[position].twoPairInputItem2
+                vh.tvTwoPairInputItem3.text=mData[position].twoPairInputItem3
             }
             INPUT_WITH_MULTI_UNIT_TYPE->
             {
@@ -395,6 +536,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 val adapter=ArrayAdapter(context,R.layout.item_dropdown,mData[position].inputMultiUnit)
                 adapter.setDropDownViewResource(R.layout.item_dropdown)
                 vh.spMultiInputUnit.adapter=adapter
+                vh.spMultiInputUnit.setSelection(1)
             }
             INPUT_RANGE_TYPE->
             {
@@ -408,11 +550,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SHIFT_INPUT_TYPE->
             {
                 vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
+                vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 if (mData[position].necessary)
                 {
                     val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
@@ -420,28 +564,40 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SELECT_DIALOG_TYPE->
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
-                vh.tvDialogSelectItem.text=mData[position].selectOption1Items[0]
-                vh.tvDialogSelectShow.setOnClickListener {
-                    val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.tvDialogSelectTitle.context,mData[position].selectOption1Items,vh.mHandler).dialog
+                vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
+                vh.tvDialogSelectShow.setOnClickListener{
+                    val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.itemView.context,mData[position].selectOption1Items,vh.mHandler).dialog
                     selectDialog.show()
+                }
+                if(mData[position].selectListener!=null)
+                {
+                    vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
             }
             TWO_OPTIONS_SELECT_DIALOG_TYPE->
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
-                vh.tvDialogSelectItem.text=mData[position].selectOption1Items[0]
+                //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener {
                     val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
                     selectDialog.show()
+                }
+                if(mData[position].selectListener!=null)
+                {
+                    vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
             }
             THREE_OPTIONS_SELECT_DIALOG_TYPE->
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
-                vh.tvDialogSelectItem.text=mData[position].selectOption1Items[0]
+                //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener {
                     val selectDialog=CustomDialog(CustomDialog.Options.THREE_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items,mData[position].selectOption3Items).multiDialog
                     selectDialog.show()
+                }
+                if(mData[position].selectListener!=null)
+                {
+                    vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
             }
             HINT_TYPE->
@@ -463,6 +619,91 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SUBMIT_TYPE->
             {
                 vh.btnSubmit.text=mData[position].submitContent
+//                vh.btnSubmit.setOnClickListener{
+//                    val map=HashMap<String,String>(mData.size)
+//                    for (i in 0 until mData.size)
+//                    {
+//                        val multiStyleItem=mData[i]
+//                        val viewHolder=VHList[i]
+//                        when(getItemViewType(i))
+//                        {
+//                            TITLE_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.tvTitle1.text.toString()
+//                            }
+//                            SINGLE_INPUT_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.etSingleInputContent.text.toString()
+//                            }
+//                            INPUT_WITH_UNIT_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.etInputUnitValue.text.toString()
+//                            }
+//                            INPUT_WITH_MULTI_UNIT_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.etMultiInputContent.text.toString()
+//                            }
+//                            INPUT_RANGE_TYPE->
+//                            {
+//                                val keys=multiStyleItem.key.split(" ")
+//                                map[keys[0]]=viewHolder.etRangeValue1.text.toString()
+//                                map[keys[1]]=viewHolder.etRangeValue2.text.toString()
+//                            }
+//                            INPUT_WITH_TEXTAREA_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.etTextAreaContent.text.toString()
+//                            }
+//                            TWO_PAIR_INPUT_TYPE->
+//                            {
+//                                val keys=multiStyleItem.key.split(" ")
+//                                map[keys[0]]=viewHolder.etTwoPairInputValue1.text.toString()
+//                                map[keys[1]]=viewHolder.etTwoPairInputValue2.text.toString()
+//                            }
+//                            SHIFT_INPUT_TYPE->
+//                            {
+//
+//                            }
+//                            SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
+//                            {
+//                                map[multiStyleItem.key]=viewHolder.etDialogSelectItem.text.toString()
+//                            }
+//                            MULTI_RADIO_BUTTON_TYPE->
+//                            {
+//                                var value=1
+//                                for (j in 0 until vh.llContainer.childCount)
+//                                {
+//                                    val radioButton=vh.llContainer.getChildAt(j) as RadioButton
+//                                    if (radioButton.isChecked)
+//                                    {
+//                                        map[multiStyleItem.key]=value.toString()
+//                                        break
+//                                    }
+//                                    else
+//                                        value--
+//                                }
+//                            }
+//                        }//end when
+//                    }//end for
+//                    val finalMap=HashMap<String,RequestBody>(map.size)
+//                    for (i in 0 until UnSerializeDataBase.fileList.size)
+//                    {
+//                        val fileMap=UnSerializeDataBase.fileList[i]
+//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),fileMap.file)
+//                        finalMap[fileMap.key] = requestBody
+//                    }
+//                    for (i in 0 until UnSerializeDataBase.imgList.size)
+//                    {
+//                        val imgMap=UnSerializeDataBase.imgList[i]
+//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), File(imgMap.path))
+//                        finalMap[imgMap.key] = requestBody
+//                    }
+//                    for (i in map.keys)
+//                    {
+//                        val requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), map[i])
+//                        finalMap[i]=requestBody
+//                    }
+//                    startSendMultiPartMessage(finalMap,"")
+//                }//end listener
             }
             EXPAND_TYPE->
             {
@@ -505,8 +746,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 expandList.add(vh)
             }
+            SINGLE_DISPLAY_TYPE->
+            {
+                vh.tvSingleDisplayTitle.text=mData[position].singleDisplayTitle
+                vh.tvSingleDisplayContent.text=mData[position].singleDisplayContent
 
+            }
         }
+        vh.hasInitialize=true
+        //VHList.add(vh)
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VH {
         var root:View?=null
@@ -540,6 +788,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SINGLE_INPUT_TYPE->
             {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_single_input,viewGroup,false)
+                return VH(root,viewType)
+            }
+            TWO_PAIR_INPUT_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_two_pair_input,viewGroup,false)
                 return VH(root,viewType)
             }
             INPUT_WITH_UNIT_TYPE->
@@ -597,11 +850,94 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_expand,viewGroup,false)
                 return VH(root, viewType)
             }
+            SINGLE_DISPLAY_TYPE->
+            {
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_single_display,viewGroup,false)
+                return VH(root, viewType)
+            }
         }
         return VH(root!!,TITLE_TYPE)
     }
 
     override fun getItemCount(): Int {
         return mData.size
+    }
+
+    fun insertData(position: Int,multiStyleItem: MultiStyleItem) {
+        val mutable:MutableList<MultiStyleItem> =mData.toMutableList()
+        mutable.add(multiStyleItem)
+        for (i in mData.size downTo position-1){
+            mutable[i]=mutable[i-1]
+        }
+        mutable[position]=multiStyleItem
+        mData=mutable
+    }
+    fun saveSimpleData():HashMap<String,String>
+    {
+        val map=HashMap<String,String>(mData.size)
+        for (i in 0 until mData.size)
+        {
+            val multiStyleItem=mData[i]
+            val viewHolder=VHList[i]
+            when(getItemViewType(i))
+            {
+                TITLE_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.tvTitle1.text.toString()
+                }
+                SINGLE_INPUT_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.etSingleInputContent.text.toString()
+                }
+                INPUT_WITH_UNIT_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.etInputUnitValue.text.toString()
+                }
+                INPUT_WITH_MULTI_UNIT_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.etMultiInputContent.text.toString()
+                }
+                INPUT_RANGE_TYPE->
+                {
+                    val keys=multiStyleItem.key.split(" ")
+                    map[keys[0]]=viewHolder.etRangeValue1.text.toString()
+                    map[keys[1]]=viewHolder.etRangeValue2.text.toString()
+                }
+                INPUT_WITH_TEXTAREA_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.etTextAreaContent.text.toString()
+                }
+                TWO_PAIR_INPUT_TYPE->
+                {
+                    val keys=multiStyleItem.key.split(" ")
+                    map[keys[0]]=viewHolder.etTwoPairInputValue1.text.toString()
+                    map[keys[1]]=viewHolder.etTwoPairInputValue2.text.toString()
+                }
+                SHIFT_INPUT_TYPE->
+                {
+
+                }
+                SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
+                {
+                    map[multiStyleItem.key]=viewHolder.etDialogSelectItem.text.toString()
+                }
+                MULTI_RADIO_BUTTON_TYPE->
+                {
+                    var value=1
+                    for (j in 0 until viewHolder.llContainer.childCount)
+                    {
+                        val radioButton=viewHolder.llContainer.getChildAt(j) as RadioButton
+                        if (radioButton.isChecked)
+                        {
+                            map[multiStyleItem.key]=value.toString()
+                            break
+                        }
+                        else
+                            value--
+                    }
+                }
+            }//end when
+        }//end for
+        return map
     }
 }

@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.dialog_select.view.*
 class CustomDialog {
     lateinit var dialog:AlertDialog
     lateinit var selectContent:String
-    lateinit var broadcastAction:String
     lateinit var multiDialog:OptionsPickerView<String>
+    var msgWhat:Int?=null
     var mHandler:Handler
     enum class Options
     {
@@ -38,7 +38,12 @@ class CustomDialog {
                 val builder=AlertDialog.Builder(context).setView(v)
                 builder.setPositiveButton("确认") { dialog, which ->
                     selectContent=contentList[wheelView.currentItem]
-                    val msg=mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+
+                    val msg = if (msgWhat!=null) {
+                        mHandler.obtainMessage(msgWhat!!)
+                    } else {
+                        mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+                    }
                     val data= Bundle()
                     data.putString("selectContent",selectContent)
                     msg.data=data
@@ -62,13 +67,17 @@ class CustomDialog {
             {
                 val picker=OptionsPickerBuilder(context) { options1, options2, _, _ ->
                     selectContent=option1Items[options1]+" "+option2Items[options1][options2]
-                    val msg=mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+                    val msg= if (msgWhat!=null) {
+                        mHandler.obtainMessage(msgWhat!!)
+                    } else {
+                        mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+                    }
                     val data= Bundle()
                     data.putString("selectContent",selectContent)
                     msg.data=data
                     mHandler.sendMessage(msg)
 
-                }.build<String>()
+                }.isDialog(true).build<String>()
                 picker.setPicker(option1Items,option2Items)
                 this.multiDialog=picker
             }
@@ -83,15 +92,21 @@ class CustomDialog {
             //wheelView
             Options.THREE_OPTIONS_SELECT_DIALOG->
             {
-                val picker=OptionsPickerBuilder(context,{
-                        options1, options2, options3, v ->
+                val picker=OptionsPickerBuilder(context) { options1, options2, options3, v ->
                     selectContent=option1Items[options1]+" "+option2Items[options1][options2]+" "+option3Items[options1][options2][options3]
-                    val msg=mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+                    val msg = if (msgWhat!=null)
+                    {
+                        mHandler.obtainMessage(msgWhat!!)
+                    }
+                    else
+                    {
+                        mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_OK)
+                    }
                     val data= Bundle()
                     data.putString("selectContent",selectContent)
                     msg.data=data
                     mHandler.sendMessage(msg)
-                }).isDialog(true).build<String>()
+                }.isDialog(true).build<String>()
                 picker.setPicker(option1Items,option2Items,option3Items)
                 this.multiDialog=picker
             }

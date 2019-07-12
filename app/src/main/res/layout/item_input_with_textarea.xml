@@ -4,15 +4,14 @@
               android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/general_10">
 
     <TextView
-            android:text="TextView"
+            android:text="备注"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/tv_textarea_title"
             android:textSize="@dimen/font_tv_hint_15"/>
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine|textPersonName"
-            android:ems="10"
-            android:id="@+id/et_textarea_content" android:background="@color/transparent"
-            android:minHeight="@dimen/general_200" android:gravity="top" android:textSize="@dimen/font_tv_hint_15"/>
+    <EditText android:layout_height="@dimen/general_80" android:layout_width="match_parent"
+              android:inputType="textMultiLine|textPersonName"
+              android:textSize="@dimen/font_tv_hint_15" android:id="@+id/et_textarea_content" android:gravity="top"
+              android:minHeight="@dimen/general_200" android:background="@color/transparent"
+              android:hint="附加：1"
+              android:ems="10" />
 </LinearLayout>

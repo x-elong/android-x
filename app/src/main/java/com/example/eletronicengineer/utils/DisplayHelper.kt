@@ -5,7 +5,12 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.widget.Toast
+import com.bin.david.form.data.Column
+import com.bin.david.form.data.table.TableData
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.model.User
+import kotlin.collections.ArrayList
 
 
 //
@@ -56,6 +61,40 @@ class DisplayHelper
             }
             val bitmapDrawable= BitmapDrawable(context.resources,bmp)
             return bitmapDrawable
+        }
+        fun excelGenerate(type:Constants.EXCEL_TYPE):TableData<User>
+        {
+            when(type)
+            {
+                Constants.EXCEL_TYPE.EXCEL_MEMBER->
+                {
+                    var pageMap:PageMap?=null
+                    val userList:MutableList<User> =ArrayList()
+                    val columns= listOf(
+                        Column("姓名","name"), Column("性别","sex"),
+                        Column("年龄","age"), Column("工种","type"),
+                        Column("工作经验","workTime"), Column("薪资标准","money"),
+                        Column<String>("备注","hint"))
+                    for (i in 0..UnSerializeDataBase.pageMapList.size)
+                    {
+                        val item=UnSerializeDataBase.pageMapList[i].dataMap
+                        val user=User(item.getValue("name"),
+                            item.getValue("sex"),
+                            item.getValue("age"),
+                            item.getValue("workType"),
+                            item.getValue("workExperience"),
+                            item.getValue("money"),
+                            item.getValue("remark")
+                        )
+                        userList.add(user)
+                    }
+                    return TableData("成员清册",userList,columns)
+                }
+                Constants.EXCEL_TYPE.EXCEL_VEHICLE->
+                {
+                    return TableData("", listOf())
+                }
+            }
         }
     }
     fun PixelToDip(context: Context,pxValue:Float):Int

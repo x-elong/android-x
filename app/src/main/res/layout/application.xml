@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_31"
+            android:background="#64ffffff"
+            android:gravity="center_vertical"
+            android:text="电企通应用"
+            android:textColor="#505050"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/left_45"
+            />
+
+    <ImageView
+            android:id="@+id/advertisement_background_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_157"
+            android:layout_below="@id/title_tv"
+            android:background="@drawable/advertisement_background"
+            tools:layout_editor_absoluteX="26dp"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"/>
+
+    <ImageView
+            android:id="@+id/advertisement_iv"
+            android:layout_width="@dimen/dp_302"
+            android:layout_height="@dimen/dp_102"
+            android:src="@drawable/advertisement_text"
+            android:layout_below="@id/title_tv"
+            app:layout_constraintStart_toStartOf="@+id/advertisement_background_iv"
+            app:layout_constraintBottom_toBottomOf="@+id/advertisement_background_iv" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/advertisement_background_iv"
+            app:layout_constraintTop_toTopOf="@+id/advertisement_background_iv"/>
+
+    <TextView
+            android:id="@+id/i_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36"
+            android:layout_below="@+id/advertisement_background_iv"
+            android:background="#ffffff"
+            android:elevation="@dimen/dp_4"
+            android:gravity="center_vertical"
+            android:text="        星期一    12月31日                           晴      5度     北风3级"
+            android:textColor="#505050"
+            android:textSize="@dimen/sp_12" tools:layout_editor_absoluteX="38dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/advertisement_background_iv"/>
+
+    <ImageView
+            android:id="@+id/i_iv"
+            android:paddingTop="@dimen/top_12"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_40"
+            android:elevation="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_12"
+            android:layout_below="@id/advertisement_background_iv"
+            android:src="@drawable/i"
+            app:layout_constraintStart_toStartOf="@+id/i_tv"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/i_tv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/i_tv"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/i_tv">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</androidx.constraintlayout.widget.ConstraintLayout>

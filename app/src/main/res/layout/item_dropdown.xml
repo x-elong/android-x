@@ -3,4 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:text="TextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/tv_dropdown_content" android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dropdown_content"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"/>

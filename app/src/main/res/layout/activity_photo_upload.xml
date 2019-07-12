@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:padding="@dimen/general_10"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <ImageView
+            android:layout_width="@dimen/general_30"
+            android:layout_height="@dimen/general_24"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_back"
+            android:id="@+id/iv_upload_photo_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/general_24"
+            android:layout_gravity="center_vertical"
+            android:text="专业证书附件上传"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:id="@+id/tv_uplaod_photo_title"
+            app:layout_constraintStart_toEndOf="@+id/iv_upload_photo_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_upload_photo_back"/>
+    <ImageView
+            android:background="@drawable/photo"
+            android:layout_width="@dimen/general_87"
+            android:layout_height="@dimen/general_73"
+            tools:ignore="MissingConstraints"
+            android:id="@+id/iv_uplaod_photo_content" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_10"
+            android:textSize="15sp"
+            android:text="点击拍摄专业证书照"
+            android:id="@+id/tv_upload_photo_hint"
+            app:layout_constraintStart_toStartOf="@+id/iv_uplaod_photo_content"
+            app:layout_constraintEnd_toEndOf="@+id/iv_uplaod_photo_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_uplaod_photo_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

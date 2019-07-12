@@ -1,0 +1,83 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"团队发布信息录入"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "发布类别",
+    "singleDisplayContent": "试验调试施工队"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "负责人",
+    "singleDisplayContent": "xxx"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"现场负责人",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"现场安全员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技术总工",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"资料员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技工",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"普工",
+    "necessary":false
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可操作电压等级",
+    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
+    "key":"requirementTeamVoltageClasses"
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可作业类别",
+    "checkboxNameList":["配电","变电","发电厂"],
+    "key":"requirementConstructionWorkKind"
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可操作次数",
+    "checkboxNameList":["一次","两次"]
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"机械设备",
+    "buttonName":["上传清册"]
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)",
+    "key":"validTime"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认并提交"
+  }
+]

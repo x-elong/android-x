@@ -1,0 +1,73 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "团队发布信息录入"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "发布类别",
+    "singleDisplayContent": "非开挖顶拉管作业"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "负责人",
+    "singleDisplayContent": "xxx"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"现场负责人",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"现场安全员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"操作员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"导向员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技工",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"普工",
+    "necessary":false
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"机械设备",
+    "buttonName":["上传清单"]
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)",
+    "key": "validTime"
+  },
+  {
+    "type":"HINT",
+    "hintContent":"注：字符前有 * 为必填。",
+    "customFontColor": "#FF0000",
+    "startPosition": "6",
+    "endPosition": "8"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认发布"
+  }
+]

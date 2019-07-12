@@ -10,6 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_multi_title"
             android:textColor="@android:color/black"
+            android:textSize="@dimen/font_tv_hint_15"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:gravity="center" android:layout_gravity="center" android:layout_marginLeft="@dimen/left_5"/>
     <HorizontalScrollView

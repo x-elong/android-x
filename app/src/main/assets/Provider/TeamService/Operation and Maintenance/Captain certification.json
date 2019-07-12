@@ -1,0 +1,81 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"队长个人认证"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"姓名"
+  },
+  {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["男","女"],
+    "radioButtonTitle":"性别"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"年龄",
+    "inputUnit":"(岁)"
+  },
+  {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"工种",
+    "selectOption1Items":["负责人","安全员","施工员","材料员","后勤","技工","普工"]
+  },
+  {
+    "type":"INPUT_WITH_MULTI_UNIT",
+    "inputMultiUnitTitle":"薪资要求",
+    "inputMultiUnit":["元/天","元/月","元/年"]
+  },
+  {
+    "type": "MULTI_BUTTON",
+    "buttonTitle": "个人证书附件",
+    "buttonName": ["拍照","上传附件"]
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"身份证号码"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系地址"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系电话"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"身份证照片",
+    "necessary":false
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"紧急联系人"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"关系"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"身份证号码"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系地址"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系电话"
+  },
+  {
+    "type": "MULTI_BUTTON",
+    "buttonTitle": "负责人(队长)手持身份证照片",
+    "buttonName": ["拍照","上传照片"]
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"认证"
+  }
+]

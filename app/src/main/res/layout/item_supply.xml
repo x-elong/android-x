@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/rv_main_content" android:visibility="visible"/>
+    <com.bin.david.form.core.SmartTable android:layout_width="match_parent" android:layout_height="wrap_content"
+                                        android:id="@+id/st_main_table" android:visibility="gone">
+    </com.bin.david.form.core.SmartTable>
+    <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
+               android:id="@+id/iv_main_water"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

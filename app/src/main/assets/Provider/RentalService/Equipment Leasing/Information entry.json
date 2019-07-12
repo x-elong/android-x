@@ -1,0 +1,77 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"租赁发布信息录入"
+  },
+  {
+    "type":"SINGLE_DISPLAY",
+    "singleDisplayTitle":"租赁类型",
+    "singleDisplayContent":"机械租赁"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"出租方单位名称",
+    "key": "companyName"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"单位简称",
+    "key": "companyAbbreviation"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"单位地址",
+    "key": "companyAddress"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"法人代表姓名",
+    "key": "legalPersonName"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系电话",
+    "key": "legalPersonPhone"
+  },
+  {
+
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"营业执照",
+    "necessary":false,
+    "key": "businessLicensePath"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"工器具出租清册",
+    "buttonName":["下载模板","上传清册"],
+    "key": "leaseLists"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"租赁合同",
+    "buttonName":["上传合同"],
+    "key": "businessLicensePath"
+  },
+  {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["是","否"],
+    "radioButtonTitle":"是否配送",
+    "key": "isDistribution"
+  },
+  {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["出租方提供","租赁方提供"],
+    "radioButtonTitle":"运送财产保险",
+    "key": "conveyancePropertyInsurance"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)",
+    "key": "periodValidity"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认发布"
+  }
+]

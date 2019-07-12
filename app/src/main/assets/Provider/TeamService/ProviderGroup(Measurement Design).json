@@ -1,0 +1,92 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"团队发布信息录入"
+  },
+  {
+    "type":"SINGLE_DISPLAY",
+    "singleDisplayTitle":"发布类别",
+    "singleDisplayContent":"测量设计"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "负责人",
+    "singleDisplayContent": "xxx"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"设计总工",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"测量",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"画图",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"材料",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技经",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"后勤",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技工",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"普工",
+    "necessary":false
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可设计电压等级",
+    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"]
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可设计范围",
+    "checkboxNameList":["变电","线路","通信"]
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"机械设备",
+    "buttonName":["上传清册"]
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注：字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
+    "type": "SUBMIT",
+    "submitContent": "确认并提交"
+  }
+]

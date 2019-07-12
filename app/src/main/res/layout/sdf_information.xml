@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:visibility="visible"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/layout_sdf_information"
+              android:layout_marginTop="@dimen/dp_27">
+
+    <Button android:gravity="center_horizontal" android:layout_height="@dimen/dp_27" android:layout_width="@dimen/dp_82"
+            android:id="@+id/external_bidding_tv" android:text="招标信息" android:textColor="@drawable/the_supply_text"
+            android:textSize="@dimen/sp_11" android:paddingTop="@dimen/dp_5"
+            android:background="@drawable/the_supply_bg"/>
+
+    <Button android:gravity="center_horizontal" android:layout_height="@dimen/dp_27" android:layout_width="@dimen/dp_82"
+            android:id="@+id/market_tender_tv" android:text="投标信息" android:textColor="@drawable/the_supply_text"
+            android:textSize="@dimen/sp_11" android:paddingTop="@dimen/dp_5"
+            android:background="@drawable/the_supply_bg"/>
+
+    <Button android:gravity="center_horizontal" android:layout_height="@dimen/dp_27" android:layout_width="@dimen/dp_82"
+            android:id="@+id/supply_announcement_tv" android:text="供应发布" android:textColor="@drawable/the_supply_text"
+            android:textSize="@dimen/sp_11" android:paddingTop="@dimen/dp_5"
+            android:background="@drawable/the_supply_bg"/>
+
+    <Button android:gravity="center_horizontal" android:layout_height="@dimen/dp_27" android:layout_width="@dimen/dp_82"
+            android:id="@+id/demand_release_tv" android:text="需求发布" android:textColor="@drawable/the_supply_text"
+            android:textSize="@dimen/sp_11" android:paddingTop="@dimen/dp_5"
+            android:background="@drawable/the_supply_bg"/>
+
+</LinearLayout>

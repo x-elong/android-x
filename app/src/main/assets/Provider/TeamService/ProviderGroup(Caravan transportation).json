@@ -1,0 +1,62 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"团队发布信息录入"
+  },
+  {
+    "type":"SINGLE_DISPLAY",
+    "singleDisplayTitle":"发布类别",
+    "singleDisplayContent":"马帮运输"
+  },
+  {
+    "type": "SINGLE_DISPLAY",
+    "singleDisplayTitle": "负责人",
+    "singleDisplayContent": "xxx"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"现场负责人",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"安全员",
+    "necessary":true
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"后勤",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"技工",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"普工",
+    "necessary":false
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"马匹数量",
+    "inputUnit":"(匹)"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注：字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
+    "type": "SUBMIT",
+    "submitContent": "确认并提交"
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"出租方信息认证"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"出租方单位名称"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"单位地址"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"法人代表姓名"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系电话"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"身份证照片",
+    "buttonName":["正  面","反  面","手持照片"]
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"营业执照",
+    "buttonName":["拍  照","上传图片"]
+  }
+
+]
