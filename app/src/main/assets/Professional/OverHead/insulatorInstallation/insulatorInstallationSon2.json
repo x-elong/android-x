@@ -1,0 +1,22 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"电压等级（kv）：",
+    "singleDisplayLeftContent":"10"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"规格型号：",
+    "singleDisplayLeftContent":"XP-80"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"数量（只）：",
+    "singleDisplayLeftContent":"8"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

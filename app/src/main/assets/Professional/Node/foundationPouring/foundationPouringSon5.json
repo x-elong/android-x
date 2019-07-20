@@ -1,0 +1,17 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"砖块型号：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"砌灰标号：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

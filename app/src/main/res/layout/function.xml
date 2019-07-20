@@ -8,8 +8,8 @@
     >
 <ImageView
     android:id="@+id/function_iv"
-    android:layout_width="@dimen/dp_36"
-    android:layout_height="@dimen/dp_36"
+    android:layout_width="@dimen/general_36"
+    android:layout_height="@dimen/general_36"
 
     android:layout_gravity="center_horizontal"/>
     <TextView
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="#505050"
-        android:textSize="@dimen/sp_12"
-        android:paddingBottom="@dimen/dp_8"
+        android:textSize="@dimen/font_tv_hint_12"
+        android:paddingBottom="@dimen/general_8"
         />
 </LinearLayout>

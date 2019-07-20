@@ -1,7 +1,8 @@
 [
   {
     "type":"TITLE",
-    "title1":"车辆信息录入"
+    "title1":"车辆信息录入",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",
@@ -9,47 +10,56 @@
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"牌照号码"
+    "inputSingleTitle":"牌照号码",
+    "key": "carNumber"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"车辆类型",
-    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
+    "key": "carType"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"核载乘客",
-    "inputUnit":"(人)"
+    "inputUnit":"(人)",
+    "key": "maxPassengers"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"核准载重量",
-    "inputUnit":"(吨)"
+    "inputUnit":"(吨)",
+    "key": "maxWeight"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"车厢结构",
-    "selectOption1Items":["箱式","敞篷"]
+    "selectOption1Items":["箱式","敞篷"],
+    "key": "construction"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"车厢长度",
-    "inputUnit":"(米)"
+    "inputUnit":"(米)",
+    "key": "lenghtCar"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"是否配驾驶员",
-    "radioButtonName":["是","否"]
+    "radioButtonName":["是","否"],
+    "key": "isDriver"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"保险状态",
-    "radioButtonName":["在保","脱保"]
+    "radioButtonName":["在保","脱保"],
+    "key": "isInsurance"
   },
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"车辆照片",
-    "necessary":false
+    "necessary":false,
+    "key": "carPhotoPath"
   },
   {
     "type":"SUBMIT",

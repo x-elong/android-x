@@ -1,0 +1,24 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "复测分坑",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "大号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "小号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  }
+]

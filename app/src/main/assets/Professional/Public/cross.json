@@ -1,0 +1,68 @@
+[
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "20Kv及以下跨越类型",
+    "twoDisplayContent1": "单位",
+    "twoDisplayContent2": "数量"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "普通土",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "坚土",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "松沙土",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "泥水坑",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "水坑",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "流沙坑",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "干砂坑",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "岩石(爆破)",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "岩石(人工开凿)",
+    "twoDisplayContent1": "处",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "小计",
+    "twoDisplayContent1": " ",
+    "twoDisplayContent2": "15"
+  }
+]

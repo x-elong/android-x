@@ -1,0 +1,17 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"型号：",
+    "singleDisplayLeftContent":"80以内"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"铺设长度（km）：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:background="@drawable/item_background">
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/tv_expand_list_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/font_tv_hint_15"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/top_12" android:layout_marginLeft="@dimen/left_10"
+            android:layout_marginRight="@dimen/right_30"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tv_expand_list_button"
+            android:background="@drawable/ic_expand"
+            app:layout_constraintStart_toEndOf="@+id/tv_expand_list_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="@dimen/right_20"
+            android:layout_marginLeft="@dimen/left_10"
+            android:layout_marginTop="@dimen/top_10"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_expand_list_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" app:layout_constraintTop_toBottomOf="@+id/tv_expand_list_title"
+            android:visibility="gone" tools:visibility="gone"
+            android:background="@color/dark_gray_bg"
+            />
+</androidx.constraintlayout.widget.ConstraintLayout>

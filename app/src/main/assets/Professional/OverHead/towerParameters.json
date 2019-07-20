@@ -1,0 +1,50 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "杆塔参数",
+    "styleType": "0"
+  },
+  {
+    "type": "FIVE_DISPLAY",
+    "fiveDisplayTitle": "杆号",
+    "fiveDisplayContent1": "型号",
+    "fiveDisplayContent2": "高度",
+    "fiveDisplayContent3": "属性",
+    "fiveDisplayContent4": "详情"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "FIVE_DISPLAY",
+    "fiveDisplayTitle": "A1",
+    "fiveDisplayContent1": "150锥形电杆",
+    "fiveDisplayContent2": "30米",
+    "fiveDisplayContent3": "拉线门型塔",
+    "fiveDisplayContent4": "···"
+  },
+  {
+    "type": "FIVE_DISPLAY",
+    "fiveDisplayTitle": "A2",
+    "fiveDisplayContent1": "150锥形电杆",
+    "fiveDisplayContent2": "30米",
+    "fiveDisplayContent3": "拉线门型塔",
+    "fiveDisplayContent4": "···"
+  },
+  {
+    "type": "FIVE_DISPLAY",
+    "fiveDisplayTitle": "A3",
+    "fiveDisplayContent1": "150锥形电杆",
+    "fiveDisplayContent2": "30米",
+    "fiveDisplayContent3": "拉线门型塔",
+    "fiveDisplayContent4": "···"
+  },
+  {
+    "type": "FIVE_DISPLAY",
+    "fiveDisplayTitle": "A4",
+    "fiveDisplayContent1": "150锥形电杆",
+    "fiveDisplayContent2": "30米",
+    "fiveDisplayContent3": "拉线门型塔",
+    "fiveDisplayContent4": "···"
+  }
+]

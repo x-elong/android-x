@@ -1,7 +1,8 @@
 [
   {
     "type":"TITLE",
-    "title1":"队长个人认证"
+    "title1":"队长个人认证",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",

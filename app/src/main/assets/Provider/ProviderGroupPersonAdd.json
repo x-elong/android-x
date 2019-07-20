@@ -1,36 +1,43 @@
 [
   {
     "type":"TITLE",
-    "title1":"个人信息录入"
+    "title1":"个人信息录入",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"姓名"
+    "inputSingleTitle":"姓名",
+    "key": "name"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"性别",
-    "radioButtonName":["男","女"]
+    "radioButtonName":["男","女"],
+    "key": "sex"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"年龄",
-    "inputUnit":"(岁)"
+    "inputUnit":"(岁)",
+    "key": "age"
   },
   {
-    "type": "SINGLE_DISPLAY",
-    "singleDisplayTitle": "工种",
-    "singleDisplayContent":"x"
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "工种",
+    "singleDisplayRightContent":"x",
+    "key": "wokerType"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"工作经验",
-    "inputUnit":"(年)"
+    "inputUnit":"(年)",
+    "key": "workExperience"
   },
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资要求",
-    "inputMultiUnit":["元/天","元/月","元/年"]
+    "inputMultiUnit":["元/天","元/月","元/年"],
+    "key": "money"
   },
   {
     "type":"SINGLE_INPUT",

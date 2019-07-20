@@ -1,0 +1,47 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "交叉跨越",
+    "styleType": "0"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "燃气管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "自来水管",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "通信管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "污水管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "电力管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "燃油管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "暖气管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "暖气管道",
+    "expandListPath": "Professional/Node/crossOver/crossOverSon1.json"
+  }
+]

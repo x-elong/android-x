@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/item_background"
+              android:padding="@dimen/general_10">
+
+    <TextView
+            android:layout_width="@dimen/general_100"
+            android:text="项目类别的的"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_four_display_title"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_1"
+            />
+    <TextView
+            android:layout_width="@dimen/general_65"
+            android:text="单位得的"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_four_display_item1"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_7"/>
+    <TextView
+            android:layout_width="@dimen/general_80"
+            android:text="设计量的的"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_four_display_item2"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_7"/>
+    <TextView
+            android:layout_width="@dimen/general_65"
+            android:text="实际量的"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_four_display_item3"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_7"
+            />
+</LinearLayout>

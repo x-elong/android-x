@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/top_10"
+        android:paddingBottom="@dimen/bottom_10"
+        android:background="@drawable/item_background"
+        android:orientation="horizontal"
+        >
+
+    <TextView
+        android:id="@+id/tv_project_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_10"
+        android:gravity="center"
+        android:background="@drawable/ic_expand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_project_expand_more"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="@dimen/general_10"
+        android:background="@drawable/more"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_project_expand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_project_expand_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/left_10"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintEnd_toStartOf="@+id/tv_project_expand_more"
+        app:layout_constraintStart_toEndOf="@+id/tv_project_expand"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+            android:text="规格型号"
+            android:layout_width="0dp"
+            android:background="@drawable/item_background_expand"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_project_expand_content"
+            android:paddingTop="@dimen/top_10"
+            app:layout_constraintTop_toBottomOf="@+id/tv_project_expand"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="@dimen/left_10"
+            android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

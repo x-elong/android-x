@@ -1,7 +1,8 @@
 [
   {
     "type":"TITLE",
-    "title1":"出租方信息认证"
+    "title1":"出租方信息认证",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",

@@ -1,0 +1,49 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "电缆敷设",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "直埋式敷设",
+    "expandListPath": "Professional/Passageway/cableLaying/cableLayingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "电缆沟、隧道内敷设",
+    "expandListPath": "Professional/Passageway/cableLaying/cableLayingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "排管内敷设",
+    "expandListPath": "Professional/Passageway/cableLaying/cableLayingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "沿支架、沿墙卡设",
+    "expandListPath": "Professional/Passageway/cableLaying/cableLayingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "自定义",
+    "expandListPath": "Professional/Passageway/cableLaying/cableLayingSon1.json"
+  }
+]

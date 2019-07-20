@@ -1,0 +1,72 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "节点参数",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "接入点：",
+    "twoColumnDisplayContent1": "319",
+    "twoColumnDisplayTitle2": "输出点：",
+    "twoColumnDisplayContent2": "319"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"接入点名称：",
+    "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"输出点名称：",
+    "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
+  },
+  {
+    "type":"BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "编号",
+    "fourDisplayContent1": "类型",
+    "fourDisplayContent2": "节点详情",
+    "fourDisplayContent3": "子项详情"
+  },
+  {
+    "type":"BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "A1",
+    "fourDisplayContent1": "工井",
+    "fourDisplayContent2": "直线井",
+    "fourDisplayContent3": "···"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "A2",
+    "fourDisplayContent1": "杆塔",
+    "fourDisplayContent2": "水泥杆",
+    "fourDisplayContent3": "···"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "A3",
+    "fourDisplayContent1": "设备",
+    "fourDisplayContent2": "室内变压器",
+    "fourDisplayContent3": "···"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "A4",
+    "fourDisplayContent1": "其他",
+    "fourDisplayContent2": "二线街码",
+    "fourDisplayContent3": "···"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "A4",
+    "fourDisplayContent1": "工井",
+    "fourDisplayContent2": "转角井",
+    "fourDisplayContent3": "···"
+  }
+]

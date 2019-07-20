@@ -1,0 +1,67 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "节点子项",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayContent1": "1#",
+    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayContent2": "工井"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftContent":"电缆分支箱"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftContent":"湖南人文科技学院"
+  },
+  {
+    "type":"BLANK"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"复测分坑",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"基础开挖",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"材料运输",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"预制构件制作及安装",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"基础浇筑",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"设备安装",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"接地敷设",
+    "necessary":false
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"户表安装",
+    "necessary":false
+  }
+]

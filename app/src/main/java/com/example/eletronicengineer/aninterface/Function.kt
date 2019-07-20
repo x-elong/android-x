@@ -1,3 +1,5 @@
 package com.example.eletronicengineer.aninterface
 
-class Function(val name: String, val imageid: Int)
+import android.view.View
+
+class Function(val name: String, val imageid: Int,val viewOnClickListener: View.OnClickListener?)

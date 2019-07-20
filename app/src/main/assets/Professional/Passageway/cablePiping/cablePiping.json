@@ -1,0 +1,59 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "电缆配管",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "电缆保护管铺设",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "沿电杆敷设",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "密封电缆保护管",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "顶钢管",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "非开挖水平定向穿越",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "排管",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "自定义",
+    "expandListPath": "Professional/Passageway/cablePiping/cablePipingSon1.json"
+  }
+]

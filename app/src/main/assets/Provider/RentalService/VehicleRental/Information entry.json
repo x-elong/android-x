@@ -1,56 +1,66 @@
 [
   {
     "type":"TITLE",
-    "title1":"租赁发布信息录入"
+    "title1":"租赁发布信息录入",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"租赁类型",
-    "singleDisplayContent":"车辆租赁"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁类型",
+    "singleDisplayRightContent":"车辆租赁"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"车牌号码"
+    "inputSingleTitle":"车牌号码",
+    "key": "carNumber"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"车辆类型",
-    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
+    "key": "carType"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"核载乘客",
-    "inputUnit":"(人)"
+    "inputUnit":"(人)",
+    "key": "maxPassengers"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"核准载重量",
-    "inputUnit":"(吨)"
+    "inputUnit":"(吨)",
+    "key": "maxWeight"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"车辆结构",
-    "selectOption1Items":["箱式","敞篷"]
+    "selectOption1Items":["箱式","敞篷"],
+    "key": "construction"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"车厢长度",
-    "inputUnit":"(米)"
+    "inputUnit":"(米)",
+    "key": "lenghtCar"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonName":["是","否"],
-    "radioButtonTitle":"是否配驾驶员"
+    "radioButtonTitle":"是否配驾驶员",
+    "key": "isDriver"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonName":["在保","脱保"],
-    "radioButtonTitle":"保险状态"
+    "radioButtonTitle":"保险状态",
+    "key": "isInsurance"
   },
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资要求",
-    "inputMultiUnit":["元/天","元/月","元/年"]
+    "inputMultiUnit":["元/天","元/月","元/年"],
+    "key": "money"
   },
   {
     "type":"SINGLE_INPUT",
@@ -1516,7 +1526,8 @@
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
+    "inputUnit":"(天)",
+    "key": "periodValidity"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",

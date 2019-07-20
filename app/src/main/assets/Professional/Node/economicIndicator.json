@@ -1,0 +1,62 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "经济指标",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "项目类别",
+    "fourDisplayContent1": "单位",
+    "fourDisplayContent2": "设计量",
+    "fourDisplayContent3": "实际量"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "人力运输",
+    "fourDisplayContent1": "km",
+    "fourDisplayContent2": "0.3",
+    "fourDisplayContent3": ""
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "汽车运输",
+    "fourDisplayContent1": "km",
+    "fourDisplayContent2": "10",
+    "fourDisplayContent3": ""
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "船舶运输",
+    "fourDisplayContent1": "km",
+    "fourDisplayContent2": "",
+    "fourDisplayContent3": ""
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "索道运输",
+    "fourDisplayContent1": "km",
+    "fourDisplayContent2": "",
+    "fourDisplayContent3": ""
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "土质比例",
+    "fourDisplayContent1": "%",
+    "fourDisplayContent2": "详情",
+    "fourDisplayContent3": ""
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "地形比例",
+    "fourDisplayContent1": "%",
+    "fourDisplayContent2": "详情",
+    "fourDisplayContent3": ""
+  }
+]

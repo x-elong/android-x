@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+                android:padding="10dp">
+    <TextView
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/btn_style1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/tv_dialog_select_unit_show"
+            android:text="业主单位"
+            android:textSize="@dimen/font_tv_hint_15"/>
+    <TextView
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_style1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_dialog_select_project_show"
+            android:text="全部项目"
+            android:layout_gravity="center"
+            android:textSize="@dimen/font_tv_hint_15"/>
+</RelativeLayout>

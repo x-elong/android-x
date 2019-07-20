@@ -1,0 +1,59 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "绝缘子安装",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayContent1": "A1",
+    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayContent2": "直线架子塔"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayContent1": "10m",
+    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayContent2": "150锥型电杆"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "耐张绝缘子",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "普通绝缘子",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "箝位绝缘子",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "防雷式绝缘子",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "绝缘子单串",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon3.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "绝缘子双串",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon3.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "自定义",
+    "expandListPath": "Professional/OverHead/insulatorInstallation/insulatorInstallationSon4.json"
+  }
+]

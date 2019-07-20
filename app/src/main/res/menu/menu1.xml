@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+<item
+    android:id="@+id/message"
+    android:title="消息"
+    android:icon="@drawable/message"
+    />
+    <item
+        android:id="@+id/projectdisk"
+        android:icon="@drawable/projectdisk"
+        android:title="项目盘"
+        />
+    <item
+        android:id="@+id/application1"
+        android:icon="@drawable/application1"
+        android:title="应用"
+        />
+    <item
+        android:id="@+id/phonelist"
+        android:icon="@drawable/phonelist"
+        android:title="通讯录"
+        />
+    <item
+        android:id="@+id/mine"
+        android:icon="@drawable/mine"
+        android:title="我的"
+        />
+</menu>

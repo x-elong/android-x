@@ -1,0 +1,32 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"长：",
+    "singleDisplayLeftContent":"88m"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"宽",
+    "singleDisplayLeftContent":"888m"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"深",
+    "singleDisplayLeftContent":"888m"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"开挖方式",
+    "singleDisplayLeftContent":"人工"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"土质比例：",
+    "buttonName":["详情"]
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

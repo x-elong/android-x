@@ -1,0 +1,59 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "基础浇筑",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "基层恢复",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "面层恢复",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "路缘石",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon3.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "装模",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon4.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "砖砌体",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon5.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "抹灰",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon6.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "混凝土浇筑",
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon7.json"
+  }
+]

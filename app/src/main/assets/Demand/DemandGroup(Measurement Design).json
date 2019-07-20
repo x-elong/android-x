@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求团队",
-    "key": "requirementType"
+    "key": "needType",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"测量设计施工队",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"测量设计施工队",
+    "key":"needVariety"
   },
   {
     "type":"SINGLE_INPUT",
@@ -1474,7 +1475,7 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"工程清册",
     "buttonName":["下载模板","拍照","上传附件"],
-    "key":"requirementTeamProjectList"
+    "key":"requirementTeamProjectListFile"
   },
   {
     "type":"MULTI_CHECKBOX",
@@ -1507,10 +1508,10 @@
     "key":"sexDemand"
   },
   {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"食宿标准",
-    "selectOption1Items":["全包","自理"],
-    "key": "roomBoardStandard"
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonTitle":"食宿标准",
+    "radioButtonName":["全包","自理"],
+    "key":"roomBoardStandard"
   },
   {
     "type":"SELECT_DIALOG",
@@ -1534,7 +1535,7 @@
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"薪资标准",
-    "buttonName":["面议","清单报价"],
+    "buttonName":["清工薪资","清单报价"],
     "key": "requirementPowerTransformationSalaryFile requirementListQuotationFile"
   },
   {
@@ -1547,12 +1548,11 @@
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"机械设备",
     "radioButtonName":["可提供","不提供"],
-    "key":"equipment"
+    "key":"constructionEquipment"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人",
-    "key": "constructionEquipment"
+    "inputSingleTitle":"联系人"
   },
   {
     "type":"SINGLE_INPUT",

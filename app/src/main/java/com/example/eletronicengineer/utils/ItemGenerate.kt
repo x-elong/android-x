@@ -3,6 +3,7 @@ package com.electric.engineering.utils
 import android.content.Context
 import android.view.View
 import com.electric.engineering.model.MultiStyleItem
+import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.IOException
@@ -15,6 +16,7 @@ class ItemGenerate
     var hybridButtonListener:MutableList<View.OnClickListener> =ArrayList()
     lateinit var submitListener: View.OnClickListener
     lateinit var context:Context
+    var path:String?=null
     fun getJsonFromAsset(path:String):List<MultiStyleItem>
     {
         val resultBuilder=StringBuilder()
@@ -47,7 +49,7 @@ class ItemGenerate
             {
                 "TITLE"->
                 {
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE,jsonObject.getString("title1"))
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE,jsonObject.getString("title1"),jsonObject.getString("styleType"))
 
                 }
                 "MULTI_BUTTON"->
@@ -209,6 +211,60 @@ class ItemGenerate
                     val twoPairInputItem3=jsonObject.getString("twoPairInputItem3")
                     multiStyleItem= MultiStyleItem(MultiStyleItem.Options.TWO_PAIR_INPUT,twoPairInputTitle,twoPairInputItem1,twoPairInputItem2,twoPairInputItem3)
                 }
+                "FOUR_DISPLAY"->
+                {
+                    val fourDisplayTitle=jsonObject.getString("fourDisplayTitle")
+                    val fourDisplayContent1=jsonObject.getString("fourDisplayContent1")
+                    val fourDisplayContent2=jsonObject.getString("fourDisplayContent2")
+                    val fourDisplayContent3=jsonObject.getString("fourDisplayContent3")
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.FOUR_DISPLAY,fourDisplayTitle,fourDisplayContent1,fourDisplayContent2,fourDisplayContent3)
+                }
+                "FIVE_DISPLAY"->
+                {
+                    val fiveDisplayTitle=jsonObject.getString("fiveDisplayTitle")
+                    val fiveDisplayContent1=jsonObject.getString("fiveDisplayContent1")
+                    val fiveDisplayContent2=jsonObject.getString("fiveDisplayContent2")
+                    val fiveDisplayContent3=jsonObject.getString("fiveDisplayContent3")
+                    val fiveDisplayContent4=jsonObject.getString("fiveDisplayContent4")
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.FIVE_DISPLAY,fiveDisplayTitle,fiveDisplayContent1,fiveDisplayContent2,fiveDisplayContent3,fiveDisplayContent4)
+                }
+                "TWO_COLUMN_DISPLAY"->
+                {
+                    val twoColumnDisplayTitle1=jsonObject.getString("twoColumnDisplayTitle1")
+                    val twoColumnDisplayContent1=jsonObject.getString("twoColumnDisplayContent1")
+                    val twoColumnDisplayTitle2=jsonObject.getString("twoColumnDisplayTitle2")
+                    val twoColumnDisplayContent2=jsonObject.getString("twoColumnDisplayContent2")
+
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.TWO_COLUMN_DISPLAY,twoColumnDisplayTitle1,twoColumnDisplayContent1,twoColumnDisplayTitle2,twoColumnDisplayContent2)
+                }
+                "EXPAND_LIST"->
+                {
+                    val expandListTitle=jsonObject.getString("expandListTitle")
+                    val mData=jsonObject.getString("expandListPath")
+                    if(mData!=null)
+                    {
+                        val expandListAdapter=RecyclerviewAdapter(this.getJsonFromAsset(mData))
+                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,expandListAdapter)
+                    }
+                    else
+                    {
+                        val expandListAdapter= RecyclerviewAdapter(ArrayList())
+                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,expandListAdapter)
+                    }
+                }
+                "SINGLE_DISPLAY_LEFT"->
+                {
+                    val singleDisplayLeftTitle=jsonObject.getString("singleDisplayLeftTitle")
+                    val singleDisplayLeftContent=jsonObject.getString("singleDisplayLeftContent")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,singleDisplayLeftTitle,singleDisplayLeftContent)
+                }
+                "TWO_DISPLAY"->
+                {
+                    val twoDisplayTitle=jsonObject.getString("twoDisplayTitle")
+                    val twoDisplayContent1=jsonObject.getString("twoDisplayContent1")
+                    val twoDisplayContent2=jsonObject.getString("twoDisplayContent2")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TWO_DISPLAY,twoDisplayTitle,twoDisplayContent1,twoDisplayContent2)
+                }
                 "INPUT_RANGE"->
                 {
                     val inputRangeTitle=jsonObject.getString("inputRangeTitle")
@@ -270,11 +326,105 @@ class ItemGenerate
                     val expandContent=jsonObject.getString("expandContent")
                     multiStyleItem=MultiStyleItem(MultiStyleItem.Options.EXPAND,expandTitle,expandContent)
                 }
-                "SINGLE_DISPLAY"->
+                "SINGLE_DISPLAY_RIGHT"->
                 {
-                    val singleDisplayTitle=jsonObject.getString("singleDisplayTitle")
-                    val singleDisplayContent=jsonObject.getString("singleDisplayContent")
-                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY,singleDisplayTitle,singleDisplayContent)
+                    val singleDisplayRightTitle=jsonObject.getString("singleDisplayRightTitle")
+                    val singleDisplayRightContent=jsonObject.getString("singleDisplayRightContent")
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,singleDisplayRightTitle,singleDisplayRightContent)
+                }
+                "TWO_TEXT_DIALOG"->
+                {
+                    val array1=jsonObject.getJSONArray("selectOption1Items1")
+                    val selectOption1Items1:MutableList<String> =ArrayList()
+                    for (j in 0 until array1.length())
+                    {
+                        selectOption1Items1.add(array1[j].toString())
+                    }
+                    val array2=jsonObject.getJSONArray("selectOption1Items2")
+                    val selectOption1Items2:MutableList<String> =ArrayList()
+                    for (j in 0 until array2.length())
+                    {
+                        selectOption1Items2.add(array2[j].toString())
+                    }
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TWO_TEXT_DIALOG,selectOption1Items1,jsonObject.getString("textFirstDialog"),
+                        selectOption1Items2,jsonObject.getString("textSecondDialog")
+                    )
+                }
+                "TEXT_SCOLLVIEW"->
+                {
+                    val textDetails=jsonObject.getString("textDetails")
+                    val textMore=jsonObject.getString("textMore")
+                    val textDelete=jsonObject.getString("textDelete")
+                    val expandTitle=jsonObject.getString("expandTitle")
+                    val expandContent=jsonObject.getString("expandContent")
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.TEXT_SCOLLVIEW,textDetails,textMore,textDelete,expandTitle,expandContent)
+                }
+                "EXPAND_RIGHT"->
+                {
+                    val expandTitle=jsonObject.getString("expandTitle")
+                    val expandContent=jsonObject.getString("expandContent")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.EXPAND_RIGHT,expandTitle,expandContent)
+                }
+                "BLANK"->{
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.BLANK,"")
+                }
+                // alterPosition time:2019/7/15
+                // function:定位点添加
+                "POSITION_ADD"->
+                {
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_ADD,jsonObject.getString("title1"))
+                }
+                // alterPosition time:2019/7/15
+                // function:运输起点
+                "POSITION_START"->
+                {
+                    val inputPositionDeleteTitle1=jsonObject.getString("inputPositionDeleteTitle1")
+                    val inputPositionDeleteTitle2=jsonObject.getString("inputPositionDeleteTitle2")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_START,inputPositionDeleteTitle1,inputPositionDeleteTitle2)
+
+                }
+                // alterPosition time:2019/7/15
+                // function:运输终点
+                "POSITION_END"->
+                {
+                    val inputPositionDeleteTitle3=jsonObject.getString("inputPositionDeleteTitle3")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_END,inputPositionDeleteTitle3)
+
+                }
+                // alterPosition time:2019/7/15
+                // function:删除
+                "POSITION_DELETE"->
+                {
+                    val inputPositionTitle=jsonObject.getString("inputPositionTitle")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_DELETE,inputPositionTitle)
+                }
+                // alterPosition time:2019/7/15
+                // function:带边框的输入框
+                "TITLE_INPUT_BG"->
+                {
+                    val inputSingleTitleWithBg=jsonObject.getString("inputSingleTitleWithBg")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE_INPUT_BG,inputSingleTitleWithBg)
+                }
+                // alterPosition time:2019/7/15
+                // function:带边框的输入框+选择
+                "TITLE_INPUT_BG_SELECT"->
+                {
+                    val inputSingleTitleWithBgSelect=jsonObject.getString("inputSingleTitleWithBgSelect")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.TITLE_INPUT_BG_SELECT,inputSingleTitleWithBgSelect)
+                }
+                // alterPosition time:2019/7/15
+                // function:文本扩展+选择
+                "TEXT_EXPAND_SELECT"->
+                {
+                    val expandTitle=jsonObject.getString("expandTitle")
+                    val expandContent=jsonObject.getString("expandContent")
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.TEXT_EXPAND_SELECT,expandTitle,expandContent)
+                }
+                "NODE_CHECK_IMAGE_SHOW"->{
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.NODE_CHECK_IMAGE_SHOW,jsonObject.getString("imageDetail"))
+                }
+                "SEARCH"->{
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.SEARCH,"")
                 }
             }
             multiStyleItem.key=jsonObject.optString("key")

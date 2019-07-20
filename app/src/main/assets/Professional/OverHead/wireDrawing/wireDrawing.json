@@ -1,0 +1,64 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "拉线制作",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayContent1": "A1",
+    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayContent2": "直线架子塔"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayContent1": "10m",
+    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayContent2": "150锥型电杆"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "普通拉",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "绝缘拉",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "水平拉及弓形拉",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "压接式拉线",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "拉线保护管",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "拉棒沥青防腐",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "拉棒三油两麻沥青防腐",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "自定义",
+    "expandListPath": "Professional/OverHead/wireDrawing/wireDrawingSon1.json"
+  }
+]

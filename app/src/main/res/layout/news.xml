@@ -7,18 +7,19 @@
     <TextView
             android:id="@+id/title_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_31"
+            android:layout_height="@dimen/general_31"
             android:background="#64ffffff"
             android:gravity="center_vertical"
             android:text="消息"
             android:textColor="#045b4c"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/font_tv_hint_15"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="@dimen/left_45"/>
     <TextView
+            android:id="@+id/point_tv"
             android:layout_below="@+id/title_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_360"
+            android:layout_height="@dimen/general_360"
             android:text="功能维护中"
             android:textSize="@dimen/font_tv_hint_15"
             android:gravity="center"

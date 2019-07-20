@@ -1,0 +1,27 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"抹灰类型：",
+    "singleDisplayLeftContent":"抹面"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"抹灰面积：",
+    "singleDisplayLeftContent":"888m²"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"灰浆类型：",
+    "singleDisplayLeftContent":"水泥砂浆"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"灰浆标号：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

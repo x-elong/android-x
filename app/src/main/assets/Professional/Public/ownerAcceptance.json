@@ -1,0 +1,22 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"业主验收",
+    "styleType":2
+  },
+  {
+    "type":"SEARCH"
+  },
+  {
+    "type":"NODE_CHECK_IMAGE_SHOW",
+    "imageDetail":"magazine-unload-2019-07-15-asdf"
+  },
+  {
+    "type":"NODE_CHECK_IMAGE_SHOW",
+    "imageDetail":"magazine-unload-2019-07-15-asdf"
+  },
+  {
+    "type":"NODE_CHECK_IMAGE_SHOW",
+    "imageDetail":"magazine-unload-2019-07-15-asdf"
+  }
+]

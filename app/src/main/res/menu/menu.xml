@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-<item
-    android:id="@+id/news"
-    android:title="信息"
-    android:icon="@drawable/news"
+>
+    <item
+            android:id="@+id/news"
+            android:title="信息"
+            android:icon="@drawable/news"
     />
     <item
-        android:id="@+id/sdr"
-        android:icon="@drawable/the_bottom_of_sdr"
-        android:title="供需"
-        />
+            android:id="@+id/sdr"
+            android:icon="@drawable/the_bottom_of_sdr"
+            android:title="供需"
+    />
     <item
-        android:id="@+id/application"
-        android:icon="@drawable/application"
-        android:title="应用"
-        />
+            android:id="@+id/application"
+            android:icon="@drawable/application"
+            android:title="应用"
+    />
     <item
-        android:id="@+id/shopping_mall"
-        android:icon="@drawable/shopping_mall"
-        android:title="商城"
-        />
+            android:id="@+id/shopping_mall"
+            android:icon="@drawable/shopping_mall"
+            android:title="商城"
+    />
     <item
-        android:id="@+id/my"
-        android:icon="@drawable/my"
-        android:title="我的"
-        />
+            android:id="@+id/my"
+            android:icon="@drawable/my"
+            android:title="我的"
+    />
 </menu>

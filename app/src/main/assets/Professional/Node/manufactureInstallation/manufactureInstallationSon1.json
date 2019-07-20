@@ -1,0 +1,32 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"构件名称：",
+    "singleDisplayLeftContent":"井、沟"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"构件型号：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"钢筋型号：",
+    "singleDisplayLeftContent":"10"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"钢筋重量（t）：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"预埋铁件（t）：",
+    "singleDisplayLeftContent":"888"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

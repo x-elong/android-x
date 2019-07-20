@@ -1,69 +1,42 @@
 [
   {
     "type": "TITLE",
-    "title1": "团队发布信息录入"
+    "title1": "团队发布信息录入",
+    "styleType": "0"
   },
   {
-    "type": "SINGLE_DISPLAY",
-    "singleDisplayTitle": "发布类别",
-    "singleDisplayContent": "桩机服务"
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "发布类别",
+    "singleDisplayRightContent": "桩机服务"
   },
   {
-    "type": "SINGLE_DISPLAY",
-    "singleDisplayTitle": "负责人",
-    "singleDisplayContent": "xxx"
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人",
+    "singleDisplayRightContent": "xxx"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"现场负责人",
-    "necessary":true
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"人员清册",
+    "buttonName":["下载模板","上传附件"],
+    "key": "provideCrewLists"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"现场安全员",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"施工员",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"材料员",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"后勤",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"车辆",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"技工",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"普工",
-    "necessary":false
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"车辆清册",
+    "buttonName":["下载模板","上传附件"],
+    "key": "provideTransportMachines"
   },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可作业范围",
     "checkboxNameList":["人工孔桩","机械孔桩","钢管桩"],
-    "key": "requirementConstructionWorkKind"
+    "key": "foundationWorkRanges"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"作业最大直径",
     "selectOption1Items":["1米以内","1.5米以内","2米以内","2米以上"],
-    "key": "roleMaxType"
+    "key": "workDia"
   },
   {
     "type":"THREE_OPTIONS_SELECT_DIALOG",
@@ -1510,12 +1483,14 @@
 
       [["深水埗区", "油尖旺区", "九龙城区", "黄大仙区", "观塘区", "北区", "大埔区", "沙田区",
         "西贡区", "元朗区", "屯门区", "荃湾区", "葵青区", "离岛区", "中西区", "湾仔区", "东区",
-        "南区", "其他"]]]
+        "南区", "其他"]]],
+    "key": "location"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"机械设备",
-    "buttonName":["上传清册"]
+    "buttonName":["下载模板","上传清册"],
+    "key": "constructionToolLists"
   },
   {
     "type":"INPUT_WITH_UNIT",

@@ -1,0 +1,56 @@
+[
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "回填物",
+    "twoDisplayContent1": "单位",
+    "twoDisplayContent2": "占比"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "土",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "100"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "砂",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "石粉",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "碎石",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "灰石",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "片石",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "混凝土",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "其他",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "0"
+  }
+]

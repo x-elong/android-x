@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求团队",
-    "key":"requirementType"
+    "styleType": "0",
+    "key":"needType"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"跨越架",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"跨越架",
+    "key":"needVariety"
   },
   {
     "type":"SINGLE_INPUT",
@@ -1474,7 +1475,7 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"工程清册",
     "buttonName":["下载模板","拍照","上传附件"],
-    "key":"requirementTeamProjectList"
+    "key":"requirementTeamProjectListFile"
   },
   {
     "type":"MULTI_RADIO_BUTTON",

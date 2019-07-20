@@ -1,0 +1,27 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"关联杆号：",
+    "singleDisplayLeftContent":"A1,A2,A3,A4"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"线材型号：",
+    "singleDisplayLeftContent":"JKLGYJ-120"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"根数：",
+    "singleDisplayLeftContent":"4"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"耐张长度（m）：",
+    "singleDisplayLeftContent":"242.6"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

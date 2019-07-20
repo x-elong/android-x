@@ -1,0 +1,55 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "设备安装",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayContent1": "1#",
+    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayContent2": "工井"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftContent":"电缆分支箱"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftContent":"湖南人文科技学院"
+  },
+  {
+    "type":"BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "物料名称",
+    "fourDisplayContent1": "规格型号",
+    "fourDisplayContent2": "单位",
+    "fourDisplayContent3": "数量"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "支架",
+    "fourDisplayContent1": "",
+    "fourDisplayContent2": "个",
+    "fourDisplayContent3": "50"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "桥架",
+    "fourDisplayContent1": "",
+    "fourDisplayContent2": "个",
+    "fourDisplayContent3": "80"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "下户线",
+    "fourDisplayContent1": "",
+    "fourDisplayContent2": "米",
+    "fourDisplayContent3": "100"
+  }
+]

@@ -7,22 +7,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
-            android:paddingTop="@dimen/dp_6"
+            android:paddingTop="@dimen/top_6"
             android:id="@+id/return_iv"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/general_45"
+            android:layout_height="@dimen/general_24"
             android:visibility="invisible"
-            android:src="@drawable/title_return"/>
+            android:src="@drawable/title_return"
+            tools:ignore="MissingConstraints"/>
 
     <TextView
             android:id="@+id/title_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_31"
+            android:layout_height="@dimen/general_31"
             android:background="#64ffffff"
             android:gravity="center_vertical"
             android:text="招投供需"
             android:textColor="#045b4c"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/font_tv_hint_15"
             android:layout_toRightOf="@id/return_iv"
             android:layout_marginLeft="@dimen/left_45"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
     <ImageView
             android:id="@+id/advertisement_background_iv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_157"
+            android:layout_height="@dimen/general_157"
             android:layout_below="@id/title_tv"
             android:background="@drawable/advertisement_background"
             tools:layout_editor_absoluteX="0dp"
@@ -38,12 +39,13 @@
 
     <ImageView
             android:id="@+id/advertisement_iv"
-            android:layout_width="@dimen/dp_302"
-            android:layout_height="@dimen/dp_102"
+            android:layout_width="@dimen/general_302"
+            android:layout_height="@dimen/general_102"
             android:src="@drawable/advertisement_text"
             android:layout_below="@id/title_tv"
             app:layout_constraintStart_toStartOf="@+id/advertisement_background_iv"
-            app:layout_constraintBottom_toBottomOf="@+id/advertisement_background_iv" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/advertisement_background_iv"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="@+id/advertisement_background_iv"
             app:layout_constraintTop_toTopOf="@+id/advertisement_background_iv"/>
 

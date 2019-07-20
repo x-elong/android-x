@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/item_background"
+              android:padding="@dimen/general_10">
+
+    <TextView
+            android:layout_width="@dimen/general_40"
+            android:text="A100"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_five_display_title"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_2"
+    />
+    <TextView
+            android:layout_width="@dimen/general_90"
+            android:text="150锥形电杆"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_five_display_item1"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_10"/>
+    <TextView
+            android:layout_width="@dimen/general_60"
+            android:text="小号节点"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_five_display_item2"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_10"/>
+    <TextView
+            android:layout_width="@dimen/general_80"
+            android:text="拉线门型塔"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_five_display_item3"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/general_10"/>
+
+    <TextView android:layout_width="@dimen/general_30"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/font_tv_hint_15"
+              android:id="@+id/tv_five_display_item4"
+              android:textColor="@android:color/black"
+              android:gravity="center"
+              android:layout_marginLeft="@dimen/general_10"
+              android:text="录入"
+    />
+</LinearLayout>

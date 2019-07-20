@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求三方",
-    "key":"requirementType"
+    "styleType": "0",
+    "key":"needType"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"代办资质",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"代办资质",
+    "key":"needVariety"
   },
   {
     "type":"MULTI_BUTTON",

@@ -1,0 +1,34 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "预制构件制作及安装",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "制作方量",
+    "expandListPath": "Professional/Node/manufactureInstallation/manufactureInstallationSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "安装方量",
+    "expandListPath": "Professional/Node/manufactureInstallation/manufactureInstallationSon2.json"
+  }
+]

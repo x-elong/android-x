@@ -1,0 +1,49 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "基础开挖",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayContent1": "A1",
+    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayContent2": "直线架子塔"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayContent1": "10m",
+    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayContent2": "150锥型电杆"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "路面切割",
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "破除路面",
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "电杆坑开挖",
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon3.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "拉线洞开挖",
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon3.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "塔坑开挖",
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon3.json"
+  }
+]

@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求个人",
-    "key":"requirementType"
+    "styleType": "0",
+    "key":"needType"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"普工",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"普工",
+    "key":"needVariety"
   },
   {
     "type":"SELECT_DIALOG",
@@ -1522,7 +1523,7 @@
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资标准",
     "inputMultiUnit":["元/天","元/月","元/年"],
-    "key":"salaryStandard"
+    "key":"salaryStandard salaryUnit"
   },
   {
     "type":"SINGLE_INPUT",

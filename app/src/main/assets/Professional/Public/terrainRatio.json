@@ -1,0 +1,56 @@
+[
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "地形比例",
+    "twoDisplayContent1": "单位",
+    "twoDisplayContent2": "占比"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "平地",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "20"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "丘陵",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "一般山地",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "泥沼",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "沙漠",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "高地",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "山地",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "河网",
+    "twoDisplayContent1": "%",
+    "twoDisplayContent2": "15"
+  }
+]

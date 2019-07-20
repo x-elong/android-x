@@ -1,12 +1,13 @@
 [
   {
     "type":"TITLE",
-    "title1":"三方服务信息录入"
+    "title1":"三方服务信息录入",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"服务类型",
-    "singleDisplayContent":"培训办证",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"服务类型",
+    "singleDisplayRightContent":"培训办证",
     "key": "serveType"
   },
   {

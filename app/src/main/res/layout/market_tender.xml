@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+            android:paddingTop="@dimen/top_6"
+            android:id="@+id/return_iv"
+            android:layout_width="@dimen/general_45"
+            android:layout_height="@dimen/general_24"
+            android:visibility="visible"
+            android:src="@drawable/title_return"
+            tools:ignore="MissingConstraints"/>
+
+    <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/general_31"
+            android:background="#64ffffff"
+            android:gravity="center_vertical"
+            android:text="市场投标"
+            android:textColor="#045b4c"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:layout_toRightOf="@id/return_iv"
+            android:layout_marginLeft="@dimen/left_45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

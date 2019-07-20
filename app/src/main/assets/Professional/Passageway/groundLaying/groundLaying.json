@@ -1,0 +1,54 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "接地敷设",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "接地开挖沟",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon1.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "接地极制作及安装",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "接地母线敷设",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "引下安装",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "接地体安装",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
+  },
+  {
+    "type": "EXPAND_LIST",
+    "expandListTitle": "接地防腐",
+    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
+  }
+]

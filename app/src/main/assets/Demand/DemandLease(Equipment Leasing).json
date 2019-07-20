@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求租赁",
-    "key":"requirementType"
+    "key":"needType",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"工器具租赁",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"工器具租赁",
+    "key":"needVariety"
   },
   {
     "type":"SINGLE_INPUT",

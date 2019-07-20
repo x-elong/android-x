@@ -1,0 +1,34 @@
+[
+  {
+    "type":"TITLE",
+    "title1":"项目盘",
+    "styleType": "1"
+  },
+  {
+    "type":"TWO_TEXT_DIALOG",
+    "textFirstDialog":"业主单位",
+    "selectOption1Items1":["莲花供电公司","合作方调入"],
+    "textSecondDialog":"全部项目",
+    "selectOption1Items2":["全部项目","在建项目","归档项目"]
+  },
+  {
+    "type":"TEXT_EXPAND_SELECT",
+    "expandTitle":"中阳村新农村电气化改造工程",
+    "expandContent":"规格型号:\n数量: 2"
+  },
+  {
+    "type":"TEXT_EXPAND_SELECT",
+    "expandTitle":"中阳村新农村电气化改造工程",
+    "expandContent":"规格型号:\n数量: 2"
+  },
+  {
+    "type":"TEXT_EXPAND_SELECT",
+    "expandTitle":"中阳村新农村电气化改造工程",
+    "expandContent":"规格型号:\n数量: 2"
+  },
+  {
+    "type":"TEXT_EXPAND_SELECT",
+    "expandTitle":"中阳村新农村电气化改造工程",
+    "expandContent":"规格型号:\n数量: 2"
+  }
+]

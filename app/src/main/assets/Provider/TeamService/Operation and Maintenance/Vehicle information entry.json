@@ -1,7 +1,8 @@
 [
   {
     "type":"TITLE",
-    "title1":"车辆信息录入"
+    "title1":"车辆信息录入",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",

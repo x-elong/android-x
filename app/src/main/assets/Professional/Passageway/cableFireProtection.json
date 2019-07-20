@@ -1,0 +1,88 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "电缆防火",
+    "styleType": "0"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "通道编号：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "小号节点：",
+    "fourDisplayContent1": "自动获取",
+    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent3": "自动获取"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "物料名称",
+    "fourDisplayContent1": "单位",
+    "fourDisplayContent2": "型号规格",
+    "fourDisplayContent3": "设计数量"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火堵料",
+    "fourDisplayContent1": "吨",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火隔板",
+    "fourDisplayContent1": "平方米",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火涂料",
+    "fourDisplayContent1": "kg",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火槽盒",
+    "fourDisplayContent1": "米",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火带",
+    "fourDisplayContent1": "米",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "防火墙",
+    "fourDisplayContent1": "平方米",
+    "fourDisplayContent2": "888",
+    "fourDisplayContent3": "888"
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "管塞",
+    "fourDisplayContent1": "个",
+    "fourDisplayContent2": "988",
+    "fourDisplayContent3": "100"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

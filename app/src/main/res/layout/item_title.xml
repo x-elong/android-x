@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:background="@color/title_background">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/title_background"
+    android:paddingTop="@dimen/top_5"
+    android:paddingBottom="@dimen/bottom_5">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_title_back"
-            android:background="@drawable/ic_back_xml"
-            android:textSize="@dimen/font_tv_normal_18"/>
+        android:id="@+id/tv_title_back"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_20"
+        android:background="@drawable/title_return"
+        android:textSize="@dimen/font_tv_normal_16" />
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="5dp" tools:layout_editor_absoluteX="1dp"
-            android:id="@+id/tv_title_title1" android:textSize="@dimen/font_tv_normal_20"
-            android:textColor="@android:color/black"
-            android:layout_weight="1" android:gravity="center"/>
+        android:id="@+id/tv_title_title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/right_30"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_tv_normal_18" />
+
+    <TextView
+        android:id="@+id/tv_select_more"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/more"
+        android:visibility="gone"
+        android:gravity="center"
+         />
+
+    <TextView
+        android:id="@+id/tv_select_add"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/add_black"
+        android:gravity="center"
+        android:visibility="gone" />
 </LinearLayout>

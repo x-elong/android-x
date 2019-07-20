@@ -1,12 +1,13 @@
 [
   {
     "type":"TITLE",
-    "title1":"租赁发布信息录入"
+    "title1":"租赁发布信息录入",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"租赁类型",
-    "singleDisplayContent":"机械租赁"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁类型",
+    "singleDisplayRightContent":"机械租赁"
   },
   {
     "type":"SINGLE_INPUT",

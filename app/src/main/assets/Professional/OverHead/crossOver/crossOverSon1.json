@@ -1,0 +1,12 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"水平距离（m）：",
+    "singleDisplayLeftContent":"2564"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"垂直距离（m）：",
+    "singleDisplayLeftContent":"2564"
+  }
+]

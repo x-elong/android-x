@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求团队",
-    "key":"requirementType"
+    "styleType": "0",
+    "key":"needType"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"马帮运输施工队",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"马帮运输施工队",
+    "key":"needVariety"
   },
   {
     "type":"SINGLE_INPUT",
@@ -1525,10 +1526,10 @@
     "key":"needHorseNumber"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"薪资标准",
-    "key":"salaryStandard",
-    "radioButtonName":["面议","清单报价"]
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"薪资标准",
+    "buttonName":["面议","清单报价"],
+    "key":"salaryStandard requirementListQuotationFile"
   },
   {
     "type":"SINGLE_INPUT",

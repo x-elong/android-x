@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
@@ -12,18 +14,22 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
-import com.example.eletronicengineer.fragment.*
+import com.example.eletronicengineer.fragment.main.*
+import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
+import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.sdf.*
 import java.util.ArrayList
 import java.util.Arrays
+import com.lcw.library.imagepicker.ImagePicker
+
 
 class MainActivity : AppCompatActivity() {
     var fragmentList: List<Fragment> = ArrayList()
     var lastfragment: Int = 2
     //判断选择的菜单
-    private val changeFragment =
+    val changeFragment =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.news -> {
@@ -51,8 +57,11 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.shopping_mall->{
-                    lastfragment=3
-                    switchFragment(fragmentList[lastfragment],R.id.frame_main)
+                    if(lastfragment != 3) {
+                        lastfragment = 3
+                        switchFragment(fragmentList[lastfragment], R.id.frame_main)
+                    }
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.my -> {
                     if (lastfragment != 4) {
@@ -71,12 +80,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         PermissionHelper.getPermission(this, 1)
         initFragment()
-        supportActionBar?.hide()
+
+        //supportActionBar?.hide()
     }
+
+    //初始化界面 将第三个界面作为最初界面
     private fun initFragment() {
         val newsFragment = NewsFragment()
-        val sdrFragment = sdrFragment()
+        val sdrFragment = SdrFragment()
         val applicationFragment = ApplicationFragment()
+        applicationFragment.setClickListener(View.OnClickListener{
+            if (lastfragment != 1) {
+                lastfragment = 1
+                switchFragment(fragmentList[lastfragment],R.id.frame_main)
+            }
+            supportFragmentManager.popBackStackImmediate(null,1)
+            return_iv.visibility=View.INVISIBLE
+            title_tv.text="招投供需"
+            bnv.menu.getItem(1).isChecked=true
+        })
         val mallFragment = MallFragment()
         val myFragment = MyFragment()
         fragmentList = ArrayList(Arrays.asList<Fragment>(newsFragment, sdrFragment, applicationFragment, mallFragment, myFragment))
@@ -97,7 +119,6 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(frameLayout, fragment)
         transaction.commit()
     }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode)
@@ -117,4 +138,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

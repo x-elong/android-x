@@ -1,33 +1,40 @@
 [
   {
     "type":"TITLE",
-    "title1":"出租方信息认证"
+    "title1":"出租方信息认证",
+    "styleType": "0"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"出租方单位名称"
+    "inputSingleTitle":"出租方单位名称",
+    "key": "companyName"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位地址"
+    "inputSingleTitle":"单位地址",
+    "key": "companyAddress"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"法人代表姓名"
+    "inputSingleTitle":"法人代表姓名",
+    "key": "legalPersonName"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话"
+    "inputSingleTitle":"联系电话",
+    "key": "legalPersonPhone"
   },
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"营业执照",
-    "necessary":false
+    "necessary":false,
+    "key": "businessLicensePath"
   },
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"法人身份证照片",
-    "necessary":false
+    "necessary":false,
+    "key": "legalPersonIdCardPath"
   },
   {
     "type":"SUBMIT",

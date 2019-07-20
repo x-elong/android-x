@@ -1,0 +1,32 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"电缆盖板100块（单重）：",
+    "singleDisplayLeftContent":"0.06t"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"拉盘9块（单重）：",
+    "singleDisplayLeftContent":"0.11t"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"拉盘：",
+    "singleDisplayLeftContent":"9块"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"拉盘（单重）：",
+    "singleDisplayLeftContent":"0.11t"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"小计重量：",
+    "singleDisplayLeftContent":"6.99t"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

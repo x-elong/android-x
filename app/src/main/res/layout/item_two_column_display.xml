@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:background="@drawable/item_background"
+              android:paddingBottom="@dimen/bottom_10"
+              android:paddingTop="@dimen/top_10"
+    >
+
+    <TextView
+            android:layout_width="@dimen/general_100"
+            android:gravity="center"
+            android:text="杆塔高度："
+            android:layout_height="wrap_content" android:id="@+id/tv_two_column_display_title1"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:layout_marginLeft="@dimen/general_2"
+            android:textColor="@android:color/black"/>
+    <TextView
+            android:layout_width="@dimen/general_60"
+            android:gravity="center"
+            android:text="A1000"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_two_column_display_item1"
+            android:textSize="@dimen/font_tv_hint_15"
+            android:textColor="@android:color/black"/>
+    <TextView
+            android:layout_width="@dimen/general_80"
+            android:gravity="center"
+            android:text="杆塔属性："
+            android:layout_height="wrap_content" android:id="@+id/tv_two_column_display_title2"
+            android:layout_marginLeft="@dimen/left_5"
+            android:textSize="@dimen/font_tv_hint_15" android:textColor="@android:color/black"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:text="150锥型电杆"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+        android:id="@+id/tv_two_column_display_item2"
+            android:textSize="@dimen/font_tv_hint_15" android:textColor="@android:color/black"/>
+</LinearLayout>

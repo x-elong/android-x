@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="@dimen/general_60"
-              android:background="#e5e5e5e5">
+              android:background="@color/dark_gray_bg">
 
     <Button
             android:layout_gravity="center"

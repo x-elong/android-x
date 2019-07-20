@@ -1,0 +1,82 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "复测分坑",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayContent1": "A1",
+    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayContent2": "直线架子塔"
+  },
+  {
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayContent1": "10m",
+    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayContent2": "150锥型电杆"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"杆号位置：",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"人力运输计算",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"混凝土杆、钢管杆、塔材：",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"其他材料：",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"档距：",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"基坑分坑",
+    "singleDisplayLeftContent":""
+  },
+  {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"地形（实际数据）：",
+    "selectOption1Items":["平地","丘陵","河网","山地","泥沼","沙漠","高山","一般山地"]
+  },
+  {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"土质（初步测算数据）：",
+    "selectOption1Items":["普通土","水泥坑","松砂石","坚土","流沙坑","干沙坑","水坑","岩石（爆破）","岩石（人工开凿）"]
+  },
+  {
+    "type":"BLANK"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"交叉跨越",
+    "necessary":false
+  },
+  {
+    "type": "SUBMIT",
+    "submitContent":"确认并提交"
+  }
+]

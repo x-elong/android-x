@@ -1,0 +1,73 @@
+[
+  {
+    "type": "TITLE",
+    "title1": "资料动态",
+    "styleType": "0"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "项目名称",
+    "twoDisplayContent1": "状态",
+    "twoDisplayContent2": "备注"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "资料情况",
+    "twoDisplayContent1": "已完成",
+    "twoDisplayContent2": "上传照片"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "竣工情况",
+    "twoDisplayContent1": "已完成",
+    "twoDisplayContent2": "上传照片"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "验收情况",
+    "twoDisplayContent1": "已完成",
+    "twoDisplayContent2": "上传照片"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "投产报告",
+    "twoDisplayContent1": "",
+    "twoDisplayContent2": "上传照片"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "完成日期",
+    "twoDisplayContent1": "2020年1月30日",
+    "twoDisplayContent2": ""
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "实际施工天数",
+    "twoDisplayContent1": "300天",
+    "twoDisplayContent2": ""
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "送审金额",
+    "twoDisplayContent1": "3190",
+    "twoDisplayContent2": ""
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "审定金额",
+    "twoDisplayContent1": "3190",
+    "twoDisplayContent2": ""
+  },
+  {
+    "type": "TWO_DISPLAY",
+    "twoDisplayTitle": "归档情况",
+    "twoDisplayContent1": "未归档",
+    "twoDisplayContent2": ""
+  }
+]

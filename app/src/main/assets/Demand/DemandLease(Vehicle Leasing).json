@@ -2,13 +2,14 @@
   {
     "type":"TITLE",
     "title1":"需求租赁",
-    "key":"requirementType"
+    "key":"needType",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"需求类别",
-    "singleDisplayContent":"车辆租赁",
-    "key":"requirementVariety"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别",
+    "singleDisplayRightContent":"车辆租赁",
+    "key":"needVariety"
   },
   {
     "type":"SINGLE_INPUT",
@@ -1535,12 +1536,6 @@
     "selectTitle":"路程车费",
     "selectOption1Items":["报销一半","全报","工作满一个月全报","工作满二个月全报","工作满三个月全报","工作满六个月全报","自定义"],
     "key":"journeyCarFare"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"需要人数",
-    "inputUnit":"(人)",
-    "key":"needPileFoundationEquipment"
   },
   {
     "type":"SELECT_DIALOG",

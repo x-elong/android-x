@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+  <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/tv_expand_button1"
+          android:background="@drawable/ic_expand"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          android:layout_margin="@dimen/general_10"/>
+  <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:id="@+id/tv_expand_title1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="@+id/tv_expand_button1"
+          android:textSize="@dimen/font_tv_normal_17"
+          app:layout_constraintTop_toTopOf="@+id/tv_expand_button1"
+          android:paddingRight="@dimen/left_10" android:layout_marginTop="@dimen/top_5"/>
+  <TextView
+          android:text="规格型号"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:id="@+id/tv_expand_content1"
+          app:layout_constraintTop_toBottomOf="@+id/tv_expand_button1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" android:padding="@dimen/general_10"
+          android:layout_marginLeft="@dimen/left_10" android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

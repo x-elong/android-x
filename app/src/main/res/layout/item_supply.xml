@@ -7,10 +7,12 @@
         android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/rv_main_content" android:visibility="visible"/>
+            android:layout_height="wrap_content" android:id="@+id/rv_main_content" android:visibility="visible"
+            tools:ignore="MissingConstraints"/>
     <com.bin.david.form.core.SmartTable android:layout_width="match_parent" android:layout_height="wrap_content"
-                                        android:id="@+id/st_main_table" android:visibility="gone">
+                                        android:id="@+id/st_main_table" android:visibility="gone"
+                                        tools:ignore="MissingConstraints">
     </com.bin.david.form.core.SmartTable>
     <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
-               android:id="@+id/iv_main_water"/>
+               android:id="@+id/iv_main_water" tools:ignore="MissingConstraints"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

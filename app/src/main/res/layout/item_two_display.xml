@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="@dimen/top_10"
+              android:paddingBottom="@dimen/bottom_10"
+              android:background="@drawable/item_background">
+
+    <TextView
+            android:text="岩石(人工开凿)"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:id="@+id/tv_two_display_title"
+            android:gravity="center" android:textColor="@android:color/black"
+            android:textSize="@dimen/font_tv_hint_15"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" android:id="@+id/tv_two_display_content1"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_tv_hint_15"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_two_display_content2"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_tv_hint_15"/>
+</LinearLayout>

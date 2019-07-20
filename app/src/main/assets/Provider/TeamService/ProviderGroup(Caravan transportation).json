@@ -1,52 +1,36 @@
 [
   {
     "type":"TITLE",
-    "title1":"团队发布信息录入"
+    "title1":"团队发布信息录入",
+    "styleType": "0"
   },
   {
-    "type":"SINGLE_DISPLAY",
-    "singleDisplayTitle":"发布类别",
-    "singleDisplayContent":"马帮运输"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"发布类别",
+    "singleDisplayRightContent":"马帮运输"
   },
   {
-    "type": "SINGLE_DISPLAY",
-    "singleDisplayTitle": "负责人",
-    "singleDisplayContent": "xxx"
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人",
+    "singleDisplayRightContent": "xxx"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"现场负责人",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"安全员",
-    "necessary":true
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"后勤",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"技工",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"普工",
-    "necessary":false
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"人员清册",
+    "buttonName":["下载模板","上传附件"],
+    "key": "provideCrewLists"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"马匹数量",
-    "inputUnit":"(匹)"
+    "inputUnit":"(匹)",
+    "key": "horseNumber"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
+    "inputUnit":"(天)",
+    "key": "validTime"
   },
   {
     "type": "HINT",
