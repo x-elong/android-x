@@ -18,46 +18,58 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"人员清册",
     "buttonName":["下载模板","上传清册"],
-    "key": "provideCrewLists"
+    "additionalKey": "provideCrewListsFile"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆清册",
     "buttonName":["下载模板","上传清册"],
-    "key": "provideTransportMachines"
+    "additionalKey": "provideTransportMachineFile"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆全景照",
+    "necessary":false,
+    "key": "carPhotoPath",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可操作电压等级",
     "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
-    "key":"voltages"
+    "key":"voltages",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可作业类别",
     "checkboxNameList":["配电","变电","发电厂"],
-    "key": "testWorkTypes"
+    "key": "testWorkTypes",
+    "sendFormat": "String"
   },
   {
-    "type":"MULTI_CHECKBOX",
-    "checkboxTitle":"可操作次数",
-    "checkboxNameList":["一次","两次"],
-    "key": "operateDegree"
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonTitle":"可操作次数",
+    "radioButtonName":["一次","两次","一次和两次"],
+    "key": "operateDegree",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"机械设备",
     "buttonName":["下载模板","上传清册"],
-    "key": "constructionToolLists"
+    "additionalKey": "constructionToolListFile"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
     "inputUnit":"(天)",
-    "key":"validTime"
+    "key":"validTime",
+    "sendFormat": "Int"
   },
   {
     "type":"SUBMIT",
-    "submitContent":"确认并提交"
+    "submitContent":"确认并提交",
+    "key": "Provider"
   }
 ]

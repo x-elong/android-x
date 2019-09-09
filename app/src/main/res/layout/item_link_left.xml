@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/general_50">
+
+    <TextView
+        android:id="@+id/tv_link_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="recycle"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_18"
+         />
+</LinearLayout>

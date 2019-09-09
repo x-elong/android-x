@@ -1,12 +1,12 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"规格型号：",
+    "singleDisplayLeftTitle":"规格型号:",
     "singleDisplayLeftContent":"00000"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"数量（个）：",
+    "singleDisplayLeftTitle":"数量(个):",
     "singleDisplayLeftContent":"15"
   },
   {

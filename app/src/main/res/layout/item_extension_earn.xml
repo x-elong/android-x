@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background"
+    android:padding="@dimen/general_10">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:id="@+id/tv_extension_month"
+        android:text="TextView"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_extension_month_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/general_10"
+        android:text="+50"
+        android:textColor="#d43030"
+        android:textSize="@dimen/font_tv_hint_15" />
+</LinearLayout>

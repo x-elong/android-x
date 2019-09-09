@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="拍摄专业证书且清晰可见"
+        android:text="拍摄照片且清晰可见"
         android:textSize="@dimen/font_tv_normal_16"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注意:专业证书信息应清晰可见，不反光，不缺角"
+        android:text="注意:拍摄信息应清晰可见，不反光，不缺角"
         android:textSize="@dimen/font_tv_hint_13"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/top_10"
             android:textSize="@dimen/font_tv_normal_18"
-            android:text="点击拍摄/上传专业证书照"
+            android:text="点击拍摄/上传照片"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_uplaod_photo_content"/>
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_tv_hint_12"
-        android:text="信息仅用于实名认证，游村网络将保护您的信息隐私！"
+        android:text="@信息仅用于实名认证，游村网络将保护您的信息隐私！"
         app:layout_constraintVertical_bias="0.98"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

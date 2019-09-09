@@ -6,69 +6,19 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayTitle1": "杆号:",
     "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayTitle2": "杆塔属性:",
     "twoColumnDisplayContent2": "直线架子塔"
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayTitle1": "杆塔高度(m):",
     "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayTitle2": "杆塔型号:",
     "twoColumnDisplayContent2": "150锥型电杆"
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "支架",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "下户线",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "进户线",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "保护管",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "表箱",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "表计",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon3.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "一端埋设",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "两端埋设",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "表计编号登记",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon5.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/tableInstallation/tableInstallationSon6.json"
   }
 ]

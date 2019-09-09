@@ -1,0 +1,44 @@
+[
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "土质比例",
+        "twoDisplayContent1": "单位",
+        "twoDisplayContent2": "占比"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "普通土",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "坚土",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "松砂石",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "淤泥流砂",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "冻土",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "岩石",
+        "twoDisplayContent1": "%",
+        "twoDisplayContent2": "15"
+    }
+]

@@ -20,12 +20,13 @@ class GlideLoader : ImageLoader{
         .error(R.mipmap.icon_image_error)
     override fun loadImage(imageView: ImageView?, imagePath: String?) {
         //小图加载
-        Glide.with(imageView!!.getContext()).load(imagePath).apply(mOptions).into(imageView)
+        imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
+        Glide.with(imageView!!.context).load(imagePath).apply(mOptions).into(imageView)
     }
-
     override fun loadPreImage(imageView: ImageView?, imagePath: String?) {
         //大图加载
-        Glide.with(imageView!!.getContext()).load(imagePath).apply(mPreOptions).into(imageView)
+        imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
+        Glide.with(imageView!!.context).load(imagePath).apply(mPreOptions).into(imageView)
     }
     override fun clearMemoryCache() {
         //清理缓存

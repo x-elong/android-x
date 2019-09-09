@@ -5,7 +5,7 @@
     background color:white
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="center" android:width="@dimen/general_40" android:height="@dimen/general_20">
+    <item android:gravity="center" android:width="@dimen/general_60" android:height="@dimen/general_25">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/general_5"/>
             <stroke android:color="@color/gray" android:width="@dimen/general_1"/>

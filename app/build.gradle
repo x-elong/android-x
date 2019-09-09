@@ -5,6 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('AndroidTest.jks')
+            storePassword '410410410'
+            keyAlias = 'key0'
+            keyPassword '410410410'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.eletronicengineer"
@@ -16,15 +24,22 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/AMap2DMap_5.2.0_AMapSearch_6.9.0_AMapLocation_4.7.0_20190708.jar')
+//    implementation files('libs/AMap2DMap_5.2.0_AMapSearch_6.9.0_AMapLocation_4.7.0_20190708.jar')
+//    implementation files('libs/sdk_HeWeather_Public_Android_V3.1.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -53,6 +68,14 @@ dependencies {
 
     implementation 'com.lcw.library:imagepicker:2.2.2'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+//    implementation 'com.carson_ho:SearchLayout:1.0.1'
+
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    implementation 'com.chooseedittext:library:1.0.0'
+
+    implementation 'com.kymjs.rxvolley:rxvolley:1.1.4'
 
 
 }

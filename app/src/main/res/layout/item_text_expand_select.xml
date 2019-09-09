@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="@dimen/left_10"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintEnd_toStartOf="@+id/tv_project_expand_more"
         app:layout_constraintStart_toEndOf="@+id/tv_project_expand"
@@ -46,7 +47,6 @@
     <TextView
             android:text="规格型号"
             android:layout_width="0dp"
-            android:background="@drawable/item_background_expand"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:id="@+id/tv_project_expand_content"
@@ -55,6 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginLeft="@dimen/left_10"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

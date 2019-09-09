@@ -1,29 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<TextView-->
+    <!--android:id="@+id/tv_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/general_31"-->
+    <!--android:background="#64ffffff"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="商城"-->
+    <!--android:textColor="#045b4c"-->
+    <!--android:textSize="@dimen/font_tv_hint_15"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--android:layout_marginLeft="@dimen/left_45"-->
+    <!--/>-->
+
+
+    <TextView
+        android:id="@+id/tv_mall_first_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/general_50"
+        android:background="@drawable/item_background"
+        tools:ignore="MissingConstraints" />
+
     <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/general_31"
-            android:background="#64ffffff"
-            android:gravity="center_vertical"
-            android:text="商城"
-            android:textColor="#045b4c"
-            android:textSize="@dimen/font_tv_hint_15"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/left_45"
-            />
+        android:id="@+id/tv_mall_search_bg"
+        android:layout_width="@dimen/general_280"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/view_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_mall_first_bg"
+        app:layout_constraintEnd_toStartOf="@+id/tv_mall_person"
+
+        app:layout_constraintStart_toStartOf="@+id/tv_mall_first_bg"
+        app:layout_constraintTop_toTopOf="@+id/tv_mall_first_bg"
+        app:layout_constraintVertical_bias="0.478" />
+
     <TextView
-            android:layout_below="@+id/title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/general_360"
-            android:text="功能维护中"
-            android:textSize="@dimen/font_tv_hint_15"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv"
-            tools:layout_editor_absoluteX="0dp"/>
+        android:id="@+id/tv_mall_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_8"
+        android:background="@drawable/ic_search_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_mall_search_bg"
+        app:layout_constraintLeft_toLeftOf="@id/tv_mall_search_bg"
+        app:layout_constraintTop_toTopOf="@id/tv_mall_search_bg" />
+
+    <TextView
+        android:id="@+id/tv_mall_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_person_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_mall_first_bg"
+        app:layout_constraintEnd_toEndOf="@+id/tv_mall_first_bg"
+        app:layout_constraintTop_toTopOf="@+id/tv_mall_first_bg" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_mall_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_150"
+        app:layout_constraintTop_toBottomOf="@id/tv_mall_first_bg"
+        tools:layout_editor_absoluteX="9dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_mall_point_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_10"
+        android:layout_marginBottom="@dimen/general_20"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/vp_mall_banner"
+        app:layout_constraintLeft_toLeftOf="@id/vp_mall_banner"
+        app:layout_constraintRight_toRightOf="@id/vp_mall_banner" />
+
+
+    <View
+        android:id="@+id/tv_mall_second_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/vp_mall_banner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_15"
+        android:text="商品分类"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintBottom_toBottomOf="@id/tv_mall_second_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_mall_second_bg" />
+
+    <TextView
+        android:id="@+id/tv_mall_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/right_20"
+        android:background="@drawable/ic_navigate_next_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_mall_second_bg"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_mall_second_bg" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mTabLayout_mall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_mall_second_bg"
+        app:tabBackground="@color/transparent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#4ca0fe"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#4ca0fe"
+        app:tabTextColor="@color/black" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_mall"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#efefef"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mTabLayout_mall" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

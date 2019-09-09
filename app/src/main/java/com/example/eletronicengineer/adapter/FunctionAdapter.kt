@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
@@ -39,11 +40,15 @@ class FunctionAdapter : RecyclerView.Adapter<FunctionAdapter.ViewHolder> {
         val function = mFunctionList[i]
         viewHolder.function_Image.setImageResource(function.imageid)
         viewHolder.function_name.text = function.name
+        if(function.viewOnClickListener==null)
+            viewHolder.function_Image.setOnClickListener{
+                Toast.makeText(viewHolder.function_Image.context,"点击了${viewHolder.function_name.text}",Toast.LENGTH_SHORT).show()
+            }
+        else
         viewHolder.function_Image.setOnClickListener(function.viewOnClickListener)
     }
 
     override fun getItemCount(): Int {
         return mFunctionList.size
     }
-
 }

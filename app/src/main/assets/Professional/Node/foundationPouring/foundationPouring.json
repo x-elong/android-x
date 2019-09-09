@@ -6,57 +6,22 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayTitle1": "节点编号:",
     "twoColumnDisplayContent1": "1#",
-    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayTitle2": "节点类型:",
     "twoColumnDisplayContent2": "工井"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftTitle":"节点详情:",
     "singleDisplayLeftContent":"电缆分支箱"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftTitle":"节点位置:",
     "singleDisplayLeftContent":"湖南人文科技学院"
   },
   {
     "type":"BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "基层恢复",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "面层恢复",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "路缘石",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon3.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "装模",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "砖砌体",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon5.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "抹灰",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon6.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "混凝土浇筑",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon7.json"
   }
 ]

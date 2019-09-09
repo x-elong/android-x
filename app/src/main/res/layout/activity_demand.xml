@@ -17,5 +17,4 @@
     </com.bin.david.form.core.SmartTable>
     <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
                android:id="@+id/iv_main_water" tools:ignore="MissingConstraints"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,27 @@
+[
+    {
+        "type": "TITLE",
+        "title1": "电企通应用",
+        "styleType": "0"
+    },
+    {
+        "type": "EXPAND_MENU",
+        "expandMenuTitle": "日常应用",
+        "expandMenuContent": ["公告","任务","安全学习","资源库","随手拍","报销","考勤"]
+    },
+    {
+        "type": "EXPAND_MENU",
+        "expandMenuTitle": "项目管理",
+        "expandMenuContent": ["项目盘","进度计划表","施工日志","派工记工","任务分配","机械","工器具","材料","计划","晴雨表"]
+    },
+    {
+        "type": "EXPAND_MENU",
+        "expandMenuTitle": "现场管理",
+        "expandMenuContent": ["安全巡查","质量巡查","变更签证","保险"]
+    },
+    {
+        "type": "EXPAND_MENU",
+        "expandMenuTitle": "办公管理",
+        "expandMenuContent": ["汇报","申请","审批","保险","车辆","后勤","物资","文件","日报","证书"]
+    }
+]

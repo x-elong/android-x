@@ -1,79 +1,24 @@
 [
-  {
-    "type": "TITLE",
-    "title1": "材料运输",
-    "styleType": "0"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
-    "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
-    "twoColumnDisplayContent2": "直线架子塔"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
-    "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
-    "twoColumnDisplayContent2": "150锥型电杆"
-  },
-  {
-    "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "沙、石、石灰",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "水泥、砖、土、水",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "混凝土预制品",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "电杆",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "塔材",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "横担",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "金具、绝缘子、零星钢材",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "线材",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "塑料制品",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "设备",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  }
+    {
+        "type": "TITLE",
+        "title1": "材料运输",
+        "styleType": "0"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆号:",
+        "twoColumnDisplayContent1": "A1",
+        "twoColumnDisplayTitle2": "杆塔属性:",
+        "twoColumnDisplayContent2": "直线架子塔"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆塔高度(m):",
+        "twoColumnDisplayContent1": "10m",
+        "twoColumnDisplayTitle2": "杆塔型号:",
+        "twoColumnDisplayContent2": "150锥型电杆"
+    },
+    {
+        "type": "BLANK"
+    }
 ]

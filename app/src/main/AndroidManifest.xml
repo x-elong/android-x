@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.eletronicengineer">
-    <!-- 用于进行网络定位 -->
+
+    <dist:module dist:instant="true" /> <!-- Required -->
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" /> <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
@@ -15,26 +22,91 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
+        android:usesCleartextTraffic="true"
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ImageDisplayActivity"></activity>
-        <activity android:name=".activity.ProfessionalActivity"></activity>
-        <activity android:name=".activity.ProjectDiskActivity"></activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.ShippingAddressActivity"></activity>
+        <activity android:name=".activity.MyOrderActivity" />
+        <activity android:name=".activity.MyQRCodeActivity" />
+        <activity android:name=".activity.MyInformationActivity" />
+        <activity android:name=".activity.ShopListActivity" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="9949002cc0ba3a296e76ffdeb586ede6" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity android:name=".activity.ImageDisplayActivity" />
+        <activity android:name=".activity.ProfessionalActivity" />
+        <activity android:name=".activity.ProjectDiskActivity" />
+        <activity android:name=".activity.ShoppingActivity" />
+        <activity android:name=".activity.PersonInformationActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.SupplyActivity" />
+        <activity android:name=".activity.DemandActivity" />
+        <activity android:name=".activity.DemandDisplayActivity"></activity>
+        <activity android:name=".activity.SupplyDisplayActivity"></activity>
+        <activity android:name=".activity.FriendRequestActivity" /> <!-- Required SDK核心功能 -->
+        <service
+            android:name=".service.PushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".service.ReceiveService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name="cn.jpush.im.android.helpers.IMReceiver"
+            android:enabled="true"
+            android:exported="false" /> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" /> <!-- Required since JCore 1.1.7. SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.example.chartapp.DataProvider"
+            android:exported="false" />
+        <provider
+            android:name="cn.jpush.im.android.helpers.ipc.IMProvider"
+            android:authorities="com.example.chartapp.IMProvider"
+            android:exported="false" />
+
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="0779610012f48cd81f43ca66" />
+
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.AddChatGroupActivity" />
+        <activity android:name=".activity.AddFriendActivity" />
+        <activity android:name=".activity.RetailStoreActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SupplyActivity"></activity>
-        <activity android:name=".activity.DemandActivity" />
     </application>
 
 </manifest>

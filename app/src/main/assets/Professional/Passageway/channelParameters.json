@@ -1,86 +1,38 @@
 [
-  {
-    "type": "TITLE",
-    "title1": "通道参数",
-    "styleType": "0"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "接入点：",
-    "twoColumnDisplayContent1": "319",
-    "twoColumnDisplayTitle2": "输出点：",
-    "twoColumnDisplayContent2": "319"
-  },
-  {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"接入点名称：",
-    "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
-  },
-  {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"输出点名称：",
-    "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
-  },
-  {
-    "type":"BLANK"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "编号",
-    "fiveDisplayContent1": "大号节点",
-    "fiveDisplayContent2": "小号节点",
-    "fiveDisplayContent3": "类型",
-    "fiveDisplayContent4": "详情"
-  },
-  {
-    "type":"BLANK"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "32",
-    "fiveDisplayContent2": "11",
-    "fiveDisplayContent3": "直埋",
-    "fiveDisplayContent4": "···"
-  }
+    {
+        "type": "TITLE",
+        "title1": "通道参数",
+        "styleType": "0"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "接入点:",
+        "twoColumnDisplayContent1": "319",
+        "twoColumnDisplayTitle2": "输出点:",
+        "twoColumnDisplayContent2": "319"
+    },
+    {
+        "type":"SINGLE_DISPLAY_LEFT",
+        "singleDisplayLeftTitle":"接入点名称:",
+        "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
+    },
+    {
+        "type":"SINGLE_DISPLAY_LEFT",
+        "singleDisplayLeftTitle":"输出点名称:",
+        "singleDisplayLeftContent":"湖南人文科技学院人文科技学院"
+    },
+    {
+        "type":"BLANK"
+    },
+    {
+        "type": "FIVE_DISPLAY",
+        "fiveDisplayTitle": "编号",
+        "fiveDisplayContent1": "大号节点",
+        "fiveDisplayContent2": "小号节点",
+        "fiveDisplayContent3": "类型",
+        "fiveDisplayContent4": "详情"
+    },
+    {
+        "type":"BLANK"
+    }
 ]

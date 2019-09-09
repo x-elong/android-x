@@ -3,14 +3,14 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/item_background"
-              android:padding="@dimen/general_10">
+              android:padding="@dimen/general_5">
 
     <TextView
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_position_title"
-            android:textSize="@dimen/font_tv_normal_20"
+            android:textSize="@dimen/font_tv_normal_18"
             android:hint="xxxx"
             android:gravity="center_vertical"
             android:textColor="@android:color/black" />
@@ -22,6 +22,7 @@
             android:layout_height="24dp"
             android:id="@+id/tv_position_add"
             android:background="@drawable/add"
+            android:layout_marginRight="6dp"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>
 

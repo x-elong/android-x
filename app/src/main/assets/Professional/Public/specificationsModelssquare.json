@@ -1,0 +1,26 @@
+[
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "规格型号",
+        "twoDisplayContent1": "单位",
+        "twoDisplayContent2": "数量"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "长",
+        "twoDisplayContent1": "m",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "宽",
+        "twoDisplayContent1": "m",
+        "twoDisplayContent2": "15"
+    },
+    {
+        "type": "TWO_DISPLAY",
+        "twoDisplayTitle": "深",
+        "twoDisplayContent1": "m",
+        "twoDisplayContent2": "15"
+    }
+]

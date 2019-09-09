@@ -1,54 +1,24 @@
 [
-  {
-    "type": "TITLE",
-    "title1": "预制件填埋",
-    "styleType": "0"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
-    "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
-    "twoColumnDisplayContent2": "直线架子塔"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
-    "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
-    "twoColumnDisplayContent2": "150锥型电杆"
-  },
-  {
-    "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "底盘填埋",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "拉盘填埋",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "卡盘填埋",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "套筒填埋",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "混凝土装配式基础",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon3.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/prefabricatedLandfill/prefabricatedLandfillSon4.json"
-  }
+    {
+        "type": "TITLE",
+        "title1": "预制件填埋",
+        "styleType": "0"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆号:",
+        "twoColumnDisplayContent1": "A1",
+        "twoColumnDisplayTitle2": "杆塔属性:",
+        "twoColumnDisplayContent2": "直线架子塔"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆塔高度(m):",
+        "twoColumnDisplayContent1": "10m",
+        "twoColumnDisplayTitle2": "杆塔型号:",
+        "twoColumnDisplayContent2": "150锥型电杆"
+    },
+    {
+        "type": "BLANK"
+    }
 ]

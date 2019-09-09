@@ -4,25 +4,97 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
     <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/general_31"
-            android:background="#64ffffff"
-            android:gravity="center_vertical"
-            android:text="我的"
-            android:textColor="#045b4c"
-            android:textSize="@dimen/font_tv_hint_15"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/left_45"/>
+        android:id="@+id/my_setting"
+        android:layout_width="@dimen/general_24"
+        android:layout_height="@dimen/general_24"
+        android:layout_marginTop="@dimen/general_10"
+        android:layout_marginEnd="@dimen/general_10"
+        android:background="@drawable/setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--<TextView-->
+            <!--android:id="@+id/tv_title"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/general_31"-->
+            <!--android:background="#64ffffff"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="我的"-->
+            <!--android:textColor="#045b4c"-->
+            <!--android:textSize="@dimen/font_tv_hint_15"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--android:layout_marginLeft="@dimen/left_45"/>-->
+    <View
+        android:id="@+id/view_my"
+        android:layout_width="@dimen/general_180"
+        android:layout_height="@dimen/general_60"
+        android:layout_marginStart="@dimen/left_12"
+        android:layout_marginTop="@dimen/general_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_setting" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_my_header"
+        android:layout_width="@dimen/general_51"
+        android:layout_height="@dimen/general_51"
+        android:src="@drawable/header_mall"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_my"
+        app:layout_constraintStart_toStartOf="@+id/view_my"
+        app:layout_constraintTop_toTopOf="@+id/view_my" />
+
     <TextView
-            android:layout_below="@+id/title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/general_360"
-            android:text="功能维护中"
-            android:textSize="@dimen/font_tv_hint_15"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv"
-            tools:layout_editor_absoluteX="0dp"/>
+        android:id="@+id/tv_my_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_8"
+        android:text="18788667374"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintStart_toEndOf="@+id/iv_my_header"
+        app:layout_constraintTop_toTopOf="@+id/iv_my_header" />
+
+    <TextView
+        android:id="@+id/tv_qr_code"
+        android:layout_width="@dimen/general_26"
+        android:layout_height="@dimen/general_26"
+        android:layout_marginStart="@dimen/left_8"
+        android:background="@drawable/qr_code"
+        app:layout_constraintStart_toEndOf="@+id/view_my"
+        app:layout_constraintTop_toTopOf="@+id/tv_my_phone" />
+    <TextView
+        android:id="@+id/tv_my_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="董事长室 - 董事长"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_my_header"
+        app:layout_constraintStart_toStartOf="@+id/tv_my_phone" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_function_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_16"
+        android:layout_marginTop="@dimen/top_8"
+        android:layout_marginEnd="@dimen/general_16"
+        android:background="@color/white"
+        android:overScrollMode="never"
+        android:elevation="@dimen/general_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_my_header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_other_function_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/rv_my_function_content"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/general_10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/general_195"
+            android:id="@+id/iv_desc_image"
+            android:src="@drawable/image" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#64ffffff"
+            android:textSize="@dimen/font_tv_normal_16"
+            android:id="@+id/tv_desc_content"
+            android:singleLine="false"
+            android:lineHeight="@dimen/font_tv_normal_20"
+            android:text="       湖南宇畅电力服务有限公司成立于2019年03月11日，注册地位于湖南省娄底市经济技术开发区众一桂府紫晶台0009栋111号门面，法人代表为李清海。经营范围包括电力供应；电力项目的设计；电力项目的咨询；合同能源管理；电力信息系统的设计、开发、维护；电力工程设计服务；工程技术咨询服务；计算机网络平台的建设与开发；数据库及计算机网络服务；经营电子商务；网络技术开发；基础软件服务、应用软件服务。（依法须经批准的项目，经相关部门批准后方可开展经营活动）
+            \n统一社会信用代码:91431300MA4QAGRLXX
+            \n组织机构代码： MA4QAGRLX
+            \n注册号 ：431306000022362
+            \n经营状态 ：存续（在营、开业、在册）
+            \n所属行业 ：软件和信息技术服务业
+            \n成立日期 ：5423-49-22
+            \n公司类型 ：有限责任公司(自然人投资或控股)
+            \n营业期限 ：2019-03-11 - -
+            \n法定代表人 ：李清海法人对外投资
+            \n发照日期 5423-49-22
+            \n注册资本： 544万元人民币
+            \n登记机关： 娄底市工商行政管理局经济技术开发区分局
+            \n企业地址 ：湖南省娄底市经济技术开发区众一桂府紫晶台0009栋111号门面 "/>
+    </LinearLayout>
+</ScrollView>

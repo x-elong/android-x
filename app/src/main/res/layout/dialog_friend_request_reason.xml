@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:padding="10dp"
+              android:layout_height="match_parent">
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="请输入你的理由:"
+              android:id="@+id/tv_friend_request_reason_hint"
+    />
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/background_black_stroke"
+              android:minHeight="100dp"
+              android:hint="不填默认发送你好"
+              android:id="@+id/et_friend_request_reason_content"
+    />
+</LinearLayout>

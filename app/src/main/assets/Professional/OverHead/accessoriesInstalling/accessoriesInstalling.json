@@ -6,104 +6,19 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayTitle1": "杆号:",
     "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayTitle2": "杆塔属性:",
     "twoColumnDisplayContent2": "直线架子塔"
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayTitle1": "杆塔高度(m):",
     "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayTitle2": "杆塔型号:",
     "twoColumnDisplayContent2": "150锥型电杆"
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "跳线制作及安装",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地环",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "线路故障指示器",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon3.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "悬垂线夹",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "预绞丝线夹",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "均压环",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "屏蔽环",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "重锤",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "防震锤",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "间隔棒",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "阻尼线",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "阻冰环",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "刷油漆",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon5.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "标识牌",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon6.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "喷涂杆号",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon7.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "电杆反光膜",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon8.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/accessoriesInstalling/accessoriesInstallingSon9.json"
   }
 ]

@@ -1,22 +1,22 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"构件名称：",
+    "singleDisplayLeftTitle":"构件名称:",
     "singleDisplayLeftContent":"盖板"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"构件型号：",
+    "singleDisplayLeftTitle":"构件型号:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"构件类别：",
+    "singleDisplayLeftTitle":"构件类别:",
     "singleDisplayLeftContent":"现场制作"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"预埋铁件：",
+    "singleDisplayLeftTitle":"预埋铁件:",
     "singleDisplayLeftContent":"888t"
   },
   {

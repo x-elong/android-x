@@ -20,9 +20,11 @@ import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.sdf.*
-import java.util.ArrayList
-import java.util.Arrays
 import com.lcw.library.imagepicker.ImagePicker
+import org.json.JSONArray
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     supportFragmentManager.popBackStackImmediate(null,1)
                     return_iv.visibility=View.INVISIBLE
-                    title_tv.text="招投供需"
+                    tv_title.text="招投供需"
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.application -> {
@@ -76,14 +78,20 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val startTime = System.currentTimeMillis()
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+        val endTime = System.currentTimeMillis()
+        Log.i("main run time is",(endTime-startTime).toString())
         PermissionHelper.getPermission(this, 1)
         initFragment()
-
-        //supportActionBar?.hide()
+        supportActionBar?.hide()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
     //初始化界面 将第三个界面作为最初界面
     private fun initFragment() {
         val newsFragment = NewsFragment()
@@ -96,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             }
             supportFragmentManager.popBackStackImmediate(null,1)
             return_iv.visibility=View.INVISIBLE
-            title_tv.text="招投供需"
+            tv_title.text="招投供需"
             bnv.menu.getItem(1).isChecked=true
         })
         val mallFragment = MallFragment()

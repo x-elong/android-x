@@ -6,37 +6,37 @@
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"厚度（mm）：",
+    "singleDisplayLeftTitle":"厚度（mm）:",
     "singleDisplayLeftContent":"200"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"长（m）：",
+    "singleDisplayLeftTitle":"长（m）:",
     "singleDisplayLeftContent":"10"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"宽（m）：",
+    "singleDisplayLeftTitle":"宽（m）:",
     "singleDisplayLeftContent":"8"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"面积（m²）：",
+    "singleDisplayLeftTitle":"面积（m²）:",
     "singleDisplayLeftContent":"59"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"余土外运（m³）：",
+    "singleDisplayLeftTitle":"余土外运（m³）:",
     "singleDisplayLeftContent":"38"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"人工外运（km）：",
+    "singleDisplayLeftTitle":"人工外运（km）:",
     "singleDisplayLeftContent":"10"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"机械外运（km）：",
+    "singleDisplayLeftTitle":"机械外运（km）:",
     "singleDisplayLeftContent":"10"
   },
   {

@@ -1,0 +1,12 @@
+[
+    {
+        "type": "TITLE",
+        "title1": "通讯录",
+        "styleType": "2"
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"张三",
+        "necessary":false
+    }
+]

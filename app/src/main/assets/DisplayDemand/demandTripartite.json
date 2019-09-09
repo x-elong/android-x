@@ -1,0 +1,44 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"三方服务清单：",
+    "buttonName":["点击查看"]
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"合作方属性:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"费用标准:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"报名"
+  }
+]

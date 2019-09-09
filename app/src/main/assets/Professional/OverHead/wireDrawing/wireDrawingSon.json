@@ -1,0 +1,17 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"规格型号:",
+    "singleDisplayLeftContent":"GJ-70"
+  },
+  {
+    "type":"SINGLE_DISPLAY_LEFT",
+    "singleDisplayLeftTitle":"设计数量（根）:",
+    "singleDisplayLeftContent":"1"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  }
+]

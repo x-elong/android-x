@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_title_back_integral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginTop="@dimen/general_5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_title_integral"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:paddingTop="@dimen/top_7"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_calendar_integral"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginRight="@dimen/general_10"
+        android:background="@drawable/ic_date_range_black_24dp"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_integral"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_integral"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/general_40"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"
+        android:text="一级会员"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:id="@+id/tv_extended"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"
+        app:layout_constraintRight_toLeftOf="@+id/tv_rebate"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/general_40"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"
+        android:text="二级会员"
+        android:textColor="@color/black"
+        android:background="@color/dark_gray_bg"
+        android:id="@+id/tv_rebate"
+        app:layout_constraintLeft_toRightOf="@+id/tv_extended"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/general_5"
+        android:layout_marginStart="@dimen/general_25"
+        android:text="08月"
+        android:textColor="@color/black"
+        android:id="@+id/tv_time_integral"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_extended"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"
+        android:text="+50"
+        android:textColor="#d43030"
+        android:id="@+id/tv_mark_integral"
+        android:layout_marginTop="@dimen/general_5"
+        android:layout_marginStart="@dimen/general_10"
+        app:layout_constraintStart_toEndOf="@+id/tv_time_integral"
+        app:layout_constraintTop_toBottomOf="@+id/tv_extended"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="@dimen/general_10"
+        android:background="@color/white"
+        android:id="@+id/recycler_integral"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_integral"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,59 +1,24 @@
 [
-  {
-    "type": "TITLE",
-    "title1": "材料运输",
-    "styleType": "0"
-  },
-  {
-    "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "通道编号：",
-    "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "通道类型：",
-    "fourDisplayContent3": "自动获取"
-  },
-  {
-    "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "小号节点：",
-    "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "大号节点：",
-    "fourDisplayContent3": "自动获取"
-  },
-  {
-    "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "混凝土预制品",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "线材",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "沙、石、石灰",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "水泥、砖、土、水",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "金具、绝缘子、零星钢材",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "塑料制品",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "其他材料制品",
-    "expandListPath": "Professional/OverHead/towerTransportation/towerTransportationSon1.json"
-  }
+    {
+        "type": "TITLE",
+        "title1": "材料运输",
+        "styleType": "0"
+    },
+    {
+        "type": "FOUR_DISPLAY",
+        "fourDisplayTitle": "通道编号:",
+        "fourDisplayContent1": "自动获取",
+        "fourDisplayContent2": "通道类型:",
+        "fourDisplayContent3": "自动获取"
+    },
+    {
+        "type": "FOUR_DISPLAY",
+        "fourDisplayTitle": "小号节点:",
+        "fourDisplayContent1": "自动获取",
+        "fourDisplayContent2": "大号节点:",
+        "fourDisplayContent3": "自动获取"
+    },
+    {
+        "type": "BLANK"
+    }
 ]

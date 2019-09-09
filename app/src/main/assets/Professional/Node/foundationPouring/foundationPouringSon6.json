@@ -1,22 +1,22 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"抹灰类型：",
+    "singleDisplayLeftTitle":"抹灰类型:",
     "singleDisplayLeftContent":"抹面"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"抹灰面积（m²）：",
+    "singleDisplayLeftTitle":"抹灰面积（m²）:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"灰浆类型：",
+    "singleDisplayLeftTitle":"灰浆类型:",
     "singleDisplayLeftContent":"水泥砂浆"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"灰浆标号：",
+    "singleDisplayLeftTitle":"灰浆标号:",
     "singleDisplayLeftContent":"888"
   },
   {

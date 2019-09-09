@@ -43,6 +43,9 @@
     "fourDisplayContent3": " "
   },
   {
+    "type":"BLANK"
+  },
+  {
     "type": "FOUR_DISPLAY",
     "fourDisplayTitle": "土质比例",
     "fourDisplayContent1": "%",

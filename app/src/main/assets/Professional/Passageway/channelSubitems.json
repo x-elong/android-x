@@ -5,18 +5,18 @@
     "styleType": "0"
   },
   {
-    "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "通道编号：",
-    "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "通道类型：",
-    "fourDisplayContent3": "自动获取"
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "通道编号:",
+    "twoColumnDisplayContent1": "自动获取",
+    "twoColumnDisplayTitle2": "通道类型:",
+    "twoColumnDisplayContent2": "自动获取"
   },
   {
-    "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "小号节点：",
-    "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "大号节点：",
-    "fourDisplayContent3": "自动获取"
+    "type": "TWO_COLUMN_DISPLAY",
+    "twoColumnDisplayTitle1": "小号节点:",
+    "twoColumnDisplayContent1": "自动获取",
+    "twoColumnDisplayTitle2": "大号节点:",
+    "twoColumnDisplayContent2": "自动获取"
   },
   {
     "type":"BLANK"

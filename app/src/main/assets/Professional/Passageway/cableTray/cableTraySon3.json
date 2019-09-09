@@ -1,12 +1,12 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"型号：",
+    "singleDisplayLeftTitle":"型号:",
     "singleDisplayLeftContent":"80以内"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"铺设长度：",
+    "singleDisplayLeftTitle":"铺设长度:",
     "singleDisplayLeftContent":"888"
   },
   {

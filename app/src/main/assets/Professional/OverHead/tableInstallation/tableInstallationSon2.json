@@ -1,12 +1,17 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"规格型号：",
+    "singleDisplayLeftTitle":"原表计号:",
     "singleDisplayLeftContent":"00000"
   },
   {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"照片上传",
+    "necessary":false
+  },
+  {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"数量（米）：",
+    "singleDisplayLeftTitle":"新表计号:",
     "singleDisplayLeftContent":"15"
   },
   {

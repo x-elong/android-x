@@ -1,0 +1,50 @@
+[
+    {
+        "type": "TITLE",
+        "title1": "公共点定位",
+        "styleType": "0"
+    },
+    {
+        "type": "POSITION_ADD",
+        "title1": "仓库定位"
+    },
+    {
+        "type": "POSITION_DELETE",
+        "inputPositionTitle": "",
+        "necessary": true
+    },
+    {
+        "type": "POSITION_ADD",
+        "title1": "卸点定位"
+    },
+    {
+        "type": "POSITION_DELETE",
+        "inputPositionTitle": "",
+        "necessary": true
+    },
+    {
+        "type": "POSITION_ADD",
+        "title1": "汽车运输"
+    },
+    {
+        "type": "POSITION_START_END",
+        "inputPositionTransportTitle": ""
+    },
+    {
+        "type": "POSITION_ADD",
+        "title1": "船舶运输"
+    },
+    {
+        "type": "POSITION_START_END",
+        "inputPositionTransportTitle": ""
+    },
+    {
+        "type": "POSITION_ADD",
+        "title1": "索道运输"
+    },
+    {
+        "type": "POSITION_START_END",
+        "inputPositionTransportTitle": ""
+    }
+]
+

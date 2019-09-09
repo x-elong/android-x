@@ -1,54 +1,24 @@
 [
-  {
-    "type": "TITLE",
-    "title1": "接地敷设",
-    "styleType": "0"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
-    "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
-    "twoColumnDisplayContent2": "直线架子塔"
-  },
-  {
-    "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
-    "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
-    "twoColumnDisplayContent2": "150锥型电杆"
-  },
-  {
-    "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地开挖沟",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地极制作及安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地母线敷设",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "引下安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地体安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地防腐",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  }
+    {
+        "type": "TITLE",
+        "title1": "接地敷设",
+        "styleType": "0"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆号:",
+        "twoColumnDisplayContent1": "A1",
+        "twoColumnDisplayTitle2": "杆塔属性:",
+        "twoColumnDisplayContent2": "直线架子塔"
+    },
+    {
+        "type": "TWO_COLUMN_DISPLAY",
+        "twoColumnDisplayTitle1": "杆塔高度(m):",
+        "twoColumnDisplayContent1": "10m",
+        "twoColumnDisplayTitle2": "杆塔型号:",
+        "twoColumnDisplayContent2": "150锥型电杆"
+    },
+    {
+        "type": "BLANK"
+    }
 ]

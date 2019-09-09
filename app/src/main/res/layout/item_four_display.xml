@@ -7,8 +7,8 @@
               android:padding="@dimen/general_10">
 
     <TextView
-            android:layout_width="@dimen/general_100"
-            android:text="项目类别的的"
+            android:layout_width="@dimen/general_110"
+            android:text="交叉或跨越五题"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:id="@+id/tv_four_display_title"

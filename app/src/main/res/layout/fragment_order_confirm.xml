@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f3f3"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_order_confirm_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_confirm_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:paddingTop="@dimen/top_7"
+        android:text="确认订单"
+        android:textStyle="bold"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_style3"
+        android:layout_margin="@dimen/general_3"
+        android:padding="@dimen/general_10"
+        android:id="@+id/view_address_information"
+        app:layout_constraintTop_toBottomOf="@+id/view_confirm"
+        >
+        <TextView
+            android:id="@+id/tv_order_confirm_position"
+            android:layout_width="@dimen/general_30"
+            android:layout_height="@dimen/general_30"
+            android:background="@drawable/position_two"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_5"
+            android:layout_marginStart="@dimen/general_10"
+            android:text="黄芊茜"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_order_confirm_position"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_order_confirm_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_10"
+            android:layout_marginTop="@dimen/general_5"
+            android:text="123456789012"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_order_confirm_name"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_address"
+            android:layout_width="@dimen/general_250"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_5"
+            android:layout_marginStart="@dimen/general_10"
+            android:text="苏州市虎丘区太湖大道555555555号文体中心影视中心南业街"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_hint_14"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_confirm_name"
+            app:layout_constraintStart_toEndOf="@id/tv_order_confirm_position"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_select_address"
+            android:layout_width="@dimen/general_35"
+            android:layout_height="@dimen/general_35"
+            android:background="@drawable/ic_expand"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_style3"
+        android:layout_margin="@dimen/general_3"
+        android:padding="@dimen/general_10"
+        app:layout_constraintTop_toBottomOf="@+id/view_address_information"
+        >
+        <TextView
+            android:id="@+id/tv_order_confirm_goods_image"
+            android:layout_width="@dimen/general_50"
+            android:layout_height="@dimen/general_50"
+            android:background="@drawable/banner"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_tv_normal_16"
+            android:layout_marginTop="@dimen/general_15"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_3"
+            android:layout_marginStart="@dimen/general_10"
+            android:text="九朗 5KW 屋顶太阳能发电\n 分布式光伏发电系统 勘测定金"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toTopOf="@+id/tv_order_confirm_goods_image"
+            app:layout_constraintStart_toEndOf="@id/tv_order_confirm_goods_image"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:textSize="@dimen/font_tv_hint_15"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_unit_price"
+            app:layout_constraintEnd_toStartOf="@+id/tv_unit_price"
+            app:layout_constraintTop_toTopOf="@+id/tv_unit_price" />
+
+        <TextView
+            android:id="@+id/tv_unit_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="25"
+            android:textSize="@dimen/font_tv_hint_15"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_order_confirm_goods"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_order_confirm_goods" />
+        <TextView
+            android:id="@+id/tv_order_confirm_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="数量"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_goods_image"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/btn_order_confirm_reduce"
+            android:layout_width="@dimen/general_25"
+            android:layout_height="@dimen/general_25"
+            android:layout_marginEnd="@dimen/general_75"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="-"
+            android:background="@drawable/btn_style1"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_goods_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/et_order_confirm_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="1"
+            android:enabled="false"
+            android:maxLines="1"
+            android:minEms="1"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_order_confirm_reduce"
+            app:layout_constraintEnd_toStartOf="@+id/btn_order_confirm_add"
+            app:layout_constraintStart_toEndOf="@+id/btn_order_confirm_reduce"
+            app:layout_constraintTop_toTopOf="@+id/btn_order_confirm_reduce"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_order_confirm_add"
+            android:layout_width="@dimen/general_25"
+            android:layout_height="@dimen/general_25"
+            android:layout_marginTop="@dimen/general_30"
+            android:textSize="@dimen/font_tv_normal_16"
+            android:background="@drawable/btn_style1"
+            android:text="+"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_goods_image"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_subtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="小计"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_account"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_order_confirm_subtotal_money"
+            app:layout_constraintEnd_toStartOf="@+id/tv_order_confirm_subtotal_money"
+            app:layout_constraintTop_toTopOf="@+id/tv_order_confirm_subtotal_money" />
+        <TextView
+            android:id="@+id/tv_order_confirm_subtotal_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="***"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="实付金额"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_subtotal"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_tv_normal_16"
+            android:text="¥"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_order_confirm_pay_money"
+            app:layout_constraintEnd_toStartOf="@+id/tv_order_confirm_pay_money"
+            app:layout_constraintTop_toTopOf="@+id/tv_order_confirm_pay_money" />
+        <TextView
+            android:id="@+id/tv_order_confirm_pay_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="***"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_subtotal"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_order_confirm_pay_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:text="手机号"
+            android:textColor="#383838"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_pay"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+        <EditText
+            android:id="@+id/et_order_confirm_pay_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_5"
+            android:layout_marginTop="@dimen/general_30"
+            android:layout_marginBottom="@dimen/general_30"
+            android:text=""
+            android:hint="请输入"
+            android:background="@color/white"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_confirm_pay"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_45"
+        android:background="#ff5733"
+        android:text="提交订单"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:layout_marginBottom="@dimen/general_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

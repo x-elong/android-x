@@ -1,0 +1,103 @@
+[
+    {
+        "type": "TITLE",
+        "title1": "具体任务",
+        "styleType": "3"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "复测分坑",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon1.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "基础开挖",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon2.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "材料运输",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon3.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "预制件填埋",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon4.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "基础浇筑",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon5.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "杆塔组立",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon6.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "拉线制作",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon7.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "横担安装",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon8.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "绝缘子安装",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon9.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "焊接制作",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon10.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "导线架设",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon11.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "附件安装",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon12.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "设备安装",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon13.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "接地敷设",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon14.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "户表安装",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon15.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "带电作业",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon16.json",
+        "styleType": "1"
+    }
+]

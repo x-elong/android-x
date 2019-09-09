@@ -68,7 +68,14 @@
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "跨越",
+    "fourDisplayTitle": "20kv及以下跨越",
+    "fourDisplayContent1": "处",
+    "fourDisplayContent2": "详情",
+    "fourDisplayContent3": " "
+  },
+  {
+    "type": "FOUR_DISPLAY",
+    "fourDisplayTitle": "35kv及以上跨越",
     "fourDisplayContent1": "处",
     "fourDisplayContent2": "详情",
     "fourDisplayContent3": " "

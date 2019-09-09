@@ -1,42 +1,42 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"路面形式：",
+    "singleDisplayLeftTitle":"路面形式:",
     "singleDisplayLeftContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"厚度：",
+    "singleDisplayLeftTitle":"厚度:",
     "singleDisplayLeftContent":"m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"长：",
+    "singleDisplayLeftTitle":"长:",
     "singleDisplayLeftContent":"m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"宽：",
+    "singleDisplayLeftTitle":"宽:",
     "singleDisplayLeftContent":"m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"面积：",
+    "singleDisplayLeftTitle":"面积:",
     "singleDisplayLeftContent":"m²"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"余土外运：",
+    "singleDisplayLeftTitle":"余土外运:",
     "singleDisplayLeftContent":"m³"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"人工外运：",
+    "singleDisplayLeftTitle":"人工外运:",
     "singleDisplayLeftContent":"km"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"机械外运：",
+    "singleDisplayLeftTitle":"机械外运:",
     "singleDisplayLeftContent":"km"
   },
   {

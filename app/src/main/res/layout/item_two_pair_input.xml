@@ -17,8 +17,9 @@
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:ems="3"
+            android:gravity="center"
             android:id="@+id/et_two_pair_input_value1" android:textSize="@dimen/font_tv_hint_15"
             android:textColor="@android:color/black"/>
     <TextView
@@ -28,8 +29,9 @@
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:gravity="center"
             android:ems="3"
+            android:inputType="number"
             android:id="@+id/et_two_pair_input_value2" android:textSize="@dimen/font_tv_hint_15"
             android:textColor="@android:color/black"/>
     <TextView
