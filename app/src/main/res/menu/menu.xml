@@ -12,16 +12,6 @@
             android:title="供需"
     />
     <item
-            android:id="@+id/application"
-            android:icon="@drawable/application"
-            android:title="应用"
-    />
-    <item
-            android:id="@+id/shopping_mall"
-            android:icon="@drawable/shopping_mall"
-            android:title="商城"
-    />
-    <item
             android:id="@+id/my"
             android:icon="@drawable/my"
             android:title="我的"
