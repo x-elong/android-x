@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# 排除okhttp
+  -dontwarn com.squareup.**
+  -dontwarn okio.**
+  -keep public class org.codehaus.* { *; }
+  -keep public class java.nio.* { *; }
+#排除HeWeather
+  -dontwarn interfaces.heweather.com.interfacesmodule.**
+  -keep class interfaces.heweather.com.interfacesmodule.** { *;}

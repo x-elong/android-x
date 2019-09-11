@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/view_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_logout_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_logout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="注销账号"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_logout"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_warning"
+        android:layout_width="@dimen/general_21"
+        android:layout_height="@dimen/general_21"
+        android:layout_marginTop="@dimen/top_8"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/warning"
+        app:layout_constraintEnd_toStartOf="@+id/tv_warning_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_logout_title" />
+
+    <TextView
+        android:id="@+id/tv_warning_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:text="注销账号无法恢复，请谨慎操作"
+        android:textColor="#ef2e2e"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_warning"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_warning" />
+
+    <View
+        android:layout_width="@dimen/general_35"
+        android:layout_height="@dimen/general_1"
+        android:background="#999999"
+        android:layout_marginEnd="@dimen/right_8"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_read_title"
+        app:layout_constraintEnd_toStartOf="@+id/tv_read_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_read_title" />
+
+    <TextView
+        android:id="@+id/tv_read_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请先确认以下内容"
+        android:textSize="@dimen/font_tv_hint_12"
+        android:layout_marginTop="@dimen/top_4"
+        android:textColor="@color/text_hint_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_warning_content"
+        tools:ignore="MissingConstraints"
+         />
+    <View
+        android:layout_width="@dimen/general_35"
+        android:layout_height="@dimen/general_1"
+        android:background="#999999"
+        android:layout_marginStart="@dimen/left_8"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_read_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_read_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_read_title" />
+
+    <TextView
+        android:id="@+id/tv_read_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="#505050"
+        android:text="注销账号条件\n
+1.账号处于正常状态，账号没有被盗，被封等风险。\n
+2.半个月内未进行过修改密码、换绑手机、换绑邮箱操作。\n
+3.请确保金融账号已完成销户。\n
+4.没有正在使用中的商业产品及网邻通套餐。\n
+5.没有正在进行中的交易。\n
+6.发布的信息已删除。\n
+7.账号未绑定中国网络经纪人账号。\n\n
+注销账号须知\n
+1.账号注销后，会清空账号的所有身份信息和账号信息：包括但不限于用户名、认证和密保手机号、邮箱、qq、微博、微信，以及解除该账号对外授权的绑定关系。该操作不可逆，请谨慎操作。\n
+2.账号注销后，优惠券、会员权益、账号余额将被清除且无法恢复。\n
+3.注销账号是不可恢复操作，操作之前，请确认电企通账号内所有服务均已进行妥善处理。如因注销账号造成的损失由用户自行承担。\n
+4.注销账号并不代表本账号注销前的账号行为和相关责任得到豁免或减轻。\n
+5.手机号半年不能在平台内进行二次注销。\n
+6.账号注销后，通过中国网络经纪人转移至本账号的房产推广币将无法使用。
+"
+        app:layout_constraintTop_toBottomOf="@+id/tv_read_title"
+        tools:ignore="MissingConstraints"
+         />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_35"
+        android:background="#ef0b0b"
+        android:gravity="center"
+        android:text="阅读并同意，申请注销账号"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

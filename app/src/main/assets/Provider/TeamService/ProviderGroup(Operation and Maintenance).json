@@ -18,13 +18,34 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"人员清册",
     "buttonName":["下载模板","上传清册"],
-    "key": "provideCrewLists"
+    "additionalKey": "provideCrewListsFile"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆清册",
     "buttonName":["下载模板","上传清册"],
-    "key": "provideTransportMachines"
+    "additionalKey": "provideTransportMachineFile"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆全景照",
+    "necessary":false,
+    "key": "carPhotoPath",
+    "sendFormat": "String"
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可操作电压等级",
+    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
+    "key": "voltages",
+    "sendFormat": "String"
+  },
+  {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可实施范围",
+    "checkboxNameList":["土建","安装","调试"],
+    "key": "implementationRanges",
+    "sendFormat": "String"
   },
   {
     "type":"TWO_OPTIONS_SELECT_DIALOG",
@@ -1473,29 +1494,32 @@
         "西贡区", "元朗区", "屯门区", "荃湾区", "葵青区", "离岛区", "中西区", "湾仔区", "东区",
         "南区", "其他"]]
     ],
-    "key": "workTerritory"
+    "key": "workTerritory",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"机械设备",
     "buttonName":["下载模板","上传清册"],
-    "key": "constructionToolLists"
+    "additionalKey": "constructionToolListFile"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
     "inputUnit":"(天)",
-    "key": "periodValidity"
+    "key": "validTime",
+    "sendFormat": "Int"
   },
   {
     "type":"HINT",
-    "hintContent":"注：字符前有 * 为必填。",
+    "hintContent":"注:字符前有 * 为必填。",
     "customFontColor": "#FF0000",
     "startPosition": "6",
     "endPosition": "8"
   },
   {
     "type":"SUBMIT",
-    "submitContent":"确认发布"
+    "submitContent":"确认发布",
+    "key": "Provider"
   }
 ]

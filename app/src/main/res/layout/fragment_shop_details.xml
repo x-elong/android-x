@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/tv_shop_details_first_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_shop_details_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_shop_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:paddingTop="@dimen/top_7"
+        android:text="店铺详情"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_shop_details_first_view"
+        android:background="#a7a7a7"
+        android:id="@+id/tv_shop_details_second_view"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_shop_details_second_view"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_shop_details_header"
+        android:background="@color/white"
+        android:id="@+id/tv_shop_details_three_view"
+        />
+    <ImageView
+        android:paddingBottom="@dimen/bottom_5"
+        app:layout_constraintTop_toTopOf="@id/tv_shop_details_three_view"
+        android:layout_marginTop="@dimen/top_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/tv_shop_details_header"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/image"
+        android:layout_marginLeft="@dimen/left_10"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="宇畅电力"
+        android:id="@+id/tv_shop_name"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/tv_shop_details_header"
+        android:textSize="@dimen/font_tv_normal_17"
+        app:layout_constraintLeft_toRightOf="@id/tv_shop_details_header"
+        android:layout_marginLeft="@dimen/left_20"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="专业从事电力供应的生产、销售与服务"
+        android:id="@+id/tv_shop_details"
+        app:layout_constraintBottom_toBottomOf="@id/tv_shop_details_header"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tv_shop_details_header"
+        android:layout_marginLeft="@dimen/left_20"
+        android:textColor="@color/black"/>
+    <com.google.android.material.tabs.TabLayout
+        android:paddingTop="@dimen/top_10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mTabLayout_shop"
+        app:tabMode="fixed"
+        app:tabBackground="@color/transparent"
+        app:tabIndicatorColor="#4ca0fe"
+        app:tabSelectedTextColor="#4ca0fe"
+        app:tabTextColor="@color/black"
+        app:tabGravity="fill"
+        app:layout_constraintTop_toBottomOf="@id/tv_shop_details_three_view"
+        />
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/viewpager_shop"
+        app:layout_constraintTop_toBottomOf="@id/mTabLayout_shop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

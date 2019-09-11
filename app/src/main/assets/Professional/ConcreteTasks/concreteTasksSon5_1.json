@@ -1,0 +1,22 @@
+[
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["现浇基础"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["钢管桩基础"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["预制桩基础"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["钻孔灌注桩基础"]
+    }
+]

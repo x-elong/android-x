@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM" />
+  <component name="Encoding" defaultCharsetForPropertiesFiles="GBK" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/Provider/Personal certification.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/Provider/ProviderGroupPersonAdd.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/Provider/ProviderGroupVehicleAdd.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/Provider/TripartiteServices/Information entry.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/Provider/TripartiteServices/InformationAuthentication.json" charset="UTF-8" />
+  </component>
 </project>

@@ -1,7 +1,7 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"长：",
+    "singleDisplayLeftTitle":"长:",
     "singleDisplayLeftContent":"88m"
   },
   {
@@ -21,7 +21,7 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"土质比例：",
+    "buttonTitle":"土质比例:",
     "buttonName":["详情"]
   },
   {

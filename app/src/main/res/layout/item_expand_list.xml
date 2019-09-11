@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content"
-                                                   android:background="@drawable/item_background">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background">
+
     <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/tv_expand_list_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="@dimen/font_tv_hint_15"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/black"
-            android:layout_marginTop="@dimen/top_12" android:layout_marginLeft="@dimen/left_10"
-            android:layout_marginRight="@dimen/right_30"/>
+        android:id="@+id/tv_expand_list_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_expand"
+        app:layout_constraintEnd_toStartOf="@+id/tv_expand_list_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/tv_expand_list_checkbox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_expand_list_button"
+        app:layout_constraintStart_toEndOf="@+id/tv_expand_list_button"
+        app:layout_constraintTop_toTopOf="@+id/tv_expand_list_button" />
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_expand_list_button"
-            android:background="@drawable/ic_expand"
-            app:layout_constraintStart_toEndOf="@+id/tv_expand_list_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="@dimen/right_20"
-            android:layout_marginLeft="@dimen/left_10"
-            android:layout_marginTop="@dimen/top_10"/>
+        android:id="@+id/tv_expand_list_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_expand_list_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_expand_list_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/tv_expand_list_button" />
+
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_expand_list_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" app:layout_constraintTop_toBottomOf="@+id/tv_expand_list_title"
-            android:visibility="gone" tools:visibility="gone"
-            android:background="@color/dark_gray_bg"
-            />
+        android:id="@+id/rv_expand_list_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="36dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/tv_expand_list_button"
+        app:layout_constraintTop_toBottomOf="@+id/tv_expand_list_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

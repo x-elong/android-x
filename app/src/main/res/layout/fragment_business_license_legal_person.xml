@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+    <View
+        android:id="@+id/view_business_license_legal_person"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_business_license_legal_person_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_business_license_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="营业执照法人认证"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_business_license_legal_person"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_business_license_legal_person"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/left_20"
+        android:textSize="@dimen/font_tv_hint_12"
+        android:text="请输入你的真实资料用于认证"
+        app:layout_constraintTop_toBottomOf="@+id/tv_business_license_title"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_legal_person_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <RadioButton
+        android:id="@+id/radio_button_legal_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_20"
+        android:layout_marginTop="@dimen/top_20"
+        android:text="我同意"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_legal_person_content" />
+
+    <TextView
+        android:id="@+id/tv_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《电企通认证服务协议》"
+        android:textColor="#fc2727"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/radio_button_legal_person"
+        app:layout_constraintStart_toEndOf="@+id/radio_button_legal_person"
+        app:layout_constraintTop_toTopOf="@+id/radio_button_legal_person" />
+
+    <Button
+        android:id="@+id/btn_authorize"
+        android:layout_width="@dimen/general_318"
+        android:layout_height="@dimen/general_42"
+        android:layout_marginTop="@dimen/top_22"
+        android:text="立即授权"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:background="@drawable/btn_style3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_agreement" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_8"
+        android:lineSpacingExtra="@dimen/general_4"
+        android:text="注意：\n1.请确保营业执照注册时间在2周以上\n2.营业执照中没有企业名称，或者为*等情况，请填\n写个体工商户"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/btn_authorize"
+        app:layout_constraintTop_toBottomOf="@+id/btn_authorize" />
+</androidx.constraintlayout.widget.ConstraintLayout>

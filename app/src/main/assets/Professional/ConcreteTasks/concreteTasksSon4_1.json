@@ -1,0 +1,27 @@
+[
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["底盘填埋"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["拉盘填埋"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["卡盘填埋"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["套筒填埋"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["混凝土装配式基础"]
+    }
+]

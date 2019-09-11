@@ -2,6 +2,7 @@ package com.example.eletronicengineer.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.provider.MediaStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.widget.Adapter
 import com.bin.david.form.data.Column
 import com.bin.david.form.data.table.TableData
 import com.codekidlabs.storagechooser.StorageChooser
@@ -20,14 +22,22 @@ import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.downloadFile
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_demand.*
+import kotlinx.android.synthetic.main.item_public_point_position1.*
 import java.io.File
+import java.io.FileOutputStream
 import java.lang.Exception
+import java.util.*
 import kotlin.collections.ArrayList
 class DemandActivity : AppCompatActivity() {
   lateinit var mData: List<MultiStyleItem>
   lateinit var multiButtonListeners: MutableList<View.OnClickListener>
   //List<MultiStyleItem> mData=new ArrayList<>()
+  var mAdapter: RecyclerviewAdapter?=null
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_demand)
@@ -44,15 +54,29 @@ class DemandActivity : AppCompatActivity() {
     //获得界面类型的数值
     val intent = getIntent()
     val type = intent.getIntExtra("type", 0)
-    val adapter = switchAdapter(type)
-    rv_main_content.adapter = adapter
-    rv_main_content.layoutManager = LinearLayoutManager(this@DemandActivity)
+    if(mAdapter==null){
+      val result = Observable.create<RecyclerviewAdapter>{
+        it.onNext(switchAdapter(type))
+      }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          mAdapter=it
+          rv_main_content.adapter = mAdapter
+          rv_main_content.layoutManager = LinearLayoutManager(this)
+        }
+
+    }
+    else{
+      rv_main_content.adapter = mAdapter
+      rv_main_content.layoutManager = LinearLayoutManager(this)
+    }
   }
   //选择加载的界面
   fun switchAdapter(Type: Int): RecyclerviewAdapter {
     val adapterGenerate = AdapterGenerate()
-    adapterGenerate.context = this@DemandActivity
-    adapterGenerate.activity = this@DemandActivity
+    adapterGenerate.context = this
+    adapterGenerate.activity = this
     lateinit var adapter: RecyclerviewAdapter
     when (Type) {
       Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal -> {
@@ -234,28 +258,67 @@ class DemandActivity : AppCompatActivity() {
     }
 
   }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK) {
       when (requestCode) {
         Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal -> {
-          val uri = data!!.data
-          val path = getRealPathFromURI(uri!!)
-          Log.i("path", path)
+          val bmp = data?.extras!!.get("data") as Bitmap
+          val picName= UUID.randomUUID().toString()+".png"
+          val file=File(this@DemandActivity.filesDir.absolutePath+picName)
+          val fos= FileOutputStream(file)
+          bmp.compress(Bitmap.CompressFormat.PNG,100,fos)
+          val imgMap=UnSerializeDataBase.imgList.get(UnSerializeDataBase.imgList.size-1)
+          imgMap.path=file.absolutePath
+          imgMap.needDelete=true
+          UnSerializeDataBase.imgList.set(UnSerializeDataBase.imgList.size-1,imgMap)
         }
         Constants.RequestCode.REQUEST_PICK_FILE.ordinal -> {
           val uri = data!!.data
+          var path:String?=null
           if (uri!!.toString().contains("content")) {
-            val path = getRealPathFromURI(uri)
+            path = getRealPathFromURI(uri)
             Log.i("path", path)
+            val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+            fileMap.path=path!!
+            UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
           }
-          val file = File(uri.toString())
-          if (file.exists()) {
-            Log.i("file", file.name)
+          else
+          {
+            val file = File(uri.toString())
+            if (file.exists())
+            {
+              Log.i("file", file.name)
+            }
+            val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+            fileMap.path=uri.toString()
+            UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
           }
+
           //val resultFile= File()
         }
       }
+    }
+    else
+    {
+      if (UnSerializeDataBase.fileList.size!=0)
+      {
+        val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+        if (fileMap.path=="")
+        {
+          UnSerializeDataBase.fileList.removeAt(UnSerializeDataBase.fileList.size-1)
+        }
+      }
+      else if(UnSerializeDataBase.imgList.size!=0)
+      {
+        val imgMap=UnSerializeDataBase.imgList.get(UnSerializeDataBase.imgList.size-1)
+        if (imgMap.path=="")
+        {
+          UnSerializeDataBase.imgList.removeAt(UnSerializeDataBase.imgList.size-1)
+        }
+      }
+
     }
   }
 

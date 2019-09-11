@@ -6,16 +6,16 @@
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "通道编号：",
+    "fourDisplayTitle": "通道编号:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent2": "通道类型:",
     "fourDisplayContent3": "自动获取"
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "小号节点：",
+    "fourDisplayTitle": "小号节点:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent2": "大号节点:",
     "fourDisplayContent3": "自动获取"
   },
   {
@@ -24,16 +24,19 @@
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "路面切割",
-    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon1.json"
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon1.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "破除路面",
-    "expandListPath": "Professional/Passageway/foundationExcavation/foundationExcavationSon1.json"
+    "expandListPath": "Professional/Passageway/foundationExcavation/foundationExcavationSon1.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "土石方开挖",
-    "expandListPath": "Professional/Node/foundationExcavation/foundationExcavationSon1.json"
+    "expandListPath": "Professional/Node/foundationExcavation/foundationExcavationSon1.json",
+"styleType":"0"
   }
 ]

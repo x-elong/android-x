@@ -1,37 +1,37 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"配管类型：",
+    "singleDisplayLeftTitle":"配管类型:",
     "singleDisplayLeftContent":"钢管"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"规格型号：",
+    "singleDisplayLeftTitle":"规格型号:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"单孔长度（m）：",
+    "singleDisplayLeftTitle":"单孔长度（m）:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"孔数（孔）：",
+    "singleDisplayLeftTitle":"孔数（孔）:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"混凝土包封（m³）：",
+    "singleDisplayLeftTitle":"混凝土包封（m³）:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"长（m）：",
+    "singleDisplayLeftTitle":"长（m）:",
     "singleDisplayLeftContent":"8"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"深（m）：",
+    "singleDisplayLeftTitle":"深（m）:",
     "singleDisplayLeftContent":"45"
   },
   {

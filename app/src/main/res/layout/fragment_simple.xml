@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/view_simple"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="#218bfc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_simple_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_simple_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginTop="@dimen/top_7"
+        android:text="登录密码过于简单"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_smile_image"
+        android:layout_width="@dimen/general_50"
+        android:layout_height="@dimen/general_50"
+        android:background="@drawable/smile"
+        android:layout_marginTop="@dimen/general_25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintTop_toBottomOf="@+id/view_simple"
+        />
+    <TextView
+        android:id="@+id/tv_simple_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="温馨提示"
+        android:textStyle="bold"
+        android:textColor="#ffe500"
+        android:textSize="@dimen/font_tv_normal_21"
+        android:layout_marginTop="@dimen/general_35"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintTop_toBottomOf="@+id/view_simple"
+        />
+    <TextView
+        android:id="@+id/tv_simple_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/general_20"
+        android:layout_marginLeft="@dimen/general_20"
+        android:layout_marginRight="@dimen/general_20"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:text="密码中应包含6-16位数字加字母，为保证您的密码安全，请您重新设置"
+        app:layout_constraintTop_toBottomOf="@+id/tv_smile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:id="@+id/tv_simple_again"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_35"
+        android:background="#218bfc"
+        android:gravity="center"
+        android:text="重新设置"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_17"
+        android:layout_marginTop="@dimen/general_20"
+        android:layout_marginLeft="@dimen/general_20"
+        android:layout_marginRight="@dimen/general_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_simple_tips"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

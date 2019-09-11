@@ -1,92 +1,107 @@
 [
-  {
-    "type":"TITLE",
-    "title1":"新建项目盘",
-    "styleType": 0
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"项目名称：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"合同名称：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"项目批次：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"项目地点：",
-    "necessary":false
-  },
-  {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"项目属性：",
-    "selectOption1Items":["主网工程","配网工程","变电工程"]
-  },
-  {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"项目性质：",
-    "selectOption1Items":["新建","改造","技改","大修","拆除","运维"]
-  },
-  {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"电压等级：",
-    "selectOption1Items":["20kV及以下","35kV","110kV","220kV","330kV","500"]
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"工期要求：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"建设单位：",
-    "necessary":false
-  },
-   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"设计单位：",
-     "necessary":false
-  },
- {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"监理单位：",
-   "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"开工日期：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"竣工日期：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"图纸：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"任务分配：",
-    "necessary":false
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"动态记录：",
-    "necessary":false
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
-  }
+    {
+        "type": "TITLE",
+        "title1": "新建项目盘",
+        "styleType": 0
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "项目名称:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "合同名称:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "项目批次:",
+        "necessary": false
+    },
+    {
+        "type": "THREE_OPTIONS_SELECT_DIALOG",
+        "selectTitle": "项目地点",
+        "placePath": "pca.json",
+        "key": "projectSite",
+        "sendFormat": "String"
+    },
+    {
+        "type": "SELECT_DIALOG",
+        "selectTitle": "项目属性:",
+        "selectOption1Items": [
+            "主网工程",
+            "配网工程",
+            "变电工程"
+        ]
+    },
+    {
+        "type": "SELECT_DIALOG",
+        "selectTitle": "项目性质:",
+        "selectOption1Items": [
+            "新建",
+            "改造",
+            "技改",
+            "大修",
+            "拆除",
+            "运维"
+        ]
+    },
+    {
+        "type": "SELECT_DIALOG",
+        "selectTitle": "电压等级:",
+        "selectOption1Items": [
+            "20kV及以下",
+            "35kV",
+            "110kV",
+            "220kV",
+            "330kV",
+            "500"
+        ]
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "工期要求:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "建设单位:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "设计单位:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "监理单位:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "开工日期:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "竣工日期:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "图纸:",
+        "necessary": false
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "任务分配:",
+        "necessary": false
+    },
+    {
+        "type": "SUBMIT",
+        "submitContent": "确认并提交"
+    }
 ]
 

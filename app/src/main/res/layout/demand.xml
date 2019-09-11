@@ -1,71 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_marginTop="@dimen/top_27"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_marginTop="@dimen/top_8"
     android:id="@+id/demand_release"
     android:layout_below="@+id/advertisement_iv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:visibility="visible">
 
-    <Button
-        android:id="@+id/demand_personal"
-
-        android:layout_width="@dimen/general_82"
-        android:layout_height="@dimen/general_27"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/top_5"
-        android:textSize="@dimen/font_tv_hint_12"
-        android:textColor="@drawable/the_demand_text"
-        android:background="@drawable/the_demand_bg"
-        android:text="需求个人"/>
-    <Button
-        android:id="@+id/demand_team"
-        android:layout_width="@dimen/general_82"
-        android:layout_height="@dimen/general_27"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/top_5"
-        android:textSize="@dimen/font_tv_hint_12"
-        android:textColor="@drawable/the_demand_text"
-        android:background="@drawable/the_demand_bg"
-        android:text="需求团队"/>
-    <Button
-        android:id="@+id/demand_lease"
-
-        android:layout_width="@dimen/general_82"
-        android:layout_height="@dimen/general_27"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/top_5"
-        android:textSize="@dimen/font_tv_hint_12"
-        android:textColor="@drawable/the_demand_text"
-        android:background="@drawable/the_demand_bg"
-        android:text="需求租赁"/>
-    <Button
-
-        android:id="@+id/demand_third_party"
-        android:layout_width="@dimen/general_82"
-        android:layout_height="@dimen/general_27"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/font_tv_hint_12"
-        android:textColor="@drawable/the_demand_text"
-        android:background="@drawable/the_demand_bg"
-        android:paddingTop="@dimen/top_5"
-        android:text="需求三方"/>
-</LinearLayout>
-    <Button
-        android:layout_marginTop="@dimen/top_180"
-        android:id="@+id/demand_add"
-        android:background="@drawable/btn_circle"
-        android:text="+"
-        android:textSize="@dimen/font_tv_bit_title_30"
-        android:elevation="@dimen/general_2"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/demand_direction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_smoke"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@color/transparent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#4ca0fe"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#4ca0fe"
+        app:tabTextColor="@color/black" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tv_demand_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/demand_direction"
+        app:layout_constraintStart_toStartOf="@+id/demand_direction"
+        app:layout_constraintTop_toBottomOf="@+id/demand_direction" />
+</androidx.constraintlayout.widget.ConstraintLayout>

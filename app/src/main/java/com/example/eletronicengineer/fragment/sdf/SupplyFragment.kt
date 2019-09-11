@@ -13,6 +13,9 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_supply.view.*
 
 class SupplyFragment:Fragment(){
@@ -24,6 +27,7 @@ class SupplyFragment:Fragment(){
             return fragment
         }
     }
+    var mAdapter:RecyclerviewAdapter?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i("onCreateView","running")
         val view= inflater.inflate(R.layout.item_supply,container,false)
@@ -32,9 +36,24 @@ class SupplyFragment:Fragment(){
         adapterGenerate.context=view.context
         adapterGenerate.activity=activity as AppCompatActivity
         //加载选择的界面
-        val adapter = switchAdapter(adapterGenerate,data!!.getInt("type"))
-        view.rv_main_content.adapter=adapter
-        view.rv_main_content.layoutManager= LinearLayoutManager(context)
+        if(mAdapter==null){
+            val result = Observable.create<RecyclerviewAdapter>{
+                val adapter = switchAdapter(adapterGenerate,data!!.getInt("type"))
+                it.onNext(adapter)
+            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mAdapter=it
+                    view.rv_main_content.adapter=mAdapter
+                    view.rv_main_content.layoutManager= LinearLayoutManager(context)
+                }
+
+        }
+        else{
+            view.rv_main_content.adapter=mAdapter
+            view.rv_main_content.layoutManager= LinearLayoutManager(context)
+        }
         return view
     }
     fun switchAdapter(adapterGenerate: AdapterGenerate,Type: Int):RecyclerviewAdapter
@@ -107,10 +126,12 @@ class SupplyFragment:Fragment(){
                 adapter=adapterGenerate.ProviderGroupSubstationConstruction()
                 var singleDisplayRightContent = "变电施工队"
                 adapter.mData[1].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath=Constants.HttpUrlPath.Provider.PowerTransformation
             }
             //团队服务——主网施工
             Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupSubstationConstruction()
+                adapter.urlPath=Constants.HttpUrlPath.Provider.MajorNetwork
                 var singleDisplayRightContent = "主网施工队"
                 adapter.mData[1].singleDisplayRightContent = singleDisplayRightContent
 
@@ -118,55 +139,68 @@ class SupplyFragment:Fragment(){
             //团队服务——配网施工
             Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupSubstationConstruction()
+                adapter.urlPath=Constants.HttpUrlPath.Provider.DistribuionNetwork
                 var singleDisplayRightContent = "配网施工队"
                 adapter.mData[1].singleDisplayRightContent = singleDisplayRightContent
             }
             //团队服务——测量设计
             Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupMeasurementDesign()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
             }
             //团队服务——马帮运输
             Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupCaravanTransportation()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
             }
             //团队服务——桩基
             Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupPileFoundationConstruction()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
             }
             //团队服务——非开挖
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupNonExcavation()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
             }
             //团队服务——试验调试
             Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupTestDebugging()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
             }
             //团队服务——跨越架
             Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupCrossingFrame()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
             }
             //团队服务——运维
             Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{
                 adapter=adapterGenerate.OperationAndMaintenance()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
             }
             //租赁服务——车辆
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{
                 adapter=adapterGenerate.VehicleRental()
+                adapter.urlPath = Constants.HttpUrlPath.Provider.requirementLeaseCar
             }
-            //祖灵服务——工器具
+            //租赁服务——工器具
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{
                 adapter=adapterGenerate.EquipmentLeasing()
                 adapter.mData[1].singleDisplayRightContent = "工器具租赁"
+                adapter.urlPath=Constants.HttpUrlPath.Provider.LcTool
+                adapter.mData[13].key="validTime"
             }
             //租赁服务--机械
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
                 adapter=adapterGenerate.EquipmentLeasing()
                 adapter.mData[1].singleDisplayRightContent = "机械租赁"
+                adapter.urlPath=Constants.HttpUrlPath.Provider.LeaseMachinery
             }
             //租赁服务--设备
             Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
                 adapter=adapterGenerate.EquipmentLeasing()
                 adapter.mData[1].singleDisplayRightContent = "设备租赁"
+                adapter.urlPath=Constants.HttpUrlPath.Provider.LeaseFacility
             }
             //培训办证
             Constants.FragmentType.TRIPARTITE_TRAINING_CERTIFICATE_TYPE.ordinal->{

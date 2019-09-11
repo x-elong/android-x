@@ -1,22 +1,22 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"电压等级（kv）：",
+    "singleDisplayLeftTitle":"电压等级（kv）:",
     "singleDisplayLeftContent":"1"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"规格型号：",
+    "singleDisplayLeftTitle":"规格型号:",
     "singleDisplayLeftContent":"70*7*1500"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"线材根数：",
+    "singleDisplayLeftTitle":"线材根数:",
     "singleDisplayLeftContent":"四线"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"数量（组）：",
+    "singleDisplayLeftTitle":"数量（组）:",
     "singleDisplayLeftContent":"四"
   },
   {

@@ -12,6 +12,7 @@
             android:gravity="center"
             android:id="@+id/tv_dialog_select_unit_show"
             android:text="业主单位"
+            android:padding="@dimen/general_5"
             android:textSize="@dimen/font_tv_hint_15"/>
     <TextView
             android:layout_marginRight="20dp"
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_dialog_select_project_show"
             android:text="全部项目"
+            android:padding="@dimen/general_5"
             android:layout_gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>
 </RelativeLayout>

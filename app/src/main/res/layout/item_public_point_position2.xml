@@ -5,25 +5,29 @@
               android:background="@android:color/white"
               android:padding="@dimen/general_10">
 
-    <TextView
-            android:layout_width="wrap_content"
+    <EditText
+            android:layout_width="@dimen/general_80"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_position_child_title"
-            android:layout_weight="1"
+            android:id="@+id/et_position_child_title"
             android:textSize="@dimen/font_tv_hint_15"
-            android:hint="xxxx"
-            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:hint="xx仓库"
+            android:gravity="center"
+            android:enabled="false"
             android:textColor="@android:color/black" />
     <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_position_child_item1"
+            android:id="@+id/et_position_child_item1"
             android:layout_weight="2"
+            android:maxLines="1"
+            android:singleLine="true"
             android:background="@drawable/edit_style1"
             android:textSize="@dimen/font_tv_hint_15"
-            android:hint="请输入"
-            android:gravity="center|right"
-            android:textColor="@color/text_hint_gray"
+            android:hint="请点击右方定位按钮获取位置"
+            android:focusable="false"
+            android:cursorVisible="false"
+            android:textColor="@color/black"
             android:layout_marginLeft="@dimen/left_10"
             android:layout_marginRight="@dimen/right_10"/>
     <TextView
@@ -33,11 +37,12 @@
             android:background="@drawable/position"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="8dp"
     />
     <TextView
             android:layout_width="24dp"
-            android:layout_height="24dp" android:id="@+id/tv_position_delete1"
+            android:layout_height="24dp"
+            android:id="@+id/tv_position_delete"
             android:background="@drawable/delete"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>

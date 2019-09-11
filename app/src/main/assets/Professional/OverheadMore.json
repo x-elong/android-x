@@ -2,88 +2,112 @@
   {
     "type":"TITLE",
     "title1":"中阳村新农村电气化改造工程",
-    "styleType": "1"
+    "styleType": "1",
+    "key": "name"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"项目名称：",
-    "singleDisplayLeftContent":"中阳村新农村电气化改造工程"
-  },
-  {
-  "type":"SINGLE_DISPLAY_LEFT",
-  "singleDisplayLeftTitle":"合同名称：",
-  "singleDisplayLeftContent":"2018娄星区农网改造工程"
+    "singleDisplayLeftTitle":"项目名称:",
+    "singleDisplayLeftContent":"中阳村新农村电气化改造工程",
+    "key": "name"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"项目批次：",
-    "singleDisplayLeftContent":"2018娄星区农网改造"
+    "singleDisplayLeftTitle":"项目批次:",
+    "singleDisplayLeftContent":"2018娄星区农网改造",
+    "key": "projectBatch"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"项目地点：",
-    "singleDisplayLeftContent":"湖南省娄底市娄星区大埠桥办事处"
+    "singleDisplayLeftTitle":"项目地点:",
+    "singleDisplayLeftContent":"湖南省娄底市娄星区大埠桥办事处",
+    "key": "site"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"项目属性：",
-    "singleDisplayLeftContent":"主网工程"
+    "singleDisplayLeftTitle":"项目属性:",
+    "singleDisplayLeftContent":"主网工程",
+    "key": "property"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"项目性质：",
-    "singleDisplayLeftContent":"改造"
+    "singleDisplayLeftTitle":"项目性质:",
+    "singleDisplayLeftContent":"改造",
+    "key": "nature"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"电压等级：",
-    "singleDisplayLeftContent":"20kv及以上"
+    "singleDisplayLeftTitle":"电压等级:",
+    "singleDisplayLeftContent":"20kv及以上",
+    "key": "voltageClasses"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"工期要求：",
-    "singleDisplayLeftContent":"100天"
+    "singleDisplayLeftTitle":"工期要求:",
+    "singleDisplayLeftContent":"100天",
+    "key": "timeLimit"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"建设单位：",
+    "singleDisplayLeftTitle":"建设单位:",
     "singleDisplayLeftContent":"娄底市供电公司"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"设计单位：",
+    "singleDisplayLeftTitle":"设计单位:",
     "singleDisplayLeftContent":"娄底市星源电力设计有限公司"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"监理单位：",
+    "singleDisplayLeftTitle":"监理单位:",
     "singleDisplayLeftContent":"娄底监理有限公司"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"开工日期：",
-    "singleDisplayLeftContent":"2019.01"
+    "singleDisplayLeftTitle":"开工日期:",
+    "singleDisplayLeftContent":"2019.01",
+    "key": "dateCommence"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"竣工日期：",
-    "singleDisplayLeftContent":"2019.04"
+    "singleDisplayLeftTitle":"竣工日期:",
+    "singleDisplayLeftContent":"2019.04",
+    "key": "completionDate"
+  },
+  {
+    "type": "SHIFT_INPUT",
+    "necessary":false,
+    "shiftInputTitle":"图纸",
+    "key": "drawingPath"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"图纸：",
-    "singleDisplayLeftContent":""
+    "singleDisplayLeftTitle":"任务分配:",
+    "singleDisplayLeftContent":"施工一队",
+    "key": "taskAllocation"
   },
   {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"任务分配：",
-    "singleDisplayLeftContent":"施工一队"
+    "type": "SHIFT_INPUT",
+    "necessary":false,
+    "shiftInputTitle":"自查自检",
+    "key": "drawingPath"
   },
   {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"动态记录：",
-    "singleDisplayLeftContent":""
+    "type": "SHIFT_INPUT",
+    "necessary":false,
+    "shiftInputTitle":"监理验收",
+    "key": "drawingPath"
+  },
+  {
+    "type": "SHIFT_INPUT",
+    "necessary":false,
+    "shiftInputTitle":"业主验收",
+    "key": "drawingPath"
+  },
+  {
+    "type": "SHIFT_INPUT",
+    "necessary":false,
+    "shiftInputTitle":"资料动态",
+    "key": "drawingPath"
   }
-
-
 ]

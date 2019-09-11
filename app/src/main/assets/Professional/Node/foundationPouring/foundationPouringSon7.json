@@ -1,37 +1,37 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"浇筑类型：",
+    "singleDisplayLeftTitle":"浇筑类型:",
     "singleDisplayLeftContent":"垫层混凝土"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"标号：",
+    "singleDisplayLeftTitle":"标号:",
     "singleDisplayLeftContent":"C10"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"方量（m³）：",
+    "singleDisplayLeftTitle":"方量（m³）:",
     "singleDisplayLeftContent":"888"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"混凝土类型：",
+    "singleDisplayLeftTitle":"混凝土类型:",
     "singleDisplayLeftContent":"人工搅拌"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"浇筑方式：",
+    "singleDisplayLeftTitle":"浇筑方式:",
     "singleDisplayLeftContent":"人工"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"钢筋绑扎在10以内（t）：",
+    "singleDisplayLeftTitle":"钢筋绑扎在10以内(t):",
     "singleDisplayLeftContent":"65"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"钢筋绑扎在10以上（t）：",
+    "singleDisplayLeftTitle":"钢筋绑扎在10以上(t):",
     "singleDisplayLeftContent":"65"
   },
   {

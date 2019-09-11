@@ -1,12 +1,12 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"面层类型（单位）：",
+    "singleDisplayLeftTitle":"面层类型（单位）:",
     "singleDisplayLeftContent":"混凝土（m³）"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"施工方式：",
+    "singleDisplayLeftTitle":"施工方式:",
     "singleDisplayLeftContent":"机械"
   },
   {

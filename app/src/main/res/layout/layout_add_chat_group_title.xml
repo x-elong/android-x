@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/tv_chat_group_back"
+        android:layout_width="@dimen/general_45"
+        android:layout_height="@dimen/general_24"
+        android:layout_weight="0"
+        android:layout_marginTop="@dimen/top_3"
+        android:background="@drawable/title_return"
+        android:textSize="@dimen/font_tv_normal_16" />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/general_31"
+            android:layout_marginTop="@dimen/top_5"
+            android:gravity="center_vertical"
+        android:id="@+id/tv_chat_group_name" android:layout_weight="1"
+            android:text="发起群聊" android:textSize="@dimen/font_tv_hint_15"
+        android:layout_marginLeft="@dimen/left_10" android:textColor="#000000"/>
+    <TextView
+            android:text="发送"
+            android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/top_5"
+            android:layout_height="wrap_content" android:id="@+id/tv_chat_group_send" android:textSize="@dimen/font_tv_normal_16"
+            android:background="@drawable/green_round_rect" android:textColor="#FFFFFF" android:padding="@dimen/general_5"/>
+</LinearLayout>

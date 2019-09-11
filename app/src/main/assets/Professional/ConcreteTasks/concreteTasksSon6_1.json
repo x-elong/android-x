@@ -1,0 +1,27 @@
+[
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["混凝土杆"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["撑杆"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["钢管杆"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["钢管塔"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["铁塔"]
+    }
+]

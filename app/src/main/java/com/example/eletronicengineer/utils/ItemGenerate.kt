@@ -5,6 +5,7 @@ import android.view.View
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -68,7 +69,14 @@ class ItemGenerate
                     {
                         multiStyleItem=MultiStyleItem(MultiStyleItem.Options.MULTI_BUTTON,jsonObject.getString("buttonTitle"),buttonName,ArrayList())
                     }
-
+                    if (jsonObject.optString("additionalKey")!=null)
+                    {
+                        multiStyleItem.additionalKey=jsonObject.optString("additionalKey")
+                    }
+                    for(i in buttonName)
+                    {
+                        multiStyleItem.buttonCheckList.add(false)
+                    }
                 }
                 "MULTI_RADIO_BUTTON"->
                 {
@@ -164,33 +172,70 @@ class ItemGenerate
                 }
                 "THREE_OPTIONS_SELECT_DIALOG"->
                 {
-                    val array1=jsonObject.getJSONArray("selectOption1Items")
-                    val array2=jsonObject.getJSONArray("selectOption2Items")
-                    val array3=jsonObject.getJSONArray("selectOption3Items")
                     val selectOption1Items:MutableList<String> =ArrayList()
                     val selectOption2Items:MutableList<MutableList<String>> =ArrayList()
                     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
-                    for (j in 0 until array1.length())
-                    {
-                        selectOption1Items.add(array1[j].toString())
-                    }
-                    for (j in 0 until array2.length())
-                    {
-                        selectOption2Items.add(ArrayList())
-                        for (k in 0 until array2.getJSONArray(j).length())
+                    if(jsonObject.getString("placePath")!=null){
+                        val resultBuilder= StringBuilder()
+                        val bf= BufferedReader(InputStreamReader(context!!.assets.open("pca.json")))
+                        try {
+                            var line=bf.readLine()
+                            while (line!=null)
+                            {
+                                resultBuilder.append(line)
+                                line=bf.readLine()
+                            }
+                        }
+                        catch (io: IOException)
                         {
-                            selectOption2Items[j].add(array2.getJSONArray(j).getString(k))
+                            io.printStackTrace()
+                        }
+                        val json= JSONObject(resultBuilder.toString())
+                        val keys:Iterator<String> = json.keys()
+                        while (keys.hasNext()){
+                            val key = keys.next()
+                            selectOption1Items.add(key)
+                            val js = json.getJSONObject(key)
+                            val jskeys = js.keys()
+                            selectOption2Items.add(ArrayList())
+                            selectOption3Items.add(ArrayList())
+                            while (jskeys.hasNext()){
+                                val jskey = jskeys.next()
+                                selectOption2Items[selectOption2Items.size-1].add(jskey)
+                                selectOption3Items[selectOption3Items.size-1].add(ArrayList())
+                                var valueArray = js.getJSONArray(jskey)
+                                for (j in 0 until valueArray.length()){
+                                    selectOption3Items[selectOption3Items.size-1][selectOption3Items[selectOption3Items.size-1].size-1].add(valueArray[j].toString())
+                                }
+                            }
                         }
                     }
-                    for (j in 0 until array2.length())
-                    {
-                        selectOption3Items.add(ArrayList())
-                        for (k in 0 until array2.getJSONArray(j).length())
+                    else{
+                        val array1=jsonObject.getJSONArray("selectOption1Items")
+                        val array2=jsonObject.getJSONArray("selectOption2Items")
+                        val array3=jsonObject.getJSONArray("selectOption3Items")
+                        for (j in 0 until array1.length())
                         {
-                            selectOption3Items[j].add(ArrayList())
-                            for (m in 0 until array3.getJSONArray(j).getJSONArray(k).length())
+                            selectOption1Items.add(array1[j].toString())
+                        }
+                        for (j in 0 until array2.length())
+                        {
+                            selectOption2Items.add(ArrayList())
+                            for (k in 0 until array2.getJSONArray(j).length())
                             {
-                                selectOption3Items[j][k].add(array3.getJSONArray(j).getJSONArray(k).getString(m))
+                                selectOption2Items[j].add(array2.getJSONArray(j).getString(k))
+                            }
+                        }
+                        for (j in 0 until array2.length())
+                        {
+                            selectOption3Items.add(ArrayList())
+                            for (k in 0 until array2.getJSONArray(j).length())
+                            {
+                                selectOption3Items[j].add(ArrayList())
+                                for (m in 0 until array3.getJSONArray(j).getJSONArray(k).length())
+                                {
+                                    selectOption3Items[j][k].add(array3.getJSONArray(j).getJSONArray(k).getString(m))
+                                }
                             }
                         }
                     }
@@ -239,17 +284,18 @@ class ItemGenerate
                 }
                 "EXPAND_LIST"->
                 {
+                    val styleType = jsonObject.getString("styleType")
                     val expandListTitle=jsonObject.getString("expandListTitle")
                     val mData=jsonObject.getString("expandListPath")
                     if(mData!=null)
                     {
                         val expandListAdapter=RecyclerviewAdapter(this.getJsonFromAsset(mData))
-                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,expandListAdapter)
+                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,styleType,expandListAdapter)
                     }
                     else
                     {
                         val expandListAdapter= RecyclerviewAdapter(ArrayList())
-                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,expandListAdapter)
+                        multiStyleItem= MultiStyleItem(MultiStyleItem.Options.EXPAND_LIST,expandListTitle,styleType,expandListAdapter)
                     }
                 }
                 "SINGLE_DISPLAY_LEFT"->
@@ -375,28 +421,11 @@ class ItemGenerate
                     multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_ADD,jsonObject.getString("title1"))
                 }
                 // alterPosition time:2019/7/15
-                // function:运输起点
-                "POSITION_START"->
-                {
-                    val inputPositionDeleteTitle1=jsonObject.getString("inputPositionDeleteTitle1")
-                    val inputPositionDeleteTitle2=jsonObject.getString("inputPositionDeleteTitle2")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_START,inputPositionDeleteTitle1,inputPositionDeleteTitle2)
-
-                }
-                // alterPosition time:2019/7/15
-                // function:运输终点
-                "POSITION_END"->
-                {
-                    val inputPositionDeleteTitle3=jsonObject.getString("inputPositionDeleteTitle3")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_END,inputPositionDeleteTitle3)
-
-                }
-                // alterPosition time:2019/7/15
                 // function:删除
                 "POSITION_DELETE"->
                 {
                     val inputPositionTitle=jsonObject.getString("inputPositionTitle")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_DELETE,inputPositionTitle)
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_DELETE,inputPositionTitle,jsonObject.getBoolean("necessary"))
                 }
                 // alterPosition time:2019/7/15
                 // function:带边框的输入框
@@ -420,14 +449,26 @@ class ItemGenerate
                     val expandContent=jsonObject.getString("expandContent")
                     multiStyleItem= MultiStyleItem(MultiStyleItem.Options.TEXT_EXPAND_SELECT,expandTitle,expandContent)
                 }
-                "NODE_CHECK_IMAGE_SHOW"->{
-                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.NODE_CHECK_IMAGE_SHOW,jsonObject.getString("imageDetail"))
+                // alterPosition time:2019/7/22
+                // function:公共点定位，起始点与终点合并
+                "POSITION_START_END"->
+                {
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.POSITION_START_END,jsonObject.getString("inputPositionTransportTitle"))
                 }
-                "SEARCH"->{
-                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.SEARCH,"")
+                "DISTANCE_POSITION"->{
+                    multiStyleItem= MultiStyleItem(MultiStyleItem.Options.DISTANCE_POSITION,jsonObject.getString("inputDistancePositionTitle"),jsonObject.getString("inputDistancePositionUnit"),jsonObject.getBoolean("necessary"))
+                }
+                "EXPAND_MENU"->{
+                    val array = jsonObject.getJSONArray("expandMenuContent")
+                    val expandMenuContent:MutableList<String> =ArrayList()
+                    for (j in 0 until array.length()) {
+                        expandMenuContent.add(array[j].toString())
+                    }
+                    multiStyleItem = MultiStyleItem(MultiStyleItem.Options.EXPAND_MENU,expandMenuContent,jsonObject.getString("expandMenuTitle"))
                 }
             }
             multiStyleItem.key=jsonObject.optString("key")
+            multiStyleItem.sendFormat=jsonObject.optString("sendFormat")
             data.add(multiStyleItem)
         }
         return data

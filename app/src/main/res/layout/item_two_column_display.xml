@@ -10,7 +10,7 @@
     <TextView
             android:layout_width="@dimen/general_100"
             android:gravity="center"
-            android:text="杆塔高度："
+            android:text="杆塔高度:"
             android:layout_height="wrap_content" android:id="@+id/tv_two_column_display_title1"
             android:textSize="@dimen/font_tv_hint_15"
             android:layout_marginLeft="@dimen/general_2"
@@ -26,7 +26,7 @@
     <TextView
             android:layout_width="@dimen/general_80"
             android:gravity="center"
-            android:text="杆塔属性："
+            android:text="杆塔属性:"
             android:layout_height="wrap_content" android:id="@+id/tv_two_column_display_title2"
             android:layout_marginLeft="@dimen/left_5"
             android:textSize="@dimen/font_tv_hint_15" android:textColor="@android:color/black"/>

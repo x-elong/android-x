@@ -1,75 +1,95 @@
 [
-  {
-    "type":"TITLE",
-    "title1":"三方服务信息录入",
-    "styleType": "0"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"服务类型",
-    "singleDisplayRightContent":"培训办证",
-    "key": "serveType"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位名称",
-    "key": "companyName"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位简称",
-    "key": "companyAbbreviation"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位地址",
-    "key": "companyAddress"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"法人代表姓名",
-    "key": "legalPersonName"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
-    "key": "legalPersonPhone"
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"营业执照",
-    "necessary":false,
-    "key":"businessLicensePath"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人姓名",
-    "key": "legalPersonName"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人电话",
-    "key": "legalPersonPhone"
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"三方服务合同",
-    "necessary":false,
-    "key": "thirdServicesContractPath"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
-    "inputUnit":"(天)",
-    "key": "periodValidity"
-  },
-  {
-    "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"经营范围",
-    "key": "businessScope"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
-  }
+    {
+        "type":"TITLE",
+        "title1":"三方服务信息录入",
+        "styleType": "0"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"服务类型",
+        "singleDisplayRightContent":"培训办证",
+        "key": "serveType",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"单位名称",
+        "key": "companyName",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"单位简称",
+        "key": "companyAbbreviation",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"单位地址",
+        "key": "companyAddress",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"法人代表姓名",
+        "key": "legalPersonName",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"联系电话",
+        "key": "legalPersonPhone",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"法人身份证照片",
+        "necessary":false,
+        "key":"legalPersonIdCardPath",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"营业执照",
+        "necessary":false,
+        "key":"businessLicensePath",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"联系人姓名",
+        "key": "contact",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"联系人电话",
+        "key": "contactPhone",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"三方服务合同",
+        "necessary":false,
+        "key": "thirdServicesContractPath",
+        "sendFormat": "String"
+    },
+    {
+        "type":"INPUT_WITH_UNIT",
+        "inputUnitTitle":"有效期",
+        "inputUnit":"(天)",
+        "key": "validTime",
+        "sendFormat": "Int"
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"经营范围(选填)",
+        "key": "businessScope",
+        "sendFormat": "String"
+    },
+    {
+        "type":"SUBMIT",
+        "submitContent":"确认并提交",
+        "key": "Provider"
+    }
 ]

@@ -6,32 +6,22 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayTitle1": "节点编号:",
     "twoColumnDisplayContent1": "1#",
-    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayTitle2": "节点类型:",
     "twoColumnDisplayContent2": "工井"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftTitle":"节点详情:",
     "singleDisplayLeftContent":"电缆分支箱"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftTitle":"节点位置:",
     "singleDisplayLeftContent":"湖南人文科技学院"
   },
   {
     "type":"BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "制作方量",
-    "expandListPath": "Professional/Node/manufactureInstallation/manufactureInstallationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "安装方量",
-    "expandListPath": "Professional/Node/manufactureInstallation/manufactureInstallationSon2.json"
   }
 ]

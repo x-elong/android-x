@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:orientation="vertical"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent" android:background="#EBE3E3">
+
+    <include android:id="@+id/layout_add_friend_title" layout="@layout/layout_chat_main_title"/>
+    <EditText
+            android:drawableStart="@drawable/search"
+            android:drawablePadding="@dimen/general_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:hint="账号/手机号"
+            android:padding="@dimen/general_15"
+            android:background="#FFFFFF"
+            tools:layout_editor_absoluteX="16dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_add_friend_title"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_add_friend_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/editText"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

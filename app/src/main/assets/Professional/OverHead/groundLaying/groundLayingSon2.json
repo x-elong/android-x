@@ -1,17 +1,17 @@
 [
-  {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"规格型号：",
-    "singleDisplayLeftContent":"接地模块"
-  },
-  {
-    "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"数量（m）：",
-    "singleDisplayLeftContent":"7"
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"照片上传",
-    "necessary":false
-  }
+    {
+        "type":"SINGLE_DISPLAY_LEFT",
+        "singleDisplayLeftTitle":"规格型号:",
+        "singleDisplayLeftContent":"接地模块"
+    },
+    {
+        "type":"SINGLE_DISPLAY_LEFT",
+        "singleDisplayLeftTitle":"数量（m）:",
+        "singleDisplayLeftContent":"7"
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"照片上传",
+        "necessary":false
+    }
 ]

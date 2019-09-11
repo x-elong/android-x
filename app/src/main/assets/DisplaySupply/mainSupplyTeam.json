@@ -1,0 +1,37 @@
+[
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"变电主网配网测量设计",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"马帮运输",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"桩机服务",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"非开挖顶拉管作业",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"试验调试",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"跨越架",
+        "necessary": false
+    },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"运行维护",
+        "necessary": false
+    }
+]

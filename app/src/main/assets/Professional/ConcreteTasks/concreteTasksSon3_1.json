@@ -1,0 +1,57 @@
+[
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["沙、石、石灰"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["水泥、砖、土、水"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["混凝土制品"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["电杆"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["塔材"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["横担"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["金具、绝缘子、零星钢材"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["线材"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["塑料制品"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["设备"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["自定义"]
+    }
+]

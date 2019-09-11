@@ -6,16 +6,16 @@
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "通道编号：",
+    "fourDisplayTitle": "通道编号:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent2": "通道类型:",
     "fourDisplayContent3": "自动获取"
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "小号节点：",
+    "fourDisplayTitle": "小号节点:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent2": "大号节点:",
     "fourDisplayContent3": "自动获取"
   },
   {
@@ -24,36 +24,43 @@
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "基层恢复",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon1.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon1.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "面层恢复",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon2.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon2.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "路缘石",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon3.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon3.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "装模",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon4.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon4.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "砖砌体",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon5.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon5.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "抹灰",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon6.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon6.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "混凝土浇筑",
-    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon7.json"
+    "expandListPath": "Professional/Node/foundationPouring/foundationPouringSon7.json",
+"styleType":"0"
   }
 ]

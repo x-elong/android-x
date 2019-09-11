@@ -14,37 +14,5 @@
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A1",
-    "fiveDisplayContent1": "150锥形电杆",
-    "fiveDisplayContent2": "30米",
-    "fiveDisplayContent3": "拉线门型塔",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A2",
-    "fiveDisplayContent1": "150锥形电杆",
-    "fiveDisplayContent2": "30米",
-    "fiveDisplayContent3": "拉线门型塔",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A3",
-    "fiveDisplayContent1": "150锥形电杆",
-    "fiveDisplayContent2": "30米",
-    "fiveDisplayContent3": "拉线门型塔",
-    "fiveDisplayContent4": "···"
-  },
-  {
-    "type": "FIVE_DISPLAY",
-    "fiveDisplayTitle": "A4",
-    "fiveDisplayContent1": "150锥形电杆",
-    "fiveDisplayContent2": "30米",
-    "fiveDisplayContent3": "拉线门型塔",
-    "fiveDisplayContent4": "···"
   }
 ]

@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.adapter
 
 import android.animation.ValueAnimator
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -14,41 +15,42 @@ import kotlinx.android.synthetic.main.item_multi.view.*
 import kotlinx.android.synthetic.main.item_single_input.view.*
 import kotlinx.android.synthetic.main.item_title.view.*
 import android.os.Handler
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.TextWatcher
+import android.provider.MediaStore
+import android.text.*
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.util.TypedValue
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.amap.api.location.AMapLocationListener
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
-import com.example.eletronicengineer.utils.AdapterGenerate
-import com.example.eletronicengineer.utils.ObserverFactory
-import com.example.eletronicengineer.utils.startSendMessage
-import kotlinx.android.synthetic.main.fragment_project_more.view.*
+import com.example.eletronicengineer.aninterface.ExpandMenuItem
+import com.example.eletronicengineer.utils.*
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.goods.view.*
 import kotlinx.android.synthetic.main.item_confirm.view.*
+import kotlinx.android.synthetic.main.item_distance_position.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
 import kotlinx.android.synthetic.main.item_expand.view.tv_expand_title
 import kotlinx.android.synthetic.main.item_expand_list.view.*
+import kotlinx.android.synthetic.main.item_expand_menu.view.*
 import kotlinx.android.synthetic.main.item_expand_right.view.*
 import kotlinx.android.synthetic.main.item_five_display.view.*
 import kotlinx.android.synthetic.main.item_four_display.view.*
 import kotlinx.android.synthetic.main.item_hint.view.*
-import kotlinx.android.synthetic.main.item_image_check.view.*
 import kotlinx.android.synthetic.main.item_input_with_multi_unit.view.*
 import kotlinx.android.synthetic.main.item_input_with_textarea.view.*
+import kotlinx.android.synthetic.main.item_mall_goods_type.view.*
 import kotlinx.android.synthetic.main.item_new_project_disk1.view.*
 import kotlinx.android.synthetic.main.item_new_project_disk2.view.*
 import kotlinx.android.synthetic.main.item_public_point_position1.view.*
 import kotlinx.android.synthetic.main.item_public_point_position2.view.*
-import kotlinx.android.synthetic.main.item_public_point_position3.view.*
-import kotlinx.android.synthetic.main.item_public_point_position4.view.*
-import kotlinx.android.synthetic.main.item_search.view.*
+import kotlinx.android.synthetic.main.item_public_point_position_transport.view.*
 import kotlinx.android.synthetic.main.item_shift_input.view.*
 import kotlinx.android.synthetic.main.item_single_display_right.view.*
 import kotlinx.android.synthetic.main.item_single_display_left.view.*
@@ -58,6 +60,12 @@ import kotlinx.android.synthetic.main.item_two_column_display.view.*
 import kotlinx.android.synthetic.main.item_two_dialog.view.*
 import kotlinx.android.synthetic.main.item_two_display.view.*
 import kotlinx.android.synthetic.main.item_two_pair_input.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.w3c.dom.Text
+import java.io.File
 
 class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     companion object {
@@ -92,26 +100,24 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
         const val EXPAND_RIGHT_TYPE = 25
         const val TWO_TEXT_DIALOG_TYPE = 26
-        const val SEARCH_TYPE = 27
+
+        const val DISTANCE_POSITION_TYPE=27
+        const val EXPAND_MENU_TYPE=28
         const val FIVE_DISPLAY_TYPE=29
 
-        // alterPosition time:2019/7/15
         // function:公共点定位
         const val POSITION_ADD_TYPE = 30
         const val POSITION_DELETE_TYPE = 31
-        const val POSITION_START_TYPE = 32
-        const val POSITION_END_TYPE = 33
-        // alterPosition time:2019/7/15
+
+        const val GOODS_TYPE=32
+        const val STORE_TYPE=33
         // function://新建项目盘中标题+带边框的输入框
         const val TITLE_INPUT_BG_TYPE = 34
         //新建项目盘中标题+带边框的输入框+选择
         const val TITLE_INPUT_BG_SELECT_TYPE = 35
-        // alterPosition time:2019/7/15
         // function:扩展+选择
         const val TEXT_EXPAND_SELECT_TYPE = 36
-
-        const val NODE_CHECK_IMAGE_SHOW_TYPE = 37
-
+        const val POSITION_START_END_TYPE = 37
         const val BLANK_TYPE=50
         const val MESSAGE_SELECT_OK:Int=100
     }
@@ -144,7 +150,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 INPUT_RANGE_TYPE->
                 {
-                    val keys=multiStyleItem.key.split(" ")
+                    val keys=multiStyleItem.additionalKey.split(" ")
                     result[keys[0]]=viewHolder.etRangeValue1.text.toString()
                     result[keys[1]]=viewHolder.etRangeValue2.text.toString()
                 }
@@ -154,7 +160,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 TWO_PAIR_INPUT_TYPE->
                 {
-                    val keys = multiStyleItem.key.split(" ")
+                    val keys = multiStyleItem.additionalKey.split(" ")
                     result[keys[0]] = viewHolder.etTwoPairInputValue1.text.toString()
                     result[keys[1]] = viewHolder.etTwoPairInputValue2.text.toString()
                 }
@@ -190,7 +196,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var expandList:MutableList<VH> =ArrayList()
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
-
+    var urlPath:String=""
+    var baseUrl="http://192.168.1.149:8014"
+    //http://10.1.5.90:8012
+    //http://192.168.1.85:8018
     inner class VH:RecyclerView.ViewHolder
     {
         var itemPosition=-1
@@ -198,6 +207,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvBack:TextView
         lateinit var tvSelectMore:TextView
         lateinit var tvSelectAdd:TextView
+        lateinit var tvSelectOk:TextView
 
         lateinit var multiTitle:TextView
         lateinit var llContainer: LinearLayout
@@ -219,6 +229,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvShiftInputTitle:TextView
         lateinit var tvShiftInputContent:TextView
         lateinit var tvShiftInputShow:TextView
+        lateinit var ivShiftInputPicture:CircleImageView
 
         lateinit var tvTwoPairInputTitle:TextView
         lateinit var tvTwoPairInputItem1:TextView
@@ -259,7 +270,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var spMultiInputUnit:Spinner
         lateinit var tvMultiInputUnitTitle:TextView
         lateinit var etMultiInputContent:EditText
-        lateinit var tvMultiSelectShow:TextView
+
 
         lateinit var tvDialogSelectTitle:TextView
         lateinit var etDialogSelectItem:TextView
@@ -277,6 +288,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvExpandButton:TextView
         lateinit var tvExpandMore:TextView
 
+
         lateinit var tvsingleDisplayRightTitle:TextView
         lateinit var tvsingleDisplayRightContent:TextView
 
@@ -293,34 +305,46 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         // alterPosition time:2019/7/15
         // function: //公共点定位     仓库定位  +
         lateinit var tvPositionTitle1:TextView
+        lateinit var tvPositionAdd:TextView
         // alterPosition time:2019/7/15
         // function: //公共点定位     1号仓库 输入框 定位图标   -
-        lateinit var tvPositionInputTitle:TextView
+        lateinit var etPositionInputTitle:TextView
         lateinit var etPositionInputContent:EditText
-        // alterPosition time:2019/7/15
-        // function: //公共点定位     1号 始 输入框 定位图标   -
-        lateinit var tvPositionInputTitle1:TextView
-        lateinit var tvPositionInputTitle2:TextView
-        lateinit var etPositionInputContent1:EditText
-        // alterPosition time:2019/7/15
-        // function: //公共点定位     终 输入框 定位图标
-        lateinit var tvPositionInputTitle3:TextView
-        lateinit var etPositionInputContent2:EditText
-        // alterPosition time:2019/7/15
+        lateinit var tvPositionListener:TextView
+        lateinit var tvPositionDelect:TextView
         // function: // //新建项目盘中标题+带边框的输入框
         lateinit var tvSingleInputTitleWithBg:TextView
         lateinit var etSingleInputContentWithBg:EditText
-        // alterPosition time:2019/7/15
         // function: // //新建项目盘中标题+带边框的输入框+选择
         lateinit var tvSingleInputTitleWithBgSelect:TextView
         lateinit var etSingleInputContentWithBgSelect:EditText
 
-        // function:自查自检图片显示
-        lateinit var tvContentDetail:TextView
-        lateinit var tvCheckMore:TextView
+        // alterPosition time:2019/7/22
+        // function:公共点定位 起始与终点合并
+        lateinit var inputPositionTransportTitle : TextView
+        lateinit var etPositionInputContentStart : TextView
+        lateinit var tvPositionTransportStartLocation:TextView
+        lateinit var etPositionInputContentEnd : TextView
+        lateinit var tvPositionTransportEndLocation:TextView
 
-        // function:搜索
-        lateinit var etSearchContent:EditText
+        lateinit var tvDistancePositionTitle :TextView
+        lateinit var etDistancePositionContent:EditText
+        lateinit var tvDistancePositionUnit:TextView
+        lateinit var tvDistancePositionItem:TextView
+
+        lateinit var tvExpandMenuButton:TextView
+        lateinit var tvExpandMenuTitle:TextView
+        lateinit var rvExpandMenuListContent:RecyclerView
+
+        lateinit var tvGoodsName:TextView
+        lateinit var tvGoodsPrice:TextView
+        lateinit var ivGoodsImage:ImageView
+
+        lateinit var ivStoreImage:ImageView
+        lateinit var tvStoreName:TextView
+        lateinit var tvStoreAddress:TextView
+        lateinit var tvStoreMajor:TextView
+        lateinit var ivStoreShift:ImageView
 
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
@@ -328,18 +352,24 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 MESSAGE_SELECT_OK->
                 {
                     val selectContent=it.data.getString("selectContent")
-                    if(selectContent.equals("自定义")){
+                    if(selectContent.equals("自定义") || selectContent.equals("其他") ||selectContent.equals("填写")){
                         etDialogSelectItem.isEnabled=true
                         etDialogSelectItem.hint="请输入"
                         etDialogSelectItem.text=""
-                    }else if(selectContent.equals("填写")){
-                        mData[position].options=MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT
-                        mData[position].inputMultiUnitTitle=mData[position].selectTitle
-                        mData[position].inputMultiUnit= listOf("元/天","元/月","元/年")
-                        tvMultiSelectShow.setOnClickListener {
-                        }
+                        etDialogSelectItem.addTextChangedListener(object :TextWatcher{
+                            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                    }else {
+                            }
+
+                            override fun afterTextChanged(p0: Editable?) {
+
+                            }
+
+                            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                                mData[position].selectContent=p0.toString()
+                            }
+                        })
+                    }else{
                         etDialogSelectItem.isEnabled=false
                         etDialogSelectItem.text=selectContent
                         mData[itemPosition].selectContent=selectContent!!
@@ -359,7 +389,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 MESSAGE_SELECT_OK->
                 {
                     val selectContent=it.data.getString("selectContent")
+                    if(selectContent.equals("自定义") || selectContent.equals("其他") ||selectContent.equals("填写")){
+                        tvTextFirstDialog.isEnabled=true
+                        tvTextFirstDialog.hint="请输入"
+                        tvTextFirstDialog.text=""
+                    }else{
+                        tvTextFirstDialog.isEnabled=true
                         tvTextFirstDialog.text=selectContent
+                    }
                     false
                 }
                 else->
@@ -374,7 +411,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 MESSAGE_SELECT_OK->
                 {
                     val selectContent=it.data.getString("selectContent")
+                    if(selectContent.equals("自定义") || selectContent.equals("其他") ||selectContent.equals("填写")){
+                        tvTextSecondDialog.isEnabled=true
+                        tvTextSecondDialog.hint="请输入"
+                        tvTextSecondDialog.text=""
+                    }else{
+                        tvTextSecondDialog.isEnabled=true
                         tvTextSecondDialog.text=selectContent
+                    }
+
                     false
                 }
                 else->
@@ -488,13 +533,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     spMultiInputUnit=v.sp_input_multi_unit_unit
                     tvMultiInputUnitTitle=v.tv_input_multi_unit_title
                     etMultiInputContent=v.et_input_multi_unit_content
-                    tvMultiSelectShow=v.tv_multi_select_show
                 }
                 SHIFT_INPUT_TYPE->
                 {
                     tvShiftInputTitle=v.tv_shift_input_title
                     tvShiftInputContent=v.et_shift_input_item
                     tvShiftInputShow=v.tv_shift_input_show
+                    ivShiftInputPicture=v.iv_shift_input_picture
                 }
                 SELECT_DIALOG_TYPE->
                 {
@@ -557,28 +602,27 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     //root root.findViewById(R,id.tv_title_title1)
                     tvPositionTitle1=v.tv_position_title
+                    tvPositionAdd=v.tv_position_add
                 }
                 // alterPosition time:2019/7/15
                 // function: //公共点定位     1号仓库 输入框 定位图标   -
                 POSITION_DELETE_TYPE->
                 {
-                    tvPositionInputTitle=v.tv_position_child_title
-                    etPositionInputContent=v.tv_position_child_item1
+                    etPositionInputTitle=v.et_position_child_title
+                    etPositionInputContent=v.et_position_child_item1
+                    tvPositionListener=v.tv_position_point1
+                    tvPositionDelect=v.tv_position_delete
                 }
-                // alterPosition time:2019/7/15
-                // function: //公共点定位     1号 始 输入框 定位图标   -
-                POSITION_START_TYPE->
+                // alterPosition time:2019/7/22
+                // function:公共点定位，起始与终点合并
+                POSITION_START_END_TYPE->
                 {
-                    tvPositionInputTitle1=v.tv_text_title
-                    tvPositionInputTitle2=v.tv_text_start_title
-                    etPositionInputContent1=v.tv_position_child_item2
-                }
-                // alterPosition time:2019/7/15
-                // function: //公共点定位     终 输入框 定位图标
-                POSITION_END_TYPE->
-                {
-                    tvPositionInputTitle3=v.tv_text_end_title
-                    etPositionInputContent2=v.tv_position_child_item3
+                    inputPositionTransportTitle=v.et_text_title_up
+                    tvPositionTransportStartLocation=v.tv_position_point_start
+                    etPositionInputContentStart=v.et_position_child_item_up
+                    tvPositionTransportEndLocation=v.tv_position_point_end
+                    etPositionInputContentEnd=v.et_position_child_item_down
+                    tvPositionDelect=v.tv_position_delete_up
                 }
                 // alterPosition time:2019/7/15
                 // function: //新建项目标题+带边框的输入框
@@ -603,17 +647,31 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvExpandContent=v.tv_project_expand_content
                     tvExpandMore=v.tv_project_expand_more
                 }
-                NODE_CHECK_IMAGE_SHOW_TYPE->{
-                    tvContentDetail=v.tv_check_title
-                    tvCheckMore=v.tv_check_more
-                }
-                // function:搜索
-                SEARCH_TYPE->
-                {
-                    etSearchContent = v.et_search
-                }
                 BLANK_TYPE->{
 
+                }
+                DISTANCE_POSITION_TYPE->{
+                    tvDistancePositionTitle=v.tv_distance_position_title
+                    etDistancePositionContent=v.et_distance_position_content
+                    tvDistancePositionUnit=v.tv_distance_position_unit
+                    tvDistancePositionItem=v.tv_distance_position_item
+                }
+                EXPAND_MENU_TYPE->{
+                    tvExpandMenuButton = v.tv_expand_menu_button
+                    tvExpandMenuTitle = v.tv_expand_menu_title
+                    rvExpandMenuListContent = v.rv_expanded_menu_content
+                }
+                GOODS_TYPE->{
+                    tvGoodsName = v.tv_goods_name
+                    tvGoodsPrice = v.tv_goods_price
+                    ivGoodsImage = v.iv_goods_picture
+                }
+                STORE_TYPE->{
+                    ivStoreImage = v.iv_mall_store_name
+                    tvStoreName = v.tv_mall_store_name
+                    tvStoreAddress = v.tv_mall_add_name
+                    tvStoreMajor = v.tv_mall_major_name
+                    ivStoreShift = v.iv_person_inform_shift
                 }
             }
             VHList.add(this)
@@ -622,10 +680,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     constructor(data:List<MultiStyleItem>)
     {
         this.mData=data
-        for(i in 0 until mData.size/2)
-        {
+        notifyItemRangeChanged(0,mData.size/2)
+    }
 
-        }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
     override fun getItemViewType(position: Int): Int {
         val multiStyleItem=mData.get(position)
@@ -662,8 +721,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             // function:公共点定位
             MultiStyleItem.Options.POSITION_ADD->return POSITION_ADD_TYPE
             MultiStyleItem.Options.POSITION_DELETE->return POSITION_DELETE_TYPE
-            MultiStyleItem.Options.POSITION_START->return POSITION_START_TYPE
-            MultiStyleItem.Options.POSITION_END->return POSITION_END_TYPE
             // alterPosition time:2019/7/15
             // function: //新建项目盘
             MultiStyleItem.Options.TITLE_INPUT_BG->return TITLE_INPUT_BG_TYPE
@@ -671,9 +728,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             // alterPosition time:2019/7/15
             // function:扩展+选择
             MultiStyleItem.Options.TEXT_EXPAND_SELECT->return TEXT_EXPAND_SELECT_TYPE
-            MultiStyleItem.Options.NODE_CHECK_IMAGE_SHOW->return NODE_CHECK_IMAGE_SHOW_TYPE
-            MultiStyleItem.Options.SEARCH->return SEARCH_TYPE
+            MultiStyleItem.Options.POSITION_START_END->return POSITION_START_END_TYPE
             MultiStyleItem.Options.BLANK->return BLANK_TYPE
+            MultiStyleItem.Options.DISTANCE_POSITION ->return DISTANCE_POSITION_TYPE
+            MultiStyleItem.Options.EXPAND_MENU->return EXPAND_MENU_TYPE
+            MultiStyleItem.Options.GOODS->return GOODS_TYPE
+            MultiStyleItem.Options.STORE->return STORE_TYPE
             else->
             {
                 return TITLE_TYPE
@@ -683,6 +743,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var time=0
     override fun onBindViewHolder(vh: VH, position: Int) {
         vh.itemPosition=position
+        mData[position].itemPosition = position
         vh.setIsRecyclable(false)
         if (adapterObserver!=null)
         {
@@ -708,8 +769,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }else if(mData[position].styleType.equals("2")){
                     vh.tvSelectAdd.setOnClickListener(mData[position].tvSelect)
                     vh.tvSelectAdd.visibility=View.VISIBLE
+                }else if(mData[position].styleType.equals("3")) {
+                    vh.tvSelectOk.setOnClickListener((mData[position].tvSelect))
+                    vh.tvSelectOk.visibility=View.VISIBLE
                 }
-
             }
             MULTI_BUTTON_TYPE->
             {
@@ -766,14 +829,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 val context=vh.itemView.context
                 vh.multiTitle.text=mData[position].checkboxTitle
-                mData[position].checkboxValueList=ArrayList(mData[position].checkboxNameList.size)
+                if (mData[position].checkboxValueList.size==0)
+                {
+                    mData[position].checkboxValueList=ArrayList(mData[position].checkboxNameList.size)
+                    for (i in 0 until mData[position].checkboxNameList.size)
+                    {
+                        mData[position].checkboxValueList.add(false)
+                    }
+                }
                 for (name in mData[position].checkboxNameList)
                 {
                     val checkboxItem=CheckBox(context)
                     checkboxItem.text=name
                     checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     vh.llContainer.addView(checkboxItem)
-                    mData[position].checkboxValueList.add(false)
                     checkboxItem.setOnCheckedChangeListener{
                             compoundButton, bool ->
                         val index=mData[position].checkboxNameList.indexOf(compoundButton.text)
@@ -790,7 +859,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
                     checkboxItem.layoutParams=params
                 }
-                for (i in 0 until vh.llContainer.childCount-1)
+                for (i in 0 until vh.llContainer.childCount)
                 {
                     val item=vh.llContainer.getChildAt(i) as CheckBox
                     item.isChecked=mData[position].checkboxValueList[i]
@@ -874,6 +943,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SINGLE_INPUT_TYPE->
             {
                 vh.tvSingleInputTitle.text=mData[position].inputSingleTitle
+                if(mData[position].inputSingleHint!=""){
+                    vh.etSingleInputContent.hint=mData[position].inputSingleHint
+                }
                 vh.etSingleInputContent.addTextChangedListener(object: TextWatcher {
                     override fun afterTextChanged(p0: Editable?) {
 
@@ -898,6 +970,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
+                if (mData[position].inputUnitTitle=="有效期")
+                {
+                    vh.etInputUnitValue.hint="1-90"
+                }
                 vh.etInputUnitValue.addTextChangedListener(object :TextWatcher{
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -948,6 +1024,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         mData[position].twoPairInputValue2=p0.toString()
                     }
                 })
+                if (mData[position].twoPairInputValue1!="")
+                {
+                    vh.etTwoPairInputValue1.setText(mData[position].twoPairInputValue1)
+                }
+                if (mData[position].twoPairInputValue2!="")
+                {
+                    vh.etTwoPairInputValue2.setText(mData[position].twoPairInputValue2)
+                }
             }
             FOUR_DISPLAY_TYPE->
             {
@@ -955,12 +1039,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvfourDisplayItem1.text=mData[position].fourDisplayContent1
                 vh.tvfourDisplayItem2.text=mData[position].fourDisplayContent2
                 vh.tvfourDisplayItem3.text=mData[position].fourDisplayContent3
-
                 if (mData[position].fourDisplayContent2.equals("详情"))
                 {
-                    vh.tvfourDisplayItem2.setBackgroundResource(R.drawable.btn_style1)
+                    vh.tvfourDisplayItem2.setBackgroundResource(R.drawable.btn_style2)
                     vh.tvfourDisplayItem2.setOnClickListener(mData[position].fourDisplayListener)
-                    vh.tvfourDisplayItem2.setOnClickListener(mData[position].fiveDisplayListener)
                 }
                 if (mData[position].fourDisplayContent3.equals("···"))
                 {
@@ -991,6 +1073,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvsingleDisplayLeftTitle.text=mData[position].singleDisplayLeftTitle
                 vh.tvsingleDisplayLeftContent.text=mData[position].singleDisplayLeftContent
+                if (mData[position].singleDisplayLeftContent.equals("详情"))
+                {
+                    vh.tvsingleDisplayLeftContent.setBackgroundResource(R.drawable.btn_style2)
+                    vh.tvsingleDisplayLeftContent.setOnClickListener(mData[position].singleDisplayLeftListener)
+                }
             }
             TWO_DISPLAY_TYPE->
             {
@@ -1000,7 +1087,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
                 if (mData[position].twoDisplayContent2.equals("上传照片"))
                 {
-                    vh.tvTwoDisplayContent2.setBackgroundResource(R.drawable.btn_style1)
+                    vh.tvTwoDisplayContent2.setBackgroundResource(R.drawable.btn_style2)
                     vh.tvTwoDisplayContent2.setOnClickListener(mData[position].twoDisplayListener)
                 }
             }
@@ -1021,6 +1108,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         mData[position].inputMultiContent=p0.toString()
+                        if (p0!!.contains(mData[position].inputMultiAbandonInput)){
+                            //vh.etMultiInputContent.inputType= InputType.TYPE_NULL
+                            vh.etMultiInputContent.isEnabled=false
+                            vh.etMultiInputContent.hint=""
+                        }
+
+                        else{
+                            vh.etMultiInputContent.isEnabled=true
+                            vh.etMultiInputContent.hint="请输入"
+                            //vh.etMultiInputContent.inputType=InputType.TYPE_CLASS_TEXT
+                        }
+
                     }
                 })
                 vh.spMultiInputUnit.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
@@ -1036,9 +1135,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 if (mData[position].inputMultiSelectUnit!="")
                 {
-                    val position=adapter.getPosition(mData[position].inputMultiSelectUnit)
-                    vh.spMultiInputUnit.setSelection(position)
+                    val unitPosition=mData[position].inputMultiUnit.indexOf(mData[position].inputMultiSelectUnit)
+                    vh.spMultiInputUnit.setSelection(unitPosition)
                 }
+                mData[position].inputMultiSelectUnit=mData[position].inputMultiUnit[0]
                 vh.spMultiInputUnit.adapter=adapter
                 vh.spMultiInputUnit.setSelection(1)
             }
@@ -1097,7 +1197,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SHIFT_INPUT_TYPE->
             {
                 vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
-                vh.tvShiftInputContent.text=mData[position].shiftinputContent
+                    vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 if (mData[position].necessary)
                 {
@@ -1108,11 +1208,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
+                if(mData[position].shiftInputPicture!=""){
+                    vh.ivShiftInputPicture.visibility=View.VISIBLE
+                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
+                }
             }
             SELECT_DIALOG_TYPE->
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
-                //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
+                vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 mData[position].selectContent=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener{
                     val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.itemView.context,mData[position].selectOption1Items,vh.mHandler).dialog
@@ -1177,10 +1281,28 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.btnSubmit.text=mData[position].submitContent
                 vh.btnSubmit.setOnClickListener{
-                    val map=saveSimpleData()
-                    val filesDir=it.context.filesDir.absolutePath
+                    val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
+                    val provider=NetworkAdapter.Provider(mData,vh.btnSubmit.context)
+                    if(networkAdapter.check()){
+                        if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
+                        {
+                            if(mData[position].key=="Provider")
+                                provider.generateMultiPartRequestBody(baseUrl+urlPath)
+                            else
+                                networkAdapter.generateMultiPartRequestBody(baseUrl+urlPath)
+                            //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
+                        }
+                        else
+                        {
+                            //startSendMessage(map,baseUrl+urlPath)
+                            if(mData[position].key=="Provider")
+                                provider.generateJsonRequestBody(baseUrl+urlPath)
+                            else
+                                networkAdapter.generateJsonRequestBody(baseUrl+urlPath)
+                        }
+                    }
+
                     //downloadFile(filesDir,"工程量清册.xlsx","工程量清册模板","http://10.1.5.90:8012")
-                    startSendMessage(map,"http://10.1.5.90:8012")
                 }
 
             }
@@ -1356,28 +1478,108 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 //vh.tvTitle1.setText(mData[position].getTitle1())
                 vh.tvPositionTitle1.text=mData[position].positionTitle
+                vh.tvPositionAdd.setOnClickListener(mData[position].positionAdd)
             }
             // alterPosition time:2019/7/15
             // function:公共点定位
             POSITION_DELETE_TYPE->
             {
-                vh.tvPositionInputTitle.text=mData[position].inputPositionTitle
-                vh.etPositionInputContent.hint = "湖南省娄底市湖南人文科技学院"
+                vh.etPositionInputTitle.text=mData[position].inputPositionTitle
+                if(!(mData[position].inputPositionTitle in arrayListOf("节点位置:","杆号位置:"))) {
+                    vh.etPositionInputTitle.isEnabled=true
+                    vh.etPositionInputTitle.setBackgroundResource(R.drawable.edit_style1)
+                    vh.etPositionInputTitle.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            mData[position].inputPositionTitle = p0.toString()
+                        }
+                    })
+                }
+                vh.tvPositionListener.setOnClickListener(mData[position].positionListener)
+                vh.etPositionInputContent.setText(mData[position].inputPositionContent)
+                vh.etPositionInputContent.movementMethod=ScrollingMovementMethod.getInstance()
+                if(mData[position].positionDelect==null){
+                    vh.tvPositionDelect.setOnClickListener {
+                        val data = mData.toMutableList()
+                        data.removeAt(position)
+                        for (j in 0 until data[0].positionSubitemsRow.size){
+                            if(data[0].positionSubitemsRow[j]>=position)
+                                data[0].positionSubitemsRow[j]--
+                        }
+                        mData=data
+                        notifyItemRangeRemoved(position,itemCount)
+                    }
+                }
+                else
+                    vh.tvPositionDelect.setOnClickListener(mData[position].positionDelect)
+
+                if(!mData[position].necessary)
+                vh.tvPositionDelect.visibility=View.GONE
             }
-            // alterPosition time:2019/7/15
-            // function:公共点定位
-            POSITION_START_TYPE->
+            // alterPosition time:2019/7/22
+            // function:公共点定位，起始点与终点合并
+            POSITION_START_END_TYPE->
             {
-                vh.tvPositionInputTitle1.text=mData[position].inputPositionDeleteTitle1
-                vh.tvPositionInputTitle2.text=mData[position].inputPositionDeleteTitle2
-                vh.etPositionInputContent1.hint = "湖南省娄底市湖南人文科技学院"
-            }
-            // alterPosition time:2019/7/15
-            // function:公共点定位
-            POSITION_END_TYPE->
-            {
-                vh.tvPositionInputTitle3.text=mData[position].inputPositionDeleteTitle3
-                vh.etPositionInputContent2.hint = "湖南省娄底市湖南人文科技学院"
+
+                vh.inputPositionTransportTitle.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        mData[position].inputPositionTransportTitle = p0.toString()
+                    }
+                })
+                vh.inputPositionTransportTitle.text = mData[position].inputPositionTransportTitle
+                if(mData[position].positionStartListener==null){
+                    vh.tvPositionTransportStartLocation.setOnClickListener {
+                        LocationHelper(vh.tvPositionTransportStartLocation.context, AMapLocationListener {
+                            mData[position].inputPositionLatitude = it.latitude
+                            mData[position].inputPositionLongitude = it.longitude
+                            mData[position].inputPositionContentStart = it.address
+                            notifyItemChanged(position)
+                        })
+                    }
+                }
+                else
+                    vh.tvPositionTransportStartLocation.setOnClickListener(mData[position].positionStartListener)
+
+                if(mData[position].inputPositionContentStart!="")
+                vh.etPositionInputContentStart.text = mData[position].inputPositionContentStart
+
+                if(mData[position].positionEndListener==null){
+                    vh.tvPositionTransportEndLocation.setOnClickListener {
+                        LocationHelper(vh.tvPositionTransportEndLocation.context, AMapLocationListener {
+                            mData[position].inputPositionLatitude = it.latitude
+                            mData[position].inputPositionLongitude = it.longitude
+                            mData[position].inputPositionContentEnd = it.address
+                            notifyItemChanged(position)
+                        })
+                    }
+                }
+                else
+                    vh.tvPositionTransportEndLocation.setOnClickListener(mData[position].positionEndListener)
+
+                if(mData[position].inputPositionContentEnd!="")
+                vh.etPositionInputContentEnd.text=mData[position].inputPositionContentEnd
+
+                vh.tvPositionDelect.setOnClickListener {
+                    val data = mData.toMutableList()
+                    data.removeAt(position)
+                    for (j in 0 until data[0].positionSubitemsRow.size){
+                        if(data[0].positionSubitemsRow[j]>=position)
+                            data[0].positionSubitemsRow[j]--
+                    }
+                    mData=data
+                    notifyItemRangeRemoved(position,itemCount)
+                }
             }
             // alterPosition time:2019/7/15
             // function: //新建项目盘
@@ -1436,22 +1638,84 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 expandList.add(vh)
             }
-            // function:节点自查自检图片显示
-            NODE_CHECK_IMAGE_SHOW_TYPE->
-            {
-                vh.tvContentDetail.text=mData[position].title_image_show
-                vh.tvCheckMore.setOnClickListener(mData[position].checkMoreListener)
-            }
-            // function:搜索
-            SEARCH_TYPE->
-            {
-                vh.etSearchContent.hint = "搜索"
-            }
             BLANK_TYPE->{
 
             }
+            DISTANCE_POSITION_TYPE->{
+                vh.tvDistancePositionTitle.text=mData[position].inputDistancePositionTitle
+                vh.tvDistancePositionUnit.text=mData[position].inputDistancePositionUnit
+                vh.etDistancePositionContent.setText(mData[position].inputDistancePositionContent)
+                vh.tvDistancePositionItem.setOnClickListener(mData[position].positionListener)
+                if(!mData[position].necessary)
+                    vh.tvDistancePositionItem.visibility=View.INVISIBLE
+            }
+            EXPAND_MENU_TYPE->{
+                vh.tvExpandMenuTitle.text=mData[position].expandMenuTitle
+                var expandMenuList:MutableList<ExpandMenuItem> = ArrayList()
+                expandMenuList.clear()
+                val expandMenuListListener:MutableList<View.OnClickListener?> = ArrayList()
+                for (j in 0 until mData[position].expandMenuList.size){
+                    expandMenuListListener.add(null)
+                }
+                //val expandMenuListListener=mData[position].expandMenuListListener
+                for (j in 0 until mData[position].expandMenuList.size){
+                    expandMenuList.add(ExpandMenuItem(mData[position].expandMenuList[j],expandMenuListListener[j]))
+                }
+                vh.rvExpandMenuListContent.adapter=ExpandMenuAdapter(expandMenuList)
+                vh.rvExpandMenuListContent.layoutManager = GridLayoutManager(vh.rvExpandMenuListContent.context,3)
+                vh.tvExpandMenuButton.setOnClickListener{it->
+                    if (expandPosition!=-1) {
+                        val valueAnimator=ValueAnimator.ofFloat(90f,0f)
+                        valueAnimator.duration=200
+                        val positionTemp=expandPosition
+                        valueAnimator.addUpdateListener {
+                            expandList[positionTemp].tvExpandMenuButton.rotation=it.animatedValue.toString().toFloat()
+                            if (expandList[positionTemp].tvExpandMenuButton.rotation==90f) {
+                                expandList[positionTemp].rvExpandMenuListContent.visibility=View.GONE
+                            }
+                        }
+                        valueAnimator.start()
+                    }
+                    if (expandList.indexOf(vh)!=expandPosition) {
+                        val valueAnimator2=ValueAnimator.ofFloat(0.toFloat(),90.toFloat())
+                        valueAnimator2.duration=200
+                        valueAnimator2.addUpdateListener {
+                            vh.tvExpandMenuButton.rotation=it.animatedValue.toString().toFloat()
+                            if (vh.tvExpandMenuButton.rotation==90f) {
+                                vh.rvExpandMenuListContent.visibility = View.VISIBLE
+                            }
+                        }
+                        valueAnimator2.start()
+                        vh.tvExpandMenuButton.rotation = "90".toFloat()
+                        expandPosition=expandList.indexOf(vh)
+                    }
+                    else {
+                        expandPosition=-1
+                    }
+                }
+                expandList.add(vh)
+            }
+            GOODS_TYPE->{
+                vh.tvGoodsName.text = mData[position].goodsName
+                vh.tvGoodsPrice.text="￥${mData[position].goodsprice}"
+                vh.itemView.setOnClickListener(mData[position].itemListener)
+                GlideLoader().loadImage(vh.ivGoodsImage,mData[position].goodsPicture)
+
+            }
+            STORE_TYPE->{
+                GlideLoader().loadImage(vh.ivStoreImage,mData[position].storeImage)
+                vh.tvStoreName.text=mData[position].storeName
+                vh.tvStoreAddress.text=mData[position].storeAddress
+                vh.tvStoreMajor.text=mData[position].storeMajor
+                vh.itemView.setOnClickListener(mData[position].itemListener)
+                vh.ivStoreShift.setOnClickListener {
+
+                }
+                if(mData[position].styleType=="1"){
+                    vh.ivStoreShift.visibility = View.VISIBLE
+                }
+            }
         }
-        mData[position].viewHolderInitialize=true
         //VHList.add(vh)
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VH {
@@ -1605,14 +1869,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_public_point_position2,viewGroup,false)
                 return VH(root,viewType)
             }
-            POSITION_START_TYPE->
+
+            POSITION_START_END_TYPE->
             {
-                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_public_point_position3,viewGroup,false)
-                return VH(root,viewType)
-            }
-            POSITION_END_TYPE->
-            {
-                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_public_point_position4,viewGroup,false)
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_public_point_position_transport,viewGroup,false)
                 return VH(root,viewType)
             }
             // alterPosition time:2019/7/15
@@ -1636,21 +1896,25 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_text_expand_select,viewGroup,false)
                 return VH(root, viewType)
             }
-            // function: //自查自检标题
-            NODE_CHECK_IMAGE_SHOW_TYPE->
-            {
-                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_image_check,viewGroup,false)
-                return VH(root,viewType)
-            }
-            // function:搜索
-            SEARCH_TYPE->
-            {
-                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_search,viewGroup,false)
-                return VH(root,viewType)
-            }
             BLANK_TYPE->{
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_blank,viewGroup,false)
                 return VH(root, viewType)
+            }
+            DISTANCE_POSITION_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_distance_position,viewGroup,false)
+                return VH(root,viewType)
+            }
+            EXPAND_MENU_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_expand_menu,viewGroup,false)
+                return VH(root,viewType)
+            }
+            GOODS_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.goods,viewGroup,false)
+                return VH(root,viewType)
+            }
+            STORE_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mall_goods_type,viewGroup,false)
+                return VH(root,viewType)
             }
         }
         return VH(root!!,TITLE_TYPE)
@@ -1666,14 +1930,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         for (i in 0 until mData.size-1)
         {
             val multiStyleItem=mData[i]
-            val viewHolder=VHList[i]
             if (multiStyleItem.key=="")
                 continue
-            when(viewHolder.itemViewType)
+            when(multiStyleItem.options)
             {
-                TITLE_TYPE->
+                MultiStyleItem.Options.TITLE ->
                 {
-
                     map[multiStyleItem.key]=if (multiStyleItem.title1!="")
                     {
                         multiStyleItem.title1
@@ -1683,9 +1945,26 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         ""
                     }
                 }
-                SINGLE_INPUT_TYPE->
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->
                 {
-
+                    map[multiStyleItem.key]=if (multiStyleItem.singleDisplayRightContent!="")
+                    {
+                        multiStyleItem.singleDisplayRightContent
+                    }
+                    else
+                        ""
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT->
+                {
+                    map[multiStyleItem.key]=if (multiStyleItem.singleDisplayLeftContent!="")
+                    {
+                        multiStyleItem.singleDisplayLeftContent
+                    }
+                    else
+                        ""
+                }
+                MultiStyleItem.Options.SINGLE_INPUT->
+                {
                     map[multiStyleItem.key]=if (multiStyleItem.inputSingleContent!="")
                     {
                         multiStyleItem.inputSingleContent
@@ -1693,7 +1972,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     else
                         ""
                 }
-                INPUT_WITH_UNIT_TYPE->
+                MultiStyleItem.Options.INPUT_WITH_UNIT->
                 {
 
                     map[multiStyleItem.key]=if (multiStyleItem.inputUnitContent!="")
@@ -1701,17 +1980,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     else
                         ""
                 }
-                INPUT_WITH_MULTI_UNIT_TYPE->
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT->
                 {
-                    map[multiStyleItem.key]=if (multiStyleItem.inputMultiContent!="")
+                    val keys=multiStyleItem.additionalKey.split(" ")
+                    map[keys[0]]=if (multiStyleItem.inputMultiContent!="")
                         multiStyleItem.inputMultiContent
                     else
                         ""
+                    map[keys[1]]=if (multiStyleItem.inputMultiSelectUnit!="")
+                        multiStyleItem.inputMultiSelectUnit
+                    else
+                        ""
                 }
-                INPUT_RANGE_TYPE->
+                MultiStyleItem.Options.INPUT_RANGE->
                 {
-                    val keys=multiStyleItem.key.split(" ")
-
+                    val keys=multiStyleItem.additionalKey.split(" ")
                     map[keys[0]]=if (multiStyleItem.inputRangeValue1!="")
                         multiStyleItem.inputRangeValue1
                     else
@@ -1722,17 +2005,16 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     else
                         ""
                 }
-                INPUT_WITH_TEXTAREA_TYPE->
+                MultiStyleItem.Options.INPUT_WITH_TEXTAREA->
                 {
-
                     map[multiStyleItem.key]=if (multiStyleItem.textAreaContent!="")
                         multiStyleItem.textAreaContent
                     else
                         ""
                 }
-                TWO_PAIR_INPUT_TYPE->
+                MultiStyleItem.Options.TWO_PAIR_INPUT->
                 {
-                    val keys=multiStyleItem.key.split(" ")
+                    val keys=multiStyleItem.additionalKey.split(" ")
 
                     map[keys[0]]=if (multiStyleItem.twoPairInputValue1!="")
                         multiStyleItem.twoPairInputValue1
@@ -1743,19 +2025,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     else
                         ""
                 }
-                SHIFT_INPUT_TYPE->
+                MultiStyleItem.Options.SHIFT_INPUT->
                 {
 
                 }
-                SELECT_DIALOG_TYPE, TWO_OPTIONS_SELECT_DIALOG_TYPE, THREE_OPTIONS_SELECT_DIALOG_TYPE->
+                MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->
                 {
-
                     map[multiStyleItem.key]=if (multiStyleItem.selectContent!="")
                         multiStyleItem.selectContent
                     else
                         ""
                 }
-                MULTI_RADIO_BUTTON_TYPE->
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON->
                 {
                     map[multiStyleItem.key]=if (multiStyleItem.radioButtonValue!="")
                     {
@@ -1764,22 +2045,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     else
                         ""
                 }
-                MULTI_CHECKBOX_TYPE->
+                MultiStyleItem.Options.MULTI_BUTTON->
+                {
+                }
+                MultiStyleItem.Options.MULTI_CHECKBOX->
                 {
                     var checkNum=0
-                    for (j in 0 until multiStyleItem.checkboxValueList.size-1)
+                    for (j in 0 until multiStyleItem.checkboxValueList.size)
                     {
                         if (multiStyleItem.checkboxValueList[j])
                         {
-                            checkNum++
-                            if (checkNum>=2)
-                            {
-                                map[multiStyleItem.key]="-1"
-                            }
+                            if (checkNum!=0)
+                                map[multiStyleItem.key]=map[multiStyleItem.key]+"|${1-j}"
                             else
-                            {
-                                map[multiStyleItem.key]=(1-j).toString()
-                            }
+                                map[multiStyleItem.key]="${1-j}"
+                            checkNum++
                         }
                     }
                 }

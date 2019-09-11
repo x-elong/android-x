@@ -1,0 +1,32 @@
+[
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["普通拉"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["绝缘拉"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["水平拉及弓形拉"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["压接式拉线"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["拉线保护管"]
+    },
+    {
+        "type": "MULTI_CHECKBOX",
+        "checkboxTitle": "",
+        "checkboxNameList": ["拉棒沥青防腐"]
+    }
+]

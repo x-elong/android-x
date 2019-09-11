@@ -6,19 +6,19 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayTitle1": "节点编号:",
     "twoColumnDisplayContent1": "1#",
-    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayTitle2": "节点类型:",
     "twoColumnDisplayContent2": "工井"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftTitle":"节点详情:",
     "singleDisplayLeftContent":"电缆分支箱"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftTitle":"节点位置:",
     "singleDisplayLeftContent":"湖南人文科技学院"
   },
   {
@@ -27,16 +27,19 @@
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "路面切割",
-    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon1.json"
+    "expandListPath": "Professional/Node/foundationExcavation/foundationExcavationSon1.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "破除路面",
-    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon2.json"
+    "expandListPath": "Professional/OverHead/foundationExcavation/foundationExcavationSon2.json",
+"styleType":"0"
   },
   {
     "type": "EXPAND_LIST",
     "expandListTitle": "土石方开挖",
-    "expandListPath": "Professional/Node/foundationExcavation/foundationExcavationSon1.json"
+    "expandListPath": "Professional/Node/foundationExcavation/foundationExcavationSon1.json",
+"styleType":"0"
   }
 ]

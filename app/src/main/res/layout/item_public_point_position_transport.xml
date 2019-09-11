@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:padding="@dimen/general_10">
+
+    <EditText
+        android:layout_width="@dimen/general_80"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_text_title_up"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:hint="xxxx"
+        android:gravity="center"
+        android:singleLine="true"
+        android:background="@drawable/edit_style1"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf = "parent"
+        app:layout_constraintTop_toTopOf="@+id/et_position_child_item_up"
+        app:layout_constraintBottom_toBottomOf="@+id/et_position_child_item_up"
+        />
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_text_start_title_up"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:text="始"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf = "@+id/et_text_title_up"
+        app:layout_constraintTop_toTopOf="@+id/et_position_child_item_up"
+        app:layout_constraintBottom_toBottomOf="@+id/et_position_child_item_up"/>
+    <EditText
+        android:layout_width="@dimen/general_180"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_position_child_item_up"
+        android:background="@drawable/edit_style1"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:hint="请点击右方定位按钮获取位置"
+        android:singleLine="true"
+        android:layout_marginLeft="@dimen/left_10"
+        android:layout_marginRight="@dimen/right_10"
+        android:focusable="false"
+        android:cursorVisible="false"
+        app:layout_constraintLeft_toRightOf = "@+id/tv_text_start_title_up"
+        app:layout_constraintRight_toLeftOf = "@+id/tv_position_point_start"
+        />
+
+    <TextView
+        android:id="@+id/tv_position_point_start"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/position"
+        android:gravity="center"
+        android:layout_marginRight="8dp"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/et_position_child_item_up"
+        app:layout_constraintRight_toLeftOf="@id/tv_position_delete_up"
+        app:layout_constraintTop_toTopOf="@+id/et_position_child_item_up" />
+
+    <TextView
+        android:id="@+id/tv_position_delete_up"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/delete"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/et_position_child_item_up"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_position_child_item_up" />
+
+    <TextView
+        android:id="@+id/tv_text_start_title_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="终"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/et_position_child_item_down"
+        app:layout_constraintRight_toRightOf="@+id/tv_text_start_title_up"
+        app:layout_constraintStart_toStartOf="@+id/tv_text_start_title_up"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text_start_title_up"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <EditText
+        android:id="@+id/et_position_child_item_down"
+        android:layout_width="@dimen/general_180"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_style1"
+        android:hint="请点击右方定位按钮获取位置"
+        android:singleLine="true"
+        android:focusable="false"
+        android:cursorVisible="false"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintEnd_toStartOf="@+id/tv_position_point_end"
+        app:layout_constraintStart_toEndOf="@+id/tv_text_start_title_up"
+        app:layout_constraintTop_toBottomOf="@+id/et_position_child_item_up" />
+
+    <TextView
+        android:id="@+id/tv_position_point_end"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/position"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@id/tv_position_point_start"
+        app:layout_constraintStart_toStartOf="@+id/tv_position_point_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_position_point_start"
+        app:layout_constraintVertical_bias="0.854" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

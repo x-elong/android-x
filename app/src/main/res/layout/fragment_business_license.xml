@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_business_license"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_business_license_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_business_license_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="营业执照普通认证"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_business_license"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_business_license"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/iv_business_license"
+        android:layout_width="@dimen/general_128"
+        android:layout_height="@dimen/general_180"
+        android:layout_marginTop="@dimen/top_10"
+        android:background="@drawable/btn_style1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_business_license" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="点击查看大图"
+        android:textSize="@dimen/font_tv_hint_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_business_license" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="@dimen/general_150"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginTop="8dp"
+        android:text="上传营业执照照片"
+        android:background="@drawable/btn_style3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_14"
+        android:layout_marginTop="@dimen/top_25"
+        android:layout_marginEnd="@dimen/right_14"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:lineSpacingMultiplier="1.2"
+        android:gravity="center_vertical"
+        android:text="1.国徽、二维码、公章需完整，不能有缺失部分；\n2.营业执照无水印
+\n3.清晰原件数码照，拒绝扫描件、 悬挂件
+\n4.复印件需加盖公司红章
+\n5.营业执照四周边框需完整，不折叠、不反光、文字清晰可见
+\n6.请提供含统一社会信用代码的新版执照7请核对匹   配信息是否正确
+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_upload" />
+</androidx.constraintlayout.widget.ConstraintLayout>

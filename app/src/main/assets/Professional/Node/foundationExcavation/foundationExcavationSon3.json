@@ -1,77 +1,77 @@
 [
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"开挖方式：",
+    "singleDisplayLeftTitle":"开挖方式:",
     "singleDisplayLeftContent":"人工挖土"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"长：",
+    "singleDisplayLeftTitle":"长:",
     "singleDisplayLeftContent":"8m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"宽：",
+    "singleDisplayLeftTitle":"宽:",
     "singleDisplayLeftContent":"88m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"深：",
+    "singleDisplayLeftTitle":"深:",
     "singleDisplayLeftContent":"80m"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"坑内挖土方量：",
+    "singleDisplayLeftTitle":"坑内挖土方量:",
     "singleDisplayLeftContent":"100m³"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"平基方量：",
+    "singleDisplayLeftTitle":"平基方量:",
     "singleDisplayLeftContent":"200m³"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"土质/比例：",
+    "buttonTitle":"土质/比例:",
     "buttonName":["详情"]
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"人工运土：",
+    "singleDisplayLeftTitle":"人工运土:",
     "singleDisplayLeftContent":"200m³"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"运距：",
+    "singleDisplayLeftTitle":"运距:",
     "singleDisplayLeftContent":"150km³"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"机械运土：",
+    "singleDisplayLeftTitle":"机械运土:",
     "singleDisplayLeftContent":"250m³"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"运距：",
+    "singleDisplayLeftTitle":"运距:",
     "singleDisplayLeftContent":"120km"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"回填方量：",
+    "singleDisplayLeftTitle":"回填方量:",
     "singleDisplayLeftContent":"150m³"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"回填物比例：",
+    "buttonTitle":"回填物比例:",
     "buttonName":["详情"]
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"回填方式：",
+    "singleDisplayLeftTitle":"回填方式:",
     "singleDisplayLeftContent":"自然沉降"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"挡土板：",
+    "singleDisplayLeftTitle":"挡土板:",
     "singleDisplayLeftContent":"300m²"
   },
   {

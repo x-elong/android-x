@@ -6,34 +6,19 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayTitle1": "杆号:",
     "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayTitle2": "杆塔属性:",
     "twoColumnDisplayContent2": "直线架子塔"
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayTitle1": "杆塔高度(m):",
     "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayTitle2": "杆塔型号:",
     "twoColumnDisplayContent2": "150锥型电杆"
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "1#耐张段",
-    "expandListPath": "Professional/OverHead/wireErection/wireErectionSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "2#耐张段",
-    "expandListPath": "Professional/OverHead/wireErection/wireErectionSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "3#耐张段",
-    "expandListPath": "Professional/OverHead/wireErection/wireErectionSon1.json"
   }
 ]

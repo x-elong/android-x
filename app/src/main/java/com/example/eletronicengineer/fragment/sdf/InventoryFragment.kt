@@ -23,69 +23,43 @@ class InventoryFragment : Fragment() {
             return inventoryFragment
         }
     }
-
+    val mutable:MutableList<MultiStyleItem> = ArrayList()
     lateinit var title:String
-    var type:Int=-1
-    val option1Items= listOf("查看","删除")
-    val mHander= Handler(Handler.Callback {
-        when(it.what){
-            RecyclerviewAdapter.MESSAGE_SELECT_OK->{
-                val selectContent=it.data.getString("selectContent")
-                when(selectContent){
-                    "查看"->{
-                        val data= Bundle()
-                        data.putInt("type", type)
-                        data.putString("title",title)
-                        val fragment=
-                            ShiftInputFragment.newInstance(data)
-                        (activity as SupplyActivity).switchFragment(fragment,R.id.frame_supply,"ShiftInput")
-                    }
-                    "删除"->{
-
-                    }
-                }
-                false
-            }
-            else->{
-                false
-            }
-        }
-    })
+    lateinit var key:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
-        type=arguments!!.getInt("type")
+        key=arguments!!.getString("key")
         title=arguments!!.getString("title")
-        view.tv_title_title1.text=title+"清册"
-        title=title.replace("现场","")
+        view.tv_title_title1.text=title
         initRecyclerviewAdapter(view)
         initOnClickListener(view)
         return view
     }
     fun initRecyclerviewAdapter(view: View){
-        val mutable:MutableList<MultiStyleItem> = ArrayList()
         var mData:List<MultiStyleItem>
+        mutable.clear()
         when(title){
             "车辆"->{
-                view.tv_tip1.text="类    别"
-                view.tv_tip2.text="规格型号"
-                for (i in 0 until 10) {
-                    val multiSryleItem = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "第"+(i+1)+title, "kkk")
+                for (i in 0 until 3) {
+                    val multiSryleItem = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "第"+(i+1)+title, false)
                     mutable.add(multiSryleItem)
                     mutable[i].jumpListener=View.OnClickListener {
-                        val selectDialog= CustomDialog(CustomDialog.Options.SELECT_DIALOG,view.context,option1Items,mHander).dialog
-                        selectDialog.show()
+                        val data= Bundle()
+                        data.putInt("position",i)
+                        data.putString("key",key)
+                        (activity as SupplyActivity).switchFragment(UploadPhoneFragment.newInstance(data),R.id.frame_supply,"Capture")
                     }
                 }
             }
             else->{
-                view.tv_tip1.text="工    种"
-                view.tv_tip2.text="姓    名"
-                for (i in 0 until 10) {
-                    val multiSryleItem = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "第"+ (i+1) +title, "哈哈哈")
+                for (i in 0 until 3) {
+                    val multiSryleItem = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "第"+ (i+1) +title, false)
                     mutable.add(multiSryleItem)
                     mutable[i].jumpListener=View.OnClickListener {
-                        val selectDialog= CustomDialog(CustomDialog.Options.SELECT_DIALOG,view.context,option1Items,mHander).dialog
-                        selectDialog.show()
+                        val data= Bundle()
+                        data.putInt("position",i)
+                        data.putString("key",key)
+                        (activity as SupplyActivity).switchFragment(UploadPhoneFragment.newInstance(data),R.id.frame_supply,"Capture")
                     }
                 }
             }
@@ -101,11 +75,7 @@ class InventoryFragment : Fragment() {
             activity!!.supportFragmentManager.popBackStack()
         }
         view.button_add.setOnClickListener {
-            val data= Bundle()
-            data.putInt("type", type)
-            data.putString("title",title)
-            val fragment= ShiftInputFragment.newInstance(data)
-            (activity as SupplyActivity).switchFragment(fragment,R.id.frame_supply,"ShiftInput")
+
         }
     }
 }

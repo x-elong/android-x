@@ -6,94 +6,19 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆号：",
+    "twoColumnDisplayTitle1": "杆号:",
     "twoColumnDisplayContent1": "A1",
-    "twoColumnDisplayTitle2": "杆塔属性：",
+    "twoColumnDisplayTitle2": "杆塔属性:",
     "twoColumnDisplayContent2": "直线架子塔"
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "杆塔高度(m)：",
+    "twoColumnDisplayTitle1": "杆塔高度(m):",
     "twoColumnDisplayContent1": "10m",
-    "twoColumnDisplayTitle2": "杆塔型号：",
+    "twoColumnDisplayTitle2": "杆塔型号:",
     "twoColumnDisplayContent2": "150锥型电杆"
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "现浇基础",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "钢管桩基础",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "预制桩基础",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "钻孔灌注桩基础",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "岩石锚杆基础钻孔浇灌",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "树根桩基础",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "保护帽、防撞墩",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "排水沟",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "护坡、挡土墙",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "护坡、挡土墙及排水沟",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "喷射混凝土护坡",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "基础防护",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon4.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "自定义",
-    "expandListPath": "Professional/OverHead/foundationPouring/foundationPouringSon4.json"
   }
 ]

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/general_5"
+    android:background="@color/white">
+<ImageView
+    android:id="@+id/iv_goods_picture"
+    android:layout_width="@dimen/general_170"
+    android:layout_height="@dimen/general_166" />
+    <TextView
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/tv_goods_name"
+        android:layout_width="@dimen/general_170"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="湖南宇畅有限公司电力电容器"/>
+    <TextView
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/tv_goods_price"
+        android:textColor="@color/black"
+        android:layout_width="@dimen/general_94"
+        android:layout_height="wrap_content"
+        android:text="￥1000"/>
+</LinearLayout>

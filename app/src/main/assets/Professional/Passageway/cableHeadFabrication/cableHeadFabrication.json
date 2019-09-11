@@ -6,34 +6,19 @@
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "通道编号：",
+    "fourDisplayTitle": "通道编号:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "通道类型：",
+    "fourDisplayContent2": "通道类型:",
     "fourDisplayContent3": "自动获取"
   },
   {
     "type": "FOUR_DISPLAY",
-    "fourDisplayTitle": "小号节点：",
+    "fourDisplayTitle": "小号节点:",
     "fourDisplayContent1": "自动获取",
-    "fourDisplayContent2": "大号节点：",
+    "fourDisplayContent2": "大号节点:",
     "fourDisplayContent3": "自动获取"
   },
   {
     "type": "BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "终端头制作",
-    "expandListPath": "Professional/Passageway/cableHeadFabrication/cableHeadFabricationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "中间头制作",
-    "expandListPath": "Professional/Passageway/cableHeadFabrication/cableHeadFabricationSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "肘型终端头制作",
-    "expandListPath": "Professional/Passageway/cableHeadFabrication/cableHeadFabricationSon1.json"
   }
 ]

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_order_details_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:paddingTop="@dimen/top_7"
+        android:text="订单详情"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_order_details_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_50"
+        android:gravity="center"
+        android:padding="@dimen/general_15"
+        android:text="湖南宇畅官方旗舰店"
+        android:textColor="#000000"
+        android:textSize="@dimen/font_tv_normal_17"
+        app:layout_constraintTop_toBottomOf="@+id/view_order"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_order_details_image"
+        android:layout_width="@dimen/general_100"
+        android:layout_height="@dimen/general_100"
+        android:layout_marginStart="@dimen/general_15"
+        android:background="@drawable/banner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_shop" />
+
+    <TextView
+        android:id="@+id/tv_order_details_content"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_10"
+        android:text="商品名称：九朗 5KW 屋顶太阳能发电 分布式光伏发电系统 勘测定金"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="#333333"
+        app:layout_constraintStart_toEndOf="@+id/tv_order_details_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_shop" />
+
+    <TextView
+        android:id="@+id/tv_order_details_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="商品编号：0000075920 \n品牌： 九朗 \n单晶：280w"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintStart_toEndOf="@+id/tv_order_details_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_content" />
+    <TextView
+        android:id="@+id/tv_order_details_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_10"
+        android:layout_marginTop="@dimen/general_10"
+        android:text="￥1000"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@+id/tv_order_details_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_shop" />
+    <TextView
+        android:id="@+id/tv_order_details_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_20"
+        android:text="x100"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:textColor="#505050"
+        app:layout_constraintStart_toEndOf="@+id/tv_order_details_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_price" />
+    <TextView
+        android:id="@+id/tv_order_details_address"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_15"
+        android:layout_marginTop="@dimen/general_40"
+        android:text="收货人：xx小同学\n收获地址：北京 北京市 海淀区 xxxxxxxxxxxxxxxxxxxxx"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:textColor="#333333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_image" />
+    <TextView
+        android:id="@+id/tv_order_details_contact"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/general_45"
+        android:text="联系卖家"
+        android:textColor="#248bfe"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:gravity="center"
+        android:background="@drawable/btn_style1"
+        android:layout_marginTop="@dimen/general_20"
+        android:layout_marginLeft="@dimen/general_5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_order_details_phone"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_address"
+        />
+    <TextView
+        android:id="@+id/tv_order_details_phone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/general_45"
+        android:gravity="center"
+        android:background="@drawable/btn_style1"
+        android:text="拨打电话"
+        android:textColor="#248bfe"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_marginTop="@dimen/general_20"
+        android:layout_marginLeft="@dimen/general_5"
+        android:layout_marginRight="@dimen/general_5"
+        app:layout_constraintStart_toEndOf="@+id/tv_order_details_contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_address"
+        />
+    <TextView
+        android:id="@+id/tv_order_details_trade"
+        android:layout_width="@dimen/general_340"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_15"
+        android:layout_marginTop="@dimen/general_20"
+        android:text="订单编号：2732738127327132\n支付宝交易号：347748392831298032988992\n创建时间：2017-02-05 13:20:56\n创建时间：2017-02-05 13:20:56"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_details_phone"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

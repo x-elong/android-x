@@ -12,67 +12,85 @@
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"出租方单位名称",
-    "key": "companyName"
+    "key": "companyName",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"单位简称",
-    "key": "companyAbbreviation"
+    "key": "companyAbbreviation",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"单位地址",
-    "key": "companyAddress"
+    "key": "companyAddress",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"法人代表姓名",
-    "key": "legalPersonName"
+    "key": "legalPersonName",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"联系电话",
-    "key": "legalPersonPhone"
+    "key": "legalPersonPhone",
+    "sendFormat": "String"
   },
+    {
+        "type":"SHIFT_INPUT",
+        "shiftInputTitle":"法人身份证照片",
+        "necessary":false,
+        "key":"legalPersonIdCardPath",
+        "sendFormat": "String"
+    },
   {
 
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"营业执照",
     "necessary":false,
-    "key": "businessLicensePath"
+    "key": "businessLicensePath",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"工器具出租清册",
     "buttonName":["下载模板","上传清册"],
-    "key": "leaseLists"
+    "additionalKey": "leaseListsFile"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"租赁合同",
-    "buttonName":["上传合同"],
-    "key": "businessLicensePath"
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"租赁合同",
+    "necessary":false,
+    "key": "leaseConTractPath",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonName":["是","否"],
     "radioButtonTitle":"是否配送",
-    "key": "isDistribution"
+    "key": "isDistribution",
+    "sendFormat": "Boolean"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["出租方提供","租赁方提供"],
-    "radioButtonTitle":"运送财产保险",
-    "key": "conveyancePropertyInsurance"
+    "type":"SELECT_DIALOG",
+    "selectTitle":"运送财产保险",
+    "selectOption1Items":["出租方提供","租赁方提供"],
+    "key": "conveyancePropertyInsurance",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
     "inputUnit":"(天)",
-    "key": "periodValidity"
+    "key": "periodValidity",
+    "sendFormat": "Int"
   },
   {
     "type":"SUBMIT",
-    "submitContent":"确认发布"
+    "submitContent":"确认发布",
+    "key": "Provider"
   }
 ]

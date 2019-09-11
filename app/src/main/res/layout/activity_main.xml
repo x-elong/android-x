@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/frame_main">
-    </FrameLayout>
-
-
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bnv"
+        app:layout_constraintTop_toTopOf="parent" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv"
             android:layout_width="match_parent"
@@ -20,6 +20,5 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="0dp"
             android:layout_marginBottom="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

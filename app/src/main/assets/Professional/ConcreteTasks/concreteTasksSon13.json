@@ -1,0 +1,14 @@
+[
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "A1",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon13_1.json",
+        "styleType": "1"
+    },
+    {
+        "type": "EXPAND_LIST",
+        "expandListTitle": "A2",
+        "expandListPath": "Professional/dispatchedWorker/ConcreteTasks/ConcreteTasksSon13_1.json",
+        "styleType": "1"
+    }
+]

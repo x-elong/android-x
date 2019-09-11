@@ -6,52 +6,22 @@
   },
   {
     "type": "TWO_COLUMN_DISPLAY",
-    "twoColumnDisplayTitle1": "节点编号：",
+    "twoColumnDisplayTitle1": "节点编号:",
     "twoColumnDisplayContent1": "1#",
-    "twoColumnDisplayTitle2": "节点类型：",
+    "twoColumnDisplayTitle2": "节点类型:",
     "twoColumnDisplayContent2": "工井"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点详情：",
+    "singleDisplayLeftTitle":"节点详情:",
     "singleDisplayLeftContent":"电缆分支箱"
   },
   {
     "type":"SINGLE_DISPLAY_LEFT",
-    "singleDisplayLeftTitle":"节点位置：",
+    "singleDisplayLeftTitle":"节点位置:",
     "singleDisplayLeftContent":"湖南人文科技学院"
   },
   {
     "type":"BLANK"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地开挖沟",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon1.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地极制作及安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地母线敷设",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "引下安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地体安装",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
-  },
-  {
-    "type": "EXPAND_LIST",
-    "expandListTitle": "接地防腐",
-    "expandListPath": "Professional/OverHead/groundLaying/groundLayingSon2.json"
   }
 ]

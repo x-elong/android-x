@@ -3,50 +3,60 @@
     "type":"TITLE",
     "title1":"需求三方",
     "styleType": "0",
-    "key":"needType"
+    "key":"requirementType",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
     "singleDisplayRightContent":"代办资质",
-    "key":"needVariety"
+    "key":"requirementVariety",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"三方服务清单",
     "buttonName":["下载模板","拍照","上传附件"],
-    "key":"thirdLists"
+    "additionalKey":"thirdListsFile"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"合作方属性",
     "key":"partnerAttribute",
+    "sendFormat":"Long",
     "radioButtonName":["单位","个人"]
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"费用标准",
     "key":"fareStandard",
-    "radioButtonName":["面议","按清单报价"]
+    "radioButtonName":["面议","按清单报价"],
+    "sendFormat":"Long"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人"
+    "inputSingleTitle":"联系人",
+    "key": "name",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话"
+    "inputSingleTitle":"联系电话",
+    "key": "phone",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
     "inputUnit":"(天)",
-    "key":"validTime"
+    "key":"validTime",
+    "sendFormat":"Long"
   },
   {
     "type":"HINT",
     "key":"additonalExplain",
-    "hintContent":"附加：有不良记录者请勿联系",
+    "sendFormat":"String",
+    "hintContent":"附加:有不良记录者请勿联系",
     "customFontColor":"#FFFF0000",
     "startPosition":0,
     "endPosition":3
