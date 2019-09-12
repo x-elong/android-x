@@ -853,6 +853,12 @@ internal fun getOwnExtendUAndI(vipLevel: Int, year: Int, baseUrl: String):Observ
 /*
  * 商城
  */
+internal fun getPopularityGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPopularityGoods()
+}
 
 internal fun getNewGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
     val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
