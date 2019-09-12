@@ -4,18 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--<TextView-->
-    <!--android:id="@+id/tv_title"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/general_31"-->
-    <!--android:background="#64ffffff"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="商城"-->
-    <!--android:textColor="#045b4c"-->
-    <!--android:textSize="@dimen/font_tv_hint_15"-->
-    <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--android:layout_marginLeft="@dimen/left_45"-->
-    <!--/>-->
 
 
     <TextView
@@ -29,11 +17,10 @@
         android:id="@+id/tv_mall_search_bg"
         android:layout_width="@dimen/general_280"
         android:layout_height="@dimen/general_30"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/view_bg"
         app:layout_constraintBottom_toBottomOf="@+id/tv_mall_first_bg"
-        app:layout_constraintEnd_toStartOf="@+id/tv_mall_person"
-
+        app:layout_constraintEnd_toEndOf="@+id/tv_mall_first_bg"
         app:layout_constraintStart_toStartOf="@+id/tv_mall_first_bg"
         app:layout_constraintTop_toTopOf="@+id/tv_mall_first_bg"
         app:layout_constraintVertical_bias="0.478" />
@@ -47,16 +34,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_mall_search_bg"
         app:layout_constraintLeft_toLeftOf="@id/tv_mall_search_bg"
         app:layout_constraintTop_toTopOf="@id/tv_mall_search_bg" />
-
-    <TextView
-        android:id="@+id/tv_mall_person"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/ic_person_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_mall_first_bg"
-        app:layout_constraintEnd_toEndOf="@+id/tv_mall_first_bg"
-        app:layout_constraintTop_toTopOf="@+id/tv_mall_first_bg" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_mall_banner"

@@ -15,7 +15,7 @@
         android:text="Gavin"
         android:id="@+id/tv_shipping_address_people"
         android:textColor="@color/black"
-        />
+        tools:ignore="MissingConstraints" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,27 +27,29 @@
         app:layout_constraintLeft_toRightOf="@id/tv_shipping_address_people"
         android:layout_marginLeft="@dimen/left_8"
         />
+
     <TextView
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_tv_hint_14"
-        android:text="湖南省娄底市娄星区大科街道湖南人文科技学院"
         android:id="@+id/tv_shipping_address"
-        app:layout_constraintTop_toBottomOf="@id/tv_shipping_address_people"
-        android:layout_marginLeft="@dimen/left_8"
+        android:layout_width="@dimen/general_300"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_6"
-        />
+        android:layout_marginEnd="8dp"
+        android:text="湖南省娄底市娄星区大科街道湖南人文科技学院dx"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintEnd_toStartOf="@+id/view8"
+        app:layout_constraintStart_toStartOf="@+id/tv_shipping_address_people"
+        app:layout_constraintTop_toBottomOf="@id/tv_shipping_address_people" />
+
     <View
+        android:id="@+id/view8"
         android:layout_width="@dimen/general_1"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/tv_shipping_address_people"
-        app:layout_constraintBottom_toBottomOf="@id/tv_shipping_address"
-        app:layout_constraintRight_toLeftOf="@id/tv_shipping_address_edit"
-        android:layout_marginLeft="@dimen/left_10"
         android:layout_marginRight="@dimen/right_10"
         android:background="#999999"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/tv_shipping_address"
+        app:layout_constraintRight_toLeftOf="@id/tv_shipping_address_edit"
+        app:layout_constraintTop_toTopOf="@id/tv_shipping_address_people" />
 
     <TextView
         android:id="@+id/tv_shipping_address_edit"

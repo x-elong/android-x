@@ -59,11 +59,6 @@ class NewsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.news, container, false)
         initRegister()
-        JMessageClient.getGroupIDList(object: GetGroupIDListCallback(){
-            override fun gotResult(p0: Int, p1: String?, p2: MutableList<Long>) {
-                Log.i("group num","${p2.size}")
-            }
-        })
         Thread{
             val inputName= EditText(context)
             inputName.hint="请输入要登录的账号"
@@ -74,8 +69,8 @@ class NewsFragment : Fragment() {
             })
             activity!!.runOnUiThread {
                 dialog.show()
+                initMenu()
             }
-            initMenu()
         }.start()
         return view
     }
@@ -91,60 +86,48 @@ class NewsFragment : Fragment() {
     private fun initData(isFirst:Boolean,loginName:String)
     {
         UnSerializeDataBase.username=loginName
-        if (isFirst)
-            JMessageClient.logout()
-        JMessageClient.getUserInfo("admin1",appkey,object: GetUserInfoCallback(){
-            override fun gotResult(p0: Int, p1: String?, p2: UserInfo?) {
-                if(p1!=null&&p1.contains("Have not logged in"))
-                {
-                    JMessageClient.login(loginName,"adminPassword",object: BasicCallback(){
-                        override fun gotResult(p0: Int, p1: String?) {
-                            Log.i("logInfo",p1)
-                            initData(false, loginName)
-                        }
-                    })
-                }
-                else
-                {
-                    val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.username)
-                    val myLatestMessage=conversation.latestMessage
-                    ContactManager.getFriendList(object: GetUserInfoListCallback(){
-                        override fun gotResult(p0: Int, p1: String?, p2: MutableList<UserInfo>?) {
-                            val userInfoList= p2 ?: ArrayList()
-                            val userAvatar= ContextCompat.getDrawable(context!!,R.drawable.user_avatar_xml)
-                            for (i in userInfoList)
+        JMessageClient.login(loginName,"adminPassword",object: BasicCallback(){
+            override fun gotResult(p0: Int, p1: String?) {
+                Log.i("logInfo",p1)
+                UnSerializeDataBase.isLogined=true
+                val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.username)
+                val myLatestMessage=conversation.latestMessage
+                ContactManager.getFriendList(object: GetUserInfoListCallback(){
+                    override fun gotResult(p0: Int, p1: String?, p2: MutableList<UserInfo>?) {
+                        val userInfoList= p2 ?: ArrayList()
+                        val userAvatar= ContextCompat.getDrawable(context!!,R.drawable.user_avatar_xml)
+                        for (i in userInfoList)
+                        {
+                            val friendConversation=JMessageClient.getSingleConversation(i.userName,appkey)
+                            val chatData=if (friendConversation.latestMessage!=null)
                             {
-                                val friendConversation=JMessageClient.getSingleConversation(i.userName,appkey)
-                                val chatData=if (friendConversation.latestMessage!=null)
+                                val simpleFormat= SimpleDateFormat("HH:mm")
+                                if (myLatestMessage.createTime>friendConversation.latestMessage.createTime)
                                 {
-                                    val simpleFormat= SimpleDateFormat("HH:mm")
-                                    if (myLatestMessage.createTime>friendConversation.latestMessage.createTime)
-                                    {
-                                        val latestContent=JiGuangMessageUtil.toJsonObject(myLatestMessage.content).get("text").asString
-                                        ChatItem(userAvatar!!,i.userName,latestContent,simpleFormat.format(Date(myLatestMessage.createTime)))
-                                    }
-                                    else
-                                    {
-                                        val latestContent=JiGuangMessageUtil.toJsonObject(friendConversation.latestMessage.content).get("text").asString
-                                        ChatItem(userAvatar!!,i.userName,latestContent,simpleFormat.format(Date(friendConversation.latestMessage.createTime)))
-                                    }
-                                }
-                                else if(myLatestMessage!=null)
-                                {
-                                    val simpleFormat= SimpleDateFormat("HH:mm")
-                                    val latestContent=
-                                        JiGuangMessageUtil.toJsonObject(myLatestMessage.content).get("text").asString
+                                    val latestContent=JiGuangMessageUtil.toJsonObject(myLatestMessage.content).get("text").asString
                                     ChatItem(userAvatar!!,i.userName,latestContent,simpleFormat.format(Date(myLatestMessage.createTime)))
                                 }
                                 else
-                                    ChatItem(userAvatar!!,i.userName,"","14:50")
-                                activity!!.runOnUiThread {
-                                    addFriend(chatData)
+                                {
+                                    val latestContent=JiGuangMessageUtil.toJsonObject(friendConversation.latestMessage.content).get("text").asString
+                                    ChatItem(userAvatar!!,i.userName,latestContent,simpleFormat.format(Date(friendConversation.latestMessage.createTime)))
                                 }
                             }
+                            else if(myLatestMessage!=null)
+                            {
+                                val simpleFormat= SimpleDateFormat("HH:mm")
+                                val latestContent=
+                                    JiGuangMessageUtil.toJsonObject(myLatestMessage.content).get("text").asString
+                                ChatItem(userAvatar!!,i.userName,latestContent,simpleFormat.format(Date(myLatestMessage.createTime)))
+                            }
+                            else
+                                ChatItem(userAvatar!!,i.userName,"","14:50")
+                            activity!!.runOnUiThread {
+                                addFriend(chatData)
+                            }
                         }
-                    })
-                }
+                    }
+                })
             }
         })
 //        val conversationList=JMessageClient.getChatRoomConversationList()
@@ -208,4 +191,5 @@ class NewsFragment : Fragment() {
             }
         }
     }
+
 }

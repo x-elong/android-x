@@ -48,7 +48,9 @@
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话"
+    "inputSingleTitle":"联系电话",
+    "key": "contactPhone",
+    "sendFormat": "String"
   },
   {
     "type":"SHIFT_INPUT",

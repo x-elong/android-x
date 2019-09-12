@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/general_37"
     android:background="@color/colorPrimaryDark"
     >
 
@@ -10,7 +10,7 @@
         android:id="@+id/tv_title_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_18"
         />
@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:layout_marginRight="@dimen/right_30"
+        android:layout_marginTop="@dimen/top_2"
         android:layout_weight="1"
         android:gravity="center"
         android:text="2"

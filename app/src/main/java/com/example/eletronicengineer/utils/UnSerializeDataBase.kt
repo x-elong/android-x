@@ -10,6 +10,8 @@ import java.io.File
 
 object UnSerializeDataBase
 {
+  var userToken=""
+  var isLogined=false
   //需求模块 由于是填完后一次性上传 故只保存图片和文件
   val fileList:MutableList<FileMap> =ArrayList()
   val imgList:MutableList<BitmapMap> =ArrayList()

@@ -41,7 +41,7 @@ class FunctionAdapter : RecyclerView.Adapter<FunctionAdapter.ViewHolder> {
         viewHolder.function_Image.setImageResource(function.imageid)
         viewHolder.function_name.text = function.name
         if(function.viewOnClickListener==null)
-            viewHolder.function_Image.setOnClickListener{
+            viewHolder.itemView.setOnClickListener{
                 Toast.makeText(viewHolder.function_Image.context,"点击了${viewHolder.function_name.text}",Toast.LENGTH_SHORT).show()
             }
         else

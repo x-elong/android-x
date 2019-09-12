@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+    <View
+        android:id="@+id/view_my_certification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_my_certification_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_my_certification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="我的认证"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_my_certification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_my_certification"
+        tools:ignore="MissingConstraints" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mTabLayout_my_certification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/view_my_certification"
+        app:tabBackground="@color/transparent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#4ca0fe"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#4ca0fe"
+        app:tabTextColor="@color/black"/>
+    <FrameLayout
+        android:id="@+id/frame_certification_category"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#efefef"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mTabLayout_my_certification" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,24 +29,27 @@
         android:id="@+id/tv_new_address_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
-        android:paddingTop="@dimen/top_7"
+        android:gravity="center"
         android:text="收货地址"
         android:textColor="#383838"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rv_address_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view3"
         tools:ignore="MissingConstraints" />
 
 
     <TextView
-        android:id="@+id/tv_new_address_ok"
+        android:id="@+id/tv_address_ok"
         android:layout_width="@dimen/general_30"
         android:layout_height="@dimen/general_30"
         android:background="@drawable/ic_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_address_content"
         android:layout_width="match_parent"
@@ -55,13 +58,4 @@
         android:padding="@dimen/top_10"
         app:layout_constraintTop_toBottomOf="@+id/view3">
     </androidx.recyclerview.widget.RecyclerView>
-    <Button
-        android:id="@+id/btn_shipping_address"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_48"
-        android:background="@drawable/btn_style1"
-        android:textSize="@dimen/font_tv_normal_16"
-        android:text="保存"
-        app:layout_constraintBottom_toBottomOf="parent"
-         />
 </androidx.constraintlayout.widget.ConstraintLayout>

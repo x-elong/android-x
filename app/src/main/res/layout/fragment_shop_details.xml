@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_shop_details_first_view"
         android:background="#a7a7a7"
         android:id="@+id/tv_shop_details_second_view"
-        ></View>
+        />
 
     <View
         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_shop_details_header"
         android:background="@color/white"
         android:id="@+id/tv_shop_details_three_view"
-        ></View>
+        />
     <ImageView
         android:paddingBottom="@dimen/bottom_5"
         app:layout_constraintTop_toTopOf="@id/tv_shop_details_three_view"
@@ -83,6 +83,7 @@
         android:id="@+id/tv_shop_details"
         app:layout_constraintBottom_toBottomOf="@id/tv_shop_details_header"
         android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/tv_shop_details_header"
         android:layout_marginLeft="@dimen/left_20"
         android:textColor="@color/black"/>
@@ -99,13 +100,13 @@
         app:tabTextColor="@color/black"
         app:tabGravity="fill"
         app:layout_constraintTop_toBottomOf="@id/tv_shop_details_three_view"
-        ></com.google.android.material.tabs.TabLayout>
+        />
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/viewpager_shop"
         app:layout_constraintTop_toBottomOf="@id/mTabLayout_shop"
         app:layout_constraintBottom_toBottomOf="parent"
-        ></androidx.viewpager.widget.ViewPager>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

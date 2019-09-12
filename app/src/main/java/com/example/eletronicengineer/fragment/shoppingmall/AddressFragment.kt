@@ -95,7 +95,7 @@ class AddressFragment : Fragment() {
         v.tv_new_address_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        v.btn_shipping_address.setOnClickListener {
+        v.tv_address_ok.setOnClickListener {
             if (NetworkAdapter(addressList, context!!).check()) {
                 val fragment = if (activity is ShippingAddressActivity) {
                     activity!!.supportFragmentManager.findFragmentByTag("my")

@@ -31,6 +31,7 @@ import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.aninterface.ExpandMenuItem
 import com.example.eletronicengineer.utils.*
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.goods.view.*
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_distance_position.view.*
@@ -228,6 +229,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvShiftInputTitle:TextView
         lateinit var tvShiftInputContent:TextView
         lateinit var tvShiftInputShow:TextView
+        lateinit var ivShiftInputPicture:CircleImageView
 
         lateinit var tvTwoPairInputTitle:TextView
         lateinit var tvTwoPairInputItem1:TextView
@@ -537,6 +539,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvShiftInputTitle=v.tv_shift_input_title
                     tvShiftInputContent=v.et_shift_input_item
                     tvShiftInputShow=v.tv_shift_input_show
+                    ivShiftInputPicture=v.iv_shift_input_picture
                 }
                 SELECT_DIALOG_TYPE->
                 {
@@ -740,6 +743,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var time=0
     override fun onBindViewHolder(vh: VH, position: Int) {
         vh.itemPosition=position
+        mData[position].itemPosition = position
         vh.setIsRecyclable(false)
         if (adapterObserver!=null)
         {
@@ -939,6 +943,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SINGLE_INPUT_TYPE->
             {
                 vh.tvSingleInputTitle.text=mData[position].inputSingleTitle
+                if(mData[position].inputSingleHint!=""){
+                    vh.etSingleInputContent.hint=mData[position].inputSingleHint
+                }
                 vh.etSingleInputContent.addTextChangedListener(object: TextWatcher {
                     override fun afterTextChanged(p0: Editable?) {
 
@@ -1190,7 +1197,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SHIFT_INPUT_TYPE->
             {
                 vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
-                    vh.tvShiftInputContent.text=mData[position].shiftinputContent
+                    vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 if (mData[position].necessary)
                 {
@@ -1200,6 +1207,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
+                if(mData[position].shiftInputPicture!=""){
+                    vh.ivShiftInputPicture.visibility=View.VISIBLE
+                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
                 }
             }
             SELECT_DIALOG_TYPE->

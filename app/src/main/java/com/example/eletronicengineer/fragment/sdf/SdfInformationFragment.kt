@@ -64,7 +64,7 @@ class SdfInformationFragment:Fragment(){
             titleContent.text="需求发布"
             addInformation.visibility = View.VISIBLE
             addInformation.setOnClickListener {
-                val Option1Items = listOf<String>("需求个人","需求团队","需求租赁","需求三方")
+                val Option1Items = listOf("需求个人","需求团队","需求租赁","需求三方")
                 val Option2Items:List<List<String>> = listOf(listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
                 var mHandler:Handler= Handler(Handler.Callback {
                     when(it.what)

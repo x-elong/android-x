@@ -58,13 +58,13 @@
     {
         "type":"SINGLE_INPUT",
         "inputSingleTitle":"联系人姓名",
-        "key": "legalPersonName",
+        "key": "contact",
         "sendFormat": "String"
     },
     {
         "type":"SINGLE_INPUT",
         "inputSingleTitle":"联系人电话",
-        "key": "legalPersonPhone",
+        "key": "contactPhone",
         "sendFormat": "String"
     },
     {

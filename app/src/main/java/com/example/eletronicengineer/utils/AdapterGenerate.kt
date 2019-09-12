@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -22,11 +23,12 @@ import com.electric.engineering.model.MultiStyleItem
 import com.electric.engineering.utils.ItemGenerate
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandDisplayActivity
-import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.activity.ProfessionalActivity
 import com.example.eletronicengineer.activity.SupplyActivity
+import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.CheckBoxAdapter
 import com.example.eletronicengineer.adapter.EngineeringAppLiancesAdapter
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.CheckBoxStyle
 import com.example.eletronicengineer.aninterface.EngineeringAppliances
@@ -34,14 +36,14 @@ import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
+import com.example.eletronicengineer.fragment.sdf.InventoryFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
 import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.lxj.xpopup.XPopup
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_input.view.*
 import kotlinx.android.synthetic.main.dialog_soil_ratio.view.*
+import kotlinx.android.synthetic.main.item_public_point_position2.*
 import kotlinx.android.synthetic.main.shift_dialog.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -3031,7 +3033,7 @@ class AdapterGenerate {
                 builder.setTitle(mData[j].shiftInputTitle)
                 builder.setNegativeButton("取消", null)
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener() { _, _ ->
-                    mData[j].shiftinputContent = dialogView.shift_dialog_content.text.toString()
+                    mData[j].shiftInputContent = dialogView.shift_dialog_content.text.toString()
                     adapter.notifyItemChanged(j)  //强制刷新
 //                    adapter.onBindViewHolder(adapter.VHList.get(j), j)
                     //adapter.notifyDataSetChanged()
@@ -3051,7 +3053,7 @@ class AdapterGenerate {
                     DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
                     DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                         result += "${year}年${month + 1}月${dayOfMonth}日"
-                        mData[j].shiftinputContent = result
+                        mData[j].shiftInputContent = result
                         adapter.notifyItemChanged(j)
 //                        adapter.onBindViewHolder(adapter.VHList.get(j), j)
                     },
@@ -3247,8 +3249,6 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-
-
     ////alterPosition:2019/8/26 0026
     //found:Sanget
     //event:需求供应显示界面（未对接口）
@@ -3399,10 +3399,11 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandIndividual.json")
-        //报名按钮的点击事件
-        mData[18].submitListener = View.OnClickListener {
+        mData[19].submitListener = View.OnClickListener {
+
         }
-        return RecyclerviewAdapter(mData)
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
     }
     //个人劳务显示模板
     fun supplyIndividualDisplay():RecyclerviewAdapter{
@@ -3575,6 +3576,4 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-
-
 }

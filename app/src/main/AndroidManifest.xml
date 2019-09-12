@@ -29,7 +29,6 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,7 +36,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ShippingAddressActivity"></activity>
+        <activity android:name=".activity.SubscribeActivity"></activity>
+        <activity android:name=".activity.SecurityCenterActivity" />
+        <activity android:name=".activity.MyRegistrationActivity" />
+        <activity android:name=".activity.MySignatureActivity" />
+        <activity android:name=".activity.MySettingActivity" />
+        <activity android:name=".activity.MyCertificationActivity" />
+        <activity android:name=".activity.ShippingAddressActivity" />
         <activity android:name=".activity.MyOrderActivity" />
         <activity android:name=".activity.MyQRCodeActivity" />
         <activity android:name=".activity.MyInformationActivity" />
@@ -58,8 +63,8 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SupplyActivity" />
         <activity android:name=".activity.DemandActivity" />
-        <activity android:name=".activity.DemandDisplayActivity"></activity>
-        <activity android:name=".activity.SupplyDisplayActivity"></activity>
+        <activity android:name=".activity.DemandDisplayActivity" />
+        <activity android:name=".activity.SupplyDisplayActivity" />
         <activity android:name=".activity.FriendRequestActivity" /> <!-- Required SDK核心功能 -->
         <service
             android:name=".service.PushService"
