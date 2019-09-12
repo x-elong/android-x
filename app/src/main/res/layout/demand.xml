@@ -23,7 +23,7 @@
         app:tabSelectedTextColor="#4ca0fe"
         app:tabTextColor="@color/black" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tv_demand_content"
+        android:id="@+id/rv_demand_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

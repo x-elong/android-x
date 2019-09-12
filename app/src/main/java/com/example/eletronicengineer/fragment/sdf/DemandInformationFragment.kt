@@ -20,8 +20,8 @@ class DemandInformationFragment: Fragment(){
     adapterGenerate.context = view.context
     adapterGenerate.activity = activity as AppCompatActivity
     val adapter = adapterGenerate.mainDemandIndividual()
-    view.tv_demand_content.adapter = adapter
-    view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+    view.rv_demand_content.adapter = adapter
+    view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
     select(view)
     return view
   }
@@ -41,32 +41,32 @@ class DemandInformationFragment: Fragment(){
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainDemandIndividual()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
           }
           "需求团队"->{
             val adapterGenerate = AdapterGenerate()
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainDemandTeam()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
           }
           "需求租赁"->{
             val adapterGenerate = AdapterGenerate()
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainDemandLease()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
           }
           "需求三方"->{
             val adapterGenerate = AdapterGenerate()
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainDemandTripartite()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
           }
         }
       }

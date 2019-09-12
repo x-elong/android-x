@@ -13,9 +13,6 @@ class MyRegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_registration)
-        tv_my_registration_back.setOnClickListener {
-            finish()
-        }
         addFragment(MyRegistrationFragment())
     }
     fun addFragment(fragment: Fragment) {

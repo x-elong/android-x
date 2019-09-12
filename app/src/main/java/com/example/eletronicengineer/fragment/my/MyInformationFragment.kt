@@ -109,36 +109,39 @@ class MyInformationFragment : Fragment(){
         item = MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,"电企通帐号","11111111")
         mMultiStyleItemList.add(item)
 
-        item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"性别",false)
-        mMultiStyleItemList.add(item)
-        item.jumpListener = View.OnClickListener {
-            var checkedItem = 0
-            val items = arrayListOf("男","女")
-            val dialog = AlertDialog.Builder(context!!)
-                .setTitle("性别")
-                .setSingleChoiceItems(items.toTypedArray(),0,object :DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        checkedItem = p1
-                    }
-                })
-                .setPositiveButton("确定",object :DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        adapter.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = items[checkedItem]
-                        adapter.notifyItemChanged(mMultiStyleItemList.indexOf(item))
-                    }
-                })
-                .create()
-            dialog.show()
+        if(true){
+            val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"性别",false)
+            mMultiStyleItemList.add(item)
+            item.jumpListener = View.OnClickListener {
+                var checkedItem = 0
+                val items = arrayListOf("男","女")
+                val dialog = AlertDialog.Builder(context!!)
+                    .setTitle("性别")
+                    .setSingleChoiceItems(items.toTypedArray(),0,object :DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            checkedItem = p1
+                        }
+                    })
+                    .setPositiveButton("确定",object :DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            adapter.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = items[checkedItem]
+                            adapter.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                        }
+                    })
+                    .create()
+                dialog.show()
+            }
         }
+
         if (true) {
-            item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "出生日期", false)
+            val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "出生日期", false)
             mMultiStyleItemList.add(item)
             item.jumpListener = View.OnClickListener {
                 val position = mMultiStyleItemList.indexOf(item)
                 val cale1 = Calendar.getInstance()
                 DatePickerDialog(
                     context,
-                    DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
+                    android.R.style.Theme_Material_Dialog_Alert,
                     DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                         Log.i("position", position.toString())
                         val result = "${year}-${month + 1}-${dayOfMonth}"
@@ -151,26 +154,31 @@ class MyInformationFragment : Fragment(){
                 ).show()
             }
         }
-
-        item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"血型",false)
-        mMultiStyleItemList.add(item)
-        item.jumpListener = View.OnClickListener {
-            val items = arrayListOf("A型","B型","AB型","O型")
-            val builder = AlertDialog.Builder(context!!)
-            builder.setTitle("血型")
-//            builder.setSingleChoiceItems(items,0,object :DialogInterface.OnClickListener{
-//                override fun onClick(p0: DialogInterface?, p1: Int) {
-//
-//                }
-//            })
-
-            builder.setPositiveButton("确定", DialogInterface.OnClickListener() { _, _ ->
-                run {
-
+        if(true){
+            item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"血型",false)
+            mMultiStyleItemList.add(item)
+            item.jumpListener = View.OnClickListener {
+                val items = arrayListOf("A型","B型","AB型","O型")
+                var checkedItem = 0
+                val builder = AlertDialog.Builder(context!!)
+                builder.setTitle("血型")
+            builder.setSingleChoiceItems(items.toTypedArray(),0,object :DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    checkedItem=p1
                 }
             })
-            val dialog = builder.create()
-            dialog.show()
+
+                builder.setPositiveButton("确定", DialogInterface.OnClickListener() { _, _ ->
+                    adapter.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent=items[checkedItem]
+                    adapter.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                })
+                val dialog = builder.create()
+                dialog.show()
+            }
+        }
+        item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"紧急联系人",false)
+        item.jumpListener = View.OnClickListener {
+//            activity as My
         }
 
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
