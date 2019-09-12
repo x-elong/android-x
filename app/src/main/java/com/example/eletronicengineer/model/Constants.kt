@@ -472,5 +472,41 @@ class Constants {
                 const val sendLogin="/user/login"
             }
         }
+        class DisplayForRequirementAndSupply {
+            companion object {
+                //需求个人
+                const val RequirementPerson="/RequirementPerson/getListByPage/{page}"
+                //需求团队 变电
+                const val RequirementPowerTransformation="/RequirementPowerTransformation/getAllFromTable/{page}/{number}"
+                //需求团队 主网
+                const val RequirementMajorNetwork="/RequirementMajorNetwork/getRequirementMajorNetworkDTO/{page}"
+                //需求团队 配网
+                const val RequirementDistribuionNetwork="/RequirementDistribuionNetwork/getListByPage/{page}"
+                //需求团队 测量设计
+                const val RequirementMeasureDesign="/RequirementMeasureDesign/getListByPage/{page}"
+                //需求团队 马帮运输
+                const val RequirementCaravanTransport="/RequirementCaravanTransport/getListByPage/{page}"
+                //需求团队 桩机服务
+                const val RequirementPileFoundation="/RequirementPileFoundation/getAllFromTable/{page}/{number}"
+                //需求团队 非开挖拉管顶管作业
+                const val RequirementUnexcavation="/RequirementUnexcavation/getAllFromTable/{page}/{number}"
+                //需求团队 试验调试
+                const val RequirementTest="/RequirementTest/getAllFromTable/{page}/{number}"
+                //需求团队 跨越架
+                const val RequirementSpanWoodenSupprt="/RequirementSpanWoodenSupprt/getAllFromTable/{page}/{number}"
+                //需求团队 运行维护
+                const val RequirementRunningMaintain="/RequirementRunningMaintain/getAllFromTable/{page}/{number}"
+                //需求租赁 车辆租赁
+                const val RequirementLeaseCar="RequirementLeaseCar/getListByPage/{page}"
+                //需求租赁 机械租赁
+                const val RequirementLeaseMachinery="RequirementLeaseMachinery/getListByPage/{page}"
+                //需求租赁 设备租赁
+                const val RequirementLeaseFacility="RequirementLeaseFacility/getListByPage/{page}"
+                //需求租赁 工器具租赁
+                const val RequirementLeaseConstructionTool="/RequirementLeaseConstructionTool/getListByPage/{page}"
+                //需求三方
+                const val RequirementThirdParty="/RequirementThirdParty//getListByPage/{page}"
+            }
+        }
     }
 }

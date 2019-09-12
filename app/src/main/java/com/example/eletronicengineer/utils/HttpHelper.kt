@@ -32,10 +32,7 @@ import com.example.eletronicengineer.db.NodePreformedUnitMakeInstallation.Instal
 import com.example.eletronicengineer.db.NodePreformedUnitMakeInstallation.MakeVolumesEntity
 import com.example.eletronicengineer.db.NodePreformedUnitMakeInstallation.PreformedUnitMakeInstallationEntity
 import com.example.eletronicengineer.db.Shopping.GoodsEntity
-import com.example.eletronicengineer.distributionFileSave.OwnExtendUAndI
-import com.example.eletronicengineer.distributionFileSave.OwnExtendUserDetails
-import com.example.eletronicengineer.distributionFileSave.OwnIntegralOfRebate
-import com.example.eletronicengineer.distributionFileSave.OwnIntegralOfRebateDetail
+import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.lg.login
 import com.example.eletronicengineer.lg.resources
 import com.example.eletronicengineer.model.Constants
@@ -56,7 +53,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 interface HttpHelper {
-
+    //需求个人
+    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPerson)
+    fun getRequirementPerson(@Path("page")page:Int,@Header("zouxiaodong")zouxiaodong:String):Observable<Requirement<ReqiurementPersonDetail>>
     @GET(Constants.HttpUrlPath.Login.sendCode)
     fun sendMobile(@Path("mobileNumber") mobileNumber: String): Observable<HttpResult<String>>
     @POST(Constants.HttpUrlPath.Login.sendRegister)
@@ -246,6 +245,7 @@ interface HttpHelper {
 
     @GET(Constants.HttpUrlPath.Shopping.GeneralizeGoods)
     fun getGeneralizeGoods():Observable<HttpResult<List<GoodsEntity>>>
+
 }
 
 class ResponseInterceptor : Interceptor {
@@ -779,48 +779,6 @@ internal fun getCableTest(nodeSubitemId:String,baseUrl: String):Observable<HttpR
 /*
  * 商城
  */
-internal fun getPopularityGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
-    val interceptor= Interceptor {
-        val request=it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build()
-        it.proceed(request)
-    }
-    val client=OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getPopularityGoods()
-}
-
-internal fun getNewGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
-    val interceptor= Interceptor {
-        val request=it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build()
-        it.proceed(request)
-    }
-    val client=OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getNewGoods()
-}
-
-internal fun getGeneralizeGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
-    val interceptor= Interceptor {
-        val request=it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build()
-        it.proceed(request)
-    }
-    val client=OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit = Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getGeneralizeGoods()
-}
-
-internal fun deleteMajorDistribuionProject(id: Long, baseUrl: String): Observable<ResponseBody> {
-    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteMajorDistribuionProject(id)
-}
-
 //分销
 internal fun getQRCode(baseUrl: String):Observable<HttpResult<String>>{
     val interceptor= Interceptor {
@@ -891,6 +849,29 @@ internal fun getOwnExtendUAndI(vipLevel: Int, year: Int, baseUrl: String):Observ
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getOwnExtendUAndI(vipLevel,year)
+}
+/*
+ * 商城
+ */
+
+internal fun getNewGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getNewGoods()
+}
+
+internal fun getGeneralizeGoods(baseUrl: String):Observable<HttpResult<List<GoodsEntity>>>{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getGeneralizeGoods()
+}
+
+internal fun deleteMajorDistribuionProject(id: Long, baseUrl: String): Observable<ResponseBody> {
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteMajorDistribuionProject(id)
 }
 
 
@@ -1036,6 +1017,14 @@ internal fun sendLogin(requestBody: RequestBody,baseUrl: String): Observable<Htt
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.sendLogin(requestBody)
+}
+internal fun getRequirementPerson(page: Int, zouxiaodong: String, baseUrl: String):Observable<Requirement<ReqiurementPersonDetail>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getRequirementPerson(page,zouxiaodong)
 }
 
 //package com.example.eletronicengineer.utils
