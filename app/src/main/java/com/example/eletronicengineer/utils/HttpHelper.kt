@@ -54,7 +54,10 @@ interface HttpHelper {
     //需求查看界面
     //需求个人
     @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPerson)
-    fun getRequirementPerson(@Path("page")page:Int,@Header("zouxiaodong")zouxiaodong:String):Observable<Requirement<ReqiurementPersonDetail>>
+    fun getReqiurementPerson():Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
+    //需求个人通过id查找详情
+    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPersonDetail)
+    fun getReqiurementPersonDetail(@Path("id")id:String,@Header("zouxiaodong")zouxiaodong:String):Observable<HttpResult<ReqiurementPersonDetail>>
 //    //需求团队 主网
 //    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementMajorNetwork)
 //    fun getRequirementMajorNetWork(@Path("page")page:Long,@Header("zouxiaodong")zouxiaodong: String):Observable<Requirement<reqiurementMajorNetwork<String>>>
@@ -806,19 +809,19 @@ internal fun uploadFile(map: Map<String, RequestBody>, baseUrl: String):Observab
     return httpHelper.SendMultiPartMessage(map)
 }
 
-internal fun getRequirementPerson(page: Int, zouxiaodong: String, baseUrl: String):Observable<Requirement<ReqiurementPersonDetail>>
+internal fun getRequirementPerson(baseUrl: String): Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getRequirementPerson(page,zouxiaodong)
+    return httpHelper.getReqiurementPerson()
 }
-//internal fun getRequirementMajorNetWork(page:Long,zouxiaodong: String,baseUrl: String):Observable<Requirement<reqiurementMajorNetwork<String>>>
-//{
-//    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
-//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//        .addConverterFactory(GsonConverterFactory.create()).build()
-//    val httpHelper = retrofit.create(HttpHelper::class.java)
-//    return httpHelper.getRequirementMajorNetWork(page,zouxiaodong)
-//}
+internal fun getRequirementPersonDetail(id: String,zouxiaodong: String,baseUrl: String):Observable<HttpResult<ReqiurementPersonDetail>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getReqiurementPersonDetail(id,zouxiaodong)
+}

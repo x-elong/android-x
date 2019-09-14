@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.activity
 
+import android.media.midi.MidiDevice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import com.example.eletronicengineer.fragment.retailstore.DemandDisplayFragment
 class DemandDisplayActivity : AppCompatActivity() {
   lateinit var title: String
   var type:Int=0
+  lateinit var id:String
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_demand_display)
@@ -20,6 +22,7 @@ class DemandDisplayActivity : AppCompatActivity() {
     val data = Bundle()
     data.putString("title", title)
     data.putInt("type",type)
+    data.putString("id",id)
     addFragment(DemandDisplayFragment.newInstance(data))
   }
 
@@ -28,6 +31,7 @@ class DemandDisplayActivity : AppCompatActivity() {
     val intent = getIntent()
     title = intent.getStringExtra("title")
     type = intent.getIntExtra("type",0)
+    id = intent.getStringExtra("id")
   }
 
   fun addFragment(fragment: Fragment) {

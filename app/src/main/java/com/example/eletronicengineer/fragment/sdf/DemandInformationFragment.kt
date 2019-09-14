@@ -1,6 +1,5 @@
 package com.example.eletronicengineer.fragment.sdf
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandActivity
+import com.example.eletronicengineer.adapter.ListAdapterForDemandPerson
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.AdapterGenerate
@@ -27,14 +28,19 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 
-
 class DemandInformationFragment: Fragment(){
     val selectOption1Items:MutableList<String> =ArrayList()
     val selectOption2Items:MutableList<MutableList<String>> =ArrayList()
     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
+    var mPersonAdapter:ListAdapterForDemandPerson?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val view = inflater.inflate(R.layout.demand, container, false)
+        val view = inflater.inflate(R.layout.demand, container, false)
         val Option1Items= listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他") as MutableList<String>
         val Option2Items= listOf(listOf("普工"), listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
             listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
@@ -45,13 +51,13 @@ class DemandInformationFragment: Fragment(){
             initDemandPerson(view,Option1Items,Option2Items)
         }
         initProjectSite(view)
-    view.tv_demand_site_select.setOnClickListener {
-        initSite(view)
-    }
-    view.tv_demand_site_clear.setOnClickListener {
-        view.tv_demand_site_select.text="选择地点"
-        view.tv_demand_site_clear.visibility=View.GONE
-    }
+        view.tv_demand_site_select.setOnClickListener {
+            initSite(view)
+        }
+        view.tv_demand_site_clear.setOnClickListener {
+            view.tv_demand_site_select.text="选择地点"
+            view.tv_demand_site_clear.visibility=View.GONE
+        }
         view.tv_demand_type_clear.setOnClickListener {
             view.tv_demand_type_select.text="选择需求类别"
             view.tv_demand_type_clear.visibility=View.GONE
@@ -60,36 +66,34 @@ class DemandInformationFragment: Fragment(){
             view.tv_demand_elect_standard_select.text="选择电压等级"
             view.tv_demand_elect_standars_clear.visibility=View.GONE
         }
-    select(view)
-    return view
-  }
+        return view
+    }
 
-  private fun fetchPersonalData(pageNumber : Int, view:View){
-    val result=getRequirementPerson(pageNumber,ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-        // todo
-        for(i in it.data)
-        {
-          addIndividualItem(view, i.projectName)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mPersonAdapter = ListAdapterForDemandPerson(activity!!)
+        demandPerson(view)
+        select(view)
+    }
+
+    private fun demandPerson(view:View) {
+        loadDemandPersonData()
+        view.tv_demand_content.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = mPersonAdapter
         }
-        if (pageNumber < it.pageCount.toInt()) {
-          // go next page
-          fetchPersonalData(pageNumber+1, view)
-        }
-      },{
-        it.printStackTrace()
-      })
-  }
-  private fun addIndividualItem(view:View, title:String)
-  {
-    val adapterGenerate = AdapterGenerate()
-    adapterGenerate.context = view.context
-    adapterGenerate.activity = activity as AppCompatActivity
-    val adapter = adapterGenerate.mainDemandIndividual()
-    adapter.mData[0].shiftInputTitle=title
-    view.tv_demand_content.adapter = adapter
-    view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-  }
+        view.tv_demand_content.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                var m = view.tv_demand_content.layoutManager as LinearLayoutManager
+                if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
+                    loadDemandPersonData()
+                }
+            }
+        })
+    }
 
   private fun select(view:View) {
     val title = arrayListOf("需求个人","需求团队","需求租赁","需求三方")
@@ -102,7 +106,8 @@ class DemandInformationFragment: Fragment(){
         //                添加选中Tab的逻辑
         when (tab.text) {
           "需求个人"->{
-            fetchPersonalData(1, view)
+              demandPerson(view)
+
               view.tv_demand_elect_standard_select.visibility=View.GONE
               view.tv_demand_site_select.visibility=View.VISIBLE
               view.tv_demand_type_select.visibility=View.VISIBLE
@@ -185,6 +190,23 @@ class DemandInformationFragment: Fragment(){
       }
     })
   }
+
+    //加载需求个人数据
+    fun loadDemandPersonData() {
+        val result =
+            getRequirementPerson(ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                val pageCount = it.message.pageCount
+                Log.i("TJL", pageCount.toString())
+                val data = it.message.data
+                for (j in data) {
+                    Log.i("TJL", j.projectSite)
+                    mPersonAdapter?.addMovie(Movie(j.requirementMajor, j.projectSite, j.id,j.projectName))
+                }
+            }, {
+                it.printStackTrace()
+            })
+    }
 
     //初始化地点数据
     fun initProjectSite(view:View){

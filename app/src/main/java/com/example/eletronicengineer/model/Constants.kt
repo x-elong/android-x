@@ -471,8 +471,10 @@ class Constants {
         //供需查看界面
         class DisplayForRequirementAndSupply {
             companion object {
-                //需求个人
-                const val RequirementPerson="/RequirementPerson/getListByPage/{page}"
+                //根据查询条件查询需求个人的数量
+                const val RequirementPerson="/RequirementPerson/getAllByQueryConditions"
+                //根据id查询需求个人详情
+                const val RequirementPersonDetail="/RequirementPerson/getRequirementPerson/{id}"
                 //需求团队 变电
                 const val RequirementPowerTransformation="/RequirementPowerTransformation/getAllFromTable/{page}/{number}"
                 //需求团队 主网

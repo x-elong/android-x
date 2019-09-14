@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getRequirementPerson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,10 +27,12 @@ class DemandDisplayFragment:Fragment() {
     }
     lateinit var title:String
     var type:Int=1
+    lateinit var id:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_demand_display, container, false)
         title=arguments!!.getString("title")
         type = arguments!!.getInt("type")
+        id = arguments!!.getString("id")
         view.tv_display_demand_title.text=title
         initFragment(view)
         return view
@@ -46,57 +49,55 @@ class DemandDisplayFragment:Fragment() {
         lateinit var adapter: RecyclerviewAdapter
         when (type) {
             1 -> {
-                adapter = adapterGenerate.demandIndividualDisplay()
-                val result = getRequirementPerson(1,"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZWRpc0tleSI6InVwbXM6bG9naW46MTY1RTFBNTYyREY2MTFGQzY3M0I3OEUyMkM1NjZBNDIiLCJpZCI6IjExNjg0MzE0Njk4OTEzMzQxNDQiLCJleHAiOjE1Njc2OTExMTQsInVzZXJuYW1lIjoiMTgzNzM4NDE5NTMifQ.sXBwtOldbFcH7fdsbYZNEHk44x1sWwvoqlzgW7f1Ae8","http://192.168.1.132:8012/")
+              adapter = adapterGenerate.demandIndividualDisplay()
+                val result = getRequirementPersonDetail(id,ApiConfig.Token,ApiConfig.BasePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                        for(j in it.data)
-                        {
-                            adapter.mData[0].singleDisplayRightContent=if(j.requirementVariety==null) {
-                                "无" } else{ j.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(j.requirementMajor==null) {
-                                "无" } else{ j.requirementMajor }
-                                adapter.mData[2].singleDisplayRightContent=if(j.projectName==null) {
-                                    "无" } else{ j.projectName}
-                                adapter.mData[3].singleDisplayRightContent=if(j.projectSite==null) {
-                                    "无" } else{ j.projectSite}
-                                adapter.mData[4].singleDisplayRightContent=if(j.planTime==null) {
-                                    "无" } else{ j.planTime}
-                                adapter.mData[5].singleDisplayRightContent=if(j.workerExperience==null) {
-                                    "无" } else{ j.workerExperience}
-                                adapter.mData[6].singleDisplayRightContent=if(j.minAgeDemand==null||j.maxAgeDemand==null) {
-                                    "无" } else{  "${j.minAgeDemand}~${j.maxAgeDemand}"}
-                                if(j.sexDemand=="0") {
-                                    adapter.mData[7].singleDisplayRightContent="女" }
-                                else if(j.sexDemand=="1"){ adapter.mData[7].singleDisplayRightContent="男"}
-                                else if(j.sexDemand=="-1"){adapter.mData[7].singleDisplayRightContent="男女不限"}
-                                else{ }
-                                adapter.mData[8].singleDisplayRightContent=if(j.roomBoardStandard=="0") {
-                                    "无" } else{ j.roomBoardStandard}
-                                if(j.roomBoardStandard=="0") {
-                                 adapter.mData[8].singleDisplayRightContent="队部自理" }
-                                else if(j.roomBoardStandard=="1"){ adapter.mData[8].singleDisplayRightContent="全包"}
-                                else{ }
-                                adapter.mData[9].singleDisplayRightContent=if(j.journeySalary==null) {
-                                    "无" } else{ j.journeySalary}
-                                adapter.mData[10].singleDisplayRightContent=if(j.journeyCarFare==null) {
-                                    "无" } else{ j.journeyCarFare}
-                                adapter.mData[11].singleDisplayRightContent=if(j.needPeopleNumber==null) {
-                                    "无" } else{ j.needPeopleNumber}
-                                adapter.mData[12].singleDisplayRightContent=if(j.salaryStandard==null) {
-                                    "无" } else{ j.salaryStandard.toString()}
-                                adapter.mData[14].singleDisplayRightContent=if(j.name==null) {
-                                    "无" } else{ j.name}
-                                adapter.mData[15].singleDisplayRightContent=if(j.phone==null) {
-                                    "无" } else{ j.phone}
-                                adapter.mData[16].singleDisplayRightContent=if(j.validTime==null) {
-                                    "无" } else{ j.validTime}
-                                adapter.mData[17].singleDisplayRightContent=if(j.additonalExplain==null) {
-                                    "无" } else{ j.additonalExplain}
+                        var data=it.message
+                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                                "无" } else{ data.requirementType }
+                            adapter.mData[1].singleDisplayRightContent=if(data.requirementMajor==null) {
+                                "无" } else{ data.requirementMajor }
+                                adapter.mData[2].singleDisplayRightContent=if(data.projectName==null) {
+                                    "无" } else{ data.projectName}
+                                adapter.mData[3].singleDisplayRightContent=if(data.projectSite==null) {
+                                    "无" } else{ data.projectSite}
+                                adapter.mData[4].singleDisplayRightContent=if(data.planTime==null) {
+                                    "无" } else{ data.planTime}
+                                adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
+                                    "无" } else{ data.workerExperience}
+                                adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                                    "无" } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                                when {
+                                    data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
+                                    data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
+                                    data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
+                                    else -> { }
+                                }
+                                when {
+                                    data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                                    data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
+                                    else -> { }
+                                }
+                                adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
+                                    "无" } else{ data.journeySalary}
+                                adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                                    "无" } else{ data.journeyCarFare}
+                                adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
+                                    "无" } else{ data.needPeopleNumber}
+                                adapter.mData[12].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
+                                    "无" } else{ "${data.salaryStandard} ${data.salaryUnit}" }
+                                adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
+                                    "无" } else{ data.name}
+                                adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
+                                    "无" } else{ data.phone}
+                                adapter.mData[16].singleDisplayRightContent=if(data.validTime==null) {
+                                    "无" } else{ data.validTime}
+                                adapter.mData[17].singleDisplayRightContent=if(data.additonalExplain==null) {
+                                    "无" } else{ data.additonalExplain}
 
                             view.tv_fragment_demand_display_content.adapter = adapter
                             view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
-                        }
                     },{
                         it.printStackTrace()
                     })

@@ -1,3 +1,3 @@
 package com.example.eletronicengineer.aninterface
 
-class Goods (var goodsPicture:String,var goodsName:String,var goodsprice:Double)
+class Movie (var requirementVariety: String, var projectSite: String, var id: String,var projectName:String)

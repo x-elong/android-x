@@ -11,24 +11,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="需求类别:"
+        android:text="需求类别："
         android:textSize="@dimen/font_tv_hint_14"
         android:textColor="@color/black"
         android:id="@+id/tv_display_demand_team_title1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_display_demand_team_title2"/>
 
     <TextView
         android:id="@+id/tv_display_demand_team_content1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="非开挖顶管拉管作业"
-        android:textSize="@dimen/font_tv_hint_14"
         android:layout_marginStart="@dimen/general_5"
+        android:text="非开挖顶管拉管作业"
         android:textColor="@color/font_color_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_display_demand_team_title1"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toTopOf="@+id/tv_demand_demand_team_content2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_display_demand_team_title1"
-        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_team_title1" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/tv_display_demand_team_title2"
         android:layout_width="wrap_content"
@@ -38,18 +43,24 @@
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_hint_14"
         app:layout_constraintStart_toStartOf="@+id/tv_display_demand_team_title1"
-        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_team_title1" />
+        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_team_title1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <TextView
-        android:visibility="visible"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_demand_demand_team_content2"
+        android:layout_width="@dimen/general_265"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/general_5"
+        android:layout_marginTop="@dimen/general_7"
         android:text="湖南省娄底市娄星区人文科技学院"
-        android:textSize="@dimen/font_tv_hint_14"
         android:textColor="@color/font_color_blue"
-        android:id="@+id/tv_demand_demand_team_content2"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/tv_display_demand_team_title2"
-        app:layout_constraintTop_toTopOf="@id/tv_display_demand_team_title2"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_team_content1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

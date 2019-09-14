@@ -3399,9 +3399,6 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandIndividual.json")
-        //报名按钮的点击事件
-        mData[18].submitListener = View.OnClickListener {
-        }
         return RecyclerviewAdapter(mData)
     }
     //个人劳务显示模板
@@ -3409,9 +3406,6 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/supplyIndividual.json")
-        mData[11].submitListener = View.OnClickListener {
-
-        }
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
