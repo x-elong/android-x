@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.GoodsAdapter
 import com.example.eletronicengineer.aninterface.Goods
+import com.example.eletronicengineer.utils.getGeneralizeGoods
 import com.example.eletronicengineer.utils.getPopularityGoods
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +23,7 @@ class RecommendGoodsFragment :Fragment(){
         return view
     }
     private fun initFragment(view: View) {
-        val result = getPopularityGoods("http://192.168.1.133:8022/").subscribeOn(Schedulers.io())
+        val result = getGeneralizeGoods("http://192.168.1.133:8022/").subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     val goodsList:MutableList<Goods> = ArrayList()

@@ -32,4 +32,3 @@ class LoginActivity: AppCompatActivity() {
         transaction.commit()
     }
 }
-

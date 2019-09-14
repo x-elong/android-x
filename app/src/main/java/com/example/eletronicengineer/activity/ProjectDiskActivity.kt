@@ -4,6 +4,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.*
 import com.example.eletronicengineer.utils.PermissionHelper
@@ -89,7 +90,9 @@ class ProjectDiskActivity : AppCompatActivity() {
   }
   //切换Fragment
   fun switchFragment(fragment: Fragment) {
+
     val transaction = supportFragmentManager.beginTransaction()
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
     //隐藏上个Fragment
     transaction.replace(R.id.frame_project_disk, fragment)
     transaction.commit()

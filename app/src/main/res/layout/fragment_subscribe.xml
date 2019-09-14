@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_subscribe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_subscribe_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_subscribe_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:text="开通"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@id/view_subscribe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/view_subscribe"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:background="@color/dark_gray_bg"
+        android:id="@+id/view_vip_member"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_95"
+        android:layout_marginTop="@dimen/top_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_subscribe" />
+
+    <CheckBox
+        android:id="@+id/checkbox_vip_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:buttonTint="#2a82e4"
+        android:text="VIP会员"
+        android:layout_marginStart="@dimen/left_20"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_vip_member"
+        app:layout_constraintTop_toTopOf="@+id/view_vip_member" />
+
+    <TextView
+        android:id="@+id/tv_vip_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="@dimen/left_30"
+        android:text="1.XXXXXXXXXXXXXXX\n2.XXXXXXXXX\n3.XXXXXXXXXXXXXX"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_vip_member"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_vip_member" />
+
+    <View
+        android:background="@color/dark_gray_bg"
+        android:id="@+id/view_company_management"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_95"
+        android:layout_marginTop="@dimen/top_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_vip_member" />
+
+    <CheckBox
+        android:id="@+id/checkbox_company_management"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:text="公司管理"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:buttonTint="#2a82e4"
+        android:layout_marginStart="@dimen/left_20"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_company_management"
+        app:layout_constraintTop_toTopOf="@+id/view_company_management" />
+
+    <TextView
+        android:id="@+id/tv_company_management"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="@dimen/left_30"
+        android:text="1.XXXXXXXXXXXXXXX\n2.XXXXXXXXX\n3.XXXXXXXXXXXXXX"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_company_management"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_company_management" />
+
+    <View
+        android:background="@color/dark_gray_bg"
+        android:id="@+id/view_project_management"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_95"
+        android:layout_marginTop="@dimen/top_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_company_management" />
+
+    <CheckBox
+        android:id="@+id/checkbox_project_management"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:text="项目管理"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:buttonTint="#2a82e4"
+        android:layout_marginStart="@dimen/left_20"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_project_management"
+        app:layout_constraintTop_toTopOf="@+id/view_project_management" />
+
+    <TextView
+        android:id="@+id/tv_project_management"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="@dimen/left_30"
+        android:text="1.XXXXXXXXXXXXXXX\n2.XXXXXXXXX\n3.XXXXXXXXXXXXXX"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_project_management"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_project_management" />
+
+    <View
+        android:background="@color/dark_gray_bg"
+        android:id="@+id/view_mall_system"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_95"
+        android:layout_marginTop="@dimen/top_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_project_management" />
+
+    <CheckBox
+        android:id="@+id/checkbox_mall_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:text="商城系统"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:buttonTint="#2a82e4"
+        android:layout_marginStart="@dimen/left_20"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_mall_system"
+        app:layout_constraintTop_toTopOf="@+id/view_mall_system" />
+
+    <TextView
+        android:id="@+id/tv_mall_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="@dimen/left_30"
+        android:text="1.XXXXXXXXXXXXXXX\n2.XXXXXXXXX\n3.XXXXXXXXXXXXXX"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_mall_system"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_mall_system" />
+
+    <Button
+        android:id="@+id/btn_confirmed_subscribe"
+        android:layout_width="@dimen/general_100"
+        android:layout_height="@dimen/general_40"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/right_16"
+        android:background="@drawable/btn_style3"
+        android:text="确认开通"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_mall_system"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

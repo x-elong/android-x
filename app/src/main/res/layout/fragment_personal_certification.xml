@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/left_12"
+        android:text="请确认是您本人，验证完后不可修改"
+        android:textSize="@dimen/font_tv_hint_12"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_personal_certification_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+         />
+
+    <View
+        android:id="@+id/view_personal_id_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_240"
+        android:layout_marginTop="@dimen/general_8"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/rv_personal_certification_content"
+         />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_8"
+        android:text="身份证正反照:"
+        android:layout_marginTop="@dimen/general_8"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_personal_id_card"
+        app:layout_constraintTop_toTopOf="@+id/view_personal_id_card" />
+
+    <ImageView
+        android:id="@+id/iv_id_card_people"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginStart="@dimen/general_10"
+        android:layout_marginTop="@dimen/general_10"
+        android:background="@drawable/id_card_people"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/view_personal_id_card" />
+
+    <ImageView
+        android:id="@+id/iv_id_card_nation"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/id_card_nation"
+        app:layout_constraintEnd_toEndOf="@+id/iv_id_card_people"
+        app:layout_constraintStart_toStartOf="@+id/iv_id_card_people"
+        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people" />
+
+    <Button
+        android:id="@+id/btn_personal_certification"
+        android:layout_width="@dimen/general_268"
+        android:layout_height="@dimen/general_43"
+        android:layout_marginTop="@dimen/top_20"
+        android:text="确认并提交"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:background="@drawable/btn_style3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_personal_id_card" />
+</androidx.constraintlayout.widget.ConstraintLayout>

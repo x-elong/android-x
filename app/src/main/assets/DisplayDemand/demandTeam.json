@@ -25,6 +25,9 @@
     "buttonName":["点击查看"]
   },
   {
+    "type": "BLANK"
+  },
+  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"电压等级:",
     "singleDisplayRightContent":"00"

@@ -3,6 +3,8 @@ package com.example.eletronicengineer.fragment.login
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,15 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MainActivity
+import com.example.eletronicengineer.utils.sendLogin
+import com.example.eletronicengineer.utils.sendRegister
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.view.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import org.json.JSONObject
 
 class LoginFragment: Fragment() {
 
@@ -26,10 +36,15 @@ class LoginFragment: Fragment() {
             activity!!.finish()
         }
         v.tv_login_confirm.setOnClickListener {
-            var username:String = v.et_login_name.text.toString()
-            var password:String = v.et_login_password.text.toString()
+            val username:String = v.et_login_name.text.toString()
+            val password:String = v.et_login_password.text.toString()
             if(!username.isBlank() && !password.isBlank()){
-                startActivity(Intent(context, MainActivity::class.java))
+                val key= arrayListOf("username","password")
+                val value= arrayListOf(username,password)
+//                sendLoginForHttp(key,value,"http://192.168.1.50:8026/")
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             }
             else {
                 Toast.makeText(context,"请输入登陆账号及密码",Toast.LENGTH_SHORT).show()
@@ -45,5 +60,37 @@ class LoginFragment: Fragment() {
         v.tv_login_problem.setOnClickListener {
             (activity as LoginActivity).switchFragment(ProblemFragment())
         }
+    }
+    fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>,baseUrl:String) {
+        val result= Observable.create<RequestBody> {
+            //建立网络请求体 (类型，内容)
+            var jsonObject = JSONObject()
+            for (i in 0 until key.size) {
+                jsonObject.put(key[i], value[i])
+            }
+            val requestBody= RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
+            it.onNext(requestBody)
+        }
+            .subscribe {
+                val result = sendLogin(it,baseUrl).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    {
+                        Log.i("111hy",it.code)
+                        if(it.code=="200")
+                        {
+                            Toast.makeText(context,"登录成功",Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(context, MainActivity::class.java))
+                        }else{
+                            Toast.makeText(context,"登录失败, 请输入正确的用户名和密码",Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    {
+                        val toast = Toast.makeText(context,"连接超时",Toast.LENGTH_SHORT)
+                        toast.setGravity(Gravity.CENTER,0,0)
+                        toast.show()
+                        it.printStackTrace()
+                    }
+                )
+            }
+
     }
 }

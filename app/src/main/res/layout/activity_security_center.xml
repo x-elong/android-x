@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SecurityCenterActivity">
+    <View
+        android:id="@+id/view_security_center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_security_center_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_security_center_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:text="安全中心"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@id/view_security_center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/view_security_center"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view_lock_account"
+        android:layout_width="@dimen/general_332"
+        android:layout_height="@dimen/general_127"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@drawable/btn_style4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_security_center" />
+
+    <TextView
+        android:layout_width="@dimen/general_224"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="当您怀疑你的账号被盗或异常时,\n您可以锁定账号,防止坏人登录"
+        android:gravity="center"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toTopOf="@+id/btn_lock_account"
+        app:layout_constraintEnd_toEndOf="@+id/view_lock_account"
+        app:layout_constraintStart_toStartOf="@+id/view_lock_account"
+        app:layout_constraintTop_toTopOf="@+id/view_lock_account" />
+
+    <Button
+        android:id="@+id/btn_lock_account"
+        android:layout_width="@dimen/general_156"
+        android:layout_height="@dimen/general_38"
+        android:layout_marginBottom="@dimen/bottom_10"
+        android:background="@drawable/btn_style4"
+        android:text="锁定账号"
+        android:textColor="#2a82e4"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view_lock_account"
+        app:layout_constraintEnd_toEndOf="@+id/view_lock_account"
+        app:layout_constraintStart_toStartOf="@+id/view_lock_account" />
+
+    <View
+        android:id="@+id/view_logout_account"
+        android:layout_width="@dimen/general_332"
+        android:layout_height="@dimen/general_127"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@drawable/btn_style4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_lock_account" />
+
+    <TextView
+        android:layout_width="@dimen/general_224"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="注销账号无法操作请谨慎操作"
+        android:gravity="center"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logout_account"
+        app:layout_constraintEnd_toEndOf="@+id/view_logout_account"
+        app:layout_constraintStart_toStartOf="@+id/view_logout_account"
+        app:layout_constraintTop_toTopOf="@+id/view_logout_account" />
+
+    <Button
+        android:id="@+id/btn_logout_account"
+        android:layout_width="@dimen/general_156"
+        android:layout_height="@dimen/general_38"
+        android:layout_marginBottom="@dimen/bottom_10"
+        android:background="@drawable/btn_style4"
+        android:text="注销账号"
+        android:textColor="#2a82e4"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view_logout_account"
+        app:layout_constraintEnd_toEndOf="@+id/view_logout_account"
+        app:layout_constraintStart_toStartOf="@+id/view_logout_account" />
+</androidx.constraintlayout.widget.ConstraintLayout>

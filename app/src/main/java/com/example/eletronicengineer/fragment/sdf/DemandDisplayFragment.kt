@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment.retailstore
+package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.*
-import com.example.eletronicengineer.utils.getRequirementPerson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_demand_display.view.*

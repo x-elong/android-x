@@ -32,7 +32,7 @@
         android:layout_width="@dimen/general_180"
         android:layout_height="@dimen/general_60"
         android:layout_marginStart="@dimen/left_12"
-        android:layout_marginTop="@dimen/general_15"
+        android:layout_marginTop="@dimen/general_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_setting" />
 
@@ -89,12 +89,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_my_header" />
 
+    <View
+        android:id="@+id/view_subscribe"
+        android:layout_width="@dimen/general_346"
+        android:layout_height="@dimen/general_60"
+        android:layout_marginTop="@dimen/top_8"
+        android:alpha="0.85"
+        android:background="@drawable/view_style1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_my_function_content" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginStart="@dimen/left_20"
+        android:background="@drawable/ic_pentagram"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_subscribe"
+        app:layout_constraintStart_toStartOf="@+id/view_subscribe"
+        app:layout_constraintTop_toTopOf="@+id/btn_subscribe"
+        app:layout_constraintVertical_bias="0.433" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_8"
+        android:text="开通，尊享4大特权"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
+    <Button
+        android:id="@+id/btn_subscribe"
+        android:layout_width="@dimen/general_80"
+        android:layout_height="@dimen/general_35"
+        android:layout_marginEnd="@dimen/right_30"
+        android:text="立即开通"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:background="@drawable/btn_style3"
+        app:layout_constraintBottom_toBottomOf="@+id/view_subscribe"
+        app:layout_constraintEnd_toEndOf="@+id/view_subscribe"
+        app:layout_constraintTop_toTopOf="@+id/view_subscribe" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_other_function_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/top_4"
         android:overScrollMode="never"
-        app:layout_constraintTop_toBottomOf="@+id/rv_my_function_content"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/view_subscribe"
+        tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

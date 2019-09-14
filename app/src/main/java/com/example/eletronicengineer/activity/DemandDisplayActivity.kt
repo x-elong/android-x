@@ -1,11 +1,10 @@
 package com.example.eletronicengineer.activity
 
-import android.media.midi.MidiDevice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.retailstore.DemandDisplayFragment
+import com.example.eletronicengineer.fragment.sdf.DemandDisplayFragment
 
 class DemandDisplayActivity : AppCompatActivity() {
   lateinit var title: String

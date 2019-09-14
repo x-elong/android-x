@@ -19,6 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="@dimen/general_30"
+        android:popupBackground="@color/white"
         app:layout_constraintStart_toEndOf="@+id/tv_search_back"
         app:layout_constraintBottom_toBottomOf="@+id/tv_search_first_bg"
         app:layout_constraintTop_toTopOf="@+id/tv_search_first_bg"
@@ -33,7 +35,7 @@
 
 
     <com.library.ChooseEditText
-        android:id="@+id/chooseedittext"
+        android:id="@+id/choose_edit_text"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"

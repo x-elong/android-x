@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_payment_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:text="支付订单"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@id/view_payment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/view_payment"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_payment_amount"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_120"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@color/dark_gray_bg"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="合计\n¥3000.00"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_payment" />
+    <View
+        android:id="@+id/view_we_chat_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_54"
+        android:layout_marginTop="@dimen/top_20"
+        android:background="@drawable/tv_style"
+        app:layout_constraintTop_toBottomOf="@+id/tv_payment_amount" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginStart="@dimen/left_20"
+        android:background="@drawable/we_chat_payment"
+        app:layout_constraintBottom_toBottomOf="@+id/view_we_chat_payment"
+        app:layout_constraintStart_toStartOf="@+id/view_we_chat_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_we_chat_payment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_20"
+        android:text="微信支付"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
+    <RadioButton
+        android:id="@+id/radio_btn_we_chat_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:layout_marginEnd="@dimen/right_20"
+        app:layout_constraintBottom_toBottomOf="@+id/view_we_chat_payment"
+        app:layout_constraintEnd_toEndOf="@+id/view_we_chat_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_we_chat_payment" />
+
+    <View
+        android:id="@+id/view_ali_pay_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_54"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@drawable/tv_style"
+        app:layout_constraintTop_toBottomOf="@+id/view_we_chat_payment" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginStart="@dimen/left_20"
+        android:background="@drawable/ali_pay_payment"
+        app:layout_constraintBottom_toBottomOf="@+id/view_ali_pay_payment"
+        app:layout_constraintStart_toStartOf="@+id/view_ali_pay_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_ali_pay_payment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_20"
+        android:text="支付宝支付"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+    <RadioButton
+        android:id="@+id/radio_btn_ali_pay_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/right_20"
+        app:layout_constraintBottom_toBottomOf="@+id/view_ali_pay_payment"
+        app:layout_constraintEnd_toEndOf="@+id/view_ali_pay_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_ali_pay_payment" />
+    
+    <Button
+        android:id="@+id/btn_confirmed_pay"
+        android:layout_width="@dimen/general_326"
+        android:layout_height="@dimen/general_45"
+        android:text="确认支付"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:background="#f5ca40"
+        android:textColor="@color/black"
+        android:layout_marginBottom="@dimen/bottom_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

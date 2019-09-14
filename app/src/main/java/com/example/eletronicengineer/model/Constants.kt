@@ -233,17 +233,17 @@ class Constants {
                 //获取去所有项目
                 const val MajorDistribuionProject = "/Vip/getMajorDistribuionProjectAllByVipId/{id}/{page}"
                 //自检自查 查询
-                const val selfInspectionQuery = "/SelfInspection/selectAll/{UpId}"
+                const val selfInspectionQuery="/SelfInspection/selectAll/{UpId}"
                 //自检自查 上传文件
-                const val selfInspectionUploadFile = "/SelfInspection/uploadFile/"
+                const val selfInspectionUploadFile="/SelfInspection/uploadFile/"
                 //自检自查 下载文件
-                const val selfInspectionDownloadFile = "/SelfInspection/downloadFile/"
+                const val selfInspectionDownloadFile="/SelfInspection/downloadFile/"
                 //自检自查 修改名字
-                const val selfInspectionUpdateFile = "/SelfInspection/updateFile/"
+                const val selfInspectionUpdateFile="/SelfInspection/updateFile/"
                 //架空经济指标
                 const val OverHeadAerialEconomy = "/AerialEconomyIndex/selectByAerialEconomyIndexIndexKey/{aerialId}"
                 //添加公共点定位
-                const val AerialCommonPointLocation = "/AerialCommonPointLocation/insertAerialCommonPointLocation/"
+                const val AerialCommonPointLocation="/AerialCommonPointLocation/insertAerialCommonPointLocation/"
                 //获取杆塔参数
                 const val PowerTowerParameters =
                     "/PowerTowerParameter/getPowerTowerParameters/{majorDistribuionProjectId}/{pageNumber}"
@@ -404,71 +404,74 @@ class Constants {
                 //通道经济指标
                 const val GalleryEconomy = "/EconomicIndex/getEconomicIndexByPrimaryKey/{cableId}"
                 //通道 电缆头制作
-                const val CableHeadMake = "/CableHeadMake/selectCableHeadMake/{nodeSubitemId}"
+                const val CableHeadMake="/CableHeadMake/selectCableHeadMake/{nodeSubitemId}"
                 //更新 电缆头制作
-                const val updateCableHeadMake = "/CableHeadMake/updateCableHeadMake/"
+                const val updateCableHeadMake="/CableHeadMake/updateCableHeadMake/"
                 //通道 电缆防火
-                const val CableFireroofing = "/CableFireroofing/seleteCableFireroofing/{nodeSubitemId}"
+                const val CableFireroofing="/CableFireroofing/seleteCableFireroofing/{nodeSubitemId}"
                 //更新 电缆防火
-                const val updateCableFireroofing = "/CableFireroofing/updateCableFireroofing/"
+                const val updateCableFireroofing="/CableFireroofing/updateCableFireroofing/"
                 //通道 电缆桥架
-                const val CableBridge = "/CableBridge/selectCableBridge/{nodeSubitemId}"
+                const val CableBridge="/CableBridge/selectCableBridge/{nodeSubitemId}"
                 //更新 电缆桥架
-                const val updateCableBridge = "/CableBridge/updateCableBridge/"
+                const val updateCableBridge="/CableBridge/updateCableBridge/"
                 //通道 电缆敷设
-                const val CableLaying = "/CableLaying/selectCableLaying/{nodeSubitemId}"
+                const val CableLaying="/CableLaying/selectCableLaying/{nodeSubitemId}"
                 //更新 电缆桥架
-                const val updateCableLaying = "/CableLaying/updateCableLaying/"
+                const val updateCableLaying="/CableLaying/updateCableLaying/"
 
                 //通道 电缆试验
-                const val CableTest = "/CableTest/getCableTest/{nodeSubitemId}"
+                const val CableTest="/CableTest/getCableTest/{nodeSubitemId}"
                 //更新 电缆试验
-                const val updateCableTest = "/CableTest/updateCableTest/"
+                const val updateCableTest="/CableTest/updateCableTest/"
                 //通道 电缆配管
-                const val ListCablePipe = "/ListCablePipe/selectListCablePipe/{nodeSubitemId}"
+                const val ListCablePipe="/ListCablePipe/selectListCablePipe/{nodeSubitemId}"
                 //更新 电缆配管
-                const val updateListCablePipe = "/ListCablePipe/updateListCablePipe/"
+                const val updateListCablePipe="/ListCablePipe/updateListCablePipe/"
                 //删除项目盘项目
                 const val deleteMajorDistribuionProject = "/Vip/deleteMajorDistribuionProject/{id}"
 
             }
         }
-
-        class Distribution {
-            companion object {
+        class Distribution{
+            companion object{
                 //获取二维码
-                const val QRCode = "sale/getQRCode/"
+                const val QRCode="sale/getQRCode/"
                 //获取个人总积分
-                const val OwnIntegral = "sale/getOwnIntegral/"
+                const val OwnIntegral="sale/getOwnIntegral/"
                 //获取收益（本月收益加今日收益）
                 //type( day)
-                const val UserIncome = "sale/getUserIncome/{type}"
+                const val UserIncome="sale/getUserIncome/{type}"
                 //获取积分详情
                 //date(二级选择器的selectContent)
-                const val OwnIntegralOfRebate = "sale/getOwnIntegralOfRebate/{date}"
+                const val OwnIntegralOfRebate="sale/getOwnIntegralOfRebate/{date}"
                 //获取下级会员
                 //vipLevel(1 2)
-                const val OwnExtendUser = "sale/getOwnExtendUser/{vipLevel}"
+                const val OwnExtendUser="sale/getOwnExtendUser/{vipLevel}"
                 //获取推广详情
                 //vipLevel(1 2)
                 //year(一级选择器的selectContent)
-                const val OwnExtendUAndI = "sale/getOwnExtendUAndI/{vipLevel}/{year}"
+                const val OwnExtendUAndI="sale/getOwnExtendUAndI/{vipLevel}/{year}"
             }
         }
-
-        class Shopping {
-            companion object {
+        class Shopping{
+            companion object{
                 //人气商品列表
-                const val PopularityGoods = "/Generalize/getPopularityGoodsInfo/"
+                const val PopularityGoods="/Generalize/getPopularityGoodsInfo/"
                 //新品商品列表
-                const val NewGoods = "/Generalize/getNewGoodsInfo/"
+                const val NewGoods="/Generalize/getNewGoodsInfo/"
                 //人气推广列表
-                const val GeneralizeGoods = "/Generalize/getGeneralizeGoodsInfo/"
+                const val GeneralizeGoods="/Generalize/getGeneralizeGoodsInfo/"
                 //
             }
         }
-
-        //供需查看界面
+        class Login{
+            companion object{
+                const val sendCode="/Jmessage/sendCode/{mobileNumber}"
+                const val sendRegister="/user/regist"
+                const val sendLogin="/user/login"
+            }
+        }
         class DisplayForRequirementAndSupply {
             companion object {
                 //根据查询条件查询需求个人的数量

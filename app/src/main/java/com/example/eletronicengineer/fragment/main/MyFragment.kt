@@ -15,6 +15,8 @@ import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.FunctionAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Function
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.dialog_recommended_application.view.*
 import kotlinx.android.synthetic.main.my.view.*
 
 class MyFragment : Fragment() {
@@ -33,11 +35,16 @@ class MyFragment : Fragment() {
             val intent =Intent(activity,MyInformationActivity::class.java)
             startActivity(intent)
         }
-        mView.tv_my_phone.setOnClickListener {
-            Toast.makeText(context,mView.tv_my_phone.text,Toast.LENGTH_SHORT).show()
-        }
         mView.tv_qr_code.setOnClickListener {
             val intent =Intent(activity,MyQRCodeActivity::class.java)
+            startActivity(intent)
+        }
+        mView.my_setting.setOnClickListener {
+            val intent =Intent(activity,MySettingActivity::class.java)
+            startActivity(intent)
+        }
+        mView.btn_subscribe.setOnClickListener {
+            val intent =Intent(activity,SubscribeActivity::class.java)
             startActivity(intent)
         }
     }
@@ -45,7 +52,9 @@ class MyFragment : Fragment() {
     private fun initData() {
         mFunctionList.clear()
         mMultiStyleItemList.clear()
-        mFunctionList.add(Function("我的发布",R.drawable.my_release,null))
+        mFunctionList.add(Function("我的发布",R.drawable.my_release,View.OnClickListener {
+
+        }))
         mFunctionList.add(Function("我的订单",R.drawable.my_order,View.OnClickListener {
             val intent = Intent(activity,MyOrderActivity::class.java)
             startActivity(intent)
@@ -61,10 +70,49 @@ class MyFragment : Fragment() {
         mView.rv_my_function_content.adapter=FunctionAdapter(mFunctionList)
         mView.rv_my_function_content.layoutManager = GridLayoutManager(context,4)
 
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"我的报名",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+            val intent = Intent(activity,MyRegistrationActivity::class.java)
+            startActivity(intent)
+        }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"签名设置",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+            val intent = Intent(activity,MySignatureActivity::class.java)
+            startActivity(intent)
+        }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"认证管理",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+            val intent = Intent(activity,MyCertificationActivity::class.java)
+            startActivity(intent)
+        }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"帮助中心",false))
+
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"推荐电企通",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+            val dialog = BottomSheetDialog(context!!)
+            val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_recommended_application,null)
+            dialogView.view_sms.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialogView.view_we_chat.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialogView.view_qq.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialogView.tv_cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.setContentView(dialogView)
+            dialog.show()
+        }
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"安全中心",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+            val intent = Intent(activity,SecurityCenterActivity::class.java)
+            startActivity(intent)
+        }
         mView.rv_my_other_function_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
         mView.rv_my_other_function_content.layoutManager = LinearLayoutManager(context)
     }

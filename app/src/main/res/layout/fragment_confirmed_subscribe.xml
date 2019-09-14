@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_confirmed_subscribe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_confirmed_subscribe_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_subscribe_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:text="确认开通"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@id/view_confirmed_subscribe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/view_confirmed_subscribe"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_vip_member"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_90"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@color/dark_gray_bg"
+        android:text="VIP会员"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_confirmed_subscribe"/>
+
+    <TextView
+        android:id="@+id/tv_company_management"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_90"
+        android:layout_marginTop="@dimen/top_10"
+        android:background="@color/dark_gray_bg"
+        android:text="公司管理"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_vip_member"/>
+    <TextView
+        android:id="@+id/tv_project_management"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_90"
+        android:layout_marginTop="@dimen/top_10"
+        android:background="@color/dark_gray_bg"
+        android:text="项目管理"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_company_management"/>
+    <TextView
+        android:id="@+id/tv_mall_system"
+        android:layout_width="@dimen/general_330"
+        android:layout_height="@dimen/general_90"
+        android:layout_marginTop="@dimen/top_10"
+        android:background="@color/dark_gray_bg"
+        android:text="商城系统"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_project_management"/>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_marginTop="@dimen/top_20"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mall_system"
+        android:layout_width="match_parent"
+        android:background="#999999"
+        android:layout_height="@dimen/general_1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="合计:"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_payment_amount"
+        app:layout_constraintEnd_toStartOf="@+id/tv_payment_amount"
+        app:layout_constraintTop_toTopOf="@+id/tv_payment_amount" />
+
+    <TextView
+        android:id="@+id/tv_payment_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#d43030"
+        android:text="¥3000.00"
+        android:layout_marginEnd="@dimen/right_10"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_pay"
+        app:layout_constraintEnd_toStartOf="@+id/btn_pay"
+        app:layout_constraintTop_toTopOf="@+id/btn_pay" />
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_width="@dimen/general_96"
+        android:layout_height="@dimen/general_48"
+        android:layout_marginEnd="8dp"
+        android:background="#d43030"
+        android:text="去支付"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -127,12 +127,16 @@
         "sendFormat":"Long"
     },
     {
-        "type":"SINGLE_INPUT",
-        "inputSingleTitle":"联系人"
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"联系人",
+    "key": "name",
+    "sendFormat": "String"
     },
     {
         "type":"SINGLE_INPUT",
-        "inputSingleTitle":"联系电话"
+        "inputSingleTitle":"联系电话",
+        "key": "phone",
+        "sendFormat": "String"
     },
     {
         "type":"INPUT_WITH_UNIT",

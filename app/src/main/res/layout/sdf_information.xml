@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
             android:visibility="visible"
-              android:layout_height="wrap_content"
-              android:layout_width="match_parent"
-              android:id="@+id/layout_sdf_information"
-              android:layout_marginTop="@dimen/top_27">
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_sdf_information"
+    android:layout_marginTop="@dimen/top_27">
 
     <Button
         android:id="@+id/external_bidding_tv"

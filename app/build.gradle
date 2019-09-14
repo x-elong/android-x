@@ -69,7 +69,7 @@ dependencies {
     implementation 'com.lcw.library:imagepicker:2.2.2'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-//    implementation 'com.carson_ho:SearchLayout:1.0.1'
+    implementation 'com.carson_ho:SearchLayout:1.0.1'
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
@@ -77,5 +77,6 @@ dependencies {
 
     implementation 'com.kymjs.rxvolley:rxvolley:1.1.4'
 
+    implementation 'com.wjj.easy:qrcodestyle:1.0.0'
 
 }

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+    <View
+        android:id="@+id/view_message_management"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_message_management_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_message_management_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="消息管理"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_message_management"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_message_management"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/tv_message_management_ok"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
+        android:background="@drawable/ic_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view_system_information"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_48"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message_management_title"
+        />
+
+    <TextView
+        android:id="@+id/tv_system_information1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#505050"
+        android:text="系统消息"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintTop_toTopOf="@+id/view_system_information"
+        app:layout_constraintBottom_toTopOf="@+id/tv_system_information2"
+        app:layout_constraintStart_toStartOf="@+id/tv_system_information2" />
+
+    <TextView
+        android:id="@+id/tv_system_information2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/gray"
+        android:text="系统通知、聊天消息等通知提醒"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view_system_information"
+        app:layout_constraintStart_toStartOf="@+id/view_system_information" />
+
+    <Switch
+        android:id="@+id/switch_system_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/right_16"
+        android:switchMinWidth="@dimen/general_35"
+        android:checked="true"
+        android:thumb="@drawable/switch_custom_thumb_selector"
+        android:track="@drawable/switch_custom_track_selector"
+        app:layout_constraintBottom_toBottomOf="@+id/view_system_information"
+        app:layout_constraintEnd_toEndOf="@+id/view_system_information"
+        app:layout_constraintTop_toTopOf="@+id/view_system_information"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view_sound"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_48"
+        android:layout_marginTop="@dimen/top_10"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/view_system_information"
+        />
+
+    <TextView
+        android:id="@+id/tv_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#505050"
+        android:layout_marginStart="8dp"
+        android:text="声音"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintTop_toTopOf="@+id/view_sound"
+        app:layout_constraintBottom_toBottomOf="@+id/view_sound"
+        app:layout_constraintStart_toStartOf="@+id/view_sound" />
+    <Switch
+        android:id="@+id/switch_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:switchMinWidth="@dimen/general_35"
+        android:thumb="@drawable/switch_custom_thumb_selector"
+        android:track="@drawable/switch_custom_track_selector"
+        android:layout_marginEnd="@dimen/right_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_sound"
+        app:layout_constraintEnd_toEndOf="@+id/view_sound"
+        app:layout_constraintTop_toTopOf="@+id/view_sound"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:layout_marginTop="@dimen/top_1"
+        android:id="@+id/view_vibration"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_48"
+        app:layout_constraintTop_toBottomOf="@+id/view_sound"
+        />
+
+    <TextView
+        android:id="@+id/tv_vibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#505050"
+        android:layout_marginStart="8dp"
+        android:text="振动"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintTop_toTopOf="@+id/view_vibration"
+        app:layout_constraintBottom_toBottomOf="@+id/view_vibration"
+        app:layout_constraintStart_toStartOf="@+id/view_vibration" />
+    <Switch
+        android:id="@+id/switch_vibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:switchMinWidth="@dimen/general_35"
+        android:thumb="@drawable/switch_custom_thumb_selector"
+        android:track="@drawable/switch_custom_track_selector"
+        android:layout_marginEnd="@dimen/right_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_vibration"
+        app:layout_constraintEnd_toEndOf="@+id/view_vibration"
+        app:layout_constraintTop_toTopOf="@+id/view_vibration"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

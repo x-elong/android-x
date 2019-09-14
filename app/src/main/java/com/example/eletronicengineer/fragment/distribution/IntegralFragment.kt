@@ -69,7 +69,7 @@ class IntegralFragment : Fragment(){
                 v.tv_mark_integral.visibility=View.VISIBLE
 
                 var dateForHttp = "${year}-${month+1}-${day}"
-                val resultForHttp = getOwnIntegralOfRebate(dateForHttp,"http://192.168.1.132:8012/").subscribeOn(Schedulers.io())
+                val resultForHttp = getOwnIntegralOfRebate(dateForHttp,"http://192.168.1.149:8022/").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                         mIntegralList.clear()

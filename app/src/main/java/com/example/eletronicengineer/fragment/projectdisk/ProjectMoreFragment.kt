@@ -381,7 +381,7 @@ class ProjectMoreFragment : Fragment(){
 //                            i.singleDisplayLeftContent = if(str==null)"" else str
 //                        }
 //                        MultiStyleItem.Options.SHIFT_INPUT ->{
-//                            //i.shiftinputContent = json.getString(i.key)
+//                            //i.shiftInputContent = json.getString(i.key)
 //                        }
 //                    }
 //                }

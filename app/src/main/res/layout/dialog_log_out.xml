@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+<Button
+    android:id="@+id/btn_switch_login"
+    android:text="切换账号"
+    android:gravity="center"
+    android:background="@color/white"
+    android:textSize="@dimen/font_tv_hint_14"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/general_48" />
+    <Button
+        android:id="@+id/btn_sign_out"
+        android:layout_marginTop="@dimen/general_1"
+        android:text="退出"
+        android:gravity="center"
+        android:background="@color/white"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_48" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_marginTop="@dimen/general_4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_48"
+        android:background="@color/white"
+        android:text="取消"
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_hint_14" />
+</LinearLayout>
