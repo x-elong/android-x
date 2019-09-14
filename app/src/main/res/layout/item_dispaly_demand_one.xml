@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/general_5"
+    android:padding="@dimen/general_5"
+    android:background="@drawable/item_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="需求类别:"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="@color/black"
+        android:id="@+id/tv_display_demand_person_title1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_display_demand_person_content1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="特种作业"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:layout_marginStart="@dimen/general_5"
+        android:textColor="@color/font_color_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_display_demand_person_title1"
+        app:layout_constraintStart_toEndOf="@+id/tv_display_demand_person_title1"
+        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_person_title1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="需求专业:"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:layout_marginEnd="@dimen/general_5"
+        android:textColor="@color/black"
+        android:id="@+id/tv_display_demand_person_title2"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_display_demand_person_title1"
+        app:layout_constraintEnd_toStartOf="@id/tv_display_demand_person_content2"
+        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_person_title1" />
+
+    <TextView
+        android:id="@+id/tv_display_demand_person_content2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="电气试验作业"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:layout_marginStart="@dimen/general_5"
+        android:textColor="@color/font_color_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_display_demand_person_title1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_person_title1" />
+
+    <TextView
+        android:id="@+id/tv_display_demand_person_title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/general_7"
+        android:text="项目地点："
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/tv_display_demand_person_title1"
+        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_person_title1" />
+    <TextView
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_5"
+        android:text="湖南省娄底市娄星区人文科技学院"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="@color/font_color_blue"
+        android:id="@+id/tv_demand_demand_person_content3"
+        app:layout_constraintStart_toEndOf="@id/tv_display_demand_person_title3"
+        app:layout_constraintTop_toTopOf="@id/tv_display_demand_person_title3"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
