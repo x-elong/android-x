@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+
 android {
     signingConfigs {
         debug {
@@ -78,5 +79,4 @@ dependencies {
     implementation 'com.kymjs.rxvolley:rxvolley:1.1.4'
 
     implementation 'com.wjj.easy:qrcodestyle:1.0.0'
-
 }

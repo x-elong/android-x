@@ -11,20 +11,20 @@ import com.example.eletronicengineer.aninterface.Movie
 class MovieViewHolder(inflater: LayoutInflater, vg: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_dispaly_demand_two, vg, false)) {
 
-    private var requirementVariety: TextView? = null
+    private var reqirementMajor: TextView? = null
     private var projectSite: TextView? = null
-    var projectName=""
+    var requirementVariety=""
     var mId:String = ""
 
     init {
-        requirementVariety = itemView.findViewById(R.id.tv_display_demand_team_content1)
+        reqirementMajor = itemView.findViewById(R.id.tv_display_demand_team_content1)
         projectSite = itemView.findViewById(R.id.tv_demand_demand_team_content2)
     }
 
     fun bind(movie: Movie) {
-        requirementVariety?.text = movie.requirementVariety
+        reqirementMajor?.text = movie.requirementMajor
         projectSite?.text = movie.projectSite
         mId = movie.id
-        projectName=movie.projectName
+        requirementVariety=movie.reqiurementVariety
     }
 }

@@ -3,25 +3,33 @@ package com.example.eletronicengineer.fragment.sdf
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.adapter.ListAdapterForDemandPerson
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.fragment.login.LoginFragment
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.getRequirementPerson
+import com.example.eletronicengineer.utils.sendRegister
 import kotlinx.android.synthetic.main.demand.view.*
 import com.google.android.material.tabs.TabLayout
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -33,6 +41,11 @@ class DemandInformationFragment: Fragment(){
     val selectOption2Items:MutableList<MutableList<String>> =ArrayList()
     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
     var mPersonAdapter:ListAdapterForDemandPerson?=null
+
+    val mCountPerPage = 6
+    var mPageNumber = 1
+    var mIsLastPage = false
+    var mIsLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +63,7 @@ class DemandInformationFragment: Fragment(){
         view.tv_demand_type_select.setOnClickListener {
             initDemandPerson(view,Option1Items,Option2Items)
         }
-        initProjectSite(view)
+        initProjectSite()
         view.tv_demand_site_select.setOnClickListener {
             initSite(view)
         }
@@ -125,12 +138,7 @@ class DemandInformationFragment: Fragment(){
               }
          }
           "需求团队"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainDemandTeam()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+
 
               view.tv_demand_elect_standard_select.visibility=View.VISIBLE
               view.tv_demand_type_select.visibility=View.VISIBLE
@@ -145,13 +153,6 @@ class DemandInformationFragment: Fragment(){
               }
           }
           "需求租赁"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainDemandLease()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
               view.tv_demand_elect_standard_select.visibility=View.GONE
               view.tv_demand_type_select.visibility=View.VISIBLE
               view.tv_demand_site_select.visibility=View.VISIBLE
@@ -163,13 +164,6 @@ class DemandInformationFragment: Fragment(){
               }
           }
           "需求三方"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainDemandTripartite()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
               view.tv_demand_elect_standard_select.visibility=View.GONE
               view.tv_demand_site_select.visibility=View.GONE
               view.tv_demand_type_select.visibility=View.VISIBLE
@@ -191,25 +185,60 @@ class DemandInformationFragment: Fragment(){
     })
   }
 
-    //加载需求个人数据
+    @Synchronized fun setLoading() : Boolean {
+        if (mIsLoading)
+            return false
+        mIsLoading = true
+        return true
+    }
+
     fun loadDemandPersonData() {
-        val result =
-            getRequirementPerson(ApiConfig.BasePath).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                val pageCount = it.message.pageCount
-                Log.i("TJL", pageCount.toString())
-                val data = it.message.data
-                for (j in data) {
-                    Log.i("TJL", j.projectSite)
-                    mPersonAdapter?.addMovie(Movie(j.requirementMajor, j.projectSite, j.id,j.projectName))
-                }
-            }, {
-                it.printStackTrace()
-            })
+        if (mIsLastPage)
+            return
+        if (!setLoading())
+            return
+
+        _loadDemandPersonData()
+        mIsLoading = false
+    }
+
+    fun _loadDemandPersonData() {
+        val key= arrayListOf("page","number")
+        val value= arrayListOf(mPageNumber,mCountPerPage)
+
+        val result= Observable.create<RequestBody> {
+            //建立网络请求体 (类型，内容)
+            val jsonObject = JSONObject()
+            for (i in 0 until key.size) {
+                jsonObject.put(key[i], value[i])
+            }
+            val requestBody= RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
+            it.onNext(requestBody)
+        }
+            .subscribe {
+                val result =
+                    getRequirementPerson(it,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                            val pageCount = it.message.pageCount
+                            Log.i("TJL", pageCount.toString())
+                            val data = it.message.data
+                            for (j in data) {
+                                Log.i("TJL", j.projectSite)
+                                Log.i("TJL",j.requirementVariety)
+                                mPersonAdapter?.addMovie(Movie(j.requirementMajor, j.projectSite, j.id,j.requirementVariety))
+                            }
+                            if (data.size < mCountPerPage)
+                                mIsLastPage = true
+                            else
+                                mPageNumber ++
+                        }, {
+                            it.printStackTrace()
+                        })
+            }
     }
 
     //初始化地点数据
-    fun initProjectSite(view:View){
+    fun initProjectSite(){
         val resultBuilder= StringBuilder()
         val bf= BufferedReader(InputStreamReader(context!!.assets.open("pca.json")))
         try {

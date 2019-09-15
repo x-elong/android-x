@@ -24,11 +24,11 @@ class ListAdapterForDemandPerson(activity: Activity): RecyclerView.Adapter<Movie
         val inflater = LayoutInflater.from(vg.context)
         var view = MovieViewHolder(inflater, vg)
         view.itemView.setOnClickListener{
-
+            Toast.makeText(vg.context,view.mId,Toast.LENGTH_LONG).show()
             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
             intent.putExtra("type",1)
-            intent.putExtra("title",view.projectName)
             intent.putExtra("id",view.mId)
+            intent.putExtra("requirementVariety",view.requirementVariety)
             mActivity.startActivity(intent)
         }
         return view

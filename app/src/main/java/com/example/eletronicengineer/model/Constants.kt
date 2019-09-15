@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.model
 
+import com.example.eletronicengineer.distributionFileSave.ReqiurementPersonDetail
+
 class Constants {
     //Request Code
     enum class RequestCode {
@@ -478,36 +480,45 @@ class Constants {
                 const val RequirementPerson="/RequirementPerson/getAllByQueryConditions"
                 //根据id查询需求个人详情
                 const val RequirementPersonDetail="/RequirementPerson/getRequirementPerson/{id}"
+
+                //根据查询条件查询需求团队的数量
+                const val ReqiurementTeam="/RequirementTeam/getAllByQueryConditions"
                 //需求团队 变电
-                const val RequirementPowerTransformation="/RequirementPowerTransformation/getAllFromTable/{page}/{number}"
+                const val RequirementPowerTransformation="/RequirementPowerTransformation/getRequirementPowerTransformation/{id}"
                 //需求团队 主网
-                const val RequirementMajorNetwork="/RequirementMajorNetwork/getRequirementMajorNetworkDTO/{page}"
+                const val RequirementMajorNetwork="/RequirementMajorNetwork/getRequirementMajorNetwork/{id}"
                 //需求团队 配网
-                const val RequirementDistribuionNetwork="/RequirementDistribuionNetwork/getListByPage/{page}"
+                const val RequirementDistribuionNetwork="/RequirementDistribuionNetwork/getRequirementDistribuionNetwork/{id}"
                 //需求团队 测量设计
-                const val RequirementMeasureDesign="/RequirementMeasureDesign/getListByPage/{page}"
+                const val RequirementMeasureDesign="/RequirementMeasureDesign/getRequirementMeasureDesign/{id}"
                 //需求团队 马帮运输
-                const val RequirementCaravanTransport="/RequirementCaravanTransport/getListByPage/{page}"
+                const val RequirementCaravanTransport="/RequirementCaravanTransport/getRequirementCaravanTransport/{id}"
                 //需求团队 桩机服务
-                const val RequirementPileFoundation="/RequirementPileFoundation/getAllFromTable/{page}/{number}"
+                const val RequirementPileFoundation="/RequirementPileFoundation/getRequirementPileFoundation/{id}"
                 //需求团队 非开挖拉管顶管作业
-                const val RequirementUnexcavation="/RequirementUnexcavation/getAllFromTable/{page}/{number}"
+                const val RequirementUnexcavation="/RequirementUnexcavation/getRequirementUnexcavation/{id}"
                 //需求团队 试验调试
-                const val RequirementTest="/RequirementTest/getAllFromTable/{page}/{number}"
+                const val RequirementTest="/RequirementTest/getRequirementTest/{id}"
                 //需求团队 跨越架
-                const val RequirementSpanWoodenSupprt="/RequirementSpanWoodenSupprt/getAllFromTable/{page}/{number}"
+                const val RequirementSpanWoodenSupprt="/RequirementSpanWoodenSupprt/getRequirementSpanWoodenSupprt/{id}"
                 //需求团队 运行维护
-                const val RequirementRunningMaintain="/RequirementRunningMaintain/getAllFromTable/{page}/{number}"
+                const val RequirementRunningMaintain="/RequirementRunningMaintain/getRequirementRunningMaintain/{id}"
+
+                //根据查询条件查询需求租赁数量
+                const val RequirementLease="RequirementLease/getAllByQueryConditions"
                 //需求租赁 车辆租赁
-                const val RequirementLeaseCar="RequirementLeaseCar/getListByPage/{page}"
+                const val RequirementLeaseCar="/RequirementLeaseCar/getRequirementLeaseCar/{id}"
                 //需求租赁 机械租赁
-                const val RequirementLeaseMachinery="RequirementLeaseMachinery/getListByPage/{page}"
+                const val RequirementLeaseMachinery="/RequirementLeaseMachinery/getRequirementLeaseMachinery/{id}"
                 //需求租赁 设备租赁
-                const val RequirementLeaseFacility="RequirementLeaseFacility/getListByPage/{page}"
+                const val RequirementLeaseFacility="RequirementLeaseFacility/getRequirementLeaseFacility/{id}"
                 //需求租赁 工器具租赁
-                const val RequirementLeaseConstructionTool="/RequirementLeaseConstructionTool/getListByPage/{page}"
+                const val RequirementLeaseConstructionTool="/RequirementLeaseConstructionTool/getRequirementLeaseConstructionTool/{id}"
+
+                //根据查询条件查询需求三方
+                const val RequirementThirdParty="/RequirementThirdParty/getAllByQueryConditions"
                 //需求三方
-                const val RequirementThirdParty="/RequirementThirdParty//getListByPage/{page}"
+                const val RequirementThirdPartyDetail="/RequirementThirdParty/getRequirementThirdParty/{id}"
             }
         }
     }

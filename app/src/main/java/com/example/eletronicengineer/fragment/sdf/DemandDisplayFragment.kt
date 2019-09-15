@@ -24,15 +24,14 @@ class DemandDisplayFragment:Fragment() {
             return fragment
         }
     }
-    lateinit var title:String
     var type:Int=1
     lateinit var id:String
+    lateinit var requirementVariety:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_demand_display, container, false)
-        title=arguments!!.getString("title")
         type = arguments!!.getInt("type")
         id = arguments!!.getString("id")
-        view.tv_display_demand_title.text=title
+        requirementVariety=arguments!!.getString("requirementVariety")
         initFragment(view)
         return view
     }
@@ -47,9 +46,10 @@ class DemandDisplayFragment:Fragment() {
         adapterGenerate.activity = activity as AppCompatActivity
         lateinit var adapter: RecyclerviewAdapter
         when (type) {
+            //需求个人显示模板
             1 -> {
               adapter = adapterGenerate.demandIndividualDisplay()
-                val result = getRequirementPersonDetail(id,ApiConfig.Token,ApiConfig.BasePath)
+                val result = getRequirementPersonDetail(id,ApiConfig.BasePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
@@ -101,6 +101,7 @@ class DemandDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
+            //需求团队变电主网配网测量设计显示模板
             2->{
                 adapter = adapterGenerate.demandTeamDisplay()
 //                val result = getRequirementMajorNetWork(1,"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZWRpc0tleSI6InVwbXM6bG9naW46OTExNDFCNEU0QzgxOTFBRTdCNkNEQzQ2QzlGNjZGMDEiLCJpZCI6IjExNzA2MDMxMTMwNDE2MTI4MDAiLCJleHAiOjE1Njc5OTkwNDQsInVzZXJuYW1lIjoiMTM1NzUyMzI1MzEifQ.1PSXdgJwVu-mcgJAtvvutwUBfsigRCWiCNhd504OjLs","http://192.168.1.132:8012/")

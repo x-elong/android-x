@@ -7,7 +7,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.sdf.DemandDisplayFragment
 
 class DemandDisplayActivity : AppCompatActivity() {
-  lateinit var title: String
+  lateinit var requirementVariety:String
   var type:Int=0
   lateinit var id:String
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,18 +19,18 @@ class DemandDisplayActivity : AppCompatActivity() {
   private fun initFragment() {
     initData()
     val data = Bundle()
-    data.putString("title", title)
     data.putInt("type",type)
     data.putString("id",id)
+    data.putString("requirementVariety",requirementVariety)
     addFragment(DemandDisplayFragment.newInstance(data))
   }
 
   //获取加载的界面类型
   private fun initData() {
     val intent = getIntent()
-    title = intent.getStringExtra("title")
     type = intent.getIntExtra("type",0)
     id = intent.getStringExtra("id")
+    requirementVariety=intent.getStringExtra("requirementVariety")
   }
 
   fun addFragment(fragment: Fragment) {

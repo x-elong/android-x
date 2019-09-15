@@ -67,13 +67,6 @@ class SupplyInformationFragment : Fragment() {
         //                添加选中Tab的逻辑
         when (tab.text) {
           "个人劳务"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainSupplyIndividual()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_site_select.visibility=View.GONE
             view.tv_demand_type_select.visibility=View.VISIBLE
@@ -88,13 +81,6 @@ class SupplyInformationFragment : Fragment() {
             }
           }
           "团队服务"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainSupplyTeam()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
             view.tv_demand_elect_standard_select.visibility=View.VISIBLE
             view.tv_demand_type_select.visibility=View.VISIBLE
             view.tv_demand_site_select.visibility=View.VISIBLE
@@ -108,13 +94,6 @@ class SupplyInformationFragment : Fragment() {
             }
           }
           "租赁服务"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainSupplyLease()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_type_select.visibility=View.VISIBLE
             view.tv_demand_site_select.visibility=View.VISIBLE
@@ -126,13 +105,6 @@ class SupplyInformationFragment : Fragment() {
             }
           }
           "三方服务"->{
-            val adapterGenerate = AdapterGenerate()
-            adapterGenerate.context = view.context
-            adapterGenerate.activity = activity as AppCompatActivity
-            val adapter = adapterGenerate.mainSupplyTripartite()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
-
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_type_select.visibility=View.VISIBLE
             view.tv_demand_site_select.visibility=View.VISIBLE

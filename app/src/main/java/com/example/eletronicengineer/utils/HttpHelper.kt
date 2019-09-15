@@ -54,17 +54,22 @@ import java.io.IOException
 
 interface HttpHelper {
     //需求个人
-    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPerson)
-    fun getReqiurementPerson():Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
+    @POST(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPerson)
+    fun getReqiurementPerson(@Body data:RequestBody):Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
     //需求个人通过id查找详情
     @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPersonDetail)
-    fun getReqiurementPersonDetail(@Path("id")id:String,@Header("zouxiaodong")zouxiaodong:String):Observable<HttpResult<ReqiurementPersonDetail>>
+    fun getReqiurementPersonDetail(@Path("id")id:String):Observable<HttpResult<ReqiurementPersonDetail>>
+
+//    //需求团队
+//    @POST(Constants.HttpUrlPath.DisplayForRequirementAndSupply.ReqiurementTeam)
+//    fun getRequirementTeam(@Body data:RequestBody):Observable<HttpResult<Requirement<>>>
+
 //    //需求团队 主网
-//    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementMajorNetwork)
-//    fun getRequirementMajorNetWork(@Path("page")page:Long,@Header("zouxiaodong")zouxiaodong: String):Observable<Requirement<reqiurementMajorNetwork<String>>>
-//    //需求团队 变电
-//    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPowerTransformation)
-//    fun getRequirementPowerTransformation(@Path("page")page:Long,@Path("number")number:Long,@Header("zouxiaodong")zouxiaodong: String):Observable<HttpResult<ReqiurementPersonDetail>>
+////    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementMajorNetwork)
+////    fun getRequirementMajorNetWork(@Path("page")page:Long,@Header("zouxiaodong")zouxiaodong: String):Observable<Requirement<reqiurementMajorNetwork<String>>>
+////    //需求团队 变电
+////    @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPowerTransformation)
+////    fun getRequirementPowerTransformation(@Path("page")page:Long,@Path("number")number:Long):Observable<HttpResult<ReqiurementPersonDetail>>
     //需求团队 配网
 
     //需求团队 马帮运输
@@ -1053,21 +1058,23 @@ internal fun sendLogin(requestBody: RequestBody,baseUrl: String): Observable<Htt
 }
 
 //供需查看
-internal fun getRequirementPerson(baseUrl: String): Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
+//查询需求个人数量
+internal fun getRequirementPerson(requestBody: RequestBody,baseUrl: String): Observable<HttpResult<Requirement<ReqiurementPersonDetail>>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getReqiurementPerson()
+    return httpHelper.getReqiurementPerson(requestBody)
 }
-internal fun getRequirementPersonDetail(id: String,zouxiaodong: String,baseUrl: String):Observable<HttpResult<ReqiurementPersonDetail>>
+//根据id查询需求个人详情
+internal fun getRequirementPersonDetail(id: String,baseUrl: String):Observable<HttpResult<ReqiurementPersonDetail>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getReqiurementPersonDetail(id,zouxiaodong)
+    return httpHelper.getReqiurementPersonDetail(id)
 }
 
 //package com.example.eletronicengineer.utils
