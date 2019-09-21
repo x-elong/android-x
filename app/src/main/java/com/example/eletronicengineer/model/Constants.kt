@@ -7,7 +7,8 @@ class Constants {
         REQUEST_PICK_IMAGE,//选取照片
         REQUEST_PICK_FILE,//选取文件
         REQUEST_UPLOAD_FILE,//上传文件
-        REQUEST_DOWNLOAD_FILE//下载文件
+        REQUEST_DOWNLOAD_FILE,//下载文件
+        MY_SCAN_REQUEST_CODE
     }
 
     enum class HandlerMsg {
@@ -16,6 +17,10 @@ class Constants {
     }
 
     enum class FragmentType {
+        DEMAND_INDIVIDUAL_TYPE,
+        DEMAND_GROUP_TYPE,
+        DEMAND_LEASE_TYPE,
+        DEMAND_TRIPARTITE_TYPE,
         PERSONAL_GENERAL_WORKERS_TYPE,  //个人普工
         PERSONAL_SPECIAL_WORK_TYPE,  //个人特种作业
         PERSONAL_PROFESSIONAL_OPERATION_TYPE,    //个人专业操作

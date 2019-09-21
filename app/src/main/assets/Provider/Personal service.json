@@ -69,6 +69,8 @@
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
+    "textAreaContent":"",
+    "necessary": true,
     "key": "remark",
     "sendFormat": "String"
   },

@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.adapter
 
+import android.graphics.Color
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.aninterface.StoresName
+import com.example.eletronicengineer.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_mall_goods_type.view.*
 
 /**
@@ -32,7 +35,7 @@ class StoreTypeAdapter:RecyclerView.Adapter<StoreTypeAdapter.StoreViewHolder> {
         var storeName:TextView
         var storeAdd:TextView
         var storeMajor:TextView
-        var storeShift:ImageView
+        var storeShift:TextView
         //构造函数
         constructor(view:View):super(view){
             //绑定控件
@@ -40,7 +43,7 @@ class StoreTypeAdapter:RecyclerView.Adapter<StoreTypeAdapter.StoreViewHolder> {
             storeName = view.tv_mall_store_name
             storeAdd = view.tv_mall_add_name
             storeMajor = view.tv_mall_major_name
-            storeShift = view.iv_person_inform_shift
+            storeShift = view.tv_person_inform_shift
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreViewHolder {
@@ -59,14 +62,23 @@ class StoreTypeAdapter:RecyclerView.Adapter<StoreTypeAdapter.StoreViewHolder> {
         // holder.setIsRecyclable(false)
         //给相应项的内部控件赋值
         val storesName = storesList[position]
-        holder.storeImage.setImageResource(storesName.storeImage)
+        GlideLoader().loadImage(holder.storeImage,storesName.storeImage)
         holder.storeName.text = storesName.storeName
         holder.storeAdd.text = storesName.storeAdd
         holder.storeMajor.text = storesName.storeMajor
-        holder.storeShift.setOnClickListener(storesName.storeListener)
+//        holder.storeShift.setOnClickListener(storesName.storeListener)
+        holder.itemView.setOnClickListener(storesName.storeListener)
         when {
-            storesName.style==0 -> { }
+            storesName.style==0 -> {
+                holder.storeShift.text = "直聊"
+                holder.storeShift.setTextColor(Color.parseColor("#2a82e4"))
+                holder.storeShift.setBackgroundResource(R.drawable.btn_style4)
+            }
             storesName.style==1 -> {
+                holder.storeShift.text = "···"
+                holder.storeShift.setTextSize(TypedValue.COMPLEX_UNIT_PX,holder.storeShift.resources.getDimensionPixelSize(R.dimen.font_tv_normal_26).toFloat())
+                holder.storeShift.paint.isFakeBoldText = true
+//                holder.storeShift.setBackgroundResource(R.drawable.more)
                 holder.storeShift.visibility = View.VISIBLE
             }
         }

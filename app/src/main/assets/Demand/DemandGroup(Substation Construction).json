@@ -147,6 +147,8 @@
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"附加信息",
+    "textAreaContent":"",
+    "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"
   },

@@ -84,6 +84,8 @@
     {
         "type":"INPUT_WITH_TEXTAREA",
         "textAreaTitle":"经营范围(选填)",
+        "textAreaContent":"",
+        "necessary": true,
         "key": "businessScope",
         "sendFormat": "String"
     },

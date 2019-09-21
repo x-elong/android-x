@@ -101,6 +101,8 @@
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"附加条款",
+    "textAreaContent":"",
+    "necessary": true,
     "key": "comment",
     "sendFormat": "String"
   },

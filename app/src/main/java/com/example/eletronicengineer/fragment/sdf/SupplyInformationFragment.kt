@@ -71,8 +71,8 @@ class SupplyInformationFragment : Fragment() {
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainSupplyIndividual()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
 
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_site_select.visibility=View.GONE
@@ -92,8 +92,8 @@ class SupplyInformationFragment : Fragment() {
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainSupplyTeam()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
 
             view.tv_demand_elect_standard_select.visibility=View.VISIBLE
             view.tv_demand_type_select.visibility=View.VISIBLE
@@ -112,8 +112,8 @@ class SupplyInformationFragment : Fragment() {
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainSupplyLease()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
 
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_type_select.visibility=View.VISIBLE
@@ -130,8 +130,8 @@ class SupplyInformationFragment : Fragment() {
             adapterGenerate.context = view.context
             adapterGenerate.activity = activity as AppCompatActivity
             val adapter = adapterGenerate.mainSupplyTripartite()
-            view.tv_demand_content.adapter = adapter
-            view.tv_demand_content.layoutManager = LinearLayoutManager(view.context)
+            view.rv_demand_content.adapter = adapter
+            view.rv_demand_content.layoutManager = LinearLayoutManager(view.context)
 
             view.tv_demand_elect_standard_select.visibility=View.GONE
             view.tv_demand_type_select.visibility=View.VISIBLE

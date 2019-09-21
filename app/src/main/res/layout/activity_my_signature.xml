@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg"
     tools:context=".activity.MySignatureActivity">
     <View
         android:id="@+id/view_my_signature"
@@ -37,14 +38,62 @@
         app:layout_constraintTop_toTopOf="@+id/view_my_signature"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:layout_width="@dimen/general_110"
-        android:layout_height="@dimen/general_30"
-        android:text="添加签名"
-        android:textSize="@dimen/font_tv_hint_13"
-        android:background="@drawable/btn_style3"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/iv_signature"
+        android:layout_width="@dimen/general_346"
+        android:layout_height="@dimen/general_120"
+        android:layout_marginTop="@dimen/top_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_my_signature_title" />
+        app:layout_constraintTop_toBottomOf="@+id/view_my_signature" />
+
+    <TextView
+        android:id="@+id/tv_signature_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_18"
+        android:text="我还是空的，快来添加吧~"
+
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_signature" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/general_68"
+        android:layout_height="@dimen/general_28"
+        android:layout_marginTop="@dimen/top_18"
+        android:layout_marginStart="@dimen/left_72"
+        android:background="#ff5733"
+        android:text="删除"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_signature" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_retransmission"
+        android:layout_width="@dimen/general_68"
+        android:layout_height="@dimen/general_28"
+        android:layout_marginTop="@dimen/top_18"
+        android:layout_marginEnd="@dimen/right_72"
+        android:background="#2a82e4"
+        android:text="重传"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_signature" />
+    <Button
+        android:id="@+id/btn_signature"
+        android:layout_width="@dimen/general_110"
+        android:layout_height="@dimen/general_30"
+        android:layout_marginTop="@dimen/top_50"
+        android:background="@drawable/btn_style3"
+        android:text="添加签名"
+        android:textSize="@dimen/font_tv_hint_13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_signature" />
 </androidx.constraintlayout.widget.ConstraintLayout>

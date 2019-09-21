@@ -2634,7 +2634,7 @@ class AdapterGenerate {
         for (j in 4 until mData.size) {
             mData[j].jumpListener = View.OnClickListener {
                 val data = Bundle()
-                data.putInt("type", AdapterGenerate().getType(mData[0].title1 + " " + mData[j].shiftInputTitle))
+                data.putInt("type", getType(mData[0].title1 + " " + mData[j].shiftInputTitle))
                 (activity as ProfessionalActivity).switchFragment(ProjectMoreFragment.newInstance(data), "")
             }
         }
@@ -3573,6 +3573,38 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/demandTripartite.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+
+    /**
+     * 我的报名
+     */
+    fun registrationDisplayDemandIndividual():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandIndividual.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandGroup():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandGroup.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandLease():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandLease.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandTripartite():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandTripartite.json")
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }

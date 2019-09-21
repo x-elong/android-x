@@ -91,6 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_we_chat_payment" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view_ali_pay_payment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_54"
@@ -99,6 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_we_chat_payment" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textView8"
         android:layout_width="@dimen/general_36"
         android:layout_height="@dimen/general_36"
@@ -109,6 +111,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_ali_pay_payment" />
 
     <TextView
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/left_20"
@@ -119,6 +122,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
     <RadioButton
+        android:visibility="gone"
         android:id="@+id/radio_btn_ali_pay_payment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

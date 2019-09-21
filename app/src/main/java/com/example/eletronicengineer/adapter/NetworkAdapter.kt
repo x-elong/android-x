@@ -5348,17 +5348,11 @@ class NetworkAdapter {
     }
 
     fun check(): Boolean {
+        var result = ""
         for (j in mData) {
             when (j.options) {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
-                    if (j.inputSingleContent == "") {
-                        val toast = Toast.makeText(context, "${j.inputSingleTitle}不能为空", Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.CENTER, 0, 0)
-                        toast.show()
-                        return false
-                    } else if (j.inputSingleTitle.contains("电话") && j.inputSingleContent.length != 11) {
-                        val toast = Toast.makeText(context, "请输入正确的${j.inputSingleTitle}", Toast.LENGTH_SHORT)
-                        var result = ""
+                    Log.i("inputSingleTitle + inputSingleContent","${j.inputSingleTitle.contains("身份证")} ${j.inputSingleContent.length != 18} ${j.inputSingleTitle}+${j.inputSingleContent.length}")
                         if (j.inputSingleContent == "") {
                             result = "${j.inputSingleTitle.replace("：", "")}不能为空"
                         } else if ((j.inputSingleTitle.contains("电话") || (j.inputSingleTitle == "手机号码")) && j.inputSingleContent.length != 11) {
@@ -5368,17 +5362,27 @@ class NetworkAdapter {
                         } else if (j.inputSingleTitle == "企业注册号：" && (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18)) {
                             result = "请输入正确的15位${j.inputSingleTitle.replace("：", "")}或18位统一社会信用代码"
                         }
+                        Log.i("result",result)
                         if (result != "") {
-                            val toast = Toast.makeText(context, result, Toast.LENGTH_SHORT)
-                            toast.setGravity(Gravity.CENTER, 0, 0)
-                            toast.show()
+                            mToast(result)
                             return false
                         }
                     }
+                MultiStyleItem.Options.INPUT_WITH_UNIT->{
+                    if(j.inputUnitContent=="")
+                        result = "${j.inputUnitContent.replace("：", "")}不能为空"
+                    if (result != "") {
+                        mToast(result)
+                        return false
+                    }
+                }
                 }
             }
-
-        }
         return true
+    }
+    fun mToast(result: String){
+        val toast = Toast.makeText(context, result, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
     }
 }

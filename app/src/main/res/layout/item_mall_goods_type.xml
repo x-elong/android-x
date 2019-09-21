@@ -5,19 +5,21 @@
     android:layout_marginHorizontal="@dimen/general_5"
     android:background="@drawable/item_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ImageView
-        android:layout_width="@dimen/general_64"
-        android:layout_height="@dimen/general_64"
-        android:src="@drawable/storename"
         android:id="@+id/iv_mall_store_name"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/general_57"
+        android:layout_height="@dimen/general_57"
+        android:src="@drawable/storename"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="店铺名称：湖南人文科技学院"
         android:textSize="@dimen/font_tv_normal_18"
+        android:textColor="#505050"
         android:layout_marginLeft="@dimen/left_10"
         app:layout_constraintLeft_toRightOf="@id/iv_mall_store_name"
         app:layout_constraintTop_toTopOf="@id/iv_mall_store_name"
@@ -28,29 +30,33 @@
         android:text="地址：湖南省娄底市"
         android:textSize="@dimen/font_tv_hint_13"
         android:id="@+id/tv_mall_add_name"
+        app:layout_constraintBottom_toTopOf="@+id/tv_mall_major_name"
         app:layout_constraintTop_toBottomOf="@id/tv_mall_store_name"
         app:layout_constraintLeft_toLeftOf="@id/tv_mall_store_name"
         android:layout_marginTop="@dimen/top_4"
-
+        android:layout_marginBottom="@dimen/bottom_4"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="主营：变压器、调压器、开关……"
         android:textSize="@dimen/font_tv_hint_13"
+        android:textColor="#505050"
         android:id="@+id/tv_mall_major_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_mall_add_name"
+        android:layout_marginBottom="@dimen/bottom_8"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/tv_mall_add_name"
         android:layout_marginTop="@dimen/top_10"
         />
-    <ImageView
-        android:visibility="gone"
-        android:layout_width="@dimen/general_24"
-        android:layout_height="@dimen/general_24"
-        android:id="@+id/iv_person_inform_shift"
+    <TextView
+        android:layout_width="@dimen/general_42"
+        android:layout_height="@dimen/general_36"
+        android:id="@+id/tv_person_inform_shift"
         app:layout_constraintTop_toTopOf="@id/iv_mall_store_name"
         app:layout_constraintBottom_toBottomOf="@id/tv_mall_major_name"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="@dimen/right_10"
-        android:src="@drawable/more"/>
+        android:gravity="center"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:layout_marginRight="@dimen/right_6"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

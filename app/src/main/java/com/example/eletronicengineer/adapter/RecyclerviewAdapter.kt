@@ -4,6 +4,8 @@ import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.ScrollingMovementMethod
-import android.text.style.ForegroundColorSpan
+import android.text.style.*
 import android.util.Log
 import android.util.TypedValue
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,11 +31,16 @@ import com.amap.api.location.AMapLocationListener
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.aninterface.ExpandMenuItem
+import com.example.eletronicengineer.fragment.my.JobOverviewFragment
+import com.example.eletronicengineer.lg.resources
 import com.example.eletronicengineer.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.demand.view.*
 import kotlinx.android.synthetic.main.goods.view.*
 import kotlinx.android.synthetic.main.item_confirm.view.*
+import kotlinx.android.synthetic.main.item_demand.view.*
 import kotlinx.android.synthetic.main.item_distance_position.view.*
 import kotlinx.android.synthetic.main.item_expand.view.*
 import kotlinx.android.synthetic.main.item_expand.view.tv_expand_title
@@ -51,6 +58,7 @@ import kotlinx.android.synthetic.main.item_new_project_disk2.view.*
 import kotlinx.android.synthetic.main.item_public_point_position1.view.*
 import kotlinx.android.synthetic.main.item_public_point_position2.view.*
 import kotlinx.android.synthetic.main.item_public_point_position_transport.view.*
+import kotlinx.android.synthetic.main.item_registration.view.*
 import kotlinx.android.synthetic.main.item_shift_input.view.*
 import kotlinx.android.synthetic.main.item_single_display_right.view.*
 import kotlinx.android.synthetic.main.item_single_display_left.view.*
@@ -64,6 +72,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.apache.log4j.lf5.util.Resource
 import org.w3c.dom.Text
 import java.io.File
 
@@ -118,6 +127,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         // function:扩展+选择
         const val TEXT_EXPAND_SELECT_TYPE = 36
         const val POSITION_START_END_TYPE = 37
+
+        const val DEMAND_ITEM_TYPE=38
+        const val REGISTRATION_ITEM_TYPE=39
         const val BLANK_TYPE=50
         const val MESSAGE_SELECT_OK:Int=100
     }
@@ -344,7 +356,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvStoreName:TextView
         lateinit var tvStoreAddress:TextView
         lateinit var tvStoreMajor:TextView
-        lateinit var ivStoreShift:ImageView
+        lateinit var tvStoreShift:TextView
+
+        lateinit var tvDemandItemTitle:TextView
+        lateinit var tvDemandItemProjectMode:TextView
+        lateinit var tvDemandItemProjectAddress:TextView
+        lateinit var btnDemandMore:Button
+
+        lateinit var tvRegistrationItemType:TextView
+        lateinit var tvRegistrationItemNumber:TextView
+        lateinit var tvRegistrationItemInformation1:TextView
+        lateinit var tvRegistrationItemInformation2:TextView
+        lateinit var btnRegistrationDelete:Button
+        lateinit var btnRegistrationShare:Button
+
 
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
@@ -440,6 +465,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvBack=v.tv_title_back
                     tvSelectMore=v.tv_select_more
                     tvSelectAdd=v.tv_select_add
+                    tvSelectOk=v.tv_select_ok
                 }
                 MULTI_BUTTON_TYPE->
                 {
@@ -671,7 +697,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvStoreName = v.tv_mall_store_name
                     tvStoreAddress = v.tv_mall_add_name
                     tvStoreMajor = v.tv_mall_major_name
-                    ivStoreShift = v.iv_person_inform_shift
+                    tvStoreShift = v.tv_person_inform_shift
+                }
+                DEMAND_ITEM_TYPE->{
+                    tvDemandItemTitle=v.tv_demand_mode
+                    tvDemandItemProjectMode=v.tv_project_mode
+                    tvDemandItemProjectAddress=v.tv_project_address
+                    btnDemandMore=v.btn_more
+                }
+                REGISTRATION_ITEM_TYPE->{
+                    tvRegistrationItemType=v.tv_type
+                    tvRegistrationItemNumber=v.tv_number_of_subscribers
+                    tvRegistrationItemInformation1=v.tv_information1
+                    tvRegistrationItemInformation2=v.tv_information2
+                    btnRegistrationDelete=v.btn_delete
+                    btnRegistrationShare=v.btn_share
                 }
             }
             VHList.add(this)
@@ -734,6 +774,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             MultiStyleItem.Options.EXPAND_MENU->return EXPAND_MENU_TYPE
             MultiStyleItem.Options.GOODS->return GOODS_TYPE
             MultiStyleItem.Options.STORE->return STORE_TYPE
+            MultiStyleItem.Options.DEMAND_ITEM-> return DEMAND_ITEM_TYPE
+            MultiStyleItem.Options.REGISTRATION_ITEM-> return REGISTRATION_ITEM_TYPE
             else->
             {
                 return TITLE_TYPE
@@ -1192,13 +1234,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.etTextAreaContent.setText(mData[position].textAreaContent)
                 }
-
+                    vh.etTextAreaContent.isEnabled = mData[position].necessary
             }
             SHIFT_INPUT_TYPE->
             {
                 vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
                     vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
+                vh.itemView.setOnClickListener(mData[position].jumpListener)
                 if (mData[position].necessary)
                 {
                     val context=vh.itemView.context
@@ -1393,6 +1436,16 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.tvsingleDisplayRightTitle.text=mData[position].singleDisplayRightTitle
                 vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
+                if(mData[position].jumpListener!=null){
+                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)
+                }
+                if(mData[position].singleDisplayRightContent.contains("查看")){
+                    val spannable = SpannableStringBuilder(vh.tvsingleDisplayRightContent.text)
+                    spannable.setSpan(BackgroundColorSpan(Color.parseColor("#248aff")),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    spannable.setSpan(ForegroundColorSpan(Color.WHITE),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    vh.tvsingleDisplayRightContent.setText(spannable)
+//                        vh.tvsingleDisplayRightContent.setBackgroundResource(R.drawable.btn_style3)
+                }
             }
             //业主单位
             TWO_TEXT_DIALOG_TYPE->
@@ -1708,11 +1761,49 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvStoreAddress.text=mData[position].storeAddress
                 vh.tvStoreMajor.text=mData[position].storeMajor
                 vh.itemView.setOnClickListener(mData[position].itemListener)
-                vh.ivStoreShift.setOnClickListener {
-
-                }
+                vh.tvStoreShift.setOnClickListener (mData[position].jumpListener)
                 if(mData[position].styleType=="1"){
-                    vh.ivStoreShift.visibility = View.VISIBLE
+                    vh.tvStoreShift.text = "···"
+                    vh.tvStoreShift.setTextSize(TypedValue.COMPLEX_UNIT_PX,vh.tvStoreShift.resources.getDimensionPixelSize(R.dimen.font_tv_normal_26).toFloat())
+                    vh.tvStoreShift.paint.isFakeBoldText = true
+                }else{
+                    vh.tvStoreShift.text = "直聊"
+                    vh.tvStoreShift.setTextColor(Color.parseColor("#2a82e4"))
+                    vh.tvStoreShift.setBackgroundResource(R.drawable.btn_style4)
+                }
+            }
+            DEMAND_ITEM_TYPE->{
+                vh.tvDemandItemTitle.text=mData[position].demandItemTitle
+                vh.tvDemandItemProjectMode.text=mData[position].demandItemProjectMode
+                vh.tvDemandItemProjectAddress.text=mData[position].demandItemProjectAddress
+                if(mData[position].demandItemProjectAddress==""){
+                    vh.tvDemandItemProjectAddress.visibility=View.GONE
+                }
+                vh.btnDemandMore.text = mData[position].demandItemProjectMore
+                vh.btnDemandMore.setOnClickListener(mData[position].jumpListener)
+            }
+            REGISTRATION_ITEM_TYPE->{
+                vh.tvRegistrationItemType.text=mData[position].registrationItemType
+                vh.tvRegistrationItemNumber.text=mData[position].registrationItemNumber
+                vh.tvRegistrationItemInformation1.text=mData[position].registrationItemInformation1
+                vh.tvRegistrationItemInformation2.text=mData[position].registrationItemInformation2
+                if (vh.tvRegistrationItemInformation2.text==""){
+                    vh.tvRegistrationItemInformation2.visibility=View.GONE
+                }
+                vh.btnRegistrationDelete.setOnClickListener(mData[position].deleteListener)
+                vh.btnRegistrationDelete.setOnClickListener{
+                    val data = mData.toMutableList()
+                    data.removeAt(position)
+                    mData=data
+                    notifyDataSetChanged()
+//                    if(position==mData.size)
+//                        notifyItemRemoved(position)
+//                    else
+//                        notifyItemRangeRemoved(position,itemCount)
+                }
+                vh.itemView.setOnClickListener {
+                    val bundle = Bundle()
+                    (vh.itemView.context as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
                 }
             }
         }
@@ -1914,6 +2005,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             STORE_TYPE->{
                 root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mall_goods_type,viewGroup,false)
+                return VH(root,viewType)
+            }
+            DEMAND_ITEM_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_demand,viewGroup,false)
+                return VH(root,viewType)
+            }
+            REGISTRATION_ITEM_TYPE->{
+                root=LayoutInflater.from(viewGroup.context).inflate(R.layout.item_registration,viewGroup,false)
                 return VH(root,viewType)
             }
         }

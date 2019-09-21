@@ -35,6 +35,8 @@
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
+    "textAreaContent":"",
+    "necessary": true,
     "textAreaTitle":"备注"
   },
   {

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/bottom_2"
+    android:elevation="@dimen/general_2"
+    android:background="@drawable/view_style2">
+
+    <View
+        android:id="@+id/view_demand_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_80"
+        android:background="@drawable/item_background"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_demand_mode"
+        android:layout_width="@dimen/general_80"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_15"
+        android:text="需求个人"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view_demand_item"
+        app:layout_constraintStart_toStartOf="@+id/view_demand_item"
+        app:layout_constraintTop_toTopOf="@+id/view_demand_item" />
+
+    <TextView
+        android:id="@+id/tv_project_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_10"
+        android:text="变电施工队"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toTopOf="@+id/tv_project_address"
+        app:layout_constraintStart_toEndOf="@+id/tv_demand_mode"
+        app:layout_constraintTop_toTopOf="@+id/view_demand_item" />
+
+    <TextView
+        android:id="@+id/tv_project_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="@dimen/bottom_12"
+        android:text="湖南神华永州电力新建工程"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view_demand_item"
+        app:layout_constraintEnd_toEndOf="@+id/view_demand_item"
+        app:layout_constraintStart_toEndOf="@+id/tv_demand_mode" />
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        app:layout_constraintTop_toBottomOf="@+id/view_demand_item"
+        />
+
+    <Button
+        android:id="@+id/btn_demand_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_style4"
+        android:text="删除"
+        android:textColor="#2a82e4"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view7"
+        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintTop_toTopOf="@+id/view7" />
+
+    <Button
+        android:id="@+id/btn_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/right_10"
+        android:background="@drawable/btn_style3"
+        android:text="详情"
+        android:textColor="#505050"
+        android:layout_marginEnd="8dp"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintTop_toTopOf="@+id/view7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

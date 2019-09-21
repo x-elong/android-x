@@ -36,7 +36,8 @@
         app:civ_border_width="2dp" />
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_shift_input_show"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_shift_input_show"
             android:background="@drawable/ic_expand"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>

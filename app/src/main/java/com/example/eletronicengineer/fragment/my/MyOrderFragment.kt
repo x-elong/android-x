@@ -35,7 +35,7 @@ class MyOrderFragment:Fragment() {
         var storesName: StoresName? = null
         //给链表赋值
         for (j in 0 until 6){
-            storesName = StoresName(R.drawable.storename,"九朗{$j}KW屋顶太阳能发……","280w","2019-06-06 20:06:00",View.OnClickListener {
+            storesName = StoresName(R.drawable.storename.toString(),"九朗{$j}KW屋顶太阳能发……","280w","2019-06-06 20:06:00",View.OnClickListener {
                 (activity as MyOrderActivity).switchFragment(OrderDetailsFragment(),"")
             },1)
             mShopList.add(storesName)

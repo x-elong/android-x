@@ -5,15 +5,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.my.BusinessLicenseFragment
-import com.example.eletronicengineer.fragment.my.EditProfileFragment
-import com.example.eletronicengineer.fragment.my.MyInformationFragment
-import com.example.eletronicengineer.fragment.my.PersonalCertificationFragment
+import com.example.eletronicengineer.fragment.my.*
 import com.example.eletronicengineer.model.Constants
 import com.lcw.library.imagepicker.ImagePicker
+import io.card.payment.CardIOActivity
+import io.card.payment.CreditCard
 import java.io.File
 import java.io.FileOutputStream
 
@@ -60,6 +61,39 @@ class MyInformationActivity : AppCompatActivity() {
                     val fragment=this.supportFragmentManager.findFragmentByTag("MyInformation")
                     if(fragment is MyInformationFragment)
                         fragment.refresh(mImagePaths[0])
+                }
+                Constants.RequestCode.MY_SCAN_REQUEST_CODE.ordinal->{
+                    var resultDisplayStr = ""
+                    if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+
+                        val scanResult = data.getParcelableExtra<CreditCard>(CardIOActivity.EXTRA_SCAN_RESULT)
+                        //                        data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT)
+                        // Never log a raw card number. Avoid displaying it, but if necessary use getFormattedCardNumber()
+                        //resultDisplayStr = "银行卡号: " + scanResult.getRedactedCardNumber() + "\n"; //只显示尾号
+                        resultDisplayStr = "银行卡号: " + scanResult.formattedCardNumber + "\n"  //显示银行卡号
+
+                        Log.i("resultDisplayStr is", "银行卡号:" + resultDisplayStr)
+                        // Do something with the raw number, e.g.:
+                        // myService.setCardNumber( scanResult.cardNumber );
+
+                        if (scanResult.isExpiryValid()) {
+                            resultDisplayStr += "Expiration Date: " + scanResult.expiryMonth + "/" + scanResult.expiryYear + "\n"
+                            Log.i("aaa", "银行卡号有效期:" + resultDisplayStr)
+                        }
+
+                        if (scanResult.cvv != null) {
+                            // Never log or display a CVV
+                            resultDisplayStr += "CVV has " + scanResult.cvv.length + " digits.\n"
+                        }
+
+                        if (scanResult.postalCode != null) {
+                            resultDisplayStr += "Postal Code: " + scanResult.postalCode + "\n"
+                        }
+                    } else {
+                        resultDisplayStr = "Scan was canceled."
+                    }
+                    val fragment=this.supportFragmentManager.findFragmentByTag("AddBankCard") as AddBankCardFragment
+                    fragment.setBankCardAccount(resultDisplayStr)
                 }
             }
         }

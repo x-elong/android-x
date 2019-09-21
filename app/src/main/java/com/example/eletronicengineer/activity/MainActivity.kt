@@ -112,12 +112,12 @@ class MainActivity : AppCompatActivity() {
         val mallFragment = MallFragment()
         val myFragment = MyFragment()
         fragmentList = ArrayList(Arrays.asList<Fragment>(newsFragment, sdrFragment, applicationFragment, mallFragment, myFragment))
-        lastfragment = 2
+        lastfragment = 1
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_main, applicationFragment)
+        transaction.replace(R.id.frame_main, sdrFragment)
         transaction.commit()
         bnv.setOnNavigationItemSelectedListener(changeFragment)
-        bnv.menu.getItem(2).isChecked = true
+        bnv.menu.getItem(1).isChecked = true
         //sdrFragment.initindex(lastfragment);
     }
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_job_more"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_job_more_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_job_more_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="职位详情"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@+id/view_job_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view_job_more"
+        tools:ignore="MissingConstraints" />
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_job_more_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/view_job_more"
+    />
+
+    <Button
+        android:id="@+id/btn_edit_job_information"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_48"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_style4"
+        android:text="编辑职位"
+        android:layout_marginTop="@dimen/top_20"
+        android:textColor="#2a82e4"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_job_more_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

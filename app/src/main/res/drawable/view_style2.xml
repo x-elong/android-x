@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    round button
+    stroke color:gray(width:1dp)
+    background color:white
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="center">
+        <shape android:shape="rectangle">
+            <stroke android:color="@color/dark_gray_bg" android:width="@dimen/general_1"/>
+            <solid android:color="@color/white"/>
+        </shape>
+    </item>
+</layer-list>

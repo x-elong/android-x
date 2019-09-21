@@ -340,7 +340,9 @@ class ItemGenerate
                 "INPUT_WITH_TEXTAREA"->
                 {
                     val textAreaTitle=jsonObject.getString("textAreaTitle")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle)
+                    val textAreaContent=jsonObject.getString("textAreaContent")
+                    val necessary = jsonObject.getBoolean("necessary")
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle,textAreaContent,necessary)
 
                 }
                 "SHIFT_INPUT"->

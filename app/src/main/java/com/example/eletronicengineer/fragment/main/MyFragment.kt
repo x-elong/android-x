@@ -53,7 +53,8 @@ class MyFragment : Fragment() {
         mFunctionList.clear()
         mMultiStyleItemList.clear()
         mFunctionList.add(Function("我的发布",R.drawable.my_release,View.OnClickListener {
-
+            val intent = Intent(activity,MyReleaseActivity::class.java)
+            startActivity(intent)
         }))
         mFunctionList.add(Function("我的订单",R.drawable.my_order,View.OnClickListener {
             val intent = Intent(activity,MyOrderActivity::class.java)
