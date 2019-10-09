@@ -33,6 +33,7 @@ import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.aninterface.ExpandMenuItem
+import com.example.eletronicengineer.fragment.my.JobMoreFragment
 import com.example.eletronicengineer.fragment.my.JobOverviewFragment
 import com.example.eletronicengineer.lg.resources
 import com.example.eletronicengineer.utils.*
@@ -209,7 +210,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
     var urlPath:String=""
-    var baseUrl="http://192.168.1.149:8014"
+    var baseUrl="http://192.168.1.67:8012"
     //http://10.1.5.90:8012
     //http://192.168.1.85:8018
     inner class VH:RecyclerView.ViewHolder
@@ -285,7 +286,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
 
         lateinit var tvDialogSelectTitle:TextView
-        lateinit var etDialogSelectItem:TextView
+        lateinit var etDialogSelectItem:EditText
         lateinit var tvDialogSelectShow:TextView
 
         lateinit var tvTextAreaTitle:TextView
@@ -360,16 +361,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
         lateinit var tvDemandItemTitle:TextView
         lateinit var tvDemandItemProjectMode:TextView
-        lateinit var tvDemandItemProjectAddress:TextView
-        lateinit var btnDemandMore:Button
+        lateinit var tvDemandItemProjectName:TextView
 
         lateinit var tvRegistrationItemType:TextView
-        lateinit var tvRegistrationItemNumber:TextView
         lateinit var tvRegistrationItemInformation1:TextView
         lateinit var tvRegistrationItemInformation2:TextView
         lateinit var btnRegistrationDelete:Button
         lateinit var btnRegistrationShare:Button
-
+        lateinit var btnRegistrationMore:Button
 
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
@@ -380,7 +379,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     if(selectContent.equals("自定义") || selectContent.equals("其他") ||selectContent.equals("填写")){
                         etDialogSelectItem.isEnabled=true
                         etDialogSelectItem.hint="请输入"
-                        etDialogSelectItem.text=""
+                        etDialogSelectItem.setText("")
                         etDialogSelectItem.addTextChangedListener(object :TextWatcher{
                             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -396,7 +395,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         })
                     }else{
                         etDialogSelectItem.isEnabled=false
-                        etDialogSelectItem.text=selectContent
+                        etDialogSelectItem.setText(selectContent)
                         mData[itemPosition].selectContent=selectContent!!
                     }
                     false
@@ -702,16 +701,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 DEMAND_ITEM_TYPE->{
                     tvDemandItemTitle=v.tv_demand_mode
                     tvDemandItemProjectMode=v.tv_project_mode
-                    tvDemandItemProjectAddress=v.tv_project_address
-                    btnDemandMore=v.btn_more
+                    tvDemandItemProjectName=v.tv_project_name
                 }
                 REGISTRATION_ITEM_TYPE->{
                     tvRegistrationItemType=v.tv_type
-                    tvRegistrationItemNumber=v.tv_number_of_subscribers
                     tvRegistrationItemInformation1=v.tv_information1
                     tvRegistrationItemInformation2=v.tv_information2
                     btnRegistrationDelete=v.btn_delete
                     btnRegistrationShare=v.btn_share
+                    btnRegistrationMore=v.btn_registration_more
                 }
             }
             VHList.add(this)
@@ -1259,8 +1257,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SELECT_DIALOG_TYPE->
             {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
-                vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
-                mData[position].selectContent=mData[position].selectOption1Items[0]
+                if(mData[position].selectContent==""){
+                    mData[position].selectContent=mData[position].selectOption1Items[0]
+                    vh.etDialogSelectItem.setText(mData[position].selectOption1Items[0])
+                }else{
+                    vh.etDialogSelectItem.setText(mData[position].selectContent)
+                }
+
                 vh.tvDialogSelectShow.setOnClickListener{
                     val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.itemView.context,mData[position].selectOption1Items,vh.mHandler).dialog
                     selectDialog.show()
@@ -1276,7 +1279,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 if (mData[position].selectContent!="")
                 {
-                    vh.etDialogSelectItem.text=mData[position].selectContent
+                    vh.etDialogSelectItem.setText(mData[position].selectContent)
                 }
                 vh.tvDialogSelectShow.setOnClickListener {
                     val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
@@ -1297,7 +1300,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 }
                 if (mData[position].selectContent!="")
                 {
-                    vh.etDialogSelectItem.text=mData[position].selectContent
+                    vh.etDialogSelectItem.setText(mData[position].selectContent)
                 }
                 if(mData[position].selectListener!=null)
                 {
@@ -1775,16 +1778,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             DEMAND_ITEM_TYPE->{
                 vh.tvDemandItemTitle.text=mData[position].demandItemTitle
                 vh.tvDemandItemProjectMode.text=mData[position].demandItemProjectMode
-                vh.tvDemandItemProjectAddress.text=mData[position].demandItemProjectAddress
-                if(mData[position].demandItemProjectAddress==""){
-                    vh.tvDemandItemProjectAddress.visibility=View.GONE
-                }
-                vh.btnDemandMore.text = mData[position].demandItemProjectMore
-                vh.btnDemandMore.setOnClickListener(mData[position].jumpListener)
+                vh.tvDemandItemProjectName.text=mData[position].demandItemProjectName
+                if(vh.tvDemandItemProjectName.text=="")
+                    vh.tvDemandItemProjectName.visibility = View.GONE
+                vh.itemView.setOnClickListener(mData[position].jumpListener)
             }
             REGISTRATION_ITEM_TYPE->{
                 vh.tvRegistrationItemType.text=mData[position].registrationItemType
-                vh.tvRegistrationItemNumber.text=mData[position].registrationItemNumber
                 vh.tvRegistrationItemInformation1.text=mData[position].registrationItemInformation1
                 vh.tvRegistrationItemInformation2.text=mData[position].registrationItemInformation2
                 if (vh.tvRegistrationItemInformation2.text==""){
@@ -1801,10 +1801,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 //                    else
 //                        notifyItemRangeRemoved(position,itemCount)
                 }
-                vh.itemView.setOnClickListener {
-                    val bundle = Bundle()
-                    (vh.itemView.context as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
-                }
+                vh.btnRegistrationMore.setOnClickListener(mData[position].registrationMoreListener)
+                vh.itemView.setOnClickListener(mData[position].jumpListener)
             }
         }
         //VHList.add(vh)

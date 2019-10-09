@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view_sms"
         android:layout_width="@dimen/general_68"
         android:layout_height="@dimen/general_68"
@@ -32,6 +33,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_sms"
         android:layout_width="@dimen/general_41"
         android:layout_height="@dimen/general_42"
@@ -42,6 +44,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_sms" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_sms_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,10 +61,12 @@
         android:layout_width="@dimen/general_68"
         android:layout_height="@dimen/general_68"
         android:layout_marginStart="@dimen/left_46"
+        android:layout_marginTop="@dimen/top_26"
+        android:layout_marginBottom="8dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/view_sms"
+        app:layout_constraintBottom_toTopOf="@+id/tv_qq_name"
         app:layout_constraintStart_toEndOf="@+id/view_sms"
-        app:layout_constraintTop_toTopOf="@+id/view_sms"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -86,17 +91,17 @@
         app:layout_constraintStart_toStartOf="@+id/view_we_chat" />
 
     <View
-
         android:id="@+id/view_qq"
         android:layout_width="@dimen/general_68"
         android:layout_height="@dimen/general_68"
         android:layout_marginStart="@dimen/left_46"
+        android:layout_marginTop="@dimen/top_26"
         android:layout_marginEnd="@dimen/right_33"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/view_we_chat"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view_we_chat"
-        app:layout_constraintTop_toTopOf="@+id/view_we_chat"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -128,7 +133,7 @@
         android:gravity="center"
         android:text="取消"
         android:textColor="#3c4a54"
-        android:layout_marginTop="@dimen/top_46"
+        android:layout_marginTop="@dimen/top_26"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toBottomOf="@+id/tv_we_chat_name"
          />

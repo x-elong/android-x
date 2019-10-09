@@ -84,6 +84,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toTopOf="@+id/view11" />
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_add_bank_card_camera"
         android:layout_width="@dimen/general_24"
         android:layout_height="@dimen/left_24"
@@ -102,6 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view11" />
 
     <TextView
+        android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开户银行"
@@ -116,11 +118,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/general_10"
-        android:theme="@style/TextAppearance.AppCompat.Display4"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/right_8"
         android:dropDownVerticalOffset="@dimen/general_30"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
         app:layout_constraintBottom_toBottomOf="@+id/view12"
         app:layout_constraintEnd_toEndOf="@+id/view12"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="@+id/view12" />
+
+    <Button
+        android:id="@+id/btn_add_bank_card"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_48"
+        android:layout_marginTop="@dimen/top_40"
+        android:text="确认添加"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="#2a82e4"
+        android:background="@drawable/btn_style4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view12" />
 </androidx.constraintlayout.widget.ConstraintLayout>

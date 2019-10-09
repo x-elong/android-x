@@ -255,8 +255,8 @@ class NetworkAdapter {
                     val results = try {
                         for (j in UnSerializeDataBase.imgList) {
                             if (j.key == data.key) {
-                                val ImagePath = j.path.split("|")
-                                for (k in ImagePath) {
+                                val imagePath = j.path.split("|")
+                                for (k in imagePath) {
                                     val file = File(k)
                                     val imagePart = MultipartBody.Part.createFormData(
                                         "file",
@@ -5290,7 +5290,7 @@ class NetworkAdapter {
             it.onNext(requestBody)
         }.subscribe {
             val result =
-                putSimpleMessage(it, "http://192.168.1.133:8014" + baseUrl).observeOn(AndroidSchedulers.mainThread())
+                putSimpleMessage(it, ApiConfig.BasePath + baseUrl).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
@@ -5370,14 +5370,14 @@ class NetworkAdapter {
                     }
                 MultiStyleItem.Options.INPUT_WITH_UNIT->{
                     if(j.inputUnitContent=="")
-                        result = "${j.inputUnitContent.replace("：", "")}不能为空"
+                        result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                     if (result != "") {
                         mToast(result)
                         return false
                     }
                 }
-                }
             }
+        }
         return true
     }
     fun mToast(result: String){

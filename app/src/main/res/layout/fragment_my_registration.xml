@@ -53,6 +53,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/right_6"
         android:hint="需求类别"
+        android:text="需求 需求个人"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/tv_under"
@@ -70,7 +71,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_registration"
+        android:id="@+id/rv_my_registration_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"

@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_personal_certification.view.*
 
 class PersonalCertificationFragment :Fragment(){
     val glideLoader = GlideLoader()
-    val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var selectImage=-1
     lateinit var mView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,26 +62,22 @@ class PersonalCertificationFragment :Fragment(){
                 .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
         }
         mView.btn_personal_certification.setOnClickListener {
-            val networkAdapter = NetworkAdapter(mMultiStyleItemList,context!!)
-            if(networkAdapter.check()){
-                if(UnSerializeDataBase.imgList[0].path==""||UnSerializeDataBase.imgList[1].path==""){
+            if(mView.et_id_card_name.text.isBlank()){
+                val toast = Toast.makeText(context,"身份证姓名不能为空",Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER,0,0)
+                toast.show()
+                }else if(mView.et_id_card_number.text.isBlank() || mView.et_id_card_number.text.length!=18){
+                val toast = Toast.makeText(context,"请输入正确的18位身份证号码",Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER,0,0)
+                toast.show()
+            }else if(UnSerializeDataBase.imgList[0].path==""||UnSerializeDataBase.imgList[1].path==""){
                     val toast = Toast.makeText(context,"身份证正反照不能为空",Toast.LENGTH_SHORT)
                     toast.setGravity(Gravity.CENTER,0,0)
                     toast.show()
-                }else{
+            }else{
 
-                }
             }
         }
-        mMultiStyleItemList.clear()
-        var item = MultiStyleItem(MultiStyleItem.Options.SELECT_DIALOG,arrayListOf("中国大陆","港澳台地区"),"国籍(地区):")
-        mMultiStyleItemList.add(item)
-        item = MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"真实姓名:","请填写真实姓名")
-        mMultiStyleItemList.add(item)
-        item = MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"身份证号码:","请输入身份证号码")
-        mMultiStyleItemList.add(item)
-        mView.rv_personal_certification_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        mView.rv_personal_certification_content.layoutManager= LinearLayoutManager(context)
     }
     fun refresh(imagePath:String){
         if(selectImage==1){

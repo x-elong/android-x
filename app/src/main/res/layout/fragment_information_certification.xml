@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray_bg">
+    <View
+        android:id="@+id/view_information_certification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_information_certification_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_information_certification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="信息认证"
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_information_certification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_information_certification"
+        tools:ignore="MissingConstraints" />
+    <View
+        android:id="@+id/view_subject_category_sp"
+        android:background="@drawable/view_style2"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_information_certification"/>
+
+    <TextView
+        android:id="@+id/tv_subject_category_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="主体类别"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_subject_category_under"
+        app:layout_constraintEnd_toStartOf="@+id/tv_subject_category_under"
+        app:layout_constraintStart_toStartOf="@+id/view_subject_category_sp"
+        app:layout_constraintTop_toTopOf="@+id/tv_subject_category_under" />
+
+    <TextView
+        android:id="@+id/tv_subject_category_under"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/under"
+        app:layout_constraintBottom_toBottomOf="@+id/view_subject_category_sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_subject_category_sp"
+        app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_subject_category_sp">
+
+        <FrameLayout
+            android:id="@+id/frame_certification_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#efefef" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_gray_bg">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="主体信息"
+        android:textColor="#248bfe"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_marginTop="@dimen/top_8"
+        android:id="@+id/view_institution_name"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_institution_name"
+        android:text="机构名称："
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_institution_name"
+        app:layout_constraintTop_toTopOf="@+id/view_institution_name"
+        app:layout_constraintBottom_toBottomOf="@+id/view_institution_name"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_institution_name_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="xxx"
+        android:background="@color/transparent"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toEndOf="@+id/tv_institution_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintTop_toTopOf="@+id/view_institution_name"
+        app:layout_constraintBottom_toBottomOf="@+id/view_institution_name"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
+    <View
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/view_social_credit_code"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/view_institution_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_social_credit_code"
+        android:text="社会信用代码："
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_social_credit_code"
+        app:layout_constraintTop_toTopOf="@+id/view_social_credit_code"
+        app:layout_constraintBottom_toBottomOf="@+id/view_social_credit_code"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_social_credit_code_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="11111"
+        android:background="@color/transparent"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_credit_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintTop_toTopOf="@+id/view_social_credit_code"
+        app:layout_constraintBottom_toBottomOf="@+id/view_social_credit_code"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
+
+    <View
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/view_main_code"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/view_social_credit_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_main_code"
+        android:text="主营："
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_main_code"
+        app:layout_constraintTop_toTopOf="@+id/view_main_code"
+        app:layout_constraintBottom_toBottomOf="@+id/view_main_code"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_main_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="3"
+        android:hint="请输入主营信息"
+        android:background="@color/transparent"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toEndOf="@+id/tv_main_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintTop_toTopOf="@+id/view_main_code"
+        app:layout_constraintBottom_toBottomOf="@+id/view_main_code"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="法人信息登记"
+        android:textColor="#248bfe"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_main_code" />
+
+    <View
+        android:id="@+id/view_legal_personal_id_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_260"
+        android:layout_marginTop="@dimen/general_8"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_8"
+        android:text="法人身份证正反照:"
+        android:layout_marginTop="@dimen/general_8"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_legal_personal_id_card"
+        app:layout_constraintTop_toTopOf="@+id/view_legal_personal_id_card" />
+
+    <ImageView
+        android:id="@+id/iv_legal_id_card_people_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:background="@drawable/id_card_people"
+        app:layout_constraintEnd_toEndOf="@+id/view_legal_personal_id_card"
+        app:layout_constraintStart_toStartOf="@+id/view_legal_personal_id_card"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <ImageView
+        android:id="@+id/iv_legal_id_card_nation_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/id_card_nation"
+        app:layout_constraintEnd_toEndOf="@+id/iv_legal_id_card_people_show"
+        app:layout_constraintStart_toStartOf="@+id/iv_legal_id_card_people_show"
+        app:layout_constraintTop_toBottomOf="@+id/iv_legal_id_card_people_show" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="管理员信息登记"
+        android:textColor="#248bfe"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_legal_personal_id_card" />
+
+    <View
+        android:layout_marginTop="@dimen/top_8"
+        android:id="@+id/view_administrator_name"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_administrator_name"
+        android:text="管理员身份证姓名："
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_administrator_name"
+        app:layout_constraintTop_toTopOf="@+id/view_administrator_name"
+        app:layout_constraintBottom_toBottomOf="@+id/view_administrator_name"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_administrator_name_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="123xx"
+        android:background="@color/transparent"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toEndOf="@+id/view_administrator_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintTop_toTopOf="@+id/view_administrator_name"
+        app:layout_constraintBottom_toBottomOf="@+id/view_administrator_name"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
+    <View
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/view_administrator_number"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/view_administrator_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_administrator_number"
+        android:text="管理员身份证号码："
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_administrator_number"
+        app:layout_constraintTop_toTopOf="@+id/view_administrator_number"
+        app:layout_constraintBottom_toBottomOf="@+id/view_administrator_number"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_administrator_number_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请输入管理员身份证号码"
+        android:background="@color/transparent"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toEndOf="@+id/tv_administrator_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintTop_toTopOf="@+id/view_administrator_number"
+        app:layout_constraintBottom_toBottomOf="@+id/view_administrator_number"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
+    <View
+        android:id="@+id/view_administrator_id_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_260"
+        android:layout_marginTop="@dimen/general_8"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/view_administrator_number"
+        />
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_8"
+        android:text="管理员身份证正反照:"
+        android:layout_marginTop="@dimen/general_8"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_administrator_id_card"
+        app:layout_constraintTop_toTopOf="@+id/view_administrator_id_card" />
+
+    <ImageView
+        android:id="@+id/iv_administrator_id_card_people_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:background="@drawable/id_card_people"
+        app:layout_constraintEnd_toEndOf="@+id/view_administrator_id_card"
+        app:layout_constraintStart_toStartOf="@+id/view_administrator_id_card"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <ImageView
+        android:id="@+id/iv_administrator_id_card_nation_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/id_card_nation"
+        app:layout_constraintEnd_toEndOf="@+id/iv_administrator_id_card_people_show"
+        app:layout_constraintStart_toStartOf="@+id/iv_administrator_id_card_people_show"
+        app:layout_constraintTop_toBottomOf="@+id/iv_administrator_id_card_people_show" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_Enterprise_certification"
+        android:layout_width="@dimen/general_268"
+        android:layout_height="@dimen/general_43"
+        android:layout_marginTop="@dimen/top_20"
+        android:text="认证"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:background="@drawable/btn_style3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_administrator_id_card" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,13 +31,13 @@ class ContractInformationFragment :Fragment(){
             val bundle = Bundle()
             (activity as MyInformationActivity).switchFragment(AddContractInformationFragment.newInstance(bundle),"Education")
         }
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"合同期限","合同类型","合同公司","详情")
+        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"合同期限","合同类型","合同公司")
         item.jumpListener = View.OnClickListener {
             val bundle = Bundle()
             (activity as MyInformationActivity).switchFragment(AddContractInformationFragment.newInstance(bundle),"AddEducation")
         }
         mMultiStyleItemList.add(item)
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"50天","不要式子合同","湖南神华永州电力新建工程","详情")
+        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"50天","不要式子合同","湖南神华永州电力新建工程")
         item.jumpListener = View.OnClickListener {
             val bundle = Bundle()
             (activity as MyInformationActivity).switchFragment(AddContractInformationFragment.newInstance(bundle), "AddEducation")

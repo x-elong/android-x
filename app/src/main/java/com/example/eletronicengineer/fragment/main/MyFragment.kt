@@ -15,7 +15,12 @@ import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.FunctionAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Function
+import com.example.eletronicengineer.model.ApiConfig
+import com.example.eletronicengineer.utils.GlideLoader
+import com.example.eletronicengineer.utils.getUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_recommended_application.view.*
 import kotlinx.android.synthetic.main.my.view.*
 
@@ -50,6 +55,7 @@ class MyFragment : Fragment() {
     }
 
     private fun initData() {
+        getDataUser()
         mFunctionList.clear()
         mMultiStyleItemList.clear()
         mFunctionList.add(Function("我的发布",R.drawable.my_release,View.OnClickListener {
@@ -76,11 +82,11 @@ class MyFragment : Fragment() {
             val intent = Intent(activity,MyRegistrationActivity::class.java)
             startActivity(intent)
         }
-        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"签名设置",false))
-        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
-            val intent = Intent(activity,MySignatureActivity::class.java)
-            startActivity(intent)
-        }
+//        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"签名设置",false))
+//        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+//            val intent = Intent(activity,MySignatureActivity::class.java)
+//            startActivity(intent)
+//        }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"认证管理",false))
         mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,MyCertificationActivity::class.java)
@@ -109,12 +115,16 @@ class MyFragment : Fragment() {
             dialog.setContentView(dialogView)
             dialog.show()
         }
-        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"安全中心",false))
-        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
-            val intent = Intent(activity,SecurityCenterActivity::class.java)
-            startActivity(intent)
-        }
         mView.rv_my_other_function_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
         mView.rv_my_other_function_content.layoutManager = LinearLayoutManager(context)
+    }
+    fun getDataUser(){
+        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                GlideLoader().loadImage(mView.iv_my_header,it.message.user.headerImg)
+                mView.tv_my_phone.text = it.message.user.phone
+            },{
+                it.printStackTrace()
+            })
     }
 }

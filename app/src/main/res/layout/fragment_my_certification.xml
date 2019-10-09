@@ -37,23 +37,93 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view_my_certification"
         tools:ignore="MissingConstraints" />
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/mTabLayout_my_certification"
+
+    <TextView
+        android:id="@+id/tv_my_certification_add"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/add_black"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/view_my_certification"
+        app:layout_constraintEnd_toEndOf="@+id/view_my_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_my_certification"
+         />
+    <View
+        android:id="@+id/view_sp_company"
+        android:background="@drawable/view_style2"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_my_certification"/>
+
+    <TextView
+        android:id="@+id/tv_company_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/view_my_certification"
-        app:tabBackground="@color/transparent"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="#4ca0fe"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="#4ca0fe"
-        app:tabTextColor="@color/black"/>
-    <FrameLayout
-        android:id="@+id/frame_certification_category"
+        android:hint="公司名称"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_company_under"
+        app:layout_constraintEnd_toStartOf="@+id/tv_company_under"
+        app:layout_constraintStart_toStartOf="@+id/view_sp_company"
+        app:layout_constraintTop_toTopOf="@+id/tv_company_under" />
+    <TextView
+        android:id="@+id/tv_company_under"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/under"
+        app:layout_constraintBottom_toBottomOf="@+id/view_sp_company"
+        app:layout_constraintEnd_toEndOf="@+id/view_sp_company"
+        app:layout_constraintTop_toTopOf="@+id/view_sp_company" />
+    <View
+        android:id="@+id/view_subject_category_sp"
+        android:background="@drawable/view_style2"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_sp_company"/>
+
+    <TextView
+        android:id="@+id/tv_subject_category_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="主体类别"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_subject_category_under"
+        app:layout_constraintEnd_toStartOf="@+id/tv_subject_category_under"
+        app:layout_constraintStart_toStartOf="@+id/view_subject_category_sp"
+        app:layout_constraintTop_toTopOf="@+id/tv_subject_category_under" />
+
+    <TextView
+        android:id="@+id/tv_subject_category_under"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/under"
+        app:layout_constraintBottom_toBottomOf="@+id/view_subject_category_sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_subject_category_sp"
+        app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#efefef"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mTabLayout_my_certification" />
+        app:layout_constraintTop_toBottomOf="@+id/view_subject_category_sp">
+
+        <FrameLayout
+            android:id="@+id/frame_certification_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#efefef" />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,6 @@ import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lcw.library.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.dialog_upload.view.*
-import kotlinx.android.synthetic.main.fragment_business_license.view.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.view.*
 import org.json.JSONObject

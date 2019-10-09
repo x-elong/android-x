@@ -54,7 +54,7 @@ class PhoneRegisterFragment: Fragment()  {
             }
             else{
                 if(v.tv_get_check.text=="重新获取验证码" || v.tv_get_check.text=="获取验证码"){
-                    val result= sendMobile(phoneNum,"http://192.168.1.50:8026/").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    val result= sendMobile(phoneNum,"http://192.168.1.67:8026/").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                             if(it.desc=="验证码发送成功")
                             {
@@ -101,7 +101,7 @@ class PhoneRegisterFragment: Fragment()  {
             else{
                 val key= arrayListOf("username","code","password","repassword")
                 val value= arrayListOf(phoneNum,registerPassword,password,rePassword)
-                sendRegisterForHttp(key,value,"http://192.168.1.50:8026/")
+                sendRegisterForHttp(key,value,"http://192.168.1.67:8026/")
             }
             if(result!=""){
                 val toast = Toast.makeText(context,result,Toast.LENGTH_SHORT)
@@ -135,7 +135,6 @@ class PhoneRegisterFragment: Fragment()  {
             val jsonObject = JSONObject()
             for (i in 0 until key.size) {
                 jsonObject.put(key[i], value[i])
-
             }
             val requestBody= RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
             it.onNext(requestBody)

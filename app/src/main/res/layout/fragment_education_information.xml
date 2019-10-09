@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:overScrollMode="never"
-    android:id="@+id/rv_education_information_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-</androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_education_information_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_delete_education"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_48"
+        android:background="@drawable/btn_style4"
+        android:layout_marginTop="@dimen/top_40"
+        android:text="删除"
+        android:textColor="#2a82e4"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_education_information_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

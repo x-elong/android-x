@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@id/line2"
         app:layout_constraintBottom_toTopOf="@id/line3"
         />
-    下<EditText
+    <EditText
     android:id="@+id/et_register_password"
     android:layout_width="@dimen/general_140"
     android:layout_height="wrap_content"

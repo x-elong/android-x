@@ -10,7 +10,12 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.getUser
+import com.google.gson.Gson
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_emergency_contact.view.*
+import org.json.JSONObject
 
 class EmergencyContactFragment :Fragment(){
     lateinit var mView: View
@@ -36,7 +41,28 @@ class EmergencyContactFragment :Fragment(){
         }
         mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        mView.rv_emergency_contact_content.adapter = adapter
-        mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
+
+        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {
+                val urgentPeoples = it.message.urgentPeoples
+                val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("urgentPeoples")
+                if(urgentPeoples!=null)
+                    for (j in urgentPeoples){
+                        val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.urgentPeopleName,false)
+                        item.jumpListener = View.OnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("urgentPeople",jsonArray.getJSONObject(urgentPeoples.indexOf(j)).toString())
+                            (activity as MyInformationActivity).switchFragment(EmergencyContactInformationFragment.newInstance(bundle),"")
+                        }
+                        mMultiStyleItemList.add(item)
+                    }
+                adapter = RecyclerviewAdapter(mMultiStyleItemList)
+                mView.rv_emergency_contact_content.adapter = adapter
+                mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
+            },{
+                it.printStackTrace()
+            })
+//        mView.rv_emergency_contact_content.adapter = adapter
+//        mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
     }
 }

@@ -136,6 +136,44 @@ class Constants {
     }
 
     class HttpUrlPath {
+
+        //我的
+        class My{
+            companion object{
+                const val updatePassword = "/userInfo/alterPassword/"
+                const val getUser="/TUpmsUser/getUser/"
+                const val upateDTO1 = "/TUpmsUser/upateDTO1/"
+                const val upateBankCar = "/TUpmsUser/upateBankCar/"
+                const val updateEducationBackground = "/TUpmsUser/updateEducationBackground/"
+                const val insertEducationBackground = "/TUpmsUser/insertEducationBackground/"
+                const val deleteEducationBackground = "/TUpmsUser/deleteEducationBackground/{id}"
+                const val delectChildren = "/HomeChildren/deleteHomeChildren/{id}"
+                const val updateHomeChildren = "/HomeChildren/updateHomeChildren/"
+                const val insertHomeChildren = "/HomeChildren/insertHomeChildren/"
+                const val updateUrgentPeople = "/UrgentPeople/updateUrgentPeople/"
+                const val insertUrgentPeople = "/UrgentPeople/insertUrgentPeople/"
+                const val deleteUrgentPeople = "/UrgentPeople/deleteUrgentPeople/{id}"
+                const val insertBankCard = "/TUpmsUser/insertBankCard/"
+                const val deleteBankCard = "/TUpmsUser/deleteBankCard/{id}"
+                const val updateHeaderImg = "/TUpmsUser/updateHeaderImg/{headerImg}"
+                /**
+                 *我的发布
+                 */
+                const val getDemandIndividual = "/RequirementPerson/getOwnByQueryConditions/"
+                const val getDemandGroup = "/RequirementTeam/getRequirementTeamDTOListByFounder/"
+                const val getDemandLease = "/RequirementLease/getRequirementLeaseDTOListByFounder/"
+                const val getDemandTripartite = "/RequirementThirdParty/getAllByFounder/"
+                /**
+                 * 我的报名
+                 */
+                const val getRegistration = "/LeaseLoggingCheck/getByVip/"
+                const val getPersonRequirement = "/PersonRequirementInformationCheck/getList2PersonRequirementInformationCheck/"
+                const val getRequirementTeam = "/RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck2/"
+                const val getLease= "/LeaseLoggingCheck/getList2LeaseLoggingCheckController/"
+                const val getRequirementThird= "/RequirementThirdLoggingCheck/getList2RequirementThirdLoggingCheck/"
+            }
+        }
+
         //需求
         class Requirement {
             companion object {

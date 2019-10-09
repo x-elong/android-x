@@ -71,11 +71,6 @@ class MySettingFragment :Fragment() {
             (activity as MySettingActivity).switchFragment(RelatedFragment())
         }
         mMultiStyleItemList.add(item)
-        item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"注销帐号",false)
-        item.jumpListener = View.OnClickListener {
-            (activity as MySettingActivity).switchFragment(LogoutFragment())
-        }
-        mMultiStyleItemList.add(item)
         mView.rv_setting_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
         mView.rv_setting_content.layoutManager=LinearLayoutManager(context)
     }

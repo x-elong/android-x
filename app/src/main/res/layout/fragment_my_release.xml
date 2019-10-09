@@ -53,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="发布类别"
+        android:text="需求 需求个人"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/tv_under"
@@ -75,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_sp"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/view_sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

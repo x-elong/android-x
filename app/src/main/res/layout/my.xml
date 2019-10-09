@@ -67,6 +67,7 @@
         app:layout_constraintStart_toEndOf="@+id/view_my"
         app:layout_constraintTop_toTopOf="@+id/tv_my_phone" />
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_my_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,23 +1,40 @@
 package com.example.eletronicengineer.fragment.my
 
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
-import com.google.android.material.tabs.TabLayout
+import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
+import com.example.eletronicengineer.custom.CustomDialog
 import kotlinx.android.synthetic.main.fragment_my_certification.view.*
 
 class MyCertificationFragment :Fragment(){
+    val mHandler = Handler(Handler.Callback {
+        when(it.what)
+        {
+            MESSAGE_SELECT_OK->
+            {
+                val selectContent=it.data.getString("selectContent")
+                mView.tv_subject_category_content.text=selectContent
+                when(selectContent){
+                    "个人 "-> (activity as MyCertificationActivity).switchFragment(PersonalCertificationShowFragment(),R.id.frame_certification_category,"Certification")
+                    else -> (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationShowFragment(),R.id.frame_certification_category,"Certification")
+                }
+//                mView.sp_demand_moder.
+                false
+            }
+            else->
+            {
+                false
+            }
+        }
+    })
     lateinit var mView:View
-    var selectedPosition = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_my_certification,container,false)
         initFragment()
@@ -28,37 +45,17 @@ class MyCertificationFragment :Fragment(){
         mView.tv_my_certification_back.setOnClickListener {
             activity!!.finish()
         }
-        val mTitle = arrayListOf("个人认证","企业认证")
-        for(j in mTitle){
-            mView.mTabLayout_my_certification.addTab(mView.mTabLayout_my_certification.newTab().setText(j))
+        mView.view_subject_category_sp.setOnClickListener{
+            val Option1Items = listOf("供应商","建设单位","设计单位","施工单位","监理单位","咨询单位","职能部门","个人","其他")
+            val Option2Items:List<List<String>> = listOf(listOf("材料供应","机械租赁","技术服务","金融服务"), listOf("政府单位","事业单位","企业"),listOf(""),
+                listOf("施工企业","施工队","项目部"),
+                listOf(""),listOf(""),listOf("安监部","质检部"),listOf(""),listOf(""))
+            val selectDialog= CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,context!!,mHandler,Option1Items,Option2Items).multiDialog
+            selectDialog.show()
         }
-        if(selectedPosition==0)
-            (activity as MyCertificationActivity).switchFragment(PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
-        else {
-            mView.mTabLayout_my_certification.getTabAt(selectedPosition)!!.select()
-            (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationFragment(), R.id.frame_certification_category, "EnterpriseCertification")
+        mView.tv_my_certification_add.setOnClickListener {
+            (activity as MyCertificationActivity).switchFragment(InformationCertificationFragment(),R.id.frame_my_certification,"Certification")
         }
-        mView.mTabLayout_my_certification.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabSelected(p0: TabLayout.Tab) {
-                Log.i("select is",p0.text.toString())
-                if(p0.text=="个人认证"){
-                    selectedPosition=0
-                    (activity as MyCertificationActivity).switchFragment(PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
-                }else{
-                    selectedPosition=1
-                    (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationFragment(),R.id.frame_certification_category,"EnterpriseCertification")
-                }
-            }
-
-        })
     }
 
 }
