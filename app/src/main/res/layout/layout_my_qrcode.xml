@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/general_10"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_qr_code_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_20"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/tv_qr_code_phone"
+        app:layout_constraintTop_toTopOf="@+id/tv_qr_code_phone" />
+
+    <TextView
+        android:id="@+id/tv_qr_code_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_20"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/tv_qr_code_avatar"
+        app:layout_constraintTop_toTopOf="@+id/tv_qr_code_avatar" />
+
+    <TextView
+        android:id="@+id/tv_qr_code_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_qr_code_avatar"
+        app:layout_constraintStart_toStartOf="@+id/tv_qr_code_phone" />
+
+    <TextView
+        android:id="@+id/tv_qr_code_avatar"
+        android:layout_width="96dp"
+        android:layout_height="79dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_qr_code_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_20"
+        app:layout_constraintEnd_toEndOf="@+id/tv_qr_code_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_qr_code_location"
+        app:layout_constraintTop_toBottomOf="@+id/tv_qr_code_location" />
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/top_20"
+        app:layout_constraintTop_toBottomOf="@+id/tv_qr_code_content"
+        tools:layout_editor_absoluteX="11dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/ic_smile"
+        android:drawablePadding="@dimen/left_10"
+        android:text="扫描我的二维码加我为企业通好友哦!"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toBottomOf="@+id/view15"
+        tools:layout_editor_absoluteX="38dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
