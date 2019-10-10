@@ -2,6 +2,10 @@ package com.example.eletronicengineer.db.My
 
 import java.io.Serializable
 
+
+/**
+ * @param userName 用户账号
+ * */
 class UserSubitemEntity (
     var id:Long?,
     var createTime:Long?,
