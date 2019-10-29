@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/general_10"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/general_10">
 
     <TextView
         android:id="@+id/tv_qr_code_name"
@@ -59,11 +60,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
         android:drawableLeft="@drawable/ic_smile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:drawablePadding="@dimen/left_10"
         android:text="扫描我的二维码加我为企业通好友哦!"
         android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view15"
-        tools:layout_editor_absoluteX="38dp" />
+ />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

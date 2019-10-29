@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import cn.jpush.im.android.api.JMessageClient
+import cn.jpush.im.api.BasicCallback
 import com.amap.api.col.sl2.it
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
@@ -99,6 +101,11 @@ class PhoneRegisterFragment: Fragment()  {
                 result="两次输入的密码不相同"
             }
             else{
+                JMessageClient.register(phoneNum,password,object:BasicCallback(){
+                    override fun gotResult(p0: Int, p1: String?) {
+                        Log.i("registerMsg",p1)
+                    }
+                })
                 val key= arrayListOf("username","code","password","repassword")
                 val value= arrayListOf(phoneNum,registerPassword,password,rePassword)
                 sendRegisterForHttp(key,value,"http://192.168.1.67:8026/")

@@ -34,6 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_soil_ratio.view.*
 import okhttp3.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.Serializable
@@ -51,39 +52,55 @@ class NetworkAdapter {
             this.mData = mData
             this.context = context
         }
-
-        fun generateJsonRequestBody(baseUrl: String) {
-            val result = Observable.create<RequestBody> {
-                val jsonObject = JSONObject()
-                for (i in mData) {
-                    when (i.sendFormat) {
-                        "String" -> {
-                            jsonObject.put(i.key, parseToString(i))
-                        }
-                        "String[]" -> {
-                            val keyList = i.key.split(" ")
-                            val valueList = parseToStringArray(i)
-                            for (j in 0 until valueList.size) {
-                                jsonObject.put(keyList[j], valueList[j])
-                            }
-                        }
-                        "Int" -> {
-                            jsonObject.put(i.key, parseToInt(i))
-                        }
-                        "Boolean" -> {
-                            jsonObject.put(i.key, parseToBoolean(i))
-                        }
-                        "Long String" -> {
-                            val longAlsoString = parseToLongAndString(i)
-                            val keys = i.key.split(" ")
-                            if (longAlsoString.second != i.inputMultiAbandonInput)
-                                jsonObject.put(keys[0], longAlsoString.first)
-                            jsonObject.put(keys[1], longAlsoString.second)
+        fun generateJsonArray(data: List<List<MultiStyleItem>>):JSONArray
+        {
+            val array=JSONArray()
+            for (i in data)
+            {
+                array.put(generateJsonObject(i))
+            }
+            return array
+        }
+        fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
+        {
+            val jsonObject = JSONObject()
+            for (i in mData) {
+                when (i.sendFormat) {
+                    "String" -> {
+                        jsonObject.put(i.key, parseToString(i))
+                    }
+                    "String[]" -> {
+                        val keyList = i.key.split(" ")
+                        val valueList = parseToStringArray(i)
+                        for (j in 0 until valueList.size) {
+                            jsonObject.put(keyList[j], valueList[j])
                         }
                     }
+                    "Int" -> {
+                        jsonObject.put(i.key, parseToInt(i))
+                    }
+                    "Boolean" -> {
+                        jsonObject.put(i.key, parseToBoolean(i))
+                    }
+                    "Long String" -> {
+                        val longAlsoString = parseToLongAndString(i)
+                        val keys = i.key.split(" ")
+                        if (longAlsoString.second != i.inputMultiAbandonInput)
+                            jsonObject.put(keys[0], longAlsoString.first)
+                        jsonObject.put(keys[1], longAlsoString.second)
+                    }
+                    "JsonArray"->
+                    {
+                        jsonObject.put(i.key,generateJsonArray(listOf(listOf())))
+                    }
                 }
+            }
+            return jsonObject
+        }
+        fun generateJsonRequestBody(baseUrl: String) {
+            val result = Observable.create<RequestBody> {
                 //建立网络请求体 (类型，内容)
-                val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
+                val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData).toString())
                 it.onNext(requestBody)
             }
                 .subscribe {
@@ -109,9 +126,7 @@ class NetworkAdapter {
                         }
                     )
                 }
-
         }
-
         fun parseToLongAndString(data: MultiStyleItem): Pair<Long, String> {
             var longAlsoString: Pair<Long, String>
             when (data.options) {

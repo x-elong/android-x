@@ -43,7 +43,7 @@ class LoginFragment: Fragment() {
                 val key= arrayListOf("username","password")
 //                val value= arrayListOf("13575232531","123456")
                 val value= arrayListOf(username,password)
-               sendLoginForHttp(key,value)
+                sendLoginForHttp(key,value)
 //                val intent = Intent(context, MainActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                startActivity(intent)
