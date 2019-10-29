@@ -23,7 +23,11 @@ class MyCertificationFragment :Fragment(){
                 mView.tv_subject_category_content.text=selectContent
                 when(selectContent){
                     "个人 "-> (activity as MyCertificationActivity).switchFragment(PersonalCertificationShowFragment(),R.id.frame_certification_category,"Certification")
-                    else -> (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationShowFragment(),R.id.frame_certification_category,"Certification")
+                    else -> {
+                        val bundle = Bundle()
+                        bundle.putString("mainType",mView.tv_subject_category_content.text.toString())
+                        (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationShowFragment.newInstace(bundle),R.id.frame_certification_category,"Certification")
+                    }
                 }
 //                mView.sp_demand_moder.
                 false

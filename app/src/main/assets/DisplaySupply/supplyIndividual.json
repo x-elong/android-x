@@ -51,6 +51,11 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"负责人所在地:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"备注:",
     "singleDisplayRightContent":""
   },

@@ -26,7 +26,7 @@ import org.json.JSONObject
 
 class LoginFragment: Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         initFragment(view)
         return view
@@ -43,7 +43,7 @@ class LoginFragment: Fragment() {
                 val key= arrayListOf("username","password")
 //                val value= arrayListOf("13575232531","123456")
                 val value= arrayListOf(username,password)
-               sendLoginForHttp(key,value)
+                sendLoginForHttp(key,value)
 //                val intent = Intent(context, MainActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                startActivity(intent)
@@ -74,13 +74,15 @@ class LoginFragment: Fragment() {
             it.onNext(requestBody)
         }
             .subscribe {
-                val result = sendLogin(it,"http://192.168.1.67:8026").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                val result = sendLogin(it,"http://192.168.1.132:8026").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         Log.i("111hy",it.code)
                         if(it.code=="200")
                         {
                             Log.i("cookie",UnSerializeDataBase.cookie)
                             UnSerializeDataBase.userToken = it.message.token
+                            UnSerializeDataBase.userName = it.message.user.userName
+                            UnSerializeDataBase.userPhone = it.message.user.phone
                             Log.i("token is ",it.message.token)
 
                             Toast.makeText(context,"登录成功",Toast.LENGTH_SHORT).show()
@@ -92,7 +94,7 @@ class LoginFragment: Fragment() {
                         }
                     },
                     {
-                        val toast = Toast.makeText(context,"连接超时",Toast.LENGTH_SHORT)
+                        val toast = Toast.makeText(context,"登录异常",Toast.LENGTH_SHORT)
                         toast.setGravity(Gravity.CENTER,0,0)
                         toast.show()
                         it.printStackTrace()

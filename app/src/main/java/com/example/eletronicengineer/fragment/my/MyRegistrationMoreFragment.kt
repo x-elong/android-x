@@ -18,6 +18,7 @@ import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_my_registration.*
 import kotlinx.android.synthetic.main.fragment_my_registration_more.view.*
+import org.json.JSONObject
 
 class MyRegistrationMoreFragment :Fragment(){
     companion object{
@@ -54,15 +55,45 @@ class MyRegistrationMoreFragment :Fragment(){
         when(type){
             Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandIndividual()
+                val json = JSONObject(arguments!!.getString("demandIndividual"))
+                val js = json.getJSONObject("personRequirementInformationCheck")
+                adapter.mData[1].singleDisplayRightContent = json.getString("requirementMajor")
+                adapter.mData[2].singleDisplayRightContent = json.getString("name")
+                adapter.mData[3].singleDisplayRightContent = json.getString("phone")
+                if(!js.isNull("comment"))
+                    adapter.mData[5].textAreaContent = js.getString("comment")
             }
             Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandGroup()
+                val json = JSONObject(arguments!!.getString("demandGroup"))
+                val js = json.getJSONObject("requirementTeamLoggingCheck")
+                adapter.mData[0].singleDisplayRightContent = js.getString("type")
+                adapter.mData[1].singleDisplayRightContent = json.getString("name")
+                adapter.mData[2].singleDisplayRightContent = json.getString("phone")
+                if(!js.isNull("comment"))
+                    adapter.mData[8].textAreaContent = js.getString("comment")
             }
             Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandLease()
+                val json = JSONObject(arguments!!.getString("demandLease"))
+                val js = json.getJSONObject("leaseLoggingCheck")
+                adapter.mData[0].singleDisplayRightContent = json.getString("vehicleType")
+                adapter.mData[1].singleDisplayRightContent = json.getString("name")
+                adapter.mData[2].singleDisplayRightContent = json.getString("phone")
+                if(!js.isNull("comment"))
+                    adapter.mData[4].textAreaContent = js.getString("comment")
             }
             Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandTripartite()
+                val json = JSONObject(arguments!!.getString("demandTripartite"))
+                val js = json.getJSONObject("requirementThirdLoggingCheck")
+                adapter.mData[0].singleDisplayRightContent = json.getString("requirementVariety")
+                adapter.mData[1].singleDisplayRightContent = json.getString("name")
+                adapter.mData[2].singleDisplayRightContent = json.getString("phone")
+                if(!js.isNull("companyName"))
+                adapter.mData[3].singleDisplayRightContent = json.getString("companyName")
+                if(!js.isNull("comment"))
+                    adapter.mData[4].textAreaContent = js.getString("comment")
             }
         }
         mView.rv_registration_more_content.adapter = adapter

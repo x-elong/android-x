@@ -8,8 +8,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.my.MyCertificationFragment
-import com.example.eletronicengineer.fragment.my.PersonalCertificationFragment
+import com.example.eletronicengineer.fragment.my.*
 import com.example.eletronicengineer.model.Constants
 import com.lcw.library.imagepicker.ImagePicker
 import java.io.File
@@ -57,8 +56,12 @@ class MyCertificationActivity : AppCompatActivity() {
                 Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal-> {
                     val mImagePaths = data!!.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES)
                     val fragment=this@MyCertificationActivity.supportFragmentManager.findFragmentByTag("Certification")
-                    if(fragment is PersonalCertificationFragment)
-                        fragment.refresh(mImagePaths[0])
+                    when(fragment){
+                        is PersonalCertificationFragment->fragment.refresh(mImagePaths[0])
+                        is EnterpriseCertificationFragment->fragment.refresh(mImagePaths[0])
+                        is PersonalReCertificationFragment ->fragment.refresh(mImagePaths[0])
+                        is EnterpriseReCertificationFragment-> fragment.refresh(mImagePaths[0])
+                    }
                 }
             }
         }

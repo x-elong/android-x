@@ -19,8 +19,6 @@ class ImageDisplayActivity : AppCompatActivity() {
         iv_actionBar_back.setOnClickListener {
             finish()
         }
-        tv_delect.setOnClickListener {
-        }
         GlideLoader().loadPreImage(iv_preImage,mImagePath)
     }
 }

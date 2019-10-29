@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:padding="@dimen/general_10"
+    android:padding="@dimen/general_5"
     >
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="@dimen/general_70"
-        android:layout_height="@dimen/general_70"
+        android:layout_width="@dimen/general_60"
+        android:layout_height="@dimen/general_60"
         />
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:text="X"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -44,7 +44,7 @@ class ImageFragment:Fragment(){
     lateinit var key:String
     private var mImagePaths: ArrayList<String> = ArrayList()
     var mImagesPath =""
-    val lastImage = Image("drawable/add.png",View.OnClickListener {
+    val lastImage = Image("",View.OnClickListener {
         ImagePicker.getInstance()
             .setTitle("图片")//设置标题
             .showCamera(true)//设置是否显示拍照按钮
@@ -90,7 +90,8 @@ class ImageFragment:Fragment(){
     }
 
     private fun initAdapter(view: View) {
-        var imageList:MutableList<Image> = ArrayList()
+        val imageList:MutableList<Image> = ArrayList()
+        lastImage.isX = false
         imageList.add(lastImage)
         mAdapter = ImageAdapter(imageList)
         val recyclerView = view.rv_image

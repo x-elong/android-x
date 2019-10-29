@@ -86,7 +86,6 @@ class MyInformationFragment : Fragment() {
             }.subscribe {
                 val result = putSimpleMessage(it,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.updateHeaderImg)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-
                         val json = JSONObject(it.string())
                         Log.i("imagePath + code",imagePath+json.toString())
                         var result = ""
@@ -772,7 +771,11 @@ class MyInformationFragment : Fragment() {
                     (activity as MyInformationActivity).switchFragment(FamilyInformationFragment(), "")
                 }
                 mMultiStyleItemList.add(item)
-
+                item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "个人材料", false)
+                item.jumpListener = View.OnClickListener {
+                    (activity as MyInformationActivity).switchFragment(PersonalMaterialsFragment(), "MyInformation")
+                }
+                mMultiStyleItemList.add(item)
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "紧急联系人", false)
                 item.jumpListener = View.OnClickListener {
                     (activity as MyInformationActivity).switchFragment(EmergencyContactFragment(),"EmergencyContact")

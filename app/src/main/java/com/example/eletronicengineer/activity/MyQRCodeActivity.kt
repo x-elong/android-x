@@ -6,10 +6,14 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.SimpleTarget
@@ -19,6 +23,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.wjj.easy.qrcodestyle.QRCodeStyle
 import kotlinx.android.synthetic.main.activity_my_qrcode.*
+import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.log
 
@@ -32,7 +37,7 @@ class MyQRCodeActivity : AppCompatActivity() {
         }
         val data=intent.getSerializableExtra("user") as UserSubitemEntity
         logo_iv.run {
-            qrName=data.name
+            qrName=data.userName
             qrPhone=data.phone
             qrLocation="百全楼410"
             Glide.with(this@MyQRCodeActivity).load(data.headerImg).into(object:CustomTarget<Drawable>(){
@@ -50,7 +55,7 @@ class MyQRCodeActivity : AppCompatActivity() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                     qrContent=resource
                     this@MyQRCodeActivity.runOnUiThread {
-                        logo_iv.updateUI()
+
                     }
                 }
             })
@@ -59,8 +64,22 @@ class MyQRCodeActivity : AppCompatActivity() {
             logo_iv.apply {
                 val image= Bitmap.createBitmap(measuredWidth,measuredHeight,Bitmap.Config.ARGB_8888)
                 draw(Canvas(image))
-                val fos=FileOutputStream(context.filesDir)
+                val absolutePath = context.cacheDir.absolutePath
+                val file = File(absolutePath)
+                file.mkdirs()
+                if(!file.exists()) {
+                    file.mkdirs()
+                }
+                val fos=FileOutputStream("/storage/emulated/0/Pictures/test.png")
                 image.compress(Bitmap.CompressFormat.PNG,100,fos)
+                Log.i("path:","${context.cacheDir.absolutePath}/test.png")
+                Log.i("File exists:",File("${context.cacheDir.absolutePath}/test.png").exists().toString())
+                var result = "二维码保存失败"
+                if(File("/storage/emulated/0/Pictures/test.png").exists())
+                    result = "二维码保存成功"
+                    val toast = Toast.makeText(context,result,Toast.LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER,0,0)
+                toast.show()
             }
         }
         /*

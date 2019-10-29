@@ -15,9 +15,6 @@
     "singleDisplayRightContent":"xxx"
   },
   {
-    "type": "BLANK"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"计划工期（月）:",
     "singleDisplayRightContent":"xxx"
@@ -75,6 +72,11 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"路程车费:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"薪资标准:",
     "singleDisplayRightContent":"00"
   },
   {

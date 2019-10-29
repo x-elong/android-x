@@ -3399,9 +3399,6 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandIndividual.json")
-        mData[19].submitListener = View.OnClickListener {
-
-        }
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }

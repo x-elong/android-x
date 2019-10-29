@@ -64,7 +64,7 @@ class MyRegistrationFragment :Fragment(){
         }
     })
     lateinit var mView: View
-    val baseUrl = "http://192.168.1.67:8012"
+    val baseUrl = "http://192.168.1.132:8012"
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var page = 1
     var pageCount = 1
@@ -83,6 +83,7 @@ class MyRegistrationFragment :Fragment(){
                 val lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 if(lastCompletelyVisibleItemPosition == layoutManager.itemCount-1 && page<=pageCount){
                     Log.i("page","$page")
+                    page++
                     Toast.makeText(mView.context,"滑动到底了", Toast.LENGTH_SHORT).show()
                     when(mView.tv_mode_content.text){
                         "需求 需求个人"->{
@@ -107,6 +108,8 @@ class MyRegistrationFragment :Fragment(){
     }
 
     private fun initFragment() {
+        mMultiStyleItemList.clear()
+        adapter.mData = mMultiStyleItemList
         mView.tv_my_registration_back.setOnClickListener {
             activity!!.finish()
         }
@@ -120,6 +123,7 @@ class MyRegistrationFragment :Fragment(){
         mView.rv_my_registration_content.adapter=adapter
         mView.rv_my_registration_content.layoutManager=LinearLayoutManager(context)
         getDataDemandIndividual()
+//        initData()
     }
 
     private fun initData() {
@@ -156,6 +160,8 @@ class MyRegistrationFragment :Fragment(){
         }
         mMultiStyleItemList.add(item)
         val adapter=RecyclerviewAdapter(mMultiStyleItemList)
+        mView.rv_my_registration_content.adapter=adapter
+        mView.rv_my_registration_content.layoutManager=LinearLayoutManager(context)
     }
     private fun getDataRegistration() {
         val result = Observable.create<RequestBody> {
@@ -170,7 +176,6 @@ class MyRegistrationFragment :Fragment(){
                     var result = ""
                     if(code==200){
                         result="当前数据获取成功"
-                        page++
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
@@ -181,6 +186,7 @@ class MyRegistrationFragment :Fragment(){
                             val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求三方",js.getString("requirementVariety"),"")
                             item.jumpListener=View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
                                 (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
                             }
@@ -211,7 +217,6 @@ class MyRegistrationFragment :Fragment(){
                     var result = ""
                     if(code==200){
                         result="当前数据获取成功"
-                        page++
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
@@ -222,6 +227,7 @@ class MyRegistrationFragment :Fragment(){
                             val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求个人",js.getString("requirementVariety"),"")
                             item.jumpListener=View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("demandIndividual",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal)
                                 (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
                             }
@@ -252,7 +258,6 @@ class MyRegistrationFragment :Fragment(){
                     var result = ""
                     if(code==200){
                         result="当前数据获取成功"
-                        page++
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
@@ -260,9 +265,10 @@ class MyRegistrationFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求团队",js.getString("requirementVariety"),"")
+                            val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求团队",js.getJSONObject("requirementTeamLoggingCheck").getString("type"),"")
                             item.jumpListener=View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("demandGroup",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal)
                                 (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
                             }
@@ -293,17 +299,19 @@ class MyRegistrationFragment :Fragment(){
                     var result = ""
                     if(code==200){
                         result="当前数据获取成功"
-                        page++
+
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
                         val size = adapter.mData.size
+                        Log.i("size is :",size.toString())
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求租赁",js.getString("requirementVariety"),"")
+                            val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求租赁",js.getJSONObject("leaseLoggingCheck").getString("type"),"")
                             item.jumpListener=View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("demandLease",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal)
                                 (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
                             }
@@ -311,6 +319,7 @@ class MyRegistrationFragment :Fragment(){
                         }
                         adapter.mData = data
                         adapter.notifyItemRangeInserted(size,adapter.mData.size-size)
+                        Log.i("adapter.mData.size is :",adapter.mData.size.toString())
                     }else if(code==400 && jsonObject.getString("message")=="没有该数据"){
                         result="当前数据为空"
                         pageCount = 0
@@ -334,7 +343,7 @@ class MyRegistrationFragment :Fragment(){
                     var result = ""
                     if(code==200){
                         result="当前数据获取成功"
-                        page++
+
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
@@ -345,6 +354,7 @@ class MyRegistrationFragment :Fragment(){
                             val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求三方",js.getString("requirementVariety"),"")
                             item.jumpListener=View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("demandTripartite",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
                                 (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
                             }

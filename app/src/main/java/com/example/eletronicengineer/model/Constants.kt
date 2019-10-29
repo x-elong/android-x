@@ -155,7 +155,10 @@ class Constants {
                 const val deleteUrgentPeople = "/UrgentPeople/deleteUrgentPeople/{id}"
                 const val insertBankCard = "/TUpmsUser/insertBankCard/"
                 const val deleteBankCard = "/TUpmsUser/deleteBankCard/{id}"
-                const val updateHeaderImg = "/TUpmsUser/updateHeaderImg/{headerImg}"
+                const val updateHeaderImg = "/TUpmsUser/updateHeaderImg/"
+                const val insertCertificate = "/Certificate/insertCertificate/"
+                const val updateCertificate = "/Certificate/updateCertificate/"
+                const val deleteCertificate = "/Certificate/deleteCertificate/{id}"
                 /**
                  *我的发布
                  */
@@ -163,14 +166,32 @@ class Constants {
                 const val getDemandGroup = "/RequirementTeam/getRequirementTeamDTOListByFounder/"
                 const val getDemandLease = "/RequirementLease/getRequirementLeaseDTOListByFounder/"
                 const val getDemandTripartite = "/RequirementThirdParty/getAllByFounder/"
+                const val getPersonalIssue = "/PersonalIssue/insertOneselfPersonalIssue/{page}/{pageSize}"
+                const val getTeamService = "/RunningMaintain/getRunningMaintainALLDTOPerson/"
+                const val getLeaseService = "/LeaseCar/getAllByVipId/{page}/{pageSize}"
+                const val getThridService = "/Third/insertOneselfThirdServices/{pageSize}/{page}"
+
+                const val  getPersonalIssueMore = "/PersonalIssue/insertPersonalIssue/{id}"
+                const val getRequirementPersonMore = "/RequirementPerson/getRequirementPerson/{id}"
                 /**
-                 * 我的报名
+                 * 报名
                  */
                 const val getRegistration = "/LeaseLoggingCheck/getByVip/"
-                const val getPersonRequirement = "/PersonRequirementInformationCheck/getList2PersonRequirementInformationCheck/"
-                const val getRequirementTeam = "/RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck2/"
-                const val getLease= "/LeaseLoggingCheck/getList2LeaseLoggingCheckController/"
-                const val getRequirementThird= "/RequirementThirdLoggingCheck/getList2RequirementThirdLoggingCheck/"
+                const val getPersonRequirement = "/PersonRequirementInformationCheck/getListPersonRequirementInformationCheck/"
+                const val getRequirementTeam = "/RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck/"
+                const val getLease= "/LeaseLoggingCheck/getListLeaseLoggingCheckController/"
+                const val getRequirementThird= "/RequirementThirdLoggingCheck/getListRequirementThirdLoggingCheck/"
+
+                /**
+                 * 认证
+                 */
+                const val enterpriseCertification = "/OrganizationCertification/insertOrganizationCertification/"
+                const val enterpriseReCertification = "/OrganizationCertification/updateOrganizationCertificatio/"
+                const val personalCertification = "/OrganizationCertification/insertOneOrganizationCertification/"
+                const val certificationMore = "/OrganizationCertification/getOrganizationCertificationDTOALL/"
+
+                const val creatOrder = "/weixinPay/creatOrderByApp/{productId}"
+                const val payNotify ="/weixinPay/payNotifyByApp/{orderNumber}"
             }
         }
 

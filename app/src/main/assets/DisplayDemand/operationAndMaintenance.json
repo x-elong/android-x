@@ -25,9 +25,6 @@
     "buttonName":["点击查看"]
   },
   {
-    "type": "BLANK"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"工作经验（年）:",
     "singleDisplayRightContent":"00"
@@ -63,9 +60,9 @@
     "singleDisplayRightContent":"00"
   },
   {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资标准:",
-    "singleDisplayRightContent":"00"
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"薪资标准:",
+    "buttonName":["清工薪资","清单报价"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

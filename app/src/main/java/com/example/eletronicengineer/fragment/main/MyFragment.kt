@@ -15,6 +15,8 @@ import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.FunctionAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Function
+import com.example.eletronicengineer.db.My.UserEntity
+import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.getUser
@@ -28,6 +30,7 @@ class MyFragment : Fragment() {
     lateinit var mView:View
     val mFunctionList:MutableList<Function> = ArrayList()
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
+    lateinit var user:UserSubitemEntity
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.my, container, false)
         initData()
@@ -40,12 +43,18 @@ class MyFragment : Fragment() {
             val intent =Intent(activity,MyInformationActivity::class.java)
             startActivity(intent)
         }
+        mView.tv_my_vip.setOnClickListener{
+            val intent = Intent(activity,MyVipActivity::class.java)
+            startActivity(intent)
+        }
         mView.tv_qr_code.setOnClickListener {
             val intent =Intent(activity,MyQRCodeActivity::class.java)
+            intent.putExtra("user",user)
             startActivity(intent)
         }
         mView.my_setting.setOnClickListener {
             val intent =Intent(activity,MySettingActivity::class.java)
+
             startActivity(intent)
         }
         mView.btn_subscribe.setOnClickListener {
@@ -62,14 +71,14 @@ class MyFragment : Fragment() {
             val intent = Intent(activity,MyReleaseActivity::class.java)
             startActivity(intent)
         }))
-        mFunctionList.add(Function("我的订单",R.drawable.my_order,View.OnClickListener {
-            val intent = Intent(activity,MyOrderActivity::class.java)
-            startActivity(intent)
-        }))
-        mFunctionList.add(Function("收货地址",R.drawable.shipping_address,View.OnClickListener {
-            val intent = Intent(activity,ShippingAddressActivity::class.java)
-            startActivity(intent)
-        }))
+//        mFunctionList.add(Function("我的订单",R.drawable.my_order,View.OnClickListener {
+//            val intent = Intent(activity,MyOrderActivity::class.java)
+//            startActivity(intent)
+//        }))
+//        mFunctionList.add(Function("收货地址",R.drawable.shipping_address,View.OnClickListener {
+//            val intent = Intent(activity,ShippingAddressActivity::class.java)
+//            startActivity(intent)
+//        }))
         mFunctionList.add(Function("分销",R.drawable.distribution,View.OnClickListener {
             val intent = Intent(activity,RetailStoreActivity::class.java)
             startActivity(intent)
@@ -121,6 +130,7 @@ class MyFragment : Fragment() {
     fun getDataUser(){
         val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                user = it.message.user
                 GlideLoader().loadImage(mView.iv_my_header,it.message.user.headerImg)
                 mView.tv_my_phone.text = it.message.user.phone
             },{

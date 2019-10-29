@@ -41,18 +41,18 @@ class EducationInformationFragment :Fragment(){
             bundle.putInt("type",0)
             (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle),"AddEducation")
         }
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"学历","毕业时间","毕业院校+专业")
-        item.jumpListener = View.OnClickListener {
-            val bundle = Bundle()
-            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle),"AddEducation")
-        }
-        mMultiStyleItemList.add(item)
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"本科","2019-10-01","湖南人文科技学院物联网工程")
-        item.jumpListener = View.OnClickListener {
-            val bundle = Bundle()
-            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle), "AddEducation")
-        }
-        mMultiStyleItemList.add(item)
+//        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"学历","毕业时间","毕业院校+专业")
+//        item.jumpListener = View.OnClickListener {
+//            val bundle = Bundle()
+//            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle),"AddEducation")
+//        }
+//        mMultiStyleItemList.add(item)
+//        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"本科","2019-10-01","湖南人文科技学院物联网工程")
+//        item.jumpListener = View.OnClickListener {
+//            val bundle = Bundle()
+//            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle), "AddEducation")
+//        }
+//        mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
         val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({

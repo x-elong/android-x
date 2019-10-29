@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="发布类别"
-        android:text="需求 需求个人"
+        android:text=""
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/tv_under"

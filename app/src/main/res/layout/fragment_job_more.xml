@@ -38,24 +38,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/view_job_more"
         tools:ignore="MissingConstraints" />
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_job_more_content"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/view_job_more"
-    />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_job_more_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/btn_edit_job_information"
+        app:layout_constraintTop_toBottomOf="@id/view_job_more" />
 
     <Button
         android:id="@+id/btn_edit_job_information"
         android:layout_width="@dimen/general_200"
         android:layout_height="@dimen/general_48"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/btn_style4"
         android:text="编辑职位"
-        android:layout_marginTop="@dimen/top_20"
         android:textColor="#2a82e4"
         android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_job_more_content" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,72 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
+    "buttonTitle":"工程量清册:",
+    "buttonName":["点击查看"]
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"电压等级:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"作业类别:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工作经验（年）:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"年龄要求（岁）:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"性别要求:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"食宿标准:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"路程车费:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"路程工资:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需要人数（人）:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆（辆）:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"薪资标准:",
+    "buttonName":["清工薪资","清单报价"]
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"机械设备:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"乙供材料清单:",
     "buttonName":["点击查看"]
   },
   {
@@ -29,76 +94,13 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"电压等级:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"作业类别:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工作经验（年）:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"年龄要求（岁）:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"性别要求:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"食宿标准:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"路程车费:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"路程工资:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需要人数（人）:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资标准:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆（辆）:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"机械设备:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type": "BLANK"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系电话:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

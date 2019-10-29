@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.fragment.my
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,26 +14,31 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.Constants
-import com.example.eletronicengineer.utils.BitmapMap
-import com.example.eletronicengineer.utils.GlideLoader
-import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.*
 import com.lcw.library.imagepicker.ImagePicker
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_personal_certification.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import org.json.JSONObject
+import rx.Observer
+import java.io.File
 
 class PersonalCertificationFragment :Fragment(){
     val glideLoader = GlideLoader()
     var selectImage=-1
     lateinit var mView: View
+    var idCardPeopleMap = BitmapMap("","identifyCardPathFront")
+    var idCardNationMap = BitmapMap("","identifyCardPathContrary")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_personal_certification,container,false)
         initFragment()
         return mView
     }
-
     private fun initFragment() {
-        UnSerializeDataBase.imgList.clear()
-        UnSerializeDataBase.imgList.add(BitmapMap("","people"))
-        UnSerializeDataBase.imgList.add(BitmapMap("","nation"))
         mView.iv_id_card_people.setOnClickListener {
             selectImage=1
             ImagePicker.getInstance()
@@ -70,22 +76,83 @@ class PersonalCertificationFragment :Fragment(){
                 val toast = Toast.makeText(context,"请输入正确的18位身份证号码",Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER,0,0)
                 toast.show()
-            }else if(UnSerializeDataBase.imgList[0].path==""||UnSerializeDataBase.imgList[1].path==""){
+            }else if(idCardPeopleMap.path==""||idCardNationMap.path==""){
                     val toast = Toast.makeText(context,"身份证正反照不能为空",Toast.LENGTH_SHORT)
                     toast.setGravity(Gravity.CENTER,0,0)
                     toast.show()
             }else{
-
+                uploadImg()
             }
         }
     }
     fun refresh(imagePath:String){
         if(selectImage==1){
-            UnSerializeDataBase.imgList[0].path=imagePath
+            idCardPeopleMap.path=imagePath
             glideLoader.loadImage(mView.iv_id_card_people,imagePath)
         }else if(selectImage==2){
-            UnSerializeDataBase.imgList[1].path=imagePath
+            idCardNationMap.path=imagePath
             glideLoader.loadImage(mView.iv_id_card_nation,imagePath)
+        }
+    }
+
+    fun uploadImg(){
+        var result = ""
+        val fileList = arrayListOf(File (idCardPeopleMap.path),File (idCardNationMap.path))
+        val results = try {
+            for (j in fileList){
+                Log.i("File path is : ",j.path)
+                val imagePart = MultipartBody.Part.createFormData("file",j.name,
+                    RequestBody.create(MediaType.parse("image/*"),j))
+                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    {
+                        //Log.i("responseBody",it.string())
+                        if (result != "")
+                            result += "|"
+                        if(j.path==idCardPeopleMap.path){
+                            idCardPeopleMap.path = it.string()
+                            result += idCardPeopleMap.path
+                        }
+                        else{
+                            idCardNationMap.path = it.string()
+                            result += idCardPeopleMap.path
+                        }
+                        Log.i("result url", result)
+                        if(result.split("|").size==2)
+                            certification(result)
+                    },
+                    {
+                        it.printStackTrace()
+                    })
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    fun certification(result: String){
+        val result = Observable.create<RequestBody> {
+            val json = JSONObject().put("mainType","个人")
+                .put("vipName",mView.et_id_card_name.text)
+                .put("identifyCard",mView.et_id_card_number.text)
+                .put("identifyCardPathFront",idCardPeopleMap.path)
+                .put("identifyCardPathContrary",idCardNationMap.path)
+            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+            it.onNext(requestBody)
+        }.subscribe {
+            val result = startSendMessage(it,"http://192.168.1.132:8032"+ Constants.HttpUrlPath.My.personalCertification)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                    val jsonObject = JSONObject(it.string())
+                    val code = jsonObject.getInt("code")
+                    var result = ""
+                    if(code==200){
+                        result = "提交成功"
+                        activity!!.supportFragmentManager.popBackStackImmediate()
+                    }
+                    else
+                        result = "提交失败"
+                    ToastHelper.mToast(context!!,result)
+                },{
+                    it.printStackTrace()
+                })
         }
     }
 }

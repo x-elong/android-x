@@ -24,20 +24,6 @@
             android:padding="@dimen/general_16"
             android:src="@mipmap/icon_actionbar_back"
             tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tv_delect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="删除"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_tv_normal_18"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/iv_preImage"
         android:layout_width="match_parent"

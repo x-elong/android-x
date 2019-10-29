@@ -210,7 +210,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
     var urlPath:String=""
-    var baseUrl="http://192.168.1.67:8012"
+    var baseUrl="http://192.168.1.132:8012"
     //http://10.1.5.90:8012
     //http://192.168.1.85:8018
     inner class VH:RecyclerView.ViewHolder
@@ -1285,6 +1285,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
                     selectDialog.show()
                 }
+                vh.itemView.setOnClickListener{
+                    val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
+                    selectDialog.show()
+                }
                 if(mData[position].selectListener!=null)
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
@@ -1295,6 +1299,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener {
+                    val selectDialog=CustomDialog(CustomDialog.Options.THREE_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items,mData[position].selectOption3Items).multiDialog
+                    selectDialog.show()
+                }
+                vh.itemView.setOnClickListener{
                     val selectDialog=CustomDialog(CustomDialog.Options.THREE_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items,mData[position].selectOption3Items).multiDialog
                     selectDialog.show()
                 }
@@ -1784,6 +1792,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
             }
             REGISTRATION_ITEM_TYPE->{
+                if(mData[position].necessary)
+                    vh.btnRegistrationMore.visibility = View.VISIBLE
                 vh.tvRegistrationItemType.text=mData[position].registrationItemType
                 vh.tvRegistrationItemInformation1.text=mData[position].registrationItemInformation1
                 vh.tvRegistrationItemInformation2.text=mData[position].registrationItemInformation2

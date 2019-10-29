@@ -1,0 +1,44 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类别:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"合作类型:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"单位名称:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"合作地区:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type": "BLANK"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"资质要求:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"报名"
+  }
+]

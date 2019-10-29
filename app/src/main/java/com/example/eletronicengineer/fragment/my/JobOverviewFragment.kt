@@ -33,15 +33,17 @@ class JobOverviewFragment :Fragment(){
             return jobOverviewFragment
         }
     }
-    var baseUrl = "http://192.168.1.67:8012"
+    var baseUrl = "http://192.168.1.132:8012"
     lateinit var checkId:String
     var page = 1
     var pageCount = 1
     lateinit var mView: View
+    lateinit var type:String
     var adapter = RecyclerviewAdapter(ArrayList())
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_job_overview,container,false)
         checkId = arguments!!.getString("CheckId")
+        type = arguments!!.getString("type")
         initFragment()
         initOnScrollListener()
         return mView
@@ -69,12 +71,18 @@ class JobOverviewFragment :Fragment(){
     }
 
     private fun getData() {
+        baseUrl+=when(type){
+            "需求个人"->Constants.HttpUrlPath.My.getPersonRequirement
+            "需求团队"->Constants.HttpUrlPath.My.getRequirementTeam
+            "需求租赁"->Constants.HttpUrlPath.My.getLease
+            else->Constants.HttpUrlPath.My.getRequirementThird
+        }
         val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("CheckId",checkId).put("page",page).put("pageSize",5)
-            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+            val json = JSONObject().put("checkId",checkId).put("page",page).put("pageSize",5)
+                val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+ Constants.HttpUrlPath.My.getDemandIndividual)
+            val result = startSendMessage(it,baseUrl)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -90,7 +98,8 @@ class JobOverviewFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val item = MultiStyleItem(MultiStyleItem.Options.STORE,"","张凌","44岁 | 湖南省 长沙市雨花区","普工 | 面议","0")
+                            val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,js.getString("name"),js.getString("phone"))
+//                            val item = MultiStyleItem(MultiStyleItem.Options.STORE,"","张凌","44岁 | 湖南省 长沙市雨花区","普工 | 面议","0")
                             data.add(item)
                         }
                         adapter.mData = data
@@ -98,6 +107,8 @@ class JobOverviewFragment :Fragment(){
                     }else if(code==400 && jsonObject.getString("message")=="没有该数据"){
                         result="当前数据为空"
                         pageCount = 0
+                    }else if(code == 500){
+                        result = jsonObject.getString("message")
                     }
                     Toast.makeText(context,result, Toast.LENGTH_SHORT).show()
                 },{

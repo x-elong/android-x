@@ -35,11 +35,11 @@ class EmergencyContactFragment :Fragment(){
     }
     private fun initFragment() {
         val mMultiStyleItemList: MutableList<MultiStyleItem> = ArrayList()
-        val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"张凌",false)
-        item.jumpListener = View.OnClickListener {
-            (activity as MyInformationActivity).switchFragment(EmergencyContactInformationFragment(),"")
-        }
-        mMultiStyleItemList.add(item)
+//        val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"张凌",false)
+//        item.jumpListener = View.OnClickListener {
+//            (activity as MyInformationActivity).switchFragment(EmergencyContactInformationFragment(),"")
+//        }
+//        mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
 
         val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

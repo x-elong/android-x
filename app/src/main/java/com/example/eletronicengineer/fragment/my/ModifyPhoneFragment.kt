@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.sendMobile
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,12 +26,10 @@ class ModifyPhoneFragment :Fragment(){
         }
     }
     private var mDisposable: Disposable? = null
-    lateinit var phone:String
     lateinit var mView:View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_modify_phone,container,false)
         initFragment()
-        phone = arguments!!.getString("phone")
         return mView
     }
 
@@ -40,7 +39,7 @@ class ModifyPhoneFragment :Fragment(){
         }
         mView.tv_get_old_check.setOnClickListener {
                 if(mView.tv_get_old_check.text=="重新获取验证码" || mView.tv_get_old_check.text=="获取验证码"){
-                    val result= sendMobile(phone,"http://192.168.1.50:8026/").subscribeOn(Schedulers.io()).observeOn(
+                    val result= sendMobile(UnSerializeDataBase.userPhone,"http://192.168.1.50:8026/").subscribeOn(Schedulers.io()).observeOn(
                         AndroidSchedulers.mainThread()).subscribe(
                         {
                             if(it.desc=="验证码发送成功")

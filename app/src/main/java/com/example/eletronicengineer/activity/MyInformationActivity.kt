@@ -61,6 +61,9 @@ class MyInformationActivity : AppCompatActivity() {
                     val fragment=this.supportFragmentManager.findFragmentByTag("MyInformation")
                     if(fragment is MyInformationFragment)
                         fragment.refresh(mImagePaths[0])
+                    else if(fragment is PersonalMaterialsFragment)
+                        fragment.uploadImg(mImagePaths[0])
+
                 }
                 Constants.RequestCode.MY_SCAN_REQUEST_CODE.ordinal->{
                     var resultDisplayStr = ""

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份证照片"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+    <View
+        android:id="@+id/view_id_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_260"
+        android:layout_marginTop="@dimen/general_8"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        />
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/general_8"
+        android:text="身份证正反照:"
+        android:layout_marginTop="@dimen/general_8"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintStart_toStartOf="@+id/view_id_card"
+        app:layout_constraintTop_toTopOf="@+id/view_id_card" />
+
+    <ImageView
+        android:id="@+id/iv_id_card_people"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:background="@drawable/id_card_people"
+        app:layout_constraintEnd_toEndOf="@+id/view_id_card"
+        app:layout_constraintStart_toStartOf="@+id/view_id_card"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ImageView
+        android:id="@+id/iv_id_card_nation"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/id_card_nation"
+        app:layout_constraintEnd_toEndOf="@+id/iv_id_card_people"
+        app:layout_constraintStart_toStartOf="@+id/iv_id_card_people"
+        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people" />
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学历证书"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toBottomOf="@+id/view_id_card"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_education_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_8"
+        android:text="学位证书"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toBottomOf="@+id/rv_education_content"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_diploma_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_8"
+        android:text="员工照片"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toBottomOf="@+id/rv_diploma_content"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_employee_photo_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_8"
+        android:text="专业证书"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toBottomOf="@+id/rv_employee_photo_content"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_professional_certificate_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_8"
+        android:text="其他证书"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintTop_toBottomOf="@+id/rv_professional_certificate_content"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_other_certificate_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+</androidx.constraintlayout.widget.ConstraintLayout>

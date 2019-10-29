@@ -60,9 +60,29 @@ interface HttpHelper {
      * 我的
      */
 
+    @GET(Constants.HttpUrlPath.My.creatOrder)
+    fun creatOrder(@Path("productId") productId: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.payNotify)
+    fun payNotify(@Path("orderNumber") orderNumber: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.getPersonalIssue)
+    fun getPersonalIssue(@Path("page") page: Int,@Path("pageSize") pageSize:Int): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.getRequirementPersonMore)
+    fun getRequirementPersonMore(@Path("id") id: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.getPersonalIssueMore)
+    fun getPersonalIssueMore(@Path("id") id: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.getLeaseService)
+    fun getLeaseService(@Path("page") page: Int,@Path("pageSize") pageSize:Int): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.getThridService)
+    fun getThridService(@Path("pageSize") page: Int,@Path("page") pageSize:Int): Observable<ResponseBody>
+
     @GET(Constants.HttpUrlPath.My.getUser)
     fun getUser():Observable<HttpResult<UserEntity>>
-
 
     @DELETE(Constants.HttpUrlPath.My.delectChildren)
     fun deleteChildren(@Path("id") id: String): Observable<ResponseBody>
@@ -75,6 +95,9 @@ interface HttpHelper {
 
     @DELETE(Constants.HttpUrlPath.My.deleteBankCard)
     fun deleteBankCard(@Path("id") id: String): Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.My.deleteCertificate)
+    fun deleteCertificate(@Path("id") id: String): Observable<ResponseBody>
 
     //需求个人
     @GET(Constants.HttpUrlPath.DisplayForRequirementAndSupply.RequirementPerson)
@@ -245,7 +268,7 @@ interface HttpHelper {
     @POST(Constants.HttpUrlPath.Requirement.excel)
     fun downloadExcel(@Path("fileName") filename: String): Call<ResponseBody>
 
-    @POST("api/upload/url")
+    @POST("/api/upload/url")
     @Multipart
     fun uploadImage(@Part data: MultipartBody.Part): Observable<ResponseBody>
 
@@ -967,7 +990,7 @@ internal fun startSendMessage(requestBody: RequestBody, baseUrl: String):Observa
 
 internal fun uploadImage(data: MultipartBody.Part): Observable<ResponseBody> {
     val retrofit =
-        Retrofit.Builder().baseUrl("http://shiptux.cn:8088/").addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        Retrofit.Builder().baseUrl("https://imgurl.org/").addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.uploadImage(data).subscribeOn(Schedulers.newThread())
@@ -1133,6 +1156,88 @@ internal fun deleteBankCard(id:String):Observable<ResponseBody>{
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.deleteBankCard(id)
 }
+
+internal fun deleteCertificate(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.BasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteCertificate(id)
+}
+
+internal fun getPersonalIssue(page: Int,pageSize: Int):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPersonalIssue(page,pageSize)
+}
+
+internal fun getRequirementPersonMore(id: String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getRequirementPersonMore(id)
+}
+
+internal fun getPersonalIssueMore(id: String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPersonalIssueMore(id)
+}
+
+
+internal fun getLeaseService(page: Int,pageSize: Int):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getLeaseService(page,pageSize)
+}
+
+internal fun getThridService(page: Int,pageSize: Int):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getThridService(pageSize,page)
+}
+
+internal fun creatOrder(productId:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.creatOrder(productId)
+}
+
+internal fun payNotify(orderNumber:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.payNotify(orderNumber)
+}
+
 
 
 

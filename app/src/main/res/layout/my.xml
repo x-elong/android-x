@@ -42,7 +42,6 @@
         android:layout_height="@dimen/general_51"
         android:src="@drawable/header_mall"
         app:civ_border_color="@color/colorPrimary"
-        app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/view_my"
         app:layout_constraintStart_toStartOf="@+id/view_my"
         app:layout_constraintTop_toTopOf="@+id/view_my" />
@@ -58,6 +57,17 @@
         app:layout_constraintStart_toEndOf="@+id/iv_my_header"
         app:layout_constraintTop_toTopOf="@+id/iv_my_header" />
 
+    <TextView
+        android:id="@+id/tv_my_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的VIP会员>"
+        android:background="@drawable/btn_style4"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:textColor="#248bfe"
+        android:layout_marginBottom="@dimen/bottom_8"
+        app:layout_constraintStart_toStartOf="@+id/tv_my_phone"
+        app:layout_constraintBottom_toBottomOf="@+id/view_my" />
     <TextView
         android:id="@+id/tv_qr_code"
         android:layout_width="@dimen/general_26"

@@ -40,6 +40,7 @@
         android:id="@+id/et_institution_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:inputType="textPersonName"
         android:ems="3"
         android:hint="请输入机构名称"
@@ -79,6 +80,7 @@
         android:hint="请输入社会信用代码"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tv_social_credit_code"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/right_40"
@@ -109,8 +111,9 @@
         android:id="@+id/et_main_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:ems="3"
+        android:inputType="text"
+        android:textColor="@color/black"
         android:hint="请输入主营信息"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
@@ -122,7 +125,50 @@
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="营业执照:"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintTop_toBottomOf="@+id/view_main_code"
+        tools:ignore="MissingConstraints" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_business_license_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_4"
+        android:text="公函图片:"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintTop_toBottomOf="@+id/rv_business_license_content"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_official_picture_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公函图片模板下载"
+        android:background="@drawable/btn_style4"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        tools:ignore="MissingConstraints" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/rv_official_picture_content"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btn_official_picture_download" />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -133,7 +179,7 @@
         android:textColor="#248bfe"
         android:textSize="@dimen/font_tv_normal_20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_main_code" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_official_picture_content" />
 
     <View
         android:id="@+id/view_legal_personal_id_card"
@@ -215,6 +261,7 @@
         app:layout_constraintStart_toEndOf="@+id/view_administrator_name"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/right_40"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="@+id/view_administrator_name"
         app:layout_constraintBottom_toBottomOf="@+id/view_administrator_name"
         android:gravity="right"
@@ -244,6 +291,7 @@
         android:inputType="number"
         android:ems="3"
         android:hint="请输入管理员身份证号码"
+        android:textColor="@color/black"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toEndOf="@+id/tv_administrator_number"

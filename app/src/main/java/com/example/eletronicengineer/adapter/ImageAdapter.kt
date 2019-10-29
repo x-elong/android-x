@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
@@ -20,17 +21,38 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>{
         this.mImageList = ImageList
     }
     inner class ViewHolder : RecyclerView.ViewHolder {
-        var ivImage : ImageView
+        val ivImage : ImageView
+        val tvDelete :TextView
         constructor(view: View):super (view){
             ivImage=view.iv_image
+            tvDelete = view.tv_delete
         }
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = mImageList[position]
-        if(position==mImageList.size-1)
-            holder.ivImage.setImageResource(R.drawable.photo)
+//        holder.tvDelete.setOnClickListener(image.deleteListenner)
+        if(!image.isX)
+            holder.tvDelete.visibility = View.GONE
+        else{
+            holder.tvDelete.visibility = View.VISIBLE
+            if(image.deleteListenner!=null)
+                holder.tvDelete.setOnClickListener(image.deleteListenner)
+            else{
+                holder.tvDelete.setOnClickListener {
+                    val imageList = mImageList.toMutableList()
+                    imageList.removeAt(position)
+                    mImageList = imageList
+                    notifyDataSetChanged()
+                }
+            }
+        }
+
+        if(position==mImageList.size-1 && image.imagePath==""){
+            GlideLoader().loadImage(holder.ivImage,R.drawable.photo)
+//            holder.ivImage.setImageResource(R.drawable.add)
+        }
         else
-        GlideLoader().loadImage(holder.ivImage,image.imagePath)
+            GlideLoader().loadImage(holder.ivImage,image.imagePath)
         if(image.imageListener==null){
             holder.ivImage.setOnClickListener {
                 val intent = Intent(holder.ivImage.context, ImageDisplayActivity::class.java)
