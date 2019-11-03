@@ -11,6 +11,7 @@ import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.startSendMessage
@@ -44,14 +45,14 @@ class EnterpriseCertificationShowFragment :Fragment(){
         mView.btn_enterprise_re_certification.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("mainType",mainType)
-            (activity as MyCertificationActivity).switchFragment(ReCertificationFragment.newInstance(bundle),R.id.frame_my_certification,"MyCertification")
+            FragmentHelper.switchFragment(activity!!,ReCertificationFragment.newInstance(bundle),R.id.frame_my_certification,"MyCertification")
         }
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("mainType",mainType)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://192.168.1.132:8032"+ Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

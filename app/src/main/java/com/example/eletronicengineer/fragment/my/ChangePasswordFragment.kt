@@ -33,7 +33,7 @@ class ChangePasswordFragment : Fragment(){
                 val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
                 it.onNext(requestBody)
             }.subscribe {
-                val result = startSendMessage(it,"http://192.168.1.132:8026"+ Constants.HttpUrlPath.My.updatePassword)
+                val result = startSendMessage(it,"http://10.1.5.141:8026"+ Constants.HttpUrlPath.My.updatePassword)
                     .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                         val jsonObject = JSONObject(it.string())
                         val code = jsonObject.getInt("code")

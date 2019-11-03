@@ -44,10 +44,6 @@ class DemandActivity : AppCompatActivity() {
     initData()
   }
 
-  fun Finish() {
-    finish()
-  }
-
   fun initData() {
     supportActionBar?.hide()
     multiButtonListeners = ArrayList()

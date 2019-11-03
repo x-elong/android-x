@@ -41,7 +41,7 @@ class SupplyActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_supply)
 		initFragment()
-		PermissionHelper.getPermission(this@SupplyActivity,1)
+
 	}
 	//接送传过来的界面类型并发送
 	fun initFragment(){

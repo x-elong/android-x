@@ -210,7 +210,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
     var urlPath:String=""
-    var baseUrl="http://192.168.1.132:8012"
+    var baseUrl="http://10.1.5.141:8012"
     //http://10.1.5.90:8012
     //http://192.168.1.85:8018
     inner class VH:RecyclerView.ViewHolder

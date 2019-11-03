@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import kotlinx.android.synthetic.main.fragment_bind_phone.view.*
 
@@ -25,7 +26,7 @@ class BindPhoneFragment :Fragment(){
         }
         view.tv_bind_phone_number.text="当前绑定手机号："+UnSerializeDataBase.userPhone
         view.btn_modify_phone.setOnClickListener {
-            (activity as MyInformationActivity).switchFragment( ModifyPhoneFragment(),"")
+            FragmentHelper.switchFragment(activity!!,ModifyPhoneFragment(),R.id.frame_my_information,"")
         }
         return view
     }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
@@ -57,8 +58,7 @@ class FamilyInformationFragment :Fragment(){
         }
         item = MultiStyleItem(MultiStyleItem.Options.FOUR_DISPLAY,"子女姓名","性别","出生日期","详情")
         mMultiStyleItemList.add(item)
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        val result = NetworkAdapter().getDataUser().subscribe({
                 val data = adapter.mData.toMutableList()
                 homeChildrens= JSONObject(Gson().toJson(it.message)).getJSONArray("homeChildrens")
                 val homeChildrens = it.message.homeChildrens

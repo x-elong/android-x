@@ -14,6 +14,7 @@ import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.AdapterGenerate
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getPersonalIssueMore
 import com.example.eletronicengineer.utils.getRequirementPersonMore
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +50,7 @@ class JobMoreFragment :Fragment(){
         }
         mView.btn_edit_job_information.setOnClickListener {
             val bundle = Bundle()
-            (activity as MyReleaseActivity).switchFragment(ModifyJobInformationFragment.newInstance(bundle))
+            FragmentHelper.switchFragment(activity!!,ModifyJobInformationFragment.newInstance(bundle),R.id.frame_my_release,"")
         }
     }
 

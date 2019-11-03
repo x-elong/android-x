@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getUser
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,7 +41,7 @@ class EducationInformationFragment :Fragment(){
         item.tvSelect = View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",0)
-            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle),"AddEducation")
+            FragmentHelper.switchFragment(activity!!,AddEducationInformationFragment.newInstance(bundle),R.id.frame_my_information,"AddEducation")
         }
 //        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"学历","毕业时间","毕业院校+专业")
 //        item.jumpListener = View.OnClickListener {
@@ -54,8 +56,7 @@ class EducationInformationFragment :Fragment(){
 //        }
 //        mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        val result = NetworkAdapter().getDataUser().subscribe({
                 val educationBackgrounds= it.message.educationBackgrounds
                 val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("educationBackgrounds")
                 if(educationBackgrounds!=null)
@@ -66,7 +67,7 @@ class EducationInformationFragment :Fragment(){
                             val bundle = Bundle()
                             bundle.putInt("type",1)
                             bundle.putString("EducationBackground",jsonArray.getJSONObject(educationBackgrounds.indexOf(j)).toString())
-                            (activity as MyInformationActivity).switchFragment(AddEducationInformationFragment.newInstance(bundle), "ModifyEducation")
+                            FragmentHelper.switchFragment(activity!!,AddEducationInformationFragment.newInstance(bundle),R.id.frame_my_information,"ModifyEducation")
                         }
                         mMultiStyleItemList.add(item)
                     }

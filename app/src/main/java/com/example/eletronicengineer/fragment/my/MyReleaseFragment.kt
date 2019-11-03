@@ -82,7 +82,7 @@ class MyReleaseFragment :Fragment(){
     lateinit var mView:View
     var page = 1
     var pageCount = 1
-    var baseUrl = "http://192.168.1.132:8012"
+    var baseUrl = "http://10.1.5.141:8012"
     lateinit var adapter:RecyclerviewAdapter
     var tvMode = "需求 需求个人"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -203,13 +203,13 @@ class MyReleaseFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("type","需求个人")
                                 bundle.putString("id",js.getString("id"))
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("CheckId",js.getString("id"))
                                 bundle.putString("type","需求个人")
-                                (activity as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -250,13 +250,13 @@ class MyReleaseFragment :Fragment(){
                             item.necessary = true
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("CheckId",js.getString("requirementTeamId"))
                                 bundle.putString("type","需求团队")
-                                (activity as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -300,13 +300,13 @@ class MyReleaseFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("type","需求租赁 ${requirementVariety}")
                                 bundle.putString("id",js.getString("requirementLeaseId"))
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("CheckId",js.getString("requirementLeaseId"))
                                 bundle.putString("type","需求租赁")
-                                (activity as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -352,13 +352,13 @@ class MyReleaseFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("type","需求三方 "+type)
                                 bundle.putString("id",js.getString("id"))
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("CheckId",js.getString("id"))
                                 bundle.putString("type","需求三方")
-                                (activity as MyReleaseActivity).switchFragment(JobOverviewFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -397,7 +397,7 @@ class MyReleaseFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("type","个人劳务")
                                 bundle.putString("id",js.getString("id"))
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -441,7 +441,7 @@ class MyReleaseFragment :Fragment(){
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("id",js.getString("id"))
-                                (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             data.add(item)
                         }
@@ -480,7 +480,7 @@ class MyReleaseFragment :Fragment(){
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
                             bundle.putString("id",js.getString("id"))
-                            (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                            FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                         }
                         data.add(item)
                     }
@@ -512,14 +512,11 @@ class MyReleaseFragment :Fragment(){
                     val data = adapter.mData.toMutableList()
                     for (j in 0 until jsonArray.length()){
                         val js = jsonArray.getJSONObject(j)
-                        val serveType = "服务类型："+js.getString("serveType")
-                        val information = if(serveType=="资质合作")  "公司名称："+js.getString("companyName") else "有效期：${js.getString("validTime")}天"
-                        val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"三方服务",serveType,information)
-
+                        val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"三方服务","服务类型："+js.getString("serveType"),"有效期：${js.getString("validTime")}天")
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
                             bundle.putString("id",js.getString("id"))
-                            (activity as MyReleaseActivity).switchFragment(JobMoreFragment.newInstance(bundle))
+                            FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                         }
                         data.add(item)
                     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.my.*
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.lcw.library.imagepicker.ImagePicker
 import java.io.File
 import java.io.FileOutputStream
@@ -19,27 +20,8 @@ class MyCertificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_certification)
-        initData()
+        FragmentHelper.addFragment(this,MyCertificationFragment(),R.id.frame_my_certification,"MyCertification")
     }
-
-    private fun initData() {
-        addFragment(MyCertificationFragment(),R.id.frame_my_certification,"MyCertification")
-    }
-
-    fun addFragment(fragment: Fragment,frameLayout:Int,tag:String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(frameLayout, fragment,tag)
-        transaction.commit()
-    }
-
-    fun switchFragment(fragment: Fragment,frameLayout:Int,tag:String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(frameLayout, fragment,tag)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){

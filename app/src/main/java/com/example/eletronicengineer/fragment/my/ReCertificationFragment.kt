@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.startSendMessage
@@ -38,11 +39,11 @@ class ReCertificationFragment :Fragment(){
         if(mainType=="个人"){
             val bundle = Bundle()
             bundle.putString("mainType",mainType)
-            (activity as MyCertificationActivity).addFragment(PersonalReCertificationFragment.newInstance(bundle),R.id.frame_re_certification_category,"Certification")
+            FragmentHelper.switchFragment(activity!!,PersonalReCertificationFragment.newInstance(bundle),R.id.frame_re_certification_category,"Certification")
         }else{
             val bundle = Bundle()
             bundle.putString("mainType",mainType)
-            (activity as MyCertificationActivity).addFragment(EnterpriseReCertificationFragment.newInstance(bundle),R.id.frame_re_certification_category,"Certification")
+            FragmentHelper.switchFragment(activity!!,EnterpriseReCertificationFragment.newInstance(bundle),R.id.frame_re_certification_category,"Certification")
         }
         return view
     }

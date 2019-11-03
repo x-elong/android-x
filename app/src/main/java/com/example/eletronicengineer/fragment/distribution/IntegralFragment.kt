@@ -69,7 +69,7 @@ class IntegralFragment : Fragment(){
                 v.tv_mark_integral.visibility=View.VISIBLE
 
                 var dateForHttp = "${year}-${month+1}-${day}"
-                val resultForHttp = getOwnIntegralOfRebate(dateForHttp,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                val resultForHttp = getOwnIntegralOfRebate(dateForHttp,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                         mIntegralList.clear()
@@ -162,7 +162,7 @@ class IntegralFragment : Fragment(){
                                 temp = "$tempYear-$tempMonth-01"
                                 Log.i("temp",temp)
 
-                                val resultForHttp = getOwnIntegralOfRebate(temp,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                                val resultForHttp = getOwnIntegralOfRebate(temp,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                                         mIntegralList.clear()
                                         val mdata = it.message
@@ -235,7 +235,7 @@ class IntegralFragment : Fragment(){
                 v.tv_extended.visibility=View.VISIBLE
                 v.tv_rebate.visibility=View.VISIBLE
                 var vipLevel = 1
-                val resultForHttp = getOwnExtendUser(vipLevel,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                val resultForHttp = getOwnExtendUser(vipLevel,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         mIntegralList.clear()
                         val temp=it.message
@@ -272,7 +272,7 @@ class IntegralFragment : Fragment(){
                     v.tv_extended.setBackgroundColor(Color.parseColor("#ffffff"))
 
                     vipLevel = 1
-                    val resultForHttp = getOwnExtendUser(vipLevel,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                    val resultForHttp = getOwnExtendUser(vipLevel,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             mIntegralList.clear()
                             val temp=it.message
@@ -306,7 +306,7 @@ class IntegralFragment : Fragment(){
                     v.tv_rebate.setBackgroundColor(Color.parseColor("#ffffff"))
                     v.tv_extended.setBackgroundColor(Color.parseColor("#e5e5e5"))
                     vipLevel = 2
-                    val resultForHttp = getOwnExtendUser(vipLevel,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                    val resultForHttp = getOwnExtendUser(vipLevel,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             mIntegralList.clear()
                             val temp=it.message
@@ -347,7 +347,7 @@ class IntegralFragment : Fragment(){
                 v.tv_calendar_integral.visibility=View.VISIBLE
                 var vipLevel:Int=1
 
-                val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         mExtensionList.clear()
                         val tempName = listOf("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月")
@@ -384,7 +384,7 @@ class IntegralFragment : Fragment(){
                                 var temp = type.substring(0,4)
                                 year = temp.toInt()
 
-                                val resultforhttp = getOwnExtendUAndI(vipLevel,temp.toInt(),"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                                val resultforhttp = getOwnExtendUAndI(vipLevel,temp.toInt(),"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                                         mExtensionList.clear()
                                         val tempName = listOf("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月")
@@ -423,7 +423,7 @@ class IntegralFragment : Fragment(){
                     v.tv_rebate.setBackgroundColor(Color.parseColor("#e5e5e5"))
                     v.tv_extended.setBackgroundColor(Color.parseColor("#ffffff"))
                     vipLevel=1
-                    val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                    val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             mExtensionList.clear()
                             val tempName = listOf("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月")
@@ -453,7 +453,7 @@ class IntegralFragment : Fragment(){
                     v.tv_rebate.setBackgroundColor(Color.parseColor("#ffffff"))
                     v.tv_extended.setBackgroundColor(Color.parseColor("#e5e5e5"))
                     vipLevel=2
-                    val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+                    val resultforhttp = getOwnExtendUAndI(vipLevel,year,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             mExtensionList.clear()
                             val tempName = listOf("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月")

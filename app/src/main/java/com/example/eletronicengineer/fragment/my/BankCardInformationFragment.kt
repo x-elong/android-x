@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getUser
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,10 +40,9 @@ class BankCardInformationFragment :Fragment(){
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         item.tvSelect = View.OnClickListener {
-            (activity as MyInformationActivity).switchFragment(AddBankCardFragment(),"AddBankCard")
+            FragmentHelper.switchFragment(activity!!,AddBankCardFragment(),R.id.frame_my_information,"AddBankCard")
         }
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        val result = NetworkAdapter().getDataUser().subscribe({
                 val data = adapter.mData.toMutableList()
                 val bankCards = it.message.bankCards
                 val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("bankCards")
@@ -51,7 +52,7 @@ class BankCardInformationFragment :Fragment(){
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
                             bundle.putString("bankCard",jsonArray.getJSONObject(bankCards.indexOf(j)).toString())
-                            (activity as MyInformationActivity).switchFragment(BankCardMoreFragment.newInstance(bundle),"")
+                            FragmentHelper.switchFragment(activity!!,BankCardMoreFragment.newInstance(bundle),R.id.frame_my_information,"")
                         }
                         data.add(item)
                     }

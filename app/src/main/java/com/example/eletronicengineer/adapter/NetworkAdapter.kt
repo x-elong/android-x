@@ -16,6 +16,7 @@ import com.example.eletronicengineer.activity.ProfessionalActivity
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
+import com.example.eletronicengineer.db.My.UserEntity
 import com.example.eletronicengineer.fragment.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
@@ -26,6 +27,8 @@ import com.example.eletronicengineer.utils.getProjects
 import com.example.eletronicengineer.utils.startSendMessage
 import com.example.eletronicengineer.utils.startSendMultiPartMessage
 import com.example.eletronicengineer.utils.uploadImage
+import com.example.eletronicengineer.utils.putSimpleMessage
+import com.example.eletronicengineer.wxapi.WXPayEntryActivity
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -34,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_soil_ratio.view.*
 import okhttp3.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.Serializable
@@ -51,39 +55,55 @@ class NetworkAdapter {
             this.mData = mData
             this.context = context
         }
-
-        fun generateJsonRequestBody(baseUrl: String) {
-            val result = Observable.create<RequestBody> {
-                val jsonObject = JSONObject()
-                for (i in mData) {
-                    when (i.sendFormat) {
-                        "String" -> {
-                            jsonObject.put(i.key, parseToString(i))
-                        }
-                        "String[]" -> {
-                            val keyList = i.key.split(" ")
-                            val valueList = parseToStringArray(i)
-                            for (j in 0 until valueList.size) {
-                                jsonObject.put(keyList[j], valueList[j])
-                            }
-                        }
-                        "Int" -> {
-                            jsonObject.put(i.key, parseToInt(i))
-                        }
-                        "Boolean" -> {
-                            jsonObject.put(i.key, parseToBoolean(i))
-                        }
-                        "Long String" -> {
-                            val longAlsoString = parseToLongAndString(i)
-                            val keys = i.key.split(" ")
-                            if (longAlsoString.second != i.inputMultiAbandonInput)
-                                jsonObject.put(keys[0], longAlsoString.first)
-                            jsonObject.put(keys[1], longAlsoString.second)
+        fun generateJsonArray(data: List<List<MultiStyleItem>>):JSONArray
+        {
+            val array=JSONArray()
+            for (i in data)
+            {
+                array.put(generateJsonObject(i))
+            }
+            return array
+        }
+        fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
+        {
+            val jsonObject = JSONObject()
+            for (i in mData) {
+                when (i.sendFormat) {
+                    "String" -> {
+                        jsonObject.put(i.key, parseToString(i))
+                    }
+                    "String[]" -> {
+                        val keyList = i.key.split(" ")
+                        val valueList = parseToStringArray(i)
+                        for (j in 0 until valueList.size) {
+                            jsonObject.put(keyList[j], valueList[j])
                         }
                     }
+                    "Int" -> {
+                        jsonObject.put(i.key, parseToInt(i))
+                    }
+                    "Boolean" -> {
+                        jsonObject.put(i.key, parseToBoolean(i))
+                    }
+                    "Long String" -> {
+                        val longAlsoString = parseToLongAndString(i)
+                        val keys = i.key.split(" ")
+                        if (longAlsoString.second != i.inputMultiAbandonInput)
+                            jsonObject.put(keys[0], longAlsoString.first)
+                        jsonObject.put(keys[1], longAlsoString.second)
+                    }
+                    "JsonArray"->
+                    {
+                        jsonObject.put(i.key,generateJsonArray(listOf(listOf())))
+                    }
                 }
+            }
+            return jsonObject
+        }
+        fun generateJsonRequestBody(baseUrl: String) {
+            val result = Observable.create<RequestBody> {
                 //建立网络请求体 (类型，内容)
-                val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
+                val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData).toString())
                 it.onNext(requestBody)
             }
                 .subscribe {
@@ -109,9 +129,7 @@ class NetworkAdapter {
                         }
                     )
                 }
-
         }
-
         fun parseToLongAndString(data: MultiStyleItem): Pair<Long, String> {
             var longAlsoString: Pair<Long, String>
             when (data.options) {
@@ -311,6 +329,7 @@ class NetworkAdapter {
     //data source  需
     var mData: List<MultiStyleItem> = ArrayList()
     lateinit var context: Context
+    constructor(){}
 
     constructor(context: Context) {
         this.context = context
@@ -5352,7 +5371,7 @@ class NetworkAdapter {
         for (j in mData) {
             when (j.options) {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
-                    Log.i("inputSingleTitle + inputSingleContent","${j.inputSingleTitle.contains("身份证")} ${j.inputSingleContent.length != 18} ${j.inputSingleTitle}+${j.inputSingleContent.length}")
+//                    Log.i("inputSingleTitle + inputSingleContent","${j.inputSingleTitle.contains("身份证")} ${j.inputSingleContent.length != 18} ${j.inputSingleTitle}+${j.inputSingleContent.length}")
                         if (j.inputSingleContent == "") {
                             result = "${j.inputSingleTitle.replace("：", "")}不能为空"
                         } else if ((j.inputSingleTitle.contains("电话") || (j.inputSingleTitle == "手机号码")) && j.inputSingleContent.length != 11) {
@@ -5364,7 +5383,7 @@ class NetworkAdapter {
                         }
                         Log.i("result",result)
                         if (result != "") {
-                            mToast(result)
+                            ToastHelper.mToast(context,result)
                             return false
                         }
                     }
@@ -5372,7 +5391,7 @@ class NetworkAdapter {
                     if(j.inputUnitContent=="")
                         result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                     if (result != "") {
-                        mToast(result)
+                        ToastHelper.mToast(context,result)
                         return false
                     }
                 }
@@ -5380,9 +5399,43 @@ class NetworkAdapter {
         }
         return true
     }
-    fun mToast(result: String){
-        val toast = Toast.makeText(context, result, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.CENTER, 0, 0)
-        toast.show()
+
+    fun startSendMessage(jsonObject:JSONObject,baseUrl: String):Observable<ResponseBody>{
+        val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
+        return startSendMessage(requestBody,baseUrl)
+    }
+    fun putSimpleMessage(jsonObject:JSONObject,baseUrl: String):Observable<ResponseBody>{
+        val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
+        return putSimpleMessage(requestBody,baseUrl)
+    }
+
+    /**
+     * @我的
+     */
+    fun getDataUser():Observable<HttpResult<UserEntity>>{
+         return Observable.create<HttpResult<UserEntity>> {
+                target->getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+         }
+    }
+
+    //创建商品支付订单
+    fun creatDataOrder(productId:String){
+        creatOrder(productId).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread())
+            .subscribe({
+                val json = JSONObject(it.string())
+                if(json.getInt("code")==200){
+                    val intent = Intent(context, WXPayEntryActivity::class.java)
+                    intent.putExtra("json",json.getString("message"))
+                    context.startActivity(intent)
+                }
+            },{
+                it.printStackTrace()
+            })
     }
 }

@@ -17,6 +17,7 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -64,7 +65,7 @@ class MyRegistrationFragment :Fragment(){
         }
     })
     lateinit var mView: View
-    val baseUrl = "http://192.168.1.132:8012"
+    val baseUrl = "http://10.1.5.141:8012"
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var page = 1
     var pageCount = 1
@@ -132,7 +133,7 @@ class MyRegistrationFragment :Fragment(){
         item.jumpListener=View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal)
-            (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
         }
         mMultiStyleItemList.add(item)
 
@@ -140,7 +141,7 @@ class MyRegistrationFragment :Fragment(){
         item.jumpListener=View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal)
-            (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
         }
         mMultiStyleItemList.add(item)
 
@@ -148,7 +149,7 @@ class MyRegistrationFragment :Fragment(){
         item.jumpListener=View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal)
-            (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
         }
         mMultiStyleItemList.add(item)
 
@@ -156,7 +157,7 @@ class MyRegistrationFragment :Fragment(){
         item.jumpListener=View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
-            (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
         }
         mMultiStyleItemList.add(item)
         val adapter=RecyclerviewAdapter(mMultiStyleItemList)
@@ -188,7 +189,7 @@ class MyRegistrationFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
-                                (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
                             }
                             data.add(item)
                         }
@@ -229,7 +230,7 @@ class MyRegistrationFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("demandIndividual",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal)
-                                (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
                             }
                             data.add(item)
                         }
@@ -270,7 +271,7 @@ class MyRegistrationFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("demandGroup",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal)
-                                (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
                             }
                             data.add(item)
                         }
@@ -313,7 +314,7 @@ class MyRegistrationFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("demandLease",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal)
-                                (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
                             }
                             data.add(item)
                         }
@@ -356,7 +357,7 @@ class MyRegistrationFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putString("demandTripartite",js.toString())
                                 bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
-                                (activity as MyRegistrationActivity).switchFragment(MyRegistrationMoreFragment.newInstance(bundle))
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
                             }
                             data.add(item)
                         }

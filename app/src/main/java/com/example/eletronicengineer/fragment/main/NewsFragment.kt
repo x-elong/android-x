@@ -192,4 +192,6 @@ class NewsFragment : Fragment() {
         }
     }
 
+
+
 }

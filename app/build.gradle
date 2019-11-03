@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
 //    implementation files('libs/AMap2DMap_5.2.0_AMapSearch_6.9.0_AMapLocation_4.7.0_20190708.jar')
 //    implementation files('libs/sdk_HeWeather_Public_Android_V3.1.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

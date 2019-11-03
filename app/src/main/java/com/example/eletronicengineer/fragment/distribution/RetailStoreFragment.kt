@@ -48,7 +48,7 @@ class RetailStoreFragment:Fragment() {
 
         //二维码按钮监听
         view.tv_retail_two_dimensional_code_image.setOnClickListener{
-            val result = getQRCode("http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+            val result = getQRCode("http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
                     val path = it.message
                     //将拿到的路径访问文件服务器，拿到照片，然后进入碎片显示
@@ -67,7 +67,7 @@ class RetailStoreFragment:Fragment() {
             }
 
         //总积分
-        val resultForTotalScore = getOwnIntegral("http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+        val resultForTotalScore = getOwnIntegral("http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                 if(it.message!= null)
                 {
@@ -83,7 +83,7 @@ class RetailStoreFragment:Fragment() {
             })
 
         //月收益
-        val resultForMonthBenifit = getUserIncome("month","http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+        val resultForMonthBenifit = getUserIncome("month","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                 if(it.message!= null)
                 {
@@ -99,7 +99,7 @@ class RetailStoreFragment:Fragment() {
             })
 
         //日收益
-        val resultForDayBenifit = getUserIncome("day","http://192.168.1.132:8022/").subscribeOn(Schedulers.io())
+        val resultForDayBenifit = getUserIncome("day","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                 if(it.message!= null)
                 {

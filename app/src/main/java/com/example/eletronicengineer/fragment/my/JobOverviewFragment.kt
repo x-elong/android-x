@@ -33,7 +33,7 @@ class JobOverviewFragment :Fragment(){
             return jobOverviewFragment
         }
     }
-    var baseUrl = "http://192.168.1.132:8012"
+    var baseUrl = "http://10.1.5.141:8012"
     lateinit var checkId:String
     var page = 1
     var pageCount = 1

@@ -10,6 +10,7 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_emergency_contact_information.view.*
 import org.json.JSONObject
 
@@ -35,7 +36,7 @@ class EmergencyContactInformationFragment :Fragment(){
             val bundle = Bundle()
             bundle.putInt("style",1)
             bundle.putString("urgentPeople",json.toString())
-            (activity as MyInformationActivity).switchFragment(EditEmergencyContactFragment.newInstance(bundle),"")
+            FragmentHelper.switchFragment(activity!!,EditEmergencyContactFragment.newInstance(bundle),R.id.frame_my_information,"")
         }
         initFragment()
         return mView

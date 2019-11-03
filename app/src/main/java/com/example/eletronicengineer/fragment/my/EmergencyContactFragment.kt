@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getUser
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +30,7 @@ class EmergencyContactFragment :Fragment(){
         mView.btn_add_emergency.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("style",0)
-            (activity as MyInformationActivity).switchFragment(EditEmergencyContactFragment.newInstance(bundle),"")
+            FragmentHelper.switchFragment(activity!!,EditEmergencyContactFragment.newInstance(bundle),R.id.frame_my_information,"")
         }
         initFragment()
         return mView
@@ -41,27 +43,25 @@ class EmergencyContactFragment :Fragment(){
 //        }
 //        mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
-
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe( {
-                val urgentPeoples = it.message.urgentPeoples
-                val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("urgentPeoples")
-                if(urgentPeoples!=null)
-                    for (j in urgentPeoples){
-                        val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.urgentPeopleName,false)
-                        item.jumpListener = View.OnClickListener {
-                            val bundle = Bundle()
-                            bundle.putString("urgentPeople",jsonArray.getJSONObject(urgentPeoples.indexOf(j)).toString())
-                            (activity as MyInformationActivity).switchFragment(EmergencyContactInformationFragment.newInstance(bundle),"")
-                        }
-                        mMultiStyleItemList.add(item)
+        val result = NetworkAdapter().getDataUser().subscribe({
+            val urgentPeoples = it.message.urgentPeoples
+            val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("urgentPeoples")
+            if(urgentPeoples!=null)
+                for (j in urgentPeoples){
+                    val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.urgentPeopleName,false)
+                    item.jumpListener = View.OnClickListener {
+                        val bundle = Bundle()
+                        bundle.putString("urgentPeople",jsonArray.getJSONObject(urgentPeoples.indexOf(j)).toString())
+                        FragmentHelper.switchFragment(activity!!,EmergencyContactInformationFragment.newInstance(bundle),R.id.frame_my_information,"")
                     }
-                adapter = RecyclerviewAdapter(mMultiStyleItemList)
-                mView.rv_emergency_contact_content.adapter = adapter
-                mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
-            },{
-                it.printStackTrace()
-            })
+                    mMultiStyleItemList.add(item)
+                }
+            adapter = RecyclerviewAdapter(mMultiStyleItemList)
+            mView.rv_emergency_contact_content.adapter = adapter
+            mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
+        },{
+
+        })
 //        mView.rv_emergency_contact_content.adapter = adapter
 //        mView.rv_emergency_contact_content.layoutManager = LinearLayoutManager(context)
     }

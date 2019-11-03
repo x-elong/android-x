@@ -138,7 +138,7 @@ class PersonalCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://192.168.1.132:8032"+ Constants.HttpUrlPath.My.personalCertification)
+            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.personalCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

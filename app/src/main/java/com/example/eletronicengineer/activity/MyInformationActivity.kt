@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.my.*
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.lcw.library.imagepicker.ImagePicker
 import io.card.payment.CardIOActivity
 import io.card.payment.CreditCard
@@ -27,21 +28,7 @@ class MyInformationActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        addFragment(MyInformationFragment())
-    }
-
-    fun addFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_my_information, fragment,"MyInformation")
-        transaction.commit()
-    }
-
-    fun switchFragment(fragment: Fragment, tag:String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.frame_my_information, fragment,tag)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        FragmentHelper.addFragment(this,MyInformationFragment(),R.id.frame_my_information,"MyInformation")
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

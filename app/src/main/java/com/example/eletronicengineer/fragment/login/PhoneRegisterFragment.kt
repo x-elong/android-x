@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import cn.jpush.im.android.api.JMessageClient
+import cn.jpush.im.api.BasicCallback
 import com.amap.api.col.sl2.it
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
@@ -54,7 +56,7 @@ class   PhoneRegisterFragment: Fragment()  {
             }
             else{
                 if(v.tv_get_check.text=="重新获取验证码" || v.tv_get_check.text=="获取验证码"){
-                    val result= sendMobile(phoneNum,"http://192.168.1.132:8026/").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    val result= sendMobile(phoneNum,"http://10.1.5.141:8026/").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                             if(it.desc=="验证码发送成功")
                             {
@@ -99,9 +101,14 @@ class   PhoneRegisterFragment: Fragment()  {
                 result="两次输入的密码不相同"
             }
             else{
+                JMessageClient.register(phoneNum,password,object:BasicCallback(){
+                    override fun gotResult(p0: Int, p1: String?) {
+                        Log.i("registerMsg",p1)
+                    }
+                })
                 val key= arrayListOf("username","code","password","repassword")
                 val value= arrayListOf(phoneNum,registerPassword,password,rePassword)
-                sendRegisterForHttp(key,value,"http://192.168.1.132:8026/")
+                sendRegisterForHttp(key,value,"http://10.1.5.141:8026/")
             }
             if(result!=""){
                 val toast = Toast.makeText(context,result,Toast.LENGTH_SHORT)

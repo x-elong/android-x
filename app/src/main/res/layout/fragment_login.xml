@@ -127,6 +127,15 @@
         app:layout_constraintTop_toBottomOf="@id/line2"
         app:layout_constraintBottom_toTopOf="@id/line3"
         />
+
+    <CheckBox
+        android:id="@+id/cb_pwd_display"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
+        app:layout_constraintBottom_toBottomOf="@+id/et_login_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_login_password"
+        app:layout_constraintTop_toTopOf="@+id/et_login_password" />
     <View
         android:id="@+id/line3"
         android:layout_width="match_parent"
@@ -213,5 +222,4 @@
         app:layout_constraintStart_toEndOf="@+id/line5"
         app:layout_constraintTop_toBottomOf="@id/tv_login_confirm"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,7 +72,7 @@ class ProjectDiskActivity : AppCompatActivity() {
     initFragment()
     supportActionBar?.hide()
     //返回
-    PermissionHelper.getPermission(this@ProjectDiskActivity,1)
+
   }
 
   private fun initFragment() {

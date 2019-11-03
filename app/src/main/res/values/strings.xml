@@ -162,4 +162,10 @@
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
     <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
     <string name="pay_ok">支付成功</string>
+
+
+    <string name="pay_success">Payment success:</string>
+    <string name="pay_result">Payment result:</string>
+    <string name="confirm">Confirm</string>
+    <string name="pay_failed">Payment failed:</string>
 </resources>

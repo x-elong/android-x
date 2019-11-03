@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val endTime = System.currentTimeMillis()
         Log.i("main run time is",(endTime-startTime).toString())
-        PermissionHelper.getPermission(this, 1)
         initFragment()
         supportActionBar?.hide()
     }

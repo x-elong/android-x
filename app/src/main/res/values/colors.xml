@@ -157,4 +157,7 @@
     <color name="navy">#000080</color>
     <color name="black">#000000</color>
     <color name="navpage">#FFE1E8EB</color>
+    <color name="vip1">#98E8FA</color>
+    <color name="vip2">#C9BDF4</color>
+    <color name="vip3">#FCE386</color>
 </resources>

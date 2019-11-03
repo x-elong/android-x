@@ -11,6 +11,7 @@ import com.example.eletronicengineer.activity.PersonInformationActivity
 import com.example.eletronicengineer.adapter.ShippingAddressAdapter
 import com.example.eletronicengineer.aninterface.ShippingAddress
 import com.example.eletronicengineer.fragment.shopping.AddressFragment
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_reseive_addr.view.*
 
 /**
@@ -32,9 +33,9 @@ class ReceiveAddrFragment:Fragment() {
         //设置适配器
         view.rv_receive_addr.adapter = ShippingAddressAdapter(mShippingAddressList)
         view.bt_new_address.setOnClickListener {
-            val data = Bundle()
-            data.putString("title", "添加收货地址")
-            (activity as PersonInformationActivity).switchFragment(AddressFragment.newInstance(data))
+            val bundle = Bundle()
+            bundle.putString("title", "添加收货地址")
+            FragmentHelper.switchFragment(activity!!,AddressFragment.newInstance(bundle),R.id.frame_person_information,"")
         }
         return view
     }
@@ -42,9 +43,9 @@ class ReceiveAddrFragment:Fragment() {
         //给链表赋值
         for (j in 0 until 6){
             val shippingAddress = ShippingAddress("Gavin","13574141625","湖南省娄底市娄星区大科街道湖南人文科技学院",View.OnClickListener {
-                val data = Bundle()
-                data.putString("title", "编辑收货地址")
-                (activity as PersonInformationActivity).switchFragment(AddressFragment.newInstance(data))
+                val bundle = Bundle()
+                bundle.putString("title", "编辑收货地址")
+                FragmentHelper.switchFragment(activity!!,AddressFragment.newInstance(bundle),R.id.frame_person_information,"")
             })
             mShippingAddressList.add(shippingAddress)
         }

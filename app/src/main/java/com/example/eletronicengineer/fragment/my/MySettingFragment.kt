@@ -12,6 +12,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MySettingActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.SysApplication
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_log_out.view.*
@@ -56,19 +57,19 @@ class MySettingFragment :Fragment() {
         mMultiStyleItemList.clear()
         var item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"消息管理",false)
         item.jumpListener = View.OnClickListener {
-            (activity as MySettingActivity).switchFragment(MessageManagementFragment())
+            FragmentHelper.switchFragment(activity!!,MessageManagementFragment(),R.id.frame_my_setting,"")
         }
         mMultiStyleItemList.add(item)
         item = MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,"清除缓存","0.0KB")
         mMultiStyleItemList.add(item)
         item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"意见反馈",false)
         item.jumpListener = View.OnClickListener {
-            (activity as MySettingActivity).switchFragment(FeedbackFragment())
+            FragmentHelper.switchFragment(activity!!,FeedbackFragment(),R.id.frame_my_setting,"")
         }
         mMultiStyleItemList.add(item)
         item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"关于",false)
         item.jumpListener = View.OnClickListener {
-            (activity as MySettingActivity).switchFragment(RelatedFragment())
+            FragmentHelper.switchFragment(activity!!,RelatedFragment(),R.id.frame_my_setting,"")
         }
         mMultiStyleItemList.add(item)
         mView.rv_setting_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)

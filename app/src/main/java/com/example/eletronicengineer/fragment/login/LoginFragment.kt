@@ -1,7 +1,10 @@
 package com.example.eletronicengineer.fragment.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
@@ -26,6 +29,9 @@ import org.json.JSONObject
 
 class LoginFragment: Fragment() {
 
+    private var username = ""
+    private var password = ""
+    private lateinit var pref: SharedPreferences
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         initFragment(view)
@@ -33,12 +39,17 @@ class LoginFragment: Fragment() {
     }
 
     private fun initFragment(v: View) {
+        pref = PreferenceManager.getDefaultSharedPreferences(context)
+        username = pref.getString("username","")
+        password = pref.getString("password","")
+        v.et_login_name.setText(username)
+        v.et_login_password.setText(password)
         v.tv_login_back.setOnClickListener {
             activity!!.finish()
         }
         v.tv_login_confirm.setOnClickListener {
-            val username:String = v.et_login_name.text.toString()
-            val password:String = v.et_login_password.text.toString()
+            username = v.et_login_name.text.toString()
+            password = v.et_login_password.text.toString()
             if(!username.isBlank() && !password.isBlank()){
                 val key= arrayListOf("username","password")
 //                val value= arrayListOf("13575232531","123456")
@@ -51,7 +62,6 @@ class LoginFragment: Fragment() {
             else {
                 Toast.makeText(context,"请输入登陆账号及密码",Toast.LENGTH_SHORT).show()
             }
-
         }
         v.tv_login_register.setOnClickListener {
             (activity as LoginActivity).switchFragment(PhoneRegisterFragment())
@@ -62,6 +72,14 @@ class LoginFragment: Fragment() {
         v.tv_login_problem.setOnClickListener {
             (activity as LoginActivity).switchFragment(ProblemFragment())
         }
+        v.cb_pwd_display.setOnClickListener {
+            if(v.cb_pwd_display.isChecked)
+                v.et_login_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            else
+                v.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            v.et_login_password.setSelection(v.et_login_password.length())
+        }
+
     }
     fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>) {
         val result= Observable.create<RequestBody> {
@@ -74,7 +92,7 @@ class LoginFragment: Fragment() {
             it.onNext(requestBody)
         }
             .subscribe {
-                val result = sendLogin(it,"http://192.168.1.132:8026").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                val result = sendLogin(it,"http://10.1.5.141:8026").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         Log.i("111hy",it.code)
                         if(it.code=="200")
@@ -84,11 +102,15 @@ class LoginFragment: Fragment() {
                             UnSerializeDataBase.userName = it.message.user.userName
                             UnSerializeDataBase.userPhone = it.message.user.phone
                             Log.i("token is ",it.message.token)
-
+                            val editor = pref.edit()
+                            editor.putString("username",username)
+                            editor.putString("password",password)
+                            editor.apply()
                             Toast.makeText(context,"登录成功",Toast.LENGTH_SHORT).show()
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
+
                         }else{
                             Toast.makeText(context,"登录失败, 请输入正确的用户名和密码",Toast.LENGTH_SHORT).show()
                         }

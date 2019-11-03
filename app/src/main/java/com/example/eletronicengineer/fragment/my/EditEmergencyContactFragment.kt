@@ -56,47 +56,36 @@ class EditEmergencyContactFragment :Fragment(){
             val networkAdapter = NetworkAdapter(adapter.mData,context!!)
             if(networkAdapter.check()){
                 if(style==1){
-                    val result = Observable.create<RequestBody>{
-                        val jsonObject = json.put("urgentPeopleName",adapter.mData[0].inputSingleContent)
-                            .put("relation",adapter.mData[1].inputSingleContent)
-                            .put("phone",adapter.mData[2].inputSingleContent)
-                            .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
-                            .put("address",adapter.mData[4].inputSingleContent)
-                            .put("additonalExplain",adapter.mData[5].textAreaContent)
-                        val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
-                        it.onNext(requestBody)
-                    }.subscribe {
-                        val result = putSimpleMessage(it,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.updateUrgentPeople).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                if(JSONObject(it.string()).getInt("code")==200){
-                                    val toast = Toast.makeText(context,"修改成功",Toast.LENGTH_SHORT)
-                                    toast.setGravity(Gravity.CENTER,0,0)
-                                    toast.show()
-                                    mView.tv_edit_emergency_contact_back.callOnClick()
-                                }else{
-                                    val toast = Toast.makeText(context,"修改失败",Toast.LENGTH_SHORT)
-                                    toast.setGravity(Gravity.CENTER,0,0)
-                                    toast.show()
-                                }
-                            },{
-                                it.printStackTrace()
-                            })
-                    }
+                    val jsonObject = json.put("urgentPeopleName",adapter.mData[0].inputSingleContent)
+                        .put("relation",adapter.mData[1].inputSingleContent)
+                        .put("phone",adapter.mData[2].inputSingleContent)
+                        .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
+                        .put("address",adapter.mData[4].inputSingleContent)
+                        .put("additonalExplain",adapter.mData[5].textAreaContent)
+                    val result = NetworkAdapter().putSimpleMessage(jsonObject,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.updateUrgentPeople)
+                        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                            if(JSONObject(it.string()).getInt("code")==200){
+                                val toast = Toast.makeText(context,"修改成功",Toast.LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER,0,0)
+                                toast.show()
+                                mView.tv_edit_emergency_contact_back.callOnClick()
+                            }else{
+                                val toast = Toast.makeText(context,"修改失败",Toast.LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER,0,0)
+                                toast.show()
+                            }
+                        },{
+                            it.printStackTrace()
+                        })
                 }else{
-                    val result = Observable.create<RequestBody>{
-                        val jsonObject = JSONObject().put("urgentPeopleName",adapter.mData[0].inputSingleContent)
-                            .put("relation",adapter.mData[1].inputSingleContent)
-                            .put("phone",adapter.mData[2].inputSingleContent)
-                            .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
-                            .put("address",adapter.mData[4].inputSingleContent)
-                            .put("additonalExplain",adapter.mData[5].textAreaContent)
-                        val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
-                        it.onNext(requestBody)
-                    }.subscribe {
-                        val result = startSendMessage(it,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertUrgentPeople).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
+                    val jsonObject = JSONObject().put("urgentPeopleName",adapter.mData[0].inputSingleContent)
+                        .put("relation",adapter.mData[1].inputSingleContent)
+                        .put("phone",adapter.mData[2].inputSingleContent)
+                        .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
+                        .put("address",adapter.mData[4].inputSingleContent)
+                        .put("additonalExplain",adapter.mData[5].textAreaContent)
+                        val result = NetworkAdapter().startSendMessage(jsonObject,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertUrgentPeople)
+                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                                 if(JSONObject(it.string()).getInt("code")==200){
                                     val toast = Toast.makeText(context,"添加成功",Toast.LENGTH_SHORT)
                                     toast.setGravity(Gravity.CENTER,0,0)
@@ -111,7 +100,6 @@ class EditEmergencyContactFragment :Fragment(){
                                 it.printStackTrace()
                             })
                     }
-                }
             }
 
         }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.my.MySettingFragment
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.SysApplication
 import kotlinx.android.synthetic.main.activity_my_setting.*
 
@@ -20,20 +21,7 @@ class MySettingActivity : AppCompatActivity() {
         Log.i("","")
     }
     private fun initData() {
-        addFragment((MySettingFragment()))
-    }
+        FragmentHelper.addFragment(this,MySettingFragment(),R.id.frame_my_setting,"setting")
 
-    fun addFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_my_setting, fragment,"setting")
-        transaction.commit()
-    }
-
-    fun switchFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.frame_my_setting, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }

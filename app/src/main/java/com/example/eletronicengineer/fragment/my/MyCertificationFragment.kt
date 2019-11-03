@@ -11,6 +11,7 @@ import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_my_certification.view.*
 
 class MyCertificationFragment :Fragment(){
@@ -22,11 +23,11 @@ class MyCertificationFragment :Fragment(){
                 val selectContent=it.data.getString("selectContent")
                 mView.tv_subject_category_content.text=selectContent
                 when(selectContent){
-                    "个人 "-> (activity as MyCertificationActivity).switchFragment(PersonalCertificationShowFragment(),R.id.frame_certification_category,"Certification")
+                    "个人 "-> FragmentHelper.switchFragment(activity!!,PersonalCertificationShowFragment(),R.id.frame_certification_category,"Certification")
                     else -> {
                         val bundle = Bundle()
                         bundle.putString("mainType",mView.tv_subject_category_content.text.toString())
-                        (activity as MyCertificationActivity).switchFragment(EnterpriseCertificationShowFragment.newInstace(bundle),R.id.frame_certification_category,"Certification")
+                        FragmentHelper.switchFragment(activity!!,EnterpriseCertificationShowFragment.newInstace(bundle),R.id.frame_certification_category,"Certification")
                     }
                 }
 //                mView.sp_demand_moder.
@@ -58,7 +59,7 @@ class MyCertificationFragment :Fragment(){
             selectDialog.show()
         }
         mView.tv_my_certification_add.setOnClickListener {
-            (activity as MyCertificationActivity).switchFragment(InformationCertificationFragment(),R.id.frame_my_certification,"Certification")
+            FragmentHelper.switchFragment(activity!!,InformationCertificationFragment(),R.id.frame_my_certification,"Certification")
         }
     }
 

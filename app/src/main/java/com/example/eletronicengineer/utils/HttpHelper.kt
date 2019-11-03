@@ -1172,7 +1172,7 @@ internal fun getPersonalIssue(page: Int,pageSize: Int):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getPersonalIssue(page,pageSize)
 }
@@ -1182,7 +1182,7 @@ internal fun getRequirementPersonMore(id: String):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getRequirementPersonMore(id)
 }
@@ -1192,7 +1192,7 @@ internal fun getPersonalIssueMore(id: String):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getPersonalIssueMore(id)
 }
@@ -1203,7 +1203,7 @@ internal fun getLeaseService(page: Int,pageSize: Int):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getLeaseService(page,pageSize)
 }
@@ -1213,7 +1213,7 @@ internal fun getThridService(page: Int,pageSize: Int):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8012").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getThridService(pageSize,page)
 }
@@ -1223,7 +1223,7 @@ internal fun creatOrder(productId:String):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.creatOrder(productId)
 }
@@ -1233,7 +1233,7 @@ internal fun payNotify(orderNumber:String):Observable<ResponseBody>{
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://192.168.1.132:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl("http://10.1.5.141:8032").addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.payNotify(orderNumber)
 }

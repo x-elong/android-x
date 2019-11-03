@@ -10,6 +10,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_information_certification.view.*
 
 class InformationCertificationFragment :Fragment(){
@@ -37,11 +38,11 @@ class InformationCertificationFragment :Fragment(){
                         val selectContent=it.data.getString("selectContent")
                         mView.tv_subject_category_content.text=selectContent
                         when(selectContent){
-                            "个人 "-> (activity as MyCertificationActivity).addFragment(PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
+                            "个人 "-> FragmentHelper.switchFragment(activity!!,PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
                             else -> {
                                 val bundle = Bundle()
                                 bundle.putString("mainType",mView.tv_subject_category_content.text.toString())
-                                (activity as MyCertificationActivity).addFragment(EnterpriseCertificationFragment.newInstance(bundle),R.id.frame_certification_category,"Certification")
+                                FragmentHelper.switchFragment(activity!!,EnterpriseCertificationFragment.newInstance(bundle),R.id.frame_certification_category,"Certification")
                             }
                         }
 //                mView.sp_demand_moder.

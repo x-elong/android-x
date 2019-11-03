@@ -2,6 +2,7 @@ package com.example.eletronicengineer.fragment.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,14 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.FunctionAdapter
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Function
 import com.example.eletronicengineer.db.My.UserEntity
 import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.GlideLoader
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.getUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,6 +34,7 @@ class MyFragment : Fragment() {
     val mFunctionList:MutableList<Function> = ArrayList()
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     lateinit var user:UserSubitemEntity
+    private var headerImg = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.my, container, false)
         initData()
@@ -38,15 +42,33 @@ class MyFragment : Fragment() {
         return mView
     }
 
+    override fun onStart() {
+        super.onStart()
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        headerImg = pref.getString("headerImg","")
+        if(headerImg==""){
+            val result = NetworkAdapter().getDataUser().subscribe( {
+                user = it.message.user
+                GlideLoader().loadImage(mView.iv_my_header,it.message.user.headerImg)
+                pref.edit().putString("headerImg",it.message.user.headerImg).apply()
+            },{
+                it.printStackTrace()
+            })
+        }
+        else{
+            GlideLoader().loadImage(mView.iv_my_header,headerImg)
+        }
+        mView.tv_my_phone.text = UnSerializeDataBase.userPhone
+    }
     private fun initOnClick() {
         mView.view_my.setOnClickListener {
             val intent =Intent(activity,MyInformationActivity::class.java)
             startActivity(intent)
         }
-        mView.tv_my_vip.setOnClickListener{
-            val intent = Intent(activity,MyVipActivity::class.java)
-            startActivity(intent)
-        }
+//        mView.tv_my_vip.setOnClickListener{
+//            val intent = Intent(activity,MyVipActivity::class.java)
+//            startActivity(intent)
+//        }
         mView.tv_qr_code.setOnClickListener {
             val intent =Intent(activity,MyQRCodeActivity::class.java)
             intent.putExtra("user",user)
@@ -61,10 +83,15 @@ class MyFragment : Fragment() {
             val intent =Intent(activity,SubscribeActivity::class.java)
             startActivity(intent)
         }
+        mView.btn_my_vip_privileges.setOnClickListener {
+            val intent = Intent(activity,MyVipActivity::class.java)
+            startActivity(intent)
+
+        }
     }
 
     private fun initData() {
-        getDataUser()
+//        getDataUser()
         mFunctionList.clear()
         mMultiStyleItemList.clear()
         mFunctionList.add(Function("我的发布",R.drawable.my_release,View.OnClickListener {
@@ -126,15 +153,5 @@ class MyFragment : Fragment() {
         }
         mView.rv_my_other_function_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
         mView.rv_my_other_function_content.layoutManager = LinearLayoutManager(context)
-    }
-    fun getDataUser(){
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                user = it.message.user
-                GlideLoader().loadImage(mView.iv_my_header,it.message.user.headerImg)
-                mView.tv_my_phone.text = it.message.user.phone
-            },{
-                it.printStackTrace()
-            })
     }
 }

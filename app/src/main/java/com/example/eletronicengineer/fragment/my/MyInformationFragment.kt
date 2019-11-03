@@ -21,9 +21,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.db.My.UserEntity
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.model.HttpResult
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getUser
 import com.example.eletronicengineer.utils.putSimpleMessage
@@ -70,10 +73,13 @@ class MyInformationFragment : Fragment() {
         return mView
     }
     private fun initFragment() {
-        getDataUser()
+        val result = NetworkAdapter().getDataUser().subscribe {
+            initDataUser(it)
+        }
+
         (mView.rv_my_information_content.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
     }
-
+    //将照片设置在对于的控件上
     fun refresh(mImagePath: String) {
         val file = File(mImagePath)
         val imagePart = MultipartBody.Part.createFormData("file",file.name, RequestBody.create(MediaType.parse("image/*"),file))
@@ -107,18 +113,8 @@ class MyInformationFragment : Fragment() {
             it.printStackTrace()
         })
     }
-
-    fun getDataUser(){
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread())
-            .subscribe({
-                val users = it.message
-                val user = it.message.user
-                val bankCards = it.message.bankCards
-                val educationBackgrounds = it.message.educationBackgrounds
-                val certificates = it.message.certificates
-                val homeChildrens = it.message.homeChildrens
-                val urgentPeoples = it.message.urgentPeoples
+    fun initDataUser(httpResult: HttpResult<UserEntity>){
+                val user = httpResult.message.user
                 val userJson = JSONObject(Gson().toJson(user))
                 val mMultiStyleItemList: MutableList<MultiStyleItem> = ArrayList()
                 var item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "头像", "","1")
@@ -168,7 +164,7 @@ class MyInformationFragment : Fragment() {
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "手机", user.phone)
                 item.jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    (activity as MyInformationActivity).switchFragment(BindPhoneFragment.newInstance(bundle), "")
+                    FragmentHelper.switchFragment(activity!!,BindPhoneFragment.newInstance(bundle),R.id.frame_my_information,"")
                 }
                 mMultiStyleItemList.add(item)
 //                item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "微信", "换绑")
@@ -179,7 +175,7 @@ class MyInformationFragment : Fragment() {
 //                mMultiStyleItemList.add(item)
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "修改密码", "去修改")
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(ChangePasswordFragment(), "")
+                    FragmentHelper.switchFragment(activity!!,ChangePasswordFragment(),R.id.frame_my_information,"")
                 }
                 mMultiStyleItemList.add(item)
 
@@ -750,13 +746,13 @@ class MyInformationFragment : Fragment() {
                 }
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "学历信息", false)
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(EducationInformationFragment(),"")
+                    FragmentHelper.switchFragment(activity!!,EducationInformationFragment(),R.id.frame_my_information,"")
                 }
                 mMultiStyleItemList.add(item)
 
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "银行卡信息", false)
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(BankCardInformationFragment(), "")
+                    FragmentHelper.switchFragment(activity!!,BankCardInformationFragment(),R.id.frame_my_information,"")
                 }
                 mMultiStyleItemList.add(item)
 
@@ -768,25 +764,22 @@ class MyInformationFragment : Fragment() {
 
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "家庭信息", false)
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(FamilyInformationFragment(), "")
+                    FragmentHelper.switchFragment(activity!!,FamilyInformationFragment(),R.id.frame_my_information,"")
                 }
                 mMultiStyleItemList.add(item)
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "个人材料", false)
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(PersonalMaterialsFragment(), "MyInformation")
+                    FragmentHelper.switchFragment(activity!!,PersonalMaterialsFragment(),R.id.frame_my_information,"MyInformation")
                 }
                 mMultiStyleItemList.add(item)
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "紧急联系人", false)
                 item.jumpListener = View.OnClickListener {
-                    (activity as MyInformationActivity).switchFragment(EmergencyContactFragment(),"EmergencyContact")
+                    FragmentHelper.switchFragment(activity!!,EmergencyContactFragment(),R.id.frame_my_information,"EmergencyContact")
                 }
                 mMultiStyleItemList.add(item)
                 adapter = RecyclerviewAdapter(mMultiStyleItemList)
                 mView.rv_my_information_content.adapter = adapter
                 mView.rv_my_information_content.layoutManager = LinearLayoutManager(context)
-            },{
-                it.printStackTrace()
-            })
     }
 }
 
