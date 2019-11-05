@@ -39,7 +39,7 @@ class BankCardInformationFragment :Fragment(){
         item.backListener = View.OnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        item.tvSelect = View.OnClickListener {
+        item.tvSelectListener = View.OnClickListener {
             FragmentHelper.switchFragment(activity!!,AddBankCardFragment(),R.id.frame_my_information,"AddBankCard")
         }
         val result = NetworkAdapter().getDataUser().subscribe({

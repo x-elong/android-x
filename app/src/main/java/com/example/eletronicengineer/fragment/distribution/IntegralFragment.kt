@@ -58,17 +58,17 @@ class IntegralFragment : Fragment(){
         when (type) {
             1 -> {
                 val calendar = Calendar.getInstance()
-                var year=calendar.get(Calendar.YEAR)
-                var month=calendar.get(Calendar.MONTH)
-                var day=calendar.get(Calendar.DAY_OF_MONTH)
-                var result: String
+                val year=calendar.get(Calendar.YEAR)
+                val month=calendar.get(Calendar.MONTH)
+                val day=calendar.get(Calendar.DAY_OF_MONTH)
+                val result: String
                 result = "${year}年${month + 1}月"
                 v.tv_time_integral.text = result
                 v.tv_time_integral.visibility = View.VISIBLE
                 v.tv_calendar_integral.visibility=View.VISIBLE
                 v.tv_mark_integral.visibility=View.VISIBLE
 
-                var dateForHttp = "${year}-${month+1}-${day}"
+                val dateForHttp = "${year}-${month+1}-${day}"
                 val resultForHttp = getOwnIntegralOfRebate(dateForHttp,"http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
@@ -77,7 +77,7 @@ class IntegralFragment : Fragment(){
                         if(mdata!=null)
                         {
                             v.tv_mark_integral.text = mdata.monthIntegral.toString()
-                            var temp = mdata.detailDTOList
+                            val temp = mdata.detailDTOList
                             var temp1:String
                             var temp2:String
                             var tempSave=""
@@ -111,8 +111,8 @@ class IntegralFragment : Fragment(){
                                 {
                                     tempSave1="其他"
                                 }
-                                var foundTime = SimpleDateFormat("yyyy-MM-dd").format(j.foundTime)
-                                var integralStyle =
+                                val foundTime = SimpleDateFormat("yyyy-MM-dd").format(j.foundTime)
+                                val integralStyle =
                                     IntegralStyle("", j.eventName, "时间：${foundTime}       ${tempSave}       ${tempSave1}", "+${j.addIntegral}", 1)
                                 mIntegralList.add(integralStyle)
                             }
@@ -129,8 +129,8 @@ class IntegralFragment : Fragment(){
                         }
                     )
                 v.tv_calendar_integral.setOnClickListener {
-                    var option1Items:MutableList<String> =ArrayList()
-                    var option2Items:MutableList<MutableList<String>> =ArrayList()
+                    val option1Items:MutableList<String> =ArrayList()
+                    val option2Items:MutableList<MutableList<String>> =ArrayList()
                     for (j in 0 until 51)
                     {
                         option1Items.add((2010+j).toString()+"年")
@@ -146,7 +146,7 @@ class IntegralFragment : Fragment(){
                     val handler = Handler(Handler.Callback {
                         when (it.what) {
                             RecyclerviewAdapter.MESSAGE_SELECT_OK -> {
-                                var type = it.data.getString("selectContent")
+                                val type = it.data.getString("selectContent")
                                 v.tv_time_integral.text = type
                                 var tempYear = ""
                                 var tempMonth = ""

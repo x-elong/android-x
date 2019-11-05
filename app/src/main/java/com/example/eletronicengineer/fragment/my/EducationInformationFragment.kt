@@ -38,7 +38,7 @@ class EducationInformationFragment :Fragment(){
         item.backListener = View.OnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        item.tvSelect = View.OnClickListener {
+        item.tvSelectListener = View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt("type",0)
             FragmentHelper.switchFragment(activity!!,AddEducationInformationFragment.newInstance(bundle),R.id.frame_my_information,"AddEducation")

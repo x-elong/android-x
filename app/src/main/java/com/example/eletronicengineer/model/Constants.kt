@@ -10,7 +10,9 @@ class Constants {
         REQUEST_DOWNLOAD_FILE,//下载文件
         MY_SCAN_REQUEST_CODE
     }
+    enum class inventoryType{
 
+    }
     enum class HandlerMsg {
         UPLOAD_CLEARANCE_SALARY_SELECT_OK,//清工薪资
         UPLOAD_LIST_QUOTE_SELECT_OK//清单报价

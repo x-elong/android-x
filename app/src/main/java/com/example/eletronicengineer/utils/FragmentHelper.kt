@@ -8,7 +8,12 @@ import com.example.eletronicengineer.R
 class FragmentHelper {
     companion object{
         //在当前下增加碎片
-
+        /**
+         * @param activity 碎片处于的活动
+         * @param fragment 新碎片
+         * @param frameLayout Frame布局
+         * @param tag 标签(可给空，看情况给)
+         */
         fun addFragment(activity: FragmentActivity,fragment: Fragment, frameLayout:Int, tag:String) {
             val transaction = activity.supportFragmentManager.beginTransaction()
             transaction.add(frameLayout,fragment,tag)

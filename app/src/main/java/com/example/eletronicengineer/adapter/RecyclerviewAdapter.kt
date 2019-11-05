@@ -803,14 +803,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvBack.setOnClickListener(mData[position].backListener)
                 }
-                if(mData[position].styleType.equals("1")){
-                    vh.tvSelectMore.setOnClickListener(mData[position].tvSelect)
+                if(mData[position].styleType=="1"){
+                    vh.tvSelectMore.setOnClickListener(mData[position].tvSelectListener)
                     vh.tvSelectMore.visibility=View.VISIBLE
-                }else if(mData[position].styleType.equals("2")){
-                    vh.tvSelectAdd.setOnClickListener(mData[position].tvSelect)
+                }else if(mData[position].styleType=="2"){
+                    vh.tvSelectAdd.setOnClickListener(mData[position].tvSelectListener)
                     vh.tvSelectAdd.visibility=View.VISIBLE
-                }else if(mData[position].styleType.equals("3")) {
-                    vh.tvSelectOk.setOnClickListener((mData[position].tvSelect))
+                }else if(mData[position].styleType=="3") {
+                    vh.tvSelectOk.setOnClickListener((mData[position].tvSelectListener))
                     vh.tvSelectOk.visibility=View.VISIBLE
                 }
             }
@@ -1334,31 +1334,35 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             SUBMIT_TYPE->
             {
                 vh.btnSubmit.text=mData[position].submitContent
-                vh.btnSubmit.setOnClickListener{
-                    val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
-                    val provider=NetworkAdapter.Provider(mData,vh.btnSubmit.context)
-                    if(networkAdapter.check()){
-                        if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
-                        {
-                            if(mData[position].key=="Provider")
-                                provider.generateMultiPartRequestBody(baseUrl+urlPath)
-                            else
-                                networkAdapter.generateMultiPartRequestBody(baseUrl+urlPath)
-                            //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
-                        }
-                        else
-                        {
-                            //startSendMessage(map,baseUrl+urlPath)
-                            if(mData[position].key=="Provider")
-                                provider.generateJsonRequestBody(baseUrl+urlPath)
-                            else
-                                networkAdapter.generateJsonRequestBody(baseUrl+urlPath)
-                        }
-                    }
-
-                    //downloadFile(filesDir,"工程量清册.xlsx","工程量清册模板","http://10.1.5.90:8012")
+                if(mData[position].submitListener!=null){
+                    vh.btnSubmit.setOnClickListener(mData[position].submitListener)
                 }
+                else{
+                    vh.btnSubmit.setOnClickListener{
+                        val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
+                        val provider=NetworkAdapter.Provider(mData,vh.btnSubmit.context)
+                        if(networkAdapter.check()){
+                            if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
+                            {
+                                if(mData[position].key=="Provider")
+                                    provider.generateMultiPartRequestBody(baseUrl+urlPath)
+                                else
+                                    networkAdapter.generateMultiPartRequestBody(baseUrl+urlPath)
+                                //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
+                            }
+                            else
+                            {
+                                //startSendMessage(map,baseUrl+urlPath)
+                                if(mData[position].key=="Provider")
+                                    provider.generateJsonRequestBody(baseUrl+urlPath)
+                                else
+                                    networkAdapter.generateJsonRequestBody(baseUrl+urlPath)
+                            }
+                        }
 
+                        //downloadFile(filesDir,"工程量清册.xlsx","工程量清册模板","http://10.1.5.90:8012")
+                    }
+                }
             }
             EXPAND_TYPE->
             {

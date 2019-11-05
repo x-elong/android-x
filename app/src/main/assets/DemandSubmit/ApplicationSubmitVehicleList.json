@@ -1,0 +1,44 @@
+﻿[
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"拍照号码："
+  },
+  {
+  "type": "SELECT_DIALOG",
+  "selectTitle": "车辆类型:",
+  "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+  },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "车厢结构：",
+    "selectOption1Items": ["箱式","敞篷"]
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"核载乘客："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"核准载重量/吨："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"车厢长度/米："
+  },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "是否配驾驶员:",
+    "selectOption1Items": ["配备","不配备"]
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"车辆照片",
+    "key": "xx",
+    "buttonName":["上传"]
+  },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "保险状态:",
+    "selectOption1Items": ["有保险","无保险"]
+  }
+]

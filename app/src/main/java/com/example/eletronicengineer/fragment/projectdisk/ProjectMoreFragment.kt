@@ -385,7 +385,7 @@ class ProjectMoreFragment : Fragment(){
 //                        }
 //                    }
 //                }
-                adapter.mData[0].tvSelect = View.OnClickListener {
+                adapter.mData[0].tvSelectListener = View.OnClickListener {
                     val option1Items = listOf("架空", "节点", "通道")
                     val option2Items = listOf(
                         listOf("经济指标", "材料清册", "杆塔参数", "耐张段", "公共点定位"),

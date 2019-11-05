@@ -35,16 +35,14 @@ import com.example.eletronicengineer.aninterface.EngineeringAppliances
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
-import com.example.eletronicengineer.fragment.sdf.ImageFragment
-import com.example.eletronicengineer.fragment.sdf.InventoryFragment
-import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
+import com.example.eletronicengineer.fragment.sdf.*
 import com.example.eletronicengineer.model.Constants
 import com.lxj.xpopup.XPopup
 import kotlinx.android.synthetic.main.dialog_input.view.*
 import kotlinx.android.synthetic.main.dialog_soil_ratio.view.*
 import kotlinx.android.synthetic.main.item_public_point_position2.*
 import kotlinx.android.synthetic.main.shift_dialog.view.*
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -1177,10 +1175,11 @@ class AdapterGenerate {
             UnSerializeDataBase.fileList.clear()
         }
         mData[9].jumpListener = View.OnClickListener {
-            val data = Bundle()
-            data.putString("key", mData[9].key)
-            data.putString("title", mData[9].shiftInputTitle)
-            (activity as SupplyActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_supply, "Capture")
+            (activity as SupplyActivity).switchFragment(ApplicationSubmitFragment(), R.id.frame_supply, "register")
+//            val data = Bundle()
+//            data.putString("key", mData[9].key)
+//            data.putString("title", mData[9].shiftInputTitle)
+//            (activity as SupplyActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_supply, "Capture")
         }
 
         val adapter = RecyclerviewAdapter(mData)
@@ -2271,7 +2270,7 @@ class AdapterGenerate {
         mData[0].backListener = View.OnClickListener {
             activity.finish()
         }
-        mData[0].tvSelect = View.OnClickListener {
+        mData[0].tvSelectListener = View.OnClickListener {
             XPopup.Builder(context)
                 .atView(it)  // 依附于所点击的View，内部会自动判断在上方或者下方显示
                 .asAttachList(
@@ -3399,6 +3398,9 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandIndividual.json")
+        mData[mData.size-1].submitListener = View.OnClickListener {
+
+        }
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
@@ -3573,7 +3575,6 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-
     /**
      * 我的报名
      */
@@ -3603,6 +3604,39 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandTripartite.json")
         val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+
+    fun inventoryType():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
+        mData[6].buttonListener = arrayListOf(View.OnClickListener {
+            mData[0].selected = 6
+            val bundle = Bundle()
+            bundle.putInt("position",6)
+            bundle.putString("type","成员清册")
+            bundle.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as SupplyActivity,InventoryFragment.newInstance(bundle), R.id.frame_supply, "inventory")
+        })
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+
+    fun inventoryItemType():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+        val adapter = RecyclerviewAdapter(mData)
+        adapter.mData[0].backListener = View.OnClickListener {
+            activity.supportFragmentManager.popBackStackImmediate()
+        }
+        adapter.mData[0].tvSelectListener = View.OnClickListener {
+            Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+            val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as InventoryFragment
+            activity.supportFragmentManager.popBackStackImmediate()
+            fragment.update(adapter.mData)
+        }
         return adapter
     }
 }

@@ -1,0 +1,30 @@
+﻿[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"项目名称:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"项目特征描述:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工程量:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"计量单位:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"综合单价："
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"详细说明："
+  }
+]

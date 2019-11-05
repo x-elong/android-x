@@ -17,7 +17,7 @@ class VipPrivilegesMoreFragment :Fragment(){
     ): View? {
         val view = inflater.inflate(R.layout.fragment_vip_privileges_more,container,false)
         view.tv_vip_privileges_more_back.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStackImmediate()
         }
         view.btn_subscribe.setOnClickListener {
             val bundle = Bundle()

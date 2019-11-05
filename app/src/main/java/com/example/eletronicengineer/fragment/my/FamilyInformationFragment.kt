@@ -78,7 +78,7 @@ class FamilyInformationFragment :Fragment(){
                 it.printStackTrace()
             })
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        adapter.mData[0].tvSelect = View.OnClickListener {
+        adapter.mData[0].tvSelectListener = View.OnClickListener {
             val dialog = AlertDialog.Builder(context!!)
             val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_recyclerview,null)
             val rvList:MutableList<MultiStyleItem> = ArrayList()

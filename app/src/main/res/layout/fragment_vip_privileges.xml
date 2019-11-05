@@ -13,7 +13,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/tv_vip_privileges_back"
         android:layout_width="wrap_content"

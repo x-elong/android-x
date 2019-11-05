@@ -1,0 +1,31 @@
+﻿[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"项目名称:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需求类型:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人姓名:",
+    "singleDisplayRightContent":"***"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人电话:",
+    "singleDisplayRightContent":"***"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"租赁清册",
+    "buttonName":["上传"]
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"备注"
+  }
+]

@@ -40,7 +40,7 @@ class AddContractInformationFragment :Fragment(){
         item.backListener = View.OnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        item.tvSelect = View.OnClickListener {
+        item.tvSelectListener = View.OnClickListener {
             val networkAdapter = NetworkAdapter(mMultiStyleItemList,context!!)
             if(networkAdapter.check())
                 activity!!.supportFragmentManager.popBackStackImmediate()

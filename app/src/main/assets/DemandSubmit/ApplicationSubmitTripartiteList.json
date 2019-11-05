@@ -1,0 +1,27 @@
+﻿[
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"项目名称："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"项目特征描述："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"计量单位："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"数量："
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"报价清单（按单价）:",
+    "singleDisplayRightContent":" "
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"详细说明："
+  }
+]

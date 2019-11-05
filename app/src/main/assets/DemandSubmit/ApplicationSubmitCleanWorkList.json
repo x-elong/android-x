@@ -1,0 +1,23 @@
+﻿[
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"岗位类别："
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"需要人数："
+  },
+    {
+        "type":"INPUT_WITH_MULTI_UNIT",
+        "inputMultiUnitTitle":"薪资标准",
+        "inputMultiUnit":["元/天","元/月","元/年"]
+    },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"个人证件名称："
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"备注"
+  }
+]
