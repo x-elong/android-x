@@ -16,7 +16,7 @@ class ImageDisplayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image_display)
         val intent = getIntent()
         val mImagePath=intent.getStringExtra("imagePath")
-        iv_actionBar_back.setOnClickListener {
+        view_image_display.setOnClickListener {
             finish()
         }
         GlideLoader().loadPreImage(iv_preImage,mImagePath)

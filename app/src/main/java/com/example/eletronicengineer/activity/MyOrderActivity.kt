@@ -15,11 +15,4 @@ class MyOrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_order)
         FragmentHelper.addFragment(this,MyOrderFragment(),R.id.frame_my_order,"")
     }
-    fun switchFragment(fragment: Fragment, tag:String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.frame_my_order, fragment,tag)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 }

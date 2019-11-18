@@ -19,6 +19,7 @@ import com.lcw.library.imagepicker.ImagePicker
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_information_certification.*
 import kotlinx.android.synthetic.main.fragment_personal_certification.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -55,7 +56,7 @@ class PersonalReCertificationFragment : Fragment() {
             val requestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it, "http://10.1.5.141:8032" + Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -106,6 +107,9 @@ class PersonalReCertificationFragment : Fragment() {
                 //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
                 .setImageLoader(glideLoader)//设置自定义图片加载器
                 .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+        }
+        activity!!.btn_information_certification.setOnClickListener {
+            mView.btn_personal_certification.callOnClick()
         }
         mView.btn_personal_certification.setOnClickListener {
             if (mView.et_id_card_name.text.isBlank()) {
@@ -186,7 +190,7 @@ class PersonalReCertificationFragment : Fragment() {
             it.onNext(requestBody)
         }.subscribe {
             val result =
-                putSimpleMessage(it, "http://10.1.5.141:8032" + Constants.HttpUrlPath.My.enterpriseReCertification)
+                putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.enterpriseReCertification)
                     .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                         val jsonObject = JSONObject(it.string())
                         val code = jsonObject.getInt("code")

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SubscribeActivity
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_confirmed_subscribe.view.*
 
 class ConfirmedSubscribeFragment :Fragment(){
@@ -36,7 +37,7 @@ class ConfirmedSubscribeFragment :Fragment(){
         view.btn_pay.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("paymentAmount", Int.MAX_VALUE)
-            (activity as SubscribeActivity).switchFragment(PaymentFragment.newInstance(bundle),"")
+            FragmentHelper.switchFragment(activity!!,PaymentFragment.newInstance(bundle),R.id.frame_subscribe,"")
         }
         return view
     }

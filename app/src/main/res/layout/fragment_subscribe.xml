@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <View
-        android:id="@+id/view_subscribe"
+        android:id="@+id/view_vip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -33,10 +33,10 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintTop_toTopOf="@id/view_subscribe"
+        app:layout_constraintTop_toTopOf="@id/view_vip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/view_subscribe"
+        app:layout_constraintBottom_toBottomOf="@id/view_vip"
         tools:ignore="MissingConstraints" />
 
     <View
@@ -47,7 +47,7 @@
         android:layout_marginTop="@dimen/top_15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_subscribe" />
+        app:layout_constraintTop_toBottomOf="@+id/view_vip" />
 
     <CheckBox
         android:id="@+id/checkbox_vip_member"

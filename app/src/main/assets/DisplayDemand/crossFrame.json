@@ -16,27 +16,27 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计划工期（月）:",
+    "singleDisplayRightTitle":"计划工期(月):",
     "singleDisplayRightContent":"xxx"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
-    "buttonName":["点击查看"]
+    "buttonTitle":"车辆",
+    "buttonName":["车辆清册"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"跨越架材料:",
+    "singleDisplayRightTitle":"跨越架材质:",
     "singleDisplayRightContent":"00"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工作经验（年）:",
+    "singleDisplayRightTitle":"工作经验(年):",
     "singleDisplayRightContent":"00"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"年龄要求（岁）:",
+    "singleDisplayRightTitle":"年龄要求(岁):",
     "singleDisplayRightContent":"00"
   },
   {
@@ -61,18 +61,13 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需要人数（人）:",
+    "singleDisplayRightTitle":"需要人数(人):",
     "singleDisplayRightContent":"00"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"薪资标准:",
-    "buttonName":["清工薪资","清单报价"]
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆（辆）:",
-    "singleDisplayRightContent":"00"
+    "buttonTitle":"岗位及薪资标准:",
+    "buttonName":["成员清册"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -94,12 +89,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注:",
+    "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
   },
   {

@@ -1,7 +1,7 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类别:",
+    "singleDisplayRightTitle":"租赁类型:",
     "singleDisplayRightContent":"xxx"
   },
   {
@@ -16,13 +16,13 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计划工期（月）:",
+    "singleDisplayRightTitle":"施工工期(月):",
     "singleDisplayRightContent":"xxx"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"需求租赁清单：",
-    "buttonName":["点击查看"]
+    "buttonName":["在线查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -31,7 +31,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"配送费用:",
+    "singleDisplayRightTitle":"配送:",
     "singleDisplayRightContent":"00"
   },
   {
@@ -59,12 +59,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注:",
+    "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
   },
   {

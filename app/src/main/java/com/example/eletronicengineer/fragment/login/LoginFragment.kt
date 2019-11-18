@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MainActivity
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.sendLogin
 import com.example.eletronicengineer.utils.sendRegister
@@ -54,23 +55,23 @@ class LoginFragment: Fragment() {
                 val key= arrayListOf("username","password")
 //                val value= arrayListOf("13575232531","123456")
                 val value= arrayListOf(username,password)
-//                sendLoginForHttp(key,value)
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+                sendLoginForHttp(key,value)
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                startActivity(intent)
             }
             else {
                 Toast.makeText(context,"请输入登陆账号及密码",Toast.LENGTH_SHORT).show()
             }
         }
         v.tv_login_register.setOnClickListener {
-            (activity as LoginActivity).switchFragment(PhoneRegisterFragment())
+            FragmentHelper.switchFragment(activity!!,PhoneRegisterFragment(),R.id.frame_login,"")
         }
         v.tv_forget_password.setOnClickListener {
-            (activity as LoginActivity).switchFragment(ForgetPasswordFragment())
+            FragmentHelper.switchFragment(activity!!,ForgetPasswordFragment(),R.id.frame_login,"")
         }
         v.tv_login_problem.setOnClickListener {
-            (activity as LoginActivity).switchFragment(ProblemFragment())
+            FragmentHelper.switchFragment(activity!!,ProblemFragment(),R.id.frame_login,"")
         }
         v.cb_pwd_display.setOnClickListener {
             if(v.cb_pwd_display.isChecked)
@@ -79,6 +80,8 @@ class LoginFragment: Fragment() {
                 v.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             v.et_login_password.setSelection(v.et_login_password.length())
         }
+        if(username!="" && password!="")
+            v.tv_login_confirm.callOnClick()
 
     }
     fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>) {
@@ -92,7 +95,7 @@ class LoginFragment: Fragment() {
             it.onNext(requestBody)
         }
             .subscribe {
-                val result = sendLogin(it,"http://10.1.5.141:8026").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                val result = sendLogin(it,UnSerializeDataBase.upmsBasePath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         Log.i("111hy",it.code)
                         if(it.code=="200")
@@ -101,6 +104,8 @@ class LoginFragment: Fragment() {
                             UnSerializeDataBase.userToken = it.message.token
                             UnSerializeDataBase.userName = it.message.user.userName
                             UnSerializeDataBase.userPhone = it.message.user.phone
+                            if(it.message.user.name!=null)
+                                UnSerializeDataBase.idCardName = it.message.user.name!!
                             Log.i("token is ",it.message.token)
                             val editor = pref.edit()
                             editor.putString("username",username)
@@ -110,7 +115,6 @@ class LoginFragment: Fragment() {
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
-
                         }else{
                             Toast.makeText(context,"登录失败, 请输入正确的用户名和密码",Toast.LENGTH_SHORT).show()
                         }

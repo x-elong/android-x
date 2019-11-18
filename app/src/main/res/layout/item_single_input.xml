@@ -17,5 +17,5 @@
             android:hint="请输入"
             android:id="@+id/et_input_content" android:gravity="right"
             android:background="@color/transparent" android:textSize="@dimen/font_tv_hint_15"
-            android:layout_marginLeft="@dimen/left_10" android:layout_marginRight="@dimen/right_40" />
+            android:layout_marginLeft="@dimen/left_10"  />
 </LinearLayout>

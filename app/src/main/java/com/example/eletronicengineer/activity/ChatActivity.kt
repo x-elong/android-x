@@ -33,7 +33,7 @@ class ChatActivity:AppCompatActivity()
             {
                 val username=intent.getStringExtra("username")
                 //JMessageClient.deleteSingleConversation(username)
-                mConversation= Conversation.createSingleConversation(UnSerializeDataBase.username)
+                mConversation= Conversation.createSingleConversation(UnSerializeDataBase.userName)
                 tv_chat_main_title_name.text=username
                 initData(username)
             }
@@ -42,8 +42,8 @@ class ChatActivity:AppCompatActivity()
                 val groupId=intent.getLongExtra("groupId",0)
                 mConversation= JMessageClient.getGroupConversation(groupId)
                 tv_chat_main_title_name.text=mConversation.title
-                if (UnSerializeDataBase.username!=null)
-                    initData(UnSerializeDataBase.username!!)
+                if (UnSerializeDataBase.userName!=null)
+                    initData(UnSerializeDataBase.userName!!)
                 else
                     initData("admin1")
             }
@@ -65,7 +65,7 @@ class ChatActivity:AppCompatActivity()
                 if (i.allMessage.size==0&&i.latestMessage==null)
                     continue
                 val userInfo=i.targetInfo as UserInfo
-                if (userInfo.userName==UnSerializeDataBase.username||userInfo.userName==username)
+                if (userInfo.userName==UnSerializeDataBase.userName||userInfo.userName==username)
                 {
                     if (i.allMessage.size==0)
                         messageList.add(i.latestMessage)
@@ -83,7 +83,7 @@ class ChatActivity:AppCompatActivity()
             if (i.targetInfo is UserInfo)
             {
                 val targetInfo=i.targetInfo as UserInfo
-                if (targetInfo.userName==UnSerializeDataBase.username)
+                if (targetInfo.userName==UnSerializeDataBase.userName)
                 {
                     val chatMessageItem=ChatMessageItem(true, JiGuangMessageUtil.toJsonObject(i.content).get("text").asString)
                     messageData.add(chatMessageItem)

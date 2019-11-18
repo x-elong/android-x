@@ -29,9 +29,9 @@
             <!--android:layout_marginLeft="@dimen/left_45"/>-->
     <View
         android:id="@+id/view_my"
-        android:layout_width="@dimen/general_180"
-        android:layout_height="@dimen/general_60"
-        android:layout_marginStart="@dimen/left_12"
+        android:layout_width="@dimen/general_340"
+        android:layout_height="@dimen/general_80"
+        android:layout_marginStart="@dimen/left_10"
         android:layout_marginTop="@dimen/general_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_setting" />
@@ -67,27 +67,27 @@
         android:layout_marginBottom="@dimen/bottom_8"
         app:layout_constraintStart_toStartOf="@+id/tv_my_phone"
         app:layout_constraintBottom_toBottomOf="@+id/view_my" />
+
     <TextView
         android:id="@+id/tv_qr_code"
         android:layout_width="@dimen/general_26"
         android:layout_height="@dimen/general_26"
-        android:layout_marginStart="@dimen/left_8"
+        android:layout_marginEnd="@dimen/right_16"
         android:background="@drawable/qr_code"
-        app:layout_constraintStart_toEndOf="@+id/view_my"
-        app:layout_constraintTop_toTopOf="@+id/tv_my_phone" />
+        app:layout_constraintBottom_toBottomOf="@+id/view_my"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btn_my_vip_privileges"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
-        android:background="#248bfe"
+        android:background="@drawable/btn_style3"
         android:text="查看会员特权"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_hint_15"
-        app:layout_constraintBottom_toTopOf="@+id/rv_my_function_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_qr_code"
-        app:layout_constraintTop_toTopOf="@+id/tv_qr_code" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_qr_code"
+        app:layout_constraintEnd_toEndOf="@+id/view_my"
+        app:layout_constraintTop_toTopOf="@+id/view_my" />
 
     <TextView
         android:visibility="gone"
@@ -99,22 +99,9 @@
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintBottom_toBottomOf="@+id/iv_my_header"
         app:layout_constraintStart_toStartOf="@+id/tv_my_phone" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_function_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_16"
-        android:layout_marginTop="@dimen/top_8"
-        android:layout_marginEnd="@dimen/general_16"
-        android:background="@color/white"
-        android:overScrollMode="never"
-        android:elevation="@dimen/general_4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_my_header" />
 
     <View
-        android:id="@+id/view_subscribe"
+        android:id="@+id/view_vip"
         android:layout_width="@dimen/general_346"
         android:layout_height="@dimen/general_60"
         android:layout_marginTop="@dimen/top_8"
@@ -122,7 +109,7 @@
         android:background="@drawable/view_style1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_my_function_content" />
+        app:layout_constraintTop_toBottomOf="@+id/view_my" />
 
     <TextView
         android:id="@+id/textView6"
@@ -131,38 +118,38 @@
         android:layout_marginStart="@dimen/left_20"
         android:background="@drawable/ic_pentagram"
         app:layout_constraintBottom_toBottomOf="@+id/btn_subscribe"
-        app:layout_constraintStart_toStartOf="@+id/view_subscribe"
-        app:layout_constraintTop_toTopOf="@+id/btn_subscribe"
+        app:layout_constraintStart_toStartOf="@+id/view_vip"
+        app:layout_constraintTop_toTopOf="@+id/btn_vip"
         app:layout_constraintVertical_bias="0.433" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/general_8"
-        android:text="开通，尊享4大特权"
+        android:text="超级会员特权"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/textView6" />
     <Button
-        android:id="@+id/btn_subscribe"
+        android:id="@+id/btn_vip"
         android:layout_width="@dimen/general_80"
         android:layout_height="@dimen/general_35"
         android:layout_marginEnd="@dimen/right_30"
-        android:text="立即开通"
+        android:text="点击查看"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_hint_14"
         android:background="@drawable/btn_style3"
-        app:layout_constraintBottom_toBottomOf="@+id/view_subscribe"
-        app:layout_constraintEnd_toEndOf="@+id/view_subscribe"
-        app:layout_constraintTop_toTopOf="@+id/view_subscribe" />
+        app:layout_constraintBottom_toBottomOf="@+id/view_vip"
+        app:layout_constraintEnd_toEndOf="@+id/view_vip"
+        app:layout_constraintTop_toTopOf="@+id/view_vip" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_other_function_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/top_4"
         android:overScrollMode="never"
-        app:layout_constraintTop_toBottomOf="@+id/view_subscribe"
+        app:layout_constraintTop_toBottomOf="@+id/view_vip"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

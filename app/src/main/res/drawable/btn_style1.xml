@@ -7,9 +7,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:gravity="center">
     <shape android:shape="rectangle">
-      <corners android:radius="@dimen/general_5"/>
+      <corners android:radius="@dimen/general_30"/>
       <stroke android:color="@color/gray" android:width="@dimen/general_1"/>
-      <solid android:color="@color/white"/>
+      <gradient android:startColor="#E5E5E5E5" android:endColor="#ffffff" android:type="linear"/>
     </shape>
   </item>
 </layer-list>

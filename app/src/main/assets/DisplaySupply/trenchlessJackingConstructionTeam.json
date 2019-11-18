@@ -21,18 +21,25 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"机械设备：",
-    "buttonName":["点击查看"]
-  },
-  {
-    "type":"MULTI_BUTTON",
     "buttonTitle":"车辆全景照：",
     "buttonName":["点击查看"]
   },
   {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"机械设备：",
+    "buttonName":["点击查看"]
+  },
+  {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
+  },
+  {
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"发布人所属地点:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
   },
   {
     "type":"SUBMIT",

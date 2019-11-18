@@ -16,6 +16,7 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.StoreTypeAdapter
 import com.example.eletronicengineer.aninterface.StoresName
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,7 +34,7 @@ class JobOverviewFragment :Fragment(){
             return jobOverviewFragment
         }
     }
-    var baseUrl = "http://10.1.5.141:8012"
+    var baseUrl = UnSerializeDataBase.dmsBasePath
     lateinit var checkId:String
     var page = 1
     var pageCount = 1

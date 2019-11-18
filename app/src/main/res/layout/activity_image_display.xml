@@ -7,28 +7,42 @@
     android:layout_height="match_parent"
 
     tools:context=".activity.ImageDisplayActivity">
-
     <View
-        android:id="@+id/view"
+        android:id="@+id/view_image_display"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
-        android:background="@color/black"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_image_display_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_image_display_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#383838"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_image_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_image_display"
         tools:ignore="MissingConstraints" />
-        <ImageView
-            android:id="@+id/iv_actionBar_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/general_16"
-            android:src="@mipmap/icon_actionbar_back"
-            tools:ignore="MissingConstraints" />
-    <ImageView
+    <com.lxj.xpopup.photoview.PhotoView
         android:id="@+id/iv_preImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view_image_display" />
 </androidx.constraintlayout.widget.ConstraintLayout>

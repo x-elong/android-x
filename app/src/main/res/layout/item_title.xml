@@ -14,7 +14,6 @@
         android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_18"
         />
-
     <TextView
         android:id="@+id/tv_title_title1"
         android:layout_width="wrap_content"

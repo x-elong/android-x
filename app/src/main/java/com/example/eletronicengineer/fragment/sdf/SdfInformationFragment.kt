@@ -71,10 +71,12 @@ class SdfInformationFragment:Fragment(){
                     {
                         RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
                             val selectContent=it.data.getString("selectContent")
+                            val selectContent2=it.data.getString("selectContent2")
                             val adapterGenerate = AdapterGenerate()
                             val type = adapterGenerate.getType(selectContent)
                             val intent = Intent(context, DemandActivity::class.java)
                             intent.putExtra("type",type)
+                            intent.putExtra("selectContent2",selectContent2)
                             startActivity(intent)
                             false
                         }

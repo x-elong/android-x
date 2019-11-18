@@ -29,16 +29,23 @@ class PaymentFragment :Fragment(){
         }
         view.radio_btn_we_chat_payment.setOnClickListener {
             view.radio_btn_ali_pay_payment.isChecked = false
+            view.radio_btn_num_payment.isChecked = false
         }
         view.radio_btn_ali_pay_payment.setOnClickListener {
+            view.radio_btn_we_chat_payment.isChecked = false
+            view.radio_btn_num_payment.isChecked = false
+        }
+        view.radio_btn_num_payment.setOnClickListener {
+            view.radio_btn_ali_pay_payment.isChecked = false
             view.radio_btn_we_chat_payment.isChecked = false
         }
         view.btn_confirmed_pay.setOnClickListener {
             if(view.radio_btn_we_chat_payment.isChecked)
                 networkAdapter.creatDataOrder("1")
+            else if(view.radio_btn_ali_pay_payment.isChecked)
+                networkAdapter.getAliPayOrder("1")
             else
-                PaymentHelper.startAlipay(activity!!)
-
+                networkAdapter.numPay("1")
 
         }
         return view

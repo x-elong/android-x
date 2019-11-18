@@ -4,6 +4,6 @@ import android.view.View
 
 
 class Image (val imagePath:String,var imageListener: View.OnClickListener?){
-    var deleteListenner:View.OnClickListener? = null
+    var deleteListener:View.OnClickListener? = null
     var isX = true
 }

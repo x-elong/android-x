@@ -30,7 +30,7 @@
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="我的认证"
-        android:textColor="#383838"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/view_my_certification"
         app:layout_constraintEnd_toEndOf="parent"
