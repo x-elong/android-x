@@ -62,7 +62,7 @@ class EditEmergencyContactFragment :Fragment(){
                         .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
                         .put("address",adapter.mData[4].inputSingleContent)
                         .put("additonalExplain",adapter.mData[5].textAreaContent)
-                    val result = NetworkAdapter().putSimpleMessage(jsonObject,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.updateUrgentPeople)
+                    val result = NetworkAdapter().putSimpleMessage(jsonObject,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.updateUrgentPeople)
                         .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                             if(JSONObject(it.string()).getInt("code")==200){
                                 val toast = Toast.makeText(context,"修改成功",Toast.LENGTH_SHORT)
@@ -84,7 +84,7 @@ class EditEmergencyContactFragment :Fragment(){
                         .put("urgentPeopleId",adapter.mData[3].inputSingleContent)
                         .put("address",adapter.mData[4].inputSingleContent)
                         .put("additonalExplain",adapter.mData[5].textAreaContent)
-                        val result = NetworkAdapter().startSendMessage(jsonObject,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertUrgentPeople)
+                        val result = NetworkAdapter().startSendMessage(jsonObject,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.insertUrgentPeople)
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                                 if(JSONObject(it.string()).getInt("code")==200){
                                     val toast = Toast.makeText(context,"添加成功",Toast.LENGTH_SHORT)

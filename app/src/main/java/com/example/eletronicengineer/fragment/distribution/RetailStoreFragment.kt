@@ -14,6 +14,7 @@ import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MainActivity
 import com.example.eletronicengineer.activity.RetailStoreActivity
 import com.example.eletronicengineer.fragment.distribution.IntegralFragment
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getOwnIntegral
 import com.example.eletronicengineer.utils.getQRCode
 import com.example.eletronicengineer.utils.getUserIncome
@@ -117,19 +118,19 @@ class RetailStoreFragment:Fragment() {
         view.tv_score_details_image.setOnClickListener {
               data.putInt("type",1)
               data.putString("title","积分详情")
-            (activity as RetailStoreActivity).switchFragment(IntegralFragment.newInstance(data))
+              FragmentHelper.switchFragment(activity!!,IntegralFragment.newInstance(data),R.id.frame_retail_store,"")
         }
         //下级会员按钮监听
         view.tv_sub_vip_image.setOnClickListener {
             data.putInt("type",2)
             data.putString("title","下级会员")
-            (activity as RetailStoreActivity).switchFragment(IntegralFragment.newInstance(data))
+            FragmentHelper.switchFragment(activity!!,IntegralFragment.newInstance(data),R.id.frame_retail_store,"")
         }
         //推广详情按钮监听
         view.tv_promote_details_image.setOnClickListener {
             data.putInt("type",3)
             data.putString("title","推广详情")
-            (activity as RetailStoreActivity).switchFragment(IntegralFragment.newInstance(data))
+            FragmentHelper.switchFragment(activity!!,IntegralFragment.newInstance(data),R.id.frame_retail_store,"")
         }
     }
 }

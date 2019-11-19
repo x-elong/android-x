@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.db.My.UserSubitemEntity
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.wjj.easy.qrcodestyle.QRCodeStyle
 import kotlinx.android.synthetic.main.activity_my_qrcode.*
 import java.io.File
@@ -35,12 +36,12 @@ class MyQRCodeActivity : AppCompatActivity() {
         tv_qr_code_back.setOnClickListener {
             finish()
         }
-        val data=intent.getSerializableExtra("user") as UserSubitemEntity
+        val headerImg=intent.getStringExtra("headerImg")
         logo_iv.run {
-            qrName=data.userName
-            qrPhone=data.phone
+            qrName=UnSerializeDataBase.userName
+            qrPhone=UnSerializeDataBase.userPhone
             qrLocation="百全楼410"
-            Glide.with(this@MyQRCodeActivity).load(data.headerImg).into(object:CustomTarget<Drawable>(){
+            Glide.with(this@MyQRCodeActivity).load(headerImg).into(object:CustomTarget<Drawable>(){
                 override fun onLoadCleared(placeholder: Drawable?) {
 
                 }

@@ -30,14 +30,27 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
-        android:text="标题"
+        android:text="信息详情"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_tv_normal_16"
+        android:textSize="@dimen/font_tv_normal_17"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/tv_display_demand_back_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_display_demand_back_view"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_display_demand_add"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:text="添加"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_17"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tv_display_demand_back_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/general_8"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView

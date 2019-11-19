@@ -21,12 +21,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"年龄（岁）:",
+    "singleDisplayRightTitle":"年龄(岁):",
     "singleDisplayRightContent":"xxx"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工作经验（年）:",
+    "singleDisplayRightTitle":"工作经验(年):",
     "singleDisplayRightContent":"00"
   },
   {
@@ -46,13 +46,15 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":"00"
   },
   {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"负责人所在地:",
-    "singleDisplayRightContent":"00"
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"发布人所属地点:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

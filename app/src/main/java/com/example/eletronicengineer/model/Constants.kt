@@ -10,7 +10,7 @@ class Constants {
         REQUEST_DOWNLOAD_FILE,//下载文件
         MY_SCAN_REQUEST_CODE
     }
-    enum class inventoryType{
+    enum class InventoryType{
 
     }
     enum class HandlerMsg {
@@ -183,23 +183,26 @@ class Constants {
                 const val getRequirementTeam = "/RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck/"
                 const val getLease= "/LeaseLoggingCheck/getListLeaseLoggingCheckController/"
                 const val getRequirementThird= "/RequirementThirdLoggingCheck/getListRequirementThirdLoggingCheck/"
-
                 /**
-                 * 认证
+                 * @认证
                  */
                 const val enterpriseCertification = "/OrganizationCertification/insertOrganizationCertification/"
                 const val enterpriseReCertification = "/OrganizationCertification/updateOrganizationCertificatio/"
                 const val personalCertification = "/OrganizationCertification/insertOneOrganizationCertification/"
                 const val certificationMore = "/OrganizationCertification/getOrganizationCertificationDTOALL/"
-
+                const val numPayCreatOrder="/numpay/creatOrder/{productId}"
                 const val creatOrder = "/weixinPay/creatOrderByApp/{productId}"
                 const val payNotify ="/weixinPay/payNotifyByApp/{orderNumber}"
+                const val getAliPayOrderStr ="alipay/getAliPayOrderStr/{productId}"
+                const val checkAlipay="/alipay/checkAlipay/"
             }
         }
 
         //需求
         class Requirement {
             companion object {
+                const val insertPersonRequirementInformationCheck ="/PersonRequirementInformationCheck/insertPersonRequirementInformationCheck/"
+
                 //需求个人
                 const val requirementPerson = "/RequirementPerson/insertRequirementPerson/"
                 //需求主网
@@ -538,40 +541,98 @@ class Constants {
                 const val sendLogin="/user/login"
             }
         }
-        class DisplayForRequirementAndSupply {
+        class DisplayForRequirement {
             companion object {
-                //需求个人
-                const val RequirementPerson="/RequirementPerson/getListByPage/{page}"
+                //根据查询条件查询需求个人的数量
+                const val RequirementPerson="/RequirementPerson/getAllByQueryConditions"
+                //                //根据id查询需求个人详情
+                const val RequirementPersonDetail="/RequirementPerson/getRequirementPerson/{id}"
+
+                //根据查询条件查询需求团队的数量
+                const val ReqiurementTeam="/RequirementTeam/getRequirementTeamDTOList"
                 //需求团队 变电
-                const val RequirementPowerTransformation="/RequirementPowerTransformation/getAllFromTable/{page}/{number}"
+                const val RequirementPowerTransformation="/RequirementPowerTransformation/getRequirementPowerTransformation/{id}"
                 //需求团队 主网
-                const val RequirementMajorNetwork="/RequirementMajorNetwork/getRequirementMajorNetworkDTO/{page}"
+                const val RequirementMajorNetwork="/RequirementMajorNetwork/getRequirementMajorNetwork/{id}"
                 //需求团队 配网
-                const val RequirementDistribuionNetwork="/RequirementDistribuionNetwork/getListByPage/{page}"
+                const val RequirementDistributionNetwork="/RequirementDistribuionNetwork/getRequirementDistribuionNetwork/{id}"
                 //需求团队 测量设计
-                const val RequirementMeasureDesign="/RequirementMeasureDesign/getListByPage/{page}"
+                const val RequirementMeasureDesign="/RequirementMeasureDesign/getRequirementMeasureDesign/{id}"
                 //需求团队 马帮运输
-                const val RequirementCaravanTransport="/RequirementCaravanTransport/getListByPage/{page}"
+                const val RequirementCaravanTransport="/RequirementCaravanTransport/getRequirementCaravanTransport/{id}"
                 //需求团队 桩机服务
-                const val RequirementPileFoundation="/RequirementPileFoundation/getAllFromTable/{page}/{number}"
+                const val RequirementPileFoundation="/RequirementPileFoundation/getRequirementPileFoundation/{id}"
                 //需求团队 非开挖拉管顶管作业
-                const val RequirementUnexcavation="/RequirementUnexcavation/getAllFromTable/{page}/{number}"
+                const val RequirementUnexcavation="/RequirementUnexcavation/getRequirementUnexcavation/{id}"
                 //需求团队 试验调试
-                const val RequirementTest="/RequirementTest/getAllFromTable/{page}/{number}"
+                const val RequirementTest="/RequirementTest/getRequirementTest/{id}"
                 //需求团队 跨越架
-                const val RequirementSpanWoodenSupprt="/RequirementSpanWoodenSupprt/getAllFromTable/{page}/{number}"
+                const val RequirementSpanWoodenSupprt="/RequirementSpanWoodenSupprt/getRequirementSpanWoodenSupprt/{id}"
                 //需求团队 运行维护
-                const val RequirementRunningMaintain="/RequirementRunningMaintain/getAllFromTable/{page}/{number}"
+                const val RequirementRunningMaintain="/RequirementRunningMaintain/getRequirementRunningMaintain/{id}"
+
+                //根据查询条件查询需求租赁数量
+                const val RequirementLease="RequirementLease/getRequirementLeaseDTOList"
                 //需求租赁 车辆租赁
-                const val RequirementLeaseCar="RequirementLeaseCar/getListByPage/{page}"
+                const val RequirementLeaseCar="/RequirementLeaseCar/getRequirementLeaseCar/{id}"
                 //需求租赁 机械租赁
-                const val RequirementLeaseMachinery="RequirementLeaseMachinery/getListByPage/{page}"
+                const val RequirementLeaseMachinery="/RequirementLeaseMachinery/getRequirementLeaseMachinery/{id}"
                 //需求租赁 设备租赁
-                const val RequirementLeaseFacility="RequirementLeaseFacility/getListByPage/{page}"
+                const val RequirementLeaseFacility="RequirementLeaseFacility/getRequirementLeaseFacility/{id}"
                 //需求租赁 工器具租赁
-                const val RequirementLeaseConstructionTool="/RequirementLeaseConstructionTool/getListByPage/{page}"
+                const val RequirementLeaseConstructionTool="/RequirementLeaseConstructionTool/getRequirementLeaseConstructionTool/{id}"
+
+                //根据查询条件查询需求三方
+                const val RequirementThirdParty="/RequirementThirdParty/getAllByQueryConditions"
                 //需求三方
-                const val RequirementThirdParty="/RequirementThirdParty//getListByPage/{page}"
+                const val RequirementThirdPartyDetail="/RequirementThirdParty/getRequirementThirdParty/{id}"
+            }
+        }
+        class DisplayForSupply{
+            companion object{
+                //个人劳务根据查询条件查询数量
+                const val PersonalIssue="/PersonalIssue/insertListPersonalIssue"
+                //个人劳务根据id查询
+                const val PersonalIssueDetail="/PersonalIssue/insertPersonalIssue/{id}"
+
+                //团队服务根据查询条件查询数量
+                const val TeamIssue="/RunningMaintain/getRunningMaintainALLDTOALL"
+                //马帮运输
+                const val CaravanTransport="/CaravanTransport/selectCaravanTransportDTO/{id}"
+                //试验调试
+                const val TestTeam="/TestTeam/getTestTeam/{id}"
+                //跨越架
+                const val SpanWoodenSupprt="/SpanWoodenSupprt/getSpanWoodenSupprt/{id}"
+                //运行维护
+                const val RunningMaintain="/RunningMaintain/getRunningMaintain/{id}"
+                //非开挖
+                const val Unexcavation="/Unexcavation/getUnexcavation/{id}"
+                //桩机服务
+                const val PileFoundation="/PileFoundation/selectPileFoundationDTO/{id}"
+                //配网施工队
+                const val DistribuionNetwork="/DistribuionNetwork/selectDistribuionNetworkDTO/{id}"
+                //主网施工队
+                const val MajorNetwork="/MajorNetwork/selectMajorNetworkDTO/{id}"
+                //变电施工队
+                const val PowerTransformation="/PowerTransformation/selectPowerTransformationDTO/{id}"
+                //测量设计
+                const val MeasureDesign="/MeasureDesign/selectMeasureDesignDTO/{id}"
+
+                //租赁服务
+                const val LeaseIssue="/Lease/getLeaseDTOList"
+                //车辆租赁
+                const val LeaseCar="/LeaseCar/getLeaseCarById/{id}"
+                //设备租赁
+                const val LeaseFacility="/LeaseFacility/getLeaseFacilityById/{id}"
+                //工器具租赁
+                const val LeaseConstructionTool="/LeaseConstructionTool/getLeaseConstructionToolById/{id}"
+                //机械租赁
+                const val LeaseMachinery="/LeaseMachinery/getLeaseMachineryById/{id}"
+
+                //三方
+                const val ThirdIssue="/Third/selectBy"
+                //详情
+                const val ThirdIssueDetail="/Third/selectThirdServices/{id}"
             }
         }
     }

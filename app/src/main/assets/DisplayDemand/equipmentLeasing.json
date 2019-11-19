@@ -16,7 +16,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计划工期（月）:",
+    "singleDisplayRightTitle":"计划工期(月):",
     "singleDisplayRightContent":"xxx"
   },
   {
@@ -59,7 +59,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
   },
   {

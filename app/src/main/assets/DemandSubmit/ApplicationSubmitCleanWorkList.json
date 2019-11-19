@@ -1,5 +1,10 @@
 ﻿[
   {
+    "type": "TITLE",
+    "title1": "信息详情",
+    "styleType": "3"
+  },
+  {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"岗位类别："
   },
@@ -18,6 +23,8 @@
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注"
+    "textAreaTitle":"备注",
+    "textAreaContent":"",
+    "necessary":false
   }
 ]

@@ -70,11 +70,12 @@
         app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_information_certification"
         app:layout_constraintTop_toBottomOf="@+id/view_subject_category_sp">
 
         <FrameLayout
@@ -83,4 +84,20 @@
             android:layout_height="wrap_content"
             android:background="#efefef" />
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_information_certification"
+
+        android:layout_width="@dimen/general_258"
+        android:layout_height="@dimen/general_43"
+        android:background="@drawable/btn_style3"
+        android:textSize="@dimen/font_tv_normal_16"
+
+        android:text="提交认证"
+
+        android:layout_marginTop="@dimen/top_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

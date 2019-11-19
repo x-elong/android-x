@@ -119,7 +119,46 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_ali_pay_payment"
         app:layout_constraintEnd_toEndOf="@+id/view_ali_pay_payment"
         app:layout_constraintTop_toTopOf="@+id/view_ali_pay_payment" />
-    
+
+    <View
+        android:id="@+id/view_num_payment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_54"
+        android:layout_marginTop="@dimen/top_15"
+        android:background="@drawable/tv_style"
+        app:layout_constraintTop_toBottomOf="@+id/view_ali_pay_payment" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="@dimen/general_42"
+        android:layout_height="@dimen/general_42"
+        android:layout_marginStart="@dimen/left_20"
+        android:background="@drawable/ali_pay_payment"
+        app:layout_constraintBottom_toBottomOf="@+id/view_num_payment"
+        app:layout_constraintStart_toStartOf="@+id/view_num_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_num_payment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_10"
+        android:text="推广人数支付"
+        android:textColor="#464649"
+        android:textSize="@dimen/font_tv_normal_24"
+        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/textView9" />
+    <RadioButton
+        android:id="@+id/radio_btn_num_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/right_20"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:buttonTint="#2a82e4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_num_payment"
+        app:layout_constraintEnd_toEndOf="@+id/view_num_payment"
+        app:layout_constraintTop_toTopOf="@+id/view_num_payment" />
+
     <Button
         android:id="@+id/btn_confirmed_pay"
         android:layout_width="@dimen/general_326"

@@ -14,6 +14,8 @@ class MyVipActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_vip)
-        FragmentHelper.addFragment(this, VipPrivilegesFragment(),R.id.frame_vip,"")
+        tv_my_vip_privileges_information_back.setOnClickListener {
+            finish()
+        }
     }
 }

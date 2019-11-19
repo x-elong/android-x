@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/general_5"
+
+    android:layout_marginStart="@dimen/left_5"
+    android:layout_marginEnd="@dimen/right_5"
     android:padding="@dimen/general_5"
     android:background="@drawable/item_background">
 
@@ -12,11 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="需求类别："
+        android:visibility="gone"
         android:textSize="@dimen/font_tv_hint_14"
         android:textColor="@color/black"
+        android:layout_marginStart="@dimen/general_8"
         android:id="@+id/tv_display_demand_team_title1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_display_demand_team_title2"/>
 
     <TextView
@@ -35,6 +38,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_display_demand_team_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +54,6 @@
         android:id="@+id/tv_demand_demand_team_content2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_5"
         android:layout_marginTop="@dimen/general_7"
         android:text="湖南省娄底市娄星区人文科技学gfhgfhgfhfghgfhhfghgfhgfhfghgf院"
         android:textColor="@color/font_color_blue"

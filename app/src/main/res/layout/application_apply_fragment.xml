@@ -5,64 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <View
-        android:id="@+id/tv_application_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_37"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/tv_application_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
-        android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_application_title"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:gravity="center"
-        android:text="报名"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_tv_normal_17"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tv_application_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_application_view"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/tv_application_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_tv_normal_17"
-        android:textStyle="bold"
-        android:layout_marginEnd="@dimen/general_16"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_application_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_application_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_application_view"
-        tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tv_application_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/general_8"
-        android:layout_marginEnd="@dimen/general_8"
-        android:layout_marginBottom="@dimen/general_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_application_view"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

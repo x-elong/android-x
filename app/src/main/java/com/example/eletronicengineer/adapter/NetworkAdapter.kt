@@ -12,7 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.MyVipActivity
 import com.example.eletronicengineer.activity.ProfessionalActivity
+import com.example.eletronicengineer.activity.SubscribeActivity
+import com.example.eletronicengineer.activity.VipActivity
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
@@ -343,7 +346,6 @@ class NetworkAdapter {
         this.mData = mData
         this.context = context
     }
-
     fun generateJsonRequestBody(baseUrl: String) {
         val loadingDialog = LoadingDialog(context, "正在发布...", R.mipmap.ic_dialog_loading)
         loadingDialog.show()
@@ -5309,7 +5311,7 @@ class NetworkAdapter {
             it.onNext(requestBody)
         }.subscribe {
             val result =
-                putSimpleMessage(it, ApiConfig.BasePath + baseUrl).observeOn(AndroidSchedulers.mainThread())
+                putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + baseUrl).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
@@ -5423,7 +5425,10 @@ class NetworkAdapter {
          }
     }
 
-    //创建商品支付订单
+    /**
+     * @微信创建商品支付订单
+     */
+
     fun creatDataOrder(productId:String){
         creatOrder(productId).subscribeOn(Schedulers.io()).observeOn(
             AndroidSchedulers.mainThread())
@@ -5435,6 +5440,40 @@ class NetworkAdapter {
                     context.startActivity(intent)
                 }
             },{
+                ToastHelper.mToast(context,"网络异常")
+                it.printStackTrace()
+            })
+    }
+
+    /**
+     * @支付宝创建商品支付订单
+     */
+
+    fun getAliPayOrder(productId:String){
+        getAliPayOrderStr(productId).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread())
+            .subscribe({
+                    PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"))
+            },{
+                ToastHelper.mToast(context,"网络异常")
+                it.printStackTrace()
+            })
+    }
+
+    /**
+     * @推广人数支付
+     */
+
+    fun numPay(productId:String){
+        numPayCreatOrder(productId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                val json = JSONObject(it.string())
+                val message = json.getString("message")
+                if(json.getString("payDesc")=="OK")
+                    (context as VipActivity).supportFragmentManager.popBackStackImmediate()
+                    ToastHelper.mToast(context,message)
+            },{
+                ToastHelper.mToast(context,"网络异常")
                 it.printStackTrace()
             })
     }

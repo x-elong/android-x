@@ -16,11 +16,4 @@ class MyRegistrationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_registration)
         FragmentHelper.addFragment(this,MyRegistrationFragment(),R.id.frame_my_registration,"")
     }
-    fun switchFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.frame_my_registration, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 }

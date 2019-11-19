@@ -210,9 +210,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     var expandPosition:Int=-1
     val VHList:MutableList<VH> =ArrayList()
     var urlPath:String=""
-    var baseUrl="http://10.1.5.141:8012"
-    //http://10.1.5.90:8012
-    //http://192.168.1.85:8018
     inner class VH:RecyclerView.ViewHolder
     {
         var itemPosition=-1
@@ -1337,6 +1334,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if(mData[position].submitListener!=null){
                     vh.btnSubmit.setOnClickListener(mData[position].submitListener)
                 }
+                else if(mData[position].submitContent.equals("报名")|| mData[position].submitContent.equals("联系对方"))
+                {
+                    vh.btnSubmit.setOnClickListener(mData[position].submitListener)
+                }
                 else{
                     vh.btnSubmit.setOnClickListener{
                         val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
@@ -1345,18 +1346,18 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                             if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
                             {
                                 if(mData[position].key=="Provider")
-                                    provider.generateMultiPartRequestBody(baseUrl+urlPath)
+                                    provider.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
                                 else
-                                    networkAdapter.generateMultiPartRequestBody(baseUrl+urlPath)
+                                    networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
                                 //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
                             }
                             else
                             {
                                 //startSendMessage(map,baseUrl+urlPath)
                                 if(mData[position].key=="Provider")
-                                    provider.generateJsonRequestBody(baseUrl+urlPath)
+                                    provider.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
                                 else
-                                    networkAdapter.generateJsonRequestBody(baseUrl+urlPath)
+                                    networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
                             }
                         }
 
@@ -1449,7 +1450,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_DISPLAY_RIGHT_TYPE->
             {
-                vh.tvsingleDisplayRightTitle.text=mData[position].singleDisplayRightTitle
+                vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity
+                val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
+                val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
+                val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
+                if(startPosition>-1)
+                    sp.setSpan(AbsoluteSizeSpan((14*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                vh.tvsingleDisplayRightTitle.text=sp
                 vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)

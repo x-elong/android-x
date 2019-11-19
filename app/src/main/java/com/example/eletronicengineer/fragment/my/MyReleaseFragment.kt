@@ -82,7 +82,6 @@ class MyReleaseFragment :Fragment(){
     lateinit var mView:View
     var page = 1
     var pageCount = 1
-    var baseUrl = "http://10.1.5.141:8012"
     lateinit var adapter:RecyclerviewAdapter
     var tvMode = "需求 需求个人"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -182,7 +181,7 @@ class MyReleaseFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getDemandIndividual)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getDemandIndividual)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -231,7 +230,7 @@ class MyReleaseFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getDemandGroup)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getDemandGroup)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -278,7 +277,7 @@ class MyReleaseFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getDemandLease)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getDemandLease)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -328,7 +327,7 @@ class MyReleaseFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getDemandTripartite)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getDemandTripartite)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -419,7 +418,7 @@ class MyReleaseFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getTeamService)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getTeamService)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

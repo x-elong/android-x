@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SubscribeActivity
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_subscribe.view.*
 
 class SubscribeFragment :Fragment(){
@@ -39,7 +40,7 @@ class SubscribeFragment :Fragment(){
             else{
                 val bundle = Bundle()
                 bundle.putIntegerArrayList("SubscribeContent",subscribeItems)
-                (activity as SubscribeActivity).switchFragment(ConfirmedSubscribeFragment.newInstance(bundle),"")
+                FragmentHelper.switchFragment(activity!!,ConfirmedSubscribeFragment.newInstance(bundle),R.id.frame_subscribe,"")
             }
 
         }

@@ -26,7 +26,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话：",
+    "singleDisplayRightTitle":"法人联系电话：",
     "singleDisplayRightContent":"00"
   },
   {
@@ -56,8 +56,20 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"经营范围:",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"发布人所属地点:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
   },
   {
     "type":"SUBMIT",

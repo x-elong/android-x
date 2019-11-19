@@ -19,6 +19,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_enterprise_re_certification.view.*
+import kotlinx.android.synthetic.main.fragment_information_certification.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -126,7 +127,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it, "http://10.1.5.141:8032" + Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -179,7 +180,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -234,7 +235,9 @@ class EnterpriseReCertificationFragment :Fragment(){
                     it.printStackTrace()
                 })
         }
-
+        activity!!.btn_information_certification.setOnClickListener {
+            mView.btn_re_enterprise_certification.callOnClick()
+        }
         mView.btn_re_enterprise_certification.setOnClickListener {
             initImagePath()
             uploadImg()
@@ -323,7 +326,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = putSimpleMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.enterpriseReCertification)
+            val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.enterpriseReCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

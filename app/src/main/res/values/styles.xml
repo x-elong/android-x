@@ -7,10 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="LoadingDialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">#2a82e4</item>
@@ -24,4 +26,13 @@
         <!-- <item name="android:background">@drawable/nav_page</item> -->
         <item name="android:background">@color/navpage</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

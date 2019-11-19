@@ -1,0 +1,39 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"序号：",
+    "singleDisplayRightContent":""
+  },
+  {
+  "type":"SINGLE_DISPLAY_RIGHT",
+  "singleDisplayRightTitle":"机械类型：",
+  "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"特征描述：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"数量：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"单位：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"发布人所属地点:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"备注：",
+    "singleDisplayRightContent":""
+  }
+]

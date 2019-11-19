@@ -49,7 +49,7 @@ class AddBankCardFragment :Fragment(){
                 it.onNext(requestBody)
             }.subscribe {
                 val result = startSendMessage(it,
-                    UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertBankCard).subscribeOn(
+                    UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.insertBankCard).subscribeOn(
                     Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

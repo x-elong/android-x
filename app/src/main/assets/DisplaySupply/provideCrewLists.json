@@ -1,0 +1,44 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"姓名：",
+    "singleDisplayRightContent":""
+  },
+  {
+  "type":"SINGLE_DISPLAY_RIGHT",
+  "singleDisplayRightTitle":"性别：",
+  "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"年龄：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工作类型：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工作经验：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"薪资要求：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"发布人所属地点:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"备注：",
+    "singleDisplayRightContent":""
+  }
+]

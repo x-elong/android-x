@@ -1,43 +1,66 @@
 ﻿[
   {
     "type":"TITLE",
-    "title": "报名",
-    "style": "0"
+    "title1": "报名",
+    "styleType": "0",
+    "key":"requirementType",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目名称:",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightContent":" ",
+    "key":"requirementType",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类型:",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightContent":" ",
+    "key":"requirementType",
+    "sendFormat": "String"
+
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求专业:",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightContent":" ",
+    "key":"requirementType",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人姓名:",
-    "singleDisplayRightContent":"***"
+    "singleDisplayRightContent":"***",
+    "key":"requirementType",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人电话:",
-    "singleDisplayRightContent":"***"
+    "singleDisplayRightContent":"***",
+    "key":"requirementType",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"成员清册",
-    "buttonName":["上传"]
+    "buttonName":["上传"],
+    "key": "chengyuanlist",
+    "sendFormat": "MemberList"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary": true
+    "necessary":false,
+    "key":"requirementType",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SUBMIT",
+    "submitContent":"确认并提交",
+    "key":"requirementType",
+    "sendFormat": "String"
   }
 ]

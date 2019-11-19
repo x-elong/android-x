@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
@@ -61,9 +62,14 @@ class ImageFragment:Fragment(){
         key = arguments!!.getString("key")
         val title = arguments!!.getString("title")
         mView=inflater.inflate(R.layout.fragment_image,container,false)
+        if(activity is SupplyActivity)
+            mView.bt_image.visibility = View.GONE
         mView.tv_image_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
-            UnSerializeDataBase.imgList.clear()
+            if((activity is  SupplyActivity))
+                Log.i("","")
+            else
+                UnSerializeDataBase.imgList.clear()
         }
         mView.bt_image.setOnClickListener {
             if(UnSerializeDataBase.imgList.size==0)
@@ -101,7 +107,6 @@ class ImageFragment:Fragment(){
     fun refresh(mImagePaths:ArrayList<String>){
         var isExit = false
         var imagesPath = ""
-
         for (i in UnSerializeDataBase.imgList){
             if(i.key==key){
                 var imagePaths = i.path.split("|").toMutableList()
@@ -123,6 +128,13 @@ class ImageFragment:Fragment(){
         val imageList:ArrayList<Image> = ArrayList()
         for (j in this.mImagePaths){
             imageList.add(Image(j,null))
+            imageList[imageList.size-1].deleteListener = View.OnClickListener {
+                val mImageList = mAdapter.mImageList.toMutableList()
+                mImageList.removeAt(this.mImagePaths.indexOf(j))
+                mAdapter.mImageList = mImageList
+                mAdapter.notifyDataSetChanged()
+                delect(j)
+            }
         }
         imageList.add(lastImage)
         mAdapter = ImageAdapter(imageList)
@@ -137,6 +149,8 @@ class ImageFragment:Fragment(){
                 var imagesPath = mImagePaths.toString().replace(", ","|")
                 imagesPath = imagesPath.substring(1,imagesPath.length-1)
                 i.path=imagesPath
+                if(i.path=="")
+                    UnSerializeDataBase.imgList.remove(i)
                 break
             }
         }

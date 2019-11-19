@@ -88,10 +88,10 @@ class InventoryFragment : Fragment() {
             mData.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,itemMultiStyleItem[1].inputSingleContent,false))
             mData[mData.size-1].itemMultiStyleItem = itemMultiStyleItem
             mData[mData.size-1].jumpListener = View.OnClickListener {
-                adapter!!.mData[0].selected = mData.size-1
+                mData[0].selected = mData.size-1
                 val bundle = Bundle()
                 bundle.putSerializable("inventoryItem",mData[mData.size-1].itemMultiStyleItem as Serializable)
-                FragmentHelper.switchFragment(activity!!,InventoryItemMoreFragment.newInstance(bundle),R.id.frame_supply,"")
+                FragmentHelper.switchFragment(mView.context as SupplyActivity,InventoryItemMoreFragment.newInstance(bundle),R.id.frame_supply,"")
             }
             adapter!!.mData = mData
             adapter!!.notifyItemInserted(mData.size-1)

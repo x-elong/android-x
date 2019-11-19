@@ -1,5 +1,10 @@
 ﻿[
   {
+    "type": "TITLE",
+    "title1": "信息详情",
+    "styleType": "3"
+  },
+  {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"拍照号码："
   },
