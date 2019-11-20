@@ -1,12 +1,5 @@
 ﻿[
   {
-    "type":"TITLE",
-    "title1": "报名",
-    "styleType": "0",
-    "key":"requirementType",
-    "sendFormat": "String"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目名称:",
     "singleDisplayRightContent":" ",

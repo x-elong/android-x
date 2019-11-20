@@ -43,7 +43,7 @@ class ProjectListDetailFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_demand_display, container, false)
-        view.tv_display_demand_title.text = "清册详情"
+        view.tv_demand_display_title.text = "清册详情"
         type = arguments!!.getInt("type")
         when (type) {
             1, 3,24 -> listData1 =
@@ -68,7 +68,7 @@ class ProjectListDetailFragment:Fragment() {
     }
 
     private fun initFragment(view: View) {
-        view.tv_display_demand_back.setOnClickListener {
+        view.tv_demand_display_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
 //        view.tv_display_demand_add.visibility=View.VISIBLE
@@ -94,8 +94,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[3].singleDisplayRightContent=if(listData1.units==null){"无数据"}else{ listData1.units}
                 adapter.mData[4].singleDisplayRightContent="乙方填写"
                 adapter.mData[5].singleDisplayRightContent=if(listData1.detailsExplain==null){"无数据"}else{ listData1.detailsExplain}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             2 ->//清工薪资
             {
@@ -105,8 +105,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[2].singleDisplayRightContent = if(listData2.salaryStandard==null){"无数据"}else{ listData2.salaryStandard}
                 adapter.mData[3].singleDisplayRightContent = if(listData2.personCertificate==null){"无数据"}else{ listData2.personCertificate}
                 adapter.mData[4].singleDisplayRightContent = if(listData2.remark==null){"无数据"}else{ listData2.remark}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager =
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager =
                     LinearLayoutManager(view.context)
             }
             3 ->//清单报价
@@ -118,8 +118,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[3].singleDisplayRightContent = if(listData1.units==null){"无数据"}else{ listData1.units}
                 adapter.mData[4].singleDisplayRightContent = "乙方填写"
                 adapter.mData[5].singleDisplayRightContent = if(listData1.detailsExplain==null){"无数据"}else{ listData1.detailsExplain}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager =
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager =
                     LinearLayoutManager(view.context)
             }
             4 ->//乙供清单
@@ -130,8 +130,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[2].singleDisplayRightContent = if(listData3.quantity==null){"无数据"}else{ listData3.quantity}
                 adapter.mData[3].singleDisplayRightContent = if(listData3.units==null){"无数据"}else{ listData3.units}
                 adapter.mData[4].singleDisplayRightContent = if(listData3.details==null){"无数据"}else{ listData3.details}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager =
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager =
                     LinearLayoutManager(view.context)
             }
             5 ->//需求租赁清单
@@ -145,8 +145,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[5].singleDisplayRightContent = if(listData4.hireTime==null){"无数据"}else{ listData4.hireTime }
                 adapter.mData[6].singleDisplayRightContent = "乙方填写"
                 adapter.mData[7].singleDisplayRightContent = if(listData4.detailsExplain==null){"无数据"}else{ listData4.detailsExplain }
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager =
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager =
                     LinearLayoutManager(view.context)
             }
             6 ->//需求三方
@@ -159,8 +159,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[4].singleDisplayRightContent = if(listData5.units==null){"无数据"}else{ listData5.units }
                 adapter.mData[5].singleDisplayRightContent = "乙方填写"
                 adapter.mData[6].singleDisplayRightContent = if(listData5.detailsExplain==null){"无数据"}else{ listData5.detailsExplain }
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager =
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager =
                     LinearLayoutManager(view.context)
             }
             7->//成员清册
@@ -173,8 +173,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[4].singleDisplayRightContent = if(listData7.workExperience==null){"无数据"}else{ listData7.workExperience }
                 adapter.mData[5].singleDisplayRightContent = if(listData7.money==null && listData7.salaryUnit==null){"无数据"} else{"${listData7.money} ${listData7.salaryUnit}"}
                 adapter.mData[6].singleDisplayRightContent = if(listData7.remark==null){"无数据"}else{ listData7.remark }
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             8->//车辆清册
             {
@@ -187,8 +187,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[5].singleDisplayRightContent = if(listData8.lenghtCar==null){"无数据"} else{listData8.lenghtCar}
                 adapter.mData[6].singleDisplayRightContent = if(listData8.isDriver==null){"无数据"}else{ listData8.isDriver}
                 adapter.mData[7].singleDisplayRightContent = if(listData8.isInsurance==null){"无数据"}else{ listData8.isInsurance }
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             9->//机械清册
             {
@@ -199,8 +199,8 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[3].singleDisplayRightContent = if(listData9.quantity==null){"无数据"}else{ listData9.quantity }
                 adapter.mData[4].singleDisplayRightContent = if(listData9.unit==null){"无数据"}else{ listData9.unit }
                 adapter.mData[5].singleDisplayRightContent = if(listData9.remark==null){"无数据"} else{listData9.remark}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             10->//工器具
             {
@@ -211,35 +211,35 @@ class ProjectListDetailFragment:Fragment() {
                 adapter.mData[3].singleDisplayRightContent = if(listData10.quantity==null){"无数据"}else{ listData10.quantity }
                 adapter.mData[4].singleDisplayRightContent = if(listData10.unit==null){"无数据"}else{ listData10.unit }
                 adapter.mData[5].singleDisplayRightContent = if(listData10.remark==null){"无数据"} else{listData10.remark}
-                view.tv_fragment_demand_display_content.adapter = adapter
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = adapter
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             /* 20 ->//成员清册
              {
                  adapter = adapterGenerate.ApplicationSubmitDetailList(type)
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              21 ->//车辆清册
              {
                  adapter = adapterGenerate.ApplicationSubmitDetailList(type)
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              22 ->//机械清册
              {
                  adapter = adapterGenerate.ApplicationSubmitDetailList(type)
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              23 ->//清工薪资清册 listData2
              {
                  adapter = adapterGenerate.ApplicationSubmitDetailList(type)
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              24 ->//清单报价清册 listData1
@@ -250,8 +250,8 @@ class ProjectListDetailFragment:Fragment() {
                  adapter.mData[2].singleDisplayRightContent = if( listData1.quantity ==null){"无数据"}else{  listData1.quantity  }
                  adapter.mData[3].singleDisplayRightContent =   if( listData1.units ==null){"无数据"}else{  listData1.units  }
                  adapter.mData[5].singleDisplayRightContent =  if( listData1.detailsExplain ==null){"无数据"}else{ listData1.detailsExplain  }
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              25 ->//需求租赁清册 listData4
@@ -263,8 +263,8 @@ class ProjectListDetailFragment:Fragment() {
  //                adapter.mData[3].singleDisplayRightContent = listData1.units
  //                adapter.mData[5].singleDisplayRightContent = listData1.detailsExplain
                  adapter.mData[4].singleDisplayRightContent=  if( listData4.quotationList ==null){"无数据"}else{ listData4.quotationList }
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }
              26 ->//需求三方清册 listData5
@@ -276,8 +276,8 @@ class ProjectListDetailFragment:Fragment() {
  //                adapter.mData[3].singleDisplayRightContent = listData1.units
  //                adapter.mData[5].singleDisplayRightContent = listData1.detailsExplain
                  adapter.mData[4].singleDisplayRightContent= if( listData5.quotationList ==null){"无数据"}else{ listData5.quotationList }
-                 view.tv_fragment_demand_display_content.adapter = adapter
-                 view.tv_fragment_demand_display_content.layoutManager =
+                 view.rv_demand_display_content.adapter = adapter
+                 view.rv_demand_display_content.layoutManager =
                      LinearLayoutManager(view.context)
              }*/
         }

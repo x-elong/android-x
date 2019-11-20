@@ -1,10 +1,5 @@
 ﻿[
   {
-    "type":"TITLE",
-    "title1": "报名",
-    "styleType": "0"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目名称:",
     "singleDisplayRightContent":" "
@@ -49,11 +44,5 @@
     "textAreaTitle":"备注",
     "textAreaContent":"",
     "necessary":false
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交",
-    "key":"requirementType",
-    "sendFormat": "String"
   }
 ]

@@ -1,7 +1,7 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类别:",
+    "singleDisplayRightTitle":"租赁类型:",
     "singleDisplayRightContent":"xxx"
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计划工期(月):",
+    "singleDisplayRightTitle":"施工工期(月):",
     "singleDisplayRightContent":"xxx"
   },
   {
@@ -71,7 +71,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"路程车费:",
+    "singleDisplayRightTitle":"路程车旅费:",
     "singleDisplayRightContent":"00"
   },
   {
@@ -82,11 +82,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆(辆):",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"机械设备:",
     "singleDisplayRightContent":"00"
   },
   {
@@ -104,12 +99,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期(天):",
+    "singleDisplayRightTitle":"发布有效期(天):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注:",
+    "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
   },
   {

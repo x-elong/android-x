@@ -20,11 +20,6 @@
     "singleDisplayRightContent":"xxx"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
-    "buttonName":["点击查看"]
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"运输材型:",
     "singleDisplayRightContent":"00"
@@ -84,12 +79,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期(天):",
+    "singleDisplayRightTitle":"发布有效期(天):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注:",
+    "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
   },
   {

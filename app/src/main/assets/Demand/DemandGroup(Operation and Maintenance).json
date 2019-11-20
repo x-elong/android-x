@@ -1,12 +1,5 @@
 ﻿[
   {
-    "type":"TITLE",
-    "title1":"需求团队",
-    "styleType": "0",
-    "key":"requirementType",
-    "sendFormat":"String"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
     "singleDisplayRightContent":"运行维护施工队",
@@ -35,8 +28,8 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
-    "buttonName":["下载模板","拍照","上传附件"],
+    "buttonTitle":"车辆",
+    "buttonName":["车辆清册"],
     "additionalKey":"requirementTeamProjectListFile"
   },
   {
@@ -61,6 +54,13 @@
     "sendFormat":"Long"
   },
   {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可实施范围",
+    "checkboxNameList":["土建","安装","调试"],
+    "key":"FesaibleRange",
+    "sendFormat":"String"
+  },
+  {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"食宿标准",
     "radioButtonName":["全包","自理"],
@@ -83,25 +83,11 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"薪资标准",
-    "buttonName":["清工薪资","清单报价"],
+    "buttonTitle":"岗位及薪资标准",
+    "buttonName":["成员清册"],
     "additionalKey":"requirementPowerTransformationSalaryFile requirementListQuotationFile",
     "key":"salaryStandard",
     "sendFormat":"String"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"车辆",
-    "inputUnit":"(辆)",
-    "key":"vehicle",
-    "sendFormat":"Long"
-  },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"机械设备",
-    "radioButtonName":["可提供","不提供"],
-    "key":"machineEquipment",
-    "sendFormat":"Long"
   },
   {
     "type":"INPUT_WITH_UNIT",
@@ -111,34 +97,46 @@
     "sendFormat":"Long"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人",
-    "key": "name",
-    "sendFormat": "String"
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonTitle":"机械设备",
+    "radioButtonName":["全部提供","不需提供"],
+    "key":"machineEquipment",
+    "sendFormat":"Long"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
-    "key": "phone",
-    "sendFormat": "String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":" ",
+    "key":"name",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":" ",
+    "key":"phone",
+    "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
+    "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key":"validTime",
     "sendFormat":"Long"
   },
   {
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"可操作电压等级",
+    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
+    "key":"requirementTeamVoltageClasses",
+    "sendFormat":"String"
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加",
     "textAreaContent":"",
     "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
   }
 ]

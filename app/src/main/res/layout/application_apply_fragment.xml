@@ -5,15 +5,61 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <View
+        android:id="@+id/view_registration_more"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/tv_registration_more_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:background="@drawable/ic_back_xml"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintStart_toStartOf="@+id/view_registration_more"
+        app:layout_constraintTop_toTopOf="@+id/view_registration_more" />
+
+    <TextView
+        android:id="@+id/tv_registration_more_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="报名信息详情"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@id/view_registration_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/view_registration_more"
+        tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tv_application_content"
+        android:id="@+id/rv_registration_more_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/general_8"
+        android:layout_marginEnd="@dimen/general_8"
+        app:layout_constraintBottom_toTopOf="@id/button_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_registration_more"
         app:layout_constraintVertical_bias="0.0" />
+    <Button
+        android:id="@+id/button_ok"
+        android:layout_width="@dimen/general_268"
+        android:layout_height="@dimen/general_43"
+        android:background="@drawable/btn_style3"
+        android:text="确认并提交"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_registration_more_content"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

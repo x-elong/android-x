@@ -59,7 +59,7 @@ class ProjectListFragment:Fragment() {
     var constructionEquipmentNum:Int=-2
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_demand_display, container, false)
-        view.tv_display_demand_title.text="清册列表"
+        view.tv_demand_display_title.text="清册列表"
         type = arguments!!.getInt("type")
         when (type) {
             1, 3 ,24->
@@ -67,7 +67,7 @@ class ProjectListFragment:Fragment() {
                 if(arguments!!.getSerializable("listData1")== null) requirementSalary2 = 0
                 else{
                     listData1 = arguments!!.getSerializable("listData1") as List<requirementTeamProjectList>
-                    requirementSalary2 = if(listData1!!.isEmpty()) 0
+                    requirementSalary2 = if(listData1.isEmpty()) 0
                     else listData1.size
                 }
             }
@@ -76,7 +76,7 @@ class ProjectListFragment:Fragment() {
                 else
                 {
                     listData2 = arguments!!.getSerializable("listData2") as List<requirementPowerTransformationSalary>
-                    requirementSalary1 = if(listData2!!.isEmpty())  0
+                    requirementSalary1 = if(listData2.isEmpty())  0
                     else   listData2.size
                 }
             }
@@ -86,7 +86,7 @@ class ProjectListFragment:Fragment() {
                 if(arguments!!.getSerializable("listData4")==null)  requirementLease = 0
                 else{
                     listData4 = arguments!!.getSerializable("listData4") as List<requirementLeaseProjectList>
-                    requirementLease = if(listData4!!.isEmpty()) 0
+                    requirementLease = if(listData4.isEmpty()) 0
                     else listData4.size
                 }
 
@@ -95,7 +95,7 @@ class ProjectListFragment:Fragment() {
                 if(arguments!!.getSerializable("listData5")==null)  requirementThird = 0
                 else{
                     listData5 = arguments!!.getSerializable("listData5") as List<thirdLists>
-                    requirementThird = if(listData5!!.isEmpty()) 0
+                    requirementThird = if(listData5.isEmpty()) 0
                     else listData5.size
                 }
             }
@@ -124,7 +124,7 @@ class ProjectListFragment:Fragment() {
     private fun initFragment(view: View) {
         mProjectList.clear()
         //listAdapter=ProjectListAdapter()
-        view.tv_display_demand_back.setOnClickListener {
+        view.tv_demand_display_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         /*  view.tv_display_demand_add.setOnClickListener {
@@ -231,8 +231,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             2->//清工薪资
             {
@@ -259,8 +259,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             3->//清单报价
             {
@@ -286,8 +286,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             4->//乙供清单
             {
@@ -313,8 +313,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             5->{//需求租赁清单
                 for(i in listData4)
@@ -340,8 +340,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             6->{//需求三方
                 for(i in listData5)
@@ -367,8 +367,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             7->{//人员清册显示
                 for(i in listData7)
@@ -394,8 +394,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             8->{//车辆清册显示
                 for(i in listData8)
@@ -421,8 +421,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 
             }
             9->{//机械清册显示
@@ -449,8 +449,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
             10->{//工程量清册显示
                 for(i in listData10)
@@ -470,8 +470,8 @@ class ProjectListFragment:Fragment() {
                     var projectList = ProjectList(temp,listListener)
                     mProjectList.add(projectList)
                 }
-                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
             }
 
             /*  //成员清册
@@ -496,8 +496,8 @@ class ProjectListFragment:Fragment() {
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
 
-                  view.tv_fragment_demand_display_content.adapter =listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter =listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               21->{
                   view.tv_display_demand_add.visibility=View.VISIBLE
@@ -512,8 +512,8 @@ class ProjectListFragment:Fragment() {
                       mProjectList.add(projectList)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               22->{
                   view.tv_display_demand_add.visibility=View.VISIBLE
@@ -535,9 +535,9 @@ class ProjectListFragment:Fragment() {
                       mProjectList.add(projectList)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter =
+                  view.rv_demand_display_content.adapter =
                       listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager =
+                  view.rv_demand_display_content.layoutManager =
                       LinearLayoutManager(view.context)
 
               }
@@ -554,8 +554,8 @@ class ProjectListFragment:Fragment() {
                       var projectList = ProjectList((i+1).toString(),listListener)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               //清单报价
               24->{
@@ -586,8 +586,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               25->{//需求租赁清单
 
@@ -619,8 +619,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               26->{//需求三方清单
 
@@ -652,8 +652,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter =listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter =listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 
 
               }

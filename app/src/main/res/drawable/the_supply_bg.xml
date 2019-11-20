@@ -9,6 +9,9 @@
     <shape>
       <stroke android:width="@dimen/general_1"
               android:color="#4ca0fe"/>
+      <corners android:radius="@dimen/general_20"/>
+      <gradient android:startColor="#FF0CB40C" android:endColor="#ffffff" android:type="linear"/>
+
     </shape>
   </item>
 </selector>

@@ -1,7 +1,7 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布类别：",
+    "singleDisplayRightTitle":"供应类别:",
     "singleDisplayRightContent":"xxx"
   },
   {
@@ -11,8 +11,8 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"人员清册：",
-    "buttonName":["点击查看"]
+    "buttonTitle":"成员清册：",
+    "buttonName":["在线编辑"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -26,7 +26,7 @@
   },
   {
     "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"发布人所属地点:",
+    "selectTitle":"负责人所在地:",
     "placePath": "pcas.json",
     "key":"issuerBelongSite",
     "sendFormat":"String"

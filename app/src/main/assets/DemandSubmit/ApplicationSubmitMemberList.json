@@ -1,10 +1,5 @@
 ﻿[
   {
-    "type": "TITLE",
-    "title1": "成员清册详情",
-    "styleType": "3"
-  },
-  {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"姓名：",
     "key": "name",

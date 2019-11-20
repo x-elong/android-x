@@ -1,12 +1,5 @@
 [
   {
-    "type":"TITLE",
-    "title1":"需求个人",
-    "styleType": "0",
-    "key":"requirementType",
-    "sendFormat":"String"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
     "singleDisplayRightContent":"普工",
@@ -35,7 +28,7 @@
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"计划工期",
+    "inputUnitTitle":"施工工期",
     "inputUnit":"(月)",
     "key":"planTime",
     "sendFormat":"Long"
@@ -84,7 +77,7 @@
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"需要人数",
+    "inputUnitTitle":"需求人数",
     "inputUnit":"(人)",
     "key":"needPeopleNumber",
     "sendFormat":"Long"
@@ -98,34 +91,32 @@
 
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":" ",
     "key":"name",
     "sendFormat":"String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":" ",
     "key":"phone",
     "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
+    "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key":"validTime",
     "sendFormat":"Long"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加",
     "textAreaContent":"",
     "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
   }
 ]

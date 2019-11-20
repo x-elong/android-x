@@ -6,12 +6,56 @@
     android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+    <View
+        android:id="@+id/view_inventory_item_more"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_inventory_item_more_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintStart_toStartOf="@+id/view_inventory_item_more"
+        app:layout_constraintTop_toTopOf="@+id/view_inventory_item_more"
+        android:background="@drawable/ic_back_xml"
 
+        />
+
+    <TextView
+        android:id="@+id/tv_inventory_item_more_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="xxx"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@id/view_inventory_item_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/view_inventory_item_more"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_select_ok"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_ok"
+        android:gravity="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_inventory_item_more_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_inventory_item_more_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_inventory_item_more"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

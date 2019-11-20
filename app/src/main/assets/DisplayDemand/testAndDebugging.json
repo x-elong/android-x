@@ -21,8 +21,8 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
-    "buttonName":["点击查看"]
+    "buttonTitle":"车辆",
+    "buttonName":["车辆清册"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -77,12 +77,7 @@
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"薪资标准:",
-    "buttonName":["清工薪资","清单报价"]
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆(辆):",
-    "singleDisplayRightContent":"00"
+    "buttonName":["成员清册"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -104,12 +99,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期(天):",
+    "singleDisplayRightTitle":"发布有效期(天):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注:",
+    "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
   },
   {

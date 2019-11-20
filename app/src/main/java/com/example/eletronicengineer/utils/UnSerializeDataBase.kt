@@ -15,12 +15,12 @@ import java.io.File
  */
 object UnSerializeDataBase
 {
-  const val upmsBasePath = "http://ycdlfw.com:8026"
-  const val dmsBasePath = "http://ycdlfw.com:8012"
-  const val mineBasePath = "http://ycdlfw.com:8032"
-//  const val upmsBasePath = "http://10.1.5.141:8026"
-//  const val dmsBasePath = "http://10.1.5.141:8012"
-//  const val mineBasePath = "http://10.1.5.141:8032"
+//  const val upmsBasePath = "http://ycdlfw.com:8026"
+//  const val dmsBasePath = "http://ycdlfw.com:8012"
+//  const val mineBasePath = "http://ycdlfw.com:8032"
+  const val upmsBasePath = "http://10.1.5.141:8026"
+  const val dmsBasePath = "http://10.1.5.141:8012"
+  const val mineBasePath = "http://10.1.5.141:8032"
   var userToken=""
   var cookie:String =""
   var userName:String=""

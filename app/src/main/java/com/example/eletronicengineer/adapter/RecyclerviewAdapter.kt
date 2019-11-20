@@ -1334,10 +1334,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if(mData[position].submitListener!=null){
                     vh.btnSubmit.setOnClickListener(mData[position].submitListener)
                 }
-                else if(mData[position].submitContent.equals("报名")|| mData[position].submitContent.equals("联系对方"))
-                {
-                    vh.btnSubmit.setOnClickListener(mData[position].submitListener)
-                }
                 else{
                     vh.btnSubmit.setOnClickListener{
                         val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
@@ -1450,13 +1446,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_DISPLAY_RIGHT_TYPE->
             {
-                vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity
-                val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
-                val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
-                val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
-                if(startPosition>-1)
-                    sp.setSpan(AbsoluteSizeSpan((14*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                vh.tvsingleDisplayRightTitle.text=sp
+                vh.tvsingleDisplayRightTitle.text=mData[position].singleDisplayRightTitle
                 vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)

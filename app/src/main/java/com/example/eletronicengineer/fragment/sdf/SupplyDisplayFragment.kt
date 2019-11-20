@@ -22,7 +22,7 @@ import com.example.eletronicengineer.utils.getSupplyMajorNetWork
 import com.example.eletronicengineer.utils.getSupplyPersonDetail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_demand_display.view.*
+import kotlinx.android.synthetic.main.fragment_supply_display.view.*
 import java.io.Serializable
 
 class SupplyDisplayFragment:Fragment() {
@@ -38,7 +38,7 @@ class SupplyDisplayFragment:Fragment() {
     var type:Int=0
     lateinit var id:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_demand_display, container, false)
+        val view = inflater.inflate(R.layout.fragment_supply_display, container, false)
         id=arguments!!.getString("id")
         type = arguments!!.getInt("type")
         initFragment(view)
@@ -46,7 +46,7 @@ class SupplyDisplayFragment:Fragment() {
     }
 
     private fun initFragment(view: View) {
-        view.tv_display_demand_back.setOnClickListener {
+        view.tv_supply_display_back.setOnClickListener {
             activity!!.finish()
         }
         val adapterGenerate = AdapterGenerate()
@@ -114,8 +114,8 @@ class SupplyDisplayFragment:Fragment() {
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -240,8 +240,8 @@ class SupplyDisplayFragment:Fragment() {
 //                            }
                         }
                         //Log.i("data.majorNetwork.name",data.majorNetwork.name)
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -366,8 +366,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -492,8 +492,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -619,8 +619,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -673,8 +673,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -801,8 +801,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -918,8 +918,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1047,8 +1047,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
 
                     },{
                         it.printStackTrace()
@@ -1165,8 +1165,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1293,8 +1293,8 @@ class SupplyDisplayFragment:Fragment() {
 //Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
 //                            }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1366,8 +1366,8 @@ class SupplyDisplayFragment:Fragment() {
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1478,8 +1478,8 @@ class SupplyDisplayFragment:Fragment() {
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1590,8 +1590,8 @@ class SupplyDisplayFragment:Fragment() {
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1702,8 +1702,8 @@ class SupplyDisplayFragment:Fragment() {
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_supply_display_content.adapter = adapter
+                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1797,8 +1797,8 @@ class SupplyDisplayFragment:Fragment() {
                                     Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            view.tv_fragment_demand_display_content.adapter = adapter
-                            view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                            view.rv_supply_display_content.adapter = adapter
+                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                         },{
                             it.printStackTrace()
                         })
@@ -1847,8 +1847,8 @@ class SupplyDisplayFragment:Fragment() {
                                     Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            view.tv_fragment_demand_display_content.adapter = adapter
-                            view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                            view.rv_supply_display_content.adapter = adapter
+                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                         },{
                             it.printStackTrace()
                         })

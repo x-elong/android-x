@@ -1,12 +1,5 @@
 [
   {
-    "type":"TITLE",
-    "title1":"需求团队",
-    "styleType": "0",
-    "key":"requirementType",
-    "sendFormat":"String"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
     "singleDisplayRightContent":"马帮运输施工队",
@@ -32,12 +25,6 @@
     "inputUnit":"(月)",
     "key":"projectTime",
     "sendFormat":"Long"
-  },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"工程清册",
-    "buttonName":["下载模板","拍照","上传附件"],
-    "additionalKey":"requirementTeamProjectListFile"
   },
   {
     "type":"MULTI_CHECKBOX",
@@ -96,42 +83,39 @@
     "sendFormat":"Long"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"薪资标准",
-    "buttonName":["面议","清单报价"],
-    "additionalKey":"salaryStandard requirementListQuotationFile",
-    "key":"salaryStandard",
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonTitle":"薪资标准",
+    "radioButtonName":["面议"],
+    "key":"roomBoardStandard",
     "sendFormat":"Long"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人",
-    "key": "name",
-    "sendFormat": "String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":" ",
+    "key":"name",
+    "sendFormat":"String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
-    "key": "phone",
-    "sendFormat": "String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":" ",
+    "key":"phone",
+    "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
+    "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key":"validTime",
     "sendFormat":"Long"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加",
     "textAreaContent":"",
     "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
   }
 ]
