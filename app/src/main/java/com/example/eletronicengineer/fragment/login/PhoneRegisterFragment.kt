@@ -13,6 +13,8 @@ import cn.jpush.im.api.BasicCallback
 import com.amap.api.col.sl2.it
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
+import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.sendMobile
 import com.example.eletronicengineer.utils.sendRegister
 import io.reactivex.Flowable
@@ -56,7 +58,7 @@ class   PhoneRegisterFragment: Fragment()  {
             }
             else{
                 if(v.tv_get_check.text=="重新获取验证码" || v.tv_get_check.text=="获取验证码"){
-                    val result= sendMobile(phoneNum,"http://10.1.5.141:8026/").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    val result= sendMobile(phoneNum, UnSerializeDataBase.upmsBasePath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                             if(it.desc=="验证码发送成功")
                             {
@@ -108,7 +110,7 @@ class   PhoneRegisterFragment: Fragment()  {
                 })
                 val key= arrayListOf("username","code","password","repassword")
                 val value= arrayListOf(phoneNum,registerPassword,password,rePassword)
-                sendRegisterForHttp(key,value,"http://10.1.5.141:8026/")
+                sendRegisterForHttp(key,value,UnSerializeDataBase.upmsBasePath)
             }
             if(result!=""){
                 val toast = Toast.makeText(context,result,Toast.LENGTH_SHORT)
@@ -118,13 +120,13 @@ class   PhoneRegisterFragment: Fragment()  {
         }
 
         v.tv_register_login.setOnClickListener {
-            (activity as LoginActivity).switchFragment(LoginFragment())
+            FragmentHelper.switchFragment(activity!!,LoginFragment(),R.id.frame_login,"")
         }
         v.tv_register_forget_password.setOnClickListener {
-            (activity as LoginActivity).switchFragment(ForgetPasswordFragment())
+            FragmentHelper.switchFragment(activity!!,ForgetPasswordFragment(),R.id.frame_login,"")
         }
         v.tv_register_problem.setOnClickListener {
-            (activity as LoginActivity).switchFragment(ProblemFragment())
+            FragmentHelper.switchFragment(activity!!,ProblemFragment(),R.id.frame_login,"")
         }
     }
 
@@ -155,7 +157,7 @@ class   PhoneRegisterFragment: Fragment()  {
                             val toast = Toast.makeText(context,"注册成功",Toast.LENGTH_SHORT)
                             toast.setGravity(Gravity.CENTER,0,0)
                             toast.show()
-                            (activity as LoginActivity).switchFragment(LoginFragment())
+                            FragmentHelper.switchFragment(activity!!,LoginFragment(),R.id.frame_login,"")
                         }
                         else if(it.desc=="用户名称已存在"){
                             val toast = Toast.makeText(context,"用户名称已存在,请重新输入手机号！",Toast.LENGTH_SHORT)

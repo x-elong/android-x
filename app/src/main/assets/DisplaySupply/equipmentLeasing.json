@@ -6,7 +6,7 @@
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"出租房单位名称：",
+  "singleDisplayRightTitle":"出租方单位名称：",
   "singleDisplayRightContent":"xxx"
   },
   {
@@ -41,8 +41,8 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工器具出租清册：",
-    "buttonName":["点击查看"]
+    "buttonTitle":"工器具租赁清册：",
+    "buttonName":["在线查看"]
   },
   {
     "type":"MULTI_BUTTON",
@@ -61,8 +61,15 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
+  },
+  {
+    "type":"THREE_OPTIONS_SELECT_DIALOG",
+    "selectTitle":"负责人所在地:",
+    "placePath": "pcas.json",
+    "key":"issuerBelongSite",
+    "sendFormat":"String"
   },
   {
     "type":"SUBMIT",

@@ -64,12 +64,13 @@ class NewsFragment : Fragment() {
             inputName.hint="请输入要登录的账号"
             val dialog= AlertDialog.Builder(context!!).setView(inputName).setPositiveButton("确认",object: DialogInterface.OnClickListener{
                 override fun onClick(p0: DialogInterface?, p1: Int) {
-                    initData(true,inputName.text.toString())
+
                 }
             })
             activity!!.runOnUiThread {
-                dialog.show()
+//                dialog.show()
                 initMenu()
+                initData(true)
             }
         }.start()
         return view
@@ -83,14 +84,13 @@ class NewsFragment : Fragment() {
         val intent=Intent(activity,ReceiveService::class.java)
         activity!!.bindService(intent,serviceConn, Context.BIND_AUTO_CREATE)
     }
-    private fun initData(isFirst:Boolean,loginName:String)
+    private fun initData(isFirst:Boolean)
     {
-        UnSerializeDataBase.username=loginName
-        JMessageClient.login(loginName,"adminPassword",object: BasicCallback(){
+        JMessageClient.login(UnSerializeDataBase.userName,"adminPassword",object: BasicCallback(){
             override fun gotResult(p0: Int, p1: String?) {
                 Log.i("logInfo",p1)
                 UnSerializeDataBase.isLogined=true
-                val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.username)
+                val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.userName)
                 val myLatestMessage=conversation.latestMessage
                 ContactManager.getFriendList(object: GetUserInfoListCallback(){
                     override fun gotResult(p0: Int, p1: String?, p2: MutableList<UserInfo>?) {

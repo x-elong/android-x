@@ -71,7 +71,7 @@ class MyFragment : Fragment() {
 //        }
         mView.tv_qr_code.setOnClickListener {
             val intent =Intent(activity,MyQRCodeActivity::class.java)
-            intent.putExtra("user",user)
+            intent.putExtra("headerImg",headerImg)
             startActivity(intent)
         }
         mView.my_setting.setOnClickListener {
@@ -79,10 +79,10 @@ class MyFragment : Fragment() {
 
             startActivity(intent)
         }
-        mView.btn_subscribe.setOnClickListener {
-            val intent =Intent(activity,SubscribeActivity::class.java)
-            startActivity(intent)
-        }
+//        mView.btn_subscribe.setOnClickListener {
+//            val intent =Intent(activity,SubscribeActivity::class.java)
+//            startActivity(intent)
+//        }
         mView.btn_my_vip_privileges.setOnClickListener {
             val intent = Intent(activity,MyVipActivity::class.java)
             startActivity(intent)

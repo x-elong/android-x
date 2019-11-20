@@ -72,7 +72,7 @@ class AddEducationInformationFragment :Fragment(){
                         val requestBody =RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
                         it.onNext(requestBody)
                     }.subscribe {
-                        val result = startSendMessage(it,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertEducationBackground)
+                        val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.insertEducationBackground)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
@@ -99,7 +99,7 @@ class AddEducationInformationFragment :Fragment(){
                         it.onNext(requestBody)
                     }.subscribe {
                         val result =
-                            putSimpleMessage(it, UnSerializeDataBase.BasePath + Constants.HttpUrlPath.My.updateEducationBackground).observeOn(
+                            putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.updateEducationBackground).observeOn(
                                 AndroidSchedulers.mainThread())
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(

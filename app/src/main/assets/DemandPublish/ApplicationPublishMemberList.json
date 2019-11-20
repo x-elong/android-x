@@ -1,0 +1,44 @@
+﻿[
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "岗位类别",
+    "selectOption1Items": ["普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类"],
+    "key":"wokerType",
+    "sendFormat": "String"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"需要人数",
+    "inputUnit": "(人)",
+    "key":"needPeopleNumber",
+    "sendFormat": "Long"
+  },
+  {
+    "type":"INPUT_WITH_MULTI_UNIT",
+    "inputMultiUnitTitle":"薪资标准",
+    "inputMultiUnit":["元/天","元/月","元/年"],
+    "key":"money salaryUnit",
+    "sendFormat": "Double String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"个人证件名称",
+    "key": "name",
+    "sendFormat": "String"
+  },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "是否必须持证上岗",
+    "selectOption1Items": ["是","否"],
+    "key":"sex",
+    "sendFormat": "Long"
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"备注",
+    "textAreaContent":"",
+    "necessary":false,
+    "key":"remark",
+    "sendFormat":"String"
+  }
+]

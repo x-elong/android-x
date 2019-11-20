@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.dialog_select.view.*
 class CustomDialog {
   lateinit var dialog:AlertDialog
   lateinit var selectContent:String
+  lateinit var selectContent2:String
   lateinit var multiDialog:OptionsPickerView<String>
   var msgWhat:Int?=null
   var mHandler:Handler
@@ -67,6 +68,7 @@ class CustomDialog {
       {
         val picker=OptionsPickerBuilder(context) { options1, options2, _, _ ->
           selectContent=option1Items[options1]+" "+option2Items[options1][options2]
+          selectContent2=option1Items[options1]
           val msg= if (msgWhat!=null) {
             mHandler.obtainMessage(msgWhat!!)
           } else {
@@ -74,6 +76,7 @@ class CustomDialog {
           }
           val data= Bundle()
           data.putString("selectContent",selectContent)
+          data.putString("selectContent2",selectContent2)
           msg.data=data
           mHandler.sendMessage(msg)
 

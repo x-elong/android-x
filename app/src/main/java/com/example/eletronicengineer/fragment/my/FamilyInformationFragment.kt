@@ -79,7 +79,7 @@ class FamilyInformationFragment :Fragment(){
             })
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
         adapter.mData[0].tvSelectListener = View.OnClickListener {
-            val dialog = AlertDialog.Builder(context!!)
+            val builder = AlertDialog.Builder(context!!)
             val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_recyclerview,null)
             val rvList:MutableList<MultiStyleItem> = ArrayList()
             rvList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"子女姓名"))
@@ -104,7 +104,7 @@ class FamilyInformationFragment :Fragment(){
             }
             dialogView.rv_dialog.adapter = RecyclerviewAdapter(rvList)
             dialogView.rv_dialog.layoutManager=LinearLayoutManager(dialogView.context)
-            dialog.setTitle("子女信息")
+            builder.setTitle("子女信息")
                 .setView(dialogView)
                 .setNegativeButton("取消",null)
                 .setPositiveButton("确定",object : DialogInterface.OnClickListener{
@@ -124,7 +124,7 @@ class FamilyInformationFragment :Fragment(){
                             it.onNext(requestBody)
                         }.subscribe {
                             val result =
-                                startSendMessage(it, UnSerializeDataBase.BasePath + Constants.HttpUrlPath.My.insertHomeChildren).observeOn(AndroidSchedulers.mainThread())
+                                startSendMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.insertHomeChildren).observeOn(AndroidSchedulers.mainThread())
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(
                                         {
@@ -225,10 +225,10 @@ class FamilyInformationFragment :Fragment(){
                                                                     }
                                                                 })
                                                                 .setView(v)
-                                                                .create()
-                                                                .show()
-//                                    .window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-//                                    .window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+                                                            val dialog = builder.create()
+                                                            dialog.show()
+                                                            dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+                                                            dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
                                                         }
                                                     }).show()
                                                 }
@@ -242,8 +242,10 @@ class FamilyInformationFragment :Fragment(){
                         }
                     }
                 })
-                .create()
-                .show()
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         }
         mView.rv_family_content.adapter = adapter
         mView.rv_family_content.layoutManager = LinearLayoutManager(context)
@@ -327,7 +329,7 @@ class FamilyInformationFragment :Fragment(){
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, UnSerializeDataBase.BasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -346,10 +348,10 @@ class FamilyInformationFragment :Fragment(){
                                 }
                             })
                             .setView(v)
-                            .create()
-                            .show()
-//                                    .window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-//                                    .window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+                        val dialog = builder.create()
+                        dialog.show()
+                        dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+                        dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
                     }
                 }).show()
             }

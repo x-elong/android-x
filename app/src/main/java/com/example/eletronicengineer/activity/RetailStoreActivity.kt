@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.retailstore.RetailStoreFragment
+import com.example.eletronicengineer.utils.FragmentHelper
 
 
 class RetailStoreActivity : AppCompatActivity() {
@@ -19,24 +20,12 @@ class RetailStoreActivity : AppCompatActivity() {
 //        initData()
         val data = Bundle()
 //        data.putString("title", title)
-        addFragment(RetailStoreFragment.newInstance(data))
+         FragmentHelper.addFragment(this,RetailStoreFragment.newInstance(data),R.id.frame_retail_store,"")
     }
 
     //获取加载的界面类型
     private fun initData() {
         val intent = getIntent()
         title = intent.getStringExtra("title")
-    }
-
-    fun addFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_retail_store, fragment)
-        transaction.commit()
-    }
-    fun switchFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_retail_store, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }

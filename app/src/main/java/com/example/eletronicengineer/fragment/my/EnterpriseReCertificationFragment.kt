@@ -126,7 +126,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it, "http://10.1.5.141:8032" + Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -179,7 +179,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -323,7 +323,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = putSimpleMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.enterpriseReCertification)
+            val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.enterpriseReCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

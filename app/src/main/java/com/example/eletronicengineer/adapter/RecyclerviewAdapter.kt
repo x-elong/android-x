@@ -1246,7 +1246,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
+                   // tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
                 if(mData[position].shiftInputPicture!=""){
@@ -1335,6 +1335,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             {
                 vh.btnSubmit.text=mData[position].submitContent
                 if(mData[position].submitListener!=null){
+                    vh.btnSubmit.setOnClickListener(mData[position].submitListener)
+                }
+                else if(mData[position].submitContent.equals("报名")|| mData[position].submitContent.equals("联系对方"))
+                {
                     vh.btnSubmit.setOnClickListener(mData[position].submitListener)
                 }
                 else{
@@ -1449,7 +1453,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_DISPLAY_RIGHT_TYPE->
             {
-                vh.tvsingleDisplayRightTitle.text=mData[position].singleDisplayRightTitle
+                vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity
+                val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
+                val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
+                val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
+                if(startPosition>-1)
+                    sp.setSpan(AbsoluteSizeSpan((14*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                vh.tvsingleDisplayRightTitle.text=sp
                 vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)

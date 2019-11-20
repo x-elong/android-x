@@ -76,7 +76,7 @@ class ReceiveService:Service()
         if (event.message.targetInfo is UserInfo)
         {
             val targetUserName=(event.message.targetInfo as UserInfo).userName
-            val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.username)
+            val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.userName)
             conversation.createSendMessage(event.message.content)
         }
         if (mBinder.messageEventEmit!=null)
@@ -86,7 +86,7 @@ class ReceiveService:Service()
     }
     fun onEvent(event:ConversationRefreshEvent)
     {
-        val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.username)
+        val conversation=JMessageClient.getSingleConversation(UnSerializeDataBase.userName)
         val allMessage=conversation.allMessage
         for (i in allMessage)
         {

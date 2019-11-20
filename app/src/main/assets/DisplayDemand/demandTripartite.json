@@ -7,7 +7,7 @@
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"三方服务清单：",
-    "buttonName":["点击查看"]
+    "buttonName":["在线查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -34,7 +34,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期（天）:",
+    "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
   },
   {

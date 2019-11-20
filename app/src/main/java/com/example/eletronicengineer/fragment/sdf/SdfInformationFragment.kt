@@ -17,7 +17,9 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.sdf.*
+import kotlinx.android.synthetic.main.sdf_information.*
 import kotlinx.android.synthetic.main.sdf_information.view.*
+import kotlinx.android.synthetic.main.sdf_information.view.demand_release_tv
 
 class SdfInformationFragment:Fragment(){
     lateinit var titleReturn:View
@@ -71,10 +73,12 @@ class SdfInformationFragment:Fragment(){
                     {
                         RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
                             val selectContent=it.data.getString("selectContent")
+                            val selectContent2=it.data.getString("selectContent2")
                             val adapterGenerate = AdapterGenerate()
                             val type = adapterGenerate.getType(selectContent)
                             val intent = Intent(context, DemandActivity::class.java)
                             intent.putExtra("type",type)
+                            intent.putExtra("selectContent2",selectContent2)
                             startActivity(intent)
                             false
                         }

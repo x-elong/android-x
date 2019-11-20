@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
+import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_simple.view.*
 
 class SimpleFragment: Fragment()  {
@@ -19,7 +20,7 @@ class SimpleFragment: Fragment()  {
 
     private fun initFragment(v: View) {
         v.tv_simple_again.setOnClickListener {
-            (activity as LoginActivity).switchFragment(SetPasswordFragment())
+            FragmentHelper.switchFragment(activity!!,SetPasswordFragment(),R.id.frame_login,"")
         }
 
     }

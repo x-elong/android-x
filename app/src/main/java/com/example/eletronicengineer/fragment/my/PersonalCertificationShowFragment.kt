@@ -9,9 +9,7 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.model.Constants
-import com.example.eletronicengineer.utils.FragmentHelper
-import com.example.eletronicengineer.utils.GlideLoader
-import com.example.eletronicengineer.utils.ToastHelper
+import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,7 +40,7 @@ class PersonalCertificationShowFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

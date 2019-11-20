@@ -1,40 +1,49 @@
 ﻿[
   {
-    "type": "TITLE",
-    "title1": "信息详情",
-    "styleType": "3"
-  },
-  {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"姓名："
+    "inputSingleTitle":"姓名：",
+    "key": "name",
+    "sendFormat": "String"
   },
   {
   "type": "SELECT_DIALOG",
   "selectTitle": "性别:",
-  "selectOption1Items": ["男","女"]
+  "selectOption1Items": ["男","女"],
+    "key":"sex",
+    "sendFormat": "Long"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"年龄："
+    "inputSingleTitle":"年龄：",
+    "key":"age",
+    "sendFormat": "Long"
   },
   {
     "type": "SELECT_DIALOG",
     "selectTitle": "工种：",
-    "selectOption1Items": ["负责人","安全员","施工员","材料员","后勤","技工","普工"]
+    "selectOption1Items": ["负责人","安全员","施工员","材料员","后勤","技工","普工"],
+    "key":"wokerType",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"工作经验："
+    "inputSingleTitle":"工作经验：",
+    "key":"workExperience",
+    "sendFormat": "Long"
   },
-    {
-        "type":"INPUT_WITH_MULTI_UNIT",
-        "inputMultiUnitTitle":"薪资标准",
-        "inputMultiUnit":["元/天","元/月","元/年"]
-    },
+  {
+    "type":"INPUT_WITH_MULTI_UNIT",
+    "inputMultiUnitTitle":"薪资标准",
+    "inputMultiUnit":["元/天","元/月","元/年"],
+    "key":"money salaryUnit",
+    "sendFormat": "Double String"
+  },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary": true
+    "necessary":false,
+    "key":"remark",
+    "sendFormat":"String"
   }
 ]

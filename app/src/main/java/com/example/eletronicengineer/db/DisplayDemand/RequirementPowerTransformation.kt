@@ -1,0 +1,36 @@
+package com.example.eletronicengineer.distributionFileSave
+
+import java.io.Serializable
+
+class RequirementPowerTransformation(
+    var id:String,
+    var requirementType:String,
+    var requirementVariety:String,
+    var projectName:String,
+    var projectSite:String,
+    var projectTime:String,
+    var workerExperience:String,
+    var minAgeDemand:String,
+    var maxAgeDemand:String,
+    var sexDemand:String,
+    var roomBoardStandard:String,
+    var journeyCarFare:String,
+    var journeySalary:String,
+    var needPeopleNumber:String,
+    var salaryStandard:String,
+    var vehicle:String,
+    var constructionEquipment:String,
+    var seondProvideList:String,
+    var additonalExplain:String,
+    var name:String,
+    var phone:String,
+    var requirmentTeamServeId:String,
+    var requirementTeamProjectList:List<requirementTeamProjectList>?,
+    var requirementPowerTransformationSalary:List<requirementPowerTransformationSalary>?,
+    var requirementListQuotations:List<requirementTeamProjectList>?,
+    var requirementSecondProvideMaterialsList:List<requirementSecondProvideMaterialsList>?,
+    var requirementConstructionWorkKind:String,
+    var requirementTeamVoltageClasses:String,
+    var photoPath:String,
+    var validTime:String
+): Serializable

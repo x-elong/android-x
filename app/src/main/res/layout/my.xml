@@ -67,14 +67,18 @@
         android:layout_marginBottom="@dimen/bottom_8"
         app:layout_constraintStart_toStartOf="@+id/tv_my_phone"
         app:layout_constraintBottom_toBottomOf="@+id/view_my" />
+
     <TextView
         android:id="@+id/tv_qr_code"
         android:layout_width="@dimen/general_26"
         android:layout_height="@dimen/general_26"
         android:layout_marginStart="@dimen/left_8"
+        android:layout_marginEnd="@dimen/right_16"
+        android:layout_marginBottom="@dimen/bottom_8"
         android:background="@drawable/qr_code"
-        app:layout_constraintStart_toEndOf="@+id/view_my"
-        app:layout_constraintTop_toTopOf="@+id/tv_my_phone" />
+        app:layout_constraintBottom_toTopOf="@+id/rv_my_function_content"
+        app:layout_constraintEnd_toEndOf="parent"
+         />
 
     <Button
         android:id="@+id/btn_my_vip_privileges"
@@ -86,8 +90,9 @@
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintBottom_toTopOf="@+id/rv_my_function_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_qr_code"
-        app:layout_constraintTop_toTopOf="@+id/tv_qr_code" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toTopOf="parent"
+         />
 
     <TextView
         android:visibility="gone"

@@ -244,4 +244,9 @@ class SupplyFragment:Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
     }
+    fun update(itemMultiStyleItem:List<MultiStyleItem>){0
+        Log.i("position is",mAdapter!!.mData[0].selected.toString())
+        mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
+        Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())
+    }
 }

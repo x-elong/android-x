@@ -246,7 +246,7 @@ class PersonalMaterialsFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.BasePath+Constants.HttpUrlPath.My.insertCertificate)
+            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.insertCertificate)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     val json = JSONObject(it.string())
                     if(json.getInt("code")==200){

@@ -5,9 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
@@ -22,17 +19,15 @@ import com.codekidlabs.storagechooser.StorageChooser
 import com.electric.engineering.model.MultiStyleItem
 import com.electric.engineering.utils.ItemGenerate
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandDisplayActivity
-import com.example.eletronicengineer.activity.ProfessionalActivity
-import com.example.eletronicengineer.activity.SupplyActivity
-import com.example.eletronicengineer.activity.SupplyDisplayActivity
+import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.CheckBoxAdapter
 import com.example.eletronicengineer.adapter.EngineeringAppLiancesAdapter
-import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.CheckBoxStyle
 import com.example.eletronicengineer.aninterface.EngineeringAppliances
-import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
+import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
+import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.*
@@ -40,8 +35,8 @@ import com.example.eletronicengineer.model.Constants
 import com.lxj.xpopup.XPopup
 import kotlinx.android.synthetic.main.dialog_input.view.*
 import kotlinx.android.synthetic.main.dialog_soil_ratio.view.*
-import kotlinx.android.synthetic.main.item_public_point_position2.*
 import kotlinx.android.synthetic.main.shift_dialog.view.*
+import org.json.JSONObject
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -164,11 +159,8 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandIndividual.json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
+        mData[13].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[14].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPerson
 
@@ -180,109 +172,120 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Substation Construction).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[16].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
-        val clearanceSalary = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
-            mData[15].buttonCheckList[0] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        val listQuote = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[15].buttonCheckList[1] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
-        multiButtonListenersForSalary.add(listQuote)
-
-
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//工程清册
-        multiButtonListeners.add(uploadProjectListListener)
-        mData[5].buttonListener = multiButtonListeners
-        mData[15].buttonListener = multiButtonListenersForSalary
+        mData[13].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 13
+            mdata.putString("type","成员清册发布")
+            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPowerTransformation
         return adapter
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
+//        val clearanceSalary = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
+//            mData[15].buttonCheckList[0] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        val listQuote = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[15].buttonCheckList[1] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
+//        multiButtonListenersForSalary.add(listQuote)
+//
+//
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//工程清册
+//        multiButtonListeners.add(uploadProjectListListener)
+//        mData[5].buttonListener = multiButtonListeners
+//        mData[15].buttonListener = multiButtonListenersForSalary
+
     }
 
     //需求团队——测量设计
@@ -290,111 +293,124 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Measurement Design).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[16].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
-        val clearanceSalary = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            mData[15].buttonCheckList[0] = true
-            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        val listQuote = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[15].buttonCheckList[1] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
-        multiButtonListenersForSalary.add(listQuote)
-
-
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//工程量清册
-        multiButtonListeners.add(uploadProjectListListener)
-        mData[5].buttonListener = multiButtonListeners
-        mData[15].buttonListener = multiButtonListenersForSalary
-
+        mData[13].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 13
+            mdata.putString("type","成员清册发布")
+            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementMeasureDesign
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
+//        val clearanceSalary = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            mData[15].buttonCheckList[0] = true
+//            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        val listQuote = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[15].buttonCheckList[1] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
+//        multiButtonListenersForSalary.add(listQuote)
+//
+//
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//工程量清册
+//        multiButtonListeners.add(uploadProjectListListener)
+//        mData[5].buttonListener = multiButtonListeners
+//        mData[15].buttonListener = multiButtonListenersForSalary
     }
 
     //需求团队——马帮运输
@@ -402,89 +418,91 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Caravan transportation).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[14].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
-        })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
-            mData[14].resetCheckList(mData[14].buttonCheckList)
-            for (i in UnSerializeDataBase.fileList) {
-                if (i.key == mData[14].additionalKey.split(" ")[1]) {
-                    UnSerializeDataBase.fileList.remove(i)
-                }
-            }
-            mData[14].buttonCheckList[0] = true
-        })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[14].resetCheckList(mData[14].buttonCheckList)
-            mData[14].buttonCheckList[1] = true
-            val content: List<String> = listOf("上传附件", "下载模板")
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        })
-        mData[14].buttonListener = multiButtonListenerList
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//工程清册
-        multiButtonListeners.add(uploadProjectListListener)
-        mData[5].buttonListener = multiButtonListeners
+        mData[13].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[14].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementCaravanTransport
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[14].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
+//            mData[14].resetCheckList(mData[14].buttonCheckList)
+//            for (i in UnSerializeDataBase.fileList) {
+//                if (i.key == mData[14].additionalKey.split(" ")[1]) {
+//                    UnSerializeDataBase.fileList.remove(i)
+//                }
+//            }
+//            mData[14].buttonCheckList[0] = true
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[14].resetCheckList(mData[14].buttonCheckList)
+//            mData[14].buttonCheckList[1] = true
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        })
+//        mData[14].buttonListener = multiButtonListenerList
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//工程清册
+//        multiButtonListeners.add(uploadProjectListListener)
+//        mData[5].buttonListener = multiButtonListeners
+
     }
 
     //需求团队——桩基施工
@@ -492,93 +510,101 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Pile foundation construction).json")
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[16].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[16].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
-            mData[16].resetCheckList(mData[16].buttonCheckList)
-            mData[16].buttonCheckList[0] = true
-            for (i in UnSerializeDataBase.fileList) {
-                if (i.key == mData[16].additionalKey.split(" ")[1]) {
-                    UnSerializeDataBase.fileList.remove(i)
-                }
-            }
-        })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[16].resetCheckList(mData[16].buttonCheckList)
-            mData[16].buttonCheckList[1] = true
-            val content: List<String> = listOf("上传附件", "下载模板")
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        })
-        mData[16].buttonListener = multiButtonListenerList
-
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//工程清册
-        multiButtonListeners.add(uploadProjectListListener)
-
-
-        mData[0].backListener = View.OnClickListener {
-
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        mData[5].buttonListener = multiButtonListeners
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPileFoundation
-
         return adapter
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[16].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
+//            mData[16].resetCheckList(mData[16].buttonCheckList)
+//            mData[16].buttonCheckList[0] = true
+//            for (i in UnSerializeDataBase.fileList) {
+//                if (i.key == mData[16].additionalKey.split(" ")[1]) {
+//                    UnSerializeDataBase.fileList.remove(i)
+//                }
+//            }
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[16].resetCheckList(mData[16].buttonCheckList)
+//            mData[16].buttonCheckList[1] = true
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        })
+//        mData[16].buttonListener = multiButtonListenerList
+//
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//工程清册
+//        multiButtonListeners.add(uploadProjectListListener)
+//
+//
+//        mData[0].backListener = View.OnClickListener {
+//
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        mData[5].buttonListener = multiButtonListeners
     }
 
     //需求团队——非开挖
@@ -587,91 +613,98 @@ class AdapterGenerate {
         itemGenerate.context = context
         val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Non-excavation).json")
-        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[18].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
-            mData[15].resetCheckList(mData[15].buttonCheckList)
-            mData[15].buttonCheckList[0] = true
-            for (i in UnSerializeDataBase.fileList) {
-                if (i.key == mData[15].additionalKey.split(" ")[1]) {
-                    UnSerializeDataBase.fileList.remove(i)
-                }
-            }
-        })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[15].resetCheckList(mData[15].buttonCheckList)
-            mData[15].buttonCheckList[1] = true
-            val content: List<String> = listOf("上传附件", "下载模板")
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        })
-        mData[15].buttonListener = multiButtonListenerList
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//工程清册
-        multiButtonListeners.add(uploadProjectListListener)
-
-
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        mData[5].buttonListener = multiButtonListeners
-
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementUnexcavation
-
         return adapter
+//        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
+//            mData[15].resetCheckList(mData[15].buttonCheckList)
+//            mData[15].buttonCheckList[0] = true
+//            for (i in UnSerializeDataBase.fileList) {
+//                if (i.key == mData[15].additionalKey.split(" ")[1]) {
+//                    UnSerializeDataBase.fileList.remove(i)
+//                }
+//            }
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[15].resetCheckList(mData[15].buttonCheckList)
+//            mData[15].buttonCheckList[1] = true
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        })
+//        mData[15].buttonListener = multiButtonListenerList
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//工程清册
+//        multiButtonListeners.add(uploadProjectListListener)
+//
+//
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//       mData[5].buttonListener = multiButtonListeners
     }
 
     //需求团队——试验调试
@@ -679,109 +712,122 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Test debugging).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[18].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
-        val clearanceSalary = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            mData[15].buttonCheckList[0] = true
-            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        val listQuote = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[15].buttonCheckList[1] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
-        multiButtonListenersForSalary.add(listQuote)
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)
-        multiButtonListeners.add(uploadProjectListListener)//工程清册
-        mData[5].buttonListener = multiButtonListeners
-        mData[15].buttonListener = multiButtonListenersForSalary
-
+        mData[14].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 14
+            mdata.putString("type","成员清册发布")
+            mdata.putSerializable("inventory",mData[14].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementTest
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[0]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[15].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
+//        val clearanceSalary = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            mData[15].buttonCheckList[0] = true
+//            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        val listQuote = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[15].buttonCheckList[1] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
+//        multiButtonListenersForSalary.add(listQuote)
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)
+//        multiButtonListeners.add(uploadProjectListListener)//工程清册
+//        mData[5].buttonListener = multiButtonListeners
+//        mData[15].buttonListener = multiButtonListenersForSalary
     }
 
     //需求团队——跨越架
@@ -789,112 +835,125 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Crossing frame).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[13].additionalKey.split(" ")[0]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[13].additionalKey.split(" ")[1]))
-
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[15].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[16].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList<View.OnClickListener>()
-        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
-        val clearanceSalary = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            mData[13].buttonCheckList[0] = true
-            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        val listQuote = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[13].buttonCheckList[1] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
-        multiButtonListenersForSalary.add(listQuote)
-
-
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)
-        multiButtonListeners.add(uploadProjectListListener)//工程量清册
-        mData[5].buttonListener = multiButtonListeners
-        mData[13].buttonListener = multiButtonListenersForSalary
-
+        mData[12].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 12
+            mdata.putString("type","成员清册发布")
+            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementSpanWoodenSupprt
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[13].additionalKey.split(" ")[0]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[13].additionalKey.split(" ")[1]))
+//
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList<View.OnClickListener>()
+//        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
+//        val clearanceSalary = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            mData[13].buttonCheckList[0] = true
+//            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        val listQuote = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[13].buttonCheckList[1] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
+//        multiButtonListenersForSalary.add(listQuote)
+//
+//
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)
+//        multiButtonListeners.add(uploadProjectListListener)//工程量清册
+//        mData[5].buttonListener = multiButtonListeners
+//        mData[13].buttonListener = multiButtonListenersForSalary
     }
 
     //需求团队——运行维护
@@ -902,112 +961,125 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Operation and Maintenance).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[12].additionalKey.split(" ")[0]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[12].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[15].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[16].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","车辆清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
-        val clearanceSalary = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            mData[12].buttonCheckList[0] = true
-            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        val listQuote = View.OnClickListener {
-            val content: List<String> = listOf("上传附件", "下载模板")
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[12].buttonCheckList[1] = true
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        }
-        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
-        multiButtonListenersForSalary.add(listQuote)
-
-
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
-            }
-        }
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        //工程清册
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)
-        multiButtonListeners.add(uploadProjectListListener)
-        mData[5].buttonListener = multiButtonListeners
-        mData[12].buttonListener = multiButtonListenersForSalary
-
+        mData[12].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 12
+            mdata.putString("type","成员清册发布")
+            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementRunningMaintain
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[12].additionalKey.split(" ")[0]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清工薪资清册模板", "清工薪资清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[12].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val multiButtonListenersForSalary: MutableList<View.OnClickListener> = ArrayList()
+//        val clearanceSalary = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            mData[12].buttonCheckList[0] = true
+//            Toast.makeText(context, "模式:清工薪资", Toast.LENGTH_SHORT).show()
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_CLEARANCE_SALARY_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        val listQuote = View.OnClickListener {
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[12].buttonCheckList[1] = true
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        }
+//        multiButtonListenersForSalary.add(clearanceSalary)//薪资标准
+//        multiButtonListenersForSalary.add(listQuote)
+//
+//
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "工程清册模板", "工程清册模板", "")
+//            }
+//        }
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        //工程清册
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)
+//        multiButtonListeners.add(uploadProjectListListener)
+//        mData[5].buttonListener = multiButtonListeners
+//        mData[12].buttonListener = multiButtonListenersForSalary
     }
 
     //需求租赁——车辆租赁
@@ -1015,15 +1087,10 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandLease(Vehicle Leasing).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        mData[16].inputMultiAbandonInput = mData[16].inputMultiUnit[0]
+        mData[17].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[18].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseCar
-
         return adapter
     }
 
@@ -1032,90 +1099,98 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandLease(Equipment Leasing).json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
-        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
-            when (it.what) {
-                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
-                    when (it.data.getString("selectContent")) {
-                        "上传附件" -> {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            UnSerializeDataBase.fileList.add(FileMap("", mData[14].additionalKey.split(" ")[1]))
-                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-                        }
-                        "下载模板" -> {
-                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                                .withMemoryBar(true).build()
-                            chooser.show()
-                            chooser.setOnSelectListener { selectContent ->
-                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
-                            }
-                        }
-                    }
-                    false
-                }
-                else -> {
-                    false
-                }
-            }
+        mData[9].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[10].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[4].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 4
+            mdata.putString("type","租赁清册发布")
+            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
         })
-
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
-            mData[9].resetCheckList(mData[9].buttonCheckList)
-            for (i in UnSerializeDataBase.fileList) {
-                if (i.key == mData[9].additionalKey.split(" ")[1]) {
-                    UnSerializeDataBase.fileList.remove(i)
-                }
-            }
-            mData[9].buttonCheckList[0] = true
-        })
-        multiButtonListenerList.add(View.OnClickListener {
-            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
-            mData[9].resetCheckList(mData[9].buttonCheckList)
-            mData[9].buttonCheckList[1] = true
-            val content: List<String> = listOf("上传附件", "下载模板")
-            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
-            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
-            customDialog.dialog.show()
-        })
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "需求租赁清单", "需求租赁清单", "")
-            }
-        }
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-            //intent.putExtra("key",mData[5].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//拍照
-        multiButtonListeners.add(uploadProjectListListener)//上传附件
-
-        mData[5].buttonListener = multiButtonListeners
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseConstructionTool
-
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val multiButtonListenerList: MutableList<View.OnClickListener> = ArrayList()
+//        val handler = Handler(Looper.getMainLooper(),Handler.Callback {
+//            when (it.what) {
+//                Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal -> {
+//                    when (it.data.getString("selectContent")) {
+//                        "上传附件" -> {
+//                            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                            intent.type = "*/*"
+//                            UnSerializeDataBase.fileList.add(FileMap("", mData[14].additionalKey.split(" ")[1]))
+//                            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//                        }
+//                        "下载模板" -> {
+//                            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                                .withMemoryBar(true).build()
+//                            chooser.show()
+//                            chooser.setOnSelectListener { selectContent ->
+//                                downloadFile(selectContent, "清单报价清册模板", "清单报价清册模板", "")
+//                            }
+//                        }
+//                    }
+//                    false
+//                }
+//                else -> {
+//                    false
+//                }
+//            }
+//        })
+//
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:面议", Toast.LENGTH_SHORT).show()
+//            mData[9].resetCheckList(mData[9].buttonCheckList)
+//            for (i in UnSerializeDataBase.fileList) {
+//                if (i.key == mData[9].additionalKey.split(" ")[1]) {
+//                    UnSerializeDataBase.fileList.remove(i)
+//                }
+//            }
+//            mData[9].buttonCheckList[0] = true
+//        })
+//        multiButtonListenerList.add(View.OnClickListener {
+//            Toast.makeText(context, "模式:清单报价", Toast.LENGTH_SHORT).show()
+//            mData[9].resetCheckList(mData[9].buttonCheckList)
+//            mData[9].buttonCheckList[1] = true
+//            val content: List<String> = listOf("上传附件", "下载模板")
+//            val customDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG, context, content, handler)
+//            customDialog.msgWhat = Constants.HandlerMsg.UPLOAD_LIST_QUOTE_SELECT_OK.ordinal
+//            customDialog.dialog.show()
+//        })
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "需求租赁清单", "需求租赁清单", "")
+//            }
+//        }
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[5].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
+//            //intent.putExtra("key",mData[5].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//拍照
+//        multiButtonListeners.add(uploadProjectListListener)//上传附件
+//
+//        mData[5].buttonListener = multiButtonListeners
     }
 
     //需求三方
@@ -1123,42 +1198,50 @@ class AdapterGenerate {
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandTripartite.json")
-        mData[0].backListener = View.OnClickListener {
-            activity.finish()
-            UnSerializeDataBase.imgList.clear()
-            UnSerializeDataBase.fileList.clear()
-        }
-        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
-        val downloadProgressListener = View.OnClickListener {
-            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
-                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
-                .withMemoryBar(true).build()
-            chooser.show()
-            chooser.setOnSelectListener { selectContent ->
-                downloadFile(selectContent, "三方服务清单模板", "三方服务清单模板", "")
-            }
-        }
-        val uploadProjectListListener = View.OnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            //intent.putExtra("key",mData[4].key)
-            UnSerializeDataBase.fileList.add(FileMap("", mData[2].additionalKey))
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
-        }
-        val cameraListener = View.OnClickListener {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            UnSerializeDataBase.imgList.add(BitmapMap("", mData[2].additionalKey))
-            //intent.putExtra("key",mData[4].key)
-            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }
-        multiButtonListeners.add(downloadProgressListener)
-        multiButtonListeners.add(cameraListener)//拍照
-        multiButtonListeners.add(uploadProjectListListener)//上传附件
-        mData[2].buttonListener = multiButtonListeners
-
+        mData[4].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[5].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val mdata=Bundle()
+        mData[1].buttonListener= arrayListOf( View.OnClickListener {
+            mData[0].selected = 1
+            mdata.putString("type","三方服务清册发布")
+            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+        })
         val adapter = RecyclerviewAdapter(mData)
         adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementThirdParty
         return adapter
+//        mData[0].backListener = View.OnClickListener {
+//            activity.finish()
+//            UnSerializeDataBase.imgList.clear()
+//            UnSerializeDataBase.fileList.clear()
+//        }
+//        val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
+//        val downloadProgressListener = View.OnClickListener {
+//            val chooser = StorageChooser.Builder().withActivity(activity).allowCustomPath(true)
+//                .setType(StorageChooser.DIRECTORY_CHOOSER).withFragmentManager(activity.fragmentManager)
+//                .withMemoryBar(true).build()
+//            chooser.show()
+//            chooser.setOnSelectListener { selectContent ->
+//                downloadFile(selectContent, "三方服务清单模板", "三方服务清单模板", "")
+//            }
+//        }
+//        val uploadProjectListListener = View.OnClickListener {
+//            val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            intent.type = "*/*"
+//            //intent.putExtra("key",mData[4].key)
+//            UnSerializeDataBase.fileList.add(FileMap("", mData[2].additionalKey))
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//        }
+//        val cameraListener = View.OnClickListener {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            UnSerializeDataBase.imgList.add(BitmapMap("", mData[2].additionalKey))
+//            //intent.putExtra("key",mData[4].key)
+//            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//        }
+//        multiButtonListeners.add(downloadProgressListener)
+//        multiButtonListeners.add(cameraListener)//拍照
+//        multiButtonListeners.add(uploadProjectListListener)//上传附件
+//        mData[2].buttonListener = multiButtonListeners
     }
 
     /*
@@ -1175,7 +1258,9 @@ class AdapterGenerate {
             UnSerializeDataBase.fileList.clear()
         }
         mData[9].jumpListener = View.OnClickListener {
-            (activity as SupplyActivity).switchFragment(ApplicationSubmitFragment(), R.id.frame_supply, "register")
+            val bundle = Bundle()
+            bundle.putInt("type",Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal)
+            (activity as SupplyActivity).switchFragment(ApplicationSubmitFragment.newInstance(bundle), R.id.frame_supply, "register")
 //            val data = Bundle()
 //            data.putString("key", mData[9].key)
 //            data.putString("title", mData[9].shiftInputTitle)
@@ -3248,170 +3333,87 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
+    /**
+     * 我的报名
+     */
+    fun registrationDisplayDemandIndividual():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandIndividual.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandGroup():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandGroup.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandLease():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandLease.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    fun registrationDisplayDemandTripartite():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandTripartite.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+
+    fun inventoryType():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
+        mData[6].buttonListener = arrayListOf(View.OnClickListener {
+            mData[0].selected = 6
+            val bundle = Bundle()
+            bundle.putInt("position",6)
+            bundle.putString("type","成员清册")
+            bundle.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity as SupplyActivity,InventoryFragment.newInstance(bundle), R.id.frame_supply, "inventory")
+        })
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+
+    fun inventoryItemType():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+        val adapter = RecyclerviewAdapter(mData)
+        adapter.mData[0].backListener = View.OnClickListener {
+            activity.supportFragmentManager.popBackStackImmediate()
+        }
+        adapter.mData[0].tvSelectListener = View.OnClickListener {
+            Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+            val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as InventoryFragment
+            activity.supportFragmentManager.popBackStackImmediate()
+            fragment.update(adapter.mData)
+        }
+        return adapter
+    }
+
     ////alterPosition:2019/8/26 0026
     //found:Sanget
-    //event:需求供应显示界面（未对接口）
-
     //需求 供应 显示
-
-    //需求个人
-    fun mainDemandIndividual():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/mainDemandIndividual.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, DemandDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",1)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    //个人劳务
-    fun mainSupplyIndividual():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/mainSupplyIndividual.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, SupplyDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",1)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    //需求团队
-    fun mainDemandTeam():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/mainDemandTeam.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, DemandDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",j+2)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    //团队服务
-    fun mainSupplyTeam():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/mainSupplyTeam.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, SupplyDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",j+2)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    //需求租赁
-    fun mainDemandLease():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/mainDemandLease.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, DemandDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",j+9)
-                activity.startActivity(intent)
-            }
-        }
-
-        val adapter = RecyclerviewAdapter((mData))
-        return adapter
-    }
-    //租赁服务
-    fun mainSupplyLease():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/mainSupplyLease.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, SupplyDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",j+9)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter((mData))
-        return adapter
-    }
-    //需求三方
-    fun mainDemandTripartite():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/mainDemandTripartite.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, DemandDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",11)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    //三方服务
-    fun mainSupplyTripartite():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/mainSupplyTripartite.json")
-        for(j in 0 until mData.size)
-        {
-            mData[j].jumpListener = View.OnClickListener {
-                val intent = Intent(context, SupplyDisplayActivity::class.java)
-                intent.putExtra("title",mData[j].shiftInputTitle)
-                intent.putExtra("type",11)
-                activity.startActivity(intent)
-            }
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-
 
     //需求个人显示模板
     fun demandIndividualDisplay():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandIndividual.json")
-        mData[mData.size-1].submitListener = View.OnClickListener {
-
-        }
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
+        return RecyclerviewAdapter(mData)
     }
     //个人劳务显示模板
     fun supplyIndividualDisplay():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/supplyIndividual.json")
-        mData[11].submitListener = View.OnClickListener {
-
-        }
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
@@ -3575,68 +3577,1187 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-    /**
-     * 我的报名
-     */
-    fun registrationDisplayDemandIndividual():RecyclerviewAdapter{
+    //三方 资质合作
+    fun demandTeamDisplayDemandTripartiteCooperation():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandIndividual.json")
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/demandTripartiteCooperation.json")
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-    fun registrationDisplayDemandGroup():RecyclerviewAdapter{
+    //三方 资质合作
+    fun supplyTeamDisplayDemandTripartiteCooperation():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandGroup.json")
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    fun registrationDisplayDemandLease():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandLease.json")
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
-    fun registrationDisplayDemandTripartite():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("MyRegistration/DemandTripartite.json")
+        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/supplyTripartiteCooperation.json")
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
 
-    fun inventoryType():RecyclerviewAdapter{
+    //需求车辆清册查看
+    fun requirementCarList(bundle: Bundle):RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
-        mData[6].buttonListener = arrayListOf(View.OnClickListener {
-            mData[0].selected = 6
-            val bundle = Bundle()
-            bundle.putInt("position",6)
-            bundle.putString("type","成员清册")
-            bundle.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,InventoryFragment.newInstance(bundle), R.id.frame_supply, "inventory")
-        })
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementCarList.json")
+        val adapter = RecyclerviewAdapter(mData)
+        var listData1 = bundle!!.getSerializable("listData1") as RequirementCarList
+        adapter.mData[0].singleDisplayRightContent=if(listData1.carType==null){" "}else{ listData1.carType}
+        adapter.mData[1].singleDisplayRightContent=if(listData1.needCarNumber==null){" "}else{ listData1.needCarNumber}
+        when{
+            listData1.construction=="1"->adapter.mData[2].singleDisplayRightContent="箱式"
+            listData1.construction=="2"->adapter.mData[2].singleDisplayRightContent="敞篷"
+            else->adapter.mData[2].singleDisplayRightContent=" "
+        }
+        when{
+            listData1.isInsurance=="0"->adapter.mData[3].singleDisplayRightContent="无保险"
+            listData1.isInsurance=="1"->adapter.mData[3].singleDisplayRightContent="有保险"
+            else->adapter.mData[3].singleDisplayRightContent=" "
+        }
+        when{
+            listData1.isDriver=="0"->adapter.mData[4].singleDisplayRightContent="不配备"
+            listData1.isDriver=="1"->adapter.mData[4].singleDisplayRightContent="配备"
+            else->adapter.mData[4].singleDisplayRightContent=" "
+        }
+        adapter.mData[5].singleDisplayRightContent=if(listData1.haveDriver==null){" "}else{ listData1.haveDriver}
+        adapter.mData[6].singleDisplayRightContent=if(listData1.noDriver==null){" "}else{ listData1.noDriver}
+        adapter.mData[7].singleDisplayRightContent=if(listData1.remark==null){" "}else{ listData1.remark}
+        return adapter
+    }
+    //需求成员清册查看
+    fun requirementMembersList(bundle: Bundle):RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementMembersList.json")
+        val adapter = RecyclerviewAdapter(mData)
+        var listData2 = bundle!!.getSerializable("listData2") as RequirementMembersList
+        adapter.mData[0].singleDisplayRightContent=if(listData2.positionType==null){" "}else{ listData2.positionType}
+        adapter.mData[1].singleDisplayRightContent=if(listData2.needPeopleNumber==null){" "}else{ listData2.needPeopleNumber}
+        adapter.mData[2].singleDisplayRightContent=if(listData2.salaryStandard==null){" "}else{ listData2.salaryStandard}
+        adapter.mData[3].singleDisplayRightContent=if(listData2.personCertificate==null){" "}else{ listData2.personCertificate}
+        when{
+            listData2.haveCertificate=="0"->adapter.mData[4].singleDisplayRightContent="否"
+            listData2.haveCertificate=="1"->adapter.mData[4].singleDisplayRightContent="是"
+            else->adapter.mData[4].singleDisplayRightContent=" "
+        }
+        adapter.mData[5].singleDisplayRightContent=if(listData2.remark==null){" "}else{ listData2.remark}
+        return adapter
+    }
+
+    //人员清册
+    fun provideCrewLists():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/provideCrewLists.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    //清工薪资
+    fun requirementPowerTransformationSalary():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementPowerTransformationSalary.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    //清单报价
+    fun requirementListQuotations():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementListQuotations.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    //乙供清单
+    fun requirementSecondProvideMaterialsList():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementSecondProvideMaterialsList.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    //需求租赁清单
+    fun requirmentLease():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirmentLease.json")
+        val adapter = RecyclerviewAdapter(mData)
+        return adapter
+    }
+    //需求三方清单
+    fun requirmentThird():RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirmentThird.json")
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
 
-    fun inventoryItemType():RecyclerviewAdapter{
+    //机械清册
+    fun constructionToolLists():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+        val mData = itemGenerate.getJsonFromAsset("DisplaySupply/constructionToolLists.json")
         val adapter = RecyclerviewAdapter(mData)
-        adapter.mData[0].backListener = View.OnClickListener {
-            activity.supportFragmentManager.popBackStackImmediate()
-        }
-        adapter.mData[0].tvSelectListener = View.OnClickListener {
-            Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
-            val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as InventoryFragment
-            activity.supportFragmentManager.popBackStackImmediate()
-            fragment.update(adapter.mData)
+        return adapter
+    }
+
+    fun ApplicationSubmit(args:Bundle): RecyclerviewAdapter {
+        val mdata=Bundle()
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        lateinit var mData:List<MultiStyleItem>
+        lateinit var adapter: RecyclerviewAdapter
+        when (args.getInt("type")) {
+            //个人
+            Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal -> {
+//                var MutableListenerMember:MutableList<OnClickListener> =ArrayList()
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
+                adapter = RecyclerviewAdapter(mData)
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.insertPersonRequirementInformationCheck
+                adapter.baseUrl= "http://192.168.1.65:8012"
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVehicleList.json")
+                // mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanWorkList.json")
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanSingleList.json")
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMachineList.json")
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitHireList.json")
+                //mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTripartiteList.json")
+                var Listdata=args.getSerializable("RequirementPersonDetail") as RequirementPersonDetail
+                adapter.mData[0].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                adapter.mData[1].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementMajor ==null){" "} else {Listdata.requirementMajor}
+                adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                //
+                val data: MutableList<MultiStyleItem> = ArrayList()
+                data.add(MultiStyleItem(MultiStyleItem.Options.TITLE, "成员清册", "0"))
+                val JsonList :ArrayList<JSONObject> = arrayListOf(
+                    JSONObject().put("type","普工").
+                        put("needpeople",2), JSONObject().put("type","技工").
+                        put("needpeople",1), JSONObject().put("type","后勤").
+                        put("needpeople",2))
+                for(j in JsonList) {
+                    var position=JsonList.indexOf(j)
+                    var type=j.getString("type")
+                    var needpople=j.getInt("needpeople")
+                    data.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT, type, needpople.toString()))
+                    for (i in 0 until  needpople) {
+                        val position = data.size
+                        val mData1: List<MultiStyleItem>
+                        mdata.putString("type", "成员清册")
+                        mdata.putString("name", type)
+                        //mdata.putSerializable("list", i)
+                        mData1 = ApplicationSubmitDetailList(mdata).mData
+                        data.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SHIFT_INPUT,
+                                type,
+                                false
+                            )
+                        )
+                        data[data.size - 1].itemMultiStyleItem = mData1
+                        data[data.size-1].necessary=false
+                        data[data.size - 1].jumpListener = View.OnClickListener {
+                            data[0].selected = position
+                            val bundle = Bundle()
+                            bundle.putSerializable(
+                                "inventoryItem",
+                                data[position].itemMultiStyleItem as Serializable
+                            )
+                            FragmentHelper.switchFragment(
+                                context as DemandDisplayActivity,
+                                SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                R.id.frame_display_demand,
+                                ""
+                            )
+                        }
+                    }
+                    data.add(MultiStyleItem(MultiStyleItem.Options.BLANK, " "))
+                }
+                adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
+                    mData[0].selected = 5
+                    mData[5].itemMultiStyleItem=data
+                    mdata.putInt("position",5)
+                    mdata.putString("type","成员清册")
+                    mdata.putSerializable("inventory",mData[5].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+                })
+//                MutableListenerMember.add(MemberListButton)
+//                adapter.mData[5].buttonListener=MutableListenerMember
+                /*   var VehicleImageButton = OnClickListener {
+                       val data = Bundle()
+                       data.putString("key", mData[7].key)
+                       data.putString("title", mData[7].buttonTitle)
+                       (activity as ApplicationSubmitActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_application, "Capture")
+                   }
+                   MutableListenerMember.add(VehicleImageButton)
+                   adapter.mData[7].buttonListener=MutableListenerMember*/
+            }
+            //主配 网 变电 测量 实验调试 跨 运行维护
+            Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal,
+            Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal,
+            Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal,
+            Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal,
+            Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal,
+            Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal,
+            Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->
+            {
+                //  lateinit var listData1:List<requirementTeamProjectList>
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTeam.json")
+                mData[7].necessary=true
+                mData[8].necessary=true
+                lateinit var listData1: List<RequirementCarList>
+                val data: MutableList<MultiStyleItem> = ArrayList()
+                adapter = RecyclerviewAdapter(mData)
+                when (args.getInt("type"))
+                {
+                    Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->//主网
+                    {
+                        var Listdata =args.getSerializable("RequirementMajorNetWork") as RequirementMajorNetWork
+                        adapter.mData[0].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
+                            //                    Toast.makeText(context,"点击了机械清册",Toast.LENGTH_SHORT).show()
+//                    val intent=Intent(context,ProjectListActivity::class.java)
+//                    //22为机械清册
+//                    intent.putExtra("type",22)
+//                    intent.putExtra("constructionEquipment",args.getString("constructionEquipment"))
+//                    activity.startActivity(intent)
+                            //mdata.putString("constructionEquipment",ListdataRequirementMajorNetWork.constructionEquipment)
+                            if(Listdata.constructionEquipment =="1") {
+                                mData[0].selected = 6
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[6].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+//                    mdata.putInt("type",22)
+                            // (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                        })
+                    }
+                    Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->////配网
+                    {
+                        var Listdata =args.getSerializable("RequirementDistributionNetwork") as RequirementDistributionNetwork
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.constructionEquipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->//变电
+                    {
+                        var Listdata =args.getSerializable("RequirementPowerTransformation") as RequirementPowerTransformation
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.constructionEquipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->//测量设计
+                    {
+                        var Listdata =args.getSerializable("RequirementMeasureDesign") as RequirementMeasureDesign
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.equipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->//实验调试
+                    {
+                        var Listdata =args.getSerializable("RequirementTest") as RequirementTest
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.machineEquipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->//跨越架
+                    {
+                        var Listdata =args.getSerializable("RequirementSpanWoodenSupprt") as RequirementSpanWoodenSupprt
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.machineEquipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->//运维
+                    {
+                        var Listdata =args.getSerializable("RequirementRunningMaintain") as RequirementRunningMaintain
+                        adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                        adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                        adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                        adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                        adapter.mData[7].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.machineEquipment =="1") {
+                                mData[0].selected = 7
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[7].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                }
+                /////车辆清册报名
+                //
+                if(args.getSerializable("listData1")!=null) {
+                    listData1 = args!!.getSerializable("listData1") as List<RequirementCarList>
+                    for (j in listData1) {
+                        var type = j.carType
+                        var needpople = j.needCarNumber.toInt()
+                        data.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,
+                                type,
+                                needpople.toString()
+                            )
+                        )
+                        for (i in 0 until needpople) {
+                            val position = data.size
+                            val mData1: List<MultiStyleItem>
+                            mdata.putString("type", "车辆清册")
+                            mdata.putString("name", type)
+                            mData1 = ApplicationSubmitDetailList(mdata).mData
+                            data.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SHIFT_INPUT,
+                                    type,
+                                    false
+                                )
+                            )
+                            data[data.size - 1].itemMultiStyleItem = mData1
+                            data[data.size - 1].necessary = false
+                            data[data.size - 1].jumpListener = View.OnClickListener {
+                                data[0].selected = position
+                                val bundle = Bundle()
+                                bundle.putSerializable(
+                                    "inventoryItem",
+                                    data[position].itemMultiStyleItem as Serializable
+                                )
+                                bundle.putString("type","车辆清册")
+                                FragmentHelper.switchFragment(
+                                    context as DemandDisplayActivity,
+                                    SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                    R.id.frame_display_demand,
+                                    ""
+                                )
+                            }
+                        }
+                        data.add(MultiStyleItem(MultiStyleItem.Options.BLANK, " "))
+                    }
+                }
+                adapter.mData[4].buttonListener= arrayListOf(View.OnClickListener {
+                    mData[0].selected = 4
+                    mdata.putString("type","车辆清册")
+                    mData[4].itemMultiStyleItem=data
+                    mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+                })
+                adapter.mData[5].buttonListener= arrayListOf( View.OnClickListener {
+                    mData[0].selected = 5
+                    mdata.putString("type","成员清册")
+                    mdata.putSerializable("inventory",mData[5].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+
+                })
+//                if(args.getSerializable("listData1")!=null) {
+//                    listData1 =
+//                        args!!.getSerializable("listData1") as List<requirementTeamProjectList>
+//                    data.add(MultiStyleItem(MultiStyleItem.Options.TITLE, "清单报价清册", "0"))
+//                    for (i in listData1) {
+//                        val position: Int = data.size
+//                        val mData1: List<MultiStyleItem>
+//                        // mdata.putSerializable("listData1", args.getSerializable("listData1"))
+//                        mdata.putString("type", "清单报价清册")
+//                        mdata.putSerializable("list", i)
+//                        mData1 = ApplicationSubmitDetailList(mdata).mData
+//                        data.add(
+//                            MultiStyleItem(
+//                                MultiStyleItem.Options.SHIFT_INPUT,
+//                                mData1[1].singleDisplayRightContent,
+//                                false
+//                            )
+//                        )
+//                        data[data.size - 1].itemMultiStyleItem = mData1
+//
+//                        data[data.size - 1].jumpListener = View.OnClickListener {
+//                            data[0].selected = position
+//                            val bundle = Bundle()
+//                            bundle.putSerializable(
+//                                "inventoryItem",
+//                                data[position].itemMultiStyleItem as Serializable
+//                            )
+//                            FragmentHelper.switchFragment(
+//                                context as DemandDisplayActivity,
+//                                SubmitInventoryItemMoreFragment.newInstance(bundle),
+//                                R.id.frame_display_demand,
+//                                ""
+//                            )
+//                        }
+//                    }
+//                }
+                adapter.mData[8].buttonListener= arrayListOf(View.OnClickListener {
+                    mData[0].selected = 8
+                    mdata.putString("type","清工薪资清册")
+                    mdata.putSerializable("inventory",mData[8].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+                },
+                    View.OnClickListener {
+                        if(args.getSerializable("listData1")!=null)
+                        {
+                            mData[0].selected = 8
+                            mData[8].itemMultiStyleItem=data
+                            mdata.putSerializable(
+                                "inventory",
+                                mData[8].itemMultiStyleItem as Serializable
+                            )
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                SubmitInventoryFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "inventory"
+                            )
+                        }
+                        else {
+                            Toast.makeText(context,"清单报价清册为空",Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+            }
+            //马帮
+            Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal-> {//马帮运输
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitHorseHelp.json")
+                mData[5].necessary=true
+                lateinit var listData1: List<requirementTeamProjectList>
+                val data: MutableList<MultiStyleItem> = ArrayList()
+                adapter = RecyclerviewAdapter(mData)
+                var Listdata =args.getSerializable("RequirementCaravanTransport") as RequirementCaravanTransport
+                adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                adapter.mData[3].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                adapter.mData[4].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                if(args.getSerializable("listData1")!=null) {
+                    listData1 =
+                        args!!.getSerializable("listData1") as List<requirementTeamProjectList>
+                    data.add(MultiStyleItem(MultiStyleItem.Options.TITLE, "清单报价清册", "0"))
+                    for (i in listData1) {
+                        val position: Int = listData1.indexOf(i)
+                        val mData1: List<MultiStyleItem>
+                        mdata.putString("type", "清单报价清册")
+                        mdata.putSerializable("list", i)
+                        mData1 = ApplicationSubmitDetailList(mdata).mData
+                        data.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SHIFT_INPUT,
+                                mData1[1].singleDisplayRightContent,
+                                false
+                            )
+                        )
+                        data[data.size - 1].itemMultiStyleItem = mData1
+
+                        data[data.size - 1].jumpListener = View.OnClickListener {
+                            data[0].selected = position + 1
+                            val bundle = Bundle()
+                            bundle.putSerializable(
+                                "inventoryItem",
+                                data[position + 1].itemMultiStyleItem as Serializable
+                            )
+                            FragmentHelper.switchFragment(
+                                context as DemandDisplayActivity,
+                                SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                R.id.frame_display_demand,
+                                ""
+                            )
+                        }
+                    }
+                }
+//                adapter.mData[5].buttonListener== arrayListOf(View.OnClickListener {
+//                    if(args.getSerializable("listData1")!=null)
+//                    {
+//                        listData1=mdata.getSerializable("listData1") as List<requirementTeamProjectList>
+//                        mData[0].selected = 5
+//                        mdata.putSerializable("listData1", args.getSerializable("listData1"))
+//                        mdata.putString("type", "清单报价清册")
+//                        mData[5].itemMultiStyleItem=data
+//                        mdata.putSerializable(
+//                            "inventory",
+//                            mData[5].itemMultiStyleItem as Serializable
+//                        )
+//                        FragmentHelper.switchFragment(
+//                            activity as DemandDisplayActivity,
+//                            SubmitInventoryFragment.newInstance(mdata),
+//                            R.id.frame_display_demand,
+//                            "inventory"
+//                        )
+//                    }
+//                    else {
+//                        Toast.makeText(context,"清单报价清册为空",Toast.LENGTH_SHORT).show()
+//                    }
+//                })
+            }
+            //非开挖 桩基
+            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal, //桩基
+            Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{//非开挖
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPileFoundation.json")
+                adapter = RecyclerviewAdapter(mData)
+                mData[6].necessary=true
+                mData[7].necessary=true
+                lateinit var listData1: List<requirementTeamProjectList>
+                val data: MutableList<MultiStyleItem> = ArrayList()
+                when (args.getInt("type")) {
+                    Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{//桩基
+                        var Listdata = args.getSerializable("RequirementPileFoundation") as RequirementPileFoundation
+                        adapter.mData[1].singleDisplayRightContent = if (Listdata.projectName == null) {
+                            " "
+                        } else {
+                            Listdata.projectName
+                        }
+                        adapter . mData [2].singleDisplayRightContent =
+                            if (Listdata.requirementVariety == null) {
+                                " "
+                            } else {
+                                Listdata.requirementVariety
+                            }
+                        adapter . mData [3].singleDisplayRightContent =
+                            if (Listdata.name == null) {
+                                " "
+                            } else {
+                                Listdata.name
+                            }
+                        adapter . mData [4].singleDisplayRightContent =
+                            if (Listdata.phone == null) {
+                                " "
+                            } else {
+                                Listdata.phone
+                            }
+                        adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.otherMachineEquipment =="1") {
+                                mData[0].selected = 6
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[6].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                    Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{
+                        var Listdata = args.getSerializable("RequirementUnexcavation") as RequirementUnexcavation
+                        adapter.mData[1].singleDisplayRightContent = if (Listdata.projectName == null) {
+                            " "
+                        } else {
+                            Listdata.projectName
+                        }
+                        adapter . mData [2].singleDisplayRightContent =
+                            if (Listdata.requirementVariety == null) {
+                                " "
+                            } else {
+                                Listdata.requirementVariety
+                            }
+                        adapter . mData [3].singleDisplayRightContent =
+                            if (Listdata.name == null) {
+                                " "
+                            } else {
+                                Listdata.name
+                            }
+                        adapter . mData [4].singleDisplayRightContent =
+                            if (Listdata.phone == null) {
+                                " "
+                            } else {
+                                Listdata.phone
+                            }
+                        adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
+                            if(Listdata.otherMachineEquipment =="1") {
+                                mData[0].selected = 6
+                                mdata.putString("type", "机械清册")
+                                mdata.putSerializable(
+                                    "inventory",
+                                    mData[6].itemMultiStyleItem as Serializable
+                                )
+                                FragmentHelper.switchFragment(
+                                    activity as DemandDisplayActivity,
+                                    SubmitInventoryFragment.newInstance(mdata),
+                                    R.id.frame_display_demand,
+                                    "inventory"
+                                )
+                            }
+                            else{
+                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+
+
+                }
+                adapter.mData[5].buttonListener= arrayListOf(View.OnClickListener {
+                    mData[0].selected = 5
+                    mdata.putString("type","车辆清册")
+                    mdata.putSerializable("inventory",mData[5].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+                })
+                if(args.getSerializable("listData1")!=null) {
+                    listData1 =
+                        args!!.getSerializable("listData1") as List<requirementTeamProjectList>
+                    data.add(MultiStyleItem(MultiStyleItem.Options.TITLE, "清单报价清册", "0"))
+                    for (i in listData1) {
+                        val position: Int = listData1.indexOf(i)
+                        val mData1: List<MultiStyleItem>
+                        // mdata.putSerializable("listData1", args.getSerializable("listData1"))
+                        mdata.putString("type", "清单报价清册")
+                        mdata.putSerializable("list", i)
+                        mData1 = ApplicationSubmitDetailList(mdata).mData
+                        data.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SHIFT_INPUT,
+                                mData1[1].singleDisplayRightContent,
+                                false
+                            )
+                        )
+                        data[data.size - 1].itemMultiStyleItem = mData1
+                        data[data.size - 1].jumpListener = View.OnClickListener {
+                            data[0].selected = position + 1
+                            val bundle = Bundle()
+                            bundle.putSerializable(
+                                "inventoryItem",
+                                data[position + 1].itemMultiStyleItem as Serializable
+                            )
+                            FragmentHelper.switchFragment(
+                                context as DemandDisplayActivity,
+                                SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                R.id.frame_display_demand,
+                                ""
+                            )
+                        }
+                    }
+                }
+
+//                adapter.mData[7].buttonListener== arrayListOf(View.OnClickListener {
+//                    if(mdata.getSerializable("listData1")!=null)
+//                    {
+//                        listData1=mdata.getSerializable("listData1") as List<requirementTeamProjectList>
+//                        mData[0].selected = 7
+//                        mdata.putSerializable("listData1", args.getSerializable("listData1"))
+//                        mdata.putString("type", "清单报价清册")
+//                        mData[7].itemMultiStyleItem=data
+//                        mdata.putSerializable(
+//                            "inventory",
+//                            mData[7].itemMultiStyleItem as Serializable
+//                        )
+//                        FragmentHelper.switchFragment(
+//                            activity as DemandDisplayActivity,
+//                            SubmitInventoryFragment.newInstance(mdata),
+//                            R.id.frame_display_demand,
+//                            "inventory"
+//                        )
+//                    }
+//                    else {
+//                        Toast.makeText(context,"清单报价清册为空",Toast.LENGTH_SHORT).show()
+//                    }
+//                })
+            }
+            //车辆租赁
+            Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{//车辆
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVeichleHire.json")
+                adapter = RecyclerviewAdapter(mData)
+                mData[6].necessary=true
+                var Listdata =args.getSerializable("RequirementLeaseCar") as RequirementLeaseCar
+                adapter.mData[1].singleDisplayRightContent = if(Listdata.projectName ==null){" "} else {Listdata.projectName}
+                adapter.mData[2].singleDisplayRightContent = if(Listdata.requirementVariety ==null){" "} else {Listdata.requirementVariety}
+                adapter.mData[3].singleDisplayRightContent = if(Listdata.vehicleType ==null){" "} else {Listdata.vehicleType}
+                adapter.mData[4].singleDisplayRightContent = if(Listdata.name ==null){" "} else {Listdata.name}
+                adapter.mData[5].singleDisplayRightContent = if(Listdata.phone ==null){" "} else {Listdata.phone}
+                adapter.mData[6].buttonListener= arrayListOf(View.OnClickListener {
+                    mData[0].selected = 6
+                    mdata.putString("type","车辆清册")
+                    mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
+                    FragmentHelper.switchFragment(activity as DemandDisplayActivity,SubmitInventoryFragment.newInstance(mdata), R.id.frame_display_demand, "inventory")
+                })
+            }
+            //除车辆所有租赁
+            Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{//工器具
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitBesidesVeichleHire.json")
+                adapter = RecyclerviewAdapter(mData)
+                mData[5].necessary=true
+                lateinit var listData1:List<requirementLeaseProjectList>
+                when (args.getInt("type")) {
+                    Constants.FragmentType.TOOL_LEASING_TYPE.ordinal-> {//工器具
+                        var Listdata =
+                            args.getSerializable("RequirementLeaseConstructionTool") as RequirementLeaseConstructionTool
+                        adapter.mData[1].singleDisplayRightContent =
+                            if (Listdata.projectName == null) {
+                                " "
+                            } else {
+                                Listdata.projectName
+                            }
+                        adapter.mData[2].singleDisplayRightContent =
+                            if (Listdata.requirementVariety == null) {
+                                " "
+                            } else {
+                                Listdata.requirementVariety
+                            }
+                        adapter.mData[3].singleDisplayRightContent =
+                            if (Listdata.name == null) {
+                                " "
+                            } else {
+                                Listdata.name
+                            }
+                        adapter.mData[4].singleDisplayRightContent =
+                            if (Listdata.phone == null) {
+                                " "
+                            } else {
+                                Listdata.phone
+                            }
+                    }
+                }
+                adapter.mData[7].buttonListener== arrayListOf(View.OnClickListener {
+                    if(mdata.getSerializable("listData4")==null)
+                    {
+                        listData1=mdata.getSerializable("listData4") as List<requirementLeaseProjectList>
+                        mData[0].selected = 7
+                        mdata.putSerializable("listData4", args.getSerializable("listData1"))
+                        mdata.putString("type", "租赁清册")
+                        mdata.putSerializable(
+                            "inventory",
+                            mData[7].itemMultiStyleItem as Serializable
+                        )
+                        FragmentHelper.switchFragment(
+                            activity as DemandDisplayActivity,
+                            SubmitInventoryFragment.newInstance(mdata),
+                            R.id.frame_display_demand,
+                            "inventory"
+                        )
+                    }
+                    else {
+                        Toast.makeText(context,"租赁清册为空",Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            //除车资质合作 所有三方
+            16->{
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTripartite.json")
+                adapter = RecyclerviewAdapter(mData)
+                adapter.mData[0].singleDisplayRightContent =  if(args.getString("projectName")==null){" "} else {args.getString("projectName")}
+                adapter.mData[1].singleDisplayRightContent = if(args.getString("requirementVariety")==null){" "} else {args.getString("requirementVariety")}
+                adapter.mData[2].singleDisplayRightContent = if( args.getString("name")==null){" "} else { args.getString("name")}
+                adapter.mData[3].singleDisplayRightContent = if( args.getString("phone")==null){" "} else { args.getString("phone")}
+                var MutableListenerTripartite:MutableList<View.OnClickListener> =ArrayList()
+                var VehicleListTripartiteButton = View.OnClickListener {
+                    //Toast.makeText(context,"点击了三方服务清册",Toast.LENGTH_SHORT).show()
+
+                    mdata.putInt("type",26)
+                    mdata.putSerializable("listData5",args.getSerializable("listData5"))
+                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                }
+                MutableListenerTripartite.add(VehicleListTripartiteButton)
+                adapter.mData[4].buttonListener=MutableListenerTripartite
+            }
         }
         return adapter
+    }
+    fun ApplicationSubmitDetailList(bundle: Bundle):RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        lateinit var mData:List<MultiStyleItem>
+        lateinit var adapter: RecyclerviewAdapter
+        when(bundle.getString("type"))
+        {
+            //成员清册详情
+            "成员清册"->{
+                var name=bundle.getString("name")
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+                adapter = RecyclerviewAdapter(mData)
+                }
+            //车辆清册详情
+            "车辆清册"->{
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVehicleList.json")
+                adapter = RecyclerviewAdapter(mData)
+//                adapter.mData[0].backListener = View.OnClickListener {
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                }
+//                adapter.mData[0].tvSelectListener = View.OnClickListener {
+//                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+//                    val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                    fragment.update(adapter.mData)
+//                }
+                mData[3].jumpListener = View.OnClickListener {
+                    val data = Bundle()
+                    data.putString("key", mData[3].key)
+                    data.putString("title", mData[3].shiftInputTitle)
+                    (activity as DemandDisplayActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_display_demand, "Capture")
+                }
+            }
+            //机械清册详情
+            "机械清册"->{
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMachineList.json")
+                adapter = RecyclerviewAdapter(mData)
+            }
+            //清工薪资清册详情
+            "清工薪资清册"->{
+                //lateinit var listData1:List<requirementTeamProjectList>
+                //lateinit var listData2:List<requirementPowerTransformationSalary>
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanWorkList.json")
+                adapter = RecyclerviewAdapter(mData)
+                adapter.mData[0].backListener = View.OnClickListener {
+                    activity.supportFragmentManager.popBackStackImmediate()
+                }
+                adapter.mData[0].tvSelectListener = View.OnClickListener {
+                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+                    val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+                    activity.supportFragmentManager.popBackStackImmediate()
+                    fragment.update(adapter.mData)
+                }
+            }
+            //清单报价清册详情
+            "清单报价清册"->{
+                lateinit var list:requirementTeamProjectList
+                list=bundle.getSerializable("list") as requirementTeamProjectList
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanSingleList.json")
+                adapter = RecyclerviewAdapter(mData)
+                adapter.mData[0].backListener = View.OnClickListener {
+                    activity.supportFragmentManager.popBackStackImmediate()
+                }
+                adapter.mData[0].tvSelectListener = View.OnClickListener {
+                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+                    val fragment =
+                        activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+                    activity.supportFragmentManager.popBackStackImmediate()
+                    fragment.update(adapter.mData)
+                }
+                adapter.mData[1].singleDisplayRightContent = if (list.projectName == null) {
+                    "无数据"
+                } else {
+                    list.projectName
+                }
+                adapter.mData[2].singleDisplayRightContent =
+                    if (list.specificationsModels == null) {
+                        "无数据"
+                    } else {
+                        list.specificationsModels
+                    }
+                adapter.mData[3].singleDisplayRightContent = if (list.quantity == null) {
+                    "无数据"
+                } else {
+                    list.quantity
+                }
+                adapter.mData[4].singleDisplayRightContent = if (list.units == null) {
+                    "无数据"
+                } else {
+                    list.units
+                }
+                adapter.mData[6].singleDisplayRightContent = if (list.detailsExplain == null) {
+                    "无数据"
+                } else {
+                    list.detailsExplain
+                }
+            }
+            //需求租赁清单
+            "租赁清册"->{
+
+                lateinit var listData1:List<requirementLeaseProjectList>
+                listData1=bundle.getSerializable("listData4") as List<requirementLeaseProjectList>
+                for (i in listData1) {
+                    mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitHireList.json")
+                    adapter = RecyclerviewAdapter(mData)
+                    adapter.mData[0].backListener = View.OnClickListener {
+                        activity.supportFragmentManager.popBackStackImmediate()
+                    }
+                    adapter.mData[0].tvSelectListener = View.OnClickListener {
+                        val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+                        activity.supportFragmentManager.popBackStackImmediate()
+                        fragment.update(adapter.mData)
+                    }
+                    adapter.mData[1].singleDisplayRightContent = if (i.projectName == null) {
+                        "无数据"
+                    } else {
+                        i.projectName
+                    }
+                    adapter.mData[2].singleDisplayRightContent =
+                        if (i.specificationsModels == null) {
+                            "无数据"
+                        } else {
+                            i.specificationsModels
+                        }
+                    adapter.mData[3].singleDisplayRightContent = if (i.quantity == null) {
+                        "无数据"
+                    } else {
+                        i.quantity
+                    }
+                    adapter.mData[4].singleDisplayRightContent = if (i.units == null) {
+                        "无数据"
+                    } else {
+                        i.units
+                    }
+                    adapter.mData[6].singleDisplayRightContent = if (i.detailsExplain == null) {
+                        "无数据"
+                    } else {
+                        i.detailsExplain
+                    }
+                    val fragment =
+                        activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+                    activity.supportFragmentManager.popBackStackImmediate()
+                    fragment.update(adapter.mData)
+                }
+            }
+            /*  //需求三方清单
+              26->{
+                  mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTripartiteList.json")
+                  adapter = RecyclerviewAdapter(mData)
+                  return adapter
+              }*/
+        }
+        return adapter
+    }
+    fun PublishDetailList(bundle: Bundle):RecyclerviewAdapter{//清册发布
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        lateinit var mData:List<MultiStyleItem>
+        lateinit var adapter: RecyclerviewAdapter
+        when(bundle.getString("type"))
+        {
+            //成员清册发布
+            "成员清册发布"->{
+                mData = itemGenerate.getJsonFromAsset("DemandPublish/ApplicationPublishMemberList.json")
+                adapter = RecyclerviewAdapter(mData)
+            }
+            "车辆清册发布"->{
+                mData = itemGenerate.getJsonFromAsset("DemandPublish/ApplicationPublishVehicleList.json")
+                adapter = RecyclerviewAdapter(mData)
+            }
+            //租赁清册发布
+            "租赁清册发布"->{
+                lateinit var listData1:List<requirementLeaseProjectList>
+                //listData1=bundle.getSerializable("listData4") as List<requirementLeaseProjectList>
+                mData = itemGenerate.getJsonFromAsset("DemandPublish/ApplicationPublishHireList.json")
+                adapter = RecyclerviewAdapter(mData)
+//                    adapter.mData[4].singleDisplayRightContent = if (i.units == null) {
+//                        "无数据"
+//                    } else {
+//                        i.units
+//                    }
+            }
+            //三方服务清册发布
+            "三方服务清册发布"->{
+                lateinit var listData1:List<requirementLeaseProjectList>
+                //listData1=bundle.getSerializable("listData4") as List<requirementLeaseProjectList>
+                mData = itemGenerate.getJsonFromAsset("DemandPublish/ApplicationPubilshTripartiteList.json")
+                adapter = RecyclerviewAdapter(mData)
+//                    adapter.mData[4].singleDisplayRightContent = if (i.units == null) {
+//                        "无数据"
+//                    } else {
+//                        i.units
+//                    }
+            }
+        }
+        return adapter
+//            "成员清册发布"->{
+//                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
+//                adapter = RecyclerviewAdapter(mData)
+//                adapter.mData[0].backListener = View.OnClickListener {
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                }
+//                adapter.mData[0].tvSelectListener = View.OnClickListener {
+//                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+//                    val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SupplyPublishInventoryFragment
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                    fragment.update(adapter.mData)
+//                }
+            //   }
+
+//            //机械清册详情
+//            "机械清册"->{
+//                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMachineList.json")
+//                adapter = RecyclerviewAdapter(mData)
+//                adapter.mData[0].backListener = View.OnClickListener {
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                }
+//                adapter.mData[0].tvSelectListener = View.OnClickListener {
+//                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+//                    val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                    fragment.update(adapter.mData)
+//                }
+//            }
+//            //清工薪资清册详情
+//            "清工薪资清册"->{
+//                //lateinit var listData1:List<requirementTeamProjectList>
+//                //lateinit var listData2:List<requirementPowerTransformationSalary>
+//                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanWorkList.json")
+//                adapter = RecyclerviewAdapter(mData)
+//                adapter.mData[0].backListener = View.OnClickListener {
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                }
+//                adapter.mData[0].tvSelectListener = View.OnClickListener {
+//                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+//                    val fragment = activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                    fragment.update(adapter.mData)
+//                }
+//            }
+//            //清单报价清册详情
+//            "清单报价清册"->{
+//                lateinit var list:requirementTeamProjectList
+//                list=bundle.getSerializable("list") as requirementTeamProjectList
+//                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitCleanSingleList.json")
+//                adapter = RecyclerviewAdapter(mData)
+//                adapter.mData[0].backListener = View.OnClickListener {
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                }
+//                adapter.mData[0].tvSelectListener = View.OnClickListener {
+//                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+//                    val fragment =
+//                        activity.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+//                    activity.supportFragmentManager.popBackStackImmediate()
+//                    fragment.update(adapter.mData)
+//                }
+//                adapter.mData[1].singleDisplayRightContent = if (list.projectName == null) {
+//                    "无数据"
+//                } else {
+//                    list.projectName
+//                }
+//                adapter.mData[2].singleDisplayRightContent =
+//                    if (list.specificationsModels == null) {
+//                        "无数据"
+//                    } else {
+//                        list.specificationsModels
+//                    }
+//                adapter.mData[3].singleDisplayRightContent = if (list.quantity == null) {
+//                    "无数据"
+//                } else {
+//                    list.quantity
+//                }
+//                adapter.mData[4].singleDisplayRightContent = if (list.units == null) {
+//                    "无数据"
+//                } else {
+//                    list.units
+//                }
+//                adapter.mData[6].singleDisplayRightContent = if (list.detailsExplain == null) {
+//                    "无数据"
+//                } else {
+//                    list.detailsExplain
+//                }
+//            }
+
     }
 }

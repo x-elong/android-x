@@ -9,19 +9,21 @@
     android:layout_marginTop="@dimen/top_27">
 
     <Button
+        android:visibility="gone"
         android:id="@+id/external_bidding_tv"
         android:layout_width="@dimen/general_161"
         android:layout_height="@dimen/general_100"
-        android:layout_marginStart="@dimen/general_13"
         android:background="@drawable/the_supply_bg"
         android:gravity="center"
         android:text="招标信息"
         android:textColor="@drawable/the_supply_text"
         android:textSize="@dimen/font_tv_normal_20"
+        android:layout_marginStart="@dimen/general_13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/market_tender_tv"
         android:layout_width="@dimen/general_161"
         android:layout_height="@dimen/general_100"
@@ -42,12 +44,15 @@
         android:layout_height="@dimen/general_100"
         android:layout_marginTop="@dimen/general_13"
         android:background="@drawable/the_supply_bg"
+        android:textStyle="bold"
+        android:typeface="serif"
         android:gravity="center"
         android:text="供应发布"
         android:textColor="@drawable/the_supply_text"
         android:textSize="@dimen/font_tv_normal_20"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/external_bidding_tv"
+        android:layout_marginStart="@dimen/general_13"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/external_bidding_tv" />
 
     <Button
@@ -58,8 +63,10 @@
         android:layout_marginStart="@dimen/general_8"
         android:layout_marginEnd="@dimen/general_13"
         android:background="@drawable/the_supply_bg"
+        android:typeface="serif"
         android:gravity="center"
         android:text="需求发布"
+        android:textStyle="bold"
         android:textColor="@drawable/the_supply_text"
         android:textSize="@dimen/font_tv_normal_20"
         android:visibility="visible"

@@ -600,6 +600,7 @@
     <dimen name="general_598">598dp</dimen>
     <dimen name="general_599">599dp</dimen>
     <dimen name="general_600">600dp</dimen>
+    <dimen name="general_639">639dp</dimen>
     <dimen name="top_1">1dp</dimen>
     <dimen name="top_2">2dp</dimen>
     <dimen name="top_3">3dp</dimen>
@@ -3008,6 +3009,7 @@
     <dimen name="font_tv_hint_13">13sp</dimen>
     <dimen name="font_tv_hint_14">14sp</dimen>
     <dimen name="font_tv_hint_15">15sp</dimen>
+    <dimen name="font_tv_hint_16">16sp</dimen>
     <dimen name="font_tv_normal_16">16sp</dimen>
     <dimen name="font_tv_normal_17">17sp</dimen>
     <dimen name="font_tv_normal_18">18sp</dimen>

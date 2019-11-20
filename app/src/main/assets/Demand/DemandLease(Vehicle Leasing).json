@@ -1,12 +1,5 @@
 [
   {
-    "type":"TITLE",
-    "title1":"需求租赁",
-    "key":"requirementType",
-    "sendFormat":"String",
-    "styleType": "0"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
     "singleDisplayRightContent":"车辆租赁",
@@ -28,7 +21,7 @@
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"计划工期",
+    "inputUnitTitle":"施工工期",
     "inputUnit":"(月)",
     "key":"projectTime",
     "sendFormat":"Long"
@@ -105,7 +98,7 @@
   },
   {
     "type":"SELECT_DIALOG",
-    "selectTitle":"路程车费",
+    "selectTitle":"路程车旅费",
     "selectOption1Items":["报销一半","全报","工作满一个月全报","工作满二个月全报","工作满三个月全报","工作满六个月全报","自定义"],
     "key":"journeyCarFare",
     "sendFormat":"String"
@@ -119,47 +112,38 @@
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"车辆",
+    "inputUnitTitle":"车辆数量",
     "inputUnit":"(辆)",
     "key":"vehicle",
     "sendFormat":"Long"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"机械设备",
-    "radioButtonName":["可提供","不提供"],
-    "key":"machineEquipment",
-    "sendFormat":"Long"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightContent":" ",
+    "key":"name",
+    "sendFormat":"String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系人",
-    "key": "name",
-    "sendFormat": "String"
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
-    "key": "phone",
-    "sendFormat": "String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":" ",
+    "key":"phone",
+    "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
+    "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key":"validTime",
     "sendFormat":"Long"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
-    "textAreaContent":"",
+    "textAreaTitle":"附加",
+    "textAreaContent":"有不良记录者请勿联系",
     "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交"
   }
 ]

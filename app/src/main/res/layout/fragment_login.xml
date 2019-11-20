@@ -82,23 +82,22 @@
         app:layout_constraintTop_toBottomOf="@id/line1"
         app:layout_constraintBottom_toTopOf="@id/line2"
         />
+
     <TextView
         android:id="@+id/tv_login_down_list"
         android:layout_width="@dimen/general_30"
         android:layout_height="@dimen/general_30"
-        android:background="@drawable/under"
         android:layout_marginRight="@dimen/general_15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1"
+        android:background="@drawable/under"
         app:layout_constraintBottom_toTopOf="@id/line2"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_1"
         android:background="#e5e5e5"
-        android:layout_marginLeft="@dimen/general_15"
-        android:layout_marginRight="@dimen/general_15"
+
         android:layout_marginTop="@dimen/general_43"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,8 +132,8 @@
         android:layout_width="@dimen/general_30"
         android:layout_height="@dimen/general_30"
         app:layout_constraintBottom_toBottomOf="@+id/et_login_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/et_login_password"
+        app:layout_constraintEnd_toEndOf="@+id/tv_login_down_list"
+        app:layout_constraintStart_toStartOf="@+id/tv_login_down_list"
         app:layout_constraintTop_toTopOf="@+id/et_login_password" />
     <View
         android:id="@+id/line3"

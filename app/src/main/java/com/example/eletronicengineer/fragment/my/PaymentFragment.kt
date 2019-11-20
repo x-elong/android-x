@@ -37,7 +37,7 @@ class PaymentFragment :Fragment(){
             if(view.radio_btn_we_chat_payment.isChecked)
                 networkAdapter.creatDataOrder("1")
             else
-                PaymentHelper.startAlipay(activity!!)
+                networkAdapter.getAliPayOrder("1")
 
 
         }

@@ -129,7 +129,7 @@ class EnterpriseCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.certificationMore)
+            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -271,7 +271,7 @@ class EnterpriseCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,"http://10.1.5.141:8032"+ Constants.HttpUrlPath.My.enterpriseCertification)
+            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.enterpriseCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

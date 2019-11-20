@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.putSimpleMessage
 import io.reactivex.Observable
@@ -42,14 +43,14 @@ class ForgetPasswordFragment: Fragment()  {
                 it.onNext(requestBody)
             }.subscribe {
                 val result =
-                    putSimpleMessage(it, UnSerializeDataBase.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(
+                    putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(
                         AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(
                             {
                                 //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                 if (JSONObject(it.string()).getInt("code") == 200) {
-                                    (activity as LoginActivity).switchFragment(ForgetPasswordThreeFragment())
+                                    FragmentHelper.switchFragment(activity!!,ForgetPasswordThreeFragment(),R.id.frame_login,"")
                                 }
                             },
                             {
