@@ -27,6 +27,9 @@ class FriendRequestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_friend_request)
         supportActionBar?.hide()
         initData()
+        tv_chat_group_back.setOnClickListener {
+            finish()
+        }
         rv_friend_request_content.adapter=SelectFriendAdapter(mFriendRequestList)
         rv_friend_request_content.layoutManager=LinearLayoutManager(this)
         tv_chat_group_name.text="好友请求"

@@ -190,6 +190,9 @@ interface HttpHelper {
      * 我的
      */
 
+    @GET(Constants.HttpUrlPath.My.openPowerNotify)
+    fun openPowerNotify(@Path("transactionOrderId") transactionOrderId: String): Observable<ResponseBody>
+
     @GET(Constants.HttpUrlPath.My.creatOrder)
     fun creatOrder(@Path("productId") productId: String): Observable<ResponseBody>
 
@@ -219,6 +222,9 @@ interface HttpHelper {
 
     @GET(Constants.HttpUrlPath.My.getUser)
     fun getUser():Observable<HttpResult<UserEntity>>
+
+    @GET(Constants.HttpUrlPath.My.getUserOpenPower)
+    fun getUserOpenPower():Observable<HttpResult<String>>
 
     @DELETE(Constants.HttpUrlPath.My.delectChildren)
     fun deleteChildren(@Path("id") id: String): Observable<ResponseBody>
@@ -1243,6 +1249,20 @@ internal fun getUser():Observable<HttpResult<UserEntity>>{
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getUser()
 }
+
+internal fun getUserOpenPower():Observable<HttpResult<String>>{
+    val interceptor = Interceptor {
+        Log.i("body", it.call().request().body().toString())
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().baseUrl(UnSerializeDataBase.mineBasePath).client(client)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getUserOpenPower()
+}
+
 internal fun deleteChildren(id: String): Observable<ResponseBody> {
     val interceptor = Interceptor {
         Log.i("body", it.call().request().body().toString())
@@ -1340,6 +1360,19 @@ internal fun getThridService(page: Int,pageSize: Int):Observable<ResponseBody>{
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getThridService(pageSize,page)
+}
+
+/**
+ * @用户支付后开通权限接口
+ */
+internal fun openPowerNotify(orderNumber:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.openPowerNotify(orderNumber)
 }
 
 /**

@@ -5412,7 +5412,7 @@ class NetworkAdapter {
     }
 
     /**
-     * @我的
+     * @我的信息
      */
     fun getDataUser():Observable<HttpResult<UserEntity>>{
          return Observable.create<HttpResult<UserEntity>> {
@@ -5424,7 +5424,20 @@ class NetworkAdapter {
             })
          }
     }
-
+    /**
+     *@会员等级查询
+     */
+    fun getDataUserOpenPower():Observable<HttpResult<String>>{
+        return Observable.create<HttpResult<String>> {
+                target->
+            getUserOpenPower().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+        }
+    }
     /**
      * @微信创建商品支付订单
      */
@@ -5436,7 +5449,9 @@ class NetworkAdapter {
                 val json = JSONObject(it.string())
                 if(json.getInt("code")==200){
                     val intent = Intent(context, WXPayEntryActivity::class.java)
-                    intent.putExtra("json",json.getString("message"))
+                    val jsonObject = json.getJSONObject("message")
+                    jsonObject.put("openVipLevel",productId)
+                    intent.putExtra("json",jsonObject.toString())
                     context.startActivity(intent)
                 }
             },{
@@ -5448,12 +5463,11 @@ class NetworkAdapter {
     /**
      * @支付宝创建商品支付订单
      */
-
     fun getAliPayOrder(productId:String){
         getAliPayOrderStr(productId).subscribeOn(Schedulers.io()).observeOn(
             AndroidSchedulers.mainThread())
             .subscribe({
-                    PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"))
+                    PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"),productId.toInt())
             },{
                 ToastHelper.mToast(context,"网络异常")
                 it.printStackTrace()
@@ -5463,17 +5477,49 @@ class NetworkAdapter {
     /**
      * @推广人数支付
      */
-
     fun numPay(productId:String){
+        val loadingDialog = LoadingDialog(context, "购买中...", R.mipmap.ic_dialog_loading)
+        loadingDialog.show()
         numPayCreatOrder(productId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                loadingDialog.dismiss()
                 val json = JSONObject(it.string())
+                Log.i("json " ,json.toString())
                 val message = json.getString("message")
-                if(json.getString("payDesc")=="OK")
-                    (context as VipActivity).supportFragmentManager.popBackStackImmediate()
-                    ToastHelper.mToast(context,message)
+                if(json.getString("payDesc")=="OK" ){
+                    checkPaymentState(message,productId.toInt())
+                }
             },{
+                loadingDialog.dismiss()
                 ToastHelper.mToast(context,"网络异常")
+                it.printStackTrace()
+            })
+    }
+
+    /**
+     * @查询支付是否成功
+     */
+    fun checkPaymentState(orderNumber:String,openVipLevel:Int){
+        val loadingDialog = LoadingDialog(context, "结果查询中...", R.mipmap.ic_dialog_loading)
+        loadingDialog.show()
+        val result = openPowerNotify(orderNumber).subscribeOn(Schedulers.io()).observeOn(
+            AndroidSchedulers.mainThread())
+            .subscribe({
+                loadingDialog.dismiss()
+                val json = JSONObject(it.string())
+                Log.i("json " ,json.toString())
+                ToastHelper.mToast(context,json.getString("message"))
+                if(json.getInt("code")==200){
+                    UnSerializeDataBase.vipOpenState = 1
+                    UnSerializeDataBase.userVipLevel = openVipLevel
+                    if(context is WXPayEntryActivity)
+                        (context as WXPayEntryActivity).finish()
+                    else if(context is VipActivity)
+                        (context as VipActivity).supportFragmentManager.popBackStackImmediate()
+                }
+            },{
+                ToastHelper.mToast(context,"异常情况")
+                loadingDialog.dismiss()
                 it.printStackTrace()
             })
     }

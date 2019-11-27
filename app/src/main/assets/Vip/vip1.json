@@ -1,0 +1,118 @@
+[
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"个人找工作信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"个人找工作信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求个人信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求个人信息查看",
+        "singleDisplayRightContent":"3条"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求个人信息报名",
+        "singleDisplayRightContent":"3条"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"团队找项目信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"团队找项目信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求团队信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求团队信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求团队信息报名",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"供应租赁服务信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"供应租赁服务信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求租赁服务信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求租赁服务信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求租赁服务信息报名",
+        "singleDisplayRightContent":"—"
+    },
+
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"供应三方服务信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"供应三方服务信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求三方服务信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求三方服务信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"需求三方服务信息报名",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"行业黄页信息发布",
+        "singleDisplayRightContent":"—"
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"行业黄页信息查看",
+        "singleDisplayRightContent":"⊙"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"推荐电企通",
+        "singleDisplayRightContent":"√"
+    }
+]

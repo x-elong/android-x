@@ -21,17 +21,17 @@ class VipPrivilegesFragment :Fragment(){
         }
         view.tv_vip1.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("type",1)
+            bundle.putInt("type",0)
             FragmentHelper.switchFragment(activity!!,VipPrivilegesMoreFragment.newInstance(bundle),R.id.frame_vip,"")
         }
         view.tv_vip2.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("type",2)
+            bundle.putInt("type",1)
             FragmentHelper.switchFragment(activity!!,VipPrivilegesMoreFragment.newInstance(bundle),R.id.frame_vip,"")
         }
         view.tv_vip3.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("type",3)
+            bundle.putInt("type",2)
             FragmentHelper.switchFragment(activity!!,VipPrivilegesMoreFragment.newInstance(bundle),R.id.frame_vip,"")
         }
         return view

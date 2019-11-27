@@ -3338,7 +3338,20 @@ class AdapterGenerate {
         return adapter
     }
     /**
-     * 我的报名
+     * @VIP
+     */
+    fun vipPrivilegesInformation(type:Int):RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = when(type){
+            1->itemGenerate.getJsonFromAsset("Vip/vip1.json")
+            2->itemGenerate.getJsonFromAsset("Vip/vip2.json")
+            else->itemGenerate.getJsonFromAsset("Vip/vip3.json")
+        }
+        return RecyclerviewAdapter(mData)
+    }
+    /**
+     * @我的报名
      */
     fun registrationDisplayDemandIndividual():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()

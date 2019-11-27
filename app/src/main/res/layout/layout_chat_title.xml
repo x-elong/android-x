@@ -2,22 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-        android:background="#64B8B1B1">
+              android:layout_height="@dimen/general_37"
+            android:background="#64B8B1B1">
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/tv_chat_title"
               android:layout_weight="1"
-              android:layout_margin="@dimen/general_10"
+            android:layout_marginStart="@dimen/left_10"
+            android:layout_gravity="center_vertical"
               android:text="电企通"
               android:textSize="@dimen/font_tv_normal_16"
     />
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+    <TextView android:layout_width="@dimen/general_30"
+              android:layout_height="@dimen/general_30"
               android:id="@+id/tv_chat_more"
               android:layout_weight="0"
-              android:text="+"
+              android:layout_gravity="center"
+              android:background="@drawable/add_black"
+              android:gravity="center"
               android:layout_margin="@dimen/general_10"
-              android:textSize="@dimen/font_tv_normal_16"
-    />
+              android:textSize="@dimen/font_tv_normal_16" />
 </LinearLayout>

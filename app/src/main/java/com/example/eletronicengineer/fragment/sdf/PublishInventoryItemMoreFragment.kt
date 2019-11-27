@@ -33,12 +33,12 @@ class PublishInventoryItemMoreFragment:Fragment(){
         }
 
         private fun initFragment() {
-            var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
-            mView.tv_inventory_item_more_title.setOnClickListener {
-                mData[0].selected =0//点击了返回按钮，*去掉
-                val fragment =
-                    activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as PublishInventoryFragment
-                fragment.update(adapter.mData)
+            var mData=(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+            mView.tv_inventory_item_more_back.setOnClickListener {
+//                mData[0].selected =0//点击了返回按钮，*去掉
+//                val fragment =
+//                    activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as PublishInventoryFragment
+//                fragment.update(adapter.mData)
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
             mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")
@@ -53,7 +53,7 @@ class PublishInventoryItemMoreFragment:Fragment(){
                     activity!!.supportFragmentManager.popBackStackImmediate()
                 }
             }
-            adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+            adapter.mData = mData as MutableList<MultiStyleItem>
             mView.rv_inventory_item_more_content.adapter = adapter
             mView.rv_inventory_item_more_content.layoutManager = LinearLayoutManager(context)
         }

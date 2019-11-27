@@ -6,7 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-
+<View
+    android:id="@+id/view_my_title_bg"
+    android:layout_width="match_parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="#248bfe"
+    android:layout_height="@dimen/general_180"/>
     <TextView
         android:id="@+id/my_setting"
         android:layout_width="@dimen/general_24"
@@ -14,32 +19,35 @@
         android:layout_marginTop="@dimen/general_10"
         android:layout_marginEnd="@dimen/general_10"
         android:background="@drawable/setting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--<TextView-->
-            <!--android:id="@+id/tv_title"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/general_31"-->
-            <!--android:background="#64ffffff"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="我的"-->
-            <!--android:textColor="#045b4c"-->
-            <!--android:textSize="@dimen/font_tv_hint_15"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:layout_marginLeft="@dimen/left_45"/>-->
+        app:layout_constraintEnd_toEndOf="@id/view_my_title_bg"
+        app:layout_constraintTop_toTopOf="@id/view_my_title_bg" />
+    <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/general_37"
+            android:gravity="center"
+            android:text="我的"
+            app:layout_constraintStart_toStartOf="@id/view_my_title_bg"
+            app:layout_constraintEnd_toEndOf="@id/view_my_title_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_tv_normal_16"
+            app:layout_constraintTop_toTopOf="@id/view_my_title_bg"
+            />
     <View
         android:id="@+id/view_my"
         android:layout_width="@dimen/general_340"
-        android:layout_height="@dimen/general_80"
-        android:layout_marginStart="@dimen/left_10"
-        android:layout_marginTop="@dimen/general_10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_setting" />
+        android:layout_height="@dimen/general_120"
+        android:background="@drawable/btn_style4"
+        android:layout_marginTop="@dimen/top_8"
+        app:layout_constraintStart_toStartOf="@id/view_my_title_bg"
+        app:layout_constraintEnd_toEndOf="@id/view_my_title_bg"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_my_header"
-        android:layout_width="@dimen/general_51"
-        android:layout_height="@dimen/general_51"
+        android:layout_width="@dimen/general_64"
+        android:layout_height="@dimen/general_64"
+        android:layout_marginStart="@dimen/left_20"
         android:src="@drawable/header_mall"
         app:civ_border_color="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/view_my"
@@ -64,30 +72,31 @@
         android:text="普通会员"
         android:textSize="@dimen/font_tv_hint_15"
         android:textColor="#248bfe"
-        android:layout_marginBottom="@dimen/bottom_8"
         app:layout_constraintStart_toStartOf="@+id/tv_my_phone"
-        app:layout_constraintBottom_toBottomOf="@+id/view_my" />
+        app:layout_constraintBottom_toBottomOf="@+id/iv_my_header" />
 
     <TextView
         android:id="@+id/tv_qr_code"
-        android:layout_width="@dimen/general_26"
-        android:layout_height="@dimen/general_26"
+        android:layout_width="@dimen/general_36"
+        android:layout_height="@dimen/general_36"
         android:layout_marginEnd="@dimen/right_16"
+        android:layout_marginBottom="@dimen/bottom_4"
         android:background="@drawable/qr_code"
         app:layout_constraintBottom_toBottomOf="@+id/view_my"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/view_my" />
 
     <Button
         android:id="@+id/btn_my_vip_privileges"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:background="@drawable/btn_style3"
+        android:layout_height="@dimen/general_40"
+        android:background="@drawable/left_semicircle"
+        android:paddingLeft="@dimen/left_10"
+        android:paddingRight="@dimen/right_10"
         android:text="查看会员特权"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_hint_15"
-        app:layout_constraintBottom_toTopOf="@+id/tv_qr_code"
         app:layout_constraintEnd_toEndOf="@+id/view_my"
-        app:layout_constraintTop_toTopOf="@+id/view_my" />
+        app:layout_constraintTop_toTopOf="@+id/iv_my_header" />
 
     <TextView
         android:visibility="gone"
@@ -109,7 +118,7 @@
         android:background="@drawable/view_style1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_my" />
+        app:layout_constraintTop_toBottomOf="@+id/view_my_title_bg" />
 
     <TextView
         android:id="@+id/textView6"

@@ -29,6 +29,7 @@
         android:visibility="gone"
         android:id="@+id/iv_shift_input_picture"
         android:layout_width="@dimen/general_20"
+        android:layout_marginTop="@dimen/top_6"
         android:layout_height="@dimen/general_20"
         android:src="@drawable/header_mall"
         app:civ_border_color="@color/colorPrimary"

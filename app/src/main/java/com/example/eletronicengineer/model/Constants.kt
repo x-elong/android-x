@@ -136,12 +136,18 @@ class Constants {
         PERSONAL,
         VEHICLE
     }
-
+    class Goods{
+        companion object{
+            const val ELITE_VIP = "1"
+            const val GOLD_VIP = "2"
+        }
+    }
     class HttpUrlPath {
 
         //我的
         class My{
             companion object{
+                const val getUserOpenPower ="/UserGoodsPower/getUserOpenPower/"
                 const val updatePassword = "/userInfo/alterPassword/"
                 const val getUser="/TUpmsUser/getUser/"
                 const val upateDTO1 = "/TUpmsUser/upateDTO1/"
@@ -193,6 +199,7 @@ class Constants {
                 const val numPayCreatOrder="/numpay/creatOrder/{productId}"
                 const val creatOrder = "/weixinPay/creatOrderByApp/{productId}"
                 const val payNotify ="/weixinPay/payNotifyByApp/{orderNumber}"
+                const val openPowerNotify= "/UserGoodsPower/userOpenPower/{transactionOrderId}"
                 const val getAliPayOrderStr ="alipay/getAliPayOrderStr/{productId}"
                 const val checkAlipay="/alipay/checkAlipay/"
             }

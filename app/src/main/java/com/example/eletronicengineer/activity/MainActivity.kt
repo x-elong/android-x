@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.KeyEvent
 import com.example.eletronicengineer.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.PermissionHelper
 import com.example.eletronicengineer.utils.SysApplication
+import com.example.eletronicengineer.utils.ToastHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.sdf.*
 import com.lcw.library.imagepicker.ImagePicker
@@ -29,6 +32,8 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    private var exitTime:Long = 0
+
     var fragmentList: List<Fragment> = ArrayList()
     var lastfragment: Int = 2
     //判断选择的菜单
@@ -148,4 +153,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            exit()
+            return false
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun exit() {
+        if((System.currentTimeMillis()-exitTime)>2000) {
+            ToastHelper.mToast(this, "再按一次退出程序")
+            exitTime=System.currentTimeMillis()
+        }else{
+            SysApplication.getInstance().exit()
+        }
+    }
 }

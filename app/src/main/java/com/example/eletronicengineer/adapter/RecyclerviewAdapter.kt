@@ -23,6 +23,7 @@ import android.text.method.ScrollingMovementMethod
 import android.text.style.*
 import android.util.Log
 import android.util.TypedValue
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -1243,7 +1244,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red,null))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
                 if(mData[position].shiftInputPicture!=""){
@@ -1446,7 +1447,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_DISPLAY_RIGHT_TYPE->
             {
-                vh.tvsingleDisplayRightTitle.text=mData[position].singleDisplayRightTitle
+                val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
+                val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
+                val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
+                if(startPosition>-1)
+                    sp.setSpan(AbsoluteSizeSpan((14*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                vh.tvsingleDisplayRightTitle.text=sp
                 vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)

@@ -42,10 +42,9 @@
         tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/tv_select_ok"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
         android:background="@drawable/ic_ok"
         android:gravity="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_inventory_item_more_title"
