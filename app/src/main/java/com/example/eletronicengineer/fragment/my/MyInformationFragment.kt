@@ -222,7 +222,7 @@ class MyInformationFragment : Fragment() {
                                         it.onNext(requestBody)
                                     }.subscribe {
                                         val result =
-                                            putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                            putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                                 .subscribeOn(Schedulers.io())
                                                 .subscribe(
                                                     {
@@ -273,7 +273,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -326,7 +326,7 @@ class MyInformationFragment : Fragment() {
                                 it.onNext(requestBody)
                             }.subscribe {
                                 val result =
-                                    putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                    putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(
                                             {
@@ -372,7 +372,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -423,7 +423,7 @@ class MyInformationFragment : Fragment() {
                                 it.onNext(requestBody)
                             }.subscribe {
                                 val result =
-                                    putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                    putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(
                                             {
@@ -473,7 +473,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -533,7 +533,7 @@ class MyInformationFragment : Fragment() {
                                             it.onNext(requestBody)
                                         }.subscribe {
                                             val result =
-                                                putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                                putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe(
                                                         {
@@ -588,7 +588,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -633,7 +633,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -678,7 +678,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {
@@ -724,7 +724,7 @@ class MyInformationFragment : Fragment() {
                                     it.onNext(requestBody)
                                 }.subscribe {
                                     val result =
-                                        putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                        putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(
                                                 {

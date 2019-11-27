@@ -201,48 +201,54 @@ class Constants {
         //需求
         class Requirement {
             companion object {
+                //个人报名
                 const val insertPersonRequirementInformationCheck ="/PersonRequirementInformationCheck/insertPersonRequirementInformationCheck/"
-
+                //团队报名
+                const val insertRequirementTeamLoggingCheck ="/RequirementTeamLoggingCheck/insertRequirementTeamLoggingCheck/"
+                //租赁报名
+                const val insertLeaseLoggingCheckController ="/LeaseLoggingCheck/insertLeaseLoggingCheckController/"
+                //三方报名
+                const val insertRequirementThirdLoggingCheck ="/RequirementThirdLoggingCheck/insertRequirementThirdLoggingCheck/"
                 //需求个人
                 const val requirementPerson = "/RequirementPerson/insertRequirementPerson/"
                 //需求主网
-                const val requirementMajorNetwork = "/RequirementMajorNetwork/insertRequirementMajorNetworkAndroid/"
+                const val requirementMajorNetwork = "/RequirementMajorNetwork/insertRequirementMajorNetwork/"
                 //马帮运输
                 const val requirementCaravanTransport =
-                    "/RequirementCaravanTransport/insertRequirementCaravanTransportAndroid/"
+                    "/RequirementCaravanTransport/insertRequirementCaravanTransport/"
                 //需求配网
                 const val requirementDistribuionNetwork =
-                    "/RequirementDistribuionNetwork/insertRequirementDistribuionNetworkAndroid/"
+                    "/RequirementDistribuionNetwork/insertRequirementDistribuionNetwork/"
                 //测量设计
-                const val requirementMeasureDesign = "/RequirementMeasureDesign/insertRequirementMeasureDesignAndroid/"
+                const val requirementMeasureDesign = "/RequirementMeasureDesign/insertRequirementMeasureDesign/"
                 //桩基
                 const val requirementPileFoundation =
-                    "/RequirementPileFoundation/insertRequirementPileFoundationAndroid/"
+                    "/RequirementPileFoundation/insertRequirementPileFoundation/"
                 //三方
-                const val requirementThirdParty = "/RequirementThirdParty/insertRequirementThirdPartyAndroid/"
+                const val requirementThirdParty = "/RequirementThirdParty/insertRequirementThirdParty/"
                 //非开挖顶拉管
-                const val requirementUnexcavation = "/RequirementUnexcavation/insertRequirementUnexcavationAndroid/"
+                const val requirementUnexcavation = "/RequirementUnexcavation/insertRequirementUnexcavation/"
                 //试验调试
-                const val requirementTest = "/RequirementTest/insertRequirementTestAndroid/"
+                const val requirementTest = "/RequirementTest/insertRequirementTest/"
                 //跨越架
                 const val requirementSpanWoodenSupprt =
-                    "/RequirementSpanWoodenSupprt/insertRequirementSpanWoodenSupprtAndroid/"
+                    "/RequirementSpanWoodenSupprt/insertRequirementSpanWoodenSupprt/"
                 //运行维护
                 const val requirementRunningMaintain =
-                    "/RequirementRunningMaintain/insertRequirementRunningMaintainAndroid/"
+                    "/RequirementRunningMaintain/insertRequirementRunningMaintain/"
                 //变电施工
                 const val requirementPowerTransformation =
-                    "/RequirementPowerTransformation/insertRequirementPowerTransformationAndroid/"
+                    "/RequirementPowerTransformation/insertRequirementPowerTransformation/"
                 //机械租赁
                 const val requirementLeaseMachinery =
-                    "RequirementLeaseMachinery/insertRequirementLeaseMachineryAndroid/"
+                    "/RequirementLeaseMachinery/insertRequirementLeaseMachinery/"
                 //车辆租赁
                 const val requirementLeaseCar = "/RequirementLeaseCar/insertRequirementLeaseCarAndroid/"
                 //工器具租赁
                 const val requirementLeaseConstructionTool =
-                    "/RequirementLeaseConstructionTool/insertRequirementLeaseConstructionToolAndroid/"
+                    "/RequirementLeaseConstructionTool/insertRequirementLeaseConstructionTool/"
                 //设备租赁
-                const val requirementLeaseFacility = "/RequirementLeaseFacility/insertRequirementLeaseFacilityAndroid/"
+                const val requirementLeaseFacility = "/RequirementLeaseFacility/insertRequirementLeaseFacility/"
                 //excel模板下载
                 const val excel = "/excel/downloadexcel/{fileName}/"
 
@@ -264,20 +270,20 @@ class Constants {
                 //车辆租赁
                 const val requirementLeaseCar = "/LeaseCar/saveLeaseCar/"
                 //工器具
-                const val LcTool = "/LcTool/saveLcToolAndroid/"
+                const val LcTool = "/LeaseConstructionTool/insertLeaseConstructionTool/"
                 //设备
-                const val LeaseFacility = "/LeaseFacility/saveLeaseFacilityAndroid/"
+                const val LeaseFacility = "/LeaseFacility/insertLeaseFacility/"
                 //机械
-                const val LeaseMachinery = "/LeaseMachinery/saveLeaseMachineryAndroid/"
+                const val LeaseMachinery = "/LeaseMachinery/insertLeaseMachinery/"
 
                 //变电
                 const val PowerTransformation = "/PowerTransformation/savePowerTransformationAndroid/"
                 //主网
-                const val MajorNetwork = "/MajorNetwork/saveMajorNetworkAndroid/"
+                const val MajorNetwork = "/MajorNetwork/insertMajorNetwork/"
                 //配网
                 const val DistribuionNetwork = "/DistribuionNetwork/saveDistribuionNetworkAndroid/"
                 //测量设计
-                const val MeasureDesign = "/MeasureDesign/saveMeasureDesignAndroid/"
+                const val MeasureDesign = "/MeasureDesign/insertMeasureDesign/"
                 //马帮
                 const val CaravanTransport = "/CaravanTransport/saveCaravanTransportAndroid/"
                 //桩基

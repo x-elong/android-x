@@ -6,41 +6,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <View
-        android:id="@+id/tv_display_demand_back_view"
+        android:id="@+id/view_demand_display"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
+    <!--        android:background="@drawable/ic_back_xml"-->
     <TextView
-        android:id="@+id/tv_display_demand_back"
+        android:text="返回"
+        android:id="@+id/tv_demand_display_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
-        android:text="返回"
-        android:layout_marginLeft="10dp"
         android:textSize="@dimen/font_tv_normal_18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/tv_display_demand_title"
+        android:id="@+id/tv_demand_display_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="信息详情"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@id/tv_display_demand_back_view"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_display_demand_back_view"
+        app:layout_constraintTop_toTopOf="@id/view_demand_display"
         tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tv_fragment_demand_display_content"
+        android:id="@+id/rv_demand_display_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/general_8"
@@ -49,19 +47,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_display_demand_back_view"
+        app:layout_constraintTop_toBottomOf="@+id/view_demand_display"
         app:layout_constraintVertical_bias="0.0" />
     <Button
         android:id="@+id/button"
         android:layout_width="@dimen/general_268"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/general_43"
         android:background="@drawable/btn_style3"
         android:text="报名"
         android:textSize="@dimen/font_tv_hint_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_demand_display_content"
+        app:layout_constraintTop_toBottomOf="@+id/rv_supply_display_content"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

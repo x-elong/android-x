@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
@@ -37,8 +38,7 @@ class SubmitInventoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
         type = arguments!!.getString("type")
-        mView.tv_display_demand_title.setText(type)
-        mView.tv_select_add.visibility=View.GONE
+        mView.tv_inventory_title.setText(type)
         if(adapter==null){
             val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
             if(multiStyleItemList.isEmpty())
@@ -66,73 +66,108 @@ class SubmitInventoryFragment : Fragment() {
 
     }
     fun initOnClick(mView:View){
-        mView.tv_display_demand_back.setOnClickListener {
+        mView.tv_inventory_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-//        mView.tv_select_add.setOnClickListener{
-//            adapter!!.mData[0].selected = -1
-//            bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
-//            bundle.putString("type",type)
-//            FragmentHelper.switchFragment(
-//                activity!!, SubmitInventoryItemMoreFragment.newInstance(bundle),
-//                R.id.frame_display_demand, ""
-//            )
-//
-//        }
+        if(type=="机械清册")
+        {
+            mView.tv_select_add.setOnClickListener{
+            adapter!!.mData[0].selected = -1
+            bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
+            bundle.putString("type",type)
+            FragmentHelper.switchFragment(
+                activity!!, SubmitInventoryItemMoreFragment.newInstance(bundle),
+                R.id.frame_display_demand, ""
+            )
+           }
+        }
+        else{
+            mView.tv_select_add.visibility=View.GONE
+        }
+
     }
-//    private fun switchAdapter():List<MultiStyleItem>{
-//        val adapterGenerate= AdapterGenerate()
-//        adapterGenerate.context= context!!
-//        adapterGenerate.activity=activity as DemandDisplayActivity
-//        val mData:List<MultiStyleItem>
-//        when(type){
-//            "成员清册"->
-//            {
-//                bundle.putString("type",type)
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//            "车辆清册"->
-//            {
-//                bundle.putString("type",type)
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//            "机械清册"->
-//            {
-//                bundle.putString("type",type)
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//            "清工薪资清册"->
-//            {
-//                bundle.putString("type",type)
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//            "清单报价清册"->
-//            {
-//                bundle.putString("type",type)
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//            "租赁清册"->
-//            {
-//                bundle.putString("type",type)
-//                bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
-//                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//            }
-//
-//            else->mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-//        }
-//        return mData
-//    }
-    fun update(itemMultiStyleItem:List<MultiStyleItem>){
+    private fun switchAdapter():List<MultiStyleItem>{
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as DemandDisplayActivity
+        lateinit var mData:List<MultiStyleItem>
+        when(type){
+
+            "机械清册"->
+            {
+                bundle.putString("type",type)
+                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
+            }
+            "租赁清册"->
+            {
+                bundle.putString("type",type)
+                bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
+                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
+            }
+
+            else->{
+
+            }
+        }
+        return mData
+    }
+    fun update(itemMultiStyleItem:List<MultiStyleItem>) {
+        if (type == "机械清册"||type=="成员清册个人") {
+            if (adapter!!.mData[0].selected == -1) {
+                val mData = adapter!!.mData.toMutableList()
+                mData.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].inputSingleContent,
+                        false
+                    )
+                )
+                mData[0].selected = mData.size - 1
+                if (itemMultiStyleItem[0].selected == 0) {
+                    mData[mData[0].selected].necessary = false
+                } else {
+                    mData[mData[0].selected].necessary = true
+                }
+                mData[mData.size - 1].itemMultiStyleItem = itemMultiStyleItem
+                mData[mData.size - 1].jumpListener = View.OnClickListener {
+                    mData[0].selected = mData.size - 1
+                    val bundle = Bundle()
+                    bundle.putSerializable(
+                        "inventoryItem",
+                        mData[mData.size - 1].itemMultiStyleItem as Serializable
+                    )
+                    bundle.putString("type", type)
+                    FragmentHelper.switchFragment(
+                        mView.context as DemandDisplayActivity,
+                        SubmitInventoryItemMoreFragment.newInstance(bundle),
+                        R.id.frame_display_demand,
+                        ""
+                    )
+                }
+                adapter!!.mData = mData
+                adapter!!.notifyItemInserted(mData.size - 1)
+            } else {
+                adapter!!.mData[adapter!!.mData[0].selected].shiftInputTitle =
+                    itemMultiStyleItem[0].inputSingleContent
+                adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
+                adapter!!.notifyItemChanged(adapter!!.mData[0].selected)
+                if (itemMultiStyleItem[0].selected == 0) {
+                    adapter!!.mData[adapter!!.mData[0].selected].necessary = false
+                } else {
+                    adapter!!.mData[adapter!!.mData[0].selected].necessary = true
+                }
+            }
+        } else {
             adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
             adapter!!.notifyItemChanged(adapter!!.mData[0].selected)
-            if(itemMultiStyleItem[0].selected==0) {
+            if (itemMultiStyleItem[0].selected == 0) {
                 adapter!!.mData[adapter!!.mData[0].selected].necessary = false
-            }
-            else{
+            } else {
                 adapter!!.mData[adapter!!.mData[0].selected].necessary = true
             }
-        val fragment = activity!!.supportFragmentManager.findFragmentByTag("register") as ApplicationSubmitFragment
+        }
+        val fragment =
+            activity!!.supportFragmentManager.findFragmentByTag("register") as ApplicationSubmitFragment
         fragment.update(adapter!!.mData)
     }
 }

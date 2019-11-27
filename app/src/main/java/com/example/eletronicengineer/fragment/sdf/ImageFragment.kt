@@ -128,6 +128,13 @@ class ImageFragment:Fragment(){
         val imageList:ArrayList<Image> = ArrayList()
         for (j in this.mImagePaths){
             imageList.add(Image(j,null))
+            imageList[imageList.size-1].deleteListener = View.OnClickListener {
+                val mImageList = mAdapter.mImageList.toMutableList()
+                mImageList.removeAt(this.mImagePaths.indexOf(j))
+                mAdapter.mImageList = mImageList
+                mAdapter.notifyDataSetChanged()
+                delect(j)
+            }
         }
         imageList.add(lastImage)
         mAdapter = ImageAdapter(imageList)
@@ -142,6 +149,8 @@ class ImageFragment:Fragment(){
                 var imagesPath = mImagePaths.toString().replace(", ","|")
                 imagesPath = imagesPath.substring(1,imagesPath.length-1)
                 i.path=imagesPath
+                if(i.path=="")
+                    UnSerializeDataBase.imgList.remove(i)
                 break
             }
         }

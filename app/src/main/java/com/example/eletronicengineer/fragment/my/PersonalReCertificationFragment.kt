@@ -19,6 +19,7 @@ import com.lcw.library.imagepicker.ImagePicker
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_information_certification.*
 import kotlinx.android.synthetic.main.fragment_personal_certification.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -106,6 +107,9 @@ class PersonalReCertificationFragment : Fragment() {
                 //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
                 .setImageLoader(glideLoader)//设置自定义图片加载器
                 .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+        }
+        activity!!.btn_information_certification.setOnClickListener {
+            mView.btn_personal_certification.callOnClick()
         }
         mView.btn_personal_certification.setOnClickListener {
             if (mView.et_id_card_name.text.isBlank()) {

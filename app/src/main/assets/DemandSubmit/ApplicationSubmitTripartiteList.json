@@ -1,29 +1,44 @@
 ﻿[
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"项目名称："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"项目特征描述："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"计量单位："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"数量："
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"项目名称",
+    "singleDisplayRightContent":" ",
+    "key":"projectName",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"报价清单(按单价):",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightTitle":"项目特征描述",
+    "singleDisplayRightContent":" ",
+    "key":"specificationsModels",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"计量单位",
+    "singleDisplayRightContent":" ",
+    "key":"units",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"数量",
+    "singleDisplayRightContent":" ",
+    "key":"quantity",
+    "sendFormat": "Long"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"报价清单(按单价)",
+    "key":" quotationList",
+    "sendFormat": "Double"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"详细说明：",
+    "textAreaTitle":"详细说明",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":false,
+    "key":"detailsExplain",
+    "sendFormat": "String"
   }
 ]

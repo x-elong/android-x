@@ -6,32 +6,22 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.*
-import com.example.eletronicengineer.adapter.FunctionAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.aninterface.Function
-import com.example.eletronicengineer.db.My.UserEntity
 import com.example.eletronicengineer.db.My.UserSubitemEntity
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
-import com.example.eletronicengineer.utils.getUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_recommended_application.view.*
 import kotlinx.android.synthetic.main.my.view.*
 
 class MyFragment : Fragment() {
     lateinit var mView:View
-    val mFunctionList:MutableList<Function> = ArrayList()
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     lateinit var user:UserSubitemEntity
     private var headerImg = ""
@@ -79,10 +69,10 @@ class MyFragment : Fragment() {
 
             startActivity(intent)
         }
-//        mView.btn_subscribe.setOnClickListener {
-//            val intent =Intent(activity,SubscribeActivity::class.java)
-//            startActivity(intent)
-//        }
+        mView.btn_vip.setOnClickListener {
+            val intent =Intent(activity,VipActivity::class.java)
+            startActivity(intent)
+        }
         mView.btn_my_vip_privileges.setOnClickListener {
             val intent = Intent(activity,MyVipActivity::class.java)
             startActivity(intent)
@@ -92,27 +82,17 @@ class MyFragment : Fragment() {
 
     private fun initData() {
 //        getDataUser()
-        mFunctionList.clear()
         mMultiStyleItemList.clear()
-        mFunctionList.add(Function("我的发布",R.drawable.my_release,View.OnClickListener {
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"我的发布",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,MyReleaseActivity::class.java)
             startActivity(intent)
-        }))
-//        mFunctionList.add(Function("我的订单",R.drawable.my_order,View.OnClickListener {
-//            val intent = Intent(activity,MyOrderActivity::class.java)
-//            startActivity(intent)
-//        }))
-//        mFunctionList.add(Function("收货地址",R.drawable.shipping_address,View.OnClickListener {
-//            val intent = Intent(activity,ShippingAddressActivity::class.java)
-//            startActivity(intent)
-//        }))
-        mFunctionList.add(Function("分销",R.drawable.distribution,View.OnClickListener {
+        }
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"分销",false))
+        mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,RetailStoreActivity::class.java)
             startActivity(intent)
-        }))
-        mView.rv_my_function_content.adapter=FunctionAdapter(mFunctionList)
-        mView.rv_my_function_content.layoutManager = GridLayoutManager(context,4)
-
+        }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"我的报名",false))
         mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,MyRegistrationActivity::class.java)

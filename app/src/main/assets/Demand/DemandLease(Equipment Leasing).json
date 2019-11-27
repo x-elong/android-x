@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"工器具租赁",
+    "singleDisplayRightContent":"xxx租赁",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
@@ -30,35 +30,36 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"需求租赁清单",
     "buttonName":["在线编辑"],
-    "additionalKey":"requirementLeaseListsFile"
+    "key":"requirementLeaseLists",
+    "sendFormat":"JsonArray"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"财务运输保险",
+    "radioButtonName":["出租方承担","租赁方承担"],
     "key":"financeTransportationInsurance",
-    "sendFormat":"Long",
-    "radioButtonName":["出租方承担","租赁方承担"]
+    "sendFormat":"String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"配送",
+    "radioButtonName":["出租方承担","租赁方承担"],
     "key":"distribution",
-    "sendFormat":"Long",
-    "radioButtonName":["出租方承担","租赁方承担"]
+    "sendFormat":"String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"合作方属性",
+    "radioButtonName":["单位","个人"],
     "key":"partnerAttribute",
-    "sendFormat":"Long",
-    "radioButtonName":["单位","个人"]
+    "sendFormat":"String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"费用标准",
-    "key":"fareStandard",
     "radioButtonName":["面议","按清单报价"],
-    "sendFormat":"Long"
+    "key":"hireFareStandard",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -79,11 +80,18 @@
     "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key":"validTime",
-    "sendFormat":"Long"
+    "sendFormat":"String"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"有不良记录者请勿联系",
     "necessary": true,
     "key":"additonalExplain",

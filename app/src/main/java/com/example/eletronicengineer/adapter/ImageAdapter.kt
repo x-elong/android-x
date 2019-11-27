@@ -22,23 +22,23 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>{
     }
     inner class ViewHolder : RecyclerView.ViewHolder {
         val ivImage : ImageView
-        val tvDelete :TextView
+        val ivDelete :ImageView
         constructor(view: View):super (view){
             ivImage=view.iv_image
-            tvDelete = view.tv_delete
+            ivDelete = view.iv_delete
         }
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = mImageList[position]
-//        holder.tvDelete.setOnClickListener(image.deleteListenner)
+//        holder.tvDelete.setOnClickListener(image.deleteListener)
         if(!image.isX)
-            holder.tvDelete.visibility = View.GONE
+            holder.ivDelete.visibility = View.GONE
         else{
-            holder.tvDelete.visibility = View.VISIBLE
-            if(image.deleteListenner!=null)
-                holder.tvDelete.setOnClickListener(image.deleteListenner)
+            holder.ivDelete.visibility = View.VISIBLE
+            if(image.deleteListener!=null)
+                holder.ivDelete.setOnClickListener(image.deleteListener)
             else{
-                holder.tvDelete.setOnClickListener {
+                holder.ivDelete.setOnClickListener {
                     val imageList = mImageList.toMutableList()
                     imageList.removeAt(position)
                     mImageList = imageList

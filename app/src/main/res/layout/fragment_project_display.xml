@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <View
-        android:id="@+id/tv_display_demand_back_view"
+        android:id="@+id/view_project_display"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -16,7 +16,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tv_display_demand_back"
+        android:id="@+id/tv_project_demand_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -24,8 +24,8 @@
         android:text="返回"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginLeft="10dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_display_demand_back_view"
-        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_back_view" />
+        app:layout_constraintStart_toStartOf="@+id/view_project_display"
+        app:layout_constraintTop_toTopOf="@+id/view_project_display" />
 
     <TextView
         android:id="@+id/tv_project_demand_title"
@@ -36,16 +36,16 @@
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tv_display_demand_back_view"
+        app:layout_constraintBottom_toBottomOf="@id/view_project_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_display_demand_back_view"
+        app:layout_constraintTop_toTopOf="@id/view_project_display"
         tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_inventory_fragment_content"
+        android:id="@+id/rv_project_fragment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_display_demand_back_view"
+        app:layout_constraintTop_toBottomOf="@+id/view_project_display"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -19,6 +19,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_enterprise_re_certification.view.*
+import kotlinx.android.synthetic.main.fragment_information_certification.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -234,7 +235,9 @@ class EnterpriseReCertificationFragment :Fragment(){
                     it.printStackTrace()
                 })
         }
-
+        activity!!.btn_information_certification.setOnClickListener {
+            mView.btn_re_enterprise_certification.callOnClick()
+        }
         mView.btn_re_enterprise_certification.setOnClickListener {
             initImagePath()
             uploadImg()

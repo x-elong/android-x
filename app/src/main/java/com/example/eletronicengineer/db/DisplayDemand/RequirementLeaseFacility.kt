@@ -24,7 +24,7 @@ class RequirementLeaseFacility(
     var delFlag:String,
     var version:String,
     var requiremenLeaseServeId:String,
-    var requirementLeaseLists:List<requirementTeamProjectList>?,
+    var requirementLeaseLists:List<requirementLeaseProjectList>?,
     var photoPath:String,
     var validTime:String
 ): Serializable

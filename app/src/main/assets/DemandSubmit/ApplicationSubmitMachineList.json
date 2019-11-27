@@ -1,24 +1,34 @@
 ﻿[
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"名称："
+    "inputSingleTitle":"名称",
+    "key":"name",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"规格型号："
+    "inputSingleTitle":"规格型号",
+    "key":"specification",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"数量："
+    "inputSingleTitle":"数量",
+    "key":"quantity",
+    "sendFormat":"Long"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位："
+    "inputSingleTitle":"单位",
+    "key":"units",
+    "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注：",
+    "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":true,
+    "key":"details",
+    "sendFormat":"String"
   }
 ]

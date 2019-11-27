@@ -14,7 +14,7 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyVipActivity
 import com.example.eletronicengineer.activity.ProfessionalActivity
-import com.example.eletronicengineer.activity.SubscribeActivity
+import com.example.eletronicengineer.activity.VipActivity
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
@@ -105,6 +105,7 @@ class NetworkAdapter {
         fun generateJsonRequestBody(baseUrl: String) {
             val result = Observable.create<RequestBody> {
                 //建立网络请求体 (类型，内容)
+
                 val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData).toString())
                 it.onNext(requestBody)
             }
@@ -345,18 +346,76 @@ class NetworkAdapter {
         this.mData = mData
         this.context = context
     }
-    fun generateJsonRequestBody(baseUrl: String) {
-        val loadingDialog = LoadingDialog(context, "正在发布...", R.mipmap.ic_dialog_loading)
+    fun generateJsonArray(data: List<MultiStyleItem>):JSONArray
+    {
+        val array=JSONArray()
+        for (i in data)
+        {
+            if(i.options!=MultiStyleItem.Options.BLANK&& i.necessary==true)
+                array.put(generateJsonObject(i.itemMultiStyleItem))
+        }
+        return array
+    }
+    fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
+    {
+        val jsonObject = JSONObject()
+        for (i in mData) {
+            when (i.sendFormat) {
+                "Long" -> {
+                    jsonObject.put(i.key, parseToLong(i).toString())
+                }
+                "Double" ->{
+                    jsonObject.put(i.key, parseToDouble(i).toString())
+                }
+                "String" -> {
+                    jsonObject.put(i.key, parseToString(i))
+                }
+                "String[]" -> {
+                    val keyList = i.key.split(" ")
+                    val valueList = parseToStringArray(i)
+                    for (j in 0 until valueList.size) {
+                        jsonObject.put(keyList[j], valueList[j])
+                    }
+                }
+                "Int" -> {
+                    jsonObject.put(i.key, parseToInt(i).toString())
+                }
+                "Boolean" -> {
+                    jsonObject.put(i.key, parseToBoolean(i))
+                }
+                "Long String" -> {
+                    val longAlsoString = parseToLongAndString(i)
+                    val keys = i.key.split(" ")
+                    if (longAlsoString.second != i.inputMultiAbandonInput)
+                        jsonObject.put(keys[0], longAlsoString.first)
+                    jsonObject.put(keys[1], longAlsoString.second)
+                }
+                "JsonArray"->
+                {
+                    jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
+                }
+            }
+        }
+        return jsonObject
+    }
+    fun generateJsonRequestBody(baseUrl: String,json:JSONObject,Type:String) {
+        val loadingDialog = LoadingDialog(context, "正在${Type}...", R.mipmap.ic_dialog_loading)
         loadingDialog.show()
         val result = Observable.create<RequestBody> {
-            val jsonObject = JSONObject()
+            val jsonObject = json
             for (i in mData) {
                 when (i.sendFormat) {
                     "Long" -> {
-                        jsonObject.put(i.key, parseToLong(i))
+                        jsonObject.put(i.key, parseToLong(i).toString())
+                    }
+                    "Double" ->{
+                        jsonObject.put(i.key, parseToDouble(i).toString())
                     }
                     "String" -> {
                         jsonObject.put(i.key, parseToString(i))
+                    }
+                    "Int" -> {
+                        jsonObject.put(i.key, parseToInt(i).toString())
                     }
                     "String[]" -> {
                         val keyList = i.key.split(" ")
@@ -385,6 +444,10 @@ class NetworkAdapter {
                         jsonObject.put(keys[0], doubleAlsoString.first)
                         jsonObject.put(keys[1], doubleAlsoString.second)
                     }
+                    "JsonArray"->
+                    {
+                        jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
+                    }
                 }
             }
             val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
@@ -398,9 +461,9 @@ class NetworkAdapter {
                                 loadingDialog.dismiss()
                                 var json = JSONObject(it.string())
                                 if (json.getInt("code") == 200) {
-                                    Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "${Type}成功", Toast.LENGTH_SHORT).show()
                                 } else if (json.getInt("code") == 400) {
-                                    Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "${Type}失败", Toast.LENGTH_SHORT).show()
                                 }
                             },
                             {
@@ -538,7 +601,44 @@ class NetworkAdapter {
         }
         return resultList
     }
+    fun parseToDouble(data:MultiStyleItem):Double{
+        var result: Double = Double.MIN_VALUE
+        when (data.options) {
+            MultiStyleItem.Options.SINGLE_INPUT -> {
+                val tmp = data.inputSingleContent.toDoubleOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10.0
+            }
+        }
+        return result
+    }
 
+    private fun parseToInt(data: MultiStyleItem): Int {
+        var result = Int.MIN_VALUE
+        when (data.options) {
+            MultiStyleItem.Options.INPUT_WITH_UNIT -> {
+                if(data.inputUnitContent.toIntOrNull()!=null){
+                    result = data.inputUnitContent.toInt()
+                }
+
+            }
+            MultiStyleItem.Options.SELECT_DIALOG ->{
+                result = 1-data.selectOption1Items.indexOf(data.selectContent)
+            }
+        }
+        return result
+    }
+    private fun parseToBoolean(data: MultiStyleItem): Boolean {
+        var result = false
+        when (data.options) {
+            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+                result = data.radioButtonValue.toBoolean()
+            }
+        }
+        return result
+    }
     fun parseToString(data: MultiStyleItem): String {
         var result = ""
         when (data.options) {
@@ -573,6 +673,12 @@ class NetworkAdapter {
                 else
                     ""
             }
+            MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
+                    result = "${data.inputMultiContent.toDouble()}" + data.inputMultiSelectUnit
+                    else
+                    result = "${Long.MIN_VALUE}" + data.inputMultiSelectUnit
+        }
 
             MultiStyleItem.Options.INPUT_WITH_TEXTAREA -> {
                 result = if (data.textAreaContent != "")
@@ -602,16 +708,13 @@ class NetworkAdapter {
                 }
             }
             MultiStyleItem.Options.MULTI_CHECKBOX -> {
-                var checkNum = 0
-                for (j in 0 until data.checkboxValueList.size) {
+                var ch: ArrayList<String> = ArrayList()
+                for (j in 0 until data.checkboxValueList.size)
                     if (data.checkboxValueList[j]) {
-                        if (checkNum != 0)
-                            result += "|${1 - j}"
-                        else
-                            result = "${1 - j}"
-                        checkNum++
+                        ch.add(data.checkboxNameList[j])
                     }
-                }
+                result = ch.toString().replace(", ", "、")
+                result = result.substring(1, result.length - 1)
             }
             MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                 result = data.radioButtonValue
@@ -640,6 +743,32 @@ class NetworkAdapter {
             }
             MultiStyleItem.Options.INPUT_WITH_UNIT -> {
                 val tmp = data.inputUnitContent.toLongOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10
+            }
+            MultiStyleItem.Options.SINGLE_INPUT->{
+                val tmp = data.inputSingleContent.toLongOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10
+            }
+            MultiStyleItem.Options.MULTI_CHECKBOX -> {
+                var checkNum = 0
+                for (j in 0 until data.checkboxValueList.size) {
+                    if (data.checkboxValueList[j]) {
+                        if (checkNum != 0)
+                            result += (1-j).toLong()
+                        else
+                            result = (1-j).toLong()
+                        checkNum++
+                    }
+                }
+            }
+            MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                val tmp = data.singleDisplayRightContent.toLongOrNull()
                 result = if (tmp != null) {
                     tmp
                 } else
@@ -682,12 +811,12 @@ class NetworkAdapter {
         return longAlsoString
     }
 
-    fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double, String> {
-        var doubleAlsoString: Pair<Double, String>
+    fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double?, String> {
+        var doubleAlsoString: Pair<Double?, String>
         when (data.options) {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
-                    doubleAlsoString = Pair(data.inputMultiContent.toDouble(), data.inputMultiSelectUnit)
+                    doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                 else
                     doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
             }
@@ -1562,7 +1691,7 @@ class NetworkAdapter {
                         if (j.aerialPolePitExcavation.foundationDefenceWall == 1.toLong()) {
                             "有"
                         } else {
-                            " "
+                            "无"
                         }
                     expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "基础护壁 :", baseArmrest))
                     expandList.add(
@@ -1973,7 +2102,7 @@ class NetworkAdapter {
                         if (j.aerialTowerPitExcavation.foundationDefenceWall == 1.toLong()) {
                             "有"
                         } else {
-                            " "
+                            "无"
                         }
                     expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "基础护壁 :", baseArmrest))
                     expandList.add(
@@ -5310,7 +5439,7 @@ class NetworkAdapter {
             it.onNext(requestBody)
         }.subscribe {
             val result =
-                putSimpleMessage(it, ApiConfig.BasePath + baseUrl).observeOn(AndroidSchedulers.mainThread())
+                putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + baseUrl).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
@@ -5372,25 +5501,164 @@ class NetworkAdapter {
         for (j in mData) {
             when (j.options) {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
-//                    Log.i("inputSingleTitle + inputSingleContent","${j.inputSingleTitle.contains("身份证")} ${j.inputSingleContent.length != 18} ${j.inputSingleTitle}+${j.inputSingleContent.length}")
-                        if (j.inputSingleContent == "") {
-                            result = "${j.inputSingleTitle.replace("：", "")}不能为空"
-                        } else if ((j.inputSingleTitle.contains("电话") || (j.inputSingleTitle == "手机号码")) && j.inputSingleContent.length != 11) {
-                            result = "请输入正确的11位${j.inputSingleTitle.replace("：", "")}"
-                        } else if (j.inputSingleTitle.contains("身份证") && j.inputSingleContent.length != 18) {
-                            result = "请输入正确的18位${j.inputSingleTitle.replace("：", "")}"
-                        } else if (j.inputSingleTitle == "企业注册号：" && (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18)) {
-                            result = "请输入正确的15位${j.inputSingleTitle.replace("：", "")}或18位统一社会信用代码"
+                    if(j.necessary==true){//输入必选限制条件
+                        when(j.inputSingleTitle){
+                            "年龄"->{//报名限制
+                                if (j.inputSingleContent == "")
+                                { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
+                                else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)
+                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围"}
+                            }
+                            "名称","规格型号","数量","单位","牌照号码","单价","姓名",
+                            "报价清单(按单价)","个人证件名称","工作经验" ,
+                            "项目","项目特征描述","计量单位",
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名"->{
+                                if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
+                            }
                         }
-                        Log.i("result",result)
+                    }else {
+                        when (j.inputSingleTitle) {
+                            "电话", "手机号码", "法人代表电话" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 11) {
+                                    result = "请输入正确的11位${j.inputSingleTitle.replace("：", "")}"
+                                }
+                            }
+                            "身份证" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 18) {
+                                    result = "请输入正确的18位${j.inputSingleTitle.replace("：", "")}"
+                                }
+                            }
+                            "企业注册号" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18) {
+                                    result = "请输入正确的15位${j.inputSingleTitle.replace(
+                                        "：",
+                                        ""
+                                    )}或18位统一社会信用代码"
+                                }
+                            }
+                        }
+                    }
                         if (result != "") {
                             ToastHelper.mToast(context,result)
                             return false
                         }
                     }
+                MultiStyleItem.Options.INPUT_RANGE->{
+                          when (j.inputRangeTitle) {//此处为可选项但需检验
+                            "年龄要求" -> {
+                                if (j.inputRangeValue1 != "" && j.inputRangeValue2 != "") {
+                                    if (j.inputRangeValue1.toInt() >= j.inputRangeValue2.toInt() || j.inputRangeValue2.toInt() > 60 || j.inputRangeValue1.toInt() < 16) {
+                                        result =
+                                            "请输入正确${j.inputRangeTitle.replace("要求", "")}范围16-60岁"
+                                    }
+                                } else if (j.inputRangeValue1 == "" && j.inputRangeValue2 == "") {
+                                    result = ""
+                                } else {
+                                    result = "如需填写${j.inputRangeTitle.replace("要求", "")}请填写完整"
+                                }
+                            }
+                        }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.singleDisplayRightTitle) {
+                            "需要人数(人)" -> {
+                                if (j.singleDisplayRightContent.toInt() == 0) {
+                                    result = "请至少填写一条成员清册数据"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
                 MultiStyleItem.Options.INPUT_WITH_UNIT->{
-                    if(j.inputUnitContent=="")
-                        result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.inputUnitTitle) {
+                            "工作经验" -> {//需求发布限制
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 45) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-45年"
+                                }
+                            }
+                            "车辆数量"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 15) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-15辆"
+                                }
+                            }
+                            "计划工期", "发布有效期", "需要桩基","需求人数","需要人数","马匹数量","有效期","施工工期" -> {
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                }
+                            }
+                            //报名车辆限制
+                            "核载乘客"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 10) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-10人"
+                                }
+                            }
+                            "核准载重量"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 30) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-30吨"
+                                }
+                            }
+                            "车厢长度"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 15) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-15米"
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        when (j.inputUnitTitle) {
+                            "带驾驶员","不带驾驶员"->{
+                                     if (j.inputUnitContent!=""&&(j.inputUnitContent.toDouble() < 1 || j.inputUnitContent.toDouble() > 1000)) {
+                                        result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围1-1000元"
+                                    }
+                            }
+                            "年龄要求"->{
+                                if (j.inputUnitContent!=""&&(j.inputUnitContent.toInt() < 16 || j.inputUnitContent.toInt() > 60)) {
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围16-60元"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.inputMultiUnitTitle) {
+                            "薪资标准","薪资要求"->{
+                                if (j.inputMultiContent == ""&&j.inputMultiSelectUnit!="面议") {
+                                    result = "${j.inputMultiUnitTitle.replace("：", "")}不能为空"
+                                }
+                            }
+                        }
+                    }
                     if (result != "") {
                         ToastHelper.mToast(context,result)
                         return false
@@ -5406,8 +5674,78 @@ class NetworkAdapter {
                             return false
                         }
                     }
-
                 }
+                MultiStyleItem.Options.TWO_PAIR_INPUT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.twoPairInputTitle) {
+                            "规格条数" -> {
+                                if (j.twoPairInputValue1 != "" && j.twoPairInputValue2 != "") {
+                                    result = ""
+                                } else {
+                                    result = "${j.twoPairInputTitle.replace("：", "")}没有填完整"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context, result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG,
+                MultiStyleItem.Options.SELECT_DIALOG,
+                MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.selectTitle) {
+                            "项目地点", "孔洞最大直径","岗位类别",
+                            "可实施地域","运送财产保险" -> {
+                                if (j.selectContent == "") {
+                                    result = "${j.selectTitle.replace("：", "")}没有选择"
+                                }
+                            }
+                        }
+                    }
+                        if (result != "") {
+                            ToastHelper.mToast(context,result)
+                            return false
+                        }
+                }
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON->{
+                    if(j.necessary==true) {
+                        when (j.radioButtonTitle) {
+                            "性别要求", "机械设备", "跨越架材质", "财务运输保险",
+                            "配送", "合作方属性", "薪资标准","费用标准","性别",
+                            "可作业范围","是否配送"-> {
+                                if (j.radioButtonValue == "")
+                                    result = "${j.radioButtonTitle.replace("：", "")}没有选择"
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.MULTI_CHECKBOX->{
+                    if(j.necessary==true) {
+                        when (j.checkboxTitle) {
+                            "电压等级", "作业类别", "操作次级", "可实施范围","可操作电压等级",
+                            "可设计电压等级","可设计范围"-> {
+                                result = "${j.checkboxTitle.replace("：", "")}没有选择"
+                                for (i in 0 until j.checkboxValueList.size)
+                                    if (j.checkboxValueList[i]) {
+                                        result = ""
+                                    }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+
+
             }
         }
         return true
@@ -5464,7 +5802,25 @@ class NetworkAdapter {
         getAliPayOrderStr(productId).subscribeOn(Schedulers.io()).observeOn(
             AndroidSchedulers.mainThread())
             .subscribe({
-                    PaymentHelper.startAlipay(context as MyVipActivity,JSONObject(it.string()).getString("message"))
+                    PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"))
+            },{
+                ToastHelper.mToast(context,"网络异常")
+                it.printStackTrace()
+            })
+    }
+
+    /**
+     * @推广人数支付
+     */
+
+    fun numPay(productId:String){
+        numPayCreatOrder(productId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                val json = JSONObject(it.string())
+                val message = json.getString("message")
+                if(json.getString("payDesc")=="OK")
+                    (context as VipActivity).supportFragmentManager.popBackStackImmediate()
+                    ToastHelper.mToast(context,message)
             },{
                 ToastHelper.mToast(context,"网络异常")
                 it.printStackTrace()

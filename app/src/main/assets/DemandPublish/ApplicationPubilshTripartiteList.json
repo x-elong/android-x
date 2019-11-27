@@ -1,29 +1,46 @@
 ﻿[
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"项目"
+    "inputSingleTitle":"项目",
+    "key":"projectName",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"项目特征描述"
+    "inputSingleTitle":"项目特征描述",
+    "key":"specificationsModels",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"计量单位"
+    "inputSingleTitle":"计量单位",
+    "key":"units",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"数量"
+    "inputSingleTitle":"数量",
+    "key":"quantity",
+    "sendFormat":"Long"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"报价清单(按单价)",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightContent":""
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"详细说明",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":true,
+    "key":"detailsExplain",
+    "sendFormat":"String"
   }
 ]

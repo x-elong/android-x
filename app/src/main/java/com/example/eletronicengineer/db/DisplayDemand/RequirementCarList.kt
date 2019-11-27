@@ -10,4 +10,4 @@ class RequirementCarList (var carType:String,
                           var haveDriver:String,
                           var noDriver:String,
                           var remark:String
-                           ) : Serializable
+                           ): Serializable

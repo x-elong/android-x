@@ -18,7 +18,9 @@ import com.lcw.library.imagepicker.ImagePicker
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_enterprise_certification.*
 import kotlinx.android.synthetic.main.fragment_enterprise_certification.view.*
+import kotlinx.android.synthetic.main.fragment_information_certification.*
 import kotlinx.android.synthetic.main.fragment_information_certification.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -184,8 +186,10 @@ class EnterpriseCertificationFragment :Fragment(){
                     it.printStackTrace()
                 })
         }
-
-        mView.btn_Enterprise_certification.setOnClickListener {
+        activity!!.btn_information_certification.setOnClickListener {
+            mView.btn_information_certification.callOnClick()
+        }
+        mView.btn_information_certification.setOnClickListener {
             initImagePath()
             uploadImg()
         }

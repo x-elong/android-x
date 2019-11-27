@@ -10,6 +10,16 @@
   "singleDisplayRightContent":"xxx"
   },
   {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"是否提供车辆:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"施工工器具:",
+    "singleDisplayRightContent":"xxx"
+  },
+  {
     "type":"MULTI_BUTTON",
     "buttonTitle":"人员清册：",
     "buttonName":["点击查看"]
@@ -45,14 +55,18 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"发布人所属地点：",
-    "placePath": "pcas.json",
-    "key":"issuerBelongSite",
-    "sendFormat":"String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"发布人所属地点:",
+    "singleDisplayRightContent":"00"
   },
   {
-    "type":"SUBMIT",
-    "submitContent":"联系对方"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"发布人姓名:",
+    "singleDisplayRightContent":"00"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":"00"
   }
 ]

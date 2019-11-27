@@ -206,7 +206,7 @@ class FamilyInformationFragment :Fragment(){
                                                                         it.onNext(requestBody)
                                                                     }.subscribe {
                                                                         val result =
-                                                                            putSimpleMessage(it, ApiConfig.BasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
+                                                                            putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
                                                                                 .subscribeOn(Schedulers.io())
                                                                                 .subscribe(
                                                                                     {

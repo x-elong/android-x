@@ -123,6 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_personal_certification"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"

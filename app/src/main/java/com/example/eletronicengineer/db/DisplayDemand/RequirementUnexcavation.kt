@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
 import java.io.Serializable
 
 class RequirementUnexcavation(
@@ -32,6 +33,7 @@ class RequirementUnexcavation(
     var delFlag:String,
     var version:String,
     var requirmentTeamServeId:String,
+    var requirementCarLists:List<RequirementCarList>?,
     var requirementTeamProjectList:List<requirementTeamProjectList>?,
     var requirementListQuotations:List<requirementTeamProjectList>?,
     var requirementConstructionWorkKind:String,

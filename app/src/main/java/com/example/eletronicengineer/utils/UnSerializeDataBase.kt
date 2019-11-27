@@ -9,16 +9,21 @@ import retrofit2.http.FieldMap
 import java.io.File
 
 /**
- * @权限模块:www.ycdlfw.com/upms
- * @供需模块:www.ycdlfw.com/dms
- * @我的模块:www.ycdlfw.com/mine
+ * @权限模块:ycdlfw.com:8026
+ * @供需模块:ycdlfw.com:8012
+ * @我的模块:ycdlfw.com:8032
  */
 object UnSerializeDataBase
 {
+//  const val upmsBasePath = "http://ycdlfw.com:8026"
+ // const val dmsBasePath = "http://ycdlfw.com:8012"
+//  const val mineBasePath = "http://ycdlfw.com:8032"
   const val upmsBasePath = "http://10.1.5.141:8026"
-  const val dmsBasePath = "http://10.1.5.141:8012"
+  //const val dmsBasePath = "http://10.1.5.141:8012"
+  //const val dmsBasePath = "http://192.168.1.65:8012"
+  const val dmsBasePath = "http://192.168.1.132:8012"
   const val mineBasePath = "http://10.1.5.141:8032"
-  var userToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZWRpc0tleSI6InVwbXM6bG9naW46QjMxREQwOEREMjNCNjI4OTBFQTYxOTc5MEE2MDkxRDciLCJpZCI6IjExNzY4NDcxOTc2NDUxNzY4MzIiLCJleHAiOjE1Njk2NTU3MjksInVzZXJuYW1lIjoiMTM1NzUyMzI1MzEifQ.Cl2xK4_fNdtfiqiQjpLwTLG3Q3UhSV7hpMInZ9PVZgU"
+  var userToken=""
   var cookie:String =""
   var userName:String=""
   var userPhone:String = ""
@@ -40,7 +45,7 @@ class FileMap constructor(path:String,key:String)
 }
 class BitmapMap constructor(var path:String,val key:String)
 {
-  val bitmap = BitmapFactory.decodeFile(path)
+  val bitMap = BitmapFactory.decodeFile(path)
   var needDelete=false
 }
 class PageMap

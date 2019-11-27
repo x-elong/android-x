@@ -5,7 +5,7 @@ class measureDesign(
     var vipId:String,
     var name:String,
     var isCar:String,
-    var isFacility:String,
+    var isConstructionTool:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,
@@ -14,5 +14,7 @@ class measureDesign(
     var version:String,
     var teamServeId:String,
     var validTime:String,
-    var issuerBelongSite:String
+    var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String
 )

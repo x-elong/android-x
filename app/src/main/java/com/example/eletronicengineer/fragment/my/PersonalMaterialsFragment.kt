@@ -166,7 +166,7 @@ class PersonalMaterialsFragment :Fragment(){
                             "学历证书"->{
                                 val imageList = adapterList[1].mImageList.toMutableList()
                                     imageList.add(imageList.size-1,Image(j.certificatePath,null))
-                                imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                                imageList[imageList.size-2].deleteListener = View.OnClickListener {
                                     deleteCertificate(imageList.size-2,1,j.id)
                                 }
                                 adapterList[1].mImageList = imageList
@@ -177,7 +177,7 @@ class PersonalMaterialsFragment :Fragment(){
                                 val imageList = adapterList[2].mImageList.toMutableList()
                                 for (k in imagePath)
                                     imageList.add(imageList.size-1,Image(k,null))
-                                imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                                imageList[imageList.size-2].deleteListener = View.OnClickListener {
                                     deleteCertificate(imageList.size-2,2,j.id)
                                 }
                                 adapterList[2].mImageList = imageList
@@ -188,7 +188,7 @@ class PersonalMaterialsFragment :Fragment(){
                                 val imageList = adapterList[3].mImageList.toMutableList()
                                 for (k in imagePath)
                                     imageList.add(imageList.size-1,Image(k,null))
-                                imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                                imageList[imageList.size-2].deleteListener = View.OnClickListener {
                                     deleteCertificate(imageList.size-2,3,j.id)
                                 }
                                 adapterList[3].mImageList = imageList
@@ -199,7 +199,7 @@ class PersonalMaterialsFragment :Fragment(){
                                 val imageList = adapterList[4].mImageList.toMutableList()
                                 for (k in imagePath)
                                     imageList.add(imageList.size-1,Image(k,null))
-                                imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                                imageList[imageList.size-2].deleteListener = View.OnClickListener {
                                     deleteCertificate(imageList.size-2,4,j.id)
                                 }
                                 adapterList[4].mImageList = imageList
@@ -210,7 +210,7 @@ class PersonalMaterialsFragment :Fragment(){
                                 val imageList = adapterList[5].mImageList.toMutableList()
                                 for (k in imagePath)
                                     imageList.add(imageList.size-1,Image(k,null))
-                                imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                                imageList[imageList.size-2].deleteListener = View.OnClickListener {
                                     deleteCertificate(imageList.size-2,5,j.id)
                                 }
                                 adapterList[5].mImageList = imageList
@@ -254,7 +254,7 @@ class PersonalMaterialsFragment :Fragment(){
                         val id = json.getString("message")
                         val imageList = adapterList[selectImage].mImageList.toMutableList()
                         imageList.add(imageList.size-1,Image(imagePath,null))
-                        imageList[imageList.size-2].deleteListenner = View.OnClickListener {
+                        imageList[imageList.size-2].deleteListener = View.OnClickListener {
                             deleteCertificate(imageList.size-2,selectImage,id)
                         }
                         adapterList[selectImage].mImageList = imageList

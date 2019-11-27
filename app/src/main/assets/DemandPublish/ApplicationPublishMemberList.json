@@ -1,9 +1,14 @@
 ﻿[
   {
-    "type": "SELECT_DIALOG",
+    "type": "TWO_OPTIONS_SELECT_DIALOG",
     "selectTitle": "岗位类别",
     "selectOption1Items": ["普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类"],
-    "key":"wokerType",
+    "selectOption2Items": [[" "],["低压电工作业", "高压电工作业", "电力电缆作业", "继电保护作业", "电气试验作业", "融化焊接与热切割作业", "登高架设作业"],
+      ["压接操作", "机动绞磨操作", "牵张设备操作", "起重机械操作", "钢筋工", "混凝土工", "木工", "模板工", "油漆工", "砌筑工", "通风工", "打桩工", "架子工工"],
+      [" "],["驾驶证A1", "驾驶证A2", "驾驶证A3", "驾驶证B1", "驾驶证B2", "驾驶证C1", "驾驶证C2", "驾驶证C3", "驾驶证D", "驾驶证E"],
+    ["施工员", "安全员", "质量员", "材料员", "资料员", "预算员", "标准员", "机械员", "劳务员"],
+    ["造价工程师", "一级建造师", "安全工程师", "电气工程师"]],
+    "key":"positionType",
     "sendFormat": "String"
   },
   {
@@ -17,27 +22,34 @@
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资标准",
     "inputMultiUnit":["元/天","元/月","元/年"],
-    "key":"money salaryUnit",
-    "sendFormat": "Double String"
+    "key":"salaryStandard",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"个人证件名称",
-    "key": "name",
+    "key": "personCertificate",
     "sendFormat": "String"
   },
   {
     "type": "SELECT_DIALOG",
     "selectTitle": "是否必须持证上岗",
     "selectOption1Items": ["是","否"],
-    "key":"sex",
-    "sendFormat": "Long"
+    "key":"haveCertificate",
+    "sendFormat": "Int"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary":false,
+    "necessary":true,
     "key":"remark",
     "sendFormat":"String"
   }

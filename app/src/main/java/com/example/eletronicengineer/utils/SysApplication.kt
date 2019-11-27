@@ -30,7 +30,7 @@ class SysApplication :Application{
         for (activity in activityList) {
             activity.finish()
         }
-        activityList.clear();
+        activityList.clear()
     }
 
     override fun onLowMemory() {

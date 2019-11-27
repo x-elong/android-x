@@ -44,7 +44,7 @@ class DemandDisplayFragment:Fragment() {
     }
 
     private fun initFragment(view: View) {
-        view.tv_display_demand_back.setOnClickListener {
+        view.tv_demand_display_back.setOnClickListener {
             activity!!.finish()
         }
 
@@ -55,74 +55,73 @@ class DemandDisplayFragment:Fragment() {
         when (type) {
             //需求个人显示模板
             1 -> {
-              adapter = adapterGenerate.demandIndividualDisplay()
+                adapter = adapterGenerate.demandIndividualDisplay()
                 val result = getRequirementPersonDetail(id,ApiConfig.Token,ApiConfig.BasePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.requirementMajor==null) {
-                                " " } else{ data.requirementMajor }
-                                adapter.mData[2].singleDisplayRightContent=if(data.projectName==null) {
-                                    " " } else{ data.projectName}
-                                if(data.projectSite==null)
-                                {
-                                    adapter.mData[3].singleDisplayRightContent= " "
-                                }
-                                else
-                                {
-                                        var str=data.projectSite.split(" / ")
-                                        var projectSite=""
-                                        for(temp in str) projectSite+= "$temp "
-                                        adapter.mData[3].singleDisplayRightContent=projectSite
-                                }
-                                adapter.mData[4].singleDisplayRightContent=if(data.planTime==null) {
-                                    " " } else{ data.planTime}
-                                adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
-                                    " " } else{ data.workerExperience}
-                                adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                    " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                                when {
-                                    data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="男"
-                                    data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="女"
-                                    data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
-                                    else -> {adapter.mData[7].singleDisplayRightContent=" " }
-                                }
-                                when {
-                                    data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="全包"
-                                    data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="队部自理"
-                                    else -> { adapter.mData[8].singleDisplayRightContent=" "}
-                                }
-                                adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
-                                    " " } else{ data.journeySalary}
-                                adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
-                                    " " } else{ data.journeyCarFare}
-                                adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
-                                    " " } else{ data.needPeopleNumber}
-                                adapter.mData[12].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                                    " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
-                                adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
-                                    " " } else{ data.name}
-                                adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
-                                    " " } else{ data.phone}
-                                adapter.mData[16].singleDisplayRightContent=if(data.validTime==null) {
-                                    " " } else{ data.validTime}
-                                adapter.mData[17].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                    " " } else{ data.additonalExplain}
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.requirementMajor==null) {
+                            " " } else{ data.requirementMajor }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName}
+                        if(data.projectSite==null)
+                        {
+                            adapter.mData[3].singleDisplayRightContent= " "
+                        }
+                        else
+                        {
+                            var str=data.projectSite.split(" / ")
+                            var projectSite=""
+                            for(temp in str) projectSite+= "$temp "
+                            adapter.mData[3].singleDisplayRightContent=projectSite
+                        }
+                        adapter.mData[4].singleDisplayRightContent=if(data.planTime==null) {
+                            " " } else{ data.planTime}
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="男"
+                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="女"
+                            data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
+                            else -> {adapter.mData[7].singleDisplayRightContent=" " }
+                        }
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="全包"
+                            data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            else -> { adapter.mData[8].singleDisplayRightContent=" "}
+                        }
+                        adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                            " " } else{ data.journeyCarFare}
+                        adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
+                            " " } else{ data.needPeopleNumber}
+                        adapter.mData[12].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
+                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
+                        adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[16].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[17].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
                         view.button.setOnClickListener{
-                                    mdata.putString("needPeopleNumber",data.needPeopleNumber)
-                                    mdata.putSerializable("RequirementPersonDetail",data)
-                                    mdata.putInt("type", Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal)
-                                    FragmentHelper.switchFragment(
-                                        activity as DemandDisplayActivity,
-                                        ApplicationSubmitFragment.newInstance(mdata),
-                                        R.id.frame_display_demand,
-                                        "register"
-                                    )
-                                }
-                            view.tv_fragment_demand_display_content.adapter = adapter
-                            view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                            mdata.putSerializable("RequirementPersonDetail",data)
+                            mdata.putInt("type", Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal)
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                ApplicationSubmitFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "register"
+                            )
+                        }
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -297,9 +296,9 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
-                       view.button.setOnClickListener {
-//                            mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-                           mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putSerializable("RequirementMajorNetWork",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -310,8 +309,8 @@ class DemandDisplayFragment:Fragment() {
                             )
                         }
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -423,8 +422,10 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
-                        adapter.mData[21].submitListener = View.OnClickListener {
+                        view.button.setOnClickListener {
                             mdata.putSerializable("RequirementDistributionNetwork",data as Serializable)
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putInt("type", Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
@@ -433,8 +434,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -462,7 +463,7 @@ class DemandDisplayFragment:Fragment() {
                         }
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
                             " " } else{ data.projectTime}
-                        if(data.requirementTeamProjectList == null )
+                        if(data.requirementCarLists == null )
                         {
                             adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -470,7 +471,7 @@ class DemandDisplayFragment:Fragment() {
                         }
                         else
                         {
-                            if(data.requirementTeamProjectList!!.isEmpty())
+                            if(data.requirementCarLists!!.isEmpty())
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -479,9 +480,9 @@ class DemandDisplayFragment:Fragment() {
                             else
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                    val listData = data.requirementTeamProjectList
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",1)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -511,95 +512,30 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.journeySalary}
                         adapter.mData[13].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
-                        /*adapter.mData[14].singleDisplayRightContent=if(data.vehicle==null) {
-                            " " } else{ data.vehicle}
-                        when {
-                            data.requirementPowerTransformationSalary == null && data.requirementListQuotations == null ->adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            },View.OnClickListener { Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show() })
-                            data.requirementPowerTransformationSalary == null &&data.requirementListQuotations !=null -> adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            }, View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
-                                    mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
-                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
-                            data.requirementListQuotations == null &&data.requirementPowerTransformationSalary !=null -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }
-                                },
-                                View.OnClickListener {
-                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                })
-                            else -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }},
-                                View.OnClickListener {
-                                    if(data.requirementListQuotations!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else{
-                                        val listData = data.requirementListQuotations
-                                        mdata.putSerializable("listData1", listData as Serializable)
-                                        mdata.putInt("type",3)
-                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                    } })
-                            //薪资标准
-                        }*/
                         when {
                             data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
                             data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
                             else->{adapter.mData[14].singleDisplayRightContent=" "}
                         }
-                        if(data.requirementSecondProvideMaterialsList == null)
+                        if(data.requirementMembersLists == null)
                         {
                             adapter.mData[15].buttonListener = listOf(View.OnClickListener {
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            })//乙方材料清册
+                            })//成员清册查看
                         }
                         else{
-                            if(data.requirementSecondProvideMaterialsList!!.isEmpty())
+                            if(data.requirementMembersLists!!.isEmpty())
                             {
                                 adapter.mData[15].buttonListener = listOf(View.OnClickListener {
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                })//乙方材料清册
+                                })//成员清册查看
                             }
                             else
                             {
                                 adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                    val listData = data.requirementSecondProvideMaterialsList
-                                    mdata.putSerializable("listData3", listData as Serializable)
-                                    mdata.putInt("type",4)
+                                    val listData = data.requirementMembersLists
+                                    mdata.putSerializable("listData2", listData as Serializable)
+                                    mdata.putString("type","成员清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))      })//乙方材料清册
                             }
                         }
@@ -611,11 +547,11 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
-                        adapter.mData[21].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
-                            mdata.putSerializable("RequirementPowerTransformation",data as Serializable)
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putInt("type", Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
+                            mdata.putSerializable("RequirementPowerTransformation",data as Serializable)
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
                                 ApplicationSubmitFragment.newInstance(mdata),
@@ -623,9 +559,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -635,7 +570,7 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplay()
                 val result = getRequirementMeasureDesign(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
+                        var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
                             " " } else{ data.requirementVariety }
                         adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
@@ -653,7 +588,7 @@ class DemandDisplayFragment:Fragment() {
                         }
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
                             " " } else{ data.projectTime}
-                        if(data.requirementTeamProjectList == null )
+                        if(data.requirementCarLists == null )
                         {
                             adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -661,7 +596,7 @@ class DemandDisplayFragment:Fragment() {
                         }
                         else
                         {
-                            if(data.requirementTeamProjectList!!.isEmpty())
+                            if(data.requirementCarLists!!.isEmpty())
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -670,9 +605,9 @@ class DemandDisplayFragment:Fragment() {
                             else
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                    val listData = data.requirementTeamProjectList
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",1)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -702,79 +637,33 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.journeySalary}
                         adapter.mData[13].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
-                        /*adapter.mData[14].singleDisplayRightContent=if(data.vehicle==null) {
-                            " " } else{ data.vehicle}
-                        when {
-                            data.requirementPowerTransformationSalary == null && data.requirementListQuotations == null ->adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            },View.OnClickListener { Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show() })
-                            data.requirementPowerTransformationSalary == null &&data.requirementListQuotations !=null -> adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            }, View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
-                                    mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
-                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
-                            data.requirementListQuotations == null &&data.requirementPowerTransformationSalary !=null -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }
-                                },
-                                View.OnClickListener {
-                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                })
-                            else -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }},
-                                View.OnClickListener {
-                                    if(data.requirementListQuotations!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else{
-                                        val listData = data.requirementListQuotations
-                                        mdata.putSerializable("listData1", listData as Serializable)
-                                        mdata.putInt("type",3)
-                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                    } })
-                            //薪资标准
-                        }*/
                         when {
                             data.equipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
                             data.equipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
                             else->{adapter.mData[14].singleDisplayRightContent=" " }
                         }
-                        adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                            Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                        })
+                        if(data.requirementMembersLists == null)
+                        {
+                            adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })//成员清册查看
+                        }
+                        else{
+                            if(data.requirementMembersLists!!.isEmpty())
+                            {
+                                adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })//成员清册查看
+                            }
+                            else
+                            {
+                                adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                    val listData = data.requirementMembersLists
+                                    mdata.putSerializable("listData2", listData as Serializable)
+                                    mdata.putString("type","成员清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))      })//乙方材料清册
+                            }
+                        }
                         adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
                         adapter.mData[18].singleDisplayRightContent=if(data.phone==null) {
@@ -783,9 +672,9 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[20].singleDisplayRightContent=if(data.additonalDxplain==null) {
                             " " } else{ data.additonalDxplain}
-                        adapter.mData[21].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putSerializable("RequirementMeasureDesign",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -795,8 +684,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -806,15 +695,15 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayGongTrans()
                 val result = getRequirementCaravanTransport(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
 //                        if(data.requirementTeamProjectList == null )
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
@@ -839,60 +728,59 @@ class DemandDisplayFragment:Fragment() {
 //                                })
 //                            }
 //                        }
-                            adapter.mData[4].singleDisplayRightContent=if(data.materialsType==null) {
-                                " " } else{ data.materialsType}
-                            adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
-                                else -> { adapter.mData[7].singleDisplayRightContent=" "}
-                            }
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
-                                else -> {adapter.mData[8].singleDisplayRightContent=" " }
-                            }
-                            adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
-                            adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
-                                " " } else{ data.journeyCarFare}
-                            adapter.mData[11].singleDisplayRightContent=if(data.needHorseNumber==null) {
-                                " " } else{ data.needHorseNumber}
-                        if(data.requirementListQuotations == null )
-                        {
-                            adapter.mData[12].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            })
+                        adapter.mData[4].singleDisplayRightContent=if(data.materialsType==null) {
+                            " " } else{ data.materialsType}
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
+                            else -> { adapter.mData[7].singleDisplayRightContent=" "}
                         }
-                        else
-                        {
-                            adapter.mData[12].buttonListener = listOf(View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
-                                    mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
-                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
+                            else -> {adapter.mData[8].singleDisplayRightContent=" " }
                         }
-                            adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[16].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[17].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[18].submitListener = View.OnClickListener {
-                           // mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                            " " } else{ data.journeyCarFare}
+                        adapter.mData[11].singleDisplayRightContent=if(data.needHorseNumber==null) {
+                            " " } else{ data.needHorseNumber}
+//                        if(data.requirementListQuotations == null )
+//                        {
+//                            adapter.mData[12].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            adapter.mData[12].buttonListener = listOf(View.OnClickListener {
+//                                if(data.requirementListQuotations!!.isEmpty())
+//                                {
+//                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
+//                                }
+//                                else{
+//                                    val listData = data.requirementListQuotations
+//                                    mdata.putSerializable("listData1", listData as Serializable)
+//                                    mdata.putInt("type",3)
+//                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+//                                }
+//                            })
+//                        }
+                        adapter.mData[13].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[14].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[15].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[16].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
                             mdata.putSerializable("RequirementCaravanTransport",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -902,9 +790,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -914,117 +801,95 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayPile()
                 val result = getRequirementPileFoundation(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                        if(data.requirementTeamProjectList == null )
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        if(data.requirementCarLists == null )
                         {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                             })
                         }
                         else
                         {
-                            if(data.requirementTeamProjectList!!.isEmpty())
+                            if(data.requirementCarLists!!.isEmpty())
                             {
-                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                                 })
                             }
                             else
                             {
-                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
-                                    val listData = data.requirementTeamProjectList
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",1)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
                         }
-                            adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
-                                else -> { adapter.mData[7].singleDisplayRightContent=" "}
-                            }
-                            adapter.mData[8].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
-                                " " } else{ data.requirementConstructionWorkKind}
-                           adapter.mData[9].singleDisplayRightContent=if(data.roleMaxType==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
+                            else -> { adapter.mData[7].singleDisplayRightContent=" "}
+                        }
+                        adapter.mData[8].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
+                            " " } else{ data.requirementConstructionWorkKind}
+                        adapter.mData[9].singleDisplayRightContent=if(data.roleMaxType==null) {
                             " " } else{ data.roleMaxType}
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
-                                else -> {adapter.mData[10].singleDisplayRightContent=" " }
-                            }
-                            adapter.mData[11].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
+                            else -> {adapter.mData[10].singleDisplayRightContent=" " }
+                        }
+                        adapter.mData[11].singleDisplayRightContent=if(data.journeyCarFare==null) {
                             " " } else{ data.journeyCarFare}
-                            adapter.mData[12].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
+                        adapter.mData[12].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
                         when {
                             data.salaryStandard=="0" -> adapter.mData[13].singleDisplayRightContent=" "
                             data.salaryStandard=="1" -> adapter.mData[13].singleDisplayRightContent="面议"
+                            else -> {adapter.mData[13].singleDisplayRightContent=" " }
                         }
-                            adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundationEquipment==null) {
-                                " " } else{ data.needPileFoundationEquipment}
-//                            adapter.mData[14].singleDisplayRightContent=if(data.vehicle==null) {
-//                                " " } else{ data.vehicle }
-//                        if(data.requirementListQuotations == null )
-//                        {
-//                            adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-//                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-//                            })
-//                        }
-//                        else
-//                        {
-//                            adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-//                                if(data.requirementListQuotations!!.isEmpty())
-//                                {
-//                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-//                                }
-//                                else{
-//                                    val listData = data.requirementListQuotations
-//                                    mdata.putSerializable("listData1", listData as Serializable)
-//                                    mdata.putInt("type",3)
-//                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-//                                }
-//                            })
-//                        }
+                        adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundationEquipment==null) {
+                            " " } else{ data.needPileFoundationEquipment}
                         when {
                             data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不需要提供"
                             data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="全部提供"
                             else->{adapter.mData[15].singleDisplayRightContent=" " }
                         }
-                            adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[18].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[21].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[18].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
                             mdata.putSerializable("RequirementPileFoundation",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal)
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
                                 ApplicationSubmitFragment.newInstance(mdata),
                                 R.id.frame_display_demand,
-                                "register")
+                                "register"
+                            )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1034,105 +899,84 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayTrenchiless()
                 val result = getRequirementUnexcavation(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                        if(data.requirementTeamProjectList == null )
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        if(data.requirementCarLists == null )
                         {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                             })
                         }
                         else
                         {
-                            if(data.requirementTeamProjectList!!.isEmpty())
+                            if(data.requirementCarLists!!.isEmpty())
                             {
-                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                                 })
                             }
                             else
                             {
-                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //工程量清册
-                                    val listData = data.requirementTeamProjectList
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",1)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
                         }
-                            adapter.mData[5].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
-                                " " } else{ data.requirementConstructionWorkKind}
-                            adapter.mData[6].singleDisplayRightContent=if(data.diameterStandardBranchesNumber==null || data.holeStandardBranchesNumber==null) {
-                                " " } else{ "单管直径${data.diameterStandardBranchesNumber}毫米(mm)×${data.holeStandardBranchesNumber}孔"}
-                            adapter.mData[7].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[8].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[9].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[9].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[9].singleDisplayRightContent="男女不限"
-                                else -> {adapter.mData[9].singleDisplayRightContent=" " }
-                            }
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
-                                else -> {adapter.mData[10].singleDisplayRightContent=" " }
-                            }
-                            adapter.mData[11].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
+                            " " } else{ data.requirementConstructionWorkKind}
+                        adapter.mData[6].singleDisplayRightContent=if(data.diameterStandardBranchesNumber==null || data.holeStandardBranchesNumber==null) {
+                            " " } else{ "单管直径${data.diameterStandardBranchesNumber}毫米(mm)×${data.holeStandardBranchesNumber}孔"}
+                        adapter.mData[7].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[8].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[9].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[9].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[9].singleDisplayRightContent="男女不限"
+                            else -> {adapter.mData[9].singleDisplayRightContent=" " }
+                        }
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
+                            else -> {adapter.mData[10].singleDisplayRightContent=" " }
+                        }
+                        adapter.mData[11].singleDisplayRightContent=if(data.journeyCarFare==null) {
                             " " } else{ data.journeyCarFare}
-                            adapter.mData[12].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
+                        adapter.mData[12].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
                         when {
                             data.salaryStandard=="0" -> adapter.mData[13].singleDisplayRightContent=" "
                             data.salaryStandard=="1" -> adapter.mData[13].singleDisplayRightContent="面议"
+                            else -> {adapter.mData[13].singleDisplayRightContent=" " }
                         }
-                            adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundation==null) {
-                                " " } else{ data.needPileFoundation}
-//                        if(data.requirementListQuotations == null )
-//                        {
-//                            adapter.mData[14].buttonListener = listOf(View.OnClickListener {
-//                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-//                            })
-//                        }
-//                        else
-//                        {
-//                            adapter.mData[14].buttonListener = listOf(View.OnClickListener {
-//                                if(data.requirementListQuotations!!.isEmpty())
-//                                {
-//                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-//                                }
-//                                else{
-//                                    val listData = data.requirementListQuotations
-//                                    mdata.putSerializable("listData1", listData as Serializable)
-//                                    mdata.putInt("type",3)
-//                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-//                                }
-//                            })
-//                        }
-//                            adapter.mData[15].singleDisplayRightContent=if(data.vehicle==null) {
-//                                " " } else{ data.vehicle}
-                             when {
-                                   data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不需要提供"
-                                   data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="全部提供"
-                                  }
-                            adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[18].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[21].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundation==null) {
+                            " " } else{ data.needPileFoundation}
+                        when {
+                            data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不需要提供"
+                            data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="全部提供"
+                            else->{adapter.mData[15].singleDisplayRightContent=" " }
+                        }
+                        adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[18].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
                             mdata.putSerializable("RequirementUnexcavation",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -1142,9 +986,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1154,16 +997,16 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayTestAndDebugging()
                 val result = getRequirementTest(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                        if(data.requirementTeamProjectList == null )
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        if(data.requirementCarLists == null )
                         {
                             adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -1171,7 +1014,7 @@ class DemandDisplayFragment:Fragment() {
                         }
                         else
                         {
-                            if(data.requirementTeamProjectList!!.isEmpty())
+                            if(data.requirementCarLists!!.isEmpty())
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -1180,123 +1023,78 @@ class DemandDisplayFragment:Fragment() {
                             else
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                    val listData = data.requirementTeamProjectList
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",1)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
                         }
-                            adapter.mData[5].singleDisplayRightContent=if(data.requirementTeamVoltageClasses==null) {
-                                " " } else{ data.requirementTeamVoltageClasses}
-                            adapter.mData[6].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
-                                " " } else{ data.requirementConstructionWorkKind}
-                            adapter.mData[7].singleDisplayRightContent=if(data.operationClasses==null) {
-                                " " } else{ data.operationClasses}
-                            adapter.mData[8].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[9].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[10].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[10].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[10].singleDisplayRightContent="男女不限"
-                                else -> {  adapter.mData[10].singleDisplayRightContent=" "}
-                            }
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[11].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[11].singleDisplayRightContent="全包"
-                                else -> { adapter.mData[11].singleDisplayRightContent=" "}
-                            }
-                            adapter.mData[12].singleDisplayRightContent=if(data.journeyCarFare==null) {
-                            " " } else{ data.journeyCarFare}
-                            adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
-                            adapter.mData[14].singleDisplayRightContent=if(data.needPeopleNumber==null) {
-                                " " } else{ data.needPeopleNumber}
+                        adapter.mData[5].singleDisplayRightContent=if(data.requirementTeamVoltageClasses==null) {
+                            " " } else{ data.requirementTeamVoltageClasses}
+                        adapter.mData[6].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {
+                            " " } else{ data.requirementConstructionWorkKind}
+                        adapter.mData[7].singleDisplayRightContent=if(data.operationClasses==null) {
+                            " " } else{ data.operationClasses}
+                        adapter.mData[8].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[9].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
                         when {
-                            data.requirementPowerTransformationSalary == null && data.requirementListQuotations == null ->adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            },View.OnClickListener { Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show() })
-                            data.requirementPowerTransformationSalary == null &&data.requirementListQuotations !=null -> adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            }, View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
-                                    mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
-                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
-                            data.requirementListQuotations == null &&data.requirementPowerTransformationSalary !=null -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }
-                                },
-                                View.OnClickListener {
-                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                })
-                            else -> adapter.mData[15].buttonListener = listOf(//成员清册
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                   }}
-//                                    ,
-//                                View.OnClickListener {
-//                                    if(data.requirementListQuotations!!.isEmpty())
-//                                    {
-//                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-//                                    }
-//                                    else{
-//                                        val listData = data.requirementListQuotations
-//                                        mdata.putSerializable("listData1", listData as Serializable)
-//                                        mdata.putInt("type",3)
-//                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-//                                    } }
-                                    )
-                            //薪资标准
+                            data.sexDemand=="0" -> adapter.mData[10].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[10].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[10].singleDisplayRightContent="男女不限"
+                            else -> {  adapter.mData[10].singleDisplayRightContent=" "}
                         }
-//                            adapter.mData[16].singleDisplayRightContent=if(data.vehicle==null) {
-//                                " " } else{ data.vehicle}
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[11].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[11].singleDisplayRightContent="全包"
+                            else -> { adapter.mData[11].singleDisplayRightContent=" "}
+                        }
+                        adapter.mData[12].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                            " " } else{ data.journeyCarFare}
+                        adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[14].singleDisplayRightContent=if(data.needPeopleNumber==null) {
+                            " " } else{ data.needPeopleNumber}
+                        if(data.requirementMembersLists == null)
+                        {
+                            adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })//成员清册查看
+                        }
+                        else{
+                            if(data.requirementMembersLists!!.isEmpty())
+                            {
+                                adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })//成员清册查看
+                            }
+                            else
+                            {
+                                adapter.mData[15].buttonListener = listOf(View.OnClickListener {
+                                    val listData = data.requirementMembersLists
+                                    mdata.putSerializable("listData2", listData as Serializable)
+                                    mdata.putString("type","成员清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))      })//乙方材料清册
+                            }
+                        }
                         when {
                             data.machineEquipment=="0" -> adapter.mData[16].singleDisplayRightContent="不需要提供"
                             data.machineEquipment=="1" -> adapter.mData[16].singleDisplayRightContent="全部提供"
                             else->{adapter.mData[16].singleDisplayRightContent=" " }
                         }
-                            adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[22].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putSerializable("RequirementTest",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -1306,9 +1104,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1318,16 +1115,24 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayCrossFrame()
                 val result = getRequirementSpanWoodenSupprt(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                            if(data.requirementTeamProjectList == null )
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        if(data.requirementCarLists == null )
+                        {
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })
+                        }
+                        else
+                        {
+                            if(data.requirementCarLists!!.isEmpty())
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -1335,140 +1140,86 @@ class DemandDisplayFragment:Fragment() {
                             }
                             else
                             {
-                                if(data.requirementTeamProjectList!!.isEmpty())
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                        Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                        val listData = data.requirementTeamProjectList
-                                        mdata.putSerializable("listData1", listData as Serializable)
-                                        mdata.putInt("type",1)
-                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                    })
-                                }
-                            }
-                            adapter.mData[5].singleDisplayRightContent=if(data.spanShelfMaterial==null) {
-                                " " } else{ data.spanShelfMaterial}
-                            adapter.mData[6].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[7].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[8].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[8].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[8].singleDisplayRightContent="男女不限"
-                                else -> { adapter.mData[8].singleDisplayRightContent=" "}
-                            }
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[9].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[9].singleDisplayRightContent="全包"
-                                else -> {adapter.mData[9].singleDisplayRightContent=" " }
-                            }
-                            adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
-                            " " } else{ data.journeyCarFare}
-                            adapter.mData[11].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
-                            adapter.mData[12].singleDisplayRightContent=if(data.needPeopleNumber==null) {
-                                " " } else{ data.needPeopleNumber}
-                        when {
-                            data.requirementPowerTransformationSalary == null && data.requirementListQuotations == null ->adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            },View.OnClickListener { Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show() })
-                            data.requirementPowerTransformationSalary == null &&data.requirementListQuotations !=null -> adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            }, View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
-                            data.requirementListQuotations == null &&data.requirementPowerTransformationSalary !=null -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }
-                                },
-                                View.OnClickListener {
-                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                                 })
-                            else -> adapter.mData[13].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }}
-//                                ,
-//                                View.OnClickListener {
-//                                    if(data.requirementListQuotations!!.isEmpty())
-//                                    {
-//                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-//                                    }
-//                                    else{
-//                                        val listData = data.requirementListQuotations
-//                                        mdata.putSerializable("listData1", listData as Serializable)
-//                                        mdata.putInt("type",3)
-//                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-//                                    } }
-                            )
-                            //薪资标准
+                            }
                         }
-//                            adapter.mData[14].singleDisplayRightContent=if(data.vehicle==null) {
-//                                " " } else{ data.vehicle}
+                        adapter.mData[5].singleDisplayRightContent=if(data.spanShelfMaterial==null) {
+                            " " } else{ data.spanShelfMaterial}
+                        adapter.mData[6].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[7].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[8].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[8].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[8].singleDisplayRightContent="男女不限"
+                            else -> { adapter.mData[8].singleDisplayRightContent=" "}
+                        }
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[9].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[9].singleDisplayRightContent="全包"
+                            else -> {adapter.mData[9].singleDisplayRightContent=" " }
+                        }
+                        adapter.mData[10].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                            " " } else{ data.journeyCarFare}
+                        adapter.mData[11].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[12].singleDisplayRightContent=if(data.needPeopleNumber==null) {
+                            " " } else{ data.needPeopleNumber}
+                        if(data.requirementMembersLists == null)
+                        {
+                            adapter.mData[13].buttonListener = listOf(View.OnClickListener {
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })//成员清册查看
+                        }
+                        else{
+                            if(data.requirementMembersLists!!.isEmpty())
+                            {
+                                adapter.mData[13].buttonListener = listOf(View.OnClickListener {
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })//成员清册查看
+                            }
+                            else
+                            {
+                                adapter.mData[13].buttonListener = listOf(View.OnClickListener {
+                                    val listData = data.requirementMembersLists
+                                    mdata.putSerializable("listData2", listData as Serializable)
+                                    mdata.putString("type","成员清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))      })//乙方材料清册
+                            }
+                        }
                         when {
                             data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
                             data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
                             else->{ adapter.mData[14].singleDisplayRightContent=" "}
                         }
-                            adapter.mData[16].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[17].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[18].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[19].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                            adapter.mData[20].submitListener = View.OnClickListener {
-//                                mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-//                                mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
-                                mdata.putSerializable("RequirementSpanWoodenSupprt",data as Serializable)
-                                mdata.putInt("type", Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
-                                FragmentHelper.switchFragment(
-                                    activity as DemandDisplayActivity,
-                                    ApplicationSubmitFragment.newInstance(mdata),
-                                    R.id.frame_display_demand,
-                                    "register"
-                                )
+                        adapter.mData[16].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[17].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[18].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[19].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
+                            mdata.putSerializable("RequirementSpanWoodenSupprt",data as Serializable)
+                            mdata.putInt("type", Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                ApplicationSubmitFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "register"
+                            )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1478,16 +1229,24 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayOperationAndMaintenance()
                 val result = getRequirementRunningMaintain(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                            if(data.requirementTeamProjectList == null )
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        if(data.requirementCarLists == null )
+                        {
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })
+                        }
+                        else
+                        {
+                            if(data.requirementCarLists!!.isEmpty())
                             {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
                                     Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
@@ -1495,110 +1254,59 @@ class DemandDisplayFragment:Fragment() {
                             }
                             else
                             {
-                                if(data.requirementTeamProjectList!!.isEmpty())
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                        Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
-                                        val listData = data.requirementTeamProjectList
-                                        mdata.putSerializable("listData1", listData as Serializable)
-                                        mdata.putInt("type",1)
-                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                    })
-                                }
-                            }
-                            adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
-                                data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
-                                data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
-                                else -> { adapter.mData[7].singleDisplayRightContent=" "}
-                            }
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
-                                data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
-                                else -> { adapter.mData[8].singleDisplayRightContent=" "}
-                            }
-                            adapter.mData[9].singleDisplayRightContent=if(data.journeyCarFare==null) {
-                            " " } else{ data.journeyCarFare}
-                            adapter.mData[10].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
-                            adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
-                                " " } else{ data.needPeopleNumber}
-                        when {
-                            data.requirementPowerTransformationSalary == null && data.requirementListQuotations == null ->adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            },View.OnClickListener { Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show() })
-                            data.requirementPowerTransformationSalary == null &&data.requirementListQuotations !=null -> adapter.mData[15].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
-                            }, View.OnClickListener {
-                                if(data.requirementListQuotations!!.isEmpty())
-                                {
-                                    Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                }
-                                else{
-                                    val listData = data.requirementListQuotations
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
                                     mdata.putSerializable("listData1", listData as Serializable)
-                                    mdata.putInt("type",3)
+                                    mdata.putString("type","车辆清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-                                }
-                            })
-                            data.requirementListQuotations == null &&data.requirementPowerTransformationSalary !=null -> adapter.mData[15].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }
-                                },
-                                View.OnClickListener {
-                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
                                 })
-                            else -> adapter.mData[12].buttonListener = listOf(
-                                View.OnClickListener {
-                                    if(data.requirementPowerTransformationSalary!!.isEmpty())
-                                    {
-                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-                                    }
-                                    else {
-                                        val listData = data.requirementPowerTransformationSalary
-                                        mdata.putSerializable("listData2", listData as Serializable)
-                                        mdata.putInt("type", 2)
-                                        (activity as DemandDisplayActivity).switchFragment(
-                                            ProjectListFragment.newInstance(mdata)
-                                        )
-                                    }}
-//                                ,
-//                                View.OnClickListener {
-//                                    if(data.requirementListQuotations!!.isEmpty())
-//                                    {
-//                                        Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
-//                                    }
-//                                    else{
-//                                        val listData = data.requirementListQuotations
-//                                        mdata.putSerializable("listData1", listData as Serializable)
-//                                        mdata.putInt("type",3)
-//                                        (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
-//                                    } }
-                            )
-                            //薪资标准
+                            }
                         }
-                            adapter.mData[13].singleDisplayRightContent=if(data.vehicle==null) {
-                                " " } else{ data.vehicle}
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
+                            data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
+                            else -> { adapter.mData[7].singleDisplayRightContent=" "}
+                        }
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
+                            else -> { adapter.mData[8].singleDisplayRightContent=" "}
+                        }
+                        adapter.mData[9].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                            " " } else{ data.journeyCarFare}
+                        adapter.mData[10].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
+                            " " } else{ data.needPeopleNumber}
+                        if(data.requirementMembersLists == null)
+                        {
+                            adapter.mData[12].buttonListener = listOf(View.OnClickListener {
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })//成员清册查看
+                        }
+                        else{
+                            if(data.requirementMembersLists!!.isEmpty())
+                            {
+                                adapter.mData[12].buttonListener = listOf(View.OnClickListener {
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })//成员清册查看
+                            }
+                            else
+                            {
+                                adapter.mData[12].buttonListener = listOf(View.OnClickListener {
+                                    val listData = data.requirementMembersLists
+                                    mdata.putSerializable("listData2", listData as Serializable)
+                                    mdata.putString("type","成员清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))      })//乙方材料清册
+                            }
+                        }
+                        adapter.mData[13].singleDisplayRightContent=if(data.vehicle==null) {
+                            " " } else{ data.vehicle}
                         when {
                             data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
                             data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
@@ -1608,18 +1316,17 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.requirementConstructionWorkKind}
                         adapter.mData[16].singleDisplayRightContent=if(data.requirementTeamVoltageClasses==null) {
                             " " } else{ data.requirementTeamVoltageClasses}
-                            adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-
-                        adapter.mData[22].submitListener = View.OnClickListener {
-//                            mdata.putSerializable("listData2", data.requirementPowerTransformationSalary as Serializable) //清工薪资
-//                            mdata.putSerializable("listData1",data.requirementTeamProjectList as Serializable) //清单报价
+                        adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
+                            mdata.putSerializable("listData2", data.requirementMembersLists as Serializable) //成员清册查看
                             mdata.putSerializable("RequirementRunningMaintain",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -1629,9 +1336,8 @@ class DemandDisplayFragment:Fragment() {
                                 "register"
                             )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1641,23 +1347,23 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayVehicleLeasing()
                 val result = getRequirementLeaseCar(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
-                            adapter.mData[4].singleDisplayRightContent=if(data.vehicleType==null) {
-                                " " } else{ data.vehicleType}
-                            adapter.mData[5].singleDisplayRightContent=if(data.accurateLoadWeight==null) {
-                                " " } else{ data.accurateLoadWeight}
-                            adapter.mData[6].singleDisplayRightContent=if(data.vehicleStructure==null) {
-                                " " } else{ data.vehicleStructure}
-                            adapter.mData[7].singleDisplayRightContent=if(data.theCarriageLength==null) {
-                                " " } else{ data.theCarriageLength}
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
+                        adapter.mData[4].singleDisplayRightContent=if(data.vehicleType==null) {
+                            " " } else{ data.vehicleType}
+                        adapter.mData[5].singleDisplayRightContent=if(data.accurateLoadWeight==null) {
+                            " " } else{ data.accurateLoadWeight}
+                        adapter.mData[6].singleDisplayRightContent=if(data.vehicleStructure==null) {
+                            " " } else{ data.vehicleStructure}
+                        adapter.mData[7].singleDisplayRightContent=if(data.theCarriageLength==null) {
+                            " " } else{ data.theCarriageLength}
                         when {
                             data.insuranceCondition==null -> adapter.mData[8].singleDisplayRightContent= " "
                             data.insuranceCondition=="1" -> adapter.mData[8].singleDisplayRightContent="脱保"
@@ -1669,37 +1375,37 @@ class DemandDisplayFragment:Fragment() {
                             data.driverSex=="0" -> adapter.mData[9].singleDisplayRightContent="男"
                             data.driverSex=="-1" -> adapter.mData[9].singleDisplayRightContent="男女不限"
                         }
-                            adapter.mData[10].singleDisplayRightContent=if(data.workerExperience==null) {
-                                " " } else{ data.workerExperience}
-                            adapter.mData[11].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                                " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
-                            when {
-                                data.roomBoardStandard=="0" -> adapter.mData[12].singleDisplayRightContent="全包"
-                                data.roomBoardStandard=="1" -> adapter.mData[12].singleDisplayRightContent="队部自理"
-                                else -> { adapter.mData[12].singleDisplayRightContent=" " }
-                            }
-                            adapter.mData[14].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                        adapter.mData[10].singleDisplayRightContent=if(data.workerExperience==null) {
+                            " " } else{ data.workerExperience}
+                        adapter.mData[11].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
+                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        when {
+                            data.roomBoardStandard=="0" -> adapter.mData[12].singleDisplayRightContent="全包"
+                            data.roomBoardStandard=="1" -> adapter.mData[12].singleDisplayRightContent="队部自理"
+                            else -> { adapter.mData[12].singleDisplayRightContent=" " }
+                        }
+                        adapter.mData[14].singleDisplayRightContent=if(data.journeyCarFare==null) {
                             " " } else{ data.journeyCarFare}
-                            adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
-                                " " } else{ data.journeySalary}
-                            adapter.mData[15].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                                " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
-                            adapter.mData[16].singleDisplayRightContent=if(data.vehicle==null) {
-                                " " } else{ data.vehicle}
+                        adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
+                            " " } else{ data.journeySalary}
+                        adapter.mData[15].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
+                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
+                        adapter.mData[16].singleDisplayRightContent=if(data.vehicle==null) {
+                            " " } else{ data.vehicle}
 //                            when {
 //                                data.machineEquipment=="0" -> adapter.mData[17].singleDisplayRightContent="不提供"
 //                                data.machineEquipment=="1" -> adapter.mData[17].singleDisplayRightContent="提供"
 //                            }
 
-                            adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[22].submitListener = View.OnClickListener {
+                        adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
                             mdata.putSerializable("RequirementLeaseCar",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -1710,8 +1416,8 @@ class DemandDisplayFragment:Fragment() {
                             )
                         }
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1721,15 +1427,15 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayEquipmentLeasing()
                 val result = getRequirementLeaseConstructionTool(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
-                            adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                                " " } else{ data.projectName }
-                            adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
-                                " " } else{ data.projectSite}
-                            adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                                " " } else{ data.projectTime}
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
+                        adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
+                            " " } else{ data.projectName }
+                        adapter.mData[2].singleDisplayRightContent=if(data.projectSite==null) {
+                            " " } else{ data.projectSite}
+                        adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
+                            " " } else{ data.projectTime}
 
                         if(data.requirementLeaseLists==null)
                         {
@@ -1750,7 +1456,7 @@ class DemandDisplayFragment:Fragment() {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener {
                                     val listData = data.requirementLeaseLists
                                     mdata.putSerializable("listData4", listData as Serializable)
-                                    mdata.putInt("type",5)
+                                    mdata.putString("type","租赁清单查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -1770,21 +1476,24 @@ class DemandDisplayFragment:Fragment() {
                             data.partnerAttribute=="0" -> adapter.mData[7].singleDisplayRightContent="单位"
                             data.partnerAttribute=="1" -> adapter.mData[7].singleDisplayRightContent="个人"
                         }
-                            if(data.hireFareStandard==null) {
-                                adapter.mData[8].singleDisplayRightContent=" " }
-                            else if(data.hireFareStandard=="0"){ adapter.mData[8].singleDisplayRightContent="按清单报价"}
-                            else if(data.hireFareStandard=="1"){ adapter.mData[8].singleDisplayRightContent="面议"}
-                            adapter.mData[10].singleDisplayRightContent=if(data.name==null) {
+                        if(data.hireFareStandard==null) {
+                            adapter.mData[8].singleDisplayRightContent=" " }
+                        else if(data.hireFareStandard=="0"){ adapter.mData[8].singleDisplayRightContent="按清单报价"}
+                        else if(data.hireFareStandard=="1"){ adapter.mData[8].singleDisplayRightContent="面议"}
+                        adapter.mData[10].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
-                            adapter.mData[11].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[12].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                            adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
-                                " " } else{ data.additonalExplain}
-                        adapter.mData[14].submitListener = View.OnClickListener {
+                        adapter.mData[11].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[12].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
+                            " " } else{ data.additonalExplain}
+                        view.button.setOnClickListener {
                             mdata.putSerializable("RequirementLeaseConstructionTool",data as Serializable)
-//                            mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
+                            if(data.requirementLeaseLists!=null)
+                            {
+                                mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
+                            }
                             mdata.putInt("type", Constants.FragmentType.TOOL_LEASING_TYPE.ordinal)
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
@@ -1794,8 +1503,8 @@ class DemandDisplayFragment:Fragment() {
                             )
                         }
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1833,7 +1542,7 @@ class DemandDisplayFragment:Fragment() {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener {
                                     val listData = data.requirementLeaseLists
                                     mdata.putSerializable("listData4", listData as Serializable)
-                                    mdata.putInt("type",5)
+                                    mdata.putString("type","租赁清单查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -1865,19 +1574,22 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
-                        adapter.mData[14].submitListener = View.OnClickListener {
-
-                            mdata.putInt("type",14)
-                            mdata.putString("projectName",data.projectName)
-                            mdata.putString("requirementVariety",data.requirementVariety)
-                            mdata.putString("name",data.name)
-                            mdata.putString("phone",data.phone)
-                            mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
-                           // (activity as DemandDisplayActivity).switchFragment(ApplicationSubmitFragment(mdata))
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("RequirementLeaseFacility",data as Serializable)
+                            if(data.requirementLeaseLists!=null)
+                            {
+                                mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
+                            }
+                            mdata.putInt("type", Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal)
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                ApplicationSubmitFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "register"
+                            )
                         }
-
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1915,7 +1627,7 @@ class DemandDisplayFragment:Fragment() {
                                 adapter.mData[4].buttonListener = listOf(View.OnClickListener {
                                     val listData = data.requirementLeaseLists
                                     mdata.putSerializable("listData4", listData as Serializable)
-                                    mdata.putInt("type",5)
+                                    mdata.putString("type","租赁清单查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -1947,18 +1659,23 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
-                        adapter.mData[14].submitListener = View.OnClickListener {
-                            mdata.putInt("type",15)
-                            mdata.putString("projectName",data.projectName)
-                            mdata.putString("requirementVariety",data.requirementVariety)
-                            mdata.putString("name",data.name)
-                            mdata.putString("phone",data.phone)
-                            mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
-                            //(activity as DemandDisplayActivity).switchFragment(ApplicationSubmitFragment(mdata))
-                        }
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("RequirementLeaseMachinery",data as Serializable)
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                            if(data.requirementLeaseLists!=null)
+                            {
+                                mdata.putSerializable("listData4", data.requirementLeaseLists as Serializable)//租赁清单
+                            }
+                            mdata.putInt("type", Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal)
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                ApplicationSubmitFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "register"
+                            )
+                        }
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1968,9 +1685,9 @@ class DemandDisplayFragment:Fragment() {
                 adapter = adapterGenerate.demandTeamDisplayDemandTripartite()
                 val result = getRequirementThirdPartyDetail(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                      var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                                " " } else{ data.requirementVariety }
+                        var data=it.message
+                        adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
+                            " " } else{ data.requirementVariety }
                         if(data.thirdLists==null)
                         {
                             adapter.mData[1].buttonListener = listOf(View.OnClickListener { //三方服务清册
@@ -1990,7 +1707,7 @@ class DemandDisplayFragment:Fragment() {
                                 adapter.mData[1].buttonListener = listOf(View.OnClickListener { //三方服务清册
                                     val listData = data.thirdLists
                                     mdata.putSerializable("listData5", listData as Serializable)
-                                    mdata.putInt("type",6)
+                                    mdata.putString("type","三方清册查看")
                                     (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 })
                             }
@@ -2005,24 +1722,28 @@ class DemandDisplayFragment:Fragment() {
                             data.fareStandard=="1" -> adapter.mData[3].singleDisplayRightContent="面议"
                             data.fareStandard=="0" -> adapter.mData[3].singleDisplayRightContent="按清单报价"
                         }
-                            adapter.mData[5].singleDisplayRightContent=if(data.name==null) {
-                                " " } else{ data.name}
-                            adapter.mData[6].singleDisplayRightContent=if(data.phone==null) {
-                                " " } else{ data.phone}
-                            adapter.mData[7].singleDisplayRightContent=if(data.validTime==null) {
-                                " " } else{ data.validTime}
-                        adapter.mData[8].submitListener = View.OnClickListener {
-
-                            mdata.putInt("type",16)
-                            mdata.putString("requirementVariety",data.requirementVariety)
-                            mdata.putString("name",data.name)
-                            mdata.putString("phone",data.phone)
+                        adapter.mData[5].singleDisplayRightContent=if(data.name==null) {
+                            " " } else{ data.name}
+                        adapter.mData[6].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[7].singleDisplayRightContent=if(data.validTime==null) {
+                            " " } else{ data.validTime}
+                        adapter.mData[8].singleDisplayRightContent=if(data.additionalExplain==null) {
+                            " " } else{ data.additionalExplain}
+                        view.button.setOnClickListener {
+                            mdata.putSerializable("RequirementThirdPartyDetail",data as Serializable)
                             mdata.putSerializable("listData5", data.thirdLists as Serializable)//三方清册
-                           // (activity as DemandDisplayActivity).switchFragment(ApplicationSubmitFragment(mdata))
+                            mdata.putInt("type", Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal)
+                            FragmentHelper.switchFragment(
+                                activity as DemandDisplayActivity,
+                                ApplicationSubmitFragment.newInstance(mdata),
+                                R.id.frame_display_demand,
+                                "register"
+                            )
                         }
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -2057,11 +1778,11 @@ class DemandDisplayFragment:Fragment() {
                             mdata.putString("requirementVariety",data.requirementVariety)
                             mdata.putString("name",data.name)
                             mdata.putString("phone",data.phone)
-                           // (activity as DemandDisplayActivity).switchFragment(ApplicationSubmitFragment(mdata))
+                            // (activity as DemandDisplayActivity).switchFragment(ApplicationSubmitFragment(mdata))
                         }
 
-                        view.tv_fragment_demand_display_content.adapter = adapter
-                        view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_demand_display_content.adapter = adapter
+                        view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })

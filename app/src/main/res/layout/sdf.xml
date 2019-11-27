@@ -12,11 +12,11 @@
         android:layout_height="@dimen/general_37"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
+    <TextView
         android:id="@+id/return_iv"
-        android:layout_width="@dimen/general_45"
-        android:layout_height="@dimen/general_24"
-        android:src="@drawable/title_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_back_xml"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,6 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/left_45"
         android:layout_toRightOf="@id/return_iv"
         android:background="#64ffffff"
         android:gravity="center_vertical"
@@ -35,23 +34,21 @@
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/return_iv"
         app:layout_constraintTop_toTopOf="@+id/view14" />
 
     <TextView
         android:id="@+id/addInformation"
-        android:layout_width="@dimen/bottom_50"
-        android:layout_height="wrap_content"
-
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
         android:gravity="center"
-        android:text="+"
         android:textColor="@color/black"
-        android:textSize="@dimen/font_tv_bit_title_30"
+        android:background="@drawable/add_black"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view14"
-        app:layout_constraintVertical_bias="0.0" />
+        />
 
     <ImageView
         android:id="@+id/advertisement_background_iv"

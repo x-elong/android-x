@@ -1,36 +1,50 @@
 ﻿[
   {
   "type": "SELECT_DIALOG",
-  "selectTitle": "车辆类型:",
-  "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+  "selectTitle": "车辆类型",
+  "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
+    "key": "carType",
+    "sendFormat": "Int"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"牌照号码："
+    "inputSingleTitle":"牌照号码",
+    "key": "carNumber",
+    "sendFormat": "String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"核载乘客/人："
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"核载乘客",
+    "inputUnit":"(人)",
+    "key": "maxPassengers",
+    "sendFormat": "Long"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆照片",
-    "key": "xx",
-    "buttonName":["上传"]
+    "buttonName":["上传"],
+    "key": "carPhotoPath",
+    "sendFormat": "String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"核准载重量/吨："
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"核准载重量",
+    "inputUnit":"(吨)",
+    "key": "maxWeight",
+    "sendFormat": "Long"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"车厢长度/米："
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"车厢长度",
+    "inputUnit":"(米)",
+    "key": "lenghtCar",
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary":false,
+    "necessary":true,
     "key":"remark",
     "sendFormat":"String"
   }

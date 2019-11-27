@@ -9,14 +9,14 @@
     <shape>
       <solid android:color="#A1A1A1"/>
       <corners android:radius="@dimen/general_20"/>
-      <gradient android:startColor="#A1A1A1" android:endColor="#ffffff" android:type="linear"/>
+      <gradient android:startColor="#A1A1A1" android:endColor="#E4FFFFFF" android:type="linear"/>
     </shape>
   </item>
   <item android:state_pressed="false">
     <shape>
       <corners android:radius="@dimen/general_30"/>
       <stroke android:color="@color/gray" android:width="@dimen/general_1"/>
-      <gradient android:startColor="#E5E5E5E5" android:endColor="#ffffff" android:type="linear"/>
+      <gradient android:startColor="#92E5E5E5" android:endColor="#E9FFFFFF" android:type="linear"/>
     </shape>
   </item>
 </selector>

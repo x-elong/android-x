@@ -34,7 +34,7 @@ class PublishInventoryFragment:Fragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
             type = arguments!!.getString("type")
-            mView.tv_display_demand_title.setText(type)
+            mView.tv_inventory_title.setText(type)
             if(adapter==null){
                 val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
                 if(multiStyleItemList.isEmpty())
@@ -62,7 +62,7 @@ class PublishInventoryFragment:Fragment() {
 
         }
         fun initOnClick(mView: View){
-            mView.tv_display_demand_back.setOnClickListener {
+            mView.tv_inventory_back.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
             mView.tv_select_add.setOnClickListener{
@@ -138,13 +138,16 @@ class PublishInventoryFragment:Fragment() {
                 if (itemMultiStyleItem[0].selected == 0) {
                     mData[mData[0].selected].necessary = false
                 } else {
-                    mData[0].PeopleNumber+=itemMultiStyleItem[1].inputUnitContent.toInt()
+                    if(itemMultiStyleItem[1].inputUnitContent!="")
+                    {
+                        mData[0].PeopleNumber+=itemMultiStyleItem[1].inputUnitContent.toInt()
+                    }
                     mData[mData[0].selected].necessary = true
                 }
                 mData[mData.size-1].itemMultiStyleItem = itemMultiStyleItem
                 mData[mData.size-1].jumpListener = View.OnClickListener {
                     mData[0].selected = mData.size-1
-                    if(mData[0].PeopleNumber>0 && mData[mData[0].selected].necessary == true)
+                    if(mData[0].PeopleNumber>0 && mData[mData[0].selected].necessary == true&&itemMultiStyleItem[1].inputUnitContent!="")
                     {
                         mData[0].PeopleNumber-=if(mData[mData[0].selected].itemMultiStyleItem[1].inputUnitContent.isEmpty()){ 0 }
                         else{
@@ -152,7 +155,8 @@ class PublishInventoryFragment:Fragment() {
                         }
                     }
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",mData[mData.size-1].itemMultiStyleItem as Serializable)
+                    var itemMultiStyleItem = mData[mData.size-1].itemMultiStyleItem
+                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
                     FragmentHelper.switchFragment(mView.context as DemandActivity,PublishInventoryItemMoreFragment.newInstance(bundle),
                         R.id.frame_demand_publish,"")
@@ -175,7 +179,10 @@ class PublishInventoryFragment:Fragment() {
                 if (itemMultiStyleItem[0].selected == 0) {
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = false
                 } else {
-                    adapter!!.mData[0].PeopleNumber+=adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem[1].inputUnitContent.toInt()
+                    if(itemMultiStyleItem[1].inputUnitContent!="")
+                    {
+                        adapter!!.mData[0].PeopleNumber+=adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem[1].inputUnitContent.toInt()
+                    }
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = true
                 }
             }

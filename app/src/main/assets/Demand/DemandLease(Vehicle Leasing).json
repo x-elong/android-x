@@ -139,8 +139,15 @@
     "sendFormat":"Long"
   },
   {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"有不良记录者请勿联系",
     "necessary": true,
     "key":"additonalExplain",

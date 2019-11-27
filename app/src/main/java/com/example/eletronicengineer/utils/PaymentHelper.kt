@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
+import androidx.fragment.app.FragmentActivity
 import com.alipay.sdk.app.PayResultActivity
 import com.alipay.sdk.app.PayTask
 import com.example.eletronicengineer.R
@@ -20,7 +21,7 @@ import org.json.JSONObject
 
 class PaymentHelper {
     companion object {
-        lateinit var mActivity: Activity
+        lateinit var mActivity: FragmentActivity
         private val SDK_PAY_FLAG = 1
         private val SDK_AUTH_FLAG = 2
         val mHandler = Handler {
@@ -63,7 +64,7 @@ class PaymentHelper {
                         var result = ""
                         showAlert(mActivity, "Payment success:${jsonObject.getString("message")}")
                         if (code == 200) {
-
+                            mActivity.supportFragmentManager.popBackStackImmediate()
                         }
                     }, {
                         it.printStackTrace()
@@ -71,7 +72,7 @@ class PaymentHelper {
             }
 
         }
-        fun startAlipay(activity: Activity,orderInfo: String) {
+        fun startAlipay(activity: FragmentActivity, orderInfo: String) {
             this.mActivity = activity
              Thread(Runnable {
                 val alipay =PayTask(mActivity)

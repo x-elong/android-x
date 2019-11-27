@@ -46,6 +46,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.VipActivity"
+            android:label="@string/title_activity_vip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.MyVipActivity" />
         <activity android:name=".activity.MyReleaseActivity" />
         <activity android:name=".activity.HelpCenterActivity" />
@@ -60,6 +64,7 @@
         <activity android:name=".activity.MyQRCodeActivity" />
         <activity android:name=".activity.MyInformationActivity" />
         <activity android:name=".activity.ShopListActivity" />
+        <activity android:name=".activity.GetQRCodeActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

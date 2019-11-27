@@ -18,6 +18,7 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSA
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +66,6 @@ class MyRegistrationFragment :Fragment(){
         }
     })
     lateinit var mView: View
-    val baseUrl = "http://10.1.5.141:8012"
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var page = 1
     var pageCount = 1
@@ -170,7 +170,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getRegistration)
+            val result = startSendMessage(it, UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRegistration)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -211,7 +211,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getPersonRequirement)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getPersonRequirement)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -252,7 +252,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getRequirementTeam)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementTeam)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -293,7 +293,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getLease)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getLease)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -337,7 +337,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,baseUrl+Constants.HttpUrlPath.My.getRequirementThird)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementThird)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

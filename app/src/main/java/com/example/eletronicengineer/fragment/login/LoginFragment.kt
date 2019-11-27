@@ -80,6 +80,8 @@ class LoginFragment: Fragment() {
                 v.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             v.et_login_password.setSelection(v.et_login_password.length())
         }
+        if(username!="" && password!="")
+            v.tv_login_confirm.callOnClick()
 
     }
     fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>) {

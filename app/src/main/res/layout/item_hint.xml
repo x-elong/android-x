@@ -5,8 +5,8 @@
     android:background="@color/dark_gray_bg">
 
     <TextView
-            android:layout_height="40dp" android:layout_width="match_parent" android:textSize="@dimen/font_tv_hint_15"
+            android:layout_height="30dp" android:layout_width="match_parent" android:textSize="@dimen/font_tv_hint_15"
             android:minHeight="@dimen/general_180" android:id="@+id/tv_hint_content"
-            tools:layout_editor_absoluteX="7dp" tools:layout_editor_absoluteY="7dp" android:text="TextView"
+        tools:layout_editor_absoluteX="7dp" tools:layout_editor_absoluteY="7dp" android:text="TextView"
             />
 </LinearLayout>

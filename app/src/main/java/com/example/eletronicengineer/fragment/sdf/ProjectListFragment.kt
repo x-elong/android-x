@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.activity.DemandDisplayActivity
+import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.ProjectListAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.ProjectList
@@ -20,9 +22,7 @@ import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
 import kotlinx.android.synthetic.main.fragment_demand_display.view.*
-import kotlinx.android.synthetic.main.fragment_demand_display.view.tv_display_demand_back
 import kotlinx.android.synthetic.main.fragment_project_display.view.*
-import kotlinx.android.synthetic.main.fragment_project_display.view.rv_inventory_fragment_content
 import java.io.Serializable
 
 class ProjectListFragment:Fragment() {
@@ -37,14 +37,14 @@ class ProjectListFragment:Fragment() {
 
     lateinit var listData1:List<RequirementCarList>//车辆清册查看
     lateinit var listData2:List<RequirementMembersList>//成员清册查看
-    lateinit var listData3:List<requirementSecondProvideMaterialsList>
-    lateinit var listData4:List<requirementLeaseProjectList>
-    lateinit var listData5:List<thirdLists>
+    lateinit var listData4:List<requirementLeaseProjectList>//租赁清单查看
+    lateinit var listData5:List<thirdLists>//三方清册查看
 
-    lateinit var listData7:List<provideCrewLists>
-    lateinit var listData8:List<provideTransportMachines>
-    lateinit var listData9:List<constructionToolLists>
-    lateinit var listData10:List<leaseList>
+    lateinit var listData3:List<requirementSecondProvideMaterialsList>
+    lateinit var listData7:List<provideCrewLists>//供应人员清册查看
+    lateinit var listData8:List<provideTransportMachines>//供应运输清册查看
+    lateinit var listData9:List<constructionToolLists>//供应工器具清册查看
+    lateinit var listData10:List<leaseList>//租赁清册
 
     var mProjectList = mutableListOf<ProjectList>()
     lateinit var listListener:View.OnClickListener
@@ -58,7 +58,7 @@ class ProjectListFragment:Fragment() {
         mView = inflater.inflate(R.layout.fragment_project_display, container, false)
         type = arguments!!.getString("type")
         mView.tv_project_demand_title.text=type+"列表"
-        mView.tv_display_demand_back.setOnClickListener {
+        mView.tv_project_demand_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         if(adapter==null){
@@ -66,8 +66,8 @@ class ProjectListFragment:Fragment() {
             switchAdapter()
         }
         else{
-            mView.rv_inventory_fragment_content.adapter = adapter
-            mView.rv_inventory_fragment_content.layoutManager = LinearLayoutManager(context)
+            mView.rv_project_fragment_content.adapter = adapter
+            mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
         }
 
         return mView
@@ -83,6 +83,38 @@ class ProjectListFragment:Fragment() {
                 if(arguments!!.getSerializable("listData2")!= null)
                     listData2 = arguments!!.getSerializable("listData2") as List<RequirementMembersList>
             }
+            "租赁清单查看"->{
+                if(arguments!!.getSerializable("listData4")!= null)
+                    listData4 = arguments!!.getSerializable("listData4") as List<requirementLeaseProjectList>
+            }
+            "三方清册查看"->{
+                if(arguments!!.getSerializable("listData5")!= null)
+                    listData5 = arguments!!.getSerializable("listData5") as List<thirdLists>
+            }
+            //供应人员清册查看
+            "供应人员清册查看"->{
+                if(arguments!!.getSerializable("listData7")!= null)
+                    listData7 = arguments!!.getSerializable("listData7") as List<provideCrewLists>
+            }
+            //供应运输清册查看供应工器具清册查看
+            "供应运输清册查看"->{
+                if(arguments!!.getSerializable("listData8")!= null)
+                    listData8 = arguments!!.getSerializable("listData8") as List<provideTransportMachines>
+            }
+            //供应工器具清册查看
+            "供应工器具清册查看"->{
+                if(arguments!!.getSerializable("listData9")!= null)
+                    listData9 = arguments!!.getSerializable("listData9") as List<constructionToolLists>
+            }
+            //租赁清册
+           "工器具租赁清册查看",
+           "设备租赁清册查看",
+           "机械租赁清册查看"->{
+               if(arguments!!.getSerializable("listData10")!= null)
+                   listData10 = arguments!!.getSerializable("listData10") as List<leaseList>
+           }
+
+
 //            4 -> listData3 = arguments!!.getSerializable("listData3") as List<requirementSecondProvideMaterialsList>
 //            5 ,25->
 //            {
@@ -120,7 +152,7 @@ class ProjectListFragment:Fragment() {
     private fun switchAdapter():List<MultiStyleItem>{
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
-        adapterGenerate.activity=activity as DemandDisplayActivity
+        adapterGenerate.activity=activity as AppCompatActivity
         lateinit var mData:List<MultiStyleItem>
         when(type){
             "成员清册查看"->
@@ -132,8 +164,8 @@ class ProjectListFragment:Fragment() {
                     initFragment(mData)
                 }
                 adapter = RecyclerviewAdapter(multiStyleItemList)
-                mView.rv_inventory_fragment_content.adapter = adapter
-                mView.rv_inventory_fragment_content.layoutManager = LinearLayoutManager(context)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
             }
             "车辆清册查看"->
             {
@@ -144,22 +176,86 @@ class ProjectListFragment:Fragment() {
                     initFragment(mData)
                 }
                 adapter = RecyclerviewAdapter(multiStyleItemList)
-                mView.rv_inventory_fragment_content.adapter = adapter
-                mView.rv_inventory_fragment_content.layoutManager = LinearLayoutManager(context)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
 
             }
-//            "租赁清册发布"->
-//            {
-//                bundle.putString("type",type)
-//                //bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
-//                mData = adapterGenerate.PublishDetailList(bundle).mData
-//            }
-//            "三方服务清册发布"->
-//            {
-//                bundle.putString("type",type)
-//                // bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
-//                mData = adapterGenerate.PublishDetailList(bundle).mData
-//            }
+            "租赁清单查看"->
+            {
+                for(i in listData4)
+                {
+                    bundle.putSerializable("listData4", i as Serializable)
+                    mData = adapterGenerate.requirmentLease(bundle).mData
+                    initFragment(mData)
+                }
+                adapter = RecyclerviewAdapter(multiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+            }
+            "三方清册查看"->
+            {
+                for(i in listData5)
+                {
+                    bundle.putSerializable("listData5", i as Serializable)
+                    mData = adapterGenerate.requirmentThird(bundle).mData
+                    initFragment(mData)
+                }
+                adapter = RecyclerviewAdapter(multiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+
+            }
+            "供应人员清册查看"->
+            {
+                for(i in listData7)
+                {
+                    bundle.putSerializable("listData7", i as Serializable)
+                    mData = adapterGenerate.provideCrewLists(bundle).mData
+                    initFragment(mData)
+                }
+                adapter = RecyclerviewAdapter(multiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+
+            }
+            "供应运输清册查看"->{
+            for(i in listData8)
+            {
+                bundle.putSerializable("listData8", i as Serializable)
+                mData = adapterGenerate.provideTransportMachines(bundle).mData
+                initFragment(mData)
+            }
+            adapter = RecyclerviewAdapter(multiStyleItemList)
+            mView.rv_project_fragment_content.adapter = adapter
+            mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+           }
+            //供应工器具清册查看
+            "供应工器具清册查看"->{
+                for(i in listData9)
+                {
+                    bundle.putSerializable("listData9", i as Serializable)
+                    mData = adapterGenerate.provideConstructionToolLists(bundle).mData
+                    initFragment(mData)
+                }
+                adapter = RecyclerviewAdapter(multiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+            }
+            //租赁清册
+            "工器具租赁清册查看",
+            "设备租赁清册查看",
+            "机械租赁清册查看"->{
+                for(i in listData10)
+                {
+                    bundle.putSerializable("listData10", i as Serializable)
+                    mData = adapterGenerate.provideHireList(bundle).mData
+                    initFragment(mData)
+                }
+                adapter = RecyclerviewAdapter(multiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(context)
+            }
+
 
             else->{
             }
@@ -210,6 +306,124 @@ class ProjectListFragment:Fragment() {
                         R.id.frame_display_demand,"")
                 }
             }
+            "租赁清单查看"->//租赁清单查看
+            {
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_demand,"")
+                }
+            }
+            "三方清册查看"->//三方清册查看
+            {
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_demand,"")
+                }
+            }
+            "供应人员清册查看"->//供应人员清册查看
+            {
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_supply,"")
+                }
+            }
+            "供应运输清册查看"->//供应运输清册查看
+            {
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_supply,"")
+                }
+            }
+            //供应工器具清册查看
+            "供应工器具清册查看"->//供应工器具清册查看
+            {
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_supply,"")
+                }
+            }
+            //租赁清册
+            "工器具租赁清册查看",
+            "设备租赁清册查看",
+            "机械租赁清册查看"->{
+                multiStyleItemList.add(
+                    MultiStyleItem(
+                        MultiStyleItem.Options.SHIFT_INPUT,
+                        itemMultiStyleItem[0].singleDisplayRightContent,
+                        false
+                    )
+                )
+                var position=multiStyleItemList.size-1
+                multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
+                multiStyleItemList[position].jumpListener = View.OnClickListener {
+                    val bundle = Bundle()
+                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                        R.id.frame_display_supply,"")
+                }
+
+            }
 //            2->//清工薪资
 //            {
 //                for(i in listData2)
@@ -235,8 +449,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            3->//清单报价
 //            {
@@ -262,8 +476,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            4->//乙供清单
 //            {
@@ -289,8 +503,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            5->{//需求租赁清单
 //                for(i in listData4)
@@ -316,8 +530,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            6->{//需求三方
 //                for(i in listData5)
@@ -343,8 +557,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            7->{//人员清册显示
 //                for(i in listData7)
@@ -370,8 +584,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            8->{//车辆清册显示
 //                for(i in listData8)
@@ -397,8 +611,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //
 //            }
 //            9->{//机械清册显示
@@ -425,8 +639,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 //            10->{//工程量清册显示
 //                for(i in listData10)
@@ -446,8 +660,8 @@ class ProjectListFragment:Fragment() {
 //                    var projectList = ProjectList(temp,listListener)
 //                    mProjectList.add(projectList)
 //                }
-//                view.tv_fragment_demand_display_content.adapter = ProjectListAdapter(mProjectList)
-//                view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+//                view.rv_demand_display_content.adapter = ProjectListAdapter(mProjectList)
+//                view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 //            }
 
             /*  //成员清册
@@ -472,8 +686,8 @@ class ProjectListFragment:Fragment() {
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
 
-                  view.tv_fragment_demand_display_content.adapter =listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter =listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               21->{
                   view.tv_display_demand_add.visibility=View.VISIBLE
@@ -488,8 +702,8 @@ class ProjectListFragment:Fragment() {
                       mProjectList.add(projectList)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               22->{
                   view.tv_display_demand_add.visibility=View.VISIBLE
@@ -511,9 +725,9 @@ class ProjectListFragment:Fragment() {
                       mProjectList.add(projectList)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter =
+                  view.rv_demand_display_content.adapter =
                       listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager =
+                  view.rv_demand_display_content.layoutManager =
                       LinearLayoutManager(view.context)
 
               }
@@ -530,8 +744,8 @@ class ProjectListFragment:Fragment() {
                       var projectList = ProjectList((i+1).toString(),listListener)
                       listAdapter = ProjectListAdapter(mProjectList)
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               //清单报价
               24->{
@@ -562,8 +776,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               25->{//需求租赁清单
 
@@ -595,8 +809,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter = listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter = listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
               }
               26->{//需求三方清单
 
@@ -628,8 +842,8 @@ class ProjectListFragment:Fragment() {
                           listAdapter = ProjectListAdapter(mProjectList)
                       }
                   }
-                  view.tv_fragment_demand_display_content.adapter =listAdapter
-                  view.tv_fragment_demand_display_content.layoutManager = LinearLayoutManager(view.context)
+                  view.rv_demand_display_content.adapter =listAdapter
+                  view.rv_demand_display_content.layoutManager = LinearLayoutManager(view.context)
 
 
               }

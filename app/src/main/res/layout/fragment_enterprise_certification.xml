@@ -340,6 +340,7 @@
         app:layout_constraintStart_toStartOf="@+id/iv_administrator_id_card_people"
         app:layout_constraintTop_toBottomOf="@+id/iv_administrator_id_card_people" />
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_Enterprise_certification"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"

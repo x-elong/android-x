@@ -5,4 +5,13 @@
       <stroke android:width="@dimen/general_1" android:color="@color/dark_gray_bg"/>
     </shape>
   </item>
+  <item>
+    <selector>
+      <item android:state_pressed="true">
+        <shape>
+          <solid android:color="#cfcfcf"/>
+        </shape>
+      </item>
+    </selector>
+  </item>
 </layer-list>

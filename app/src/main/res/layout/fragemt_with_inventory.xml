@@ -6,59 +6,60 @@
     android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+
     <View
-        android:id="@+id/tv_display_demand_back_view"
+        android:id="@+id/view_inventory"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
+    <!--        android:background="@drawable/ic_back_xml"-->
     <TextView
-        android:id="@+id/tv_display_demand_back"
+        android:text="返回"
+        android:id="@+id/tv_inventory_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
-        android:text="返回"
         android:textSize="@dimen/font_tv_normal_16"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_display_demand_back_view"
-        app:layout_constraintTop_toTopOf="@+id/tv_display_demand_back_view" />
+        app:layout_constraintStart_toStartOf="@+id/view_inventory"
+        app:layout_constraintTop_toTopOf="@+id/view_inventory" />
 
     <TextView
-        android:id="@+id/tv_display_demand_title"
+        android:id="@+id/tv_inventory_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="xxx"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tv_display_demand_back_view"
+        app:layout_constraintBottom_toBottomOf="@id/view_inventory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_display_demand_back_view"
+        app:layout_constraintTop_toTopOf="@id/view_inventory"
         tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/tv_select_add"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
         android:background="@drawable/add_black"
         android:gravity="center"
         android:visibility="visible"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_display_demand_title"
+        app:layout_constraintTop_toTopOf="@id/view_inventory"
+        app:layout_constraintBottom_toBottomOf="@+id/view_inventory"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_inventory_fragment_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_display_demand_back_view"
-        >
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_inventory">
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

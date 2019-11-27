@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class constructionToolLists(
     var id:String,
     var teamServeId:String,
@@ -16,4 +18,4 @@ class constructionToolLists(
     var delFlag:String,
     var version:String,
     var remark:String
-)
+): Serializable
