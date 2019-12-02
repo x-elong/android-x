@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"xxx",
+    "singleDisplayRightContent":"",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
@@ -60,7 +60,7 @@
     "textAreaTitle":"附加信息",
     "textAreaContent":"有不良记录者请勿联系",
     "necessary": true,
-    "key":"additonalExplain",
+    "key":"additionalExplain",
     "sendFormat":"String"
   }
 ]

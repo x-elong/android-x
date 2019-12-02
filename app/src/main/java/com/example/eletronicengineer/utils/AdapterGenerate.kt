@@ -179,6 +179,8 @@ class AdapterGenerate {
 
     //需求团队——变电施工
     fun DemandGroupSubstationConstruction(): RecyclerviewAdapter {
+
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Substation Construction).json")
@@ -190,13 +192,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.mData[13].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 13
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,14,18)
         for(i in styleTypeNum){
@@ -308,6 +310,7 @@ class AdapterGenerate {
 
     //需求团队——测量设计
     fun DemandGroupMeasurementDesign(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Measurement Design).json")
@@ -319,13 +322,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.mData[13].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 13
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,14,18)
         for(i in styleTypeNum){
@@ -540,6 +543,7 @@ class AdapterGenerate {
 
     //需求团队——桩基服务
     fun DemandGroupPileFoundationConstruction(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Pile foundation construction).json")
@@ -551,7 +555,7 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,5,6,13,18)
         for(i in styleTypeNum){
@@ -649,6 +653,7 @@ class AdapterGenerate {
 
     //需求团队——非开挖
     fun DemandGroupNonExcavation(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val multiButtonListeners: MutableList<View.OnClickListener> = ArrayList()
@@ -661,7 +666,7 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,13,15,19)
         for(i in styleTypeNum){
@@ -756,6 +761,7 @@ class AdapterGenerate {
 
     //需求团队——试验调试
     fun DemandGroupTestDebugging(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Test debugging).json")
@@ -767,13 +773,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.mData[14].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 14
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[14].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,8,9,15,19)
         for(i in styleTypeNum){
@@ -887,6 +893,7 @@ class AdapterGenerate {
 
     //需求团队——跨越架
     fun DemandGroupCrossingFrame(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Crossing frame).json")
@@ -898,13 +905,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata),frame, "publishInventory")
         })
         adapter.mData[12].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 12
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,6,7,13,17)
         for(i in styleTypeNum){
@@ -1020,6 +1027,7 @@ class AdapterGenerate {
 
     //需求团队——运行维护
     fun DemandGroupOperationAndMaintenance(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Operation and Maintenance).json")
@@ -1031,13 +1039,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.mData[12].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 12
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,5,6,13,17)
         for(i in styleTypeNum){
@@ -1153,6 +1161,7 @@ class AdapterGenerate {
 
     //需求租赁——车辆租赁
     fun DemandLeaseVehicleLeasing(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandLease(Vehicle Leasing).json")
@@ -1164,7 +1173,7 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,12)
         for(i in styleTypeNum){
@@ -1179,6 +1188,7 @@ class AdapterGenerate {
 
     //需求租赁——工器具租赁
     fun DemandEquipmentLeasing(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandLease(Equipment Leasing).json")
@@ -1190,7 +1200,7 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","租赁清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,11)
         for(i in styleTypeNum){
@@ -1285,6 +1295,7 @@ class AdapterGenerate {
 
     //需求三方
     fun DemandTripartite(): RecyclerviewAdapter {
+        val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandTripartite.json")
@@ -1296,7 +1307,7 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","三方服务清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as DemandActivity,PublishInventoryFragment.newInstance(mdata), R.id.frame_demand_publish, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(6)
         for(i in styleTypeNum){
@@ -3684,7 +3695,20 @@ class AdapterGenerate {
         return adapter
     }
     /**
-     * 我的报名
+     * @VIP
+     */
+    fun vipPrivilegesInformation(type:Int):RecyclerviewAdapter{
+        val itemGenerate = ItemGenerate()
+        itemGenerate.context = context
+        val mData = when(type){
+            1->itemGenerate.getJsonFromAsset("Vip/vip1.json")
+            2->itemGenerate.getJsonFromAsset("Vip/vip2.json")
+            else->itemGenerate.getJsonFromAsset("Vip/vip3.json")
+        }
+        return RecyclerviewAdapter(mData)
+    }
+    /**
+     * @我的报名
      */
     fun registrationDisplayDemandIndividual():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
@@ -3954,7 +3978,7 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         return adapter
     }
-//////需求查看
+    //////需求查看
     //需求车辆清册查看
     fun requirementCarList(bundle: Bundle):RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()

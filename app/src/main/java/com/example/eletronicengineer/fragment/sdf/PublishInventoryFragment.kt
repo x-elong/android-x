@@ -1,7 +1,6 @@
 package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
-import com.example.eletronicengineer.activity.DemandDisplayActivity
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
@@ -30,8 +29,8 @@ class PublishInventoryFragment:Fragment() {
         private lateinit var type:String
         lateinit var mView: View
         var adapter: RecyclerviewAdapter?=null
-
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var frame = R.id.frame_demand_publish
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
             type = arguments!!.getString("type")
             mView.tv_inventory_title.setText(type)
@@ -54,6 +53,8 @@ class PublishInventoryFragment:Fragment() {
         }
 
         private fun initFragment() {
+            if(activity is MyReleaseActivity)
+                frame = R.id.frame_my_release
             val multiStyleItemList = ArrayList<MultiStyleItem>().toMutableList()
             multiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.BLANK," "))
             adapter = RecyclerviewAdapter(multiStyleItemList)
@@ -66,12 +67,13 @@ class PublishInventoryFragment:Fragment() {
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
             mView.tv_select_add.setOnClickListener{
+                //增加
                 adapter!!.mData[0].selected = -1
                 bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
                 bundle.putString("type",type)
                 FragmentHelper.switchFragment(
                     activity!!, PublishInventoryItemMoreFragment.newInstance(bundle),
-                    R.id.frame_demand_publish, ""
+                    frame, ""
                 )
 
             }
@@ -79,7 +81,7 @@ class PublishInventoryFragment:Fragment() {
         private fun switchAdapter():List<MultiStyleItem>{
             val adapterGenerate= AdapterGenerate()
             adapterGenerate.context= context!!
-            adapterGenerate.activity=activity as DemandActivity
+            adapterGenerate.activity= if(activity is DemandActivity) activity as DemandActivity else activity as MyReleaseActivity
             val mData:List<MultiStyleItem>
             when(type){
                 "成员清册发布"->
@@ -146,6 +148,7 @@ class PublishInventoryFragment:Fragment() {
                 }
                 mData[mData.size-1].itemMultiStyleItem = itemMultiStyleItem
                 mData[mData.size-1].jumpListener = View.OnClickListener {
+                    //修改
                     mData[0].selected = mData.size-1
                     if(mData[0].PeopleNumber>0 && mData[mData[0].selected].necessary == true&&itemMultiStyleItem[1].inputUnitContent!="")
                     {
@@ -158,8 +161,8 @@ class PublishInventoryFragment:Fragment() {
                     var itemMultiStyleItem = mData[mData.size-1].itemMultiStyleItem
                     bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as DemandActivity,PublishInventoryItemMoreFragment.newInstance(bundle),
-                        R.id.frame_demand_publish,"")
+                    FragmentHelper.switchFragment(activity!!,PublishInventoryItemMoreFragment.newInstance(bundle),
+                        frame,"")
                 }
                 adapter!!.mData = mData
                 adapter!!.notifyItemInserted(mData.size-1)
@@ -186,7 +189,10 @@ class PublishInventoryFragment:Fragment() {
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = true
                 }
             }
-            val fragment = activity!!.supportFragmentManager.findFragmentByTag("register") as DemandFragment
-            fragment.update(adapter!!.mData)
+            val fragment = activity!!.supportFragmentManager.findFragmentByTag("register")
+            if(fragment is DemandFragment)
+                fragment.update(adapter!!.mData)
+            else if(fragment is ModifyJobInformationFragment)
+                fragment.update(adapter!!.mData)
         }
 }

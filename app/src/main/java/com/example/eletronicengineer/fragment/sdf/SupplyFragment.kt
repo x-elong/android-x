@@ -31,6 +31,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONArray
+
 import org.json.JSONObject
 import java.io.File
 
@@ -466,7 +467,7 @@ class SupplyFragment:Fragment(){
                 val bundle=Bundle()
                 bundle.putInt("type",Type)
                 adapter=adapterGenerate.EquipmentLeasing(bundle)
-             //   adapter.mData[0].singleDisplayRightContent = "工器具租赁"
+                //   adapter.mData[0].singleDisplayRightContent = "工器具租赁"
                 var singleDisplayRightContent = "工器具租赁"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath=Constants.HttpUrlPath.Provider.LcTool

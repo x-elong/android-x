@@ -18,6 +18,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.db.My.HomeChildrensEntity
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -26,6 +27,7 @@ import com.example.eletronicengineer.utils.getUser
 import com.example.eletronicengineer.utils.putSimpleMessage
 import com.example.eletronicengineer.utils.startSendMessage
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -40,7 +42,7 @@ import java.text.SimpleDateFormat
 
 class FamilyInformationFragment :Fragment(){
     lateinit var mView: View
-    lateinit var homeChildrens:JSONArray
+    lateinit var jsonArray:JSONArray
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var adapter = RecyclerviewAdapter(ArrayList())
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,12 +60,12 @@ class FamilyInformationFragment :Fragment(){
         }
         item = MultiStyleItem(MultiStyleItem.Options.FOUR_DISPLAY,"子女姓名","性别","出生日期","详情")
         mMultiStyleItemList.add(item)
-        val result = NetworkAdapter().getDataUser().subscribe({
+        val result = NetworkAdapter().getDataHomeChildren().subscribe({
                 val data = adapter.mData.toMutableList()
-                homeChildrens= JSONObject(Gson().toJson(it.message)).getJSONArray("homeChildrens")
-                val homeChildrens = it.message.homeChildrens
-                if(homeChildrens!=null)
+                val homeChildrens = it.message
+                jsonArray= JSONArray()
                 for (j in homeChildrens){
+                    jsonArray.put(GsonBuilder().create().toJson(j,HomeChildrensEntity::class.java))
                     val sex =if(j.childrenSex.toInt()==1)
                         "男"
                     else "女"
@@ -256,8 +258,7 @@ class FamilyInformationFragment :Fragment(){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_recyclerview,null)
         for (j in 2 until adapter.mData.size){
             val item = adapter.mData[j]
-            val json = homeChildrens.getJSONObject(adapter.mData.indexOf(item)-2)
-
+            val json = jsonArray.getJSONObject(adapter.mData.indexOf(item)-2)
             adapter.mData[adapter.mData.indexOf(item)].fourDisplayListener = View.OnClickListener {
                 val values: Array<String> = arrayOf("修改", "删除")
                 val alertBuilder = AlertDialog.Builder(context!!)

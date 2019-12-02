@@ -76,6 +76,7 @@ class DemandInformationFragment: Fragment(){
             listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
             listOf("")) as MutableList<MutableList<String>>
         view.tv_demand_type_select.setOnClickListener {
+
             initDemandPerson(view,Option1Items,Option2Items,1)
         }
         initProjectSite()

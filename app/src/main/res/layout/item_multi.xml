@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal" android:background="@drawable/item_background"
-              android:padding="@dimen/general_5" android:layout_width="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/general_5">
+
     <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_multi_title"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/font_tv_hint_15"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:gravity="center" android:layout_gravity="center" android:layout_marginLeft="@dimen/left_5"/>
+        android:id="@+id/tv_multi_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/left_5"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:scrollbars="none" android:layout_marginTop="@dimen/top_1">
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="35dp"
-                      android:orientation="horizontal" android:id="@+id/cl_multi_container">
-        </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/cl_multi_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
     </HorizontalScrollView>
 </LinearLayout>

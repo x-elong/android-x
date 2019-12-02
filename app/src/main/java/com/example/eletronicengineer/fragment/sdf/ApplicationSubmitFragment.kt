@@ -18,6 +18,7 @@ import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -62,6 +63,8 @@ class ApplicationSubmitFragment:Fragment() {
         mView.button_ok.setOnClickListener {
             val networkAdapter= NetworkAdapter(adapter!!.mData,mView.context)
             if(networkAdapter.check()){
+                val loadingDialog = LoadingDialog(mView.context, "正在报名中...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
                 for(i in adapter!!.mData ) {
                     when (i.options){
                         MultiStyleItem.Options.INPUT_WITH_TEXTAREA->{
@@ -129,8 +132,6 @@ class ApplicationSubmitFragment:Fragment() {
                         ).put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
                     }
                 }
-
-
                 networkAdapter.generateJsonRequestBody(json).subscribe {
                     val loadingDialog = LoadingDialog(mView.context, "正在报名...", R.mipmap.ic_dialog_loading)
                     loadingDialog.show()

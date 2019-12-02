@@ -11,9 +11,11 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.db.My.BankCardsEntity
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getUser
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_bank_card_information.view.*
@@ -42,16 +44,14 @@ class BankCardInformationFragment :Fragment(){
         item.tvSelectListener = View.OnClickListener {
             FragmentHelper.switchFragment(activity!!,AddBankCardFragment(),R.id.frame_my_information,"AddBankCard")
         }
-        val result = NetworkAdapter().getDataUser().subscribe({
+        val result = NetworkAdapter().getDataBankCard().subscribe({
                 val data = adapter.mData.toMutableList()
-                val bankCards = it.message.bankCards
-                val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("bankCards")
-                if(bankCards!=null)
+                val bankCards = it.message
                     for (j in bankCards){
                         val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"银行卡",j.bankType,j.bankCardNumber)
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
-                            bundle.putString("bankCard",jsonArray.getJSONObject(bankCards.indexOf(j)).toString())
+                            bundle.putString("bankCard", GsonBuilder().create().toJson(j,BankCardsEntity::class.java))
                             FragmentHelper.switchFragment(activity!!,BankCardMoreFragment.newInstance(bundle),R.id.frame_my_information,"")
                         }
                         data.add(item)

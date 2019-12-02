@@ -46,17 +46,23 @@ class PersonalCertificationShowFragment :Fragment(){
                     val code = jsonObject.getInt("code")
                     var result = ""
                     if(code==200){
-                        val js = jsonObject.getJSONObject("message")
-                        result = "获取数据成功"
-                        mView.tv_id_card_name_data.text = js.getString("vipName")
-                        mView.tv_id_card_number_data.text = js.getString("identifyCard")
-                        GlideLoader().loadImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
-                        GlideLoader().loadImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
+                        if(jsonObject.getString("desc")=="FAIL"){
+                            result = jsonObject.getString("message")
+                            mView.btn_personal_re_certification.visibility = View.GONE
+                        }
+                        else{
+                            val js = jsonObject.getJSONObject("message")
+                            result = "获取数据成功"
+                            mView.tv_id_card_name_data.text = js.getString("vipName")
+                            mView.tv_id_card_number_data.text = js.getString("identifyCard")
+                            GlideLoader().loadImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
+                            GlideLoader().loadImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
+                        }
                     }
-                    else
-                        result = "获取数据失败"
-                    ToastHelper.mToast(context!!,result)
+
+                    ToastHelper.mToast(mView.context,result)
                 },{
+                    ToastHelper.mToast(mView.context,"获取信息异常")
                     it.printStackTrace()
                 })
         }

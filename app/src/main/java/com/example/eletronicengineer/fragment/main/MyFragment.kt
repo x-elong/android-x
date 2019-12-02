@@ -3,6 +3,7 @@ package com.example.eletronicengineer.fragment.main
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.example.eletronicengineer.utils.GlideLoader
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_recommended_application.view.*
@@ -25,31 +27,71 @@ class MyFragment : Fragment() {
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     lateinit var user:UserSubitemEntity
     private var headerImg = ""
+    var vipType = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.my, container, false)
-        initData()
+        initFragment()
         initOnClick()
         return mView
     }
-
     override fun onStart() {
         super.onStart()
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         headerImg = pref.getString("headerImg","")
-        if(headerImg==""){
-            val result = NetworkAdapter().getDataUser().subscribe( {
-                user = it.message.user
-                GlideLoader().loadImage(mView.iv_my_header,it.message.user.headerImg)
+        initData()
+        val result = NetworkAdapter().getDataUser().subscribe( {
+            user = it.message.user
+            Log.i("","$user.recommendResidueQuantity")
+            if(headerImg!=it.message.user.headerImg!!){
+                headerImg = it.message.user.headerImg!!
                 pref.edit().putString("headerImg",it.message.user.headerImg).apply()
-            },{
-                it.printStackTrace()
-            })
+                initData()
+            }
+        },{
+            ToastHelper.mToast(mView.context,"获取个人信息异常")
+            it.printStackTrace()
+        })
+        vipType = pref.getString("vipType","")
+        initVipType(vipType)
+        NetworkAdapter().getDataUserOpenPower().subscribe( {
+            val openPowerEntity = it.message
+            val vipType = openPowerEntity.goodsPowerName
+            if(vipType!=this.vipType){
+                this.vipType = vipType
+                pref.edit().putString("vipType",this.vipType).apply()
+                initVipType(vipType)
+                }
+        },{
+            ToastHelper.mToast(mView.context,"获取会员等级信息异常")
+            it.printStackTrace()
+        })
+    }
+    fun initVipType(vipType :String){
+        when(vipType){
+            "elite_vip"->{
+                this.vipType = "精英会员"
+                UnSerializeDataBase.userVipLevel = 1
+            }
+            "gold_vip"->{
+                this.vipType = "黄金会员"
+                UnSerializeDataBase.userVipLevel = 2
+            }
+            "vip"->{
+                this.vipType = "普通会员"
+                UnSerializeDataBase.userVipLevel = 0
+            }
+            "tourist"->{
+                this.vipType = "游客"
+                UnSerializeDataBase.userVipLevel = -1
+            }
         }
-        else{
-            GlideLoader().loadImage(mView.iv_my_header,headerImg)
-        }
+        mView.tv_my_vip_level.text = this.vipType
+    }
+    private fun initData() {
+        GlideLoader().loadImage(mView.iv_my_header,headerImg)
         mView.tv_my_phone.text = UnSerializeDataBase.userPhone
     }
+
     private fun initOnClick() {
         mView.view_my.setOnClickListener {
             val intent =Intent(activity,MyInformationActivity::class.java)
@@ -80,7 +122,7 @@ class MyFragment : Fragment() {
         }
     }
 
-    private fun initData() {
+    private fun initFragment() {
 //        getDataUser()
         mMultiStyleItemList.clear()
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"我的发布",false))

@@ -21,9 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
-        android:text="返回"
+        android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_16"
-        android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="@+id/view_project_display"
         app:layout_constraintTop_toTopOf="@+id/view_project_display" />
 

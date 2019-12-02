@@ -18,8 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="返回"
-            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_back_xml"
             android:textSize="@dimen/font_tv_normal_16"
             />
 
@@ -77,7 +76,7 @@
     <Button
         android:id="@+id/submit"
         android:layout_width="@dimen/general_268"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/general_43"
         android:background="@drawable/btn_style3"
         android:text="发布"
         android:textSize="@dimen/general_16"
@@ -91,6 +90,8 @@
         android:id="@+id/st_main_table" android:visibility="gone"
         tools:ignore="MissingConstraints">
     </com.bin.david.form.core.SmartTable>
-    <ImageView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:id="@+id/iv_main_water" tools:ignore="MissingConstraints"/>
+    <ImageView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_main_water"
+        tools:ignore="MissingConstraints"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

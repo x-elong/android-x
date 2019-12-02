@@ -148,6 +148,7 @@ class NewsFragment : Fragment() {
         val menuList=LayoutInflater.from(context).inflate(R.layout.popupwindow_chat,null,false)
         menu.contentView=menuList
         menu.setBackgroundDrawable(menuBackground!!)
+        menu.isOutsideTouchable = true
         val newGroup=ContextCompat.getDrawable(context!!,R.drawable.start_chat_group_xml)
         val addFriend=ContextCompat.getDrawable(context!!,R.drawable.add_friend_xml)
         val newFriend=ContextCompat.getDrawable(context!!,R.drawable.notification)

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -152,10 +153,9 @@ class PersonalMaterialsFragment :Fragment(){
         mView.rv_other_certificate_content.adapter = otherCertificateAdapter
         mView.rv_other_certificate_content.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
         adapterList = arrayListOf(ImageAdapter(ArrayList()),educationAdapter,diplomaAdapter,employeePhotoAdapter,professionalCertificateAdapter,otherCertificateAdapter)
-        val result = getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        val result = NetworkAdapter().getDataCertificate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe( {
-                val certificates = it.message.certificates
-                if(certificates!=null)
+                val certificates = it.message
                     for (j in certificates){
                         when(j.name){
                             "身份证照片(双面)"->{

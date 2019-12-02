@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
-       android:text="返回"
+        android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -40,8 +40,8 @@
 
     <TextView
         android:id="@+id/tv_my_certification_add"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:background="@drawable/add_black"

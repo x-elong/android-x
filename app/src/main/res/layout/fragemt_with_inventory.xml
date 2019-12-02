@@ -17,7 +17,7 @@
         tools:ignore="MissingConstraints" />
     <!--        android:background="@drawable/ic_back_xml"-->
     <TextView
-        android:text="返回"
+        android:background="@drawable/ic_back_xml"
         android:id="@+id/tv_inventory_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,8 +43,8 @@
 
     <TextView
         android:id="@+id/tv_select_add"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/general_30"
+        android:layout_height="@dimen/general_30"
         android:layout_gravity="center"
         android:background="@drawable/add_black"
         android:gravity="center"

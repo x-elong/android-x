@@ -15,7 +15,7 @@
         tools:ignore="MissingConstraints" />
     <!--        android:background="@drawable/ic_back_xml"-->
     <TextView
-        android:text="返回"
+        android:background="@drawable/ic_back_xml"
         android:id="@+id/tv_registration_more_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

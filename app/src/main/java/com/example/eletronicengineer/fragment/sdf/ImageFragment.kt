@@ -67,7 +67,7 @@ class ImageFragment:Fragment(){
             mView.bt_image.visibility = View.GONE
         mView.tv_image_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
-            if((activity is  SupplyActivity) || activity is DemandDisplayActivity )
+            if((activity is  SupplyActivity) || activity is DemandDisplayActivity)
                 Log.i("","")
             else
                 UnSerializeDataBase.imgList.clear()
@@ -82,7 +82,7 @@ class ImageFragment:Fragment(){
             }
         }
         mView.tv_image_title.setText(title)
-        initAdapter(mView)
+        initAdapter()
         for (i in UnSerializeDataBase.imgList){
             if(i.key==key){
                 mImagesPath=i.path
@@ -96,12 +96,12 @@ class ImageFragment:Fragment(){
         return mView
     }
 
-    private fun initAdapter(view: View) {
+    private fun initAdapter() {
         val imageList:MutableList<Image> = ArrayList()
         lastImage.isX = false
         imageList.add(lastImage)
         mAdapter = ImageAdapter(imageList)
-        val recyclerView = view.rv_image
+        val recyclerView = mView.rv_image
         recyclerView.adapter = mAdapter
         recyclerView.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
     }

@@ -24,6 +24,7 @@ class PaymentHelper {
         lateinit var mActivity: FragmentActivity
         private val SDK_PAY_FLAG = 1
         private val SDK_AUTH_FLAG = 2
+        var vipLevel = 0
         val mHandler = Handler {
             when (it.what) {
                 SDK_PAY_FLAG -> {
@@ -55,7 +56,7 @@ class PaymentHelper {
             }.subscribe {
                 val result = startSendMessage(
                     it,
-                    "http://192.168.1.132:8032" + Constants.HttpUrlPath.My.checkAlipay
+                    UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.checkAlipay
                 )
                     .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                     .subscribe({
@@ -64,6 +65,7 @@ class PaymentHelper {
                         var result = ""
                         showAlert(mActivity, "Payment success:${jsonObject.getString("message")}")
                         if (code == 200) {
+                            UnSerializeDataBase.userVipLevel = this.vipLevel
                             mActivity.supportFragmentManager.popBackStackImmediate()
                         }
                     }, {
@@ -72,8 +74,9 @@ class PaymentHelper {
             }
 
         }
-        fun startAlipay(activity: FragmentActivity, orderInfo: String) {
+        fun startAlipay(activity: FragmentActivity, orderInfo: String,vipLevel:Int) {
             this.mActivity = activity
+            this.vipLevel = vipLevel
              Thread(Runnable {
                 val alipay =PayTask(mActivity)
                 val result =alipay.payV2(orderInfo,true)

@@ -35,6 +35,7 @@ class LoginFragment: Fragment() {
     private lateinit var pref: SharedPreferences
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val a = arrayListOf("xxx","xxx")
         initFragment(view)
         return view
     }
@@ -115,6 +116,7 @@ class LoginFragment: Fragment() {
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
+
                         }else{
                             Toast.makeText(context,"登录失败, 请输入正确的用户名和密码",Toast.LENGTH_SHORT).show()
                         }

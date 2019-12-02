@@ -7,7 +7,8 @@
     android:padding="@dimen/general_10">
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_shift_input_title"
+            android:layout_height="wrap_content"
+        android:id="@+id/tv_shift_input_title"
             android:layout_weight="1"
             android:textSize="@dimen/font_tv_hint_15"
             android:hint="xxxx"
@@ -28,13 +29,14 @@
         android:visibility="gone"
         android:id="@+id/iv_shift_input_picture"
         android:layout_width="@dimen/general_20"
+        android:layout_marginTop="@dimen/top_1"
         android:layout_height="@dimen/general_20"
         android:src="@drawable/header_mall"
         app:civ_border_color="@color/colorPrimary"
         android:layout_marginRight="@dimen/right_4"
         />
     <TextView
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="@dimen/top_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_shift_input_show"

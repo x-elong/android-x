@@ -25,6 +25,8 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
+import com.example.eletronicengineer.utils.*
+import com.example.eletronicengineer.utils.startSendMessage
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.downloadFile
@@ -96,7 +98,7 @@ class DemandFragment:Fragment() {
         mView.tv_title_title1.setText(selectContent2)
         //返回
         mView.tv_title_back.setOnClickListener{
-            UnSerializeDataBase.imgList.clear()
+                UnSerializeDataBase.imgList.clear()
                 activity!!.finish()
         }
         //发布
@@ -110,30 +112,30 @@ class DemandFragment:Fragment() {
                 {
                     val json= JSONObject()
                     json.put("requirementType", selectContent2)
-                    networkAdapter.generateJsonRequestBody(json).subscribe {
-                        val loadingDialog = LoadingDialog(mView.context, "正在发布...", R.mipmap.ic_dialog_loading)
-                        loadingDialog.show()
-                        val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    {
-                                        loadingDialog.dismiss()
-                                        val json = JSONObject(it.string())
-                                        if (json.getInt("code") == 200) {
-                                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
-                                            mView.tv_title_back.callOnClick()
-                                        } else if (json.getInt("code") == 400) {
-                                            Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
+                    val loadingDialog = LoadingDialog(mView.context, "正在发布中...", R.mipmap.ic_dialog_loading)
+                    loadingDialog.show()
+                    networkAdapter.generateJsonRequestBody(json)
+                        .subscribe {
+                            val result =
+                                startSendMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                    .subscribe(
+                                        {
+                                            loadingDialog.dismiss()
+                                            val json = JSONObject(it.string())
+                                            if (json.getInt("code") == 200) {
+                                                ToastHelper.mToast(mView.context, "发布成功")
+                                                mView.tv_title_back.callOnClick()
+                                            } else if (json.getInt("code") == 400) {
+                                                ToastHelper.mToast(mView.context, "发布失败")
+                                            }
+                                        },
+                                        {
+                                            loadingDialog.dismiss()
+                                            ToastHelper.mToast(mView.context, "发布信息异常")
+                                            it.printStackTrace()
                                         }
-                                    },
-                                    {
-                                        loadingDialog.dismiss()
-                                        val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                                        toast.setGravity(Gravity.CENTER, 0, 0)
-                                        toast.show()
-                                        it.printStackTrace()
-                                    }
-                                )
-                    }
+                                    )
+                        }
                 }
             }
         }
@@ -309,7 +311,8 @@ class DemandFragment:Fragment() {
             Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandTripartite()
                 adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[1].singleDisplayRightTitle
+                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
+                adapter.mData[0].inputSingleContent = adapter.mData[0].singleDisplayRightContent
             }
         }
         return adapter
@@ -458,9 +461,6 @@ fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
         {
             mAdapter!!.mData[mAdapter!!.mData[0].selected].necessary = true
         }
-
-
-
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
         mAdapter!!.mData[mAdapter!!.mData[0].selected+1].singleDisplayRightContent=itemMultiStyleItem[0].PeopleNumber.toString()
