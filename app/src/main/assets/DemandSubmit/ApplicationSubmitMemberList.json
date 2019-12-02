@@ -26,6 +26,13 @@
     "sendFormat": "String"
   },
   {
+    "type":"INPUT_WITH_MULTI_UNIT",
+    "inputMultiUnitTitle":"薪资标准",
+    "inputMultiUnit":["元/天","元/月","元/年"],
+    "key":"money salaryUnit",
+    "sendFormat":"Double String"
+  },
+  {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"工作经验",
     "key":"workExperience",

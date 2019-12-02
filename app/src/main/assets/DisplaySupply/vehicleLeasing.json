@@ -2,52 +2,52 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"租赁类别：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆号码：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"车牌号码：",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆类型：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"核载乘客(岁)：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"核载乘客(人)：",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"核准载重量(吨)：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆结构：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"车蓬结构：",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车厢长度(米):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"是否配驾驶员：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"保险状态：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"薪资要求：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type": "BLANK"
@@ -55,22 +55,22 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车主姓名：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系电话：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"所在地址：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆全景照：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -80,6 +80,11 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"附加信息:",
+    "singleDisplayRightContent":""
   }
 ]

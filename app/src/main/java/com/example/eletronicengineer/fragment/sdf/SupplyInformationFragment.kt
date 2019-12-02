@@ -558,7 +558,7 @@ class SupplyInformationFragment : Fragment() {
     }
       .subscribe {
         val result =
-          getSupplyPerson(it, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+          getSupplyPerson(it, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
               val pageCount = it.message.pageCount
               val data = it.message.data
@@ -571,8 +571,8 @@ class SupplyInformationFragment : Fragment() {
                               " "
                           } else{ j.contact }
                           when {
-                              j.sex=="1" -> temp2 ="女"
-                              j.sex=="0" -> temp2="男"
+                              j.sex=="1" -> temp2 ="男"
+                              j.sex=="0" -> temp2="女"
                               j.sex==null -> temp2=" "
                           }
                           temp3 = if(j.id== null) { " " }
@@ -604,7 +604,7 @@ class SupplyInformationFragment : Fragment() {
     }
       .subscribe {
         val result =
-          getSupplyTeam(it, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+          getSupplyTeam(it, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
               val pageCount = it.message.pageCount
               val data = it.message.data
@@ -613,7 +613,7 @@ class SupplyInformationFragment : Fragment() {
                           var temp2=""
                           var temp3=""
                           temp1 = if(j.name==null) { " " } else{ j.name }
-                          temp2 = if(j.implementationRange== null) { " " } else { j.implementationRange }
+                          temp2 = if(j.issuerBelongSite== null) { " " } else { j.issuerBelongSite }
                           temp3 =if(j.id == null) { " " } else{ j.id }
                           mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应团队服务"))
                       }
@@ -638,7 +638,7 @@ class SupplyInformationFragment : Fragment() {
     }
       .subscribe {
         val result =
-          getSupplyLease(it, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(
+          getSupplyLease(it, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(
             Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
               val pageCount = it.message.pageCount
@@ -686,7 +686,7 @@ class SupplyInformationFragment : Fragment() {
     }
       .subscribe {
         val result =
-          getSupplyThirdParty(it, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(
+          getSupplyThirdParty(it, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(
             Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
               val pageCount = it.message.pageCount

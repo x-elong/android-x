@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bin.david.form.data.Column
@@ -20,11 +22,13 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.downloadFile
+import com.example.eletronicengineer.utils.startSendMessage
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,8 +54,7 @@ class DemandFragment:Fragment() {
         }
     }
     var type:Int=0
-    var  selectContent2:String=" "
-    var submitType:String="发布"
+    var  selectContent2:String=""
     lateinit var id:String
     val mdata = Bundle()
     lateinit var mData: List<MultiStyleItem>
@@ -92,7 +95,8 @@ class DemandFragment:Fragment() {
           selectContent2=arguments!!.getString("selectContent2")
         mView.tv_title_title1.setText(selectContent2)
         //返回
-        mView.tv_title_back.setOnClickListener(){
+        mView.tv_title_back.setOnClickListener{
+            UnSerializeDataBase.imgList.clear()
                 activity!!.finish()
         }
         //发布
@@ -104,9 +108,32 @@ class DemandFragment:Fragment() {
                     networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
                 else
                 {
-                    var json= JSONObject()
+                    val json= JSONObject()
                     json.put("requirementType", selectContent2)
-                    networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath,json,submitType)
+                    networkAdapter.generateJsonRequestBody(json).subscribe {
+                        val loadingDialog = LoadingDialog(mView.context, "正在发布...", R.mipmap.ic_dialog_loading)
+                        loadingDialog.show()
+                        val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                    {
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
+                                            mView.tv_title_back.callOnClick()
+                                        } else if (json.getInt("code") == 400) {
+                                            Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    {
+                                        loadingDialog.dismiss()
+                                        val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
+                                        toast.setGravity(Gravity.CENTER, 0, 0)
+                                        toast.show()
+                                        it.printStackTrace()
+                                    }
+                                )
+                    }
                 }
             }
         }

@@ -13,6 +13,20 @@
     "sendFormat": "String"
   },
   {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["男","女"],
+    "radioButtonTitle":"驾驶员性别",
+    "key":"driverSex",
+    "sendFormat":"Long"
+  },
+  {
+    "type":"INPUT_RANGE",
+    "inputRangeTitle":"驾驶员年龄",
+    "inputRangeUnit":"(岁)",
+    "key":"minAgeDemand maxAgeDemand",
+    "sendFormat":"Long[]"
+  },
+  {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"核载乘客",
     "inputUnit":"(人)",

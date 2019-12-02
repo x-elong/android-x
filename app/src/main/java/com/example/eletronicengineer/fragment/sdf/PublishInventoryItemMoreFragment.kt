@@ -35,10 +35,10 @@ class PublishInventoryItemMoreFragment:Fragment(){
         private fun initFragment() {
             var mData=(arguments!!.getSerializable("inventoryItem") as MutableList<MultiStyleItem>)
             mView.tv_inventory_item_more_back.setOnClickListener {
-//                mData[0].selected =0//点击了返回按钮，*去掉
-//                val fragment =
-//                    activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as PublishInventoryFragment
-//                fragment.update(mData)
+                mData[0].selected =0//点击了返回按钮，*去掉
+                val fragment =
+                    activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as PublishInventoryFragment
+                fragment.update(mData)
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
             mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")

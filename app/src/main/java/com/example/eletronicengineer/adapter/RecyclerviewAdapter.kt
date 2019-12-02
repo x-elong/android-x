@@ -1039,7 +1039,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
                         vh.etSingleInputContent.hint="16-60岁"
                     }
-                    "数量"->{
+                    "数量","工作经验"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
                     }
                     "单价","报价清单(按单价)"->{
@@ -1058,7 +1058,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
                 when(mData[position].inputUnitTitle){
-                    "有效期"->{
+                    "有效期","发布有效期"->{
                         vh.etInputUnitValue.hint="1-90"
                     }
                     "工作经验"->{
@@ -1482,25 +1482,25 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.btnSubmit.setOnClickListener{
                         val networkAdapter=NetworkAdapter(mData,vh.btnSubmit.context)
                         val provider=NetworkAdapter.Provider(mData,vh.btnSubmit.context)
-                        if(networkAdapter.check()){
-                            if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
-                            {
-                                if(mData[position].key=="Provider")
-                                    provider.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
-                                else
-                                    networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
-                                //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
-                            }
-                            else
-                            {
-                                //startSendMessage(map,baseUrl+urlPath)
-                                if(mData[position].key=="Provider")
-                                    provider.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
-                                else
-
-                                    networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath,JSONObject()," ")
-                            }
-                        }
+//                        if(networkAdapter.check()){
+//                            if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0)&&mData[position].key!="Provider")
+//                            {
+//                                if(mData[position].key=="Provider")
+//                                    provider.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
+//                                else
+//                                    networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+urlPath)
+//                                //startSendMultiPartMessage(multiPartMap,baseUrl+urlPath)
+//                            }
+//                            else
+//                            {
+//                                //startSendMessage(map,baseUrl+urlPath)
+//                                if(mData[position].key=="Provider")
+//                                    provider.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath,JSONObject(),"")
+//                                else
+//
+//                                    networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+urlPath,JSONObject()," ")
+//                            }
+//                        }
 
                         //downloadFile(filesDir,"工程量清册.xlsx","工程量清册模板","http://10.1.5.90:8012")
                     }

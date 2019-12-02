@@ -180,7 +180,6 @@ class DemandInformationFragment: Fragment(){
         view.tv_demand_content.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
                     value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
@@ -605,7 +604,7 @@ class DemandInformationFragment: Fragment(){
         }
             .subscribe {
                 val result =
-                    getRequirementPerson(it,ApiConfig.Token,ApiConfig.BasePath).
+                    getRequirementPerson(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
@@ -648,7 +647,7 @@ class DemandInformationFragment: Fragment(){
         }
             .subscribe {
                 val result =
-                    getRequirementTeam(it,ApiConfig.Token,ApiConfig.BasePath).
+                    getRequirementTeam(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
@@ -690,7 +689,7 @@ class DemandInformationFragment: Fragment(){
         }
             .subscribe {
                 val result =
-                    getRequirementLease(it,ApiConfig.Token,ApiConfig.BasePath).
+                    getRequirementLease(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
@@ -701,9 +700,9 @@ class DemandInformationFragment: Fragment(){
                                     var temp1: String
                                     var temp2: String
                                     var temp3:String
-                                    temp1 = if(j.vehicleType==null )
+                                    temp1 = if(j.requirementVariety==null )
                                         " "
-                                    else j.vehicleType
+                                    else j.requirementVariety
                                     temp2 = if(j.projectSite == null)
                                         " "
                                     else j.projectSite
@@ -753,7 +752,7 @@ class DemandInformationFragment: Fragment(){
         }
             .subscribe {
                 val result =
-                    getRequirementThirdParty(it,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                    getRequirementThirdParty(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
                             val data = it.message.data
@@ -861,7 +860,7 @@ class DemandInformationFragment: Fragment(){
                     for(temp in str) {
                         flagforsite += 1
                         site += if (flagforsite<3) {
-                            "$temp / "
+                            "$temp "
                         } else {
                             temp
                         }

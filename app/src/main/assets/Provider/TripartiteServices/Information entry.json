@@ -53,14 +53,14 @@
     {
         "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle": "联系人姓名",
-        "singleDisplayRightContent": "xxx",
+        "singleDisplayRightContent": "",
         "key": "contact",
         "sendFormat": "String"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle": "联系人电话",
-        "singleDisplayRightContent": "xxx",
+        "singleDisplayRightContent": "",
         "key": "contactPhone",
         "sendFormat": "String"
     },

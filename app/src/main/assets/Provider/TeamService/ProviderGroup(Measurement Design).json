@@ -31,7 +31,9 @@
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可设计范围",
-    "checkboxNameList":["变电","线路","通信"]
+    "checkboxNameList":["变电","线路","通信"],
+    "key": "implementationRanges",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
@@ -43,12 +45,12 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_UNIT",

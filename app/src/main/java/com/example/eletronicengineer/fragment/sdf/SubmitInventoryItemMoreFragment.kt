@@ -36,10 +36,10 @@ class SubmitInventoryItemMoreFragment : Fragment(){
     private fun initFragment() {
         var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
        mView.tv_inventory_item_more_back.setOnClickListener {
-//          mData[0].selected =0//点击了返回按钮，*去掉
-//           val fragment =
-//               activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
-//           fragment.update(adapter.mData)
+          mData[0].selected =0//点击了返回按钮，*去掉
+           val fragment =
+               activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+           fragment.update(adapter.mData)
            activity!!.supportFragmentManager.popBackStackImmediate()
         }
         mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")

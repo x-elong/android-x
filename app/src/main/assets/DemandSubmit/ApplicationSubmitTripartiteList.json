@@ -38,7 +38,7 @@
     "textAreaTitle":"详细说明",
     "textAreaContent":"",
     "necessary":false,
-    "key":"detailsExplain",
+    "key":"additionalExplain",
     "sendFormat": "String"
   }
 ]

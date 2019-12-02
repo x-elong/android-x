@@ -70,6 +70,11 @@
     "sendFormat": "Long"
   },
   {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "发布者所在地",
+    "singleDisplayRightContent": ""
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",

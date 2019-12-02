@@ -17,6 +17,7 @@ import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.ApiConfig
+import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getSupplyMajorNetWork
 import com.example.eletronicengineer.utils.getSupplyPersonDetail
@@ -55,9 +56,9 @@ class SupplyDisplayFragment:Fragment() {
         adapterGenerate.activity = activity as AppCompatActivity
         lateinit var adapter: RecyclerviewAdapter
         when (type) {
-            1 -> {
+            Constants.FragmentType.PERSONAL_TYPE.ordinal -> {
                 adapter = adapterGenerate.supplyIndividualDisplay()
-                val result = getSupplyPersonDetail(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyPersonDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.issuerWorkType==null) {
@@ -67,14 +68,18 @@ class SupplyDisplayFragment:Fragment() {
                         adapter.mData[2].singleDisplayRightContent=if(data.contact==null) {
                             " " } else{ data.contact}
                        if(data.sex==null) {
-                           adapter.mData[3].singleDisplayRightContent=" " } else if(data.sex=="1"){  adapter.mData[3].singleDisplayRightContent="女"}
-                        else if(data.sex=="0"){ adapter.mData[3].singleDisplayRightContent="男"}
-                        adapter.mData[4].singleDisplayRightContent=if(data.age==null) {
-                            " " } else{ data.age}
+                           adapter.mData[3].singleDisplayRightContent=" " } else if(data.sex=="1"){  adapter.mData[3].singleDisplayRightContent="男"}
+                        else if(data.sex=="0"){ adapter.mData[3].singleDisplayRightContent="女"}
+                        if(data.age=="10"){
+                            adapter.mData[4].singleDisplayRightContent=""
+                        }else{ adapter.mData[4].singleDisplayRightContent=data.age }
                         adapter.mData[5].singleDisplayRightContent=if(data.workExperience==null) {
                             " " } else{ data.workExperience}
-                        adapter.mData[6].singleDisplayRightContent=if(data.workMoney==null||data.salaryUnit==null) {
-                            " " } else{  "${data.workMoney} ${data.salaryUnit}"}
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[6].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
+                        }
                         adapter.mData[7].singleDisplayRightContent=if(data.contactPhone==null) {
                             " " } else{ "联系对方时可见"}
                         if(data.certificatePath==null)
@@ -123,9 +128,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            2->{//主网
+            Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
                 adapter = adapterGenerate.supplyTeamDisplay()
-                val result = getSupplyMajorNetWork(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyMajorNetWork(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.majorNetwork.name==null) {
@@ -203,13 +208,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                                str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -264,9 +270,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            3->{//配网
+            Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
                 adapter = adapterGenerate.supplyTeamDisplay()
-                val result = getSupplyDistributionNetWork(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyDistributionNetWork(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.distribuionNetwork.name==null) {
@@ -344,13 +350,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -405,9 +412,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            4->{//变电
+            Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
                 adapter = adapterGenerate.supplyTeamDisplay()
-                val result = getSupplyPowerTransformation(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyPowerTransformation(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.powerTransformation.name==null) {
@@ -485,13 +492,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -546,9 +554,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            5->{//测量设计
+            Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
                 adapter = adapterGenerate.supplyTeamDisplay()
-                val result = getSupplyMeasureDesign(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyMeasureDesign(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.measureDesign.name==null) {
@@ -626,13 +634,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -687,9 +696,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            6->{//马帮运输
+            Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{//马帮运输
                 adapter = adapterGenerate.supplyTeamDisplayGongTrans()
-                val result = getSupplyCaravanTransport(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyCaravanTransport(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.caravanTransport.name==null) {
@@ -743,9 +752,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            7->{//桩基服务
+            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{//桩基服务
                 adapter = adapterGenerate.supplyTeamDisplayPile()
-                val result = getSupplyPileFoundation(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyPileFoundation(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.pileFoundation.name==null) {
@@ -786,53 +795,49 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
-                        for(i in data.implementationRanges)
-                        {
-                            var str=""
-                            if(i.name!=null)
-                                str+="${i.name} "
-                            adapter.mData[5].singleDisplayRightContent=str
-                        }
-                        adapter.mData[6].singleDisplayRightContent=if(data.pileFoundation.workDia==null) {
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
+                        val implementationRanges = data.implementationRanges
+                        if(implementationRanges!=null)
+                            adapter.mData[4].singleDisplayRightContent=implementationRanges.name
+                        adapter.mData[5].singleDisplayRightContent=if(data.pileFoundation.workDia==null) {
                             " " } else{ data.pileFoundation.workDia }
-                        adapter.mData[7].singleDisplayRightContent=if(data.pileFoundation.location==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.pileFoundation.location==null) {
                             " " } else{ data.pileFoundation.location }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -843,9 +848,9 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[9].singleDisplayRightContent=if(data.pileFoundation.validTime==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.pileFoundation.validTime==null) {
                             " " } else{ data.pileFoundation.validTime}
-                        adapter.mData[10].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
                             " " } else{ data.pileFoundation.issuerBelongSite}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
@@ -872,9 +877,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            8->{//非开挖
+            Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{//非开挖
                 adapter = adapterGenerate.supplyTeamDisplayTrenchiless()
-                val result = getSupplyUnexcavation(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyUnexcavation(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
@@ -990,9 +995,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            9->{//试验调试
+            Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{//试验调试
                 adapter = adapterGenerate.supplyTeamDisplayTestAndDebugging()
-                val result = getSupplyTest(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyTest(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
@@ -1060,13 +1065,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[5].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[5].singleDisplayRightContent=str
                         adapter.mData[6].singleDisplayRightContent=if(data.testWorkTypes==null) {
                             " " } else{ data.testWorkTypes }
                         adapter.mData[7].singleDisplayRightContent=if(data.operateDegree==null) {
@@ -1119,9 +1125,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            10->{//跨越架
+            Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
                 adapter = adapterGenerate.supplyTeamDisplayCrossFrame()
-                val result = getSupplySpanWoodenSupprt(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplySpanWoodenSupprt(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
@@ -1157,7 +1163,7 @@ class SupplyDisplayFragment:Fragment() {
                                 {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
-                                    mdata.putInt("type",8)
+                                    mdata.putString("type","供应运输清册查看")
                                     (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
                                 }
                             })
@@ -1237,9 +1243,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            11->{//运行维护
+            Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{//运行维护
                 adapter = adapterGenerate.supplyTeamDisplayOperationAndMaintenance()
-                val result = getSupplyRunningMaintain(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyRunningMaintain(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
@@ -1280,53 +1286,58 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
-                        for(i in data.voltages!!)
-                        {
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
+                        if(data.voltages==null){
+                            adapter.mData[4].singleDisplayRightContent=""
+                        }else{
                             var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[5].singleDisplayRightContent=str
+                            for(i in data.voltages!!)
+                            {
+                                if(str!="")
+                                    str+="、"
+                                str+="${i.voltageDegree}"
+                            }
+                            adapter.mData[4].singleDisplayRightContent=str
                         }
-                        adapter.mData[6].singleDisplayRightContent=if(data.implementationRanges==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.implementationRanges==null) {
                             " " } else{  data.implementationRanges }
-                        adapter.mData[7].singleDisplayRightContent=if(data.workTerritory==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.workTerritory==null) {
                             " " } else{  data.workTerritory}
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1337,9 +1348,9 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[9].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener{
                             //                            if(data.contactPhone!=null)
@@ -1366,37 +1377,49 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            12->{//车辆租赁
+            Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{//车辆租赁
                 adapter = adapterGenerate.supplyTeamDisplayVehicleLeasing()
-                val result = getSupplyLeaseCar(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyLeaseCar(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.variety==null) {
                             " " } else{ data.variety }
-                        adapter.mData[1].singleDisplayRightContent=if(data.carTable.id==null) {
-                            " " } else{ data.carTable.id }
+                        adapter.mData[1].singleDisplayRightContent=if(data.carTable.carNumber==null) {
+                            " " } else{ data.carTable.carNumber }
                         adapter.mData[2].singleDisplayRightContent=if(data.carTable.carType==null) {
                             " " } else{ data.carTable.carType }
                         adapter.mData[3].singleDisplayRightContent=if(data.carTable.maxPassengers==null) {
                             " " } else{ data.carTable.maxPassengers }
                         adapter.mData[4].singleDisplayRightContent=if(data.carTable.maxWeight==null) {
                             " " } else{ data.carTable.maxWeight }
-                        adapter.mData[5].singleDisplayRightContent=if(data.carTable.construction==null) {
-                            " " } else{ data.carTable.construction }
+                        when(data.carTable.construction){
+                            "1"->{ adapter.mData[5].singleDisplayRightContent="箱式"}
+                            "0"->{adapter.mData[5].singleDisplayRightContent="敞篷"}
+                            else->{adapter.mData[5].singleDisplayRightContent=""}
+                        }
                         adapter.mData[6].singleDisplayRightContent=if(data.carTable.lenghtCar==null) {
                             " " } else{ data.carTable.lenghtCar }
-                        adapter.mData[7].singleDisplayRightContent=if(data.carTable.isDriver==null) {
-                            " " } else{ data.carTable.isDriver }
-                        adapter.mData[8].singleDisplayRightContent=if(data.carTable.isInsurance==null) {
-                            " " } else{ data.carTable.isInsurance }
-                        adapter.mData[9].singleDisplayRightContent=if(data.money==null || data.salaryUnit==null) {
-                            " " } else{ "${data.money} ${data.salaryUnit}"}
+                        when(data.carTable.isDriver){
+                            "true"->{ adapter.mData[7].singleDisplayRightContent="是"}
+                            "false"->{adapter.mData[7].singleDisplayRightContent="否"}
+                            else->{adapter.mData[7].singleDisplayRightContent=""}
+                        }
+                        when(data.carTable.isInsurance){
+                            "true"->{ adapter.mData[8].singleDisplayRightContent="在保"}
+                            "false"->{adapter.mData[8].singleDisplayRightContent="脱保"}
+                            else->{adapter.mData[8].singleDisplayRightContent=""}
+                        }
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[9].singleDisplayRightContent= "${data.money} ${data.salaryUnit}"
+                        }
                         adapter.mData[11].singleDisplayRightContent=if(data.contact==null) {
                             " " } else{ data.contact }
                         adapter.mData[12].singleDisplayRightContent=if(data.contactPhone==null) {
                             " " } else{ data.contactPhone }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent=if(data.site==null) {
+                            " " } else{ data.site }
                         if(data.carTable.carPhotoPath==null)
                         {
                             adapter.mData[14].buttonListener = listOf(View.OnClickListener {
@@ -1416,6 +1439,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime }
                         adapter.mData[16].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
+                        adapter.mData[17].singleDisplayRightContent=if(data.comment==null) {
+                            " " } else{ data.comment }
                         view.button_supply.setOnClickListener{
                             if(data.contactPhone!=null)
                             {
@@ -1441,9 +1466,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            13->{//工器具租赁
+            Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{//工器具租赁
                         adapter = adapterGenerate.supplyTeamDisplayEquipmentLeasing("工器具租赁")
-                val result = getSupplyLeaseConstructionTool(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyLeaseConstructionTool(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.leaseConstructionTool.variety==null) {
@@ -1557,9 +1582,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            14->{//设备租赁
+            Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{//设备租赁
                 adapter = adapterGenerate.supplyTeamDisplayEquipmentLeasing("设备租赁")
-                val result = getSupplyLeaseFacility(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyLeaseFacility(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.leaseFacility.variety==null) {
@@ -1671,9 +1696,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            15->{//机械租赁
+            Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{//机械租赁
                 adapter = adapterGenerate.supplyTeamDisplayEquipmentLeasing("机械租赁")
-                val result = getSupplyLeaseMachinery(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyLeaseMachinery(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.leaseMachinery.variety==null) {
@@ -1785,9 +1810,9 @@ class SupplyDisplayFragment:Fragment() {
                         it.printStackTrace()
                     })
             }
-            16->{//除资质合作
+            Constants.FragmentType.TRIPARTITE_TYPE.ordinal->{//除资质合作
                 adapter = adapterGenerate.supplyTeamDisplayDemandTripartite()
-                val result = getSupplyThirdPartyDetail(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyThirdPartyDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             var data=it.message
                             adapter.mData[0].singleDisplayRightContent=if(data.serveType==null) {
@@ -1882,9 +1907,9 @@ class SupplyDisplayFragment:Fragment() {
                             it.printStackTrace()
                         })
             }
-            17->{//资质合作
+            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{//资质合作
                 adapter = adapterGenerate.supplyTeamDisplayDemandTripartiteCooperation()
-                val result = getSupplyThirdPartyDetail(id, ApiConfig.Token, ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getSupplyThirdPartyDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                             var data=it.message
                             adapter.mData[0].singleDisplayRightContent=if(data.serveType==null) {

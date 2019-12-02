@@ -7,6 +7,51 @@
     "sendFormat": "String"
   },
   {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"车辆类型",
+    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"牌照号码"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"核载乘客",
+    "inputUnit":"(人)"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"核准载重量",
+    "inputUnit":"(吨)"
+  },
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"车厢长度",
+    "inputUnit":"(米)"
+  },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "车厢结构",
+    "selectOption1Items": ["厢式","敞篷"]
+  },
+  {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["是","否"],
+    "radioButtonTitle":"是否配驾驶员"
+  },
+  {
+    "type":"MULTI_RADIO_BUTTON",
+    "radioButtonName":["在保","脱保"],
+    "radioButtonTitle":"保险状态"
+  },
+  {
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"车辆照片",
+    "necessary":false,
+    "key": "carPhotoPath"
+  },
+  {
     "type":"THREE_OPTIONS_SELECT_DIALOG",
     "selectTitle":"所在地址",
     "placePath": "pca.json",
@@ -21,36 +66,22 @@
     "sendFormat": "Double String"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆表",
-    "buttonName":["在线编辑"],
-    "key": "carTable",
-    "sendFormat": "JsonArray"
-  },
-  {
     "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "联系人姓名",
-    "singleDisplayRightContent": "xxx",
+    "singleDisplayRightTitle": "车主姓名",
+    "singleDisplayRightContent": "",
     "key": "contact",
     "sendFormat": "String"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "联系电话",
-    "singleDisplayRightContent": "xxx",
+    "singleDisplayRightContent": "",
     "key": "contactPhone",
     "sendFormat": "String"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"车辆照片",
-    "necessary":false,
-    "key": "carPhotoPath",
-    "sendFormat": "String"
-  },
-  {
     "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "发布人所属地点",
+    "singleDisplayRightTitle": "负责人所在地",
     "singleDisplayRightContent": "",
     "key": "issuerBelongSite",
     "sendFormat": "String"
@@ -63,8 +94,15 @@
     "sendFormat": "Long"
   },
   {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加条款",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"",
     "necessary": true,
     "key": "comment",

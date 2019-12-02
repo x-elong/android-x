@@ -32,6 +32,7 @@ import com.example.eletronicengineer.utils.uploadImage
 import com.example.eletronicengineer.utils.putSimpleMessage
 import com.example.eletronicengineer.wxapi.WXPayEntryActivity
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.Scheduler
@@ -43,6 +44,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.Serializable
+import java.math.BigDecimal
 import java.net.URLEncoder
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -52,17 +54,17 @@ class NetworkAdapter {
     class Provider {
         var mData: List<MultiStyleItem>
         var context: Context
-
         constructor(mData: List<MultiStyleItem>, context: Context) {
             this.mData = mData
             this.context = context
         }
-        fun generateJsonArray(data: List<List<MultiStyleItem>>):JSONArray
+        fun generateJsonArray(data: List<MultiStyleItem>):JSONArray
         {
             val array=JSONArray()
             for (i in data)
             {
-                array.put(generateJsonObject(i))
+                if(i.options!=MultiStyleItem.Options.BLANK&& i.necessary==true)
+                    array.put(generateJsonObject(i.itemMultiStyleItem))
             }
             return array
         }
@@ -71,6 +73,12 @@ class NetworkAdapter {
             val jsonObject = JSONObject()
             for (i in mData) {
                 when (i.sendFormat) {
+                    "Long" -> {
+                        jsonObject.put(i.key, parseToLong(i).toString())
+                    }
+                    "Double" ->{
+                        jsonObject.put(i.key, parseToDouble(i).toString())
+                    }
                     "String" -> {
                         jsonObject.put(i.key, parseToString(i))
                     }
@@ -82,10 +90,16 @@ class NetworkAdapter {
                         }
                     }
                     "Int" -> {
-                        jsonObject.put(i.key, parseToInt(i))
+                        jsonObject.put(i.key, parseToInt(i).toString())
                     }
                     "Boolean" -> {
                         jsonObject.put(i.key, parseToBoolean(i))
+                    }
+                    "Double String" -> {
+                        val doubleAlsoString = parseToDoubleAndString(i)
+                        val keys = i.key.split(" ")
+                        jsonObject.put(keys[0], doubleAlsoString.first)
+                        jsonObject.put(keys[1], doubleAlsoString.second)
                     }
                     "Long String" -> {
                         val longAlsoString = parseToLongAndString(i)
@@ -96,42 +110,67 @@ class NetworkAdapter {
                     }
                     "JsonArray"->
                     {
-                        jsonObject.put(i.key,generateJsonArray(listOf(listOf())))
+                        jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
                     }
                 }
             }
             return jsonObject
         }
-        fun generateJsonRequestBody(baseUrl: String) {
-            val result = Observable.create<RequestBody> {
+        fun generateJsonRequestBody(json:JSONObject):Observable<RequestBody> {
+          return Observable.create<RequestBody> {
+                val jsonObject = json
+                for (i in mData) {
+                    when (i.sendFormat) {
+                        "Long" -> {
+                            jsonObject.put(i.key, parseToLong(i).toString())
+                        }
+                        "Double" ->{
+                            jsonObject.put(i.key, parseToDouble(i).toString())
+                        }
+                        "String" -> {
+                            jsonObject.put(i.key, parseToString(i))
+                        }
+                        "Int" -> {
+                            jsonObject.put(i.key, parseToInt(i).toString())
+                        }
+                        "String[]" -> {
+                            val keyList = i.key.split(" ")
+                            val valueList = parseToStringArray(i)
+                            for (j in 0 until valueList.size) {
+                                jsonObject.put(keyList[j], valueList[j])
+                            }
+                        }
+                        "Long[]" -> {
+                            val keyList = i.key.split(" ")
+                            val valueList = parseToLongArray(i)
+                            for (j in 0 until valueList.size) {
+                                jsonObject.put(keyList[j], valueList[j])
+                            }
+                        }
+                        "Long String" -> {
+                            val longAlsoString = parseToLongAndString(i)
+                            val keys = i.key.split(" ")
+                            if (longAlsoString.second != i.inputMultiAbandonInput)
+                                jsonObject.put(keys[0], longAlsoString.first)
+                            jsonObject.put(keys[1], longAlsoString.second)
+                        }
+                        "Double String" -> {
+                            val doubleAlsoString = parseToDoubleAndString(i)
+                            val keys = i.key.split(" ")
+                            jsonObject.put(keys[0], doubleAlsoString.first)
+                            jsonObject.put(keys[1], doubleAlsoString.second)
+                        }
+                        "JsonArray"->
+                        {
+                            jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
+                        }
+                    }
+                }
                 //建立网络请求体 (类型，内容)
-
-                val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData).toString())
+                val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
                 it.onNext(requestBody)
             }
-                .subscribe {
-                    val loadingDialog = LoadingDialog(context, "正在发布...", R.mipmap.ic_dialog_loading)
-                    loadingDialog.show()
-                    val result = startSendMessage(it, baseUrl).subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(Schedulers.io()).subscribe(
-                        {
-                            loadingDialog.dismiss()
-                            var json = JSONObject(it.string())
-                            if (json.getInt("code") == 200) {
-                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
-                            } else if (json.getInt("code") == 400) {
-                                Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
-                            }
-                        },
-                        {
-                            loadingDialog.dismiss()
-                            val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                            toast.setGravity(Gravity.CENTER, 0, 0)
-                            toast.show()
-                            it.printStackTrace()
-                        }
-                    )
-                }
+
         }
         fun parseToLongAndString(data: MultiStyleItem): Pair<Long, String> {
             var longAlsoString: Pair<Long, String>
@@ -148,6 +187,21 @@ class NetworkAdapter {
             }
             return longAlsoString
         }
+        fun parseToLongArray(data: MultiStyleItem): List<Long> {
+            val result: MutableList<Long> = ArrayList()
+            when (data.options) {
+                MultiStyleItem.Options.INPUT_RANGE -> {
+
+                    result.add(data.inputRangeValue1.toLongOrNull().run {
+                        this ?: 10.toLong()
+                    })
+                    result.add(data.inputRangeValue2.toLongOrNull().run {
+                        this ?: 10.toLong()
+                    })
+                }
+            }
+            return result
+        }
 
         private fun parseToStringArray(data: MultiStyleItem): List<String> {
             var resultList: MutableList<String> = ArrayList()
@@ -159,8 +213,29 @@ class NetworkAdapter {
                     if (data.inputMultiSelectUnit != "")
                         resultList.add(data.inputMultiSelectUnit)
                 }
+                MultiStyleItem.Options.INPUT_RANGE -> {
+                    if (data.inputRangeValue1 != "")
+                        resultList.add(data.inputRangeValue1)
+                    if (data.inputRangeValue2 != "")
+                        resultList.add(data.inputRangeValue2)
+                }
             }
             return resultList
+        }
+        fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double?, String> {
+            var doubleAlsoString: Pair<Double?, String>
+            when (data.options) {
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                    if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
+                        doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
+                    else
+                        doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                }
+                else -> {
+                    doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                }
+            }
+            return doubleAlsoString
         }
 
         private fun parseToBoolean(data: MultiStyleItem): Boolean {
@@ -168,6 +243,11 @@ class NetworkAdapter {
             when (data.options) {
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                     result = data.radioButtonValue.toBoolean()
+                }
+                MultiStyleItem.Options.SELECT_DIALOG ->{
+                    if(data.selectOption1Items.indexOf(data.selectContent)==0){
+                        result=true
+                    }
                 }
             }
             return result
@@ -252,6 +332,80 @@ class NetworkAdapter {
                             })
                 }
         }
+        fun parseToDouble(data:MultiStyleItem):Double{
+            var result: Double = Double.MIN_VALUE
+            when (data.options) {
+                MultiStyleItem.Options.SINGLE_INPUT -> {
+                    val tmp = data.inputSingleContent.toDoubleOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10.0
+                }
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                    val tmp = data.inputMultiContent.toDoubleOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10.0
+                }
+            }
+            return result
+        }
+        fun parseToLong(data: MultiStyleItem): Long {
+            var result: Long = Long.MIN_VALUE
+            when (data.options) {
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+                    val tmp = data.radioButtonValue.toLongOrNull()
+                    result = if (tmp == null) {
+                        10
+                    } else
+                        tmp
+                }
+                MultiStyleItem.Options.MULTI_BUTTON -> {
+                    for (i in 0 until data.buttonCheckList.size) {
+                        if (data.buttonCheckList[i]) {
+                            result = (1 - i).toLong()
+                            break
+                        }
+                    }
+                }
+                MultiStyleItem.Options.INPUT_WITH_UNIT -> {
+                    val tmp = data.inputUnitContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+                MultiStyleItem.Options.SINGLE_INPUT->{
+                    val tmp = data.inputSingleContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+                MultiStyleItem.Options.MULTI_CHECKBOX -> {
+                    var checkNum = 0
+                    for (j in 0 until data.checkboxValueList.size) {
+                        if (data.checkboxValueList[j]) {
+                            if (checkNum != 0)
+                                result += (1-j).toLong()
+                            else
+                                result = (1-j).toLong()
+                            checkNum++
+                        }
+                    }
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                    val tmp = data.singleDisplayRightContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+            }
+            return result
+        }
 
         private fun parseToInt(data: MultiStyleItem): Int {
             var result = Int.MIN_VALUE
@@ -259,7 +413,7 @@ class NetworkAdapter {
                 MultiStyleItem.Options.INPUT_WITH_UNIT -> {
                     result = data.inputUnitContent.toInt()
                 }
-                MultiStyleItem.Options.MULTI_RADIO_BUTTON, MultiStyleItem.Options.SELECT_DIALOG -> {
+                MultiStyleItem.Options.SELECT_DIALOG -> {
                     result = data.selectOption1Items.indexOf(data.selectContent) + 1
                 }
             }
@@ -312,13 +466,19 @@ class NetworkAdapter {
                     result = data.selectContent
                 }
                 MultiStyleItem.Options.MULTI_CHECKBOX -> {
-                    var ch: ArrayList<String> = ArrayList()
+                    val ch: ArrayList<String> = ArrayList()
                     for (j in 0 until data.checkboxValueList.size)
                         if (data.checkboxValueList[j]) {
                             ch.add(data.checkboxNameList[j])
                         }
-                    result = ch.toString().replace(", ", "|")
-                    result = result.substring(1, result.length - 1)
+                    if(data.checkboxTitle=="可操作电压等级"){
+                        result = ch.toString().replace(", ", "|")
+                        result = result.substring(1, result.length - 1)
+                    }else{
+                        result = ch.toString().replace(", ", "、")
+                        result = result.substring(1, result.length - 1)
+                    }
+
                 }
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                     val position = 1 - data.radioButtonValue.toInt()
@@ -398,10 +558,9 @@ class NetworkAdapter {
         }
         return jsonObject
     }
-    fun generateJsonRequestBody(baseUrl: String,json:JSONObject,Type:String) {
-        val loadingDialog = LoadingDialog(context, "正在${Type}...", R.mipmap.ic_dialog_loading)
-        loadingDialog.show()
-        val result = Observable.create<RequestBody> {
+    fun generateJsonRequestBody(json:JSONObject):Observable<RequestBody>{
+
+        return  Observable.create<RequestBody> {
             val jsonObject = json
             for (i in mData) {
                 when (i.sendFormat) {
@@ -448,33 +607,15 @@ class NetworkAdapter {
                     {
                         jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
                     }
+//                    "CheckJsonArray"->{
+//                        jsonObject.put(i.key,generateCheckJsonArray(i))
+//                    }
                 }
             }
             val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
             it.onNext(requestBody)
         }
-            .subscribe {
-                val result =
-                    startSendMessage(it, baseUrl).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                        .subscribe(
-                            {
-                                loadingDialog.dismiss()
-                                var json = JSONObject(it.string())
-                                if (json.getInt("code") == 200) {
-                                    Toast.makeText(context, "${Type}成功", Toast.LENGTH_SHORT).show()
-                                } else if (json.getInt("code") == 400) {
-                                    Toast.makeText(context, "${Type}失败", Toast.LENGTH_SHORT).show()
-                                }
-                            },
-                            {
-                                loadingDialog.dismiss()
-                                val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
-                                toast.show()
-                                it.printStackTrace()
-                            }
-                        )
-            }
+
 
     }
 
@@ -577,7 +718,7 @@ class NetworkAdapter {
     }
 
     fun parseToStringArray(data: MultiStyleItem): List<String> {
-        var resultList: MutableList<String> = ArrayList()
+        val resultList: MutableList<String> = ArrayList()
         when (data.options) {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                 if (data.inputMultiContent != "")
@@ -611,10 +752,16 @@ class NetworkAdapter {
                 } else
                     10.0
             }
+            MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                val tmp = data.inputMultiContent.toDoubleOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10.0
+            }
         }
         return result
     }
-
     private fun parseToInt(data: MultiStyleItem): Int {
         var result = Int.MIN_VALUE
         when (data.options) {
@@ -635,6 +782,9 @@ class NetworkAdapter {
         when (data.options) {
             MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                 result = data.radioButtonValue.toBoolean()
+            }
+            MultiStyleItem.Options.SELECT_DIALOG ->{
+                result = (data.selectOption1Items.indexOf(data.selectContent)).toString().toBoolean()
             }
         }
         return result
@@ -687,7 +837,34 @@ class NetworkAdapter {
                     ""
             }
             MultiStyleItem.Options.SHIFT_INPUT -> {
-
+                val results = try {
+                    for (j in UnSerializeDataBase.imgList) {
+                        if (j.key == data.key) {
+                            val imagePath = j.path.split("|")
+                            for (k in imagePath) {
+                                val file = File(k)
+                                val imagePart = MultipartBody.Part.createFormData(
+                                    "file",
+                                    file.name,
+                                    RequestBody.create(MediaType.parse("image/*"), file)
+                                )
+                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                                    {
+                                        //Log.i("responseBody",it.string())
+                                        if (result != "")
+                                            result += "|"
+                                        result += it.string()
+                                        Log.i("result url", result)
+                                    },
+                                    {
+                                        it.printStackTrace()
+                                    })
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                 result = if (data.selectContent != "")
@@ -708,7 +885,7 @@ class NetworkAdapter {
                 }
             }
             MultiStyleItem.Options.MULTI_CHECKBOX -> {
-                var ch: ArrayList<String> = ArrayList()
+                val ch: ArrayList<String> = ArrayList()
                 for (j in 0 until data.checkboxValueList.size)
                     if (data.checkboxValueList[j]) {
                         ch.add(data.checkboxNameList[j])
@@ -796,7 +973,7 @@ class NetworkAdapter {
 
     //parse two type
     fun parseToLongAndString(data: MultiStyleItem): Pair<Long, String> {
-        var longAlsoString: Pair<Long, String>
+        val longAlsoString: Pair<Long, String>
         when (data.options) {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
@@ -812,7 +989,7 @@ class NetworkAdapter {
     }
 
     fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double?, String> {
-        var doubleAlsoString: Pair<Double?, String>
+        val doubleAlsoString: Pair<Double?, String>
         when (data.options) {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
@@ -5512,7 +5689,7 @@ class NetworkAdapter {
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
                             "报价清单(按单价)","个人证件名称","工作经验" ,
                             "项目","项目特征描述","计量单位",
-                            "出租方单位名称","单位地址","单位名称","法人代表姓名"->{
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量"->{
                                 if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                             }
                         }
@@ -5551,7 +5728,7 @@ class NetworkAdapter {
                     }
                 MultiStyleItem.Options.INPUT_RANGE->{
                           when (j.inputRangeTitle) {//此处为可选项但需检验
-                            "年龄要求" -> {
+                            "年龄要求","驾驶员年龄" -> {
                                 if (j.inputRangeValue1 != "" && j.inputRangeValue2 != "") {
                                     if (j.inputRangeValue1.toInt() >= j.inputRangeValue2.toInt() || j.inputRangeValue2.toInt() > 60 || j.inputRangeValue1.toInt() < 16) {
                                         result =
@@ -5601,7 +5778,14 @@ class NetworkAdapter {
                                     result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-15辆"
                                 }
                             }
-                            "计划工期", "发布有效期", "需要桩基","需求人数","需要人数","马匹数量","有效期","施工工期" -> {
+                            "发布有效期","有效期"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 90) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-90天"
+                                }
+                            }
+                            "计划工期", "需要桩基","需求人数","需要人数","马匹数量","施工工期","车辆" -> {
                                 if (j.inputUnitContent == "") {
                                     result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 }
@@ -5639,7 +5823,7 @@ class NetworkAdapter {
                             }
                             "年龄要求"->{
                                 if (j.inputUnitContent!=""&&(j.inputUnitContent.toInt() < 16 || j.inputUnitContent.toInt() > 60)) {
-                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围16-60元"
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围16-60岁"
                                 }
                             }
                         }
@@ -5715,7 +5899,7 @@ class NetworkAdapter {
                         when (j.radioButtonTitle) {
                             "性别要求", "机械设备", "跨越架材质", "财务运输保险",
                             "配送", "合作方属性", "薪资标准","费用标准","性别",
-                            "可作业范围","是否配送"-> {
+                            "可作业范围","是否配送","驾驶员性别"-> {
                                 if (j.radioButtonValue == "")
                                     result = "${j.radioButtonTitle.replace("：", "")}没有选择"
                             }
@@ -5730,7 +5914,7 @@ class NetworkAdapter {
                     if(j.necessary==true) {
                         when (j.checkboxTitle) {
                             "电压等级", "作业类别", "操作次级", "可实施范围","可操作电压等级",
-                            "可设计电压等级","可设计范围"-> {
+                            "可设计电压等级","可设计范围","可作业类别"-> {
                                 result = "${j.checkboxTitle.replace("：", "")}没有选择"
                                 for (i in 0 until j.checkboxValueList.size)
                                     if (j.checkboxValueList[i]) {

@@ -6,7 +6,17 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需要车辆数量：",
+    "singleDisplayRightTitle":"车牌号码：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"核载乘客：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"最大载重：",
     "singleDisplayRightContent":""
   },
   {
@@ -16,27 +26,22 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车厢长度：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"是否配备驾驶员：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"保险状态：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否配驾驶员：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"带驾驶员(元/天)：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"不带驾驶员(元/天)：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注：",
+    "singleDisplayRightTitle":"车辆照片：",
     "singleDisplayRightContent":""
   }
 ]

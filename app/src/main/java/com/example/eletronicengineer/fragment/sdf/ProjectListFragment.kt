@@ -11,6 +11,7 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.activity.DemandDisplayActivity
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.ProjectListAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
@@ -52,6 +53,7 @@ class ProjectListFragment:Fragment() {
     val bundle = Bundle()
     private lateinit var type:String
     lateinit var mView: View
+    var frame = R.id.frame_display_demand
     var adapter: RecyclerviewAdapter?=null
     val multiStyleItemList = ArrayList<MultiStyleItem>().toMutableList()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,6 +63,8 @@ class ProjectListFragment:Fragment() {
         mView.tv_project_demand_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
+        if(activity is MyReleaseActivity)
+            frame = R.id.frame_my_release
         if(adapter==null){
             initData()
             switchAdapter()
@@ -283,8 +287,8 @@ class ProjectListFragment:Fragment() {
                         val bundle = Bundle()
                         bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                         bundle.putString("type",type)
-                        FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
-                            R.id.frame_display_demand,"")
+                        FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                            frame,"")
                     }
             }
             "成员清册查看"->//成员清册查看
@@ -302,8 +306,8 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_demand,"")
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                        frame,"")
                 }
             }
             "租赁清单查看"->//租赁清单查看
@@ -321,8 +325,8 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_demand,"")
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                        frame,"")
                 }
             }
             "三方清册查看"->//三方清册查看
@@ -340,8 +344,8 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as DemandDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_demand,"")
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                        frame,"")
                 }
             }
             "供应人员清册查看"->//供应人员清册查看
@@ -359,7 +363,7 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
                         R.id.frame_display_supply,"")
                 }
             }
@@ -378,7 +382,7 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
                         R.id.frame_display_supply,"")
                 }
             }
@@ -398,7 +402,7 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
                         R.id.frame_display_supply,"")
                 }
             }

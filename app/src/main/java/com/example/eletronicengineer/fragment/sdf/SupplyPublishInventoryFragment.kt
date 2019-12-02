@@ -105,10 +105,6 @@ class SupplyPublishInventoryFragment:Fragment() {
                     bundle.putString("type",type)
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                 }
-                "车辆表发布"->{
-                    bundle.putString("type",type)
-                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
-                }
                 else->{
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
@@ -119,7 +115,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         fun update(itemMultiStyleItem:List<MultiStyleItem>){
             if(adapter!!.mData[0].selected==-1){
                 val mData = adapter!!.mData.toMutableList()
-                if(type=="车辆清册发布"||type=="车辆表发布") {
+                if(type=="车辆清册发布") {
                     mData.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SHIFT_INPUT,
@@ -157,7 +153,7 @@ class SupplyPublishInventoryFragment:Fragment() {
                 adapter!!.notifyItemInserted(mData.size-1)
             }
             else {
-                if(type=="车辆清册发布"||type=="车辆表发布") {
+                if(type=="车辆清册发布") {
                     adapter!!.mData[adapter!!.mData[0].selected].shiftInputTitle =
                         itemMultiStyleItem[0].selectContent
                 }

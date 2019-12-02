@@ -54,9 +54,9 @@ class DemandDisplayFragment:Fragment() {
         lateinit var adapter: RecyclerviewAdapter
         when (type) {
             //需求个人显示模板
-            1 -> {
+            Constants.FragmentType.PERSONAL_TYPE.ordinal -> {
                 adapter = adapterGenerate.demandIndividualDisplay()
-                val result = getRequirementPersonDetail(id,ApiConfig.Token,ApiConfig.BasePath)
+                val result = getRequirementPersonDetail(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
@@ -81,8 +81,9 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.planTime}
                         adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
                             " " } else{ data.workerExperience}
-                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        if(data.minAgeDemand=="10"||data.maxAgeDemand=="10"){
+                            adapter.mData[6].singleDisplayRightContent=""
+                        }else{ adapter.mData[6].singleDisplayRightContent="${data.minAgeDemand}~${data.maxAgeDemand}" }
                         when {
                             data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="男"
                             data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="女"
@@ -100,8 +101,11 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.journeyCarFare}
                         adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
-                        adapter.mData[12].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[12].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[12].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
+                        }
                         adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
                         adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
@@ -127,17 +131,17 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //需求主网
-            2->{
+            Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplay()
-                val result = getRequirementMajorNetWork(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementMajorNetWork(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                            "无" } else{ data.requirementVariety }
+                            "" } else{ data.requirementVariety }
                         adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                            "无" } else{ data.projectName }
+                            "" } else{ data.projectName }
                         if(data.projectSite==null)
-                            adapter.mData[2].singleDisplayRightContent= "无"
+                            adapter.mData[2].singleDisplayRightContent= ""
                         else
                         {
                             var str=data.projectSite.split(" / ")
@@ -146,7 +150,7 @@ class DemandDisplayFragment:Fragment() {
                             adapter.mData[2].singleDisplayRightContent=projectSite
                         }
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                            "无" } else{ data.projectTime}
+                            "" } else{ data.projectTime}
                         if(data.requirementCarLists == null )
                         {
                             adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
@@ -316,9 +320,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //配网
-            3->{
+            Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplay()
-                val result = getRequirementDistributionNetWork(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementDistributionNetWork(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -441,9 +445,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //变电
-            4->{
+            Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplay()
-                val result = getRequirementPowerTransformation(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementPowerTransformation(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -566,9 +570,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //测量设计
-            5->{
+            Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplay()
-                val result = getRequirementMeasureDesign(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementMeasureDesign(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -691,9 +695,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //马帮运输
-            6->{
+            Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayGongTrans()
-                val result = getRequirementCaravanTransport(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementCaravanTransport(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -797,9 +801,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //桩机服务
-            7->{
+            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayPile()
-                val result = getRequirementPileFoundation(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementPileFoundation(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -895,9 +899,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //非开挖
-            8->{
+            Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayTrenchiless()
-                val result = getRequirementUnexcavation(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementUnexcavation(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -993,9 +997,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //试验调试
-            9->{
+            Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayTestAndDebugging()
-                val result = getRequirementTest(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementTest(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1111,9 +1115,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //跨越架
-            10->{
+            Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayCrossFrame()
-                val result = getRequirementSpanWoodenSupprt(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementSpanWoodenSupprt(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1225,9 +1229,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //运维
-            11->{
+            Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayOperationAndMaintenance()
-                val result = getRequirementRunningMaintain(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementRunningMaintain(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1343,9 +1347,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //车辆租赁
-            12->{
+            Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayVehicleLeasing()
-                val result = getRequirementLeaseCar(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementLeaseCar(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1356,56 +1360,56 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.projectSite}
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
                             " " } else{ data.projectTime}
-                        adapter.mData[4].singleDisplayRightContent=if(data.vehicleType==null) {
-                            " " } else{ data.vehicleType}
-                        adapter.mData[5].singleDisplayRightContent=if(data.accurateLoadWeight==null) {
-                            " " } else{ data.accurateLoadWeight}
-                        adapter.mData[6].singleDisplayRightContent=if(data.vehicleStructure==null) {
-                            " " } else{ data.vehicleStructure}
-                        adapter.mData[7].singleDisplayRightContent=if(data.theCarriageLength==null) {
-                            " " } else{ data.theCarriageLength}
-                        when {
-                            data.insuranceCondition==null -> adapter.mData[8].singleDisplayRightContent= " "
-                            data.insuranceCondition=="1" -> adapter.mData[8].singleDisplayRightContent="脱保"
-                            data.insuranceCondition=="0" -> adapter.mData[8].singleDisplayRightContent="在保"
+                        if(data.requirementCarLists == null )
+                        {
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })
                         }
-                        when {
-                            data.driverSex==null -> adapter.mData[9].singleDisplayRightContent= " "
-                            data.driverSex=="1" -> adapter.mData[9].singleDisplayRightContent="女"
-                            data.driverSex=="0" -> adapter.mData[9].singleDisplayRightContent="男"
-                            data.driverSex=="-1" -> adapter.mData[9].singleDisplayRightContent="男女不限"
+                        else
+                        {
+                            if(data.requirementCarLists!!.isEmpty())
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })
+                            }
+                            else
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
+                                    mdata.putSerializable("listData1", listData as Serializable)
+                                    mdata.putString("type","车辆清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                })
+                            }
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.workerExperience==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
                             " " } else{ data.workerExperience}
-                        adapter.mData[11].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[12].singleDisplayRightContent="全包"
-                            data.roomBoardStandard=="1" -> adapter.mData[12].singleDisplayRightContent="队部自理"
-                            else -> { adapter.mData[12].singleDisplayRightContent=" " }
+                            data.roomBoardStandard=="1" -> adapter.mData[6].singleDisplayRightContent="全包"
+                            data.roomBoardStandard=="0" -> adapter.mData[6].singleDisplayRightContent="队部自理"
+                            else -> { adapter.mData[6].singleDisplayRightContent=" " }
                         }
-                        adapter.mData[14].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.journeyCarFare==null) {
                             " " } else{ data.journeyCarFare}
-                        adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.journeySalary==null) {
                             " " } else{ data.journeySalary}
-                        adapter.mData[15].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
-                        adapter.mData[16].singleDisplayRightContent=if(data.vehicle==null) {
-                            " " } else{ data.vehicle}
-//                            when {
-//                                data.machineEquipment=="0" -> adapter.mData[17].singleDisplayRightContent="不提供"
-//                                data.machineEquipment=="1" -> adapter.mData[17].singleDisplayRightContent="提供"
-//                            }
-
-                        adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[9].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
+                        }
+                        adapter.mData[11].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
-                        adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
+                        adapter.mData[12].singleDisplayRightContent=if(data.phone==null) {
                             " " } else{ data.phone}
-                        adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[13].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[14].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
                             mdata.putSerializable("RequirementLeaseCar",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
                             FragmentHelper.switchFragment(
@@ -1423,9 +1427,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //工器具租赁
-            13->{
+            Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayEquipmentLeasing()
-                val result = getRequirementLeaseConstructionTool(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementLeaseConstructionTool(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1510,9 +1514,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //设备租赁
-            14->{
+            Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayEquipmentLeasing()
-                val result = getRequirementLeaseFacility(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementLeaseFacility(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1595,9 +1599,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //机械租赁
-            15->{
+            Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayEquipmentLeasing()
-                val result = getRequirementLeaseMachinery(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementLeaseMachinery(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1681,9 +1685,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //需求三方 除资质合作
-            16->{
+            Constants.FragmentType.TRIPARTITE_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayDemandTripartite()
-                val result = getRequirementThirdPartyDetail(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementThirdPartyDetail(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
@@ -1749,9 +1753,9 @@ class DemandDisplayFragment:Fragment() {
                     })
             }
             //需求三方 资质合作
-            17->{
+            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{
                 adapter = adapterGenerate.demandTeamDisplayDemandTripartiteCooperation()
-                val result = getRequirementThirdPartyDetail(id,ApiConfig.Token,ApiConfig.BasePath).subscribeOn(Schedulers.io())
+                val result = getRequirementThirdPartyDetail(id,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {

@@ -18,13 +18,12 @@ import com.codekidlabs.storagechooser.StorageChooser
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.fragment.sdf.DemandDisplayFragment
-import com.example.eletronicengineer.fragment.sdf.DemandFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
+import com.example.eletronicengineer.fragment.sdf.*
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.downloadFile
+import com.lcw.library.imagepicker.ImagePicker
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +64,47 @@ class DemandActivity : AppCompatActivity() {
     transaction.replace(R.id.frame_demand_publish, fragment,"register")
     transaction.commit()
   }
-
+  //拍照回调
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode== Activity.RESULT_OK)
+    {
+      when(requestCode)
+      {
+        Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
+        {
+          val mImagePaths = data!!.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES)
+          val fragment=this@DemandActivity.supportFragmentManager.findFragmentByTag("Capture")
+          if(fragment is UploadPhoneFragment) {
+            fragment.refresh(mImagePaths[0])
+          }else if(fragment is UpIdCardFragment){
+            fragment.refresh(mImagePaths)
+          }else if(fragment is ImageFragment){
+            fragment.refresh(mImagePaths)
+          }
+        }
+      }
+    }
+    else
+    {
+      if (UnSerializeDataBase.fileList.size!=0)
+      {
+        val fileMap= UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+        if (fileMap.path=="")
+        {
+          UnSerializeDataBase.fileList.removeAt(UnSerializeDataBase.fileList.size-1)
+        }
+      }
+      else if(UnSerializeDataBase.imgList.size!=0)
+      {
+        val imgMap= UnSerializeDataBase.imgList.get(UnSerializeDataBase.imgList.size-1)
+        if (imgMap.path=="")
+        {
+          UnSerializeDataBase.imgList.removeAt(UnSerializeDataBase.imgList.size-1)
+        }
+      }
+    }
+  }
 
 
 }

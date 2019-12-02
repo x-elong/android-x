@@ -53,9 +53,5 @@
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
     "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"联系对方"
   }
 ]

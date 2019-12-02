@@ -1,5 +1,4 @@
 [
-
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
@@ -9,12 +8,15 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"成员清册",
     "buttonName":["在线编辑"],
-    "additionalKey":"provideCrewListsFile"
+    "key": "provideCrewLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆",
-    "buttonName":["在线编辑"]
+    "buttonName":["在线编辑"],
+    "key": "provideTransportMachines",
+    "sendFormat": "JsonArray"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
@@ -26,45 +28,40 @@
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可作业范围",
     "checkboxNameList":["人工孔桩","机械孔桩","钢管桩"],
-    "key": "foundationWorkRanges",
+    "key": "implementationRanges",
     "sendFormat": "String"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"作业最大直径",
-    "selectOption1Items":["1米以内","1.5米以内","2米以内","2米以上"],
-    "key": "workDia",
-    "sendFormat": "Int"
+    "selectOption1Items":["1米以内","1.5米以内","2米以内","2米以上"]
   },
   {
     "type":"THREE_OPTIONS_SELECT_DIALOG",
     "selectTitle":"队部所在区域",
-    "placePath": "pca.json",
-    "key": "location",
-    "sendFormat": "String"
+    "placePath": "pca.json"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"工器具清册",
     "buttonName":["在线编辑"],
-    "additionalKey": "constructionToolListFile"
+    "key": "constructionToolLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)",
-    "key": "validTime",
-    "sendFormat": "Int"
+    "inputUnit":"(天)"
   },
   {
     "type":"HINT",
@@ -73,5 +70,4 @@
     "startPosition": "6",
     "endPosition": "8"
   }
-
 ]

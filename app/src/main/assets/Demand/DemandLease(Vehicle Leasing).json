@@ -27,60 +27,18 @@
     "sendFormat":"Long"
   },
   {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"车辆类型",
-    "selectOption1Items":["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
-    "key":"vehicleType",
-    "sendFormat":"String"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"核准载重量",
-    "inputUnit":"(吨)",
-    "key":"accurateLoadWeight",
-    "sendFormat":"String"
-  },
-  {
-    "type":"SELECT_DIALOG",
-    "selectTitle":"车厢结构",
-    "selectOption1Items":["厢式","敞篷"],
-    "key":"vehicleStructure",
-    "sendFormat":"String"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"车厢长度",
-    "inputUnit":"(米)",
-    "key":"theCarriageLength",
-    "sendFormat":"String"
-  },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["在保","脱保"],
-    "radioButtonTitle":"保险状态",
-    "key":"insuranceCondition",
-    "sendFormat":"Long"
-  },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["男","女"],
-    "radioButtonTitle":"驾驶员性别",
-    "key":"driverSex",
-    "sendFormat":"Long"
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"车辆",
+    "buttonName":["车辆清册"],
+    "key":"requirementCarLists",
+    "sendFormat":"JsonArray"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"工作经验",
+    "inputUnit":"(年)",
     "key":"workerExperience",
-    "sendFormat":"Long",
-    "inputUnit":"(年)"
-  },
-  {
-    "type":"INPUT_RANGE",
-    "inputRangeTitle":"年龄要求",
-    "inputRangeUnit":"(岁)",
-    "key":"minAgeDemand maxAgeDemand",
-    "sendFormat":"Long[]"
+    "sendFormat":"Long"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
@@ -109,13 +67,6 @@
     "inputMultiUnit":["面议","元/天","元/月","元/年"],
     "key":"salaryStandard salaryUnit",
     "sendFormat":"Long String"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"车辆数量",
-    "inputUnit":"(辆)",
-    "key":"vehicle",
-    "sendFormat":"Long"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

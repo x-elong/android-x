@@ -8,12 +8,15 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"成员清册",
     "buttonName":["在线编辑"],
-    "additionalKey":"provideCrewListsFile"
+    "key": "provideCrewLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆",
-    "buttonName":["在线编辑"]
+    "buttonName":["在线编辑"],
+    "key": "provideTransportMachines",
+    "sendFormat": "JsonArray"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
@@ -24,7 +27,7 @@
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可操作电压等级",
     "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
-    "key":"voltages",
+    "key": "voltage",
     "sendFormat": "String"
   },
   {
@@ -35,9 +38,9 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"可操作次数",
-    "radioButtonName":["一次","两次","一次和两次"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"可操作次数",
+    "selectOption1Items":["一次","两次","一次和两次"],
     "key": "operateDegree",
     "sendFormat": "String"
   },
@@ -45,17 +48,18 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"工器具清册",
     "buttonName":["在线编辑"],
-    "additionalKey": "constructionToolListFile"
+    "key": "constructionToolLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_UNIT",

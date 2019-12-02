@@ -20,11 +20,6 @@
     "buttonName":["点击查看"]
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆全景照：",
-    "buttonName":["点击查看"]
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"可作业范围：",
     "singleDisplayRightContent":"00"
@@ -52,6 +47,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

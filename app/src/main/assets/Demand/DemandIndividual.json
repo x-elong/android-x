@@ -57,7 +57,7 @@
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"食宿标准",
-    "radioButtonName":["全包","自理"],
+    "radioButtonName":["全包","队部自理"],
     "key":"roomBoardStandard",
     "sendFormat":"Long"
   },
