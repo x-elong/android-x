@@ -1,32 +1,32 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车牌号：",
-    "singleDisplayRightContent":""
-  },
-  {
-  "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"车辆类型：",
-  "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"最大乘客量：",
+    "singleDisplayRightTitle":"车辆类型：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"最大承重量：",
+    "singleDisplayRightTitle":"车牌号码：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆结构：",
+    "singleDisplayRightTitle":"核载乘客：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆长度：",
+    "singleDisplayRightTitle":"最大载重：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车厢结构：",
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车厢长度：",
     "singleDisplayRightContent":""
   },
   {
@@ -35,15 +35,13 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"发布人所属地点:",
-    "placePath": "pcas.json",
-    "key":"issuerBelongSite",
-    "sendFormat":"String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"保险状态：",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否在保：",
+    "singleDisplayRightTitle":"车辆照片：",
     "singleDisplayRightContent":""
   }
 ]

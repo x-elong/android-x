@@ -1,33 +1,28 @@
 ﻿[
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称:",
+    "singleDisplayRightTitle":"项目名称：",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类型:",
+    "singleDisplayRightTitle":"需求类型：",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人姓名:",
+    "singleDisplayRightTitle":"联系人姓名：",
     "singleDisplayRightContent":"***"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人电话:",
+    "singleDisplayRightTitle":"联系人电话：",
     "singleDisplayRightContent":"***"
-  },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"薪资清册",
-    "buttonName":["清单报价上传"]
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息：",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":true
   }
 ]

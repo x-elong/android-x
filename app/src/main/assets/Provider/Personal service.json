@@ -1,10 +1,5 @@
 [
   {
-    "type":"TITLE",
-    "title1":"个人信息录入",
-    "styleType": "0"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布类别",
     "singleDisplayRightContent":"普工",
@@ -19,52 +14,65 @@
     "sendFormat": "String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"姓名"
-  },
-  {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"性别",
-    "radioButtonName":["男","女"]
+    "radioButtonName":["男","女"],
+    "key": "sex",
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"年龄",
-    "inputUnit":"(岁)"
+    "inputUnitTitle":"年龄要求",
+    "inputUnit":"(岁)",
+    "key": "age",
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"工作经验",
     "inputUnit":"(年)",
     "key": "workExperience",
-    "sendFormat": "Int"
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资要求",
-    "inputMultiUnit":["元/天","元/月","元/年"],
+    "inputMultiUnit":["面议","元/天","元/月","元/年"],
     "key": "workMoney salaryUnit",
-    "sendFormat": "Long String"
+    "sendFormat": "Double String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
-    "key": "contactPhone",
-    "sendFormat": "String"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"姓名:",
+    "singleDisplayRightContent":" ",
+    "key":"contact",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":" ",
+    "key":"contactPhone",
+    "sendFormat":"String"
   },
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"专业证书附件上传",
     "necessary":false,
-    "key": "xx",
+    "key": "certificatePath",
     "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
+    "inputUnitTitle":"发布有效期",
     "inputUnit":"(天)",
     "key": "validTime",
-    "sendFormat": "Int"
+    "sendFormat": "Long"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "发布者所在地",
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
@@ -73,10 +81,6 @@
     "necessary": true,
     "key": "remark",
     "sendFormat": "String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交",
-    "key": "Provider"
   }
+
 ]

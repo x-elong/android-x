@@ -4,5 +4,5 @@ class pile(
     var provideCrewLists:List<provideCrewLists>,
     var provideTransportMachines:List<provideTransportMachines>,
     var constructionToolLists:List<constructionToolLists>,
-    var implementationRanges:List<implementationRanges>
+    var implementationRanges:implementationRanges
 )

@@ -35,6 +35,7 @@ class LoginFragment: Fragment() {
     private lateinit var pref: SharedPreferences
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val a = arrayListOf("xxx","xxx")
         initFragment(view)
         return view
     }

@@ -1,59 +1,48 @@
 ﻿[
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称:",
-    "singleDisplayRightContent":" ",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "singleDisplayRightTitle":"项目名称：",
+    "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类型:",
-    "singleDisplayRightContent":" ",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "singleDisplayRightTitle":"需求类型：",
+    "singleDisplayRightContent":" "
 
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求专业:",
-    "singleDisplayRightContent":" ",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "singleDisplayRightTitle":"需求专业：",
+    "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人姓名:",
-    "singleDisplayRightContent":"***",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "singleDisplayRightTitle":"联系人姓名：",
+    "singleDisplayRightContent":"***"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人电话:",
-    "singleDisplayRightContent":"***",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "singleDisplayRightTitle":"联系人电话：",
+    "singleDisplayRightContent":"***"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册",
+    "buttonTitle":"成员清册：",
     "buttonName":["上传"],
-    "key": "chengyuanlist",
-    "sendFormat": "MemberList"
+    "key": "enrollProvideCrewList",
+    "sendFormat": "JsonArray"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "*同意甲方要求请填写上列清册并报名",
+    "customFontColor":"#FFFF0000",
+    "startPosition":0,
+    "endPosition":17
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息：",
     "textAreaContent":"",
-    "necessary":false,
-    "key":"requirementType",
-    "sendFormat": "String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交",
-    "key":"requirementType",
-    "sendFormat": "String"
+    "necessary":true
   }
 ]

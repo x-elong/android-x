@@ -2,52 +2,27 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"租赁类型:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目名称:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目地点:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"施工工期(月):",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆类型:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"核准载重量(吨):",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车厢结构:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车厢长度(米):",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"保险状态:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"驾驶员性别:",
-    "singleDisplayRightContent":"00"
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"车辆清册：",
+    "buttonName":["点击查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -56,33 +31,23 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"年龄要求(岁):",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"食宿标准:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"路程工资:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"路程车旅费:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"路程工资:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"薪资标准:",
-    "singleDisplayRightContent":"00"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆(辆):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type": "BLANK"
@@ -90,12 +55,12 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系电话:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -106,9 +71,5 @@
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"报名"
   }
 ]

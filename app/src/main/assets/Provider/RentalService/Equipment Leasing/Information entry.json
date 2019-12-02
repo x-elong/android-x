@@ -1,13 +1,10 @@
 [
   {
-    "type":"TITLE",
-    "title1":"租赁发布信息录入",
-    "styleType": "0"
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"租赁类型",
-    "singleDisplayRightContent":"机械租赁"
+    "singleDisplayRightContent":"租赁",
+    "key": "variety",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
@@ -35,16 +32,16 @@
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"联系电话",
+    "inputSingleTitle":"法人代表电话",
     "key": "legalPersonPhone",
     "sendFormat": "String"
   },
     {
-        "type":"SHIFT_INPUT",
-        "shiftInputTitle":"法人身份证照片",
-        "necessary":false,
-        "key":"legalPersonIdCardPath",
-        "sendFormat": "String"
+          "type":"SHIFT_INPUT",
+          "shiftInputTitle":"身份证照片",
+          "necessary":false,
+          "key":"legalPersonIdCardPath",
+          "sendFormat": "String"
     },
   {
 
@@ -56,21 +53,22 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工器具出租清册",
-    "buttonName":["下载模板","上传清册"],
-    "additionalKey": "leaseListsFile"
+    "buttonTitle":"xxx",
+    "buttonName":["点击查看"],
+    "key": "leaseLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"SHIFT_INPUT",
-    "shiftInputTitle":"租赁合同",
+    "shiftInputTitle":"上传合同",
     "necessary":false,
     "key": "leaseConTractPath",
     "sendFormat": "String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["是","否"],
     "radioButtonTitle":"是否配送",
+    "radioButtonName":["是","否"],
     "key": "isDistribution",
     "sendFormat": "Boolean"
   },
@@ -82,15 +80,38 @@
     "sendFormat": "String"
   },
   {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "联系人姓名",
+    "singleDisplayRightContent": " ",
+    "key": "contact",
+    "sendFormat": "String"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "联系人电话",
+    "singleDisplayRightContent": " ",
+    "key": "contactPhone",
+    "sendFormat": "String"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人所在地",
+    "singleDisplayRightContent": "",
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
+  },
+  {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
     "inputUnit":"(天)",
-    "key": "periodValidity",
-    "sendFormat": "Int"
+    "key": "validTime",
+    "sendFormat": "Long"
   },
   {
-    "type":"SUBMIT",
-    "submitContent":"确认发布",
-    "key": "Provider"
+    "type":"HINT",
+    "hintContent":"注:字符前有 * 为必填。",
+    "customFontColor": "#FF0000",
+    "startPosition": "6",
+    "endPosition": "8"
   }
 ]

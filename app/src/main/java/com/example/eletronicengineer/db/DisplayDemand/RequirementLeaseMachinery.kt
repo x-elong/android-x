@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class RequirementLeaseMachinery(
     var id:String,
     var vipId:String,
@@ -25,4 +27,4 @@ class RequirementLeaseMachinery(
     var requirementLeaseLists:List<requirementLeaseProjectList>?,
     var photoPath:String,
     var validTime:String
-)
+): Serializable

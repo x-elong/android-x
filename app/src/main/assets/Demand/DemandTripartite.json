@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"代办资质",
+    "singleDisplayRightContent":"",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
@@ -10,20 +10,21 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"三方服务清单",
     "buttonName":["在线编辑"],
-    "additionalKey":"thirdListsFile"
+    "key":"thirdLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"合作方属性",
+    "radioButtonName":["单位","个人"],
     "key":"partnerAttribute",
-    "sendFormat":"Long",
-    "radioButtonName":["单位","个人"]
+    "sendFormat":"Long"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"费用标准",
-    "key":"fareStandard",
     "radioButtonName":["面议","按清单报价"],
+    "key":"fareStandard",
     "sendFormat":"Long"
   },
   {
@@ -48,12 +49,18 @@
     "sendFormat":"Long"
   },
   {
-    "type":"HINT",
-    "key":"additonalExplain",
-    "sendFormat":"String",
-    "hintContent":"附加1.有不良记录者请勿联系",
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
     "customFontColor":"#FFFF0000",
-    "startPosition":0,
-    "endPosition":3
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加信息",
+    "textAreaContent":"有不良记录者请勿联系",
+    "necessary": true,
+    "key":"additionalExplain",
+    "sendFormat":"String"
   }
 ]

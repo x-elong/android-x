@@ -14,12 +14,11 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyVipActivity
 import com.example.eletronicengineer.activity.ProfessionalActivity
-import com.example.eletronicengineer.activity.SubscribeActivity
 import com.example.eletronicengineer.activity.VipActivity
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
-import com.example.eletronicengineer.db.My.UserEntity
+import com.example.eletronicengineer.db.My.*
 import com.example.eletronicengineer.fragment.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
@@ -33,6 +32,7 @@ import com.example.eletronicengineer.utils.uploadImage
 import com.example.eletronicengineer.utils.putSimpleMessage
 import com.example.eletronicengineer.wxapi.WXPayEntryActivity
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.Scheduler
@@ -44,6 +44,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.Serializable
+import java.math.BigDecimal
 import java.net.URLEncoder
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -53,25 +54,32 @@ class NetworkAdapter {
     class Provider {
         var mData: List<MultiStyleItem>
         var context: Context
-
+        lateinit var jsonObject: JSONObject
         constructor(mData: List<MultiStyleItem>, context: Context) {
             this.mData = mData
             this.context = context
         }
-        fun generateJsonArray(data: List<List<MultiStyleItem>>):JSONArray
+        fun generateJsonArray(data: List<MultiStyleItem>):JSONArray
         {
             val array=JSONArray()
             for (i in data)
             {
-                array.put(generateJsonObject(i))
+                if(i.options!=MultiStyleItem.Options.BLANK&& i.necessary==true)
+                    array.put(generateJsonObject(i.itemMultiStyleItem,JSONObject()))
             }
             return array
         }
-        fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
+        fun generateJsonObject(mData: List<MultiStyleItem>,json: JSONObject):JSONObject
         {
-            val jsonObject = JSONObject()
+            val jsonObject = json
             for (i in mData) {
                 when (i.sendFormat) {
+                    "Long" -> {
+                        jsonObject.put(i.key, parseToLong(i).toString())
+                    }
+                    "Double" ->{
+                        jsonObject.put(i.key, parseToDouble(i).toString())
+                    }
                     "String" -> {
                         jsonObject.put(i.key, parseToString(i))
                     }
@@ -83,10 +91,16 @@ class NetworkAdapter {
                         }
                     }
                     "Int" -> {
-                        jsonObject.put(i.key, parseToInt(i))
+                        jsonObject.put(i.key, parseToInt(i).toString())
                     }
                     "Boolean" -> {
                         jsonObject.put(i.key, parseToBoolean(i))
+                    }
+                    "Double String" -> {
+                        val doubleAlsoString = parseToDoubleAndString(i)
+                        val keys = i.key.split(" ")
+                        jsonObject.put(keys[0], doubleAlsoString.first)
+                        jsonObject.put(keys[1], doubleAlsoString.second)
                     }
                     "Long String" -> {
                         val longAlsoString = parseToLongAndString(i)
@@ -97,40 +111,38 @@ class NetworkAdapter {
                     }
                     "JsonArray"->
                     {
-                        jsonObject.put(i.key,generateJsonArray(listOf(listOf())))
+                        jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
                     }
                 }
             }
             return jsonObject
         }
-        fun generateJsonRequestBody(baseUrl: String) {
+        fun generateJsonRequestBody(baseUrl: String,submitType:String) {
             val result = Observable.create<RequestBody> {
                 //建立网络请求体 (类型，内容)
-                val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData).toString())
+                val requestBody = RequestBody.create(MediaType.parse("application/json"), generateJsonObject(mData,jsonObject).toString())
                 it.onNext(requestBody)
             }
                 .subscribe {
-                    val loadingDialog = LoadingDialog(context, "正在发布...", R.mipmap.ic_dialog_loading)
+                    val loadingDialog = LoadingDialog(context, "正在"+submitType+"...", R.mipmap.ic_dialog_loading)
                     loadingDialog.show()
-                    val result = startSendMessage(it, baseUrl).subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(Schedulers.io()).subscribe(
-                        {
-                            loadingDialog.dismiss()
-                            var json = JSONObject(it.string())
-                            if (json.getInt("code") == 200) {
-                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
-                            } else if (json.getInt("code") == 400) {
-                                Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
+                    val result = startSendMessage(it, baseUrl).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                            {
+                                loadingDialog.dismiss()
+                                var json = JSONObject(it.string())
+                                if (json.getInt("code") == 200) {
+                                    Toast.makeText(context, submitType+"成功", Toast.LENGTH_SHORT).show()
+                                } else if (json.getInt("code") == 400) {
+                                    Toast.makeText(context, submitType+"失败", Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            {
+                                loadingDialog.dismiss()
+                                ToastHelper.mToast(context,"连接超时")
+                                it.printStackTrace()
                             }
-                        },
-                        {
-                            loadingDialog.dismiss()
-                            val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                            toast.setGravity(Gravity.CENTER, 0, 0)
-                            toast.show()
-                            it.printStackTrace()
-                        }
-                    )
+                        )
                 }
         }
         fun parseToLongAndString(data: MultiStyleItem): Pair<Long, String> {
@@ -161,6 +173,21 @@ class NetworkAdapter {
                 }
             }
             return resultList
+        }
+        fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double?, String> {
+            var doubleAlsoString: Pair<Double?, String>
+            when (data.options) {
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                    if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
+                        doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
+                    else
+                        doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                }
+                else -> {
+                    doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                }
+            }
+            return doubleAlsoString
         }
 
         private fun parseToBoolean(data: MultiStyleItem): Boolean {
@@ -252,6 +279,80 @@ class NetworkAdapter {
                             })
                 }
         }
+        fun parseToDouble(data:MultiStyleItem):Double{
+            var result: Double = Double.MIN_VALUE
+            when (data.options) {
+                MultiStyleItem.Options.SINGLE_INPUT -> {
+                    val tmp = data.inputSingleContent.toDoubleOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10.0
+                }
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                    val tmp = data.inputMultiContent.toDoubleOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10.0
+                }
+            }
+            return result
+        }
+        fun parseToLong(data: MultiStyleItem): Long {
+            var result: Long = Long.MIN_VALUE
+            when (data.options) {
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+                    val tmp = data.radioButtonValue.toLongOrNull()
+                    result = if (tmp == null) {
+                        10
+                    } else
+                        tmp
+                }
+                MultiStyleItem.Options.MULTI_BUTTON -> {
+                    for (i in 0 until data.buttonCheckList.size) {
+                        if (data.buttonCheckList[i]) {
+                            result = (1 - i).toLong()
+                            break
+                        }
+                    }
+                }
+                MultiStyleItem.Options.INPUT_WITH_UNIT -> {
+                    val tmp = data.inputUnitContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+                MultiStyleItem.Options.SINGLE_INPUT->{
+                    val tmp = data.inputSingleContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+                MultiStyleItem.Options.MULTI_CHECKBOX -> {
+                    var checkNum = 0
+                    for (j in 0 until data.checkboxValueList.size) {
+                        if (data.checkboxValueList[j]) {
+                            if (checkNum != 0)
+                                result += (1-j).toLong()
+                            else
+                                result = (1-j).toLong()
+                            checkNum++
+                        }
+                    }
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                    val tmp = data.singleDisplayRightContent.toLongOrNull()
+                    result = if (tmp != null) {
+                        tmp
+                    } else
+                        10
+                }
+            }
+            return result
+        }
 
         private fun parseToInt(data: MultiStyleItem): Int {
             var result = Int.MIN_VALUE
@@ -317,7 +418,7 @@ class NetworkAdapter {
                         if (data.checkboxValueList[j]) {
                             ch.add(data.checkboxNameList[j])
                         }
-                    result = ch.toString().replace(", ", "|")
+                    result = ch.toString().replace(", ", "、")
                     result = result.substring(1, result.length - 1)
                 }
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
@@ -346,18 +447,100 @@ class NetworkAdapter {
         this.mData = mData
         this.context = context
     }
-    fun generateJsonRequestBody(baseUrl: String) {
-        val loadingDialog = LoadingDialog(context, "正在发布...", R.mipmap.ic_dialog_loading)
-        loadingDialog.show()
-        val result = Observable.create<RequestBody> {
-            val jsonObject = JSONObject()
+    //    fun generateCheckJsonArray(data: MultiStyleItem):JSONArray{
+//        val array=JSONArray()
+//        when(data.options) {
+//            MultiStyleItem.Options.MULTI_CHECKBOX -> {
+////                var voltageDegree: ArrayList<String> = ArrayList()
+////                for (i in 0 until data.checkboxValueList.size)
+////                    if (data.checkboxValueList[i]) {
+////                        voltageDegree.add(data.checkboxNameList[i])
+////                    }
+////                for(i in voltageDegree){
+////                    array.put(JSONObject().put("voltageDegree",i.replace(", ", "")))
+////                }
+//                var voltageDegree: ArrayList<Int> = ArrayList()
+//                for (j in 0 until data.checkboxValueList.size) {
+//                    if (data.checkboxValueList[j]) {
+//                            voltageDegree.add(1-j)
+//                    }
+//                }
+//                      for(i in voltageDegree){
+//                    array.put(i.toString())
+//                }
+//            }
+//        }
+//        return array
+//    }
+    fun generateJsonArray(data: List<MultiStyleItem>):JSONArray
+    {
+        val array=JSONArray()
+        for (i in data)
+        {
+            if(i.options!=MultiStyleItem.Options.BLANK&& i.necessary==true)
+                array.put(generateJsonObject(i.itemMultiStyleItem))
+        }
+        return array
+    }
+    fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
+    {
+        val jsonObject = JSONObject()
+        for (i in mData) {
+            when (i.sendFormat) {
+                "Long" -> {
+                    jsonObject.put(i.key, parseToLong(i).toString())
+                }
+                "Double" ->{
+                    jsonObject.put(i.key, parseToDouble(i).toString())
+                }
+                "String" -> {
+                    jsonObject.put(i.key, parseToString(i))
+                }
+                "String[]" -> {
+                    val keyList = i.key.split(" ")
+                    val valueList = parseToStringArray(i)
+                    for (j in 0 until valueList.size) {
+                        jsonObject.put(keyList[j], valueList[j])
+                    }
+                }
+                "Int" -> {
+                    jsonObject.put(i.key, parseToInt(i).toString())
+                }
+                "Boolean" -> {
+                    jsonObject.put(i.key, parseToBoolean(i))
+                }
+                "Long String" -> {
+                    val longAlsoString = parseToLongAndString(i)
+                    val keys = i.key.split(" ")
+                    if (longAlsoString.second != i.inputMultiAbandonInput)
+                        jsonObject.put(keys[0], longAlsoString.first)
+                    jsonObject.put(keys[1], longAlsoString.second)
+                }
+                "JsonArray"->
+                {
+                    jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
+                }
+            }
+        }
+        return jsonObject
+    }
+    fun generateJsonRequestBody(json:JSONObject):Observable<RequestBody> {
+
+        return  Observable.create<RequestBody> {
+            val jsonObject = json
             for (i in mData) {
                 when (i.sendFormat) {
                     "Long" -> {
-                        jsonObject.put(i.key, parseToLong(i))
+                        jsonObject.put(i.key, parseToLong(i).toString())
+                    }
+                    "Double" ->{
+                        jsonObject.put(i.key, parseToDouble(i).toString())
                     }
                     "String" -> {
                         jsonObject.put(i.key, parseToString(i))
+                    }
+                    "Int" -> {
+                        jsonObject.put(i.key, parseToInt(i).toString())
                     }
                     "String[]" -> {
                         val keyList = i.key.split(" ")
@@ -386,34 +569,18 @@ class NetworkAdapter {
                         jsonObject.put(keys[0], doubleAlsoString.first)
                         jsonObject.put(keys[1], doubleAlsoString.second)
                     }
+                    "JsonArray"->
+                    {
+                        jsonObject.put(i.key,generateJsonArray(i.itemMultiStyleItem))
+                    }
+//                    "CheckJsonArray"->{
+//                        jsonObject.put(i.key,generateCheckJsonArray(i))
+//                    }
                 }
             }
             val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
             it.onNext(requestBody)
         }
-            .subscribe {
-                val result =
-                    startSendMessage(it, baseUrl).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                        .subscribe(
-                            {
-                                loadingDialog.dismiss()
-                                var json = JSONObject(it.string())
-                                if (json.getInt("code") == 200) {
-                                    Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
-                                } else if (json.getInt("code") == 400) {
-                                    Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
-                                }
-                            },
-                            {
-                                loadingDialog.dismiss()
-                                val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
-                                toast.show()
-                                it.printStackTrace()
-                            }
-                        )
-            }
-
     }
 
     fun generateMultiPartRequestBody(baseUrl: String) {
@@ -539,7 +706,53 @@ class NetworkAdapter {
         }
         return resultList
     }
+    fun parseToDouble(data:MultiStyleItem):Double{
+        var result: Double = Double.MIN_VALUE
+        when (data.options) {
+            MultiStyleItem.Options.SINGLE_INPUT -> {
+                val tmp = data.inputSingleContent.toDoubleOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10.0
+            }
+            MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                val tmp = data.inputMultiContent.toDoubleOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10.0
+            }
+        }
+        return result
+    }
+    private fun parseToInt(data: MultiStyleItem): Int {
+        var result = Int.MIN_VALUE
+        when (data.options) {
+            MultiStyleItem.Options.INPUT_WITH_UNIT -> {
+                if(data.inputUnitContent.toIntOrNull()!=null){
+                    result = data.inputUnitContent.toInt()
+                }
 
+            }
+            MultiStyleItem.Options.SELECT_DIALOG ->{
+                result = 1-data.selectOption1Items.indexOf(data.selectContent)
+            }
+        }
+        return result
+    }
+    private fun parseToBoolean(data: MultiStyleItem): Boolean {
+        var result = false
+        when (data.options) {
+            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+                result = data.radioButtonValue.toBoolean()
+            }
+            MultiStyleItem.Options.SELECT_DIALOG ->{
+                result = (data.selectOption1Items.indexOf(data.selectContent)).toString().toBoolean()
+            }
+        }
+        return result
+    }
     fun parseToString(data: MultiStyleItem): String {
         var result = ""
         when (data.options) {
@@ -574,6 +787,12 @@ class NetworkAdapter {
                 else
                     ""
             }
+            MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
+                    result = "${data.inputMultiContent.toDouble()}" + data.inputMultiSelectUnit
+                else
+                    result = "${Long.MIN_VALUE}" + data.inputMultiSelectUnit
+            }
 
             MultiStyleItem.Options.INPUT_WITH_TEXTAREA -> {
                 result = if (data.textAreaContent != "")
@@ -603,16 +822,13 @@ class NetworkAdapter {
                 }
             }
             MultiStyleItem.Options.MULTI_CHECKBOX -> {
-                var checkNum = 0
-                for (j in 0 until data.checkboxValueList.size) {
+                var ch: ArrayList<String> = ArrayList()
+                for (j in 0 until data.checkboxValueList.size)
                     if (data.checkboxValueList[j]) {
-                        if (checkNum != 0)
-                            result += "|${1 - j}"
-                        else
-                            result = "${1 - j}"
-                        checkNum++
+                        ch.add(data.checkboxNameList[j])
                     }
-                }
+                result = ch.toString().replace(", ", "、")
+                result = result.substring(1, result.length - 1)
             }
             MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                 result = data.radioButtonValue
@@ -641,6 +857,32 @@ class NetworkAdapter {
             }
             MultiStyleItem.Options.INPUT_WITH_UNIT -> {
                 val tmp = data.inputUnitContent.toLongOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10
+            }
+            MultiStyleItem.Options.SINGLE_INPUT->{
+                val tmp = data.inputSingleContent.toLongOrNull()
+                result = if (tmp != null) {
+                    tmp
+                } else
+                    10
+            }
+            MultiStyleItem.Options.MULTI_CHECKBOX -> {
+                var checkNum = 0
+                for (j in 0 until data.checkboxValueList.size) {
+                    if (data.checkboxValueList[j]) {
+                        if (checkNum != 0)
+                            result += (1-j).toLong()
+                        else
+                            result = (1-j).toLong()
+                        checkNum++
+                    }
+                }
+            }
+            MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                val tmp = data.singleDisplayRightContent.toLongOrNull()
                 result = if (tmp != null) {
                     tmp
                 } else
@@ -683,12 +925,12 @@ class NetworkAdapter {
         return longAlsoString
     }
 
-    fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double, String> {
-        var doubleAlsoString: Pair<Double, String>
+    fun parseToDoubleAndString(data: MultiStyleItem): Pair<Double?, String> {
+        var doubleAlsoString: Pair<Double?, String>
         when (data.options) {
             MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
-                    doubleAlsoString = Pair(data.inputMultiContent.toDouble(), data.inputMultiSelectUnit)
+                    doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                 else
                     doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
             }
@@ -784,31 +1026,31 @@ class NetworkAdapter {
         val result =
             getPowerTowerParameters(majorDistributionProjectId, pageNumber, baseUrl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                val entityList = it.message.data
-                for (i in entityList) {
-                    val item = MultiStyleItem(
-                        MultiStyleItem.Options.FIVE_DISPLAY,
-                        i.poleNumber,
-                        i.powerTowerType,
-                        i.powerTowerHeight,
-                        i.powerTowerAttribute,
-                        "···"
-                    )
-                    item.fiveDisplayListener = View.OnClickListener {
-                        val data = Bundle()
-                        data.putInt("type", AdapterGenerate().getType("杆塔子项"))
-                        data.putSerializable("overheadTower", i)
-                        (fragment.activity as ProfessionalActivity).switchFragment(
-                            ProjectMoreFragment.newInstance(data),
-                            ""
+                    val entityList = it.message.data
+                    for (i in entityList) {
+                        val item = MultiStyleItem(
+                            MultiStyleItem.Options.FIVE_DISPLAY,
+                            i.poleNumber,
+                            i.powerTowerType,
+                            i.powerTowerHeight,
+                            i.powerTowerAttribute,
+                            "···"
                         )
+                        item.fiveDisplayListener = View.OnClickListener {
+                            val data = Bundle()
+                            data.putInt("type", AdapterGenerate().getType("杆塔子项"))
+                            data.putSerializable("overheadTower", i)
+                            (fragment.activity as ProfessionalActivity).switchFragment(
+                                ProjectMoreFragment.newInstance(data),
+                                ""
+                            )
+                        }
+                        data.add(item)
                     }
-                    data.add(item)
+                    adapter.mData = data
+                    fragment.pageCount = it.message.pageCount
+                    adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
                 }
-                adapter.mData = data
-                fragment.pageCount = it.message.pageCount
-                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-            }
     }
 
     fun getDataGalleryParameter(
@@ -822,36 +1064,36 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getGalleryParameter(majorDistributionProjectId, pageNumber, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entityList = it.message.data.galleryNodeDTOList
-            data[1].twoColumnDisplayContent1 = it.message.data.apType
-            data[1].twoColumnDisplayContent2 = it.message.data.opType
-            data[2].singleDisplayLeftContent = it.message.data.apName
-            data[3].singleDisplayLeftContent = it.message.data.opName
-            for (i in entityList) {
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.FIVE_DISPLAY,
-                    i.galleryIndex,
-                    i.bnodeIndex,
-                    i.snodeIndex,
-                    i.kind,
-                    "···"
-                )
-                item.fiveDisplayListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putInt("type", AdapterGenerate().getType("通道子项"))
-                    data.putSerializable("galleryNode", i)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ProjectMoreFragment.newInstance(data),
-                        ""
+                val entityList = it.message.data.galleryNodeDTOList
+                data[1].twoColumnDisplayContent1 = it.message.data.apType
+                data[1].twoColumnDisplayContent2 = it.message.data.opType
+                data[2].singleDisplayLeftContent = it.message.data.apName
+                data[3].singleDisplayLeftContent = it.message.data.opName
+                for (i in entityList) {
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.FIVE_DISPLAY,
+                        i.galleryIndex,
+                        i.bnodeIndex,
+                        i.snodeIndex,
+                        i.kind,
+                        "···"
                     )
+                    item.fiveDisplayListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putInt("type", AdapterGenerate().getType("通道子项"))
+                        data.putSerializable("galleryNode", i)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ProjectMoreFragment.newInstance(data),
+                            ""
+                        )
+                    }
+                    data.add(item)
                 }
-                data.add(item)
+                adapter.mData = data
+                fragment.pageCount = it.message.pageCount
+                adapter.notifyItemRangeChanged(1, 3)
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            fragment.pageCount = it.message.pageCount
-            adapter.notifyItemRangeChanged(1, 3)
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataNodeParameter(
@@ -865,31 +1107,31 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getNodeParameter(majorDistributionProjectId, pageNumber, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            if (it.desc == "OK") {
-                val entityList = it.message.data.nodeDTOList
-                data[1].twoColumnDisplayContent1 = it.message.data.apType
-                data[1].twoColumnDisplayContent2 = it.message.data.opType
-                data[2].singleDisplayLeftContent = it.message.data.apName
-                data[3].singleDisplayLeftContent = it.message.data.opName
-                for (i in entityList) {
-                    val item = MultiStyleItem(MultiStyleItem.Options.FOUR_DISPLAY, i.nodeIndex, i.kind, i.entail, "···")
-                    item.fourDisplayListener = View.OnClickListener {
-                        val data = Bundle()
-                        data.putInt("type", AdapterGenerate().getType("节点子项"))
-                        data.putSerializable("Node", i)
-                        (fragment.activity as ProfessionalActivity).switchFragment(
-                            ProjectMoreFragment.newInstance(data),
-                            ""
-                        )
+                if (it.desc == "OK") {
+                    val entityList = it.message.data.nodeDTOList
+                    data[1].twoColumnDisplayContent1 = it.message.data.apType
+                    data[1].twoColumnDisplayContent2 = it.message.data.opType
+                    data[2].singleDisplayLeftContent = it.message.data.apName
+                    data[3].singleDisplayLeftContent = it.message.data.opName
+                    for (i in entityList) {
+                        val item = MultiStyleItem(MultiStyleItem.Options.FOUR_DISPLAY, i.nodeIndex, i.kind, i.entail, "···")
+                        item.fourDisplayListener = View.OnClickListener {
+                            val data = Bundle()
+                            data.putInt("type", AdapterGenerate().getType("节点子项"))
+                            data.putSerializable("Node", i)
+                            (fragment.activity as ProfessionalActivity).switchFragment(
+                                ProjectMoreFragment.newInstance(data),
+                                ""
+                            )
+                        }
+                        data.add(item)
                     }
-                    data.add(item)
+                    adapter.mData = data
+                    fragment.pageCount = it.message.pageCount
+                    adapter.notifyItemRangeChanged(1, 3)
+                    adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
                 }
-                adapter.mData = data
-                fragment.pageCount = it.message.pageCount
-                adapter.notifyItemRangeChanged(1, 3)
-                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-        }
     }
 
     fun getDataMaterialsTransport(
@@ -902,68 +1144,68 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getMaterialsTransport(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                for (k in j.aerialMaterialsAdd) {
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    for (k in j.aerialMaterialsAdd) {
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "${k.materialsName}/数量${k.unit}:",
+                                k.quantity.toString()
+                            )
+                        )
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "${k.materialsName}/规格型号:",
+                                k.specificationsModel
+                            )
+                        )
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "${k.materialsName}/单重(t):",
+                                k.simpleWeight.toString()
+                            )
+                        )
+                    }
                     expandList.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "${k.materialsName}/数量${k.unit}:",
-                            k.quantity.toString()
+                            "小计重量(t)",
+                            j.aerialMaterialsTransport.totalWeight.toString()
                         )
                     )
-                    expandList.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "${k.materialsName}/规格型号:",
-                            k.specificationsModel
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.aerialMaterialsTransport.photoPath != null) {
+                        UnSerializeDataBase.imgList.add(
+                            BitmapMap(
+                                j.aerialMaterialsTransport.photoPath.toString(),
+                                "photoPath"
+                            )
                         )
-                    )
-                    expandList.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "${k.materialsName}/单重(t):",
-                            k.simpleWeight.toString()
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j.aerialMaterialsTransport)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialMaterialsTransport)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
                         )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.aerialMaterialsTransport.content, "0",
+                        RecyclerviewAdapter(expandList)
                     )
+                    data.add(item)
                 }
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "小计重量(t)",
-                        j.aerialMaterialsTransport.totalWeight.toString()
-                    )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.aerialMaterialsTransport.photoPath != null) {
-                    UnSerializeDataBase.imgList.add(
-                        BitmapMap(
-                            j.aerialMaterialsTransport.photoPath.toString(),
-                            "photoPath"
-                        )
-                    )
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j.aerialMaterialsTransport)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialMaterialsTransport)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.aerialMaterialsTransport.content, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataPreformedUnitLandFill(
@@ -976,47 +1218,47 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getPreformedUnitLandFill(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.quantityUnit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.quantityUnit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.photoPath != null && j.photoPath != "") {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.photoPath != null && j.photoPath != "") {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPreformedUnitLandfill)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.content, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
                 }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPreformedUnitLandfill)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.content, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataALLAerialFacilityInstall(
@@ -1029,32 +1271,32 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getALLAerialFacilityInstall(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.name, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.name, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialsStayguyMakeList(towerSubitemId: String, baseUrl: String, adapter: RecyclerviewAdapter) {
@@ -1062,32 +1304,32 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialsStayguyMakeList(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.designQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.designQuantity.toString()
+                        )
                     )
-                )
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialEnclosureInstall(towerSubitemId: String, baseUrl: String, adapter: RecyclerviewAdapter) {
@@ -1095,33 +1337,33 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialEnclosureInstall(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialInsulatorInstall(towerSubitemId: String, baseUrl: String, adapter: RecyclerviewAdapter) {
@@ -1129,33 +1371,33 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialInsulatorInstall(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialPoleArmInstall(
@@ -1168,49 +1410,49 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialPoleArmInstall(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageClass))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "线材根数:", j.wireRodQuantity))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "线材根数:", j.wireRodQuantity))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.photoPath != null && j.photoPath != "") {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.photoPath != null && j.photoPath != "") {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPoleArmInstall)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
                 }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPoleArmInstall)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialHouseholdInstall(
@@ -1223,109 +1465,109 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialHouseholdInstall(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.aerialHouseholdInstallCommentList
-            if (entity.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "户表安装",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
+                val entity = it.message.aerialHouseholdInstallCommentList
+                if (entity.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "户表安装",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
                     )
-                )
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                if (j.specificationsModels != null)
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    if (j.specificationsModels != null)
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "规格型号:",
+                                j.specificationsModels.toString()
+                            )
+                        )
                     expandList.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "规格型号:",
-                            j.specificationsModels.toString()
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
                         )
                     )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST, "物料名称:" + j.addComment, "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
-                )
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, "物料名称:" + j.addComment, "0",
-                        RecyclerviewAdapter(expandList)
+                    data[data.size - 1].expandListAdapter.mData = mdata
+                }
+
+
+                val entity1 = it.message.aerialHouseholdInstallRegistrationList
+                if (entity1.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "表计编号登记",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
                     )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
+                for (j in entity1) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "原表计号:", j.oldTableNumber))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "原表计号照片上传:", false))
+                    if (j.oldTableLogging != null) {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.oldTableLogging.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "原表计号照片上传")
+                        data.putString("key", "oldTableLogging")
+                        data.putSerializable("serializable", j)
+                        data.putString(
+                            "baseUrl",
+                            Constants.HttpUrlPath.Professional.updateAerialHouseholdInstallRegistration
+                        )
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "新表计号:", j.newTableNumber))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "新表计号照片上传:", false))
+                    if (j.newTableLogging != null) {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.newTableLogging.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "新表计号照片上传")
+                        data.putString("key", "newTableLogging")
+                        data.putSerializable("serializable", j)
+                        data.putString(
+                            "baseUrl",
+                            Constants.HttpUrlPath.Professional.updateAerialHouseholdInstallRegistration
+                        )
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "${it.message.aerialHouseholdInstallRegistrationList.indexOf(j) + 1}#",
+                            "0",
+                            RecyclerviewAdapter(expandList)
+                        )
+                    )
+                    data[data.size - 1].expandListAdapter.mData = mdata
+                }
+
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-
-
-            val entity1 = it.message.aerialHouseholdInstallRegistrationList
-            if (entity1.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "表计编号登记",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
-                    )
-                )
-            for (j in entity1) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "原表计号:", j.oldTableNumber))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "原表计号照片上传:", false))
-                if (j.oldTableLogging != null) {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.oldTableLogging.toString(), "photoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "原表计号照片上传")
-                    data.putString("key", "oldTableLogging")
-                    data.putSerializable("serializable", j)
-                    data.putString(
-                        "baseUrl",
-                        Constants.HttpUrlPath.Professional.updateAerialHouseholdInstallRegistration
-                    )
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "新表计号:", j.newTableNumber))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "新表计号照片上传:", false))
-                if (j.newTableLogging != null) {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.newTableLogging.toString(), "photoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "新表计号照片上传")
-                    data.putString("key", "newTableLogging")
-                    data.putSerializable("serializable", j)
-                    data.putString(
-                        "baseUrl",
-                        Constants.HttpUrlPath.Professional.updateAerialHouseholdInstallRegistration
-                    )
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "${it.message.aerialHouseholdInstallRegistrationList.indexOf(j) + 1}#",
-                        "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
-            }
-
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialElectrificationJob(
@@ -1338,48 +1580,48 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialElectrificationJob(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "子项:", j.addSubitem))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "子项:", j.addSubitem))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.photoPath != null && j.photoPath != "") {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.photoPath != null && j.photoPath != "") {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialElectrificationJob)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
                 }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialElectrificationJob)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialFoundationExcavation(
@@ -1769,7 +2011,7 @@ class NetworkAdapter {
                         if (j.aerialStayguyHoleExcavation.foundationDefenceWall == 1.toLong()) {
                             "有"
                         } else {
-                            "无"
+                            " "
                         }
                     expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "基础护壁 :", baseArmrest))
                     expandList.add(
@@ -2155,32 +2397,32 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialWeldMake(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModels
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModels
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.designQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.designQuantity.toString()
+                        )
                     )
-                )
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialPoleTowerAssemblage(
@@ -2194,42 +2436,42 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialPoleTowerAssemblage(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
 
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.designQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.designQuantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "备注:", j.comment))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.photoPath != null && j.photoPath != "") {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPoleTowerAssemblage)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "备注:", j.comment))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.photoPath != null && j.photoPath != "") {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialPoleTowerAssemblage)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
+                        RecyclerviewAdapter(expandList)
                     )
+                    data.add(item)
                 }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.materialsName, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialEconomy(
@@ -2536,15 +2778,101 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getAerialFoundationCasting(towerSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val datas: MutableList<MultiStyleItem> = ArrayList()
-            val entity1 = it.message.aerialCastingFirsts
-            for (j in entity1) {
-                var isExit = false
-                var data2: MutableList<MultiStyleItem> = ArrayList()
-                for (k in datas) {
-                    if (k.expandListTitle == j.addContent) {
-                        val position = datas.indexOf(k)
-                        val data1 = k.expandListAdapter.mData.toMutableList()
+                val datas: MutableList<MultiStyleItem> = ArrayList()
+                val entity1 = it.message.aerialCastingFirsts
+                for (j in entity1) {
+                    var isExit = false
+                    var data2: MutableList<MultiStyleItem> = ArrayList()
+                    for (k in datas) {
+                        if (k.expandListTitle == j.addContent) {
+                            val position = datas.indexOf(k)
+                            val data1 = k.expandListAdapter.mData.toMutableList()
+                            data2.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "垫层方量(m³):",
+                                    j.cushionQuantity.toString()
+                                )
+                            )
+                            data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "模板类型:", j.templateType))
+                            data2.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "基坑位置:",
+                                    j.foundationPitLocation
+                                )
+                            )
+                            data2.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "主体混凝土类型:",
+                                    j.mainBetonType
+                                )
+                            )
+                            data2.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "主体混凝土标号:",
+                                    j.mainBetonNumber
+                                )
+                            )
+                            data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "浇制类型:", j.castType))
+                            data2.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "主体混凝土方量(m³):",
+                                    j.mainBetonQuantity.toString()
+                                )
+                            )
+                            if (j.rebarMake != null)
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "钢筋制作(t):",
+                                        j.rebarMake.toString()
+                                    )
+                                )
+                            if (j.rebarInstall != null)
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "钢筋安装(t):",
+                                        j.rebarInstall.toString()
+                                    )
+                                )
+                            if (j.footBoltInstall != null)
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "地脚螺栓安装(t):",
+                                        j.footBoltInstall.toString()
+                                    )
+                                )
+                            //照片上次
+                            data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                            data2[data2.size - 1].jumpListener = View.OnClickListener {
+                                val data = Bundle()
+                                data.putString("title", "照片上传")
+                                data.putString("key", "photoPath")
+                                data.putSerializable("serializable", j)
+                                data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingFirst)
+                                (fragment.activity as ProfessionalActivity).switchFragment(
+                                    ImageFragment.newInstance(data),
+                                    "Capture"
+                                )
+                            }
+                            data1.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.EXPAND_LIST, j.cushionType, "0",
+                                    RecyclerviewAdapter(data2)
+                                )
+                            )
+                            datas[position].expandListAdapter.mData = data1
+                            isExit = true
+                            break
+                        }
+                    }
+                    if (!isExit) {
                         data2.add(
                             MultiStyleItem(
                                 MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
@@ -2560,20 +2888,8 @@ class NetworkAdapter {
                                 j.foundationPitLocation
                             )
                         )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "主体混凝土类型:",
-                                j.mainBetonType
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "主体混凝土标号:",
-                                j.mainBetonNumber
-                            )
-                        )
+                        data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "主体混凝土类型:", j.mainBetonType))
+                        data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "主体混凝土标号:", j.mainBetonNumber))
                         data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "浇制类型:", j.castType))
                         data2.add(
                             MultiStyleItem(
@@ -2619,105 +2935,153 @@ class NetworkAdapter {
                                 "Capture"
                             )
                         }
+                        val data1: MutableList<MultiStyleItem> = ArrayList()
                         data1.add(
                             MultiStyleItem(
-                                MultiStyleItem.Options.EXPAND_LIST, j.cushionType, "0",
+                                MultiStyleItem.Options.EXPAND_LIST, "垫层类型:" + j.cushionType, "0",
                                 RecyclerviewAdapter(data2)
                             )
                         )
-                        datas[position].expandListAdapter.mData = data1
-                        isExit = true
-                        break
+                        datas.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
+                                RecyclerviewAdapter(data1)
+                            )
+                        )
                     }
                 }
-                if (!isExit) {
-                    data2.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "垫层方量(m³):",
-                            j.cushionQuantity.toString()
-                        )
-                    )
-                    data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "模板类型:", j.templateType))
-                    data2.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "基坑位置:",
-                            j.foundationPitLocation
-                        )
-                    )
-                    data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "主体混凝土类型:", j.mainBetonType))
-                    data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "主体混凝土标号:", j.mainBetonNumber))
-                    data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "浇制类型:", j.castType))
-                    data2.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "主体混凝土方量(m³):",
-                            j.mainBetonQuantity.toString()
-                        )
-                    )
-                    if (j.rebarMake != null)
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "钢筋制作(t):",
-                                j.rebarMake.toString()
+                val entity2 = it.message.aerialCastingSecondDTOS
+                for (j in entity2) {
+                    var isExit = false
+                    val aerialCastingBeton = j.aerialCastingBeton
+                    val aerialCastingMasonry = j.aerialCastingMasonry
+                    val data2: MutableList<MultiStyleItem> = ArrayList()
+                    for (k in datas) {
+                        if (k.expandListTitle == j.aerialCastingSecond.addContent) {
+                            val position = datas.indexOf(k)
+                            val data1 = k.expandListAdapter.mData.toMutableList()
+                            if (aerialCastingBeton != null) {
+
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "模板类型:",
+                                        aerialCastingBeton.templateType
+                                    )
+                                )
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "混凝土类型:",
+                                        aerialCastingBeton.betonType
+                                    )
+                                )
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "混凝土标号:",
+                                        aerialCastingBeton.betonNumber
+                                    )
+                                )
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "浇制类型:",
+                                        aerialCastingBeton.pourType
+                                    )
+                                )
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "混凝土方量(m³):",
+                                        aerialCastingBeton.betonQuantity.toString()
+                                    )
+                                )
+                                if (aerialCastingBeton.rebarMake != null)
+                                    data2.add(
+                                        MultiStyleItem(
+                                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                            "钢筋制作(t):",
+                                            aerialCastingBeton.rebarMake.toString()
+                                        )
+                                    )
+                                if (aerialCastingBeton.rebarInstall != null)
+                                    data2.add(
+                                        MultiStyleItem(
+                                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                            "钢筋安装(t):",
+                                            aerialCastingBeton.rebarInstall.toString()
+                                        )
+                                    )
+                                if (aerialCastingBeton.hangingNet != null)
+                                    data2.add(
+                                        MultiStyleItem(
+                                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                            "挂网(t):",
+                                            aerialCastingBeton.hangingNet.toString()
+                                        )
+                                    )
+                                //照片上次
+                                data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                                data2[data2.size - 1].jumpListener = View.OnClickListener {
+                                    val data = Bundle()
+                                    data.putString("title", "照片上传")
+                                    data.putString("key", "photoPath")
+                                    data.putSerializable("serializable", aerialCastingBeton)
+                                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingBeton)
+                                    (fragment.activity as ProfessionalActivity).switchFragment(
+                                        ImageFragment.newInstance(
+                                            data
+                                        ), "Capture"
+                                    )
+                                }
+                            } else if (aerialCastingMasonry != null) {
+                                val masonryShape =
+                                    if (aerialCastingMasonry.masonryShape == "1".toLong())
+                                        "锥形"
+                                    else
+                                        "斜坡形"
+                                data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "砌筑形状:", masonryShape))
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "砂浆比例:",
+                                        aerialCastingMasonry.mortarProportion.toString()
+                                    )
+                                )
+                                data2.add(
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                        "砌筑方量(m³):",
+                                        aerialCastingMasonry.masonryQuantity.toString()
+                                    )
+                                )
+                                data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                                data2[data2.size - 1].jumpListener = View.OnClickListener {
+                                    val data = Bundle()
+                                    data.putString("title", "照片上传")
+                                    data.putString("key", "photoPath")
+                                    data.putSerializable("serializable", aerialCastingMasonry)
+                                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingMasonry)
+                                    (fragment.activity as ProfessionalActivity).switchFragment(
+                                        ImageFragment.newInstance(
+                                            data
+                                        ), "Capture"
+                                    )
+                                }
+                            }
+                            data1.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.EXPAND_LIST, "浇砌筑方式:" + j.aerialCastingSecond.masonryWay, "0",
+                                    RecyclerviewAdapter(data2)
+                                )
                             )
-                        )
-                    if (j.rebarInstall != null)
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "钢筋安装(t):",
-                                j.rebarInstall.toString()
-                            )
-                        )
-                    if (j.footBoltInstall != null)
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "地脚螺栓安装(t):",
-                                j.footBoltInstall.toString()
-                            )
-                        )
-                    //照片上次
-                    data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                    data2[data2.size - 1].jumpListener = View.OnClickListener {
-                        val data = Bundle()
-                        data.putString("title", "照片上传")
-                        data.putString("key", "photoPath")
-                        data.putSerializable("serializable", j)
-                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingFirst)
-                        (fragment.activity as ProfessionalActivity).switchFragment(
-                            ImageFragment.newInstance(data),
-                            "Capture"
-                        )
+                            datas[position].expandListAdapter.mData = data1
+                            isExit = true
+                            break
+                        }
                     }
-                    val data1: MutableList<MultiStyleItem> = ArrayList()
-                    data1.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.EXPAND_LIST, "垫层类型:" + j.cushionType, "0",
-                            RecyclerviewAdapter(data2)
-                        )
-                    )
-                    datas.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.EXPAND_LIST, j.addContent, "0",
-                            RecyclerviewAdapter(data1)
-                        )
-                    )
-                }
-            }
-            val entity2 = it.message.aerialCastingSecondDTOS
-            for (j in entity2) {
-                var isExit = false
-                val aerialCastingBeton = j.aerialCastingBeton
-                val aerialCastingMasonry = j.aerialCastingMasonry
-                val data2: MutableList<MultiStyleItem> = ArrayList()
-                for (k in datas) {
-                    if (k.expandListTitle == j.aerialCastingSecond.addContent) {
-                        val position = datas.indexOf(k)
-                        val data1 = k.expandListAdapter.mData.toMutableList()
+                    if (!isExit) {
                         if (aerialCastingBeton != null) {
 
                             data2.add(
@@ -2788,9 +3152,8 @@ class NetworkAdapter {
                                 data.putSerializable("serializable", aerialCastingBeton)
                                 data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingBeton)
                                 (fragment.activity as ProfessionalActivity).switchFragment(
-                                    ImageFragment.newInstance(
-                                        data
-                                    ), "Capture"
+                                    ImageFragment.newInstance(data),
+                                    "Capture"
                                 )
                             }
                         } else if (aerialCastingMasonry != null) {
@@ -2814,6 +3177,7 @@ class NetworkAdapter {
                                     aerialCastingMasonry.masonryQuantity.toString()
                                 )
                             )
+                            //照片上次
                             data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
                             data2[data2.size - 1].jumpListener = View.OnClickListener {
                                 val data = Bundle()
@@ -2822,186 +3186,64 @@ class NetworkAdapter {
                                 data.putSerializable("serializable", aerialCastingMasonry)
                                 data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingMasonry)
                                 (fragment.activity as ProfessionalActivity).switchFragment(
-                                    ImageFragment.newInstance(
-                                        data
-                                    ), "Capture"
+                                    ImageFragment.newInstance(data),
+                                    "Capture"
                                 )
                             }
                         }
+
+                        val data1: MutableList<MultiStyleItem> = ArrayList()
                         data1.add(
                             MultiStyleItem(
                                 MultiStyleItem.Options.EXPAND_LIST, "浇砌筑方式:" + j.aerialCastingSecond.masonryWay, "0",
                                 RecyclerviewAdapter(data2)
                             )
                         )
-                        datas[position].expandListAdapter.mData = data1
-                        isExit = true
-                        break
+                        datas.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.EXPAND_LIST, j.aerialCastingSecond.addContent, "0",
+                                RecyclerviewAdapter(data1)
+                            )
+                        )
                     }
                 }
-                if (!isExit) {
-                    if (aerialCastingBeton != null) {
-
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "模板类型:",
-                                aerialCastingBeton.templateType
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "混凝土类型:",
-                                aerialCastingBeton.betonType
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "混凝土标号:",
-                                aerialCastingBeton.betonNumber
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "浇制类型:",
-                                aerialCastingBeton.pourType
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "混凝土方量(m³):",
-                                aerialCastingBeton.betonQuantity.toString()
-                            )
-                        )
-                        if (aerialCastingBeton.rebarMake != null)
-                            data2.add(
-                                MultiStyleItem(
-                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                    "钢筋制作(t):",
-                                    aerialCastingBeton.rebarMake.toString()
-                                )
-                            )
-                        if (aerialCastingBeton.rebarInstall != null)
-                            data2.add(
-                                MultiStyleItem(
-                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                    "钢筋安装(t):",
-                                    aerialCastingBeton.rebarInstall.toString()
-                                )
-                            )
-                        if (aerialCastingBeton.hangingNet != null)
-                            data2.add(
-                                MultiStyleItem(
-                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                    "挂网(t):",
-                                    aerialCastingBeton.hangingNet.toString()
-                                )
-                            )
-                        //照片上次
-                        data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                        data2[data2.size - 1].jumpListener = View.OnClickListener {
-                            val data = Bundle()
-                            data.putString("title", "照片上传")
-                            data.putString("key", "photoPath")
-                            data.putSerializable("serializable", aerialCastingBeton)
-                            data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingBeton)
-                            (fragment.activity as ProfessionalActivity).switchFragment(
-                                ImageFragment.newInstance(data),
-                                "Capture"
-                            )
-                        }
-                    } else if (aerialCastingMasonry != null) {
-                        val masonryShape =
-                            if (aerialCastingMasonry.masonryShape == "1".toLong())
-                                "锥形"
-                            else
-                                "斜坡形"
-                        data2.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "砌筑形状:", masonryShape))
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "砂浆比例:",
-                                aerialCastingMasonry.mortarProportion.toString()
-                            )
-                        )
-                        data2.add(
-                            MultiStyleItem(
-                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "砌筑方量(m³):",
-                                aerialCastingMasonry.masonryQuantity.toString()
-                            )
-                        )
-                        //照片上次
-                        data2.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                        data2[data2.size - 1].jumpListener = View.OnClickListener {
-                            val data = Bundle()
-                            data.putString("title", "照片上传")
-                            data.putString("key", "photoPath")
-                            data.putSerializable("serializable", aerialCastingMasonry)
-                            data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingMasonry)
-                            (fragment.activity as ProfessionalActivity).switchFragment(
-                                ImageFragment.newInstance(data),
-                                "Capture"
-                            )
-                        }
+                data.addAll(datas)
+                val aerialCastingFoundationFences = it.message.aerialCastingFoundationFences
+                val data1: MutableList<MultiStyleItem> = ArrayList()
+                for (j in aerialCastingFoundationFences) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "数量:", j.quantity.toString()))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    if (j.photoPath != null && j.photoPath != "") {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
                     }
-
-                    val data1: MutableList<MultiStyleItem> = ArrayList()
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingFoundationFence)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
                     data1.add(
                         MultiStyleItem(
-                            MultiStyleItem.Options.EXPAND_LIST, "浇砌筑方式:" + j.aerialCastingSecond.masonryWay, "0",
-                            RecyclerviewAdapter(data2)
-                        )
-                    )
-                    datas.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.EXPAND_LIST, j.aerialCastingSecond.addContent, "0",
-                            RecyclerviewAdapter(data1)
+                            MultiStyleItem.Options.EXPAND_LIST, j.fenceType, "0",
+                            RecyclerviewAdapter(expandList)
                         )
                     )
                 }
-            }
-            data.addAll(datas)
-            val aerialCastingFoundationFences = it.message.aerialCastingFoundationFences
-            val data1: MutableList<MultiStyleItem> = ArrayList()
-            for (j in aerialCastingFoundationFences) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "数量:", j.quantity.toString()))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                if (j.photoPath != null && j.photoPath != "") {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateAerialCastingFoundationFence)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                data1.add(
+                data.add(
                     MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, j.fenceType, "0",
-                        RecyclerviewAdapter(expandList)
+                        MultiStyleItem.Options.EXPAND_LIST, "防护类型:基础防护", "0",
+                        RecyclerviewAdapter(data1)
                     )
                 )
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            data.add(
-                MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, "防护类型:基础防护", "0",
-                    RecyclerviewAdapter(data1)
-                )
-            )
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataAerialGroundConnectionLay(
@@ -3379,33 +3621,33 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getListFacility(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModel
+                val entity = it.message
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.quantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.quantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.HINT, "备注:\n${j.remark}"))
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.materialName, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.HINT, "备注:\n${j.remark}"))
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.materialName, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataNodeHouseholdTableInstallation(
@@ -3418,100 +3660,100 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getNodeHouseholdTableInstallation(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.listMeterMaterials
-            if (entity.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "户表安装",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
+                val entity = it.message.listMeterMaterials
+                if (entity.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "户表安装",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
                     )
-                )
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModel
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "数量(${j.unit}):",
-                        j.designQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "数量(${j.unit}):",
+                            j.designQuantity.toString()
+                        )
                     )
-                )
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, "物料名称:" + j.materialName, "0",
-                        RecyclerviewAdapter(expandList)
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST, "物料名称:" + j.materialName, "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
+                    data[data.size - 1].expandListAdapter.mData = mdata
+                }
+
+
+                val entity1 = it.message.meterIndexRegisters
+                if (entity1.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "表计编号登记",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
+                    )
+                for (j in entity1) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "原表计号:", j.oldMeterInde))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "原表计号照片上传:", false))
+                    if (j.oldPhotoPath != null) {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.oldPhotoPath.toString(), "oldPhotoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "原表计号照片上传")
+                        data.putString("key", "oldPhotoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMeterIndexRegister)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "新表计号:", j.newMeterInde))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "新表计号照片上传:", false))
+                    if (j.newPhotoPath != null) {
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.newPhotoPath.toString(), "newPhotoPath"))
+                    }
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        val data = Bundle()
+                        data.putString("title", "新表计号照片上传")
+                        data.putString("key", "newPhotoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMeterIndexRegister)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST, "${it.message.meterIndexRegisters.indexOf(j) + 1}#", "0",
+                            RecyclerviewAdapter(expandList)
+                        )
+                    )
+                    data[data.size - 1].expandListAdapter.mData = mdata
+                }
+
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-
-
-            val entity1 = it.message.meterIndexRegisters
-            if (entity1.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "表计编号登记",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
-                    )
-                )
-            for (j in entity1) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "原表计号:", j.oldMeterInde))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "原表计号照片上传:", false))
-                if (j.oldPhotoPath != null) {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.oldPhotoPath.toString(), "oldPhotoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "原表计号照片上传")
-                    data.putString("key", "oldPhotoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMeterIndexRegister)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "新表计号:", j.newMeterInde))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "新表计号照片上传:", false))
-                if (j.newPhotoPath != null) {
-                    UnSerializeDataBase.imgList.add(BitmapMap(j.newPhotoPath.toString(), "newPhotoPath"))
-                }
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    val data = Bundle()
-                    data.putString("title", "新表计号照片上传")
-                    data.putString("key", "newPhotoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMeterIndexRegister)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
-                    )
-                }
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, "${it.message.meterIndexRegisters.indexOf(j) + 1}#", "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
-            }
-
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataNodePreformedUnitMakeInstallation(
@@ -3524,135 +3766,135 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getNodePreformedUnitMakeInstallation(id, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.makeVolumes
-            if (entity.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "制作方量",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
+                val entity = it.message.makeVolumes
+                if (entity.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "制作方量",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
                     )
-                )
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "构件型号:",
-                        j.componentModel
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "构件型号:",
+                            j.componentModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "钢筋型号:",
-                        j.rebarModel
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "钢筋型号:",
+                            j.rebarModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "钢筋重量(t):",
-                        j.rebarWeight.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "钢筋重量(t):",
+                            j.rebarWeight.toString()
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "预埋铁件(t):",
-                        j.preBuriedIron.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "预埋铁件(t):",
+                            j.preBuriedIron.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传:", false))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传:", false))
 
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null && j.photoPath != "") {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null && j.photoPath != "") {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMakeVolume)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMakeVolume)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST, "构件名称:${j.name}", "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
+                    data[data.size - 1].expandListAdapter.mData = mdata
                 }
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, "构件名称:${j.name}", "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
-            }
 
 
-            val entity1 = it.message.installVolumes
-            if (entity1.size > 0)
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "安装方量",
-                        "0",
-                        RecyclerviewAdapter(ArrayList())
+                val entity1 = it.message.installVolumes
+                if (entity1.size > 0)
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "安装方量",
+                            "0",
+                            RecyclerviewAdapter(ArrayList())
+                        )
                     )
-                )
-            for (j in entity1) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "构件型号:",
-                        j.componentModel
+                for (j in entity1) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "构件型号:",
+                            j.componentModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "构件类型:",
-                        j.kind
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "构件类型:",
+                            j.kind
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "预埋铁件(t):",
-                        j.preBuriedIron.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "预埋铁件(t):",
+                            j.preBuriedIron.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传:", false))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传:", false))
 
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null && j.photoPath != "") {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null && j.photoPath != "") {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateInstallVolume)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateInstallVolume)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
+                    mdata.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST, "构件名称:${j.name}", "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
+                    data[data.size - 1].expandListAdapter.mData = mdata
                 }
-                val mdata = data[data.size - 1].expandListAdapter.mData.toMutableList()
-                mdata.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST, "构件名称:${j.name}", "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
-                data[data.size - 1].expandListAdapter.mData = mdata
-            }
 
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
+            }
     }
 
     fun getDataNodeGroundingInstallation(
@@ -4855,70 +5097,70 @@ class NetworkAdapter {
         val oldSize = adapter.mData.size
         val result = getNodeMaterial(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.material3DTOS
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                for (k in j.materials) {
-                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "物料名称:", k.name))
-                    if (k.specificationsModel != null)
+                val entity = it.message.material3DTOS
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    for (k in j.materials) {
+                        expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "物料名称:", k.name))
+                        if (k.specificationsModel != null)
+                            expandList.add(
+                                MultiStyleItem(
+                                    MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                    "规格型号:",
+                                    k.specificationsModel.toString()
+                                )
+                            )
                         expandList.add(
                             MultiStyleItem(
                                 MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                                "规格型号:",
-                                k.specificationsModel.toString()
+                                "单重(t):",
+                                k.pieceWeight.toString()
                             )
                         )
-                    expandList.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "单重(t):",
-                            k.pieceWeight.toString()
-                        )
-                    )
-                    expandList.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "数量:",
-                            k.quantity.toString()
-                        )
-                    )
-                }
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "小计重量(t)",
-                        j.materialTransportStatistics.aggregate.toString()
-                    )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.materialTransportStatistics.photoPath != null) {
-                        UnSerializeDataBase.imgList.add(
-                            BitmapMap(
-                                j.materialTransportStatistics.photoPath.toString(),
-                                "photoPath"
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "数量:",
+                                k.quantity.toString()
                             )
                         )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j.materialTransportStatistics)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMaterialTransportStatistics)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "小计重量(t)",
+                            j.materialTransportStatistics.aggregate.toString()
+                        )
                     )
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.materialTransportStatistics.photoPath != null) {
+                            UnSerializeDataBase.imgList.add(
+                                BitmapMap(
+                                    j.materialTransportStatistics.photoPath.toString(),
+                                    "photoPath"
+                                )
+                            )
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j.materialTransportStatistics)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateMaterialTransportStatistics)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
+                    }
+                    val item = MultiStyleItem(
+                        MultiStyleItem.Options.EXPAND_LIST, j.materialTransportStatistics.kind, "0",
+                        RecyclerviewAdapter(expandList)
+                    )
+                    data.add(item)
                 }
-                val item = MultiStyleItem(
-                    MultiStyleItem.Options.EXPAND_LIST, j.materialTransportStatistics.kind, "0",
-                    RecyclerviewAdapter(expandList)
-                )
-                data.add(item)
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataCableHeadMake(
@@ -4931,52 +5173,52 @@ class NetworkAdapter {
         var data = adapter.mData.toMutableList()
         val result = getCableHeadMake(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.cableHeadMakes
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageGrade))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModel
+                val entity = it.message.cableHeadMakes
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageGrade))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "制作数量:",
-                        j.makeingQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "制作数量:",
+                            j.makeingQuantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null) {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null) {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableHeadMake)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableHeadMake)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "${entity.indexOf(j) + 1}#",
+                            "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
                 }
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "${entity.indexOf(j) + 1}#",
-                        "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataCableFireroofing(
@@ -4989,35 +5231,35 @@ class NetworkAdapter {
         var data = adapter.mData.toMutableList()
         val result = getCableFireroofing(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.cableFireroofingMaterialsTypes
-            val cableFireroofing = it.message.cableFireroofing
-            for (j in entity) {
-                val type = if (j.specificationsModel == null) "" else j.specificationsModel.toString()
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.FOUR_DISPLAY,
-                        j.name,
-                        j.unit,
-                        type,
-                        j.designQuantity.toString()
+                val entity = it.message.cableFireroofingMaterialsTypes
+                val cableFireroofing = it.message.cableFireroofing
+                for (j in entity) {
+                    val type = if (j.specificationsModel == null) "" else j.specificationsModel.toString()
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.FOUR_DISPLAY,
+                            j.name,
+                            j.unit,
+                            type,
+                            j.designQuantity.toString()
+                        )
                     )
-                )
-            }
-            data.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-            data[data.size - 1].jumpListener = View.OnClickListener {
-                if (cableFireroofing.photoPath != null) {
-                    UnSerializeDataBase.imgList.add(BitmapMap(cableFireroofing.photoPath.toString(), "photoPath"))
                 }
-                val data = Bundle()
-                data.putString("title", "照片上传")
-                data.putString("key", "photoPath")
-                data.putSerializable("serializable", cableFireroofing)
-                data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableFireroofing)
-                (fragment.activity as ProfessionalActivity).switchFragment(ImageFragment.newInstance(data), "Capture")
+                data.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                data[data.size - 1].jumpListener = View.OnClickListener {
+                    if (cableFireroofing.photoPath != null) {
+                        UnSerializeDataBase.imgList.add(BitmapMap(cableFireroofing.photoPath.toString(), "photoPath"))
+                    }
+                    val data = Bundle()
+                    data.putString("title", "照片上传")
+                    data.putString("key", "photoPath")
+                    data.putSerializable("serializable", cableFireroofing)
+                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableFireroofing)
+                    (fragment.activity as ProfessionalActivity).switchFragment(ImageFragment.newInstance(data), "Capture")
+                }
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataCableBridge(
@@ -5030,45 +5272,45 @@ class NetworkAdapter {
         var data = adapter.mData.toMutableList()
         val result = getCableBridge(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.cableBridges
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "铺设长度:",
-                        j.layLength.toString()
+                val entity = it.message.cableBridges
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "铺设长度:",
+                            j.layLength.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "型号:", j.model))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null) {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "型号:", j.model))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null) {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableBridge)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableBridge)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "${entity.indexOf(j) + 1}#",
+                            "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
                 }
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "${entity.indexOf(j) + 1}#",
-                        "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataCableLaying(
@@ -5081,59 +5323,59 @@ class NetworkAdapter {
         var data = adapter.mData.toMutableList()
         val result = getCableLaying(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.cableLayings
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageGrade))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModel
+                val entity = it.message.cableLayings
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "电压等级:", j.voltageGrade))
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "规格型号:",
+                            j.specificationsModel
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "敷设长度(km):",
-                        j.layingLength.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "敷设长度(km):",
+                            j.layingLength.toString()
+                        )
                     )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "回路数(回):",
-                        j.loopQuantity.toString()
+                    expandList.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                            "回路数(回):",
+                            j.loopQuantity.toString()
+                        )
                     )
-                )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null) {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null) {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableLaying)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateCableLaying)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "${entity.indexOf(j) + 1}#",
+                            "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
                 }
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "${entity.indexOf(j) + 1}#",
-                        "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataListCablePipe(
@@ -5146,91 +5388,91 @@ class NetworkAdapter {
         var data = adapter.mData.toMutableList()
         val result = getListCablePipe(nodeSubitemId, baseUrl).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val entity = it.message.listCablePipes
-            for (j in entity) {
-                val expandList: MutableList<MultiStyleItem> = ArrayList()
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "配管类型:", j.pipeKind))
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "规格型号:",
-                        j.specificationsModel
-                    )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "单孔长度(m):",
-                        j.haploporeLength.toString()
-                    )
-                )
-                expandList.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                        "孔数(孔):",
-                        j.holeCount.toString()
-                    )
-                )
-                if (j.concretePack != null)
+                val entity = it.message.listCablePipes
+                for (j in entity) {
+                    val expandList: MutableList<MultiStyleItem> = ArrayList()
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "添加内容:", j.kind))
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_LEFT, "配管类型:", j.pipeKind))
                     expandList.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "混凝土包装(m³):",
-                            j.concretePack.toString()
+                            "规格型号:",
+                            j.specificationsModel
                         )
                     )
-                if (j.length != null)
                     expandList.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "长(m):",
-                            j.length.toString()
+                            "单孔长度(m):",
+                            j.haploporeLength.toString()
                         )
                     )
-                if (j.wide != null)
                     expandList.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "宽(m):",
-                            j.wide.toString()
+                            "孔数(孔):",
+                            j.holeCount.toString()
                         )
                     )
-                if (j.deep != null)
-                    expandList.add(
-                        MultiStyleItem(
-                            MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
-                            "深(m):",
-                            j.deep.toString()
+                    if (j.concretePack != null)
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "混凝土包装(m³):",
+                                j.concretePack.toString()
+                            )
                         )
-                    )
-                expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
-                expandList[expandList.size - 1].jumpListener = View.OnClickListener {
-                    if (j.photoPath != null) {
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                    if (j.length != null)
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "长(m):",
+                                j.length.toString()
+                            )
+                        )
+                    if (j.wide != null)
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "宽(m):",
+                                j.wide.toString()
+                            )
+                        )
+                    if (j.deep != null)
+                        expandList.add(
+                            MultiStyleItem(
+                                MultiStyleItem.Options.SINGLE_DISPLAY_LEFT,
+                                "深(m):",
+                                j.deep.toString()
+                            )
+                        )
+                    expandList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "照片上传", false))
+                    expandList[expandList.size - 1].jumpListener = View.OnClickListener {
+                        if (j.photoPath != null) {
+                            UnSerializeDataBase.imgList.add(BitmapMap(j.photoPath.toString(), "photoPath"))
+                        }
+                        val data = Bundle()
+                        data.putString("title", "照片上传")
+                        data.putString("key", "photoPath")
+                        data.putSerializable("serializable", j)
+                        data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateListCablePipe)
+                        (fragment.activity as ProfessionalActivity).switchFragment(
+                            ImageFragment.newInstance(data),
+                            "Capture"
+                        )
                     }
-                    val data = Bundle()
-                    data.putString("title", "照片上传")
-                    data.putString("key", "photoPath")
-                    data.putSerializable("serializable", j)
-                    data.putString("baseUrl", Constants.HttpUrlPath.Professional.updateListCablePipe)
-                    (fragment.activity as ProfessionalActivity).switchFragment(
-                        ImageFragment.newInstance(data),
-                        "Capture"
+                    data.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.EXPAND_LIST,
+                            "${entity.indexOf(j) + 1}#",
+                            "0",
+                            RecyclerviewAdapter(expandList)
+                        )
                     )
                 }
-                data.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.EXPAND_LIST,
-                        "${entity.indexOf(j) + 1}#",
-                        "0",
-                        RecyclerviewAdapter(expandList)
-                    )
-                )
+                adapter.mData = data
+                adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
             }
-            adapter.mData = data
-            adapter.notifyItemRangeInserted(oldSize, adapter.mData.size - oldSize)
-        }
     }
 
     fun getDataCableTest(
@@ -5373,30 +5615,251 @@ class NetworkAdapter {
         for (j in mData) {
             when (j.options) {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
-//                    Log.i("inputSingleTitle + inputSingleContent","${j.inputSingleTitle.contains("身份证")} ${j.inputSingleContent.length != 18} ${j.inputSingleTitle}+${j.inputSingleContent.length}")
-                        if (j.inputSingleContent == "") {
-                            result = "${j.inputSingleTitle.replace("：", "")}不能为空"
-                        } else if ((j.inputSingleTitle.contains("电话") || (j.inputSingleTitle == "手机号码")) && j.inputSingleContent.length != 11) {
-                            result = "请输入正确的11位${j.inputSingleTitle.replace("：", "")}"
-                        } else if (j.inputSingleTitle.contains("身份证") && j.inputSingleContent.length != 18) {
-                            result = "请输入正确的18位${j.inputSingleTitle.replace("：", "")}"
-                        } else if (j.inputSingleTitle == "企业注册号：" && (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18)) {
-                            result = "请输入正确的15位${j.inputSingleTitle.replace("：", "")}或18位统一社会信用代码"
+                    if(j.necessary==true){//输入必选限制条件
+                        when(j.inputSingleTitle){
+                            "年龄"->{//报名限制
+                                if (j.inputSingleContent == "")
+                                { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
+                                else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)
+                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围"}
+                            }
+                            "名称","规格型号","数量","单位","牌照号码","单价","姓名",
+                            "报价清单(按单价)","个人证件名称","工作经验" ,
+                            "项目","项目特征描述","计量单位",
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名"->{
+                                if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
+                            }
                         }
-                        Log.i("result",result)
-                        if (result != "") {
-                            ToastHelper.mToast(context,result)
-                            return false
+                    }else {
+                        when (j.inputSingleTitle) {
+                            "电话", "手机号码", "法人代表电话" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 11) {
+                                    result = "请输入正确的11位${j.inputSingleTitle.replace("：", "")}"
+                                }
+                            }
+                            "身份证" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 18) {
+                                    result = "请输入正确的18位${j.inputSingleTitle.replace("：", "")}"
+                                }
+                            }
+                            "企业注册号" -> {
+                                if (j.inputSingleContent == "") {
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
+                                } else if (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18) {
+                                    result = "请输入正确的15位${j.inputSingleTitle.replace(
+                                        "：",
+                                        ""
+                                    )}或18位统一社会信用代码"
+                                }
+                            }
                         }
                     }
-                MultiStyleItem.Options.INPUT_WITH_UNIT->{
-                    if(j.inputUnitContent=="")
-                        result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                     if (result != "") {
                         ToastHelper.mToast(context,result)
                         return false
                     }
                 }
+                MultiStyleItem.Options.INPUT_RANGE->{
+                    when (j.inputRangeTitle) {//此处为可选项但需检验
+                        "年龄要求" -> {
+                            if (j.inputRangeValue1 != "" && j.inputRangeValue2 != "") {
+                                if (j.inputRangeValue1.toInt() >= j.inputRangeValue2.toInt() || j.inputRangeValue2.toInt() > 60 || j.inputRangeValue1.toInt() < 16) {
+                                    result =
+                                        "请输入正确${j.inputRangeTitle.replace("要求", "")}范围16-60岁"
+                                }
+                            } else if (j.inputRangeValue1 == "" && j.inputRangeValue2 == "") {
+                                result = ""
+                            } else {
+                                result = "如需填写${j.inputRangeTitle.replace("要求", "")}请填写完整"
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.singleDisplayRightTitle) {
+                            "需要人数(人)" -> {
+                                if (j.singleDisplayRightContent.toInt() == 0) {
+                                    result = "请至少填写一条成员清册数据"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.INPUT_WITH_UNIT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.inputUnitTitle) {
+                            "工作经验" -> {//需求发布限制
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 45) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-45年"
+                                }
+                            }
+                            "车辆数量"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 15) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-15辆"
+                                }
+                            }
+                            "计划工期", "发布有效期", "需要桩基","需求人数","需要人数","马匹数量","有效期","施工工期" -> {
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                }
+                            }
+                            //报名车辆限制
+                            "核载乘客"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 10) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-10人"
+                                }
+                            }
+                            "核准载重量"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 30) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-30吨"
+                                }
+                            }
+                            "车厢长度"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 15) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-15米"
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        when (j.inputUnitTitle) {
+                            "带驾驶员","不带驾驶员"->{
+                                if (j.inputUnitContent!=""&&(j.inputUnitContent.toDouble() < 1 || j.inputUnitContent.toDouble() > 1000)) {
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围1-1000元"
+                                }
+                            }
+                            "年龄要求"->{
+                                if (j.inputUnitContent!=""&&(j.inputUnitContent.toInt() < 16 || j.inputUnitContent.toInt() > 60)) {
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围16-60元"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.inputMultiUnitTitle) {
+                            "薪资标准","薪资要求"->{
+                                if (j.inputMultiContent == ""&&j.inputMultiSelectUnit!="面议") {
+                                    result = "${j.inputMultiUnitTitle.replace("：", "")}不能为空"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.MULTI_BUTTON->
+                {
+                    if(j.buttonTitle.contains("清册")) {
+                        if (j.necessary == false)
+                            result = "${j.buttonTitle.replace("：", "")}没有填完整"
+                        if (result != "") {
+                            ToastHelper.mToast(context, result)
+                            return false
+                        }
+                    }
+                }
+                MultiStyleItem.Options.TWO_PAIR_INPUT->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.twoPairInputTitle) {
+                            "规格条数" -> {
+                                if (j.twoPairInputValue1 != "" && j.twoPairInputValue2 != "") {
+                                    result = ""
+                                } else {
+                                    result = "${j.twoPairInputTitle.replace("：", "")}没有填完整"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context, result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG,
+                MultiStyleItem.Options.SELECT_DIALOG,
+                MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG->{
+                    if(j.necessary==true) {//为true此项为必填需检验
+                        when (j.selectTitle) {
+                            "项目地点", "孔洞最大直径","岗位类别",
+                            "可实施地域","运送财产保险" -> {
+                                if (j.selectContent == "") {
+                                    result = "${j.selectTitle.replace("：", "")}没有选择"
+                                }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON->{
+                    if(j.necessary==true) {
+                        when (j.radioButtonTitle) {
+                            "性别要求", "机械设备", "跨越架材质", "财务运输保险",
+                            "配送", "合作方属性", "薪资标准","费用标准","性别",
+                            "可作业范围","是否配送"-> {
+                                if (j.radioButtonValue == "")
+                                    result = "${j.radioButtonTitle.replace("：", "")}没有选择"
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+                MultiStyleItem.Options.MULTI_CHECKBOX->{
+                    if(j.necessary==true) {
+                        when (j.checkboxTitle) {
+                            "电压等级", "作业类别", "操作次级", "可实施范围","可操作电压等级",
+                            "可设计电压等级","可设计范围"-> {
+                                result = "${j.checkboxTitle.replace("：", "")}没有选择"
+                                for (i in 0 until j.checkboxValueList.size)
+                                    if (j.checkboxValueList[i]) {
+                                        result = ""
+                                    }
+                            }
+                        }
+                    }
+                    if (result != "") {
+                        ToastHelper.mToast(context,result)
+                        return false
+                    }
+                }
+
+
             }
         }
         return true
@@ -5407,35 +5870,101 @@ class NetworkAdapter {
         return startSendMessage(requestBody,baseUrl)
     }
     fun putSimpleMessage(jsonObject:JSONObject,baseUrl: String):Observable<ResponseBody>{
+
         val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
         return putSimpleMessage(requestBody,baseUrl)
     }
-
     /**
      * @我的信息
      */
     fun getDataUser():Observable<HttpResult<UserEntity>>{
-         return Observable.create<HttpResult<UserEntity>> {
+        return Observable.create<HttpResult<UserEntity>> {
                 target->getUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 target.onNext(it)
             },{
                 it.printStackTrace()
             })
-         }
+        }
     }
+
     /**
-     *@会员等级查询
+     * @我的家庭信息
      */
-    fun getDataUserOpenPower():Observable<HttpResult<String>>{
-        return Observable.create<HttpResult<String>> {
-                target->
-            getUserOpenPower().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun getDataHomeChildren():Observable<HttpResult<List<HomeChildrensEntity>>>{
+        return Observable.create<HttpResult<List<HomeChildrensEntity>>> {
+                target->getHomeChildren().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 target.onNext(it)
             },{
                 it.printStackTrace()
             })
+        }
+    }
+    /**
+     * @我的学历信息
+     */
+    fun getDataEducationBackground():Observable<HttpResult<List<EducationBackgroundsEntity>>>{
+        return Observable.create<HttpResult<List<EducationBackgroundsEntity>>> {
+                target->getEducationBackground().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+        }
+    }
+    /**
+     * @我的紧急联系人
+     */
+    fun getDataUrgentPeople():Observable<HttpResult<List<UrgentPeoplesEntity>>>{
+        return Observable.create<HttpResult<List<UrgentPeoplesEntity>>> {
+                target->getUrgentPeople().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+        }
+    }
+    /**
+     * @我的银行卡信息
+     */
+    fun getDataBankCard():Observable<HttpResult<List<BankCardsEntity>>>{
+        return Observable.create<HttpResult<List<BankCardsEntity>>> {
+                target->getBankCard().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+        }
+    }
+    /**
+     * @我的个人材料
+     */
+    fun getDataCertificate():Observable<HttpResult<List<CertificatesEntity>>>{
+        return Observable.create<HttpResult<List<CertificatesEntity>>> {
+                target->getCertificate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                target.onNext(it)
+            },{
+                it.printStackTrace()
+            })
+        }
+    }
+    /**
+     *@会员等级查询
+     */
+    fun getDataUserOpenPower():Observable<HttpResult<OpenPowerEntity>>{
+        return Observable.create<HttpResult<OpenPowerEntity>> {
+                target->
+            getUserOpenPower().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    target.onNext(it)
+                },{
+                    it.printStackTrace()
+                })
         }
     }
     /**
@@ -5467,7 +5996,7 @@ class NetworkAdapter {
         getAliPayOrderStr(productId).subscribeOn(Schedulers.io()).observeOn(
             AndroidSchedulers.mainThread())
             .subscribe({
-                    PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"),productId.toInt())
+                PaymentHelper.startAlipay(context as VipActivity,JSONObject(it.string()).getString("message"),productId.toInt())
             },{
                 ToastHelper.mToast(context,"网络异常")
                 it.printStackTrace()

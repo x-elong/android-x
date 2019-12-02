@@ -24,5 +24,5 @@
             android:id="@+id/et_input_unit_value" android:textSize="@dimen/font_tv_hint_15"
             android:background="@color/transparent" android:layout_marginTop="@dimen/top_10"
             android:layout_marginLeft="@dimen/left_10" android:layout_marginBottom="@dimen/bottom_10"
-            android:layout_weight="80" android:layout_marginRight="@dimen/right_50" android:gravity="right"/>
+            android:layout_weight="80"  android:layout_marginRight="@dimen/general_20" android:gravity="right"/>
 </LinearLayout>

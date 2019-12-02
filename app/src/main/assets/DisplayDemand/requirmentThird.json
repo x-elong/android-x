@@ -1,11 +1,6 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"序号：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目名称：",
     "singleDisplayRightContent":""
   },
@@ -16,12 +11,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"数量：",
+    "singleDisplayRightTitle":"计量单位：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计量单位：",
+    "singleDisplayRightTitle":"数量：",
     "singleDisplayRightContent":""
   },
   {

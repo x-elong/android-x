@@ -12,12 +12,18 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.startSendMessage
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.application_apply_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_demand_display.view.*
+import org.json.JSONObject
 
 class ApplicationSubmitFragment:Fragment() {
     companion object{
@@ -29,6 +35,10 @@ class ApplicationSubmitFragment:Fragment() {
     }
     var MemberDataSize:Int = 0
     var VehicleDataSize:Int = 0
+    var comment:String=""//备注
+    var requirementPersonId:String=""//id
+    var typeVariety:String=""//类型
+    var vipId:String=""
     lateinit var mView: View
     var adapter: RecyclerviewAdapter?=null
     override fun onCreateView(
@@ -52,7 +62,95 @@ class ApplicationSubmitFragment:Fragment() {
         mView.button_ok.setOnClickListener {
             val networkAdapter= NetworkAdapter(adapter!!.mData,mView.context)
             if(networkAdapter.check()){
-                networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+adapter!!.urlPath)
+                val loadingDialog = LoadingDialog(mView.context, "正在报名中...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
+                for(i in adapter!!.mData ) {
+                    when (i.options){
+                        MultiStyleItem.Options.INPUT_WITH_TEXTAREA->{
+                            comment=i.textAreaContent
+                        }
+                    }
+                }
+                var json=JSONObject()
+                when(arguments!!.getInt("type")) {
+                    Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal -> {//个人
+                        json.put(
+                            "personRequirementInformationCheck", JSONObject().put(
+                                "requirementPersonId", requirementPersonId
+                            ).put("comment", comment)
+                        )
+                    }
+                    Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal,//主网
+                    Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal,//配网
+                    Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal,//变电
+                    Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal,//测量设计
+                    Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal,//实验调试
+                    Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal,//跨越架
+                    Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal//运维
+                    -> {
+                        json.put(
+                            "requirementTeamLoggingCheck", JSONObject().put(
+                                "requirementCaravanTransportId", requirementPersonId
+                            ).put("type",typeVariety).put("comment", comment)).
+                            put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
+
+                    }
+                    Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal//马帮运输
+                    ->{
+                        json.put(
+                            "requirementTeamLoggingCheck", JSONObject().put(
+                                "requirementCaravanTransportId", requirementPersonId
+                            ).put("type",typeVariety).put("comment", comment)).
+                            put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
+                    }
+                    Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal,//桩基
+                    Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal//非开挖
+                    ->{
+                        json.put(
+                            "requirementTeamLoggingCheck", JSONObject().put(
+                                "requirementCaravanTransportId", requirementPersonId
+                            ).put("type",typeVariety).put("comment", comment)).
+                            put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
+                    }
+                    Constants.FragmentType.TOOL_LEASING_TYPE.ordinal,//工器具
+                    Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal,//设备
+                    Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal//机械
+                    ->{
+                        json.put(
+                            "leaseLoggingCheck", JSONObject().put(
+                                "requirementLeaseMachineryId", requirementPersonId
+                            ).put("vipId",vipId).put("type",typeVariety).put("comment", comment)
+                        ).put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
+                    }
+                    Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->//三方
+                    {
+                        json.put(
+                            "requirementThirdLoggingCheck", JSONObject().put(
+                                "requirementThirdPartyId", requirementPersonId
+                            ).put("comment", comment)
+                        ).put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
+                    }
+                }
+
+                networkAdapter.generateJsonRequestBody(json).subscribe {
+                    val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+adapter!!.urlPath)
+                        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                        .subscribe({
+                            loadingDialog.dismiss()
+                            val jsonObject = JSONObject(it.string())
+                            if(jsonObject.getInt("code")==200){
+                                ToastHelper.mToast(mView.context,"报名成功")
+                            }
+                            else{
+                                ToastHelper.mToast(mView.context,"报名失败")
+                            }
+
+                        },{
+                            loadingDialog.dismiss()
+                            ToastHelper.mToast(mView.context,"提交报名信息异常")
+                            it.printStackTrace()
+                        })
+                }
             }
         }
         return mView
@@ -66,132 +164,162 @@ class ApplicationSubmitFragment:Fragment() {
         when(arguments!!.getInt("type")){
             Constants.FragmentType.PERSONAL_GENERAL_WORKERS_TYPE.ordinal->//个人
             {
-                MemberDataSize=arguments!!.getString("needPeopleNumber").toInt()
                 bundle.putInt("type",arguments!!.getInt("type"))
+                var listdata=arguments!!.getSerializable("RequirementPersonDetail") as RequirementPersonDetail
                 bundle.putSerializable("RequirementPersonDetail",arguments!!.getSerializable("RequirementPersonDetail"))
+                requirementPersonId= listdata.id
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertPersonRequirementInformationCheck
             }
-            Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->//主网
+            Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal,//主网
+            Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal,//配网
+            Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal,//变电
+            Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal,//测量设计
+            Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal,//实验调试
+            Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal,//跨越架
+            Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal//运维
+            ->
             {
+                when(arguments!!.getInt("type")){
+                    Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
+                        var listdata=arguments!!.getSerializable("RequirementMajorNetWork") as RequirementMajorNetWork
+                        bundle.putSerializable("RequirementMajorNetWork",arguments!!.getSerializable("RequirementMajorNetWork"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+
+                    }
+                    Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->//配网
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementDistributionNetwork") as RequirementDistributionNetwork
+                        bundle.putSerializable("RequirementDistributionNetwork",arguments!!.getSerializable("RequirementDistributionNetwork"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->//变电
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementPowerTransformation") as RequirementPowerTransformation
+                        bundle.putSerializable("RequirementPowerTransformation",arguments!!.getSerializable("RequirementPowerTransformation"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->//测量设计
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementMeasureDesign") as RequirementMeasureDesign
+                        bundle.putSerializable("RequirementMeasureDesign",arguments!!.getSerializable("RequirementMeasureDesign"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->//实验调试
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementTest") as RequirementTest
+                        bundle.putSerializable("RequirementTest",arguments!!.getSerializable("RequirementTest"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->//跨越架
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementSpanWoodenSupprt") as RequirementSpanWoodenSupprt
+                        bundle.putSerializable("RequirementSpanWoodenSupprt",arguments!!.getSerializable("RequirementSpanWoodenSupprt"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->//运维
+                    {
+                        var listdata=arguments!!.getSerializable("RequirementRunningMaintain") as RequirementRunningMaintain
+                        bundle.putSerializable("RequirementRunningMaintain",arguments!!.getSerializable("RequirementRunningMaintain"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                }
                 bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementMajorNetWork") as RequirementMajorNetWork
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementMajorNetWork",arguments!!.getSerializable("RequirementMajorNetWork"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
+                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))//车辆清册查看
+                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))//成员清册查看
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->//配网
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementDistributionNetwork") as RequirementDistributionNetwork
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementDistributionNetwork",arguments!!.getSerializable("RequirementDistributionNetwork"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->//变电
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementPowerTransformation") as RequirementPowerTransformation
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementPowerTransformation",arguments!!.getSerializable("RequirementPowerTransformation"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->//测量设计
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementMeasureDesign") as RequirementMeasureDesign
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementMeasureDesign",arguments!!.getSerializable("RequirementMeasureDesign"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->//实验调试
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementTest") as RequirementTest
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                //VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementTest",arguments!!.getSerializable("RequirementTest"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->//跨越架
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementSpanWoodenSupprt") as RequirementSpanWoodenSupprt
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementSpanWoodenSupprt",arguments!!.getSerializable("RequirementSpanWoodenSupprt"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
-            Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->//运维
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementRunningMaintain") as RequirementRunningMaintain
-                MemberDataSize=ListData.needPeopleNumber.toInt()
-                // VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementRunningMaintain",arguments!!.getSerializable("RequirementRunningMaintain"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-//                bundle.putSerializable("listData2",arguments!!.getSerializable("listData2"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertRequirementTeamLoggingCheck
             }
             Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal-> //马帮运输
             {
                 bundle.putInt("type",arguments!!.getInt("type"))
+                var listdata=arguments!!.getSerializable("RequirementCaravanTransport") as RequirementCaravanTransport
                 bundle.putSerializable("RequirementCaravanTransport",arguments!!.getSerializable("RequirementCaravanTransport"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
+                typeVariety=listdata.requirementType
+                requirementPersonId= listdata.id
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertRequirementTeamLoggingCheck
             }
-            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->//桩基
-            {
-                bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementPileFoundation") as RequirementPileFoundation
-//                VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementPileFoundation",arguments!!.getSerializable("RequirementPileFoundation"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
-                adapter=adapterGenerate.ApplicationSubmit(bundle)
-            }
+            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal,//桩基
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->//非开挖
             {
+                when(arguments!!.getInt("type")){
+                    Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{//桩基
+                        var listdata=arguments!!.getSerializable("RequirementPileFoundation") as RequirementPileFoundation
+                        bundle.putSerializable("RequirementPileFoundation",arguments!!.getSerializable("RequirementPileFoundation"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal-> {//非开挖
+                        var listdata=arguments!!.getSerializable("RequirementUnexcavation") as RequirementUnexcavation
+                        bundle.putSerializable("RequirementUnexcavation",arguments!!.getSerializable("RequirementUnexcavation"))
+                        typeVariety=listdata.requirementType
+                        requirementPersonId= listdata.id
+                    }
+                }
                 bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementUnexcavation") as RequirementUnexcavation
-//                VehicleDataSize=ListData.vehicle.toInt()
-                bundle.putSerializable("RequirementUnexcavation",arguments!!.getSerializable("RequirementUnexcavation"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
+                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))//车辆清册查看
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertRequirementTeamLoggingCheck
             }
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->//车辆
             {
                 bundle.putInt("type",arguments!!.getInt("type"))
-                var ListData=arguments!!.getSerializable("RequirementLeaseCar") as RequirementLeaseCar
-                VehicleDataSize=ListData.vehicle.toInt()
                 bundle.putSerializable("RequirementLeaseCar",arguments!!.getSerializable("RequirementLeaseCar"))
 //                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
             }
-            Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->//工器具
+            Constants.FragmentType.TOOL_LEASING_TYPE.ordinal,//工器具
+            Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal,//设备
+            Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal//机械
+            ->{
+                when(arguments!!.getInt("type")){
+                    Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{//工器具
+                        var listdata=arguments!!.getSerializable("RequirementLeaseConstructionTool") as RequirementLeaseConstructionTool
+                        bundle.putSerializable("RequirementLeaseConstructionTool",arguments!!.getSerializable("RequirementLeaseConstructionTool"))
+                        typeVariety=listdata.requirementType
+                        vipId=listdata.vipId
+                        requirementPersonId= listdata.id
+                    }
+                    Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal-> {//设备
+                        bundle.putSerializable("RequirementLeaseFacility",arguments!!.getSerializable("RequirementLeaseFacility"))
+                        var listdata=arguments!!.getSerializable("RequirementLeaseFacility") as RequirementLeaseFacility
+                        typeVariety=listdata.requirementType
+                        vipId=listdata.vipId
+                        requirementPersonId= listdata.id
+
+                    }
+                    Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{//机械
+                        bundle.putSerializable("RequirementLeaseMachinery",arguments!!.getSerializable("RequirementLeaseMachinery"))
+                        var listdata=arguments!!.getSerializable("RequirementLeaseMachinery") as RequirementLeaseMachinery
+                        typeVariety=listdata.requirementType
+                        vipId=listdata.vipId
+                        requirementPersonId= listdata.id
+                    }
+                }
+                bundle.putInt("type",arguments!!.getInt("type"))
+                bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
+                adapter=adapterGenerate.ApplicationSubmit(bundle)
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertLeaseLoggingCheckController
+            }
+            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->//三方
             {
                 bundle.putInt("type",arguments!!.getInt("type"))
-                bundle.putSerializable("RequirementLeaseConstructionTool",arguments!!.getSerializable("RequirementLeaseConstructionTool"))
-//                bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
+                bundle.putSerializable("RequirementThirdPartyDetail",arguments!!.getSerializable("RequirementThirdPartyDetail"))
+                bundle.putSerializable("listData5",arguments!!.getSerializable("listData5"))
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
+                var listdata=arguments!!.getSerializable("RequirementThirdPartyDetail") as RequirementThirdPartyDetail
+                requirementPersonId= listdata.id
+                adapter!!.urlPath = Constants.HttpUrlPath.Requirement.insertRequirementThirdLoggingCheck
             }
         }
-
-
     }
     fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
 

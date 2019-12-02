@@ -1,48 +1,56 @@
 ﻿[
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称:",
+    "singleDisplayRightTitle":"项目名称：",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类型:",
+    "singleDisplayRightTitle":"需求类型：",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人姓名:",
+    "singleDisplayRightTitle":"联系人姓名：",
     "singleDisplayRightContent":"***"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人电话:",
+    "singleDisplayRightTitle":"联系人电话：",
     "singleDisplayRightContent":"***"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册:",
-    "buttonName":["上传"]
+    "buttonTitle":"车辆清册：",
+    "buttonName":["上传"],
+    "key": "enrollCars",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册:",
-    "buttonName":["上传"]
+    "buttonTitle":"成员清册：",
+    "buttonName":["上传"],
+    "key": "enrollProvideCrewList",
+    "sendFormat": "JsonArray"
   },
   {
   "type":"MULTI_BUTTON",
-  "buttonTitle":"机械清册:",
-  "buttonName":["上传"]
+  "buttonTitle":"机械清册：",
+  "buttonName":["上传"],
+    "key": "enrollMachineries",
+    "sendFormat": "JsonArray"
    },
   {
-  "type":"MULTI_BUTTON",
-  "buttonTitle":"薪资清册:",
-  "buttonName":["清工薪资上传","清单报价上传"]
-},
+    "type": "HINT",
+    "hintContent": "*同意甲方要求请填写上列清册并报名",
+    "customFontColor":"#FFFF0000",
+    "startPosition":0,
+    "endPosition":17
+  },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息：",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":true
   }
 ]

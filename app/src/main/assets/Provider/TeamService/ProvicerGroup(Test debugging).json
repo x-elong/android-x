@@ -1,43 +1,33 @@
 [
   {
-    "type":"TITLE",
-    "title1":"团队发布信息录入",
-    "styleType": "0"
-  },
-  {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
     "singleDisplayRightContent": "试验调试施工队"
   },
   {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"成员清册",
+    "buttonName":["在线编辑"],
+    "key": "provideCrewLists",
+    "sendFormat": "JsonArray"
+  },
+  {
+    "type":"MULTI_BUTTON",
+    "buttonTitle":"车辆",
+    "buttonName":["在线编辑"],
+    "key": "provideTransportMachines",
+    "sendFormat": "JsonArray"
+  },
+  {
     "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "xxx"
-  },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"人员清册",
-    "buttonName":["下载模板","上传清册"],
-    "additionalKey": "provideCrewListsFile"
-  },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册",
-    "buttonName":["下载模板","上传清册"],
-    "additionalKey": "provideTransportMachineFile"
-  },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"车辆全景照",
-    "necessary":false,
-    "key": "carPhotoPath",
-    "sendFormat": "String"
+    "singleDisplayRightTitle": "负责人所在地",
+    "singleDisplayRightContent": ""
   },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可操作电压等级",
     "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
-    "key":"voltages",
+    "key": "voltage",
     "sendFormat": "String"
   },
   {
@@ -48,17 +38,28 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"可操作次数",
-    "radioButtonName":["一次","两次","一次和两次"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"可操作次数",
+    "selectOption1Items":["一次","两次","一次和两次"],
     "key": "operateDegree",
     "sendFormat": "String"
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"机械设备",
-    "buttonName":["下载模板","上传清册"],
-    "additionalKey": "constructionToolListFile"
+    "buttonTitle":"工器具清册",
+    "buttonName":["在线编辑"],
+    "key": "constructionToolLists",
+    "sendFormat": "JsonArray"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人",
+    "singleDisplayRightContent": ""
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人电话",
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_UNIT",
@@ -68,8 +69,10 @@
     "sendFormat": "Int"
   },
   {
-    "type":"SUBMIT",
-    "submitContent":"确认并提交",
-    "key": "Provider"
+    "type":"HINT",
+    "hintContent":"注:字符前有 * 为必填。",
+    "customFontColor": "#FF0000",
+    "startPosition": "6",
+    "endPosition": "8"
   }
 ]

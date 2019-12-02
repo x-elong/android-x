@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getLeaseService
@@ -200,7 +203,7 @@ class MyReleaseFragment :Fragment(){
                             item.necessary = true
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("type","需求个人")
+                                bundle.putInt("type",Constants.FragmentType.PERSONAL_TYPE.ordinal)
                                 bundle.putString("id",js.getString("id"))
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -218,7 +221,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
-                    Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
                 })
@@ -245,10 +248,26 @@ class MyReleaseFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别："+js.getString("requirementVariety"),"项目地点："+js.getString("projectSite"))
+                            val requirementVariety = js.getString("requirementVariety")
+                            val type = when(requirementVariety){
+                                "变电施工队"->Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal
+                                "主网施工队"->Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal
+                                "配网施工队"->Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal
+                                "测量设计"->Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal
+                                "马帮运输"->Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal
+                                "桩基服务"->Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal
+                                "非开挖顶拉管作业"->Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal
+                                "试验调试"->Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal
+                                "跨越架"->Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal
+                                "运行维护"->Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal
+                                else -> 0
+                            }
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别："+requirementVariety,"项目地点："+js.getString("projectSite"))
                             item.necessary = true
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
+                                bundle.putString("id",js.getString("requirementTeamId"))
+                                bundle.putInt("type",type)
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
@@ -265,7 +284,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
-                    Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
                 })
@@ -293,11 +312,18 @@ class MyReleaseFragment :Fragment(){
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
                             val requirementVariety = js.getString("requirementVariety")
+                            val type = when(requirementVariety){
+                                "车辆租赁"->Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal
+                                "工器具租赁"->Constants.FragmentType.TOOL_LEASING_TYPE.ordinal
+                                "设备租赁"->Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal
+                                "机械租赁"->Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal
+                                else -> 0
+                            }
                             val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求租赁","租赁类型："+requirementVariety,"项目地点："+js.getString("projectSite"))
                             item.necessary = true
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("type","需求租赁 ${requirementVariety}")
+                                bundle.putInt("type",type)
                                 bundle.putString("id",js.getString("requirementLeaseId"))
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -315,7 +341,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
-                    Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
                 })
@@ -347,15 +373,37 @@ class MyReleaseFragment :Fragment(){
                             val information = if(type=="资质合作") "合作地区："+js.getString("cooperationRegion") else "合作方属性："+partnerAttribute[js.getString("partnerAttribute").toInt()]
                             val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求三方",type,information)
                             item.necessary = true
+                            val id = js.getString("id")
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("type","需求三方 "+type)
-                                bundle.putString("id",js.getString("id"))
+                                bundle.putInt("type",Constants.FragmentType.TRIPARTITE_TYPE.ordinal)
+                                bundle.putString("id",id)
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
+                            }
+                            item.deleteListener = View.OnClickListener {
+                                val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                deleteRequirementThirdParty(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                    .subscribe({
+                                        loadingDialog.dismiss()
+                                        if(JSONObject(it.string()).getInt("code")==200){
+                                            ToastHelper.mToast(mView.context,"删除成功")
+                                            val mData = adapter.mData.toMutableList()
+                                            mData.removeAt(j)
+                                            adapter.mData=mData
+                                            adapter.notifyItemRangeRemoved(j,1)
+                                        }
+                                        else
+                                            ToastHelper.mToast(mView.context,"删除失败")
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context,"删除信息异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("CheckId",js.getString("id"))
+                                bundle.putString("CheckId",id)
                                 bundle.putString("type","需求三方")
                                 FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -367,7 +415,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
-                    Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
                 })
@@ -386,6 +434,8 @@ class MyReleaseFragment :Fragment(){
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
                         val jsonArray = json.getJSONArray("data")
+                        if(jsonArray.length()==0)
+                            result="当前数据为空"
                         val size = adapter.mData.size
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
@@ -406,7 +456,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
-                    Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
                 })
@@ -424,33 +474,46 @@ class MyReleaseFragment :Fragment(){
                     val code = jsonObject.getInt("code")
                     var result = ""
                     if (code == 200) {
-                        result = "当前数据获取成功"
-                        page++
-                        val json = jsonObject.getJSONObject("message")
-                        pageCount = json.getInt("pageCount")
-                        val jsonArray = json.getJSONArray("data")
-                        val size = adapter.mData.size
-                        val data = adapter.mData.toMutableList()
-                        for (j in 0 until jsonArray.length()) {
-                            val js = jsonArray.getJSONObject(j)
-                            val type = "供应类别："+js.getString("name")
-                            val information = if(js.isNull("implementationRange")) "" else js.getString("implementationRange")
-                            val item =
-                                MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM, "团队服务", type, information)
-                            item.jumpListener = View.OnClickListener {
-                                val bundle = Bundle()
-                                bundle.putString("id",js.getString("id"))
-                                FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        if (jsonObject.getString("desc") == "FAIL") {
+                            result = "当前数据为空"
+                            pageCount = 0
+                        } else {
+                            result = "当前数据获取成功"
+                            page++
+                            val json = jsonObject.getJSONObject("message")
+                            pageCount = json.getInt("pageCount")
+                            val jsonArray = json.getJSONArray("data")
+                            val size = adapter.mData.size
+                            val data = adapter.mData.toMutableList()
+                            for (j in 0 until jsonArray.length()) {
+                                val js = jsonArray.getJSONObject(j)
+                                val type = "供应类别：" + js.getString("name")
+                                val information =
+                                    if (js.isNull("implementationRange")) "" else js.getString("implementationRange")
+                                val item =
+                                    MultiStyleItem(
+                                        MultiStyleItem.Options.REGISTRATION_ITEM,
+                                        "团队服务",
+                                        type,
+                                        information
+                                    )
+                                item.jumpListener = View.OnClickListener {
+                                    val bundle = Bundle()
+                                    bundle.putString("id", js.getString("id"))
+                                    FragmentHelper.switchFragment(
+                                        activity!!,
+                                        JobMoreFragment.newInstance(bundle),
+                                        R.id.frame_my_release,
+                                        ""
+                                    )
+                                }
+                                data.add(item)
                             }
-                            data.add(item)
+                            adapter.mData = data
+                            adapter.notifyItemRangeInserted(size, adapter.mData.size - size)
                         }
-                        adapter.mData = data
-                        adapter.notifyItemRangeInserted(size, adapter.mData.size - size)
-                    } else if (code == 400 && jsonObject.getString("message") == "没有该数据") {
-                        result = "当前数据为空"
-                        pageCount = 0
                     }
-                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                    ToastHelper.mToast(mView.context,result)
                 }, {
                     it.printStackTrace()
                 })
@@ -469,6 +532,8 @@ class MyReleaseFragment :Fragment(){
                     val json = jsonObject.getJSONObject("message")
                     pageCount = json.getInt("pageCount")
                     val jsonArray = json.getJSONArray("data")
+                    if(jsonArray.length()==0)
+                        result="当前数据为空"
                     val size = adapter.mData.size
                     val data = adapter.mData.toMutableList()
                     for (j in 0 until jsonArray.length()){
@@ -489,7 +554,7 @@ class MyReleaseFragment :Fragment(){
                     result="当前数据为空"
                     pageCount = 0
                 }
-                Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                ToastHelper.mToast(mView.context,result)
             },{
                 it.printStackTrace()
             })
@@ -507,6 +572,8 @@ class MyReleaseFragment :Fragment(){
                     val json = jsonObject.getJSONObject("message")
                     pageCount = json.getInt("pageCount")
                     val jsonArray = json.getJSONArray("data")
+                    if(jsonArray.length()==0)
+                        result="当前数据为空"
                     val size = adapter.mData.size
                     val data = adapter.mData.toMutableList()
                     for (j in 0 until jsonArray.length()){
@@ -525,7 +592,7 @@ class MyReleaseFragment :Fragment(){
                     result="当前数据为空"
                     pageCount = 0
                 }
-                Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
+                ToastHelper.mToast(mView.context,result)
             },{
                 it.printStackTrace()
             })

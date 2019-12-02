@@ -11,6 +11,7 @@ import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.UnSerializeDataBase
 import kotlinx.android.synthetic.main.fragment_information_certification.view.*
 
 class InformationCertificationFragment :Fragment(){
@@ -38,11 +39,11 @@ class InformationCertificationFragment :Fragment(){
                         val selectContent=it.data.getString("selectContent")
                         mView.tv_subject_category_content.text=selectContent
                         when(selectContent){
-                            "个人 "-> FragmentHelper.switchFragment(activity!!,PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
+                            "个人 "-> FragmentHelper.addFragment(activity!!,PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
                             else -> {
                                 val bundle = Bundle()
                                 bundle.putString("mainType",mView.tv_subject_category_content.text.toString())
-                                FragmentHelper.switchFragment(activity!!,EnterpriseCertificationFragment.newInstance(bundle),R.id.frame_certification_category,"Certification")
+                                FragmentHelper.addFragment(activity!!,EnterpriseCertificationFragment.newInstance(bundle),R.id.frame_certification_category,"Certification")
                             }
                         }
 //                mView.sp_demand_moder.
@@ -55,6 +56,11 @@ class InformationCertificationFragment :Fragment(){
                 }
             }),Option1Items,Option2Items).multiDialog
             selectDialog.show()
+        }
+        if(!UnSerializeDataBase.isCertificate){
+            mView.tv_subject_category_content.text = "个人"
+            FragmentHelper.addFragment(activity!!,PersonalCertificationFragment(),R.id.frame_certification_category,"Certification")
+            UnSerializeDataBase.isCertificate=true
         }
     }
 }

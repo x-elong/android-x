@@ -1,5 +1,9 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
+import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
+import java.io.Serializable
+
 class RequirementMeasureDesign(
     var id:String,
     var vipId:String,
@@ -29,6 +33,8 @@ class RequirementMeasureDesign(
     var delFlag:String,
     var version:String,
     var requirmentTeamServeId:String,
+    var requirementCarLists:List<RequirementCarList>?,
+    var requirementMembersLists:List<RequirementMembersList>?,
     var requirementTeamProjectList:List<requirementTeamProjectList>?,
     var requirementPowerTransformationSalary:List<requirementPowerTransformationSalary>?,
     var requirementListQuotations:List<requirementTeamProjectList>?,
@@ -36,4 +42,4 @@ class RequirementMeasureDesign(
     var requirementTeamVoltageClasses:String,
     var photoPath:String,
     var validTime:String
-)
+): Serializable

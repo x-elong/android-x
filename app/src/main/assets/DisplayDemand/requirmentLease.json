@@ -11,7 +11,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位：",
+    "singleDisplayRightTitle":"计量单位：",
     "singleDisplayRightContent":""
   },
   {
@@ -27,11 +27,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"租赁时间：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"报价清单：",
     "singleDisplayRightContent":""
   },
   {

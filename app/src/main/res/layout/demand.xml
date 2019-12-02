@@ -33,7 +33,6 @@
         android:background="@drawable/text_style1"
         android:gravity="center"
         android:text="选择需求类别"
-        app:layout_constraintBottom_toTopOf="@+id/tv_demand_content"
         app:layout_constraintEnd_toStartOf="@+id/tv_demand_site_select"
         app:layout_constraintStart_toStartOf="@+id/demand_direction"
         app:layout_constraintTop_toBottomOf="@+id/demand_direction" />

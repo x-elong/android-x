@@ -187,12 +187,13 @@ class EnterpriseCertificationFragment :Fragment(){
                 })
         }
         activity!!.btn_information_certification.setOnClickListener {
-            mView.btn_information_certification.callOnClick()
-        }
-        mView.btn_information_certification.setOnClickListener {
             initImagePath()
             uploadImg()
         }
+//        mView.btn_information_certification.setOnClickListener {
+//            initImagePath()
+//            uploadImg()
+//        }
     }
 
     private fun initImagePath() {

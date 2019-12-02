@@ -16,6 +16,7 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.example.eletronicengineer.utils.GlideLoader
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_recommended_application.view.*
@@ -40,24 +41,28 @@ class MyFragment : Fragment() {
         initData()
         val result = NetworkAdapter().getDataUser().subscribe( {
             user = it.message.user
+            Log.i("","$user.recommendResidueQuantity")
             if(headerImg!=it.message.user.headerImg!!){
                 headerImg = it.message.user.headerImg!!
                 pref.edit().putString("headerImg",it.message.user.headerImg).apply()
                 initData()
             }
         },{
+            ToastHelper.mToast(mView.context,"获取个人信息异常")
             it.printStackTrace()
         })
         vipType = pref.getString("vipType","")
         initVipType(vipType)
         NetworkAdapter().getDataUserOpenPower().subscribe( {
-            val vipType = it.message
+            val openPowerEntity = it.message
+            val vipType = openPowerEntity.goodsPowerName
             if(vipType!=this.vipType){
                 this.vipType = vipType
                 pref.edit().putString("vipType",this.vipType).apply()
                 initVipType(vipType)
                 }
         },{
+            ToastHelper.mToast(mView.context,"获取会员等级信息异常")
             it.printStackTrace()
         })
     }
@@ -71,9 +76,13 @@ class MyFragment : Fragment() {
                 this.vipType = "黄金会员"
                 UnSerializeDataBase.userVipLevel = 2
             }
-            else->{
+            "vip"->{
                 this.vipType = "普通会员"
                 UnSerializeDataBase.userVipLevel = 0
+            }
+            "tourist"->{
+                this.vipType = "游客"
+                UnSerializeDataBase.userVipLevel = -1
             }
         }
         mView.tv_my_vip_level.text = this.vipType

@@ -64,6 +64,7 @@
         <activity android:name=".activity.MyQRCodeActivity" />
         <activity android:name=".activity.MyInformationActivity" />
         <activity android:name=".activity.ShopListActivity" />
+        <activity android:name=".activity.GetQRCodeActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

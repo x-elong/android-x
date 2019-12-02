@@ -1,0 +1,41 @@
+﻿[
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"名称",
+    "key": "type",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"规格型号",
+    "key": "specificationsModel",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"单位",
+    "key": "unit",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"数量",
+    "key": "quantity",
+    "sendFormat": "Long"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"备注",
+    "textAreaContent":"",
+    "necessary":true,
+    "key":"remark",
+    "sendFormat":"String"
+  }
+]

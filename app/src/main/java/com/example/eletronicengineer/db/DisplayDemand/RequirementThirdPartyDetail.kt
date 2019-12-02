@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class RequirementThirdPartyDetail(
     var id:String,
     var vipId:String,
@@ -22,4 +24,4 @@ class RequirementThirdPartyDetail(
     var photoPath:String,
     var validTime:String,
     var thirdLists:List<thirdLists>?
-)
+): Serializable

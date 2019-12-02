@@ -2,41 +2,64 @@
   {
   "type": "SELECT_DIALOG",
   "selectTitle": "车辆类型",
-  "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"]
+  "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
+    "key":"carType",
+    "sendFormat":"String"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"车辆数量",
-    "inputUnit": "(辆)"
+    "inputUnit":"(辆)",
+    "key":"needCarNumber",
+    "sendFormat":"Long"
   },
   {
     "type": "SELECT_DIALOG",
     "selectTitle": "车厢结构",
-    "selectOption1Items": ["箱式","敞篷"]
+    "selectOption1Items":["箱式","敞篷"],
+    "key":"construction",
+    "sendFormat":"Int"
   },
   {
     "type": "SELECT_DIALOG",
-    "selectTitle": "有无保险",
-    "selectOption1Items": ["有","无"]
+    "selectTitle":"有无保险",
+    "selectOption1Items":["有","无"],
+    "key":"isInsurance",
+    "sendFormat":"Int"
   },
   {
     "type": "SELECT_DIALOG",
     "selectTitle": "是否配备驾驶员",
-    "selectOption1Items": ["是","否"]
+    "selectOption1Items":["是","否"],
+    "key":"isDriver",
+    "sendFormat":"Int"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"带驾驶员（元/天）"
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"带驾驶员",
+    "inputUnit":"(元/天)",
+    "key":"haveDriver",
+    "sendFormat":"String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"不带驾驶员（元/天）"
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"不带驾驶员",
+    "inputUnit":"(元/天)",
+    "key":"noDriver",
+    "sendFormat":"String"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"备注",
     "textAreaContent":"",
-    "necessary":false,
+    "necessary":true,
     "key":"remark",
     "sendFormat":"String"
   }

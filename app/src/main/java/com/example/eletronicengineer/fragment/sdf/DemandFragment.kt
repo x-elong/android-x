@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bin.david.form.data.Column
@@ -20,17 +22,19 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
-import com.example.eletronicengineer.utils.AdapterGenerate
-import com.example.eletronicengineer.utils.UnSerializeDataBase
-import com.example.eletronicengineer.utils.downloadFile
+import com.example.eletronicengineer.utils.*
+import com.example.eletronicengineer.utils.startSendMessage
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_demand.*
 import kotlinx.android.synthetic.main.activity_demand.view.*
 import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -48,6 +52,8 @@ class DemandFragment:Fragment() {
         }
     }
     var type:Int=0
+    var  selectContent2:String=" "
+    var submitType:String="发布"
     lateinit var id:String
     val mdata = Bundle()
     lateinit var mData: List<MultiStyleItem>
@@ -85,10 +91,11 @@ class DemandFragment:Fragment() {
             mView.rv_main_content.layoutManager = LinearLayoutManager(mView.context)
         }
         //标题
-        val  selectContent2=arguments!!.getString("selectContent2")
+          selectContent2=arguments!!.getString("selectContent2")
         mView.tv_title_title1.setText(selectContent2)
         //返回
-        mView.tv_title_back.setOnClickListener(){
+        mView.tv_title_back.setOnClickListener{
+                UnSerializeDataBase.imgList.clear()
                 activity!!.finish()
         }
         //发布
@@ -100,7 +107,32 @@ class DemandFragment:Fragment() {
                     networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
                 else
                 {
-                    networkAdapter.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
+                    var json= JSONObject()
+                    json.put("requirementType", selectContent2)
+                    val loadingDialog = LoadingDialog(mView.context, "正在发布中...", R.mipmap.ic_dialog_loading)
+                    loadingDialog.show()
+                    networkAdapter.generateJsonRequestBody(json)
+                        .subscribe {
+                            val result =
+                                startSendMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                    .subscribe(
+                                        {
+                                            loadingDialog.dismiss()
+                                            val json = JSONObject(it.string())
+                                            if (json.getInt("code") == 200) {
+                                                ToastHelper.mToast(mView.context, "发布成功")
+                                                mView.tv_title_back.callOnClick()
+                                            } else if (json.getInt("code") == 400) {
+                                                ToastHelper.mToast(mView.context, "发布失败")
+                                            }
+                                        },
+                                        {
+                                            loadingDialog.dismiss()
+                                            ToastHelper.mToast(mView.context, "发布信息异常")
+                                            it.printStackTrace()
+                                        }
+                                    )
+                        }
                 }
             }
         }
@@ -178,55 +210,70 @@ class DemandFragment:Fragment() {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()
                 var singleDisplayRightContent = "变电施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPowerTransformation
             }
             Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()
                 var singleDisplayRightContent = "主网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementMajorNetwork
             }
             Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()
                 var singleDisplayRightContent = "配网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementDistribuionNetwork
             }
             Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal -> {//测量设计
                 adapter = adapterGenerate.DemandGroupMeasurementDesign()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementMeasureDesign
             }
             Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal -> {//马帮运输
                 adapter = adapterGenerate.DemandGroupCaravanTransportation()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementCaravanTransport
             }
-            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal -> {//桩基施工
+            Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal -> {//桩基服务
                 adapter = adapterGenerate.DemandGroupPileFoundationConstruction()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPileFoundation
             }
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal -> {//非开挖
                 adapter = adapterGenerate.DemandGroupNonExcavation()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementUnexcavation
             }
             Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal -> {//试验调试
                 adapter = adapterGenerate.DemandGroupTestDebugging()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementTest
             }
             Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal -> {//跨越架
                 adapter = adapterGenerate.DemandGroupCrossingFrame()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementSpanWoodenSupprt
             }
             Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal -> {//运行维护
                 adapter = adapterGenerate.DemandGroupOperationAndMaintenance()
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementRunningMaintain
             }
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal -> {//车辆租赁
                 adapter = adapterGenerate.DemandLeaseVehicleLeasing()
                 adapter.mData[0].singleDisplayRightContent="车辆租赁"
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseCar
+
             }
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal -> {//工器具租赁
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent="工器具租赁"
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseConstructionTool
             }
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal -> {
                 var singleDisplayRightContent = "机械租赁"
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseMachinery
             }
             Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal -> {
                 var singleDisplayRightContent = "设备租赁"
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseFacility
             }
             Constants.FragmentType.TRIPARTITE_TRAINING_CERTIFICATE_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandTripartite()
@@ -261,7 +308,8 @@ class DemandFragment:Fragment() {
             Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandTripartite()
                 adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[1].singleDisplayRightTitle
+                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
+                adapter.mData[0].inputSingleContent = adapter.mData[0].singleDisplayRightContent
             }
         }
         return adapter
@@ -410,11 +458,9 @@ fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
         {
             mAdapter!!.mData[mAdapter!!.mData[0].selected].necessary = true
         }
-
-
-
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
+        mAdapter!!.mData[mAdapter!!.mData[0].selected+1].singleDisplayRightContent=itemMultiStyleItem[0].PeopleNumber.toString()
         Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())
     }
 }

@@ -1,33 +1,52 @@
 ﻿[
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"名称"
+    "inputSingleTitle":"名称",
+    "key":"projectName",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"规格型号"
+    "inputSingleTitle":"规格型号",
+    "key":"specificationsModels",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位"
+    "inputSingleTitle":"单位",
+    "key":"units",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"数量"
+    "inputSingleTitle":"数量",
+    "key":"quantity",
+    "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"单价",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"租赁时间"
+    "inputSingleTitle":"租赁时间",
+    "key":"hireTime",
+    "sendFormat":"String"
+  },
+  {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"详细说明",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":true,
+    "key":"detailsExplain",
+    "sendFormat":"String"
   }
 ]

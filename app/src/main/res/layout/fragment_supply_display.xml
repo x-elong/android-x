@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
+<!--    android:background="@drawable/ic_back_xml"-->
     <TextView
         android:id="@+id/tv_supply_display_back"
         android:layout_width="wrap_content"
@@ -44,14 +44,14 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/general_8"
         android:layout_marginEnd="@dimen/general_8"
-        app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constraintBottom_toTopOf="@id/button_supply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_supply_display"
         app:layout_constraintVertical_bias="0.0" />
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_supply"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"
         android:background="@drawable/btn_style3"

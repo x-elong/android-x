@@ -56,41 +56,46 @@ class EnterpriseCertificationShowFragment :Fragment(){
                     val code = jsonObject.getInt("code")
                     var result = ""
                     if(code==200){
-                        val js = jsonObject.getJSONObject("message")
-                        result = "获取数据成功"
-                        mView.tv_institution_name_data.text = js.getString("organizationName")
-                        mView.tv_social_credit_code_data.text = js.getString("socialCreditCode")
-                        mView.tv_main_code_data.text = js.getString("mainBusiness")
-                        GlideLoader().loadImage(mView.iv_legal_id_card_people_show,js.getString("legalPersonPositivePath"))
-                        GlideLoader().loadImage(mView.iv_legal_id_card_nation_show,js.getString("legalPersonNegativePath"))
-                        val blImagePath = js.getString("businessLicense").split("|")
-                        val blImageList = ArrayList<Image>()
-                        for (j in blImagePath){
-                            blImageList.add(Image(j,null))
-                            blImageList[blImageList.size-1].isX = false
+                        if(jsonObject.getString("desc")=="FAIL"){
+                            result = jsonObject.getString("message")
+                            mView.btn_enterprise_re_certification.visibility = View.GONE
                         }
-                        blImageList[blImageList.size-1].imageListener = View.OnClickListener {  }
-                        val opImageList = ArrayList<Image>()
-                        val opImagePath = js.getString("officialPicturePath").split("|")
-                        for (j in opImagePath){
-                            opImageList.add(Image(j,null))
-                            opImageList[opImageList.size-1].isX = false
-                        }
+                        else{
+                            val js = jsonObject.getJSONObject("message")
+                            result = "获取数据成功"
+                            mView.tv_institution_name_data.text = js.getString("organizationName")
+                            mView.tv_social_credit_code_data.text = js.getString("socialCreditCode")
+                            mView.tv_main_code_data.text = js.getString("mainBusiness")
+                            GlideLoader().loadImage(mView.iv_legal_id_card_people_show,js.getString("legalPersonPositivePath"))
+                            GlideLoader().loadImage(mView.iv_legal_id_card_nation_show,js.getString("legalPersonNegativePath"))
+                            val blImagePath = js.getString("businessLicense").split("|")
+                            val blImageList = ArrayList<Image>()
+                            for (j in blImagePath){
+                                blImageList.add(Image(j,null))
+                                blImageList[blImageList.size-1].isX = false
+                            }
+                            blImageList[blImageList.size-1].imageListener = View.OnClickListener {  }
+                            val opImageList = ArrayList<Image>()
+                            val opImagePath = js.getString("officialPicturePath").split("|")
+                            for (j in opImagePath){
+                                opImageList.add(Image(j,null))
+                                opImageList[opImageList.size-1].isX = false
+                            }
 
-                        opImageList[opImageList.size-1].imageListener = View.OnClickListener {  }
-                        mView.rv_business_license_content_show.adapter = ImageAdapter(blImageList)
-                        mView.rv_business_license_content_show.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-                        mView.rv_official_picture_content_show.adapter = ImageAdapter(opImageList)
-                        mView.rv_official_picture_content_show.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-                        mView.tv_administrator_name_data.text = js.getString("vipName")
-                        mView.tv_administrator_number_data.text = js.getString("identifyCard")
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_people_show,js.getString("identifyCardPathFront"))
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_nation_show,js.getString("identifyCardPathContrary"))
+                            opImageList[opImageList.size-1].imageListener = View.OnClickListener {  }
+                            mView.rv_business_license_content_show.adapter = ImageAdapter(blImageList)
+                            mView.rv_business_license_content_show.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+                            mView.rv_official_picture_content_show.adapter = ImageAdapter(opImageList)
+                            mView.rv_official_picture_content_show.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+                            mView.tv_administrator_name_data.text = js.getString("vipName")
+                            mView.tv_administrator_number_data.text = js.getString("identifyCard")
+                            GlideLoader().loadImage(mView.iv_administrator_id_card_people_show,js.getString("identifyCardPathFront"))
+                            GlideLoader().loadImage(mView.iv_administrator_id_card_nation_show,js.getString("identifyCardPathContrary"))
+                        }
                     }
-                    else
-                        result = "获取数据失败"
-                    ToastHelper.mToast(context!!,result)
+                    ToastHelper.mToast(mView.context,result)
                 },{
+                    ToastHelper.mToast(mView.context,"获取信息异常")
                     it.printStackTrace()
                 })
         }

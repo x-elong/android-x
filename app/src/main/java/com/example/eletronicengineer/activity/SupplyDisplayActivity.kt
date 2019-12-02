@@ -11,7 +11,7 @@ class SupplyDisplayActivity : AppCompatActivity() {
   var type:Int=0
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_demand_display)
+    setContentView(R.layout.activity_supply_display)
     initFragment()
   }
 
@@ -32,13 +32,13 @@ class SupplyDisplayActivity : AppCompatActivity() {
 
   fun addFragment(fragment: Fragment) {
     val transaction = supportFragmentManager.beginTransaction()
-    transaction.replace(R.id.frame_display_demand, fragment)
+    transaction.replace(R.id.frame_display_supply, fragment)
     transaction.commit()
   }
 
   fun switchFragment(fragment: Fragment) {
     val transaction = supportFragmentManager.beginTransaction()
-    transaction.replace(R.id.frame_display_demand, fragment)
+    transaction.replace(R.id.frame_display_supply, fragment)
     transaction.addToBackStack(null)
     transaction.commit()
   }

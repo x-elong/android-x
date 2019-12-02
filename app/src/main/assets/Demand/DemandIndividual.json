@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"普工",
+    "singleDisplayRightContent":"xxx ",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
@@ -57,7 +57,7 @@
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"食宿标准",
-    "radioButtonName":["全包","自理"],
+    "radioButtonName":["全包","队部自理"],
     "key":"roomBoardStandard",
     "sendFormat":"Long"
   },
@@ -85,9 +85,9 @@
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资标准",
-    "inputMultiUnit":["元/天","元/月","元/年"],
+    "inputMultiUnit":["面议","元/天","元/月","元/年"],
     "key":"salaryStandard salaryUnit",
-    "sendFormat":"Long String"
+    "sendFormat":"Double String"
 
   },
   {
@@ -112,8 +112,15 @@
     "sendFormat":"Long"
   },
   {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"",
     "necessary": true,
     "key":"additonalExplain",

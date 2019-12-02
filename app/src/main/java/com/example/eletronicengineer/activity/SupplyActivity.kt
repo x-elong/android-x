@@ -36,6 +36,7 @@ class SupplyActivity : AppCompatActivity() {
 	lateinit var mData:List<MultiStyleItem>
 	var mFragmentView:View?=null
 	var type:Int=-1
+	lateinit var selectContent2:String
 	lateinit var multiButtonListeners:MutableList<View.OnClickListener>
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -49,13 +50,14 @@ class SupplyActivity : AppCompatActivity() {
 		//发送出加载的界面类型
 		val data=Bundle()
 		data.putInt("type",type)
+		data.putString("selectContent2",selectContent2)
 		val fragment= SupplyFragment.newInstance(data)
 		addFragment(fragment)
 	}
 	//在当前下增加碎片
 	private fun addFragment(fragment: Fragment) {
 		val transaction = supportFragmentManager.beginTransaction()
-		transaction.add(R.id.frame_supply,fragment,"1")
+		transaction.add(R.id.frame_supply,fragment,"register")
 		transaction.commit()
 	}
 	//Fragment切换
@@ -73,14 +75,15 @@ class SupplyActivity : AppCompatActivity() {
 		multiButtonListeners=ArrayList()
 		val intent = getIntent()
 		type = intent.getIntExtra("type",0)
+		selectContent2 = intent.getStringExtra("selectContent2")
 	}
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    /*override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             supportFragmentManager.popBackStackImmediate()
         }
         return true
-    }
+    }*/
 	//拍照回调
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		super.onActivityResult(requestCode, resultCode, data)

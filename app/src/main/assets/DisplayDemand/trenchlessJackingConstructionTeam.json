@@ -101,9 +101,5 @@
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"报名"
   }
 ]

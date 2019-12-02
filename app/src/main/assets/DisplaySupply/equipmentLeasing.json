@@ -41,7 +41,7 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"工器具租赁清册：",
+    "buttonTitle":"xxx租赁清册：",
     "buttonName":["在线查看"]
   },
   {
@@ -65,14 +65,8 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"负责人所在地:",
-    "placePath": "pcas.json",
-    "key":"issuerBelongSite",
-    "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"联系对方"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"负责人所在地:",
+    "singleDisplayRightContent":"00"
   }
 ]

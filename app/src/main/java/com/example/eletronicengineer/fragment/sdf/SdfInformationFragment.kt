@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.sdf
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,16 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
+import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.sdf.*
+import kotlinx.android.synthetic.main.sdf_information.*
 import kotlinx.android.synthetic.main.sdf_information.view.*
+import kotlinx.android.synthetic.main.sdf_information.view.demand_release_tv
 
 class SdfInformationFragment:Fragment(){
     lateinit var titleReturn:View
@@ -108,10 +113,12 @@ class SdfInformationFragment:Fragment(){
                     when(it.what){
                         RecyclerviewAdapter.MESSAGE_SELECT_OK->{
                             val selectContent=it.data.getString("selectContent")
+                            val selectContent2=it.data.getString("selectContent2")
                             val adapterGenerate = AdapterGenerate()
                             val type = adapterGenerate.getType(selectContent)
                             val intent = Intent(context, SupplyActivity::class.java)
                             intent.putExtra("type",type)
+                            intent.putExtra("selectContent2",selectContent2)
                             startActivity(intent)
                             false
                         }

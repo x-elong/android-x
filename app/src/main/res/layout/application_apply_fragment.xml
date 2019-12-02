@@ -13,14 +13,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
+    <!--        android:background="@drawable/ic_back_xml"-->
     <TextView
+        android:background="@drawable/ic_back_xml"
         android:id="@+id/tv_registration_more_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
-        android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintStart_toStartOf="@+id/view_registration_more"
         app:layout_constraintTop_toTopOf="@+id/view_registration_more" />

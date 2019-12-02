@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
@@ -62,11 +63,11 @@ class ImageFragment:Fragment(){
         key = arguments!!.getString("key")
         val title = arguments!!.getString("title")
         mView=inflater.inflate(R.layout.fragment_image,container,false)
-        if(activity is SupplyActivity)
+        if(activity is SupplyActivity || activity is DemandDisplayActivity)
             mView.bt_image.visibility = View.GONE
         mView.tv_image_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
-            if((activity is  SupplyActivity))
+            if((activity is  SupplyActivity) || activity is DemandDisplayActivity)
                 Log.i("","")
             else
                 UnSerializeDataBase.imgList.clear()
@@ -81,7 +82,7 @@ class ImageFragment:Fragment(){
             }
         }
         mView.tv_image_title.setText(title)
-        initAdapter(mView)
+        initAdapter()
         for (i in UnSerializeDataBase.imgList){
             if(i.key==key){
                 mImagesPath=i.path
@@ -95,12 +96,12 @@ class ImageFragment:Fragment(){
         return mView
     }
 
-    private fun initAdapter(view: View) {
+    private fun initAdapter() {
         val imageList:MutableList<Image> = ArrayList()
         lastImage.isX = false
         imageList.add(lastImage)
         mAdapter = ImageAdapter(imageList)
-        val recyclerView = view.rv_image
+        val recyclerView = mView.rv_image
         recyclerView.adapter = mAdapter
         recyclerView.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
     }

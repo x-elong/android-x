@@ -11,6 +11,7 @@ import com.example.eletronicengineer.ViewHolder.MovieViewHolder
 import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.aninterface.Movie
+import com.example.eletronicengineer.model.Constants
 
 
 class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHolder>() {
@@ -29,7 +30,7 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
             when {
                 view.requirementType == "需求个人" -> {
                     val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                    intent.putExtra("type",1)
+                    intent.putExtra("type", Constants.FragmentType.PERSONAL_TYPE.ordinal)
                     intent.putExtra("id",view.mId)
                     mActivity.startActivity(intent)
                 }
@@ -37,61 +38,61 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                     when {
                         view.requirementMajor == ("主网施工队") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 2)
+                            intent.putExtra("type", Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("配网施工队") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 3)
+                            intent.putExtra("type", Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("变电施工队") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 4)
+                            intent.putExtra("type", Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("测量设计") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 5)
+                            intent.putExtra("type", Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("马帮运输") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 6)
+                            intent.putExtra("type", Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("桩基服务") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 7)
+                            intent.putExtra("type", Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("非开挖顶拉管作业") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 8)
+                            intent.putExtra("type", Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("试验调试") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 9)
+                            intent.putExtra("type", Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("跨越架") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 10)
+                            intent.putExtra("type", Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == "运行维护" -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 11)
+                            intent.putExtra("type", Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
@@ -99,7 +100,7 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                 }
                 view.requirementType == ("需求车辆租赁") -> {
                     val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                    intent.putExtra("type",12)
+                    intent.putExtra("type",Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
                     intent.putExtra("id",view.mId)
                     mActivity.startActivity(intent)
                 }
@@ -107,19 +108,19 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                     when {
                         view.requirementMajor == ("工器具租赁") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 13)
+                            intent.putExtra("type", Constants.FragmentType.TOOL_LEASING_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("设备租赁") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 14)
+                            intent.putExtra("type", Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("机械租赁") -> {
                             val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                            intent.putExtra("type", 15)
+                            intent.putExtra("type", Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal)
                             intent.putExtra("id", view.mId)
                             mActivity.startActivity(intent)
                         }
@@ -128,13 +129,13 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                 view.requirementType.equals("需求三方") -> {
                     if(view.requirementMajor=="资质合作"){
                         val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                        intent.putExtra("type",17)
+                        intent.putExtra("type",Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal)
                         intent.putExtra("id",view.mId)
                         mActivity.startActivity(intent)
                     }
                     else{
                         val intent = Intent(vg.context, DemandDisplayActivity::class.java)
-                        intent.putExtra("type",16)
+                        intent.putExtra("type",Constants.FragmentType.TRIPARTITE_TYPE.ordinal)
                         intent.putExtra("id",view.mId)
                         mActivity.startActivity(intent)
                     }
@@ -144,62 +145,62 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                     {
                         view.requirementMajor == "主网施工队"-> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",2)
+                            intent.putExtra("type",Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor =="配网施工队" -> {
 
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",3)
+                            intent.putExtra("type",Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("变电施工队") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",4)
+                            intent.putExtra("type",Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("测量设计") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",5)
+                            intent.putExtra("type",Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("马帮运输") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",6)
+                            intent.putExtra("type",Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("桩基服务") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",7)
+                            intent.putExtra("type",Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("非开挖顶拉管作业") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",8)
+                            intent.putExtra("type",Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("试验调试") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",9)
+                            intent.putExtra("type",Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("跨越架") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",10)
+                            intent.putExtra("type",Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == "运行维护" -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",11)
+                            intent.putExtra("type",Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
@@ -207,7 +208,7 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                     }
                 view.requirementType == ("供应租赁车辆") -> {
                     val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                    intent.putExtra("type",12)
+                    intent.putExtra("type",Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
                     intent.putExtra("id",view.mId)
                     mActivity.startActivity(intent)
                 }
@@ -215,19 +216,19 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                     when {
                         view.requirementMajor == ("工器具租赁") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",13)
+                            intent.putExtra("type",Constants.FragmentType.TOOL_LEASING_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("设备租赁") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",14)
+                            intent.putExtra("type",Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
                         view.requirementMajor == ("机械租赁") -> {
                             val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                            intent.putExtra("type",15)
+                            intent.putExtra("type",Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal)
                             intent.putExtra("id",view.mId)
                             mActivity.startActivity(intent)
                         }
@@ -236,13 +237,13 @@ class ListAdapterForDemand(activity: Activity): RecyclerView.Adapter<MovieViewHo
                 view.requirementType.equals("供应三方服务") -> {
                     if(view.requirementMajor=="资质合作"){
                         val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                        intent.putExtra("type",17)
+                        intent.putExtra("type",Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal)
                         intent.putExtra("id",view.mId)
                         mActivity.startActivity(intent)
                     }
                     else{
                         val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-                        intent.putExtra("type",16)
+                        intent.putExtra("type",Constants.FragmentType.TRIPARTITE_TYPE.ordinal)
                         intent.putExtra("id",view.mId)
                         mActivity.startActivity(intent)
                     }

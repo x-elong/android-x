@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"试验调试施工队",
+    "singleDisplayRightContent":"试验调试",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
@@ -30,7 +30,8 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆",
     "buttonName":["车辆清册"],
-    "additionalKey":"requirementTeamProjectListFile"
+    "key":"requirementCarLists",
+    "sendFormat":"JsonArray"
   },
   {
     "type":"MULTI_CHECKBOX",
@@ -99,16 +100,15 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"岗位及薪资标准",
     "buttonName":["成员清册"],
-    "additionalKey":"requirementPowerTransformationSalaryFile requirementListQuotationFile",
-    "key":"salaryStandard",
-    "sendFormat":"String"
+    "key":"requirementMembersLists",
+    "sendFormat":"JsonArray"
   },
   {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"需要人数",
-    "inputUnit":"(人)",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"需要人数(人)",
+    "singleDisplayRightContent":"0",
     "key":"needPeopleNumber",
-    "sendFormat":"Long"
+    "sendFormat":"String"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
@@ -139,8 +139,15 @@
     "sendFormat":"Long"
   },
   {
+    "type": "HINT",
+    "hintContent": "注:字符前有*为必填。",
+    "customFontColor":"#FFFF0000",
+    "startPosition":6,
+    "endPosition":7
+  },
+  {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"",
     "necessary": true,
     "key":"additonalExplain",

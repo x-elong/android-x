@@ -1,13 +1,8 @@
 [
     {
-        "type":"TITLE",
-        "title1":"三方服务信息录入",
-        "styleType": "0"
-    },
-    {
-        "type":"SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"服务类型",
-        "singleDisplayRightContent":"培训办证",
+        "type":"SELECT_DIALOG",
+        "selectTitle":"服务类型",
+        "selectOption1Items":["培训办证","审计咨询","会计事务","标书服务","法律咨询","法律咨询","其他"],
         "key": "serveType",
         "sendFormat": "String"
     },
@@ -37,33 +32,35 @@
     },
     {
         "type":"SINGLE_INPUT",
-        "inputSingleTitle":"联系电话",
+        "inputSingleTitle":"法人联系电话",
         "key": "legalPersonPhone",
         "sendFormat": "String"
     },
     {
         "type":"SHIFT_INPUT",
         "shiftInputTitle":"法人身份证照片",
-        "necessary":false,
+        "necessary":true,
         "key":"legalPersonIdCardPath",
         "sendFormat": "String"
     },
     {
         "type":"SHIFT_INPUT",
         "shiftInputTitle":"营业执照",
-        "necessary":false,
+        "necessary":true,
         "key":"businessLicensePath",
         "sendFormat": "String"
     },
     {
-        "type":"SINGLE_INPUT",
-        "inputSingleTitle":"联系人姓名",
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "联系人姓名",
+        "singleDisplayRightContent": "",
         "key": "contact",
         "sendFormat": "String"
     },
     {
-        "type":"SINGLE_INPUT",
-        "inputSingleTitle":"联系人电话",
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "联系人电话",
+        "singleDisplayRightContent": "",
         "key": "contactPhone",
         "sendFormat": "String"
     },
@@ -75,23 +72,30 @@
         "sendFormat": "String"
     },
     {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "负责人所在地",
+        "singleDisplayRightContent": ""
+    },
+    {
         "type":"INPUT_WITH_UNIT",
-        "inputUnitTitle":"有效期",
+        "inputUnitTitle":"发布有效期",
         "inputUnit":"(天)",
         "key": "validTime",
         "sendFormat": "Int"
     },
     {
         "type":"INPUT_WITH_TEXTAREA",
-        "textAreaTitle":"经营范围(选填)",
+        "textAreaTitle":"附加(经营范围)",
         "textAreaContent":"",
         "necessary": true,
         "key": "businessScope",
         "sendFormat": "String"
     },
     {
-        "type":"SUBMIT",
-        "submitContent":"确认并提交",
-        "key": "Provider"
+        "type":"HINT",
+        "hintContent":"注:字符前有 * 为必填。",
+        "customFontColor": "#FF0000",
+        "startPosition": "6",
+        "endPosition": "8"
     }
 ]

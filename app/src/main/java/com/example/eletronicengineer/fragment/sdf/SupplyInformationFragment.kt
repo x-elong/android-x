@@ -568,16 +568,16 @@ class SupplyInformationFragment : Fragment() {
                           var temp3=""
                           var temp4=""
                           temp1 = if(j.contact==null) {
-                              "无"
+                              " "
                           } else{ j.contact }
                           when {
                               j.sex=="1" -> temp2 ="女"
                               j.sex=="0" -> temp2="男"
-                              j.sex==null -> temp2="无"
+                              j.sex==null -> temp2=" "
                           }
-                          temp3 = if(j.id== null) { "无" }
+                          temp3 = if(j.id== null) { " " }
                           else { j.id }
-                          temp4 =if(j.issuerWorkerKind == null) { "无" }
+                          temp4 =if(j.issuerWorkerKind == null) { " " }
                           else{ j.issuerWorkerKind }
                           mPersonalIssueAdapter?.addData(PersonalIssue(temp1,temp2,temp4,temp3,"个人劳务"))
                       }
@@ -612,9 +612,9 @@ class SupplyInformationFragment : Fragment() {
                           var temp1=""
                           var temp2=""
                           var temp3=""
-                          temp1 = if(j.name==null) { "无" } else{ j.name }
-                          temp2 = if(j.implementationRange== null) { "无" } else { j.implementationRange }
-                          temp3 =if(j.id == null) { "无" } else{ j.id }
+                          temp1 = if(j.name==null) { " " } else{ j.name }
+                          temp2 = if(j.implementationRange== null) { " " } else { j.implementationRange }
+                          temp3 =if(j.id == null) { " " } else{ j.id }
                           mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应团队服务"))
                       }
                       if (data.size < mCountPerPageForTeam)
@@ -649,9 +649,9 @@ class SupplyInformationFragment : Fragment() {
                               var temp1=""
                               var temp2=""
                               var temp3=""
-                              temp1 = if(j.carType==null) { "无" } else{ j.carType }
-                              temp2 = if(j.issuerBelongSite== null) { "无" } else { j.issuerBelongSite }
-                              temp3 =if(j.leaseId == null) { "无" } else{ j.leaseId }
+                              temp1 = if(j.carType==null) { " " } else{ j.carType }
+                              temp2 = if(j.issuerBelongSite== null) { " " } else { j.issuerBelongSite }
+                              temp3 =if(j.leaseId == null) { " " } else{ j.leaseId }
                               mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应租赁车辆"))
                           }
                           else
@@ -659,9 +659,9 @@ class SupplyInformationFragment : Fragment() {
                               var temp1=""
                               var temp2=""
                               var temp3=""
-                              temp1 = if(j.type==null) { "无" } else{ j.type }
-                              temp2 = if(j.validTime== null) { "无" } else { j.validTime }
-                              temp3 =if(j.leaseId == null) { "无" } else{ j.leaseId }
+                              temp1 = if(j.type==null) { " " } else{ j.type }
+                              temp2 = if(j.validTime== null) { " " } else { j.validTime }
+                              temp3 =if(j.leaseId == null) { " " } else{ j.leaseId }
                               mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应租赁服务"))
                           }
                       }
@@ -697,18 +697,18 @@ class SupplyInformationFragment : Fragment() {
                               var temp1=""
                               var temp2=""
                               var temp3=""
-                              temp1 = if(j.serveType==null) { "无" } else{ j.serveType }
-                              temp2 = if(j.companyName== null) { "无" } else { j.companyName }
-                              temp3 =if(j.id == null) { "无" } else{ j.id }
+                              temp1 = if(j.serveType==null) { " " } else{ j.serveType }
+                              temp2 = if(j.companyName== null) { " " } else { j.companyName }
+                              temp3 =if(j.id == null) { " " } else{ j.id }
                               mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应三方服务"))
                           }
                           else{
                               var temp1=""
                               var temp2=""
                               var temp3=""
-                              temp1 = if(j.serveType==null) { "无" } else{ j.serveType }
-                              temp2 = if(j.validTime== null) { "无" } else { j.validTime }
-                              temp3 =if(j.id == null) { "无" } else{ j.id }
+                              temp1 = if(j.serveType==null) { " " } else{ j.serveType }
+                              temp2 = if(j.validTime== null) { " " } else { j.validTime }
+                              temp3 =if(j.id == null) { " " } else{ j.id }
                               mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应三方服务"))
                           }
                       }

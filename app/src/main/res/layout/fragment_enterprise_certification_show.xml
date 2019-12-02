@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="xxx"
+
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toEndOf="@+id/tv_institution_name"
@@ -73,7 +73,7 @@
         android:id="@+id/tv_social_credit_code_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="11111"
+
         android:textColor="@color/black"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
@@ -110,7 +110,7 @@
         android:inputType="number"
         android:textColor="@color/black"
         android:ems="3"
-        android:hint="请输入主营信息"
+
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toEndOf="@+id/tv_main_code"
@@ -240,7 +240,6 @@
         android:id="@+id/tv_administrator_name_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="123xx"
         android:textColor="@color/black"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
@@ -273,7 +272,6 @@
         android:id="@+id/tv_administrator_number_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="请输入管理员身份证号码"
         android:textColor="@color/black"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"

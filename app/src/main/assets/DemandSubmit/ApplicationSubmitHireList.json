@@ -1,33 +1,51 @@
 ﻿[
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"名称："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"规格型号："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"单位："
-  },
-  {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"数量："
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"名称",
+    "singleDisplayRightContent": " ",
+    "key":"name",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单价:",
-    "singleDisplayRightContent":" "
+    "singleDisplayRightTitle":"规格型号",
+    "singleDisplayRightContent":" ",
+    "key":"specificationsModels",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"单位",
+    "singleDisplayRightContent":" ",
+    "key":"units",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"数量",
+    "singleDisplayRightContent":" ",
+    "key":"quantity",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"租赁时间："
+    "inputSingleTitle":"单价",
+    "key":"quotationList",
+    "sendFormat": "Double"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁时间",
+    "singleDisplayRightContent":" ",
+    "key":"hireTime",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"详细说明：",
+    "textAreaTitle":"详细说明",
     "textAreaContent":"",
-    "necessary":false
+    "necessary":false,
+    "key":"detailsExplain",
+    "sendFormat": "String"
   }
 ]

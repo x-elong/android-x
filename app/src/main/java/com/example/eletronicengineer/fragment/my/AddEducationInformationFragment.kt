@@ -76,10 +76,10 @@ class AddEducationInformationFragment :Fragment(){
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                if(JSONObject(it.string()).getInt("code") == 200){
-                                    val toast = Toast.makeText(context,"添加成功",Toast.LENGTH_SHORT)
-                                    toast.setGravity(Gravity.CENTER,0,0)
-                                    toast.show()
+                                val json = JSONObject(it.string())
+                                if(json.getInt("code") == 200){
+                                    ToastHelper.mToast(mView.context,"添加成功")
+                                    activity!!.supportFragmentManager.popBackStackImmediate()
                                 }
                             },{
                                 it.printStackTrace()

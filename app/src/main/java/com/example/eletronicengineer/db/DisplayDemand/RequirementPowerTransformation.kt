@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
+import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
 import java.io.Serializable
 
 class RequirementPowerTransformation(
@@ -25,6 +27,8 @@ class RequirementPowerTransformation(
     var name:String,
     var phone:String,
     var requirmentTeamServeId:String,
+    var requirementCarLists:List<RequirementCarList>?,
+    var requirementMembersLists:List<RequirementMembersList>?,
     var requirementTeamProjectList:List<requirementTeamProjectList>?,
     var requirementPowerTransformationSalary:List<requirementPowerTransformationSalary>?,
     var requirementListQuotations:List<requirementTeamProjectList>?,

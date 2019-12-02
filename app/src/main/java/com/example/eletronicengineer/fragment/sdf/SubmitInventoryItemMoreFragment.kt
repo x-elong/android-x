@@ -35,25 +35,24 @@ class SubmitInventoryItemMoreFragment : Fragment(){
 
     private fun initFragment() {
         var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
-        mView.tv_inventory_item_more_back.setOnClickListener {
-            mData[0].selected =0//点击了返回按钮，*去掉
-            val fragment =
-                activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
-            fragment.update(adapter.mData)
-            activity!!.supportFragmentManager.popBackStackImmediate()
+       mView.tv_inventory_item_more_back.setOnClickListener {
+//          mData[0].selected =0//点击了返回按钮，*去掉
+//           val fragment =
+//               activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+//           fragment.update(adapter.mData)
+           activity!!.supportFragmentManager.popBackStackImmediate()
         }
         mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")
-        mView.tv_select_ok.setOnClickListener {
-            val networkAdapter= NetworkAdapter(mData,mView.context)
-            if(networkAdapter.check()) {
-                // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
-                val fragment =
-                    activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
-                activity!!.supportFragmentManager.popBackStackImmediate()
-                mData[0].selected = 1
-
-                fragment.update(adapter.mData)
-            }
+       mView.tv_select_ok.setOnClickListener {
+           val networkAdapter= NetworkAdapter(mData,mView.context)
+           if(networkAdapter.check()) {
+               // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
+               val fragment =
+                   activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+               activity!!.supportFragmentManager.popBackStackImmediate()
+               mData[0].selected = 1
+               fragment.update(adapter.mData)
+           }
         }
         adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
         mView.rv_inventory_item_more_content.adapter = adapter

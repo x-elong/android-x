@@ -20,11 +20,6 @@
     "buttonName":["点击查看"]
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆全景照：",
-    "buttonName":["点击查看"]
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"可操作电压等级：",
     "singleDisplayRightContent":"00"
@@ -50,14 +45,8 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"发布人所属地点:",
-    "placePath": "pcas.json",
-    "key":"issuerBelongSite",
-    "sendFormat":"String"
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"联系对方"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"发布人所属地点:",
+    "singleDisplayRightContent":"00"
   }
 ]

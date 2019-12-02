@@ -239,13 +239,15 @@ class ItemGenerate
                             }
                         }
                     }
+                    val necessary= if(jsonObject.has("necessary")){ jsonObject.getBoolean("necessary")} else { false}
                     multiStyleItem=MultiStyleItem(MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG,selectOption1Items,selectOption2Items,selectOption3Items,jsonObject.getString("selectTitle"))
 
                 }
                 "SINGLE_INPUT"->
                 {
                     val inputSingleTitle=jsonObject.getString("inputSingleTitle")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,inputSingleTitle)
+                    val necessary= if(jsonObject.has("necessary")){ jsonObject.getBoolean("necessary")} else { false}
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,inputSingleTitle,necessary)
 
                 }
                 "TWO_PAIR_INPUT"->

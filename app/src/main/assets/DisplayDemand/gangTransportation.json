@@ -60,11 +60,6 @@
     "singleDisplayRightContent":"00"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"薪资标准:",
-    "buttonName":["清单报价"]
-  },
-  {
     "type": "BLANK"
   },
   {
@@ -86,9 +81,5 @@
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"附加:",
     "singleDisplayRightContent":""
-  },
-  {
-    "type":"SUBMIT",
-    "submitContent":"报名"
   }
 ]

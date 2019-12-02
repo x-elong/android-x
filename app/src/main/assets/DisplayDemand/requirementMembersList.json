@@ -1,32 +1,32 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称：",
+    "singleDisplayRightTitle":"岗位类别：",
+    "singleDisplayRightContent":""
+  },
+  {
+  "type":"SINGLE_DISPLAY_RIGHT",
+  "singleDisplayRightTitle":"需要人数：",
+  "singleDisplayRightContent":""
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"薪资标准(按单位)：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目特征描述：",
+    "singleDisplayRightTitle":"个人证件名称：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工程量：",
+    "singleDisplayRightTitle":"是否必须持证上岗：",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计量单位：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"综合单价：",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"详细说明：",
+    "singleDisplayRightTitle":"备注：",
     "singleDisplayRightContent":""
   }
 ]

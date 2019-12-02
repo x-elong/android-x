@@ -11,9 +11,11 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.db.My.EducationBackgroundsEntity
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.getUser
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_education_information.view.*
@@ -56,17 +58,20 @@ class EducationInformationFragment :Fragment(){
 //        }
 //        mMultiStyleItemList.add(item)
         adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        val result = NetworkAdapter().getDataUser().subscribe({
-                val educationBackgrounds= it.message.educationBackgrounds
-                val jsonArray = JSONObject(Gson().toJson(it.message)).getJSONArray("educationBackgrounds")
-                if(educationBackgrounds!=null)
+        val result = NetworkAdapter().getDataEducationBackground().subscribe({
+                val educationBackgrounds= it.message
+                val jsonArray = JSONArray(it.message)
+
                     for (j in educationBackgrounds){
                         val item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,j.educationBackground,
                             SimpleDateFormat("yyyy-MM-dd").format(j.graduationTime),j.graduationAcademy+j.major)
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",1)
-                            bundle.putString("EducationBackground",jsonArray.getJSONObject(educationBackgrounds.indexOf(j)).toString())
+
+                            bundle.putString("EducationBackground",GsonBuilder().create().toJson(j,
+                                EducationBackgroundsEntity::class.java
+                            ))
                             FragmentHelper.switchFragment(activity!!,AddEducationInformationFragment.newInstance(bundle),R.id.frame_my_information,"ModifyEducation")
                         }
                         mMultiStyleItemList.add(item)
