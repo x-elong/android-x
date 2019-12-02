@@ -21,22 +21,22 @@ class GlideLoader : ImageLoader{
     override fun loadImage(imageView: ImageView?, imagePath: String?) {
         //小图加载
         imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
-        Glide.with(imageView!!.context).load(imagePath).apply(mOptions).into(imageView)
+        Glide.with(imageView.context).load(imagePath).apply(mOptions).into(imageView)
     }
     fun loadImage(imageView: ImageView?, imageID: Int) {
         //小图加载
         imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
-        Glide.with(imageView!!.context).load(imageID).apply(mOptions).into(imageView)
+        Glide.with(imageView.context).load(imageID).apply(mOptions).into(imageView)
     }
     override fun loadPreImage(imageView: ImageView?, imagePath: String?) {
         //大图加载
         imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
-        Glide.with(imageView!!.context).load(imagePath).apply(mPreOptions).into(imageView)
+        Glide.with(imageView.context).load(imagePath).apply(mPreOptions).into(imageView)
     }
     fun loadPreImage(imageView: ImageView?, imageID: Int) {
         //大图加载
         imageView!!.scaleType = ImageView.ScaleType.CENTER_CROP
-        Glide.with(imageView!!.context).load(imageID).apply(mPreOptions).into(imageView)
+        Glide.with(imageView.context).load(imageID).apply(mPreOptions).into(imageView)
     }
     override fun clearMemoryCache() {
         //清理缓存

@@ -1271,7 +1271,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                    }
                 if(mData[position].shiftInputPicture!=""){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
-                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
+                    GlideLoader().loadImage(vh.ivShiftInputPicture,"http://"+mData[position].shiftInputPicture)
                 }
             }
             SELECT_DIALOG_TYPE->

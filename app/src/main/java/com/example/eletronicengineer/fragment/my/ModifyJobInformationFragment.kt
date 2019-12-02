@@ -186,8 +186,10 @@ class ModifyJobInformationFragment :Fragment(){
                 initDemandIndividual(adapter)
                 adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
                 adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
+                adapter.mData[0].inputSingleContent = adapter.mData[0].singleDisplayRightContent
                 adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
                 adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
+                adapter.mData[1].inputSingleContent = adapter.mData[1].selectContent
             }
             Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()
@@ -1386,9 +1388,34 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[2].selectContent = requirementLeaseConstructionTool.projectSite.replace(" / ", " ")
         adapter.mData[3].inputUnitContent = requirementLeaseConstructionTool.projectTime
 
-        //adapter.mData[4].selectContent = requirementLeaseConstructionTool.vehicleType
+        val itemMultiStyleItems = ArrayList<MultiStyleItem>()
+        val requirementLeaseLists = requirementLeaseConstructionTool.requirementLeaseLists
+        if(requirementLeaseLists!=null)
+            for(j in requirementLeaseLists){
+                itemMultiStyleItems.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.projectName,true))
+                val bundle = Bundle()
+                val mData:List<MultiStyleItem>
+                bundle.putString("type","成员清册发布")
+                mData = adapterGenerate.PublishDetailList(bundle).mData
+                mData[0].inputSingleContent = j.projectName
+                mData[1].inputSingleContent = j.specificationsModels
+                mData[2].inputSingleContent = j.units
+                mData[3].inputSingleContent = j.quantity
+                mData[6].textAreaContent = j.detailsExplain
+                itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem = mData
+                itemMultiStyleItems[itemMultiStyleItems.size-1].jumpListener = View.OnClickListener {
+                    itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
+                    val bundle = Bundle()
+                    val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
+                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    bundle.putString("type","成员清册发布")
+                    FragmentHelper.switchFragment(activity!!,
+                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        R.id.frame_my_release,"")
+                }
+            }
 
-
+        adapter.mData[4].itemMultiStyleItem = itemMultiStyleItems
         adapter.mData[5].radioButtonValue = requirementLeaseConstructionTool.financeTransportationInsurance
         adapter.mData[6].radioButtonValue = requirementLeaseConstructionTool.distribution
         adapter.mData[7].radioButtonValue = requirementLeaseConstructionTool.partnerAttribute

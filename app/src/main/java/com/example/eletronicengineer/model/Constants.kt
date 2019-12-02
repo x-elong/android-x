@@ -318,6 +318,18 @@ class Constants {
                 /**
                  * @删除
                  */
+
+                //需求个人
+                const val deleteRequirementPerson="RequirementPerson/deleteRequirementPerson/{id}"
+                //车辆租赁
+                const val deleteRequirementLeaseCar = "RequirementLeaseCar/deleteRequirementLeaseCar/{id}"
+                //工器具租赁
+                const val deleteRequirementLeaseConstructionTool = "RequirementLeaseConstructionTool/deleteRequirementLeaseConstructionTool/{id}"
+                //设备租赁
+                const val deleteRequirementLeaseFacility = "RequirementLeaseFacility/deleteRequirementLeaseFacility/{id}"
+                //机械租赁
+                const val deleteRequirementLeaseMachinery = "/RequirementLeaseMachinery/deleteRequirementLeaseMachinery/{id}"
+                //需求三方
                 const val deleteRequirementThirdParty="RequirementThirdParty/deleteRequirementThirdParty/{id}"
             }
         }

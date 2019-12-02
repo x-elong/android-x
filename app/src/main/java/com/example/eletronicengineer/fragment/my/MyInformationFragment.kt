@@ -23,6 +23,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.My.UserEntity
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
@@ -81,35 +82,48 @@ class MyInformationFragment : Fragment() {
     }
     //将照片设置在对于的控件上
     fun refresh(mImagePath: String) {
+        val loadingDialog = LoadingDialog(mView.context, "正在提交中...", R.mipmap.ic_dialog_loading)
+        loadingDialog.show()
         val file = File(mImagePath)
         val imagePart = MultipartBody.Part.createFormData("file",file.name, RequestBody.create(MediaType.parse("image/*"),file))
         val result = uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            val imagePath = it.string()
-            val result = Observable.create<RequestBody>{
-                val json = JSONObject().put("headerImg",imagePath)
-                val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
-                it.onNext(requestBody)
-            }.subscribe {
-                val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.updateHeaderImg)
-                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        val json = JSONObject(it.string())
-                        Log.i("imagePath + code",imagePath+json.toString())
-                        var result = ""
-                        if(json.getInt("code")==200){
-                            result = "更新成功"
-                            adapter!!.mData[0].shiftInputPicture = mImagePath
-                            adapter!!.notifyItemChanged(0)
-                        }else{
-                            result = "更新失败"
-                        }
-                        val toast = Toast.makeText(context,result,Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.CENTER,0,0)
-                        toast.show()
-                    },{
-                        it.printStackTrace()
-                    })
+            val json = JSONObject(it.string())
+            if(json.getBoolean("success")){
+                val imagePath = json.getString("httpUrl")
+                val result = Observable.create<RequestBody>{
+                    Log.i("it",it.toString())
+                    val json = JSONObject().put("headerImg",imagePath)
+                    val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+                    it.onNext(requestBody)
+                }.subscribe {
+                    val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+Constants.HttpUrlPath.My.updateHeaderImg)
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                            loadingDialog.dismiss()
+                            val json = JSONObject(it.string())
+                            Log.i("imagePath + code",imagePath+json.toString())
+                            var result = ""
+                            if(json.getInt("code")==200){
+                                result = "更新成功"
+                                adapter!!.mData[0].shiftInputPicture = mImagePath
+                                adapter!!.notifyItemChanged(0)
+                            }else{
+                                result = "更新失败"
+                            }
+                            ToastHelper.mToast(mView.context,result)
+                        },{
+                            loadingDialog.dismiss()
+                            ToastHelper.mToast(mView.context,"提交头像异常")
+                            it.printStackTrace()
+                        })
+            }
+            }
+            else{
+                ToastHelper.mToast(mView.context,"上传失败")
+                loadingDialog.dismiss()
             }
         },{
+            loadingDialog.dismiss()
+            ToastHelper.mToast(mView.context,"上传照片异常")
             it.printStackTrace()
         })
     }

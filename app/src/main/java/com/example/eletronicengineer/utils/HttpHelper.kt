@@ -421,7 +421,7 @@ interface HttpHelper {
     @POST(Constants.HttpUrlPath.Requirement.excel)
     fun downloadExcel(@Path("fileName") filename: String): Call<ResponseBody>
 
-    @POST("/api/upload/url")
+    @POST("file/uploadFileSample")
     @Multipart
     fun uploadImage(@Part data: MultipartBody.Part): Observable<ResponseBody>
 
@@ -447,6 +447,21 @@ interface HttpHelper {
 
     @GET(Constants.HttpUrlPath.Shopping.GeneralizeGoods)
     fun getGeneralizeGoods():Observable<HttpResult<List<GoodsEntity>>>
+
+    @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementPerson)
+    fun deleteRequirementPerson(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementLeaseCar)
+    fun deleteRequirementLeaseCar(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementLeaseConstructionTool)
+    fun deleteRequirementLeaseConstructionTool(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementLeaseFacility)
+    fun deleteRequirementLeaseFacility(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementLeaseMachinery)
+    fun deleteRequirementLeaseMachinery(@Path("id") id:String):Observable<ResponseBody>
 
     @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementThirdParty)
     fun deleteRequirementThirdParty(@Path("id") id:String):Observable<ResponseBody>
@@ -1146,7 +1161,7 @@ internal fun startSendMessage(requestBody: RequestBody, baseUrl: String):Observa
 
 internal fun uploadImage(data: MultipartBody.Part): Observable<ResponseBody> {
     val retrofit =
-        Retrofit.Builder().baseUrl("https://imgurl.org/").addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        Retrofit.Builder().baseUrl(UnSerializeDataBase.mineBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.uploadImage(data).subscribeOn(Schedulers.newThread())
@@ -1880,13 +1895,67 @@ internal fun getSupplyThirdPartyDetail(id: String,token: String,baseUrl: String)
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getSupplyThirdPartyDetail(id,token)
 }
+//删除发布 需求个人
+internal fun deleteRequirementPerson(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementPerson(id)
+}
+//删除发布 车辆租赁
+internal fun deleteRequirementLeaseCar(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseCar(id)
+}
+
+//删除发布 工器具租赁
+internal fun deleteRequirementLeaseConstructionTool(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseConstructionTool(id)
+}
+
+//删除发布 设备租赁
+internal fun deleteRequirementLeaseFacility(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseFacility(id)
+}
+
+//删除发布 机械租赁
+internal fun deleteRequirementLeaseMachinery(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseMachinery(id)
+}
+
 //删除发布 需求三方
 internal fun deleteRequirementThirdParty(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.deleteRequirementThirdParty(id)
 }

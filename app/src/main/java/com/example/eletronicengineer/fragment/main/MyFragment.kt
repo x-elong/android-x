@@ -88,7 +88,7 @@ class MyFragment : Fragment() {
         mView.tv_my_vip_level.text = this.vipType
     }
     private fun initData() {
-        GlideLoader().loadImage(mView.iv_my_header,headerImg)
+        GlideLoader().loadImage(mView.iv_my_header,"http://"+headerImg)
         mView.tv_my_phone.text = UnSerializeDataBase.userPhone
     }
 

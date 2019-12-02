@@ -2,7 +2,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"xxx ",
+    "singleDisplayRightContent":"",
     "key":"requirementVariety",
     "sendFormat": "String"
   },

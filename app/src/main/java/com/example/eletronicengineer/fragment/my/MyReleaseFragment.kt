@@ -201,15 +201,37 @@ class MyReleaseFragment :Fragment(){
                             val js = jsonArray.getJSONObject(j)
                             val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,js.getString("requirementType"),"需求专业："+js.getString("requirementMajor"),"项目地点："+js.getString("projectSite"))
                             item.necessary = true
+                            val id = js.getString("id")
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putInt("type",Constants.FragmentType.PERSONAL_TYPE.ordinal)
-                                bundle.putString("id",js.getString("id"))
+                                bundle.putString("id",id)
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
+                            }
+                            item.deleteListener = View.OnClickListener {
+                                val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                deleteRequirementPerson(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                    .subscribe({
+                                        loadingDialog.dismiss()
+                                        if(JSONObject(it.string()).getInt("code")==200){
+                                            ToastHelper.mToast(mView.context,"删除成功")
+                                            val mData = adapter.mData.toMutableList()
+                                            mData.removeAt(j)
+                                            adapter.mData=mData
+                                            adapter.notifyDataSetChanged()
+                                        }
+                                        else
+                                            ToastHelper.mToast(mView.context,"删除失败")
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context,"删除信息异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("CheckId",js.getString("id"))
+                                bundle.putString("CheckId",id)
                                 bundle.putString("type","需求个人")
                                 FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -249,6 +271,10 @@ class MyReleaseFragment :Fragment(){
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
                             val requirementVariety = js.getString("requirementVariety")
+
+                            val id = js.getString("requirementTeamId")
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别："+requirementVariety,"项目地点："+js.getString("projectSite"))
+                            item.necessary = true
                             val type = when(requirementVariety){
                                 "变电施工队"->Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal
                                 "主网施工队"->Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal
@@ -262,17 +288,15 @@ class MyReleaseFragment :Fragment(){
                                 "运行维护"->Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal
                                 else -> 0
                             }
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别："+requirementVariety,"项目地点："+js.getString("projectSite"))
-                            item.necessary = true
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("id",js.getString("requirementTeamId"))
+                                bundle.putString("id",id)
                                 bundle.putInt("type",type)
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("CheckId",js.getString("requirementTeamId"))
+                                bundle.putString("CheckId",id)
                                 bundle.putString("type","需求团队")
                                 FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -312,24 +336,120 @@ class MyReleaseFragment :Fragment(){
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
                             val requirementVariety = js.getString("requirementVariety")
-                            val type = when(requirementVariety){
-                                "车辆租赁"->Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal
-                                "工器具租赁"->Constants.FragmentType.TOOL_LEASING_TYPE.ordinal
-                                "设备租赁"->Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal
-                                "机械租赁"->Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal
-                                else -> 0
-                            }
+
+                            val id = js.getString("requirementLeaseId")
+                            var type = 0
                             val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求租赁","租赁类型："+requirementVariety,"项目地点："+js.getString("projectSite"))
                             item.necessary = true
+                            when(requirementVariety){
+                                "车辆租赁"->{
+                                    type = Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementLeaseCar(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(j)
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "工器具租赁"->{
+                                    type = Constants.FragmentType.TOOL_LEASING_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementLeaseConstructionTool(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(j)
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "设备租赁"->{
+                                    type = Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementLeaseFacility(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(j)
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "机械租赁"->{
+                                    type = Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementLeaseMachinery(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(j)
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                            }
+
+
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putInt("type",type)
-                                bundle.putString("id",js.getString("requirementLeaseId"))
+                                bundle.putString("id",id)
                                 FragmentHelper.switchFragment(activity!!,JobMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
                             item.registrationMoreListener = View.OnClickListener {
                                 val bundle = Bundle()
-                                bundle.putString("CheckId",js.getString("requirementLeaseId"))
+                                bundle.putString("CheckId",id)
                                 bundle.putString("type","需求租赁")
                                 FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
                             }
@@ -391,7 +511,7 @@ class MyReleaseFragment :Fragment(){
                                             val mData = adapter.mData.toMutableList()
                                             mData.removeAt(j)
                                             adapter.mData=mData
-                                            adapter.notifyItemRangeRemoved(j,1)
+                                            adapter.notifyDataSetChanged()
                                         }
                                         else
                                             ToastHelper.mToast(mView.context,"删除失败")
