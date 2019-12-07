@@ -72,9 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_tv_hint_15"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:text="宇畅电力官方旗舰店"
-        android:textStyle="bold"
+
         app:layout_constraintLeft_toRightOf="@id/iv_shop_log"
         app:layout_constraintTop_toTopOf="@id/iv_shop_log"
         android:layout_marginLeft="@dimen/left_6"

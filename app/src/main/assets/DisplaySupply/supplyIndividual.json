@@ -2,42 +2,42 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布类型:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
   "singleDisplayRightTitle":"专业工种:",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"姓名:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"性别:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"年龄(岁):",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"工作经验(年):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"薪资要求:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系电话:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
@@ -47,12 +47,12 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"有效期(天):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

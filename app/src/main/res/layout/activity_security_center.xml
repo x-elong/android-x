@@ -31,7 +31,7 @@
         android:layout_height="@dimen/general_30"
         android:text="安全中心"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="@id/view_security_center"
         app:layout_constraintStart_toStartOf="parent"

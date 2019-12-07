@@ -1,17 +1,17 @@
 [
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"需求类型：",
+        "singleDisplayRightTitle":"需求类型:",
         "singleDisplayRightContent":"普工"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "报名人姓名：",
+        "singleDisplayRightTitle": "报名人姓名:",
         "singleDisplayRightContent":"王一"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "报名人联系电话：",
+        "singleDisplayRightTitle": "报名人联系电话:",
         "singleDisplayRightContent":"18300000000"
     },
     {

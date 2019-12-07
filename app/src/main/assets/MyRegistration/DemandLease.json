@@ -1,17 +1,17 @@
 [
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"租赁类型：",
+        "singleDisplayRightTitle":"租赁类型:",
         "singleDisplayRightContent":"车辆租赁"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人名字：",
+        "singleDisplayRightTitle": "联系人名字:",
         "singleDisplayRightContent":"王一"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人电话：",
+        "singleDisplayRightTitle": "联系人电话:",
         "singleDisplayRightContent":"18300000000"
     },
     {
@@ -22,7 +22,7 @@
     {
         "type":"INPUT_WITH_TEXTAREA",
         "textAreaTitle":"备注",
-        "textAreaContent": "     备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息",
+        "textAreaContent": "",
         "necessary": false
     }
 ]

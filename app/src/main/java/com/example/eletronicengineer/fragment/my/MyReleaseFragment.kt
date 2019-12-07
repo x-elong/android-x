@@ -47,32 +47,7 @@ class MyReleaseFragment :Fragment(){
                 val selectContent=it.data.getString("selectContent")
                 tvMode = selectContent
                 mView.tv_mode_content.text=selectContent
-                when(selectContent){
-                    "需求 需求个人"->{
-                        getDataDemandIndividual()
-                    }
-                    "需求 需求团队"->{
-                        getDataDemandGroup()
-                    }
-                    "需求 需求租赁"->{
-                        getDataDemandLease()
-                    }
-                    "需求 需求三方"->{
-                        getDataDemandTripartite()
-                    }
-                    "供应 个人劳务"->{
-                        getDataPersonalIssue()
-                    }
-                    "供应 团队服务"->{
-                        getDataTeamService()
-                    }
-                    "供应 租赁服务"->{
-                        getDataLeaseService()
-                    }
-                    "供应 三方服务"->{
-                        getDataThridService()
-                    }
-                }
+                initData()
 //                mView.sp_demand_moder.
                 false
             }
@@ -101,32 +76,7 @@ class MyReleaseFragment :Fragment(){
                 if(lastCompletelyVisibleItemPosition == layoutManager.itemCount-1 && page<=pageCount){
                     Log.i("page","$page")
                     Toast.makeText(mView.context,"滑动到底了", Toast.LENGTH_SHORT).show()
-                    when(mView.tv_mode_content.text){
-                        "需求 需求个人"->{
-                            getDataDemandIndividual()
-                        }
-                        "需求 需求团队"->{
-                            getDataDemandGroup()
-                        }
-                        "需求 需求租赁"->{
-                            getDataDemandLease()
-                        }
-                        "需求 需求三方"->{
-                            getDataDemandTripartite()
-                        }
-                        "供应 个人劳务"->{
-                            getDataPersonalIssue()
-                        }
-                        "供应 团队服务"->{
-                            getDataTeamService()
-                        }
-                        "供应 租赁服务"->{
-                            getDataLeaseService()
-                        }
-                        "供应 三方服务"->{
-                            getDataThridService()
-                        }
-                    }
+                    initData()
                 }
             }
         })
@@ -150,6 +100,10 @@ class MyReleaseFragment :Fragment(){
         //        (mView.rv_my_release_content.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         mView.rv_my_release_content.adapter=adapter
         mView.rv_my_release_content.layoutManager=LinearLayoutManager(context)
+        initData()
+
+    }
+    fun initData(){
         when(tvMode){
             "需求 需求团队"->{
                 getDataDemandGroup()
@@ -176,7 +130,6 @@ class MyReleaseFragment :Fragment(){
                 getDataDemandIndividual()
             }
         }
-
     }
     private fun getDataDemandIndividual() {
         val result = Observable.create<RequestBody> {
@@ -199,7 +152,7 @@ class MyReleaseFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,js.getString("requirementType"),"需求专业："+js.getString("requirementMajor"),"项目地点："+js.getString("projectSite"))
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,js.getString("requirementType"),"需求专业:"+js.getString("requirementMajor"),"项目地点:"+js.getString("projectSite"))
                             item.necessary = true
                             val id = js.getString("id")
                             item.jumpListener = View.OnClickListener {
@@ -217,7 +170,7 @@ class MyReleaseFragment :Fragment(){
                                         if(JSONObject(it.string()).getInt("code")==200){
                                             ToastHelper.mToast(mView.context,"删除成功")
                                             val mData = adapter.mData.toMutableList()
-                                            mData.removeAt(j)
+                                            mData.removeAt(mData.indexOf(item))
                                             adapter.mData=mData
                                             adapter.notifyDataSetChanged()
                                         }
@@ -273,20 +226,250 @@ class MyReleaseFragment :Fragment(){
                             val requirementVariety = js.getString("requirementVariety")
 
                             val id = js.getString("requirementTeamId")
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别："+requirementVariety,"项目地点："+js.getString("projectSite"))
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求团队","需求类别:"+requirementVariety,"项目地点:"+js.getString("projectSite"))
                             item.necessary = true
-                            val type = when(requirementVariety){
-                                "变电施工队"->Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal
-                                "主网施工队"->Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal
-                                "配网施工队"->Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal
-                                "测量设计"->Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal
-                                "马帮运输"->Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal
-                                "桩基服务"->Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal
-                                "非开挖顶拉管作业"->Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal
-                                "试验调试"->Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal
-                                "跨越架"->Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal
-                                "运行维护"->Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal
-                                else -> 0
+                            var type = 0
+                            when(requirementVariety){
+                                "变电施工队"-> {
+                                    type = Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementPowerTransformation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "主网施工队"->{
+                                    type = Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementMajorNetwork(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "配网施工队"->{
+                                    type = Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementDistribuionNetwork(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "测量设计"->{
+                                    type = Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementMeasureDesign(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "马帮运输"->{
+                                    type = Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementCaravanTransport(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "桩基服务"->{
+                                    type = Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementPileFoundation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "非开挖顶拉管作业"->{
+                                    type = Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementUnexcavation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "试验调试"->{
+                                    type = Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementTest(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "跨越架"->{
+                                    type = Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementSpanWoodenSupprt(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
+                                "运行维护"->{
+                                    type = Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal
+                                    item.deleteListener = View.OnClickListener {
+                                        val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                                        loadingDialog.show()
+                                        deleteRequirementRunningMaintain(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                            .subscribe({
+                                                loadingDialog.dismiss()
+                                                if(JSONObject(it.string()).getInt("code")==200){
+                                                    ToastHelper.mToast(mView.context,"删除成功")
+                                                    val mData = adapter.mData.toMutableList()
+                                                    mData.removeAt(mData.indexOf(item))
+                                                    adapter.mData=mData
+                                                    adapter.notifyDataSetChanged()
+                                                }
+                                                else
+                                                    ToastHelper.mToast(mView.context,"删除失败")
+                                            },{
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                                it.printStackTrace()
+                                            })
+                                    }
+                                }
                             }
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
@@ -339,7 +522,7 @@ class MyReleaseFragment :Fragment(){
 
                             val id = js.getString("requirementLeaseId")
                             var type = 0
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求租赁","租赁类型："+requirementVariety,"项目地点："+js.getString("projectSite"))
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求租赁","租赁类型:"+requirementVariety,"项目地点:"+js.getString("projectSite"))
                             item.necessary = true
                             when(requirementVariety){
                                 "车辆租赁"->{
@@ -353,7 +536,7 @@ class MyReleaseFragment :Fragment(){
                                                 if(JSONObject(it.string()).getInt("code")==200){
                                                     ToastHelper.mToast(mView.context,"删除成功")
                                                     val mData = adapter.mData.toMutableList()
-                                                    mData.removeAt(j)
+                                                    mData.removeAt(mData.indexOf(item))
                                                     adapter.mData=mData
                                                     adapter.notifyDataSetChanged()
                                                 }
@@ -377,7 +560,7 @@ class MyReleaseFragment :Fragment(){
                                                 if(JSONObject(it.string()).getInt("code")==200){
                                                     ToastHelper.mToast(mView.context,"删除成功")
                                                     val mData = adapter.mData.toMutableList()
-                                                    mData.removeAt(j)
+                                                    mData.removeAt(mData.indexOf(item))
                                                     adapter.mData=mData
                                                     adapter.notifyDataSetChanged()
                                                 }
@@ -401,7 +584,7 @@ class MyReleaseFragment :Fragment(){
                                                 if(JSONObject(it.string()).getInt("code")==200){
                                                     ToastHelper.mToast(mView.context,"删除成功")
                                                     val mData = adapter.mData.toMutableList()
-                                                    mData.removeAt(j)
+                                                    mData.removeAt(mData.indexOf(item))
                                                     adapter.mData=mData
                                                     adapter.notifyDataSetChanged()
                                                 }
@@ -425,7 +608,7 @@ class MyReleaseFragment :Fragment(){
                                                 if(JSONObject(it.string()).getInt("code")==200){
                                                     ToastHelper.mToast(mView.context,"删除成功")
                                                     val mData = adapter.mData.toMutableList()
-                                                    mData.removeAt(j)
+                                                    mData.removeAt(mData.indexOf(item))
                                                     adapter.mData=mData
                                                     adapter.notifyDataSetChanged()
                                                 }
@@ -488,9 +671,9 @@ class MyReleaseFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
-                            val type = "需求类别："+js.getString("requirementVariety")
+                            val type = "需求类别:"+js.getString("requirementVariety")
                             val partnerAttribute = arrayListOf("个人","单位")
-                            val information = if(type=="资质合作") "合作地区："+js.getString("cooperationRegion") else "合作方属性："+partnerAttribute[js.getString("partnerAttribute").toInt()]
+                            val information = if(type=="资质合作") "合作地区:"+js.getString("cooperationRegion") else "合作方属性:"+partnerAttribute[js.getString("partnerAttribute").toInt()]
                             val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"需求三方",type,information)
                             item.necessary = true
                             val id = js.getString("id")
@@ -509,7 +692,7 @@ class MyReleaseFragment :Fragment(){
                                         if(JSONObject(it.string()).getInt("code")==200){
                                             ToastHelper.mToast(mView.context,"删除成功")
                                             val mData = adapter.mData.toMutableList()
-                                            mData.removeAt(j)
+                                            mData.removeAt(mData.indexOf(item))
                                             adapter.mData=mData
                                             adapter.notifyDataSetChanged()
                                         }
@@ -561,7 +744,7 @@ class MyReleaseFragment :Fragment(){
                         for (j in 0 until jsonArray.length()){
                             val js = jsonArray.getJSONObject(j)
                             val sexs = arrayListOf("女","男")
-                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"个人劳务","专业工种："+js.getString("issuerWorkerKind"),"性别要求："+sexs[js.getInt("sex")])
+                            val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"个人劳务","专业工种:"+js.getString("issuerWorkerKind"),"性别要求:"+sexs[js.getInt("sex")])
                             item.jumpListener = View.OnClickListener {
                                 val bundle = Bundle()
                                 bundle.putString("type","个人劳务")
@@ -607,7 +790,7 @@ class MyReleaseFragment :Fragment(){
                             val data = adapter.mData.toMutableList()
                             for (j in 0 until jsonArray.length()) {
                                 val js = jsonArray.getJSONObject(j)
-                                val type = "供应类别：" + js.getString("name")
+                                val type = "供应类别:" + js.getString("name")
                                 val information =
                                     if (js.isNull("implementationRange")) "" else js.getString("implementationRange")
                                 val item =
@@ -658,8 +841,8 @@ class MyReleaseFragment :Fragment(){
                     val data = adapter.mData.toMutableList()
                     for (j in 0 until jsonArray.length()){
                         val js = jsonArray.getJSONObject(j)
-                        val type = "服务类型："+js.getString("type")
-                        val information = if(type=="车辆租赁") "负责人所在地："+js.getString("issuerBelongSite") else "有效期：${js.getString("validTime")}天"
+                        val type = "服务类型:"+js.getString("type")
+                        val information = if(type=="车辆租赁") "负责人所在地:"+js.getString("issuerBelongSite") else "有效期:${js.getString("validTime")}天"
                         val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"租赁服务",type,information)
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
@@ -698,7 +881,7 @@ class MyReleaseFragment :Fragment(){
                     val data = adapter.mData.toMutableList()
                     for (j in 0 until jsonArray.length()){
                         val js = jsonArray.getJSONObject(j)
-                        val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"三方服务","服务类型："+js.getString("serveType"),"有效期：${js.getString("validTime")}天")
+                        val item = MultiStyleItem(MultiStyleItem.Options.REGISTRATION_ITEM,"三方服务","服务类型:"+js.getString("serveType"),"有效期:${js.getString("validTime")}天")
                         item.jumpListener = View.OnClickListener {
                             val bundle = Bundle()
                             bundle.putString("id",js.getString("id"))

@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import kotlinx.android.synthetic.main.fragemt_inventory_item_more.view.*
+import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 
 class SubmitInventoryItemMoreFragment : Fragment(){
     companion object{
@@ -28,7 +27,7 @@ class SubmitInventoryItemMoreFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.fragemt_inventory_item_more,container,false)
+        mView = inflater.inflate(R.layout.fragment_inventory_item_more,container,false)
         initFragment()
         return mView
     }
@@ -36,10 +35,10 @@ class SubmitInventoryItemMoreFragment : Fragment(){
     private fun initFragment() {
         var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
        mView.tv_inventory_item_more_back.setOnClickListener {
-//          mData[0].selected =0//点击了返回按钮，*去掉
-//           val fragment =
-//               activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
-//           fragment.update(adapter.mData)
+          mData[0].selected =0//点击了返回按钮，*去掉
+           val fragment =
+               activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+           fragment.update(adapter.mData)
            activity!!.supportFragmentManager.popBackStackImmediate()
         }
         mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")

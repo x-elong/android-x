@@ -1,23 +1,20 @@
 package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
-import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.my.ModifyJobInformationFragment
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
 class PublishInventoryFragment:Fragment() {
@@ -35,9 +32,11 @@ class PublishInventoryFragment:Fragment() {
         var adapter: RecyclerviewAdapter?=null
         var frame = R.id.frame_demand_publish
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
+            mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
             type = arguments!!.getString("type")
             mView.tv_inventory_title.setText(type)
+        if(activity is MyReleaseActivity)
+            frame = R.id.frame_my_release
             if(adapter==null){
                 val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
                 if(multiStyleItemList.isEmpty())
@@ -57,8 +56,6 @@ class PublishInventoryFragment:Fragment() {
         }
 
         private fun initFragment() {
-            if(activity is MyReleaseActivity)
-                frame = R.id.frame_my_release
             val multiStyleItemList = ArrayList<MultiStyleItem>().toMutableList()
             multiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.BLANK," "))
             adapter = RecyclerviewAdapter(multiStyleItemList)
@@ -75,11 +72,19 @@ class PublishInventoryFragment:Fragment() {
                 adapter!!.mData[0].selected = -1
                 bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
                 bundle.putString("type",type)
-                FragmentHelper.switchFragment(
-                    activity!!, PublishInventoryItemMoreFragment.newInstance(bundle),
-                    frame, ""
-                )
+                FragmentHelper.switchFragment(activity!!, PublishInventoryItemMoreFragment.newInstance(bundle), frame, "")
+            }
 
+            for (j in adapter!!.mData){
+                j.jumpListener = View.OnClickListener {
+                    //修改
+                    adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
+                    val bundle = Bundle()
+                    var itemMultiStyleItem = j.itemMultiStyleItem
+                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(activity!!,PublishInventoryItemMoreFragment.newInstance(bundle), frame,"")
+                }
             }
         }
         private fun switchAdapter():List<MultiStyleItem>{
@@ -165,8 +170,7 @@ class PublishInventoryFragment:Fragment() {
                     var itemMultiStyleItem = mData[mData.size-1].itemMultiStyleItem
                     bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,PublishInventoryItemMoreFragment.newInstance(bundle),
-                        frame,"")
+                    FragmentHelper.switchFragment(activity!!,PublishInventoryItemMoreFragment.newInstance(bundle), frame,"")
                 }
                 adapter!!.mData = mData
                 adapter!!.notifyItemInserted(mData.size-1)
@@ -181,17 +185,18 @@ class PublishInventoryFragment:Fragment() {
                     adapter!!.mData[adapter!!.mData[0].selected].shiftInputTitle =
                         itemMultiStyleItem[0].inputSingleContent
                 }
-                adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
-                adapter!!.notifyItemChanged(adapter!!.mData[0].selected)
+
                 if (itemMultiStyleItem[0].selected == 0) {
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = false
                 } else {
                     if(itemMultiStyleItem[1].inputUnitContent!="")
                     {
-                        adapter!!.mData[0].PeopleNumber+=adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem[1].inputUnitContent.toInt()
+                        adapter!!.mData[0].PeopleNumber=adapter!!.mData[0].PeopleNumber - adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem[1].inputUnitContent.toInt() + itemMultiStyleItem[1].inputUnitContent.toInt()
                     }
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = true
                 }
+                adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
+                adapter!!.notifyItemChanged(adapter!!.mData[0].selected)
             }
             val fragment = activity!!.supportFragmentManager.findFragmentByTag("register")
             if(fragment is DemandFragment)

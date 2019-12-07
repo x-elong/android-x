@@ -1,7 +1,6 @@
 package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,9 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
 class InventoryFragment : Fragment() {
@@ -31,7 +29,7 @@ class InventoryFragment : Fragment() {
     lateinit var mView: View
     var adapter:RecyclerviewAdapter?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
+        mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
         type = arguments!!.getString("type")
         if(adapter==null){
             val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>

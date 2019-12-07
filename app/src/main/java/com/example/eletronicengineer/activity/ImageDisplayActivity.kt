@@ -19,6 +19,6 @@ class ImageDisplayActivity : AppCompatActivity() {
         view_image_display.setOnClickListener {
             finish()
         }
-        GlideLoader().loadPreImage(iv_preImage,mImagePath)
+        GlideLoader().loadPreImage(iv_preImage,"http://"+mImagePath)
     }
 }

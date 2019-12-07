@@ -15,5 +15,7 @@ class pileFoundation(
     var version:String,
     var teamServeId:String,
     var validTime:String,
-    var issuerBelongSite:String
+    var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String
 )

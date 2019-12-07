@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandActivity
-import com.example.eletronicengineer.activity.DemandDisplayActivity
-import com.example.eletronicengineer.activity.MyReleaseActivity
-import com.example.eletronicengineer.activity.SupplyDisplayActivity
+import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.ProjectListAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.ProjectList
@@ -21,7 +18,7 @@ import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
 import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import kotlinx.android.synthetic.main.fragment_demand_display.view.*
 import kotlinx.android.synthetic.main.fragment_project_display.view.*
 import java.io.Serializable
@@ -65,6 +62,8 @@ class ProjectListFragment:Fragment() {
         }
         if(activity is MyReleaseActivity)
             frame = R.id.frame_my_release
+        else if(activity is MyRegistrationActivity)
+            frame = R.id.frame_my_registration
         if(adapter==null){
             initData()
             switchAdapter()

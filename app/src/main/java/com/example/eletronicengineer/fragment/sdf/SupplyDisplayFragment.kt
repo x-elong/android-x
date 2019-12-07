@@ -68,14 +68,18 @@ class SupplyDisplayFragment:Fragment() {
                         adapter.mData[2].singleDisplayRightContent=if(data.contact==null) {
                             " " } else{ data.contact}
                        if(data.sex==null) {
-                           adapter.mData[3].singleDisplayRightContent=" " } else if(data.sex=="1"){  adapter.mData[3].singleDisplayRightContent="女"}
-                        else if(data.sex=="0"){ adapter.mData[3].singleDisplayRightContent="男"}
-                        adapter.mData[4].singleDisplayRightContent=if(data.age==null) {
-                            " " } else{ data.age}
+                           adapter.mData[3].singleDisplayRightContent=" " } else if(data.sex=="1"){  adapter.mData[3].singleDisplayRightContent="男"}
+                        else if(data.sex=="0"){ adapter.mData[3].singleDisplayRightContent="女"}
+                        if(data.age=="10"){
+                            adapter.mData[4].singleDisplayRightContent=""
+                        }else{ adapter.mData[4].singleDisplayRightContent=data.age }
                         adapter.mData[5].singleDisplayRightContent=if(data.workExperience==null) {
                             " " } else{ data.workExperience}
-                        adapter.mData[6].singleDisplayRightContent=if(data.workMoney==null||data.salaryUnit==null) {
-                            " " } else{  "${data.workMoney} ${data.salaryUnit}"}
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[6].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
+                        }
                         adapter.mData[7].singleDisplayRightContent=if(data.contactPhone==null) {
                             " " } else{ "联系对方时可见"}
                         if(data.certificatePath==null)
@@ -103,7 +107,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -204,13 +208,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                                str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -244,7 +249,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.majorNetwork.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.majorNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -345,13 +350,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -385,7 +391,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.distribuionNetwork.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.distribuionNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -486,13 +492,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -526,7 +533,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.powerTransformation.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.powerTransformation.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -627,13 +634,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[7].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[7].singleDisplayRightContent=str
                         adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
@@ -667,7 +675,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.measureDesign.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.measureDesign.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -723,7 +731,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage("10086")
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -848,7 +856,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage("10086")
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -966,7 +974,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage("10086")
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1057,13 +1065,14 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             }
                         }
+                        var str=""
                         for(i in data.voltages!!)
                         {
-                            var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[5].singleDisplayRightContent=str
+                            if(str!="")
+                                str+="、"
+                            str+="${i.voltageDegree}"
                         }
+                        adapter.mData[5].singleDisplayRightContent=str
                         adapter.mData[6].singleDisplayRightContent=if(data.testWorkTypes==null) {
                             " " } else{ data.testWorkTypes }
                         adapter.mData[7].singleDisplayRightContent=if(data.operateDegree==null) {
@@ -1095,7 +1104,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage("10086")
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1213,7 +1222,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage("10086")
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1277,53 +1286,58 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
-                        for(i in data.voltages!!)
-                        {
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
+                        if(data.voltages==null){
+                            adapter.mData[4].singleDisplayRightContent=""
+                        }else{
                             var str=""
-                            if(i.voltageDegree!=null)
-                                str+="${i.voltageDegree} "
-                            adapter.mData[5].singleDisplayRightContent=str
+                            for(i in data.voltages!!)
+                            {
+                                if(str!="")
+                                    str+="、"
+                                str+="${i.voltageDegree}"
+                            }
+                            adapter.mData[4].singleDisplayRightContent=str
                         }
-                        adapter.mData[6].singleDisplayRightContent=if(data.implementationRanges==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.implementationRanges==null) {
                             " " } else{  data.implementationRanges }
-                        adapter.mData[7].singleDisplayRightContent=if(data.workTerritory==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.workTerritory==null) {
                             " " } else{  data.workTerritory}
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1334,15 +1348,15 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[9].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener{
                             //                            if(data.contactPhone!=null)
 //                            {
                             var dialog = AlertDialog.Builder(this.context)
-                                .setTitle("对方联系电话：")
+                                .setTitle("对方联系电话:")
                                 .setMessage("10086")
                                 .setNegativeButton("联系对方") { dialog, which ->
                                     val intent = Intent(Intent.ACTION_DIAL)
@@ -1370,30 +1384,42 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.variety==null) {
                             " " } else{ data.variety }
-                        adapter.mData[1].singleDisplayRightContent=if(data.carTable.id==null) {
-                            " " } else{ data.carTable.id }
+                        adapter.mData[1].singleDisplayRightContent=if(data.carTable.carNumber==null) {
+                            " " } else{ data.carTable.carNumber }
                         adapter.mData[2].singleDisplayRightContent=if(data.carTable.carType==null) {
                             " " } else{ data.carTable.carType }
                         adapter.mData[3].singleDisplayRightContent=if(data.carTable.maxPassengers==null) {
                             " " } else{ data.carTable.maxPassengers }
                         adapter.mData[4].singleDisplayRightContent=if(data.carTable.maxWeight==null) {
                             " " } else{ data.carTable.maxWeight }
-                        adapter.mData[5].singleDisplayRightContent=if(data.carTable.construction==null) {
-                            " " } else{ data.carTable.construction }
+                        when(data.carTable.construction){
+                            "1"->{ adapter.mData[5].singleDisplayRightContent="箱式"}
+                            "0"->{adapter.mData[5].singleDisplayRightContent="敞篷"}
+                            else->{adapter.mData[5].singleDisplayRightContent=""}
+                        }
                         adapter.mData[6].singleDisplayRightContent=if(data.carTable.lenghtCar==null) {
                             " " } else{ data.carTable.lenghtCar }
-                        adapter.mData[7].singleDisplayRightContent=if(data.carTable.isDriver==null) {
-                            " " } else{ data.carTable.isDriver }
-                        adapter.mData[8].singleDisplayRightContent=if(data.carTable.isInsurance==null) {
-                            " " } else{ data.carTable.isInsurance }
-                        adapter.mData[9].singleDisplayRightContent=if(data.money==null || data.salaryUnit==null) {
-                            " " } else{ "${data.money} ${data.salaryUnit}"}
+                        when(data.carTable.isDriver){
+                            "true"->{ adapter.mData[7].singleDisplayRightContent="是"}
+                            "false"->{adapter.mData[7].singleDisplayRightContent="否"}
+                            else->{adapter.mData[7].singleDisplayRightContent=""}
+                        }
+                        when(data.carTable.isInsurance){
+                            "true"->{ adapter.mData[8].singleDisplayRightContent="在保"}
+                            "false"->{adapter.mData[8].singleDisplayRightContent="脱保"}
+                            else->{adapter.mData[8].singleDisplayRightContent=""}
+                        }
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[9].singleDisplayRightContent= "${data.money} ${data.salaryUnit}"
+                        }
                         adapter.mData[11].singleDisplayRightContent=if(data.contact==null) {
                             " " } else{ data.contact }
                         adapter.mData[12].singleDisplayRightContent=if(data.contactPhone==null) {
                             " " } else{ data.contactPhone }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent=if(data.site==null) {
+                            " " } else{ data.site }
                         if(data.carTable.carPhotoPath==null)
                         {
                             adapter.mData[14].buttonListener = listOf(View.OnClickListener {
@@ -1413,11 +1439,13 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime }
                         adapter.mData[16].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
+                        adapter.mData[17].singleDisplayRightContent=if(data.comment==null) {
+                            " " } else{ data.comment }
                         view.button_supply.setOnClickListener{
                             if(data.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1533,7 +1561,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseConstructionTool.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseConstructionTool.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1647,7 +1675,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseFacility.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseFacility.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1761,7 +1789,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseMachinery.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseMachinery.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1858,7 +1886,7 @@ class SupplyDisplayFragment:Fragment() {
                                 if(data.contactPhone!=null)
                                 {
                                     var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话：")
+                                            .setTitle("对方联系电话:")
                                             .setMessage(data.contactPhone)
                                             .setNegativeButton("联系对方") { dialog, which ->
                                                 val intent = Intent(Intent.ACTION_DIAL)
@@ -1908,7 +1936,7 @@ class SupplyDisplayFragment:Fragment() {
                                 if(data.contactPhone!=null)
                                 {
                                     var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话：")
+                                            .setTitle("对方联系电话:")
                                             .setMessage(data.contactPhone)
                                             .setNegativeButton("联系对方") { dialog, which ->
                                                 val intent = Intent(Intent.ACTION_DIAL)

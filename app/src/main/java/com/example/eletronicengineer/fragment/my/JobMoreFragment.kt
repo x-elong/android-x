@@ -140,9 +140,9 @@ class JobMoreFragment : Fragment() {
 
                             data.needPeopleNumber
 
-                        adapter.mData[12].singleDisplayRightContent =
-
+                        adapter.mData[12].singleDisplayRightContent = if(data.salaryStandard!="-1.0")
                             "${data.salaryStandard} ${data.salaryUnit}"
+                        else "面议"
 
                         adapter.mData[14].singleDisplayRightContent =
                             data.name
@@ -178,7 +178,7 @@ class JobMoreFragment : Fragment() {
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -231,7 +231,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -376,7 +376,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -403,12 +403,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -460,7 +461,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -540,7 +541,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -567,12 +568,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -614,7 +616,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -679,7 +681,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -702,12 +704,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -760,7 +763,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -840,7 +843,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -868,12 +871,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -928,9 +932,7 @@ class JobMoreFragment : Fragment() {
 //                            }
 //                        }
                         if(data.materialsType!=null)
-                        adapter.mData[4].singleDisplayRightContent =
-
-                            data.materialsType
+                        adapter.mData[4].singleDisplayRightContent = data.materialsType
 
                         adapter.mData[5].singleDisplayRightContent =
 
@@ -1015,12 +1017,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1071,7 +1074,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -1163,12 +1166,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1219,7 +1223,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -1312,12 +1316,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1368,7 +1373,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -1443,7 +1448,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -1479,12 +1484,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1535,7 +1541,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -1602,7 +1608,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -1639,12 +1645,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1695,7 +1702,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -1758,11 +1765,12 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })//乙方材料清册
                             }
                         }
+                        if(data.vehicle!=null)
                         adapter.mData[13].singleDisplayRightContent =
                             data.vehicle
 
@@ -1806,12 +1814,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1841,84 +1850,75 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[3].singleDisplayRightContent =
                             data.projectTime
 
-                        adapter.mData[4].singleDisplayRightContent =
-                            data.vehicleType
+                        if(data.requirementCarLists == null )
+                        {
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                ToastHelper.mToast(mView.context,"没有数据")
+                            })
+                        }
+                        else
+                        {
+                            if(data.requirementCarLists!!.isEmpty())
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    ToastHelper.mToast(mView.context,"没有数据")
+                                })
+                            }
+                            else
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
+                                    bundle.putSerializable("listData1", listData as Serializable)
+                                    bundle.putString("type","车辆清册查看")
+
+                                    FragmentHelper.switchFragment(
+                                        activity!!,
+                                        ProjectListFragment.newInstance(bundle),
+                                        R.id.frame_my_release,
+                                "register"
+                                    )
+                                })
+                            }
+                        }
 
                         adapter.mData[5].singleDisplayRightContent =
 
-                            data.accurateLoadWeight
-
-                        adapter.mData[6].singleDisplayRightContent =
-
-                            data.vehicleStructure
-
-                        adapter.mData[7].singleDisplayRightContent =
-
-                            data.theCarriageLength
-
-                        when {
-
-                            data.insuranceCondition == "1" -> adapter.mData[8].singleDisplayRightContent =
-                                "脱保"
-                            data.insuranceCondition == "0" -> adapter.mData[8].singleDisplayRightContent =
-                                "在保"
-                        }
-                        when {
-
-                            data.driverSex == "1" -> adapter.mData[9].singleDisplayRightContent =
-                                "女"
-                            data.driverSex == "0" -> adapter.mData[9].singleDisplayRightContent =
-                                "男"
-                            data.driverSex == "-1" -> adapter.mData[9].singleDisplayRightContent =
-                                "男女不限"
-                        }
-                        adapter.mData[10].singleDisplayRightContent =
-
                             data.workerExperience
 
-                        adapter.mData[11].singleDisplayRightContent =
-
-                            "${data.minAgeDemand}~${data.maxAgeDemand}"
-
                         when {
-                            data.roomBoardStandard == "0" -> adapter.mData[12].singleDisplayRightContent =
+                            data.roomBoardStandard == "0" -> adapter.mData[6].singleDisplayRightContent =
                                 "全包"
-                            data.roomBoardStandard == "1" -> adapter.mData[12].singleDisplayRightContent =
+                            data.roomBoardStandard == "1" -> adapter.mData[6].singleDisplayRightContent =
                                 "队部自理"
                             else -> {
-                                adapter.mData[12].singleDisplayRightContent = " "
+                                adapter.mData[6].singleDisplayRightContent = " "
                             }
                         }
-                        adapter.mData[14].singleDisplayRightContent =
+                        adapter.mData[7].singleDisplayRightContent =
 
                             data.journeyCarFare
 
-                        adapter.mData[13].singleDisplayRightContent =
+                        adapter.mData[8].singleDisplayRightContent =
 
                             data.journeySalary
 
-                        adapter.mData[15].singleDisplayRightContent =
+                        if(data.salaryStandard=="-1.0"){
+                            adapter.mData[9].singleDisplayRightContent= "面议"
+                        }else {
+                            adapter.mData[9].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
+                        }
 
-                            "${data.salaryStandard} ${data.salaryUnit}"
 
-                        adapter.mData[16].singleDisplayRightContent =
-                            data.vehicle
-
-//                            when {
-//                                data.machineEquipment=="0" -> adapter.mData[17].singleDisplayRightContent="不提供"
-//                                data.machineEquipment=="1" -> adapter.mData[17].singleDisplayRightContent="提供"
-//                            }
-
-                        adapter.mData[18].singleDisplayRightContent =
+                        adapter.mData[11].singleDisplayRightContent =
                             data.name
 
-                        adapter.mData[19].singleDisplayRightContent =
+                        adapter.mData[12].singleDisplayRightContent =
                             data.phone
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        adapter.mData[13].singleDisplayRightContent =
                             data.validTime
-
-                        adapter.mData[21].singleDisplayRightContent = data.additonalExplain
+                        if(data.additonalExplain!=null)
+                        adapter.mData[14].singleDisplayRightContent = data.additonalExplain
                         mView.rv_job_more_content.adapter = adapter
                         mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
                         mView.btn_edit_job_information.setOnClickListener {
@@ -1928,12 +1928,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirementTeamServeId",data.requirementTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -1985,7 +1986,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -2039,12 +2040,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -2094,7 +2096,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -2149,12 +2151,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -2204,7 +2207,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -2259,12 +2262,13 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {
@@ -2306,7 +2310,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                        ""
+                                "register"
                                     )
                                 })
                             }
@@ -2357,7 +2361,7 @@ class JobMoreFragment : Fragment() {
                                 activity!!,
                                 ModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                ""
+                                "register"
                             )
                         }
                     }, {

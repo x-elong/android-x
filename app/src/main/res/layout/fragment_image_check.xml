@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/view_image_check"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -24,32 +24,32 @@
         android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
         android:textSize="@dimen/font_tv_normal_18"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/view_image_check"
+        app:layout_constraintTop_toTopOf="@+id/view_image_check" />
 
     <TextView
         android:id="@+id/tv_image_check_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:paddingTop="@dimen/top_7"
+        android:layout_height="wrap_content"
         android:text="自查自检"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_image_check"
+        app:layout_constraintStart_toStartOf="@+id/view_image_check"
+        app:layout_constraintEnd_toEndOf="@+id/view_image_check"
+        app:layout_constraintBottom_toBottomOf="@+id/view_image_check"
         tools:ignore="MissingConstraints" />
 
 
     <TextView
         android:id="@+id/tv_add_select"
-        android:layout_width="@dimen/general_30"
-        android:layout_height="@dimen/general_30"
-        android:background="@drawable/add_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+        android:layout_width="@dimen/general_20"
+        android:layout_height="@dimen/general_20"
+        android:background="@drawable/add_white"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_image_check"
+        app:layout_constraintEnd_toEndOf="@+id/view_image_check"
+        app:layout_constraintTop_toTopOf="@+id/view_image_check" />
 
     <LinearLayout
         android:id="@+id/LinearLayout2"
@@ -59,7 +59,7 @@
         android:layout_marginTop="8dp"
         android:background="#f2f2f2"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/view_image_check"
         tools:layout_editor_absoluteX="5dp">
 
         <TextView

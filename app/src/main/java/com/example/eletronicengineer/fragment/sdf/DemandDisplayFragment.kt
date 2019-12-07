@@ -81,8 +81,9 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.planTime}
                         adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
                             " " } else{ data.workerExperience}
-                        adapter.mData[6].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
+                        if(data.minAgeDemand=="10"||data.maxAgeDemand=="10"){
+                            adapter.mData[6].singleDisplayRightContent=""
+                        }else{ adapter.mData[6].singleDisplayRightContent="${data.minAgeDemand}~${data.maxAgeDemand}" }
                         when {
                             data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="男"
                             data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="女"
@@ -100,8 +101,11 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.journeyCarFare}
                         adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
-                        adapter.mData[12].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[12].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[12].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
+                        }
                         adapter.mData[14].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
                         adapter.mData[15].singleDisplayRightContent=if(data.phone==null) {
@@ -133,11 +137,11 @@ class DemandDisplayFragment:Fragment() {
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.requirementVariety==null) {
-                            "无" } else{ data.requirementVariety }
+                            "" } else{ data.requirementVariety }
                         adapter.mData[1].singleDisplayRightContent=if(data.projectName==null) {
-                            "无" } else{ data.projectName }
+                            "" } else{ data.projectName }
                         if(data.projectSite==null)
-                            adapter.mData[2].singleDisplayRightContent= "无"
+                            adapter.mData[2].singleDisplayRightContent= ""
                         else
                         {
                             var str=data.projectSite.split(" / ")
@@ -146,7 +150,7 @@ class DemandDisplayFragment:Fragment() {
                             adapter.mData[2].singleDisplayRightContent=projectSite
                         }
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
-                            "无" } else{ data.projectTime}
+                            "" } else{ data.projectTime}
                         if(data.requirementCarLists == null )
                         {
                             adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
@@ -1356,56 +1360,56 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.projectSite}
                         adapter.mData[3].singleDisplayRightContent=if(data.projectTime==null) {
                             " " } else{ data.projectTime}
-                        adapter.mData[4].singleDisplayRightContent=if(data.vehicleType==null) {
-                            " " } else{ data.vehicleType}
-                        adapter.mData[5].singleDisplayRightContent=if(data.accurateLoadWeight==null) {
-                            " " } else{ data.accurateLoadWeight}
-                        adapter.mData[6].singleDisplayRightContent=if(data.vehicleStructure==null) {
-                            " " } else{ data.vehicleStructure}
-                        adapter.mData[7].singleDisplayRightContent=if(data.theCarriageLength==null) {
-                            " " } else{ data.theCarriageLength}
-                        when {
-                            data.insuranceCondition==null -> adapter.mData[8].singleDisplayRightContent= " "
-                            data.insuranceCondition=="1" -> adapter.mData[8].singleDisplayRightContent="脱保"
-                            data.insuranceCondition=="0" -> adapter.mData[8].singleDisplayRightContent="在保"
+                        if(data.requirementCarLists == null )
+                        {
+                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                            })
                         }
-                        when {
-                            data.driverSex==null -> adapter.mData[9].singleDisplayRightContent= " "
-                            data.driverSex=="1" -> adapter.mData[9].singleDisplayRightContent="女"
-                            data.driverSex=="0" -> adapter.mData[9].singleDisplayRightContent="男"
-                            data.driverSex=="-1" -> adapter.mData[9].singleDisplayRightContent="男女不限"
+                        else
+                        {
+                            if(data.requirementCarLists!!.isEmpty())
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    Toast.makeText(view.context, "没有数据", Toast.LENGTH_SHORT).show()
+                                })
+                            }
+                            else
+                            {
+                                adapter.mData[4].buttonListener = listOf(View.OnClickListener { //车辆清册
+                                    val listData = data.requirementCarLists
+                                    mdata.putSerializable("listData1", listData as Serializable)
+                                    mdata.putString("type","车辆清册查看")
+                                    (activity as DemandDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                })
+                            }
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.workerExperience==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.workerExperience==null) {
                             " " } else{ data.workerExperience}
-                        adapter.mData[11].singleDisplayRightContent=if(data.minAgeDemand==null||data.maxAgeDemand==null) {
-                            " " } else{  "${data.minAgeDemand}~${data.maxAgeDemand}"}
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[12].singleDisplayRightContent="全包"
-                            data.roomBoardStandard=="1" -> adapter.mData[12].singleDisplayRightContent="队部自理"
-                            else -> { adapter.mData[12].singleDisplayRightContent=" " }
+                            data.roomBoardStandard=="1" -> adapter.mData[6].singleDisplayRightContent="全包"
+                            data.roomBoardStandard=="0" -> adapter.mData[6].singleDisplayRightContent="队部自理"
+                            else -> { adapter.mData[6].singleDisplayRightContent=" " }
                         }
-                        adapter.mData[14].singleDisplayRightContent=if(data.journeyCarFare==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.journeyCarFare==null) {
                             " " } else{ data.journeyCarFare}
-                        adapter.mData[13].singleDisplayRightContent=if(data.journeySalary==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.journeySalary==null) {
                             " " } else{ data.journeySalary}
-                        adapter.mData[15].singleDisplayRightContent=if(data.salaryStandard==null||data.salaryUnit==null) {
-                            " " } else{ "${data.salaryStandard} ${data.salaryUnit}" }
-                        adapter.mData[16].singleDisplayRightContent=if(data.vehicle==null) {
-                            " " } else{ data.vehicle}
-//                            when {
-//                                data.machineEquipment=="0" -> adapter.mData[17].singleDisplayRightContent="不提供"
-//                                data.machineEquipment=="1" -> adapter.mData[17].singleDisplayRightContent="提供"
-//                            }
-
-                        adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
+                        if(data.salaryUnit=="面议"){
+                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        }else {
+                            adapter.mData[9].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
+                        }
+                        adapter.mData[11].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name}
-                        adapter.mData[19].singleDisplayRightContent=if(data.phone==null) {
+                        adapter.mData[12].singleDisplayRightContent=if(data.phone==null) {
                             " " } else{ data.phone}
-                        adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[13].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[14].singleDisplayRightContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
+                            mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
                             mdata.putSerializable("RequirementLeaseCar",data as Serializable)
                             mdata.putInt("type", Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
                             FragmentHelper.switchFragment(

@@ -19,7 +19,6 @@
             android:focusable="false"
             android:singleLine="true"
             android:inputType="none"
-            android:paddingRight="@dimen/right_5"
             android:background="@color/transparent"
             android:textColor="@android:color/black"
             android:layout_marginLeft="@dimen/left_10"

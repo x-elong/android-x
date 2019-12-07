@@ -24,6 +24,10 @@ class LoadingDialog : Dialog {
     var mCancelable = false
     lateinit var mRotateAnimation: RotateAnimation
 
+    constructor(context: Context, message: String):super(context,R.style.LoadingDialog){
+        mMessage = message
+        mImageId = R.mipmap.ic_dialog_loading
+    }
     constructor(context: Context, message: String, imageId:Int):super(context,R.style.LoadingDialog) {
         mMessage = message
         mImageId=imageId

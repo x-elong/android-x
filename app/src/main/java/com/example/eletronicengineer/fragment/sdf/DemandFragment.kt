@@ -27,13 +27,17 @@ import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.User
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
+import com.example.eletronicengineer.utils.AdapterGenerate
+import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.downloadFile
+import com.example.eletronicengineer.utils.startSendMessage
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_demand.*
 import kotlinx.android.synthetic.main.activity_demand.view.*
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -52,8 +56,7 @@ class DemandFragment:Fragment() {
         }
     }
     var type:Int=0
-    var  selectContent2:String=" "
-    var submitType:String="发布"
+    var  selectContent2:String=""
     lateinit var id:String
     val mdata = Bundle()
     lateinit var mData: List<MultiStyleItem>
@@ -107,7 +110,7 @@ class DemandFragment:Fragment() {
                     networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
                 else
                 {
-                    var json= JSONObject()
+                    val json= JSONObject()
                     json.put("requirementType", selectContent2)
                     val loadingDialog = LoadingDialog(mView.context, "正在发布中...", R.mipmap.ic_dialog_loading)
                     loadingDialog.show()

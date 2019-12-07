@@ -2,9 +2,11 @@ package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
@@ -33,8 +35,6 @@ class ApplicationSubmitFragment:Fragment() {
             return applicationSubmitFragment
         }
     }
-    var MemberDataSize:Int = 0
-    var VehicleDataSize:Int = 0
     var comment:String=""//备注
     var requirementPersonId:String=""//id
     var typeVariety:String=""//类型
@@ -57,6 +57,7 @@ class ApplicationSubmitFragment:Fragment() {
             mView.rv_registration_more_content.layoutManager=LinearLayoutManager(context)
         }
         mView.tv_registration_more_back.setOnClickListener {
+            UnSerializeDataBase.imgList.clear()
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         mView.button_ok.setOnClickListener {
@@ -131,25 +132,33 @@ class ApplicationSubmitFragment:Fragment() {
                         ).put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
                     }
                 }
-
                 networkAdapter.generateJsonRequestBody(json).subscribe {
-                    val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+adapter!!.urlPath)
-                        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                        .subscribe({
-                            loadingDialog.dismiss()
-                            val jsonObject = JSONObject(it.string())
-                            if(jsonObject.getInt("code")==200){
-                                ToastHelper.mToast(mView.context,"报名成功")
+                    val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+adapter!!.urlPath).subscribeOn(
+                        Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
+                                loadingDialog.dismiss()
+                                var json = JSONObject(it.string())
+                                if (json.getInt("code") == 200) {
+                                    if(json.getString("desc")=="FAIL"){
+                                        mView.tv_registration_more_back.callOnClick()
+                                        Toast.makeText(context, json.getString("message"), Toast.LENGTH_SHORT).show()
+                                    } else{
+                                        mView.tv_registration_more_back.callOnClick()
+                                        Toast.makeText(context, "报名成功", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else if (json.getInt("code") == 400) {
+                                    Toast.makeText(context, "报名失败", Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            {
+                                loadingDialog.dismiss()
+                                val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.show()
+                                it.printStackTrace()
                             }
-                            else{
-                                ToastHelper.mToast(mView.context,"报名失败")
-                            }
-
-                        },{
-                            loadingDialog.dismiss()
-                            ToastHelper.mToast(mView.context,"提交报名信息异常")
-                            it.printStackTrace()
-                        })
+                        )
                 }
             }
         }
@@ -273,7 +282,7 @@ class ApplicationSubmitFragment:Fragment() {
             {
                 bundle.putInt("type",arguments!!.getInt("type"))
                 bundle.putSerializable("RequirementLeaseCar",arguments!!.getSerializable("RequirementLeaseCar"))
-//                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
+                bundle.putSerializable("listData1",arguments!!.getSerializable("listData1"))
                 adapter=adapterGenerate.ApplicationSubmit(bundle)
             }
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal,//工器具

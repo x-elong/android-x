@@ -113,7 +113,7 @@ class IntegralFragment : Fragment(){
                                 }
                                 val foundTime = SimpleDateFormat("yyyy-MM-dd").format(j.foundTime)
                                 val integralStyle =
-                                    IntegralStyle("", j.eventName, "时间：${foundTime}       ${tempSave}       ${tempSave1}", "+${j.addIntegral}", 1)
+                                    IntegralStyle("", j.eventName, "时间:${foundTime}       ${tempSave}       ${tempSave1}", "+${j.addIntegral}", 1)
                                 mIntegralList.add(integralStyle)
                             }
                             v.recycler_integral.adapter = IntegralAdapter(mIntegralList)
@@ -205,7 +205,7 @@ class IntegralFragment : Fragment(){
                                                 }
                                                 var foundTime = SimpleDateFormat("yyyy-MM-dd").format(j.foundTime)
                                                 var integralStyle =
-                                                    IntegralStyle("", j.eventName, "时间：${foundTime}       ${tempSave}       ${tempSave1}", "+${j.addIntegral}", 1)
+                                                    IntegralStyle("", j.eventName, "时间:${foundTime}       ${tempSave}       ${tempSave1}", "+${j.addIntegral}", 1)
                                                 mIntegralList.add(integralStyle)
                                             }
                                             v.recycler_integral.adapter = IntegralAdapter(mIntegralList)

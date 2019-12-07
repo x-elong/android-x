@@ -37,7 +37,7 @@
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资要求",
-    "inputMultiUnit":["面议","元/天","元/月","元/年"],
+    "inputMultiUnit":["面议","元/日","元/月","元/年"],
     "key": "workMoney salaryUnit",
     "sendFormat": "Double String"
   },

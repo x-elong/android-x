@@ -1,63 +1,63 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"租赁类型：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"租赁类型:",
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"出租方单位名称：",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightTitle":"出租方单位名称:",
+  "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位简称：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"单位简称:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位地址：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"单位地址:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人代表姓名：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"法人代表姓名:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"法人身份证照片：",
+    "buttonTitle":"法人身份证照片:",
     "buttonName":["点击查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"营业执照：",
+    "buttonTitle":"营业执照:",
     "buttonName":["点击查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"xxx租赁清册：",
+    "buttonTitle":"xxx租赁清册:",
     "buttonName":["在线查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"租赁合同：",
+    "buttonTitle":"租赁合同:",
     "buttonName":["点击查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否配送：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"是否配送:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"运送财产保险：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"运送财产保险:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -67,6 +67,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"负责人所在地:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

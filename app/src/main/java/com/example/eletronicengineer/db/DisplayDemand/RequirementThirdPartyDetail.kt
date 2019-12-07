@@ -5,6 +5,7 @@ import java.io.Serializable
 class RequirementThirdPartyDetail(
     var id:String,
     var vipId:String,
+    var requirementThirdPartyId:String,
     var requirementType:String,
     var requirementVariety:String,
     var partnerAttribute:String,

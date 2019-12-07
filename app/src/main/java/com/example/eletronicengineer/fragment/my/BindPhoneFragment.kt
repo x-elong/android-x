@@ -24,7 +24,7 @@ class BindPhoneFragment :Fragment(){
         view.tv_bind_phone_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        view.tv_bind_phone_number.text="当前绑定手机号："+UnSerializeDataBase.userPhone
+        view.tv_bind_phone_number.text="当前绑定手机号:"+UnSerializeDataBase.userPhone
         view.btn_modify_phone.setOnClickListener {
             FragmentHelper.switchFragment(activity!!,ModifyPhoneFragment(),R.id.frame_my_information,"")
         }

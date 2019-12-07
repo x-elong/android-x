@@ -21,13 +21,13 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
+    "buttonTitle":"车辆清册:",
     "buttonName":["点击查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"工作经验(年):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

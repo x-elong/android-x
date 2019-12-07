@@ -86,7 +86,7 @@
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"薪资标准",
     "radioButtonName":["面议"],
-    "key":"roomBoardStandard",
+    "key":"salaryStandard",
     "sendFormat":"Long"
   },
   {

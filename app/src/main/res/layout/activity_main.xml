@@ -15,10 +15,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/general_41"
+            android:layout_height="@dimen/general_50"
             android:layout_alignParentBottom="true"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"/>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

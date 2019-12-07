@@ -1,32 +1,32 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"租赁类别：",
+    "singleDisplayRightTitle":"租赁类别:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车牌号码：",
+    "singleDisplayRightTitle":"车牌号码:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆类型：",
+    "singleDisplayRightTitle":"车辆类型:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"核载乘客(人)：",
+    "singleDisplayRightTitle":"核载乘客(人):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"核准载重量(吨)：",
+    "singleDisplayRightTitle":"核准载重量(吨):",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车蓬结构：",
+    "singleDisplayRightTitle":"车蓬结构:",
     "singleDisplayRightContent":""
   },
   {
@@ -36,17 +36,17 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否配驾驶员：",
+    "singleDisplayRightTitle":"是否配驾驶员:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"保险状态：",
+    "singleDisplayRightTitle":"保险状态:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资要求：",
+    "singleDisplayRightTitle":"薪资要求:",
     "singleDisplayRightContent":""
   },
   {
@@ -54,22 +54,22 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车主姓名：",
+    "singleDisplayRightTitle":"车主姓名:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话：",
+    "singleDisplayRightTitle":"联系电话:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"所在地址：",
+    "singleDisplayRightTitle":"所在地址:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆全景照：",
+    "singleDisplayRightTitle":"车辆全景照:",
     "singleDisplayRightContent":""
   },
   {

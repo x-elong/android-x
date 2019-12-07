@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <View
-        android:id="@+id/tv_person_inform_first_view"
+        android:id="@+id/view_person_inform_first_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/white"
@@ -20,11 +20,12 @@
         android:id="@+id/tv_person_inform_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_person_inform_first_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_person_inform_first_view" />
 
     <TextView
         android:id="@+id/tv_person_inform_title"
@@ -32,8 +33,7 @@
         android:layout_height="@dimen/general_30"
         android:paddingTop="@dimen/top_7"
         android:text="个人中心"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -41,7 +41,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_person_inform_first_view"
+        app:layout_constraintTop_toBottomOf="@+id/view_person_inform_first_view"
         android:background="#a7a7a7"
         android:id="@+id/tv_person_inform_second_view"
         />

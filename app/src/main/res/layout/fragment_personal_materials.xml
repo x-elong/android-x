@@ -19,20 +19,22 @@
         android:id="@+id/tv_personal_materials_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
+        android:layout_gravity="center"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_personal_materials"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_personal_materials" />
 
     <TextView
         android:id="@+id/tv_personal_materials_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
+        android:layout_height="wrap_content"
         android:text="个人材料"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="@id/view_personal_materials"
         app:layout_constraintStart_toStartOf="parent"

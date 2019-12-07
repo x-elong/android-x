@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <View
+        android:id="@+id/view_photo_upload"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -19,23 +20,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_photo_upload"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_photo_upload" />
 
     <TextView
         android:id="@+id/tv_uplaod_photo_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:paddingTop="@dimen/top_7"
+        android:layout_height="wrap_content"
         android:text="专业证书附件上传"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/view_photo_upload"
+        app:layout_constraintEnd_toEndOf="@id/view_photo_upload"
+        app:layout_constraintTop_toTopOf="@id/view_photo_upload"
+        app:layout_constraintBottom_toBottomOf="@id/view_photo_upload"
         tools:ignore="MissingConstraints" />
 
     <TextView

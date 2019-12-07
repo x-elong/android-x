@@ -1,8 +1,6 @@
 package com.example.eletronicengineer.fragment.sdf
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.activity.DemandDisplayActivity
-import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.distributionFileSave.requirementLeaseProjectList
-import com.example.eletronicengineer.distributionFileSave.requirementTeamProjectList
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.AdapterGenerate
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
 class SubmitInventoryFragment : Fragment() {
@@ -36,7 +30,7 @@ class SubmitInventoryFragment : Fragment() {
     var adapter: RecyclerviewAdapter?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
+        mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
         type = arguments!!.getString("type")
         mView.tv_inventory_title.setText(type)
         if(adapter==null){

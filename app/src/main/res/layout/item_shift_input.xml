@@ -36,11 +36,11 @@
         android:layout_marginRight="@dimen/right_4"
         />
     <TextView
-            android:layout_marginTop="@dimen/top_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/general_10"
+            android:layout_height="@dimen/general_15"
             android:id="@+id/tv_shift_input_show"
-            android:background="@drawable/ic_expand"
+            android:background="@drawable/jump"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>
 </LinearLayout>

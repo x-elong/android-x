@@ -1,58 +1,58 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"服务类型：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"服务类型:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位名称：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"单位名称:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位简称：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"单位简称:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位地址：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"单位地址:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人代表姓名：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"法人代表姓名:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人联系电话：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"法人联系电话:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"法人身份证照片：",
+    "buttonTitle":"法人身份证照片:",
     "buttonName":["点击查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"营业执照：",
+    "buttonTitle":"营业执照:",
     "buttonName":["点击查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"三方服务合同：",
+    "buttonTitle":"三方服务合同:",
     "buttonName":["点击查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人姓名：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"联系人姓名:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人电话：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"联系人电话:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -67,6 +67,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"负责人所在地:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

@@ -27,39 +27,39 @@ import kotlinx.android.synthetic.main.sdf_information.view.demand_release_tv
 class SdfInformationFragment:Fragment(){
     lateinit var titleReturn:View
     lateinit var titleContent:TextView
-    lateinit var addInformation:TextView
+    lateinit var tv_add_information:TextView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.sdf_information,container,false)
         titleReturn=activity!!.return_iv
         titleContent=activity!!.tv_title
-        addInformation = activity!!.addInformation
+        tv_add_information = activity!!.tv_add_information
         initonClick(view)
         return view
     }
     fun initonClick(view: View){
         view.external_bidding_tv.setOnClickListener{
             activity!!.supportFragmentManager.popBackStackImmediate()
-            addInformation.visibility = View.VISIBLE
-            addInformation.setOnClickListener {
+            tv_add_information.visibility = View.VISIBLE
+            tv_add_information.setOnClickListener {
             }
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
+                tv_add_information.visibility = View.GONE
                 titleReturn.visibility=View.INVISIBLE
                 titleContent.text="招投供需"
             }
         }
         view.market_tender_tv.setOnClickListener {
             switchFragment(MarketTenderFragment(),R.id.frame_main)
-            addInformation.visibility = View.VISIBLE
-            addInformation.setOnClickListener {
+            tv_add_information.visibility = View.VISIBLE
+            tv_add_information.setOnClickListener {
 
             }
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
+                tv_add_information.visibility = View.GONE
                 titleReturn.visibility=View.INVISIBLE
                 titleContent.text="招投供需"
             }
@@ -67,8 +67,8 @@ class SdfInformationFragment:Fragment(){
         view.demand_release_tv.setOnClickListener {
             switchFragment(DemandInformationFragment(),R.id.fragment_sdf)
             titleContent.text="需求发布"
-            addInformation.visibility = View.VISIBLE
-            addInformation.setOnClickListener {
+            tv_add_information.visibility = View.VISIBLE
+            tv_add_information.setOnClickListener {
                 val Option1Items = listOf("需求个人","需求团队","需求租赁","需求三方")
                 val Option2Items:List<List<String>> = listOf(listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
                 var mHandler:Handler= Handler(Handler.Callback {
@@ -97,7 +97,7 @@ class SdfInformationFragment:Fragment(){
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
+                tv_add_information.visibility = View.GONE
                 titleReturn.visibility=View.INVISIBLE
                 titleContent.text="招投供需"
             }
@@ -105,8 +105,8 @@ class SdfInformationFragment:Fragment(){
         view.supply_announcement_tv.setOnClickListener {
             switchFragment(SupplyInformationFragment(),R.id.fragment_sdf)
             titleContent.text="供应发布"
-            addInformation.visibility = View.VISIBLE
-            addInformation.setOnClickListener {
+            tv_add_information.visibility = View.VISIBLE
+            tv_add_information.setOnClickListener {
                 val option1Items= listOf("个人劳务","团队服务","租赁服务","三方服务")
                 val option2Items= listOf(listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
                 val mHander=Handler(Handler.Callback {
@@ -133,7 +133,7 @@ class SdfInformationFragment:Fragment(){
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
+                tv_add_information.visibility = View.GONE
                 titleReturn.visibility=View.INVISIBLE
                 titleContent.text="招投供需"
             }

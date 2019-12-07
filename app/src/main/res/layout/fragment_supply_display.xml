@@ -21,9 +21,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginStart="8dp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/view_supply_display"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_supply_display" />
 
     <TextView
         android:id="@+id/tv_supply_display_title"
@@ -31,7 +33,7 @@
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="信息详情"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@id/view_supply_display"
         app:layout_constraintEnd_toEndOf="parent"

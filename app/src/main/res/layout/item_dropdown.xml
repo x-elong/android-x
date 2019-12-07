@@ -5,5 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_dropdown_content"
+        android:paddingLeft="@dimen/left_5"
+        android:paddingRight="@dimen/right_5"
         android:textSize="@dimen/font_tv_hint_15"
         android:gravity="center"/>

@@ -1,27 +1,27 @@
 ﻿[
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称：",
+    "singleDisplayRightTitle":"项目名称:",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需求类型：",
+    "singleDisplayRightTitle":"需求类型:",
     "singleDisplayRightContent":" "
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人姓名：",
+    "singleDisplayRightTitle":"联系人姓名:",
     "singleDisplayRightContent":"***"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人电话：",
+    "singleDisplayRightTitle":"联系人电话:",
     "singleDisplayRightContent":"***"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"附加信息：",
+    "textAreaTitle":"附加信息:",
     "textAreaContent":"",
     "necessary":true
   }

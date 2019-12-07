@@ -33,7 +33,7 @@
         android:paddingTop="@dimen/top_7"
         android:text="店铺详情"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,7 +75,7 @@
         android:textSize="@dimen/font_tv_normal_17"
         app:layout_constraintLeft_toRightOf="@id/tv_shop_details_header"
         android:layout_marginLeft="@dimen/left_20"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/tv_shop_details_header"
         android:layout_marginLeft="@dimen/left_20"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
     <com.google.android.material.tabs.TabLayout
         android:paddingTop="@dimen/top_10"
         android:background="@color/white"

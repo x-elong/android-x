@@ -34,12 +34,12 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": "xxx"
+    "singleDisplayRightContent": ""
   },
   {
     "type":"INPUT_WITH_UNIT",

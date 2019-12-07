@@ -1,42 +1,42 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布类别：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightTitle":"发布类别:",
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人：",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightTitle":"负责人:",
+  "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"人员清册：",
+    "buttonTitle":"人员清册:",
     "buttonName":["点击查看"]
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
+    "buttonTitle":"车辆清册:",
     "buttonName":["点击查看"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"可操作电压等级：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"可操作电压等级:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"可实施范围：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"可实施范围:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"可实施地域：",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightTitle":"可实施地域:",
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"机械设备清册：",
+    "buttonTitle":"机械设备清册:",
     "buttonName":["点击查看"]
   },
   {
@@ -47,6 +47,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

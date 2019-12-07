@@ -93,6 +93,11 @@ class MyFragment : Fragment() {
     }
 
     private fun initOnClick() {
+        mView.iv_my_header.setOnClickListener {
+            val intent = Intent(activity,ImageDisplayActivity::class.java)
+            intent.putExtra("imagePath",headerImg)
+            startActivity(intent)
+        }
         mView.view_my.setOnClickListener {
             val intent =Intent(activity,MyInformationActivity::class.java)
             startActivity(intent)
@@ -115,10 +120,13 @@ class MyFragment : Fragment() {
             val intent =Intent(activity,VipActivity::class.java)
             startActivity(intent)
         }
+        mView.view_vip.setOnClickListener {
+            val intent =Intent(activity,VipActivity::class.java)
+            startActivity(intent)
+        }
         mView.btn_my_vip_privileges.setOnClickListener {
             val intent = Intent(activity,MyVipActivity::class.java)
             startActivity(intent)
-
         }
     }
 

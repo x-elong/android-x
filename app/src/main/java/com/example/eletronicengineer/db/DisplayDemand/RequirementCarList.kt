@@ -2,7 +2,10 @@ package com.example.eletronicengineer.db.DisplayDemand
 
 import java.io.Serializable
 
-class RequirementCarList (var carType:String,
+class RequirementCarList (
+                            val id :String,
+                            var requirementTeamServeId:String,
+                        var carType:String,
                           var needCarNumber:String,
                           var construction:String,
                           var isInsurance:String,

@@ -2,22 +2,22 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"供应类别:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人：",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightTitle":"负责人:",
+  "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册：",
+    "buttonTitle":"成员清册:",
     "buttonName":["在线编辑"]
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"马匹数量(匹):",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -27,6 +27,6 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

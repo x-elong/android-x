@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="店铺名称：湖南人文科技学院"
+        android:text="店铺名称:湖南人文科技学院"
         android:textSize="@dimen/font_tv_normal_18"
         android:textColor="#505050"
         android:layout_marginLeft="@dimen/left_10"
@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="地址：湖南省娄底市"
+        android:text="地址:湖南省娄底市"
         android:textSize="@dimen/font_tv_hint_13"
         android:id="@+id/tv_mall_add_name"
         app:layout_constraintBottom_toTopOf="@+id/tv_mall_major_name"
@@ -39,7 +39,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="主营：变压器、调压器、开关……"
+        android:text="主营:变压器、调压器、开关……"
         android:textSize="@dimen/font_tv_hint_13"
         android:textColor="#505050"
         android:id="@+id/tv_mall_major_name"

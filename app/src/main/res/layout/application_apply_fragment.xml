@@ -20,8 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginTop="@dimen/top_8"
         android:textSize="@dimen/font_tv_normal_16"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/view_registration_more"
         app:layout_constraintStart_toStartOf="@+id/view_registration_more"
         app:layout_constraintTop_toTopOf="@+id/view_registration_more" />
 
@@ -31,7 +33,7 @@
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="报名信息详情"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@id/view_registration_more"
         app:layout_constraintEnd_toEndOf="parent"

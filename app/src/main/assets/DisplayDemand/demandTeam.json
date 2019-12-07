@@ -2,22 +2,22 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
   "singleDisplayRightTitle":"项目名称:",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"项目地点:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"计划工期(月):",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
@@ -67,7 +67,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需要人数(人):",
-    "singleDisplayRightContent":""
+    "singleDisplayRightContent":"0"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

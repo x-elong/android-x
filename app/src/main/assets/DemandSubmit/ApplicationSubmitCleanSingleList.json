@@ -26,11 +26,11 @@
   },
   {
     "type":"SINGLE_INPUT",
-    "inputSingleTitle":"综合单价："
+    "inputSingleTitle":"综合单价:"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"详细说明：",
+    "textAreaTitle":"详细说明:",
     "textAreaContent":"",
     "necessary":false
   }

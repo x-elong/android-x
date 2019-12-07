@@ -64,9 +64,9 @@
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资标准",
-    "inputMultiUnit":["面议","元/天","元/月","元/年"],
+    "inputMultiUnit":["面议","元/日","元/月","元/年"],
     "key":"salaryStandard salaryUnit",
-    "sendFormat":"Long String"
+    "sendFormat":"Double String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

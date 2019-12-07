@@ -1,32 +1,32 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称：",
+    "singleDisplayRightTitle":"项目名称:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"规格型号：",
+    "singleDisplayRightTitle":"规格型号:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"数量：",
+    "singleDisplayRightTitle":"数量:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位：",
+    "singleDisplayRightTitle":"单位:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"清单报价（按单位）：",
+    "singleDisplayRightTitle":"清单报价（按单位）:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"详细说明：",
+    "singleDisplayRightTitle":"详细说明:",
     "singleDisplayRightContent":""
   }
 ]
