@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/top_2"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="xxx"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/font_tv_normal_16" />
 

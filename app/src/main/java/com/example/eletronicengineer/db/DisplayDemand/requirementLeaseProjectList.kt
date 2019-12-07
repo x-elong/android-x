@@ -3,7 +3,7 @@ package com.example.eletronicengineer.distributionFileSave
 import java.io.Serializable
 
 class requirementLeaseProjectList(var id:String,
-                                  var requirmentTeamServeId:String,
+                                  var requiremenLeaseServeId:String,
                                   var listId:String,
                                   var projectName:String,
                                   var specificationsModels:String,

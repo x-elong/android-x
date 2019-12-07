@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
-        android:text="xxx"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@id/view_inventory"

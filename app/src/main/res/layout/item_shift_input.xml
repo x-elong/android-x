@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_shift_input_show"
             android:background="@drawable/ic_expand"
+            android:layout_marginRight="@dimen/right_2"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>
 </LinearLayout>

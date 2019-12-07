@@ -2,22 +2,22 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布类别:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
   "singleDisplayRightTitle":"负责人:",
-  "singleDisplayRightContent":"xxx"
+  "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"是否提供车辆:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"施工工器具:",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
@@ -37,12 +37,12 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"可操作电压等级：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"可实施范围：",
-    "singleDisplayRightContent":"xxx"
+    "singleDisplayRightContent":""
   },
   {
     "type":"MULTI_BUTTON",
@@ -57,16 +57,16 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人所属地点:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布人姓名:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系电话:",
-    "singleDisplayRightContent":"00"
+    "singleDisplayRightContent":""
   }
 ]

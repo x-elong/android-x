@@ -1,11 +1,8 @@
 package com.example.eletronicengineer.adapter
 
 import android.animation.ValueAnimator
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,31 +14,21 @@ import kotlinx.android.synthetic.main.item_multi.view.*
 import kotlinx.android.synthetic.main.item_single_input.view.*
 import kotlinx.android.synthetic.main.item_title.view.*
 import android.os.Handler
-import android.provider.MediaStore
 import android.text.*
 import android.text.method.ScrollingMovementMethod
 import android.text.style.*
-import android.util.Log
 import android.util.TypedValue
 import androidx.core.content.ContextCompat
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.amap.api.location.AMapLocationListener
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
-import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.aninterface.ExpandMenuItem
-import com.example.eletronicengineer.fragment.my.JobMoreFragment
-import com.example.eletronicengineer.fragment.my.JobOverviewFragment
-import com.example.eletronicengineer.lg.resources
 import com.example.eletronicengineer.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.demand.view.*
 import kotlinx.android.synthetic.main.goods.view.*
 import kotlinx.android.synthetic.main.item_confirm.view.*
 import kotlinx.android.synthetic.main.item_demand.view.*
@@ -72,14 +59,6 @@ import kotlinx.android.synthetic.main.item_two_column_display.view.*
 import kotlinx.android.synthetic.main.item_two_dialog.view.*
 import kotlinx.android.synthetic.main.item_two_display.view.*
 import kotlinx.android.synthetic.main.item_two_pair_input.view.*
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import org.apache.log4j.lf5.util.Resource
-import org.json.JSONObject
-import org.w3c.dom.Text
-import java.io.File
 
 class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
     companion object {
@@ -864,6 +843,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val item=radioGroup.getChildAt(1-mData[position].radioButtonValue.toInt()) as RadioButton
                     item.isChecked=true
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
                 vh.llContainer.addView(radioGroup)
             }
             MULTI_CHECKBOX_TYPE->
@@ -1023,16 +1011,53 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.etSingleInputContent.setText(mData[position].inputSingleContent)
                 }
                 if(mData[position].inputSingleTitle.equals("类别")){
-                    vh.tvShiftInputContent.hint="规格/型号状态"
+                    vh.etSingleInputContent.hint="规格/型号状态"
+                }
+                when(mData[position].inputSingleTitle){
+                    "年龄"->{
+                        vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
+                        vh.etSingleInputContent.hint="16-60岁"
+                    }
+                    "数量","工作经验"->{
+                        vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
+                    }
+                    "单价","报价清单(按单价)"->{
+                    }
+                    "法人代表电话","电话","手机号码"->{
+                        vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_PHONE
+                    }
+                    else->{
+                        vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_TEXT
+                    }
+
                 }
             }
             INPUT_WITH_UNIT_TYPE->
             {
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
-                if (mData[position].inputUnitTitle=="有效期")
-                {
-                    vh.etInputUnitValue.hint="1-90"
+                when(mData[position].inputUnitTitle){
+                    "有效期","发布有效期"->{
+                        vh.etInputUnitValue.hint="1-90"
+                    }
+                    "工作经验"->{
+                        vh.etInputUnitValue.hint="0-45"
+                    }
+                    "车辆数量"->{
+                        vh.etInputUnitValue.hint="1-15"
+                    }
+                    "带驾驶员","不带驾驶员"->{
+                        vh.etInputUnitValue.hint="1-1000"
+                    }
+                    "核载乘客"->{
+                        vh.etInputUnitValue.hint="0-10"
+                    }
+                    "核准载重量"->{
+                        vh.etInputUnitValue.hint="0-30"
+                    }
+                    "车厢长度"->{
+                        vh.etInputUnitValue.hint="0-15"
+                    }
                 }
                 vh.etInputUnitValue.addTextChangedListener(object :TextWatcher{
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -1050,6 +1075,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if (mData[position].inputUnitContent!="")
                 {
                     vh.etInputUnitValue.setText(mData[position].inputUnitContent)
+                }
+                when(mData[position].styleType){
+                    "NUMBER"->{
+                        vh.etInputUnitValue.inputType=InputType.TYPE_CLASS_NUMBER
+                    }
+                }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
             }
             TWO_PAIR_INPUT_TYPE->
@@ -1092,6 +1131,16 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.etTwoPairInputValue2.setText(mData[position].twoPairInputValue2)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
+
             }
             FOUR_DISPLAY_TYPE->
             {
@@ -1168,7 +1217,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         mData[position].inputMultiContent=p0.toString()
-                        if (p0!!.contains(mData[position].inputMultiAbandonInput)){
+
+
+                    }
+                })
+                vh.spMultiInputUnit.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        mData[position].inputMultiSelectUnit=adapter.getItem(p2).toString()
+                        if (adapter.getItem(p2).toString().contains(mData[position].inputMultiAbandonInput)){
                             //vh.etMultiInputContent.inputType= InputType.TYPE_NULL
                             vh.etMultiInputContent.isEnabled=false
                             vh.etMultiInputContent.hint=""
@@ -1179,16 +1235,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                             vh.etMultiInputContent.hint="请输入"
                             //vh.etMultiInputContent.inputType=InputType.TYPE_CLASS_TEXT
                         }
-
-                    }
-                })
-                vh.spMultiInputUnit.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        mData[position].inputMultiSelectUnit=adapter.getItem(p2).toString()
                     }
                     override fun onNothingSelected(p0: AdapterView<*>?) {
                     }
                 }
+                vh.spMultiInputUnit.adapter=adapter
                 if (mData[position].inputMultiContent!="")
                 {
                     vh.etMultiInputContent.setText(mData[position].inputMultiContent)
@@ -1198,9 +1249,19 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val unitPosition=mData[position].inputMultiUnit.indexOf(mData[position].inputMultiSelectUnit)
                     vh.spMultiInputUnit.setSelection(unitPosition)
                 }
-                mData[position].inputMultiSelectUnit=mData[position].inputMultiUnit[0]
-                vh.spMultiInputUnit.adapter=adapter
-                vh.spMultiInputUnit.setSelection(1)
+                else{
+                    mData[position].inputMultiSelectUnit=mData[position].inputMultiUnit[0]
+                    vh.spMultiInputUnit.setSelection(0)
+                }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             INPUT_RANGE_TYPE->
             {
@@ -1292,6 +1353,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             TWO_OPTIONS_SELECT_DIALOG_TYPE->
             {
@@ -1313,6 +1383,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             THREE_OPTIONS_SELECT_DIALOG_TYPE->
             {
@@ -1333,6 +1412,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if(mData[position].selectListener!=null)
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
+                }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
             }
             HINT_TYPE->

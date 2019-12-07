@@ -32,7 +32,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         private lateinit var type:String
         lateinit var mView: View
         var adapter: RecyclerviewAdapter?=null
-
+        var frame = R.id.frame_supply
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
             type = arguments!!.getString("type")
@@ -73,9 +73,19 @@ class SupplyPublishInventoryFragment:Fragment() {
                 bundle.putString("type",type)
                 FragmentHelper.switchFragment(
                     activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
-                    R.id.frame_supply, ""
+                    frame, ""
                 )
-
+            }
+            for (j in adapter!!.mData){
+                j.jumpListener = View.OnClickListener {
+                    //修改
+                    adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
+                    val bundle = Bundle()
+                    var itemMultiStyleItem = j.itemMultiStyleItem
+                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle), frame,"")
+                }
             }
         }
         private fun switchAdapter():List<MultiStyleItem>{
@@ -97,15 +107,10 @@ class SupplyPublishInventoryFragment:Fragment() {
                 "工器具清册发布"->
                 {
                     bundle.putString("type",type)
-                    //bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                 }
                 "租赁清册发布"->
                 {
-                    bundle.putString("type",type)
-                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
-                }
-                "车辆表发布"->{
                     bundle.putString("type",type)
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                 }
@@ -119,7 +124,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         fun update(itemMultiStyleItem:List<MultiStyleItem>){
             if(adapter!!.mData[0].selected==-1){
                 val mData = adapter!!.mData.toMutableList()
-                if(type=="车辆清册发布"||type=="车辆表发布") {
+                if(type=="车辆清册发布") {
                     mData.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SHIFT_INPUT,
@@ -157,7 +162,7 @@ class SupplyPublishInventoryFragment:Fragment() {
                 adapter!!.notifyItemInserted(mData.size-1)
             }
             else {
-                if(type=="车辆清册发布"||type=="车辆表发布") {
+                if(type=="车辆清册发布") {
                     adapter!!.mData[adapter!!.mData[0].selected].shiftInputTitle =
                         itemMultiStyleItem[0].selectContent
                 }

@@ -53,7 +53,7 @@
   },
   {
     "type":"MULTI_BUTTON",
-    "buttonTitle":"xxx",
+    "buttonTitle":"",
     "buttonName":["点击查看"],
     "key": "leaseLists",
     "sendFormat": "JsonArray"

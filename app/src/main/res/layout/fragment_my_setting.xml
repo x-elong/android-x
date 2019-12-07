@@ -50,13 +50,14 @@
 
     <Button
         android:id="@+id/btn_log_out"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_40"
-        android:text="退出"
-        android:textColor="@color/red"
-        android:textSize="@dimen/font_tv_hint_15"
-        android:background="@drawable/btn_style1"
+        android:layout_width="@dimen/general_258"
+        android:layout_height="@dimen/general_43"
         android:layout_marginBottom="@dimen/bottom_35"
+        android:background="@drawable/btn_style3"
+        android:text="退出"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

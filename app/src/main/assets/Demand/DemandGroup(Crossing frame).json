@@ -34,9 +34,9 @@
     "sendFormat":"JsonArray"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"跨越架材质",
-    "radioButtonName":["钢管","竹木"],
+    "type":"MULTI_CHECKBOX",
+    "checkboxTitle":"跨越架材质",
+    "checkboxNameList":["钢管","竹木"],
     "key":"spanShelfMaterial",
     "sendFormat":"String"
   },

@@ -21,5 +21,6 @@
             android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_show"
             android:background="@drawable/ic_expand"
             android:layout_gravity="center"
+            android:layout_marginRight="@dimen/right_10"
             android:textSize="@dimen/font_tv_hint_15"/>
 </LinearLayout>

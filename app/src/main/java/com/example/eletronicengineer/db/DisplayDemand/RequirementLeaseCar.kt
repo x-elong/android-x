@@ -1,21 +1,18 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
 import java.io.Serializable
 
 class RequirementLeaseCar(
     var id:String,
     var vipId:String,
+    var requirementTeamServeId:String,
     var requirementType:String,
     var requirementVariety:String,
     var projectName:String,
     var projectSite:String,
     var projectTime:String,
     var vehicleType:String,
-    var accurateLoadWeight:String,
-    var vehicleStructure:String,
-    var theCarriageLength:String,
-    var insuranceCondition:String,
-    var driverSex:String,
     var workerExperience:String,
     var minAgeDemand:String,
     var maxAgeDemand:String,
@@ -25,7 +22,6 @@ class RequirementLeaseCar(
     var salaryStandard:String,
     var salaryUnit:String,
     var vehicle:String,
-    var machineEquipment:String,
     var additonalExplain:String,
     var foundTime:String,
     var founder:String,
@@ -35,5 +31,6 @@ class RequirementLeaseCar(
     var version:String,
     var validTime:String,
     var name:String,
-    var phone:String
-): Serializable
+    var phone:String,
+    var requirementCarLists:List<RequirementCarList>?
+    ): Serializable

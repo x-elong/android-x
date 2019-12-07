@@ -2,9 +2,11 @@ package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,17 +15,25 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.utils.startSendMessage
+import com.example.eletronicengineer.utils.uploadImage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_supply_publish.*
 import kotlinx.android.synthetic.main.activity_supply_publish.view.*
 import kotlinx.android.synthetic.main.activity_supply_publish.view.submit
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONArray
+
 import org.json.JSONObject
+import java.io.File
 
 class SupplyFragment:Fragment(){
     companion object{
@@ -41,11 +51,18 @@ class SupplyFragment:Fragment(){
     var validTime:Long?= Long.MIN_VALUE//有效期
     var horseNumber:Long?= Long.MIN_VALUE//马匹数量
     var name:String=""//名称
-    var voltages:ArrayList<Int> = arrayListOf() //电压表等级
+    var voltages:ArrayList<String> = arrayListOf() //电压表等级
     var workDia:Int= Int.MIN_VALUE//作业直径
     var location:String=""//队部所在区域
     var vipId:String=""
-    var submitType:String="请求"
+    //车辆表
+    var carType:String=""//车辆类型
+    var maxPassengers:Long= Long.MIN_VALUE//
+    var construction:Int=-1//车辆结构
+    var isDriver:Boolean =false
+    var isInsurance:Boolean =false
+    var carPhotoPath:String=""//车辆照片
+    var carNumber:String=""//拍照号码
     lateinit var mView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i("onCreateView","running")
@@ -81,7 +98,7 @@ class SupplyFragment:Fragment(){
         val  selectContent2=arguments!!.getString("selectContent2")
         mView.tv_title_title1.setText(selectContent2)
         //返回
-        mView.tv_title_back.setOnClickListener{
+        mView.tv_title_back.setOnClickListener(){
             UnSerializeDataBase.imgList.clear()
             activity!!.finish()
         }
@@ -98,30 +115,99 @@ class SupplyFragment:Fragment(){
                     for(i in mAdapter!!.mData ) {
                         when (i.options){
                             MultiStyleItem.Options.INPUT_WITH_UNIT->{
-                                val tmp = i.inputUnitContent.toLongOrNull()
+
                                 when(i.inputUnitTitle){
-                                    "有效期"->{
-                                        validTime = if (tmp != null) { tmp } else {10}
-                                    }
+                                        "有效期"->{
+                                            val tmp = i.inputUnitContent.toLongOrNull()
+                                            validTime = if (tmp != null) { tmp } else {10}
+                                        }
                                     "马匹数量"->{
+                                        val tmp = i.inputUnitContent.toLongOrNull()
                                         horseNumber = if (tmp != null) { tmp } else {10}
                                     }
-                                }
-                            }
-                            MultiStyleItem.Options.MULTI_CHECKBOX -> {
-                                val ch: ArrayList<String> = ArrayList()
-                                for (j in 0 until i.checkboxValueList.size)
-                                    if (i.checkboxValueList[j]) {
-                                        ch.add(i.checkboxNameList[j])
+                                    "核载乘客"->{
+                                        val tmp = i.inputUnitContent.toLongOrNull()
+                                        maxPassengers =if (tmp != null) { tmp } else {10}
                                     }
-                                when(i.checkboxTitle) {
-
                                 }
                             }
-                            MultiStyleItem.Options.SELECT_DIALOG ->{//Int
+                            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+                                when(i.radioButtonTitle) {
+                                    "是否配驾驶员"->{
+
+                                     val   tmp = i.radioButtonValue
+                                       if(tmp=="1"){
+                                           isDriver=true
+                                       }else{
+                                           isDriver=false
+                                       }
+                                    }
+                                    "保险状态"->{
+                                        val   tmp = i.radioButtonValue
+                                        if(tmp=="1"){
+                                            isInsurance=true
+                                        }else{
+                                            isInsurance=false
+                                        }
+                                    }
+                                }
+                            }
+//                            MultiStyleItem.Options.SHIFT_INPUT -> {
+//                                when(i.shiftInputTitle) {
+//                                    "车辆照片"->{
+//                                        val results = try {
+//                                            for (j in UnSerializeDataBase.imgList) {
+//                                                if (j.key == i.key) {
+//                                                    val imagePath = j.path.split("|")
+//                                                    for (k in imagePath) {
+//                                                        val file = File(k)
+//                                                        val imagePart = MultipartBody.Part.createFormData(
+//                                                            "file",
+//                                                            file.name,
+//                                                            RequestBody.create(MediaType.parse("image/*"), file)
+//                                                        )
+//                                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+//                                                            {
+//                                                                if (carPhotoPath != "")
+//                                                                    carPhotoPath += "|"
+//                                                                val json = JSONObject(it.string())
+//                                                                if(json.getBoolean("success")){
+//                                                                    carPhotoPath += json.getString("httpUrl")
+//                                                                }else{
+//                                                                    carPhotoPath += ""
+//                                                                }
+//                                                            },
+//                                                            {
+//                                                                it.printStackTrace()
+//                                                            })
+//                                                    }
+//                                                }
+//                                            }
+//                                        } catch (e: Exception) {
+//                                            e.printStackTrace()
+//                                        }
+//                                    }
+//                                }
+//                            }
+                            MultiStyleItem.Options.SINGLE_INPUT -> {
+                                when(i.inputSingleTitle) {
+                                    "牌照号码"->{
+                                        carNumber = i.inputSingleContent
+                                    }
+                                }
+
+                            }
+                            MultiStyleItem.Options.SELECT_DIALOG ->{
                                 when(i.selectTitle) {
                                     "作业最大直径"->{
-                                        workDia = 1-i.selectOption1Items.indexOf(i.selectContent)                                    }
+                                        workDia = 1-i.selectOption1Items.indexOf(i.selectContent)
+                                    }//Int
+                                    "车辆类型"->{
+                                        carType =if (i.selectContent != "") {i.selectContent} else { "" }//String
+                                    }
+                                    "车厢结构"->{
+                                        construction = 1-i.selectOption1Items.indexOf(i.selectContent)    //Int
+                                    }
                                 }
                             }
                             MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->{//String
@@ -129,6 +215,7 @@ class SupplyFragment:Fragment(){
                                     "队部所在区域"->{
                                         location = if (i.selectContent != "") {i.selectContent} else { "" }
                                     }
+
                                 }
                             }
 
@@ -142,28 +229,34 @@ class SupplyFragment:Fragment(){
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
-
+                            json.put("distribuionNetwork",
+                                JSONObject().put("name",name)
+                                    .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
-
+                            json.put("powerTransformation",
+                                JSONObject().put("name",name)
+                                    .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
-
+                            json.put("measureDesign",
+                                JSONObject().put("name",name)
+                                    .put("validTime",validTime.toString()))
                         }
                         //团队服务——马帮运输
                         Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{
                             json.put("caravanTransport",
                                 JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString())
-                                    .put("horseNumber",horseNumber.toString()))
+                                .put("validTime",validTime.toString())
+                                .put("horseNumber",horseNumber.toString()))
                         }
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
                             json.put("pileFoundation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
-                                    .put("workDia",workDia.toString())
-                                    .put("location",location))
+                                .put("workDia",workDia.toString())
+                                .put("location",location))
                         }
                         //团队服务——非开挖
                         Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal-> {
@@ -173,14 +266,51 @@ class SupplyFragment:Fragment(){
 
                         }
                         Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
-
+                            json.put("validTime",validTime.toString())
                         }
                         Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{//运维
 
                         }
+                        Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{//车辆租赁
+                            json.put("carTable",
+                                JSONObject().put("carType",carType)
+                                    .put("maxPassengers",maxPassengers.toString())
+                                    .put("maxWeight",mAdapter!!.mData[4].inputUnitContent.toLongOrNull().toString())
+                                    .put("construction",construction.toString())
+                                    .put("lenghtCar",mAdapter!!.mData[5].inputUnitContent.toLongOrNull().toString())
+                                    .put("isDriver",isDriver)
+                                    .put("isInsurance",isInsurance)
+                                    .put("carPhotoPath",carPhotoPath)
+                                    .put("carNumber",carNumber)
+                            )
+                        }
                     }
-                    provider.jsonObject = json
-                    provider.generateJsonRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath,submitType)
+                    provider.generateJsonRequestBody(json).subscribe {
+                        val loadingDialog = LoadingDialog(mView.context, "正在请求...", R.mipmap.ic_dialog_loading)
+                        loadingDialog.show()
+                        val result = startSendMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                    {
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                                Toast.makeText(context, "请求成功", Toast.LENGTH_SHORT).show()
+                                                mView.tv_title_back.callOnClick()
+                                        }else if(json.getInt("code") == 403){
+                                            Toast.makeText(context, "${json.getString("desc")} 请升级为更高级会员", Toast.LENGTH_SHORT).show()
+                                        } else if (json.getInt("code") == 400) {
+                                            Toast.makeText(context, "请求失败", Toast.LENGTH_SHORT).show()
+                                        }
+                                    },
+                                    {
+                                        loadingDialog.dismiss()
+                                        val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
+                                        toast.setGravity(Gravity.CENTER, 0, 0)
+                                        toast.show()
+                                        it.printStackTrace()
+                                    }
+                                )
+                    }
                 }
             }
         }
@@ -312,7 +442,6 @@ class SupplyFragment:Fragment(){
             Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupTestDebugging()
                 val singleDisplayRightContent = "实验调试"
-                name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
             }

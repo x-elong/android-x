@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.eletronicengineer.adapter.ListAdapterForDemand
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getRequirementLease
@@ -61,6 +63,7 @@ class DemandInformationFragment: Fragment(){
     var mIsLoadingTeam = false
     var mIsLoadingLease = false
     var mIsLoadingThird = false
+    lateinit var mView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,27 +71,27 @@ class DemandInformationFragment: Fragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.demand, container, false)
+          mView = inflater.inflate(R.layout.demand, container, false)
         val Option1Items= listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他") as MutableList<String>
         val Option2Items= listOf(listOf("普工"), listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
             listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
             listOf("测量工"), listOf("驾驶证A1","驾驶证A2","驾驶证A3","驾驶证B1","驾驶证B2","驾驶证C1","驾驶证C2","驾驶证C3","驾驶证D","驾驶证E"),
             listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
             listOf("")) as MutableList<MutableList<String>>
-        view.tv_demand_type_select.setOnClickListener {
+        mView.tv_demand_type_select.setOnClickListener {
 
-            initDemandPerson(view,Option1Items,Option2Items,1)
+            initDemandPerson(mView,Option1Items,Option2Items,1)
         }
         initProjectSite()
-        view.tv_demand_site_select.setOnClickListener {
-            initSite(view,1)
+        mView.tv_demand_site_select.setOnClickListener {
+            initSite(mView,1)
         }
-        view.tv_demand_site_clear.setOnClickListener {
-            view.tv_demand_site_select.text="选择地点"
-            view.tv_demand_site_clear.visibility=View.GONE
-            if(view.tv_demand_type_select.text!="选择需求类别")
+        mView.tv_demand_site_clear.setOnClickListener {
+            mView.tv_demand_site_select.text="选择地点"
+            mView.tv_demand_site_clear.visibility=View.GONE
+            if(mView.tv_demand_type_select.text!="选择需求类别")
             {
-                val  str=view.tv_demand_type_select.text.split(" ")
+                val  str=mView.tv_demand_type_select.text.split(" ")
                 var type=""
                 var flagfortype=0
                 for(temp in str) {
@@ -110,14 +113,14 @@ class DemandInformationFragment: Fragment(){
             mPageNumberForPerson = 1
             mIsLastPageForPerson = false
             mPersonAdapter!!.notifyMovie()
-            demandPerson(view)
+            demandPerson(mView)
         }
-        view.tv_demand_type_clear.setOnClickListener {
-            view.tv_demand_type_select.text="选择需求类别"
-            view.tv_demand_type_clear.visibility=View.GONE
-            if(view.tv_demand_site_select.text!="选择地点")
+        mView.tv_demand_type_clear.setOnClickListener {
+            mView.tv_demand_type_select.text="选择需求类别"
+            mView.tv_demand_type_clear.visibility=View.GONE
+            if(mView.tv_demand_site_select.text!="选择地点")
             {
-                val  str=view.tv_demand_site_select.text.split(" ")
+                val  str=mView.tv_demand_site_select.text.split(" ")
                 var site=""
                 var flagforsite=0
                 for(temp in str) {
@@ -139,9 +142,9 @@ class DemandInformationFragment: Fragment(){
             mPageNumberForPerson = 1
             mIsLastPageForPerson = false
             mPersonAdapter!!.notifyMovie()
-            demandPerson(view)
+            demandPerson(mView)
         }
-        return view
+        return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -181,7 +184,6 @@ class DemandInformationFragment: Fragment(){
         view.tv_demand_content.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
                     value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
@@ -595,6 +597,8 @@ class DemandInformationFragment: Fragment(){
         mIsLoadingThird = false
     }
     fun _loadDemandPersonData() {
+//        val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
+//        loadingDialog.show()
         val result= Observable.create<RequestBody> {
             //建立网络请求体 (类型，内容)
             val jsonObject = JSONObject()
@@ -610,6 +614,12 @@ class DemandInformationFragment: Fragment(){
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
+//                            loadingDialog.dismiss()
+//                            if (json.getInt("code") == 200) {
+//                                Toast.makeText(context, "加载成功", Toast.LENGTH_SHORT).show()
+//                            } else if (json.getInt("code") == 400) {
+//                                Toast.makeText(context, "加载失败", Toast.LENGTH_SHORT).show()
+//                            }
                             val data = it.message.data
                             for (j in data) {
                                 var temp1: String
@@ -632,6 +642,10 @@ class DemandInformationFragment: Fragment(){
                             else
                                 mPageNumberForPerson ++
                         }, {
+//                            loadingDialog.dismiss()
+//                            val toast = Toast.makeText(context, "加载超时", Toast.LENGTH_SHORT)
+//                            toast.setGravity(Gravity.CENTER, 0, 0)
+//                            toast.show()
                             it.printStackTrace()
                         })
             }
@@ -652,6 +666,7 @@ class DemandInformationFragment: Fragment(){
                     getRequirementTeam(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                            Log.i("s",it.code + " " + it.desc)
                             val pageCount = it.message.pageCount
                             val data = it.message.data
                             for (j in data) {
@@ -702,9 +717,9 @@ class DemandInformationFragment: Fragment(){
                                     var temp1: String
                                     var temp2: String
                                     var temp3:String
-                                    temp1 = if(j.vehicleType==null )
+                                    temp1 = if(j.requirementVariety==null )
                                         " "
-                                    else j.vehicleType
+                                    else j.requirementVariety
                                     temp2 = if(j.projectSite == null)
                                         " "
                                     else j.projectSite
@@ -862,7 +877,7 @@ class DemandInformationFragment: Fragment(){
                     for(temp in str) {
                         flagforsite += 1
                         site += if (flagforsite<3) {
-                            "$temp / "
+                            "$temp "
                         } else {
                             temp
                         }

@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sp_input_multi_unit_unit"
             android:spinnerMode="dropdown"
+            android:dropDownVerticalOffset="@dimen/general_25"
             android:layout_margin="@dimen/general_10"/>
     <TextView
         android:visibility="gone"

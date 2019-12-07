@@ -104,7 +104,7 @@ class MyInformationFragment : Fragment() {
                             var result = ""
                             if(json.getInt("code")==200){
                                 result = "更新成功"
-                                adapter!!.mData[0].shiftInputPicture = mImagePath
+                                adapter!!.mData[0].shiftInputPicture = imagePath
                                 adapter!!.notifyItemChanged(0)
                             }else{
                                 result = "更新失败"
