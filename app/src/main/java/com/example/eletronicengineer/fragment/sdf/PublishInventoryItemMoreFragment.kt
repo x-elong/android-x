@@ -111,7 +111,6 @@ class PublishInventoryItemMoreFragment:Fragment() {
                     }
                     MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
                         data[position].inputMultiContent = j.inputMultiContent
-                        data[position].inputMultiSelectUnit = j.inputMultiSelectUnit
                     }
                     MultiStyleItem.Options.SINGLE_INPUT -> {
                         data[position].inputSingleContent = j.inputSingleContent

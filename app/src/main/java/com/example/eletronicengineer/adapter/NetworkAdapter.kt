@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
@@ -22,6 +23,8 @@ import com.example.eletronicengineer.db.My.*
 import com.example.eletronicengineer.fragment.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
+import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
+import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.*
 import com.example.eletronicengineer.utils.*
@@ -166,7 +169,6 @@ class NetworkAdapter {
                         }
                     }
                 }
-              Log.i(" xxxxxxxxxxxxxxxxxxc","")
                 //建立网络请求体 (类型，内容)
                 val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
                 it.onNext(requestBody)
@@ -180,7 +182,7 @@ class NetworkAdapter {
                     if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                         longAlsoString = Pair(data.inputMultiContent.toLong(), data.inputMultiSelectUnit)
                     else
-                        longAlsoString = Pair(-1, data.inputMultiSelectUnit)
+                        longAlsoString = Pair(Long.MIN_VALUE, data.inputMultiSelectUnit)
                 }
                 else -> {
                     longAlsoString = Pair(Long.MIN_VALUE, "")
@@ -428,38 +430,39 @@ class NetworkAdapter {
                     result = data.textAreaContent
                 }
                 MultiStyleItem.Options.SHIFT_INPUT -> {
-                    val results = try {
-                        for (j in UnSerializeDataBase.imgList) {
-                            if (j.key == data.key) {
-                                val imagePath = j.path.split("|")
-                                for (k in imagePath) {
-                                    val file = File(k)
-                                    val imagePart = MultipartBody.Part.createFormData(
-                                        "file",
-                                        file.name,
-                                        RequestBody.create(MediaType.parse("image/*"), file)
-                                    )
-                                    uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                        {
-                                            //Log.i("responseBody",it.string())
-                                            if (result != "")
-                                                result += "|"
-                                            val json = JSONObject(it.string())
-                                            if(json.getBoolean("success")){
-                                                result += json.getString("httpUrl")
-                                            }else{
-                                                result += ""
-                                            }
-                                        },
-                                        {
-                                            it.printStackTrace()
-                                        })
-                                }
-                            }
+                    for (j in UnSerializeDataBase.imgList){
+                        if(j.key == data.key){
+                            result=j.path
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
                     }
+//                    val results = try {
+//                        for (j in UnSerializeDataBase.imgList) {
+//                            if (j.key == data.key) {
+//                                val imagePath = j.path.split("|")
+//                                for (k in imagePath) {
+//                                    val file = File(k)
+//                                    val imagePart = MultipartBody.Part.createFormData(
+//                                        "file",
+//                                        file.name,
+//                                        RequestBody.create(MediaType.parse("image/*"), file)
+//                                    )
+//                                    uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+//                                        {
+//                                            //Log.i("responseBody",it.string())
+//                                            if (result != "")
+//                                                result += "|"
+//                                            result += it.string()
+//                                            Log.i("result url", result)
+//                                        },
+//                                        {
+//                                            it.printStackTrace()
+//                                        })
+//                                }
+//                            }
+//                        }
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
                 }
                 MultiStyleItem.Options.SINGLE_INPUT -> {
                     result = data.inputSingleContent
@@ -526,10 +529,6 @@ class NetworkAdapter {
     fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
     {
         val jsonObject = JSONObject()
-        if(mData[0].id!=""){
-            jsonObject.put("id",mData[0].id)
-        }
-        jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
         for (i in mData) {
             when (i.sendFormat) {
                 "Long" -> {
@@ -604,6 +603,7 @@ class NetworkAdapter {
                     "Long String" -> {
                         val longAlsoString = parseToLongAndString(i)
                         val keys = i.key.split(" ")
+                        if (longAlsoString.second != i.inputMultiAbandonInput)
                             jsonObject.put(keys[0], longAlsoString.first)
                         jsonObject.put(keys[1], longAlsoString.second)
                     }
@@ -622,6 +622,8 @@ class NetworkAdapter {
             val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
             it.onNext(requestBody)
         }
+
+
     }
 
     fun generateMultiPartRequestBody(baseUrl: String) {
@@ -986,7 +988,7 @@ class NetworkAdapter {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                     longAlsoString = Pair(data.inputMultiContent.toLong(), data.inputMultiSelectUnit)
                 else
-                    longAlsoString = Pair(-1, data.inputMultiSelectUnit)
+                    longAlsoString = Pair(Long.MIN_VALUE, data.inputMultiSelectUnit)
             }
             else -> {
                 longAlsoString = Pair(Long.MIN_VALUE, "")
@@ -1002,7 +1004,7 @@ class NetworkAdapter {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                     doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                 else
-                    doubleAlsoString = Pair(-1.0, data.inputMultiSelectUnit)
+                    doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
             }
             else -> {
                 doubleAlsoString = Pair(Double.MIN_VALUE, "")
@@ -1852,7 +1854,7 @@ class NetworkAdapter {
                         )
                     )
                 for (j in entity2) {
-                    Log.i("", j.aerialExcavationSoilProportion.toString())
+                    Log.i("xxx", j.aerialExcavationSoilProportion.toString())
                     // val json = JSONObject(j.aerialExcavationSoilProportion.toString())
                     val expandList: MutableList<MultiStyleItem> = ArrayList()
                     val shape =
@@ -5640,6 +5642,40 @@ class NetworkAdapter {
         }
     }
 
+    fun upImage(imagePath: String,fragment:Fragment){
+        val loadingDialog = LoadingDialog(context,"正在上传...")
+        loadingDialog.show()
+        var result = ""
+        val file = File(imagePath)
+        val imagePart = MultipartBody.Part.createFormData("file", file.name,
+            RequestBody.create(MediaType.parse("image/*"), file))
+        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                loadingDialog.dismiss()
+                val json = JSONObject(it.string())
+                Log.i("json",json.toString())
+                if(json.getBoolean("success")){
+                    ToastHelper.mToast(context,"上传成功")
+                    result = json.getString("httpUrl")
+                    val mImagePaths = arrayListOf(result)
+                    if(fragment is UploadPhoneFragment) {
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is UpIdCardFragment){
+                        fragment.refresh(mImagePaths)
+                    }else if(fragment is ImageFragment){
+                        fragment.refresh(mImagePaths)
+                    }
+                }else{
+                    ToastHelper.mToast(context,"上传失败")
+                }
+            },
+            {
+                loadingDialog.dismiss()
+                ToastHelper.mToast(context,"上传失败")
+                it.printStackTrace()
+            })
+    }
+
     fun upImage(data: Serializable, baseUrl: String, key: String, fragment: ImageFragment): String {
         var result = ""
         val results = try {
@@ -5689,39 +5725,39 @@ class NetworkAdapter {
                         when(j.inputSingleTitle){
                             "年龄"->{//报名限制
                                 if (j.inputSingleContent == "")
-                                { result = "${j.inputSingleTitle.replace(":", "")}不能为空" }
+                                { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                                 else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)
-                                { result = "请输入正确${j.inputSingleTitle.replace(":", "")}范围"}
+                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围"}
                             }
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
                             "报价清单(按单价)","个人证件名称","工作经验" ,
                             "项目","项目特征描述","计量单位",
                             "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量"->{
-                                if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace(":", "")}不能为空" }
+                                if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                             }
                         }
                     }else {
                         when (j.inputSingleTitle) {
                             "电话", "手机号码", "法人代表电话" -> {
                                 if (j.inputSingleContent == "") {
-                                    result = "${j.inputSingleTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
                                 } else if (j.inputSingleContent.length != 11) {
-                                    result = "请输入正确的11位${j.inputSingleTitle.replace(":", "")}"
+                                    result = "请输入正确的11位${j.inputSingleTitle.replace("：", "")}"
                                 }
                             }
                             "身份证" -> {
                                 if (j.inputSingleContent == "") {
-                                    result = "${j.inputSingleTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
                                 } else if (j.inputSingleContent.length != 18) {
-                                    result = "请输入正确的18位${j.inputSingleTitle.replace(":", "")}"
+                                    result = "请输入正确的18位${j.inputSingleTitle.replace("：", "")}"
                                 }
                             }
                             "企业注册号" -> {
                                 if (j.inputSingleContent == "") {
-                                    result = "${j.inputSingleTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputSingleTitle.replace("：", "")}不能为空"
                                 } else if (j.inputSingleContent.length != 15 && j.inputSingleContent.length != 18) {
                                     result = "请输入正确的15位${j.inputSingleTitle.replace(
-                                        ":",
+                                        "：",
                                         ""
                                     )}或18位统一社会信用代码"
                                 }
@@ -5773,50 +5809,50 @@ class NetworkAdapter {
                         when (j.inputUnitTitle) {
                             "工作经验" -> {//需求发布限制
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 45) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围0-45年"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-45年"
                                 }
                             }
                             "车辆数量"->{
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 15) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围1-15辆"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-15辆"
                                 }
                             }
                             "发布有效期","有效期"->{
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 90) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围1-90天"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-90天"
                                 }
                             }
                             "计划工期", "需要桩基","需求人数","需要人数","马匹数量","施工工期","车辆" -> {
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 }
                             }
                             //报名车辆限制
                             "核载乘客"->{
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toInt() < 0 || j.inputUnitContent.toInt() > 10) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围0-10人"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-10人"
                                 }
                             }
                             "核准载重量"->{
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 30) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围0-30吨"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-30吨"
                                 }
                             }
                             "车厢长度"->{
                                 if (j.inputUnitContent == "") {
-                                    result = "${j.inputUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 } else if (j.inputUnitContent.toDouble() < 0 || j.inputUnitContent.toDouble() > 15) {
-                                    result = "请输入正确${j.inputUnitTitle.replace(":", "")}范围0-15米"
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-15米"
                                 }
                             }
                         }
@@ -5825,12 +5861,12 @@ class NetworkAdapter {
                         when (j.inputUnitTitle) {
                             "带驾驶员","不带驾驶员"->{
                                 if (j.inputUnitContent!=""&&(j.inputUnitContent.toDouble() < 1 || j.inputUnitContent.toDouble() > 1000)) {
-                                    result = "请输入正确 ${j.inputUnitTitle.replace(":", "")} 范围1-1000元"
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围1-1000元"
                                 }
                             }
                             "年龄要求"->{
                                 if (j.inputUnitContent!=""&&(j.inputUnitContent.toInt() < 16 || j.inputUnitContent.toInt() > 60)) {
-                                    result = "请输入正确 ${j.inputUnitTitle.replace(":", "")} 范围16-60岁"
+                                    result = "请输入正确 ${j.inputUnitTitle.replace("：", "")} 范围16-60岁"
                                 }
                             }
                         }
@@ -5845,7 +5881,7 @@ class NetworkAdapter {
                         when (j.inputMultiUnitTitle) {
                             "薪资标准","薪资要求"->{
                                 if (j.inputMultiContent == ""&&j.inputMultiSelectUnit!="面议") {
-                                    result = "${j.inputMultiUnitTitle.replace(":", "")}不能为空"
+                                    result = "${j.inputMultiUnitTitle.replace("：", "")}不能为空"
                                 }
                             }
                         }
@@ -5859,7 +5895,7 @@ class NetworkAdapter {
                 {
                     if(j.buttonTitle.contains("清册")) {
                         if (j.necessary == false)
-                            result = "${j.buttonTitle.replace(":", "")}没有填完整"
+                            result = "${j.buttonTitle.replace("：", "")}没有填完整"
                         if (result != "") {
                             ToastHelper.mToast(context, result)
                             return false
@@ -5873,7 +5909,7 @@ class NetworkAdapter {
                                 if (j.twoPairInputValue1 != "" && j.twoPairInputValue2 != "") {
                                     result = ""
                                 } else {
-                                    result = "${j.twoPairInputTitle.replace(":", "")}没有填完整"
+                                    result = "${j.twoPairInputTitle.replace("：", "")}没有填完整"
                                 }
                             }
                         }
@@ -5891,7 +5927,7 @@ class NetworkAdapter {
                             "项目地点", "孔洞最大直径","岗位类别",
                             "可实施地域","运送财产保险" -> {
                                 if (j.selectContent == "") {
-                                    result = "${j.selectTitle.replace(":", "")}没有选择"
+                                    result = "${j.selectTitle.replace("：", "")}没有选择"
                                 }
                             }
                         }
@@ -5908,7 +5944,7 @@ class NetworkAdapter {
                             "配送", "合作方属性", "薪资标准","费用标准","性别",
                             "可作业范围","是否配送","驾驶员性别"-> {
                                 if (j.radioButtonValue == "")
-                                    result = "${j.radioButtonTitle.replace(":", "")}没有选择"
+                                    result = "${j.radioButtonTitle.replace("：", "")}没有选择"
                             }
                         }
                     }
@@ -5922,7 +5958,7 @@ class NetworkAdapter {
                         when (j.checkboxTitle) {
                             "电压等级", "作业类别", "操作次级", "可实施范围","可操作电压等级",
                             "可设计电压等级","可设计范围","可作业类别"-> {
-                                result = "${j.checkboxTitle.replace(":", "")}没有选择"
+                                result = "${j.checkboxTitle.replace("：", "")}没有选择"
                                 for (i in 0 until j.checkboxValueList.size)
                                     if (j.checkboxValueList[i]) {
                                         result = ""

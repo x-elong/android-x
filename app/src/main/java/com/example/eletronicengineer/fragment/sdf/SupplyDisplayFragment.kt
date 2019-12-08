@@ -16,7 +16,6 @@ import com.example.eletronicengineer.activity.GetQRCodeActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getSupplyMajorNetWork

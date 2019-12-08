@@ -44,7 +44,7 @@ class UploadPhoneFragment:Fragment(){
         val view=inflater.inflate(R.layout.activity_photo_upload,container,false)
         key = arguments!!.getString("key")
         //获取当前照片的所在位置 若只有一张照片则不必传值 默认为0
-        position=arguments!!.getInt("position")
+        position=arguments!!.getInt("position",0)
         total = arguments!!.getInt("total")
         //refresh(mImagePaths!!)
         if(total==0)total=3

@@ -843,6 +843,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val item=radioGroup.getChildAt(1-mData[position].radioButtonValue.toInt()) as RadioButton
                     item.isChecked=true
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
                 vh.llContainer.addView(radioGroup)
             }
             MULTI_CHECKBOX_TYPE->
@@ -1067,6 +1076,20 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.etInputUnitValue.setText(mData[position].inputUnitContent)
                 }
+                when(mData[position].styleType){
+                    "NUMBER"->{
+                        vh.etInputUnitValue.inputType=InputType.TYPE_CLASS_NUMBER
+                    }
+                }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             TWO_PAIR_INPUT_TYPE->
             {
@@ -1108,6 +1131,16 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.etTwoPairInputValue2.setText(mData[position].twoPairInputValue2)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
+
             }
             FOUR_DISPLAY_TYPE->
             {
@@ -1221,6 +1254,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     mData[position].inputMultiSelectUnit=mData[position].inputMultiUnit[0]
                     vh.spMultiInputUnit.setSelection(0)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             INPUT_RANGE_TYPE->
             {
@@ -1291,7 +1333,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                    }
                 if(mData[position].shiftInputPicture!=""){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
-                    GlideLoader().loadImage(vh.ivShiftInputPicture,"http://"+mData[position].shiftInputPicture)
+                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
                 }
             }
             SELECT_DIALOG_TYPE->
@@ -1315,6 +1357,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             TWO_OPTIONS_SELECT_DIALOG_TYPE->
             {
@@ -1335,6 +1386,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                }
             }
             THREE_OPTIONS_SELECT_DIALOG_TYPE->
             {
@@ -1354,6 +1414,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if(mData[position].selectListener!=null)
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
+                }
+                if (mData[position].necessary)
+                {
+                    val context=vh.itemView.context
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="*"
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
                 }
             }
             HINT_TYPE->

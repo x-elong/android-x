@@ -2,17 +2,17 @@
     {
         "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle":"需求类型:",
-        "singleDisplayRightContent":"普工"
+        "singleDisplayRightContent":""
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle": "报名人姓名:",
-        "singleDisplayRightContent":"王一"
+        "singleDisplayRightContent":""
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle": "报名人联系电话:",
-        "singleDisplayRightContent":"18300000000"
+        "singleDisplayRightContent":""
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
@@ -26,23 +26,13 @@
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "薪资标准（清工薪资）",
-        "singleDisplayRightContent":" 查看 "
-    },
-    {
-        "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "薪资标准（清单报价）",
-        "singleDisplayRightContent":" 查看 "
-    },
-    {
-        "type": "SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle": "机械设备",
         "singleDisplayRightContent":" 查看 "
     },
     {
         "type":"INPUT_WITH_TEXTAREA",
         "textAreaTitle":"备注",
-        "textAreaContent": "     备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息",
+        "textAreaContent": "",
         "necessary": false
     }
 ]

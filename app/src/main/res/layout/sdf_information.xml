@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:visibility="visible"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:visibility="visible"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:id="@+id/layout_sdf_information"
-    android:layout_marginTop="@dimen/top_27">
+    android:layout_marginTop="@dimen/top_5">
 
     <Button
         android:visibility="gone"
@@ -38,40 +39,82 @@
         app:layout_constraintStart_toEndOf="@+id/external_bidding_tv"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/supply_announcement_tv"
-        android:layout_width="@dimen/general_161"
-        android:layout_height="@dimen/general_100"
-        android:layout_marginTop="@dimen/general_13"
+    <ImageButton
+        android:id="@+id/supply_announcement_ib"
+        android:layout_width="@dimen/general_50"
+        android:layout_height="@dimen/general_50"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/the_supply_bg"
-        android:paddingLeft="@dimen/general_15"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:text="供应发布"
-        android:textColor="@drawable/the_supply_text"
-        android:textSize="@dimen/font_tv_normal_20"
+        android:scaleType="centerInside"
+        android:src="@drawable/supply"
         android:visibility="visible"
-        android:layout_marginStart="@dimen/general_13"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/external_bidding_tv"
+        />
+
+    <TextView
+        android:id="@+id/supply_announcement_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="供应"
+        android:textColor="@drawable/text_style3"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/supply_announcement_ib"
+        app:layout_constraintStart_toStartOf="@+id/supply_announcement_ib"
+        app:layout_constraintTop_toBottomOf="@+id/supply_announcement_ib"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/demand_release_ib"
+        android:layout_width="@dimen/general_50"
+        android:layout_height="@dimen/general_50"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/the_supply_bg"
+        android:scaleType="centerInside"
+        android:src="@drawable/demand"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@id/supply_announcement_ib"
         app:layout_constraintTop_toBottomOf="@+id/external_bidding_tv" />
 
-    <Button
+    <TextView
         android:id="@+id/demand_release_tv"
-        android:layout_width="@dimen/general_161"
-        android:layout_height="@dimen/general_100"
-        android:layout_marginTop="@dimen/general_13"
-        android:layout_marginStart="@dimen/general_8"
-        android:layout_marginEnd="@dimen/general_13"
-        android:background="@drawable/the_supply_bg"
-        android:paddingLeft="@dimen/general_15"
-        android:gravity="center"
-        android:text="需求发布"
-        android:textStyle="bold"
-        android:textColor="@drawable/the_supply_text"
-        android:textSize="@dimen/font_tv_normal_20"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/supply_announcement_tv"
-        app:layout_constraintTop_toBottomOf="@+id/market_tender_tv" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="需求"
+        android:textColor="@drawable/text_style3"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/demand_release_ib"
+        app:layout_constraintStart_toStartOf="@+id/demand_release_ib"
+        app:layout_constraintTop_toBottomOf="@+id/supply_announcement_ib"
+        tools:ignore="MissingConstraints" />
 
+    <ImageButton
+        android:id="@+id/yellow_pages_ib"
+        android:layout_width="@dimen/general_50"
+        android:layout_height="@dimen/general_50"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/the_supply_bg"
+        android:scaleType="centerInside"
+        android:src="@drawable/hangye"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@id/demand_release_ib"
+        app:layout_constraintTop_toBottomOf="@+id/external_bidding_tv" />
+
+    <TextView
+        android:id="@+id/hangye_release_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="行业黄页"
+        android:textColor="@drawable/text_style3"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/yellow_pages_ib"
+        app:layout_constraintStart_toStartOf="@+id/yellow_pages_ib"
+        app:layout_constraintTop_toBottomOf="@+id/yellow_pages_ib"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

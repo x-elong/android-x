@@ -1,0 +1,38 @@
+[
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"名称:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "规格信号:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "单位:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "数量:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "单价:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "租赁时间:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"详细说明",
+        "textAreaContent": "",
+        "necessary": false
+    }
+]

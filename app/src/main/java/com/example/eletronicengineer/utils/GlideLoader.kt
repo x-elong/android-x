@@ -20,11 +20,12 @@ class GlideLoader : ImageLoader{
     val mPreOptions = RequestOptions()
         .skipMemoryCache(true)
         .error(R.mipmap.icon_image_error)
-    override fun loadImage(imageView: ImageView?, imagePath: String?) {
+    override fun loadImage(imageView: ImageView?, imagePath: String) {
         //小图加载
         if(imageView is CircleImageView)
             scaleType = ImageView.ScaleType.CENTER_CROP
         imageView!!.scaleType = scaleType
+        val imagePath = if(imagePath.contains("www.ycdlfw.com")) "http://${imagePath}"  else imagePath
         Glide.with(imageView.context).load(imagePath).apply(mOptions).into(imageView)
     }
     fun loadImage(imageView: ImageView?, imageID: Int) {
@@ -34,11 +35,12 @@ class GlideLoader : ImageLoader{
         imageView!!.scaleType = scaleType
         Glide.with(imageView.context).load(imageID).apply(mOptions).into(imageView)
     }
-    override fun loadPreImage(imageView: ImageView?, imagePath: String?) {
+    override fun loadPreImage(imageView: ImageView?, imagePath: String) {
         //大图加载
         if(imageView is CircleImageView)
             scaleType = ImageView.ScaleType.CENTER_CROP
         imageView!!.scaleType = scaleType
+        val imagePath = if(imagePath.contains("www.ycdlfw.com")) "http://${imagePath}"  else imagePath
         Glide.with(imageView.context).load(imagePath).apply(mPreOptions).into(imageView)
     }
     fun loadPreImage(imageView: ImageView?, imageID: Int) {

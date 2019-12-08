@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.fragment.sdf.DemandDisplayFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.model.Constants
@@ -83,13 +84,10 @@ class DemandDisplayActivity : AppCompatActivity() {
           fragment!!.view!!.iv_uplaod_photo_content.setImageBitmap(bmp)
           //UnSerializeDataBase.imgList.add(BitmapMap(file.path,""))
         }
-        Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
-        {
+        Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal-> {
           val mImagePaths = data!!.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES)
-          val fragment=this.supportFragmentManager.findFragmentByTag("Capture")
-         if(fragment is ImageFragment){
-            fragment.refresh(mImagePaths)
-          }
+          val fragment=this.supportFragmentManager.findFragmentByTag("Capture")!!
+          NetworkAdapter(this).upImage(mImagePaths[0],fragment)
         }
         Constants.RequestCode.REQUEST_PICK_FILE.ordinal -> {
           val uri = data!!.data

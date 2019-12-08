@@ -14,6 +14,7 @@ import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.My.RequirementLeaseRegistrationEntity
 import com.example.eletronicengineer.db.My.RequirementThirdRegistrationEntity
 import com.example.eletronicengineer.db.My.RequirementPersonalRegistrationEntity
+import com.example.eletronicengineer.db.My.RequirementTeamRegistrationEntity
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.deletePersonRequirementInformationCheck
@@ -60,7 +61,6 @@ class MyRegistrationMoreFragment :Fragment(){
         when(type){
             Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandIndividual()
-                val json = JSONObject()
                 val requirementPersonalRegistrationEntity = gson.fromJson(arguments!!.getString("demandIndividual"),RequirementPersonalRegistrationEntity::class.java)
                 adapter.mData[1].singleDisplayRightContent = requirementPersonalRegistrationEntity.requirementMajor
                 adapter.mData[2].singleDisplayRightContent = requirementPersonalRegistrationEntity.name
@@ -102,18 +102,71 @@ class MyRegistrationMoreFragment :Fragment(){
             }
             Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandGroup()
-                val json = JSONObject(arguments!!.getString("demandGroup"))
-                val js = json.getJSONObject("requirementTeamLoggingCheck")
-                adapter.mData[0].singleDisplayRightContent = js.getString("type")
-                adapter.mData[1].singleDisplayRightContent = json.getString("name")
-                adapter.mData[2].singleDisplayRightContent = json.getString("phone")
-                if(!js.isNull("comment"))
-                    adapter.mData[8].textAreaContent = js.getString("comment")
+                val requirementTeamRegistrationEntity = gson.fromJson(arguments!!.getString("demandGroup"),RequirementTeamRegistrationEntity::class.java)
+                adapter.mData[0].singleDisplayRightContent = requirementTeamRegistrationEntity.requirementTeamLoggingCheck.type
+                adapter.mData[1].singleDisplayRightContent = requirementTeamRegistrationEntity.name
+                adapter.mData[2].singleDisplayRightContent = requirementTeamRegistrationEntity.phone
+                adapter.mData[3].jumpListener = View.OnClickListener {
+                    val enrollProvideCrewLists = requirementTeamRegistrationEntity.enrollProvideCrewLists
+                    if(enrollProvideCrewLists!=null){
+                        val bundle = Bundle()
+                        bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
+                        bundle.putInt("requirementType",1)
+                        bundle.putString("type", "成员清册")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                    }
+                    else
+                        ToastHelper.mToast(mView.context, "没有数据")
+                }
+                adapter.mData[4].jumpListener = View.OnClickListener {
+                    val enrollCars = requirementTeamRegistrationEntity.enrollCars
+                    if(enrollCars!=null){
+                        val bundle = Bundle()
+                        bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
+                        bundle.putString("type", "车辆清册")
+                        bundle.putInt("requirementType",1)
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                    }
+                    else
+                        ToastHelper.mToast(mView.context, "没有数据")
+                }
+                adapter.mData[5].jumpListener = View.OnClickListener {
+                    if(requirementTeamRegistrationEntity.enrollMachineries!=null){
+                        val bundle = Bundle()
+                        bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
+                        bundle.putString("type", "机械设备")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                    }
+                    else
+                        ToastHelper.mToast(mView.context, "没有数据")
+                }
+                if(requirementTeamRegistrationEntity.requirementTeamLoggingCheck.comment!=null)
+                    adapter.mData[6].textAreaContent = requirementTeamRegistrationEntity.requirementTeamLoggingCheck.comment
+
+                mView.btn_delete_my_registration.setOnClickListener {
+                    val loadDialog = LoadingDialog(mView.context,"正在删除...")
+                    loadDialog.show()
+                    val result =
+                        deleteRequirementTeamLoggingCheck(requirementTeamRegistrationEntity.requirementTeamLoggingCheck.id)
+                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                                loadDialog.dismiss()
+                                val json = JSONObject(it.string())
+                                if(json.getInt("code")==200){
+                                    activity!!.supportFragmentManager.popBackStackImmediate()
+                                    ToastHelper.mToast(mView.context,"删除成功")
+                                }else{
+                                    ToastHelper.mToast(mView.context,"删除失败")
+                                }
+                            },{
+                                loadDialog.dismiss()
+                                ToastHelper.mToast(mView.context,"删除信息异常")
+                                it.printStackTrace()
+                            })
+                }
             }
             Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandLease()
-                val json = JSONObject(arguments!!.getString("demandLease"))
-                val requirementLeaseRegistrationEntity = gson.fromJson(arguments!!.getString("demandIndividual"),
+                val requirementLeaseRegistrationEntity = gson.fromJson(arguments!!.getString("demandLease"),
                     RequirementLeaseRegistrationEntity::class.java)
                 adapter.mData[0].singleDisplayRightContent = requirementLeaseRegistrationEntity.leaseLoggingCheck.type
                 adapter.mData[1].singleDisplayRightContent = requirementLeaseRegistrationEntity.name
@@ -133,15 +186,17 @@ class MyRegistrationMoreFragment :Fragment(){
                     }
                 }else{
                     adapter.mData[3].singleDisplayRightTitle = "租赁清单"
-                    val enrollRequirementLeaseList = requirementLeaseRegistrationEntity.enrollRequirementLeaseList
-                    if(enrollRequirementLeaseList!=null){
-                        val bundle = Bundle()
-                        bundle.putSerializable("inventoryList",requirementLeaseRegistrationEntity as Serializable)
-                        bundle.putString("type", "租赁清单")
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                    adapter.mData[3].jumpListener = View.OnClickListener{
+                        val enrollRequirementLeaseList = requirementLeaseRegistrationEntity.enrollRequirementLeaseList
+                        if(enrollRequirementLeaseList!=null){
+                            val bundle = Bundle()
+                            bundle.putSerializable("inventoryList",requirementLeaseRegistrationEntity as Serializable)
+                            bundle.putString("type", "租赁清单")
+                            FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        }
+                        else
+                            ToastHelper.mToast(mView.context, "没有数据")
                     }
-                    else
-                        ToastHelper.mToast(mView.context, "没有数据")
                 }
                 if(requirementLeaseRegistrationEntity.leaseLoggingCheck.comment!=null)
                     adapter.mData[4].textAreaContent = requirementLeaseRegistrationEntity.leaseLoggingCheck.comment
@@ -171,7 +226,6 @@ class MyRegistrationMoreFragment :Fragment(){
             }
             Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandTripartite()
-                val json = JSONObject()
                 val requirementThirdRegistrationEntity = gson.fromJson(arguments!!.getString("demandTripartite"),RequirementThirdRegistrationEntity::class.java)
                 adapter.mData[0].singleDisplayRightContent = requirementThirdRegistrationEntity.requirementVariety
                 adapter.mData[1].singleDisplayRightContent = requirementThirdRegistrationEntity.name

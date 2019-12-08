@@ -110,7 +110,7 @@ class ImageFragment:Fragment(){
         var imagesPath = ""
         for (i in UnSerializeDataBase.imgList){
             if(i.key==key){
-                var imagePaths = i.path.split("|").toMutableList()
+                val imagePaths = i.path.split("|").toMutableList()
                 imagePaths.addAll(mImagePaths)
                 this.mImagePaths=ArrayList(imagePaths)
                 imagesPath=imagePaths.toString().replace(", ","|")

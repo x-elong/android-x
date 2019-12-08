@@ -1,0 +1,28 @@
+[
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"名称",
+        "singleDisplayRightContent": ""
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"规格型号",
+        "singleDisplayRightContent": ""
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"数量",
+        "singleDisplayRightContent": ""
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"单位",
+        "singleDisplayRightContent": ""
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"备注",
+        "textAreaContent":"",
+        "necessary":false
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"车辆类型:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "牌照号码:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "核载乘客(人)",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SHIFT_INPUT",
+        "necessary":false,
+        "shiftInputTitle":"车辆照片"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "核准载重量(吨):",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "车厢长度(米):",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"备注",
+        "textAreaContent": "",
+        "necessary": false
+    }
+]

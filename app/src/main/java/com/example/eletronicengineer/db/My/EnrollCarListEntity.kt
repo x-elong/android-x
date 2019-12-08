@@ -14,7 +14,7 @@ class EnrollCarListEntity (
     val lenghtCar:String?,
     val isDriver:String,
     val isInsurance:String,
-    val carPhotoPath:String,
+    val carPhotoPath:String?,
     val sex:String,
     val age:String,
     val remark:String?,

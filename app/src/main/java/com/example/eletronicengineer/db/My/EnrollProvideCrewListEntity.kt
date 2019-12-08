@@ -6,7 +6,7 @@ class EnrollProvideCrewListEntity(
     val id:String?,
     val signUpId:String?,
     val listId:String?,
-    val positionType:String?,
+    val positionType:String,
     val name:String,
     val sex:String,
     val age:String,

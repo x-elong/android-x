@@ -1,35 +1,26 @@
 package com.example.eletronicengineer.fragment.my
 
-import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.My.UserEntity
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.HttpResult
 import com.example.eletronicengineer.utils.*
-import com.example.eletronicengineer.utils.getUser
 import com.example.eletronicengineer.utils.putSimpleMessage
 import com.example.eletronicengineer.utils.uploadImage
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -40,7 +31,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_datepicker.view.*
 import kotlinx.android.synthetic.main.dialog_edit.view.*
-import kotlinx.android.synthetic.main.dialog_recyclerview.view.*
 import kotlinx.android.synthetic.main.dialog_upload.view.*
 import kotlinx.android.synthetic.main.fragment_my_information.view.*
 import okhttp3.MediaType
@@ -48,9 +38,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import java.io.File
-import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 

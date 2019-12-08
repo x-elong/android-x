@@ -11,22 +11,25 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-    <ImageView
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints"  />
+    <TextView
         android:id="@+id/tv_get_qr_code_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/general_16"
-        android:src="@mipmap/icon_actionbar_back"
-        tools:ignore="MissingConstraints" />
-    <ImageView
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ic_back_xml"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"/>
+    <com.lxj.xpopup.photoview.PhotoView
         android:id="@+id/tv_get_qr_code_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

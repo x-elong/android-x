@@ -1,8 +1,6 @@
 package com.example.eletronicengineer.fragment.sdf
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +11,6 @@ import com.example.eletronicengineer.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.fragment.distribution.IntegralFragment
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import io.reactivex.android.schedulers.AndroidSchedulers

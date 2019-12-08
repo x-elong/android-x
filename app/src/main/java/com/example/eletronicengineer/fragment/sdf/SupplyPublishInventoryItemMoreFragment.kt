@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.distributionFileSave.Supply
+import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 
 class SupplyPublishInventoryItemMoreFragment:Fragment(){
@@ -21,7 +24,8 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
             }
         }
         lateinit var mView: View
-        var adapter: RecyclerviewAdapter = RecyclerviewAdapter(ArrayList())
+    lateinit var type: String
+    var adapter: RecyclerviewAdapter = RecyclerviewAdapter(ArrayList())
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -41,20 +45,88 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
                 fragment.update(adapter.mData)
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
-            mView.tv_inventory_item_more_title.setText(arguments!!.getString("type")+"详情")
+            type = arguments!!.getString("type")
+            mView.tv_inventory_item_more_title.setText(type + "详情")
             mView.tv_select_ok.setOnClickListener {
-                val networkAdapter= NetworkAdapter(mData,mView.context)
+                val networkAdapter= NetworkAdapter(adapter.mData,mView.context)
                 if(networkAdapter.check()) {
-                    // Log.i("fragment is ok?",(activity.supportFragmentManager.findFragmentByTag("inventory") is InventoryFragment).toString())
                     val fragment =
                         activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as SupplyPublishInventoryFragment
-                    mData[0].selected = 1
+                    adapter.mData[0].selected = 1
                     fragment.update(adapter.mData)
                     activity!!.supportFragmentManager.popBackStackImmediate()
                 }
             }
-            adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+            adapter = RecyclerviewAdapter(copyData(switchAdapter()))
             mView.rv_inventory_item_more_content.adapter = adapter
             mView.rv_inventory_item_more_content.layoutManager = LinearLayoutManager(context)
         }
+    private fun switchAdapter():List<MultiStyleItem>{
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        val bundle = Bundle()
+        val mData:List<MultiStyleItem>
+        adapterGenerate.activity=activity as SupplyActivity
+        when(type){
+            "成员清册发布"->
+            {
+                bundle.putString("type",type)
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+            }
+            "车辆清册发布"->
+            {
+                bundle.putString("type",type)
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+            }
+            "工器具清册发布"->
+            {
+                bundle.putString("type",type)
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+            }
+            "租赁清册发布"->
+            {
+                bundle.putString("type",type)
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+            }
+            else->{
+                bundle.putString("type","成员清册发布")
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+            }
+        }
+        return mData
+    }
+    fun copyData(dataList: List<MultiStyleItem>): List<MultiStyleItem> {
+        val data = dataList
+        val mData = (arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+        for (j in mData) {
+            val position = mData.indexOf(j)
+            when (j.options) {
+                MultiStyleItem.Options.SELECT_DIALOG,
+                MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG,
+                MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
+                    data[position].selectContent = j.selectContent
+                }
+                MultiStyleItem.Options.INPUT_WITH_UNIT -> {
+                    data[position].inputUnitContent = j.inputUnitContent
+                }
+                MultiStyleItem.Options.INPUT_WITH_MULTI_UNIT -> {
+                    data[position].inputMultiContent = j.inputMultiContent
+                    data[position].inputMultiSelectUnit = j.inputMultiSelectUnit
+                }
+                MultiStyleItem.Options.SINGLE_INPUT -> {
+                    data[position].inputSingleContent = j.inputSingleContent
+                }
+                MultiStyleItem.Options.HINT -> {
+                    data[position].hintContent = j.hintContent
+                }
+                MultiStyleItem.Options.INPUT_WITH_TEXTAREA -> {
+                    data[position].textAreaContent = j.textAreaContent
+                }
+                MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT -> {
+                    data[position].singleDisplayRightContent = j.singleDisplayRightContent
+                }
+            }
+        }
+        return data
+    }
 }

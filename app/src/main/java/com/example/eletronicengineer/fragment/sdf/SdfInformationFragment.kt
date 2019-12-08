@@ -65,6 +65,9 @@ class SdfInformationFragment:Fragment(){
             }
         }
         view.demand_release_tv.setOnClickListener {
+            view.demand_release_ib.callOnClick()
+        }
+        view.demand_release_ib.setOnClickListener {
             switchFragment(DemandInformationFragment(),R.id.fragment_sdf)
             titleContent.text="需求发布"
             tv_add_information.visibility = View.VISIBLE
@@ -103,6 +106,9 @@ class SdfInformationFragment:Fragment(){
             }
         }
         view.supply_announcement_tv.setOnClickListener {
+            view.supply_announcement_ib.callOnClick()
+        }
+        view.supply_announcement_ib.setOnClickListener {
             switchFragment(SupplyInformationFragment(),R.id.fragment_sdf)
             titleContent.text="供应发布"
             tv_add_information.visibility = View.VISIBLE

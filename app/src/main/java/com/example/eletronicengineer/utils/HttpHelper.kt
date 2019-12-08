@@ -500,6 +500,9 @@ interface HttpHelper {
     @DELETE(Constants.HttpUrlPath.My.deletePersonRequirementInformationCheck)
     fun deletePersonRequirementInformationCheck(@Path("id") id:String):Observable<ResponseBody>
 
+    @DELETE(Constants.HttpUrlPath.My.deleteRequirementTeamLoggingCheck)
+    fun deleteRequirementTeamLoggingCheck(@Path("id") id:String):Observable<ResponseBody>
+
     @DELETE(Constants.HttpUrlPath.My.deleteLeaseLoggingCheckController)
     fun deleteLeaseLoggingCheckController(@Path("id") id:String):Observable<ResponseBody>
 
@@ -2128,6 +2131,17 @@ internal fun deletePersonRequirementInformationCheck(id:String):Observable<Respo
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.deletePersonRequirementInformationCheck(id)
+}
+
+//团队
+internal fun deleteRequirementTeamLoggingCheck(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementTeamLoggingCheck(id)
 }
 
 //租赁

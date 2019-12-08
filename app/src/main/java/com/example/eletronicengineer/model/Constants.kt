@@ -216,39 +216,10 @@ class Constants {
 
                 //需求个人
                 const val deletePersonRequirementInformationCheck="PersonRequirementInformationCheck/deletePersonRequirementInformationCheck/{id}"
-                //需求团队 变电
-                const val deleteRequirementPowerTransformation= "RequirementPowerTransformation/deleteRequirementPowerTransformation/{id}"
-                //需求团队 主网
-                const val deleteRequirementMajorNetwork= "RequirementMajorNetwork/deleteRequirementMajorNetwork/{id}"
-
-                //需求团队 配网
-                const val deleteRequirementDistribuionNetwork= "RequirementDistribuionNetwork/deleteRequirementDistribuionNetwork/{id}"
-
-                //需求团队 测量
-                const val deleteRequirementMeasureDesign= "RequirementMeasureDesign/deleteRequirementMeasureDesign/{id}"
-
-                //需求团队 马帮
-                const val deleteRequirementCaravanTransport= "RequirementCaravanTransport/deleteRequirementCaravanTransport/{id}"
-
-                //需求团队 桩基
-                const val deleteRequirementPileFoundation= "RequirementPileFoundation/deleteRequirementPileFoundation/{id}"
-                //需求团队 非开挖
-                const val deleteRequirementUnexcavation= "RequirementUnexcavation/deleteRequirementUnexcavation/{id}"
-                //需求团队 跨越架
-                const val deleteRequirementSpanWoodenSupprt= "RequirementSpanWoodenSupprt/deleteRequirementSpanWoodenSupprt/{id}"
-                //需求团队 试验调试
-                const val deleteRequirementTest= "RequirementTest/deleteRequirementTest/{id}"
-                //需求团队 运行维护
-                const val deleteRequirementRunningMaintain= "RequirementRunningMaintain/deleteRequirementRunningMaintain/{id}"
-
+                //需求团队
+                const val deleteRequirementTeamLoggingCheck= "RequirementTeamLoggingCheck/deleteRequirementTeamLoggingCheck/{id}"
                 //车辆租赁
                 const val deleteLeaseLoggingCheckController = "LeaseLoggingCheck/deleteLeaseLoggingCheckController/{id}"
-                //工器具租赁
-                const val deleteRequirementLeaseConstructionTool = "RequirementLeaseConstructionTool/deleteRequirementLeaseConstructionTool/{id}"
-                //设备租赁
-                const val deleteRequirementLeaseFacility = "RequirementLeaseFacility/deleteRequirementLeaseFacility/{id}"
-                //机械租赁
-                const val deleteRequirementLeaseMachinery = "RequirementLeaseMachinery/deleteRequirementLeaseMachinery/{id}"
                 //需求三方
                 const val deleteRequirementThirdLoggingCheck="RequirementThirdLoggingCheck/deleteRequirementThirdLoggingCheck/{id}"
 

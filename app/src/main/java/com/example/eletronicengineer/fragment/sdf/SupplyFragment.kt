@@ -98,7 +98,7 @@ class SupplyFragment:Fragment(){
         val  selectContent2=arguments!!.getString("selectContent2")
         mView.tv_title_title1.setText(selectContent2)
         //返回
-        mView.tv_title_back.setOnClickListener(){
+        mView.tv_title_back.setOnClickListener{
             UnSerializeDataBase.imgList.clear()
             activity!!.finish()
         }
@@ -108,10 +108,6 @@ class SupplyFragment:Fragment(){
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, submit.context)
             val provider=NetworkAdapter.Provider(mAdapter!!.mData,submit.context)
             if(networkAdapter.check()){
-                if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0))
-                    provider.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
-                else
-                {
                     for(i in mAdapter!!.mData ) {
                         when (i.options){
                             MultiStyleItem.Options.INPUT_WITH_UNIT->{
@@ -152,43 +148,43 @@ class SupplyFragment:Fragment(){
                                     }
                                 }
                             }
-                            MultiStyleItem.Options.SHIFT_INPUT -> {
-                                when(i.shiftInputTitle) {
-                                    "车辆照片"->{
-                                        val results = try {
-                                            for (j in UnSerializeDataBase.imgList) {
-                                                if (j.key == i.key) {
-                                                    val imagePath = j.path.split("|")
-                                                    for (k in imagePath) {
-                                                        val file = File(k)
-                                                        val imagePart = MultipartBody.Part.createFormData(
-                                                            "file",
-                                                            file.name,
-                                                            RequestBody.create(MediaType.parse("image/*"), file)
-                                                        )
-                                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                                            {
-                                                                if (carPhotoPath != "")
-                                                                    carPhotoPath += "|"
-                                                                val json = JSONObject(it.string())
-                                                                if(json.getBoolean("success")){
-                                                                    carPhotoPath += json.getString("httpUrl")
-                                                                }else{
-                                                                    carPhotoPath += ""
-                                                                }
-                                                            },
-                                                            {
-                                                                it.printStackTrace()
-                                                            })
-                                                    }
-                                                }
-                                            }
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                        }
-                                    }
-                                }
-                            }
+//                            MultiStyleItem.Options.SHIFT_INPUT -> {
+//                                when(i.shiftInputTitle) {
+//                                    "车辆照片"->{
+//                                        val results = try {
+//                                            for (j in UnSerializeDataBase.imgList) {
+//                                                if (j.key == i.key) {
+//                                                    val imagePath = j.path.split("|")
+//                                                    for (k in imagePath) {
+//                                                        val file = File(k)
+//                                                        val imagePart = MultipartBody.Part.createFormData(
+//                                                            "file",
+//                                                            file.name,
+//                                                            RequestBody.create(MediaType.parse("image/*"), file)
+//                                                        )
+//                                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+//                                                            {
+//                                                                if (carPhotoPath != "")
+//                                                                    carPhotoPath += "|"
+//                                                                val json = JSONObject(it.string())
+//                                                                if(json.getBoolean("success")){
+//                                                                    carPhotoPath += json.getString("httpUrl")
+//                                                                }else{
+//                                                                    carPhotoPath += ""
+//                                                                }
+//                                                            },
+//                                                            {
+//                                                                it.printStackTrace()
+//                                                            })
+//                                                    }
+//                                                }
+//                                            }
+//                                        } catch (e: Exception) {
+//                                            e.printStackTrace()
+//                                        }
+//                                    }
+//                                }
+//                            }
                             MultiStyleItem.Options.SINGLE_INPUT -> {
                                 when(i.inputSingleTitle) {
                                     "牌照号码"->{
@@ -311,7 +307,6 @@ class SupplyFragment:Fragment(){
                                     }
                                 )
                     }
-                }
             }
         }
     }

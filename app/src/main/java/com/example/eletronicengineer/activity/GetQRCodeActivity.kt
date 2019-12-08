@@ -39,6 +39,7 @@ class GetQRCodeActivity : AppCompatActivity() {
             tv_get_qr_code_back.setOnClickListener {
                 finish()
             }
+            Log.i("imagePath",mImagePath)
             GlideLoader().loadPreImage(tv_get_qr_code_content,mImagePath)
         }
 }

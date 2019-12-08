@@ -28,7 +28,7 @@ class SubmitInventoryFragment : Fragment() {
     private lateinit var type:String
     lateinit var mView: View
     var adapter: RecyclerviewAdapter?=null
-
+    var frame = R.id.frame_display_demand
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
         type = arguments!!.getString("type")
@@ -71,12 +71,23 @@ class SubmitInventoryFragment : Fragment() {
             bundle.putString("type",type)
             FragmentHelper.switchFragment(
                 activity!!, SubmitInventoryItemMoreFragment.newInstance(bundle),
-                R.id.frame_display_demand, ""
+                frame, ""
             )
            }
         }
         else{
             mView.tv_select_add.visibility=View.GONE
+        }
+        for (j in adapter!!.mData){
+            j.jumpListener = View.OnClickListener {
+                //修改
+                adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
+                val bundle = Bundle()
+                var itemMultiStyleItem = j.itemMultiStyleItem
+                bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                bundle.putString("type",type)
+                FragmentHelper.switchFragment(activity!!,SubmitInventoryItemMoreFragment.newInstance(bundle), frame,"")
+            }
         }
 
     }
@@ -92,13 +103,6 @@ class SubmitInventoryFragment : Fragment() {
                 bundle.putString("type",type)
                 mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
             }
-            "租赁清册"->
-            {
-                bundle.putString("type",type)
-                bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
-                mData = adapterGenerate.ApplicationSubmitDetailList(bundle).mData
-            }
-
             else->{
 
             }
@@ -106,7 +110,7 @@ class SubmitInventoryFragment : Fragment() {
         return mData
     }
     fun update(itemMultiStyleItem:List<MultiStyleItem>) {
-        if (type == "机械清册"||type=="成员清册个人") {
+        if (type == "机械清册"||type=="成员清册") {
             if (adapter!!.mData[0].selected == -1) {
                 val mData = adapter!!.mData.toMutableList()
                 mData.add(

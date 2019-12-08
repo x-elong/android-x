@@ -1,0 +1,33 @@
+[
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "岗位类别",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"姓名:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "性别:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "年龄(岁):",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "工作经验(年):",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"备注",
+        "textAreaContent": "",
+        "necessary": false
+    }
+]

@@ -28,7 +28,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         private lateinit var type:String
         lateinit var mView: View
         var adapter: RecyclerviewAdapter?=null
-
+        var frame = R.id.frame_supply
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
             type = arguments!!.getString("type")
@@ -69,9 +69,19 @@ class SupplyPublishInventoryFragment:Fragment() {
                 bundle.putString("type",type)
                 FragmentHelper.switchFragment(
                     activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
-                    R.id.frame_supply, ""
+                    frame, ""
                 )
-
+            }
+            for (j in adapter!!.mData){
+                j.jumpListener = View.OnClickListener {
+                    //修改
+                    adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
+                    val bundle = Bundle()
+                    var itemMultiStyleItem = j.itemMultiStyleItem
+                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    bundle.putString("type",type)
+                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle), frame,"")
+                }
             }
         }
         private fun switchAdapter():List<MultiStyleItem>{
@@ -93,7 +103,6 @@ class SupplyPublishInventoryFragment:Fragment() {
                 "工器具清册发布"->
                 {
                     bundle.putString("type",type)
-                    //bundle.putSerializable("listData4",arguments!!.getSerializable("listData4"))
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                 }
                 "租赁清册发布"->
