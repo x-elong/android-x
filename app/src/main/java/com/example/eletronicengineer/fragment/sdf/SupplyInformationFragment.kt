@@ -46,7 +46,7 @@ class SupplyInformationFragment : Fragment() {
   var mPersonAdapter: ListAdapterForDemand?=null
   var mPersonalIssueAdapter: ListAdapterForSupply?=null
 
-    val mCountPerPageForPerson = 5
+    val mCountPerPageForPerson = 10000
     var mPageNumberForPerson = 1
     val mCountPerPageForTeam = 10000
     var mPageNumberForTeam = 1

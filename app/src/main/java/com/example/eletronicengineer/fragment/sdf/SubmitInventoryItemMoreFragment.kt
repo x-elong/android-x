@@ -125,6 +125,13 @@ class SubmitInventoryItemMoreFragment : Fragment(){
                 MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT -> {
                     data[position].singleDisplayRightContent = j.singleDisplayRightContent
                 }
+                MultiStyleItem.Options.MULTI_RADIO_BUTTON->{
+                    data[position].radioButtonValue = j.radioButtonValue
+                }
+                MultiStyleItem.Options.INPUT_RANGE->{
+                    data[position].inputRangeValue1 = j.inputRangeValue1
+                    data[position].inputRangeValue2 = j.inputRangeValue2
+                }
             }
         }
         return data

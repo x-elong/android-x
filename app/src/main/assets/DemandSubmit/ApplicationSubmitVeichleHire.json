@@ -27,7 +27,9 @@
   {
     "type":"MULTI_BUTTON",
     "buttonTitle":"车辆清册：",
-    "buttonName":["上传"]
+    "buttonName":["上传"],
+    "key": "enrollCar",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",

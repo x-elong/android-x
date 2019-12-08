@@ -24,9 +24,18 @@
     "singleDisplayRightContent": ""
   },
   {
-    "type":"MULTI_CHECKBOX",
-    "checkboxTitle":"可设计电压等级",
-    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"]
+    "type": "MULTI_CHECKBOX",
+    "checkboxTitle": "可设计电压等级",
+    "checkboxNameList": [
+      "0.4kV",
+      "10kV",
+      "35kV",
+      "110kV",
+      "220kV",
+      "500kV"
+    ],
+    "key": "voltages",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_CHECKBOX",

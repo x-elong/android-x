@@ -116,7 +116,7 @@ class SubmitInventoryFragment : Fragment() {
         return mData
     }
     fun update(itemMultiStyleItem:List<MultiStyleItem>) {
-        if (type == "机械清册"||type=="成员清册个人") {
+        if (type == "机械清册"||type=="成员清册") {
             if (adapter!!.mData[0].selected == -1) {
                 val mData = adapter!!.mData.toMutableList()
                 mData.add(

@@ -85,14 +85,14 @@ class DemandDisplayFragment:Fragment() {
                             adapter.mData[6].singleDisplayRightContent=""
                         }else{ adapter.mData[6].singleDisplayRightContent="${data.minAgeDemand}~${data.maxAgeDemand}" }
                         when {
-                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="男"
-                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="女"
+                            data.sexDemand=="1" -> adapter.mData[7].singleDisplayRightContent="男"
+                            data.sexDemand=="0" -> adapter.mData[7].singleDisplayRightContent="女"
                             data.sexDemand=="-1" -> adapter.mData[7].singleDisplayRightContent="男女不限"
                             else -> {adapter.mData[7].singleDisplayRightContent=" " }
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="全包"
-                            data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="自理"
                             else -> { adapter.mData[8].singleDisplayRightContent=" "}
                         }
                         adapter.mData[9].singleDisplayRightContent=if(data.journeySalary==null) {
@@ -190,7 +190,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> {adapter.mData[9].singleDisplayRightContent=" " }
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> { adapter.mData[10].singleDisplayRightContent=" "}
                         }
@@ -381,7 +381,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[9].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> {adapter.mData[10].singleDisplayRightContent=" " }
                         }
@@ -506,7 +506,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[9].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> { adapter.mData[10].singleDisplayRightContent=" " }
                         }
@@ -631,7 +631,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[9].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> { adapter.mData[10].singleDisplayRightContent=" "}
                         }
@@ -745,7 +745,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[7].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
                             else -> {adapter.mData[8].singleDisplayRightContent=" " }
                         }
@@ -853,7 +853,7 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[9].singleDisplayRightContent=if(data.roleMaxType==null) {
                             " " } else{ data.roleMaxType}
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> {adapter.mData[10].singleDisplayRightContent=" " }
                         }
@@ -951,7 +951,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> {adapter.mData[9].singleDisplayRightContent=" " }
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[10].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[10].singleDisplayRightContent="全包"
                             else -> {adapter.mData[10].singleDisplayRightContent=" " }
                         }
@@ -1051,7 +1051,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> {  adapter.mData[10].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[11].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[11].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[11].singleDisplayRightContent="全包"
                             else -> { adapter.mData[11].singleDisplayRightContent=" "}
                         }
@@ -1165,7 +1165,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[8].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[9].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[9].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[9].singleDisplayRightContent="全包"
                             else -> {adapter.mData[9].singleDisplayRightContent=" " }
                         }
@@ -1277,7 +1277,7 @@ class DemandDisplayFragment:Fragment() {
                             else -> { adapter.mData[7].singleDisplayRightContent=" "}
                         }
                         when {
-                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[8].singleDisplayRightContent="自理"
                             data.roomBoardStandard=="1" -> adapter.mData[8].singleDisplayRightContent="全包"
                             else -> { adapter.mData[8].singleDisplayRightContent=" "}
                         }
@@ -1388,7 +1388,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.workerExperience}
                         when {
                             data.roomBoardStandard=="1" -> adapter.mData[6].singleDisplayRightContent="全包"
-                            data.roomBoardStandard=="0" -> adapter.mData[6].singleDisplayRightContent="队部自理"
+                            data.roomBoardStandard=="0" -> adapter.mData[6].singleDisplayRightContent="自理"
                             else -> { adapter.mData[6].singleDisplayRightContent=" " }
                         }
                         adapter.mData[7].singleDisplayRightContent=if(data.journeyCarFare==null) {

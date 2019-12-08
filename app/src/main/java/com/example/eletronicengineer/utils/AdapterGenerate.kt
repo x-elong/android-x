@@ -1166,8 +1166,8 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandLease(Vehicle Leasing).json")
         val adapter = RecyclerviewAdapter(mData)
-        adapter.mData[12].singleDisplayRightContent = UnSerializeDataBase.idCardName
-        adapter.mData[13].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        adapter.mData[10].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        adapter.mData[11].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val mdata=Bundle()
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
@@ -1485,7 +1485,6 @@ class AdapterGenerate {
             mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
             FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
         })
-        adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
         return adapter
 //        mData[0].backListener = View.OnClickListener {
 //            activity.finish()
@@ -1753,7 +1752,7 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Provider/RentalService/VehicleRental/Information entry.json")
         val adapter = RecyclerviewAdapter(mData)
-        mData[12].singleDisplayRightContent = UnSerializeDataBase.userName
+        mData[12].singleDisplayRightContent = UnSerializeDataBase.idCardName
         mData[13].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val styleTypeNum = arrayListOf(3,15)
         for(i in styleTypeNum){
@@ -3989,8 +3988,8 @@ class AdapterGenerate {
         adapter.mData[0].singleDisplayRightContent=if(listData1.carType==null){" "}else{ listData1.carType}
         adapter.mData[1].singleDisplayRightContent=if(listData1.needCarNumber==null){" "}else{ listData1.needCarNumber}
         when{
-            listData1.construction=="0"->adapter.mData[2].singleDisplayRightContent="箱式"
-            listData1.construction=="1"->adapter.mData[2].singleDisplayRightContent="敞篷"
+            listData1.construction=="1"->adapter.mData[2].singleDisplayRightContent="箱式"
+            listData1.construction=="0"->adapter.mData[2].singleDisplayRightContent="敞篷"
             else->adapter.mData[2].singleDisplayRightContent=" "
         }
         when{
@@ -4222,7 +4221,7 @@ class AdapterGenerate {
                                     "inventoryItem",
                                     memberListData[position].itemMultiStyleItem as Serializable
                                 )
-                                bundle.putString("type","成员清册个人")
+                                bundle.putString("type","成员清册")
                                 FragmentHelper.switchFragment(
                                     context as DemandDisplayActivity,
                                     SubmitInventoryItemMoreFragment.newInstance(bundle),
@@ -4236,7 +4235,7 @@ class AdapterGenerate {
                     }
                     mData[5].buttonListener = arrayListOf(View.OnClickListener {
                         mData[0].selected = 5
-                        mdata.putString("type", "成员清册个人")
+                        mdata.putString("type", "成员清册")
                         mData[5].itemMultiStyleItem = memberListData
                         mdata.putSerializable(
                             "inventory",
@@ -4294,7 +4293,7 @@ class AdapterGenerate {
                             }
                             else{
                                 adapter.mData[6].necessary =true
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4322,7 +4321,7 @@ class AdapterGenerate {
                             }
                             else{
                                 mData[6].necessary =true
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4350,7 +4349,7 @@ class AdapterGenerate {
                             }
                             else{
                                 mData[6].necessary =true
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4378,7 +4377,7 @@ class AdapterGenerate {
                             }
                             else{
                                 mData[6].necessary =true
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4405,7 +4404,7 @@ class AdapterGenerate {
                                 )
                             }
                             else{
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4432,7 +4431,7 @@ class AdapterGenerate {
                                 )
                             }
                             else{
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4459,7 +4458,7 @@ class AdapterGenerate {
                                 )
                             }
                             else{
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4653,7 +4652,7 @@ class AdapterGenerate {
                         adapter.mData[2].singleDisplayRightContent = UnSerializeDataBase.idCardName
                         adapter.mData[3].singleDisplayRightContent =UnSerializeDataBase.userPhone
                         adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
-                            if(Listdata.otherMachineEquipment =="1") {
+                            if(Listdata.otherMachineEquipment =="0") {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
                                 mdata.putSerializable(
@@ -4668,7 +4667,7 @@ class AdapterGenerate {
                                 )
                             }
                             else{
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4679,7 +4678,7 @@ class AdapterGenerate {
                         adapter.mData[2].singleDisplayRightContent = UnSerializeDataBase.idCardName
                         adapter.mData[3].singleDisplayRightContent =UnSerializeDataBase.userPhone
                         adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
-                            if(Listdata.otherMachineEquipment =="1") {
+                            if(Listdata.otherMachineEquipment =="0") {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
                                 mdata.putSerializable(
@@ -4694,7 +4693,7 @@ class AdapterGenerate {
                                 )
                             }
                             else{
-                                Toast.makeText(context,"没有选择提供机械清册",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"已全部提供不需要填写",Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -4865,7 +4864,7 @@ class AdapterGenerate {
                         }
                         adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
                             mData[0].selected = 5
-                            mdata.putString("type", "车辆清册")
+                            mdata.putString("type", "车辆租赁车辆清册")
                             mData[5].itemMultiStyleItem = carListData
                             mdata.putSerializable(
                                 "inventory",

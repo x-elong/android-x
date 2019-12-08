@@ -1549,8 +1549,14 @@ class SupplyDisplayFragment:Fragment() {
                                 startActivity(intent)
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.leaseConstructionTool.isDistribution==null) {
-                            " " } else{ data.leaseConstructionTool.isDistribution }
+                        if(data.leaseConstructionTool.isDistribution!=null){
+                            when(data.leaseConstructionTool.isDistribution){
+                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                            }
+                        }
+
                         adapter.mData[11].singleDisplayRightContent=if(data.leaseConstructionTool.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseConstructionTool.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseConstructionTool.validTime==null) {
@@ -1663,8 +1669,14 @@ class SupplyDisplayFragment:Fragment() {
                                 startActivity(intent)
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.leaseFacility.isDistribution==null) {
-                            " " } else{ data.leaseFacility.isDistribution }
+                        if(data.leaseFacility.isDistribution!=null){
+                            when(data.leaseFacility.isDistribution){
+                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                            }
+                        }
+
                         adapter.mData[11].singleDisplayRightContent=if(data.leaseFacility.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseFacility.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseFacility.validTime==null) {
@@ -1777,8 +1789,14 @@ class SupplyDisplayFragment:Fragment() {
                                 startActivity(intent)
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.leaseMachinery.isDistribution==null) {
-                            " " } else{ data.leaseMachinery.isDistribution }
+                        if(data.leaseMachinery.isDistribution!=null){
+                            when(data.leaseMachinery.isDistribution){
+                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                            }
+                        }
+
                         adapter.mData[11].singleDisplayRightContent=if(data.leaseMachinery.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseMachinery.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseMachinery.validTime==null) {
