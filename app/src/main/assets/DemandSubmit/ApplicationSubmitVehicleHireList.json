@@ -4,7 +4,7 @@
   "selectTitle": "车辆类型",
   "selectOption1Items": ["皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随车吊"],
     "key": "carType",
-    "sendFormat": "Int"
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_INPUT",
@@ -16,15 +16,14 @@
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonName":["男","女"],
     "radioButtonTitle":"驾驶员性别",
-    "key":"driverSex",
+    "key":"sex",
     "sendFormat":"Long"
   },
   {
-    "type":"INPUT_RANGE",
-    "inputRangeTitle":"驾驶员年龄",
-    "inputRangeUnit":"(岁)",
-    "key":"minAgeDemand maxAgeDemand",
-    "sendFormat":"Long[]"
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"驾驶员年龄",
+    "key": "age",
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_UNIT",

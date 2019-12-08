@@ -5705,7 +5705,7 @@ class NetworkAdapter {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
                     if(j.necessary==true){//输入必选限制条件
                         when(j.inputSingleTitle){
-                            "年龄"->{//报名限制
+                            "年龄","驾驶员年龄"->{//报名限制
                                 if (j.inputSingleContent == "")
                                 { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                                 else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)

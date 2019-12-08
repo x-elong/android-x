@@ -22,15 +22,8 @@
     "type": "SELECT_DIALOG",
     "selectTitle": "工种",
     "selectOption1Items": ["负责人","安全员","施工员","材料员","后勤","技工","普工"],
-    "key":"wokerType",
+    "key":"positionType",
     "sendFormat": "String"
-  },
-  {
-    "type":"INPUT_WITH_MULTI_UNIT",
-    "inputMultiUnitTitle":"薪资标准",
-    "inputMultiUnit":["元/天","元/月","元/年"],
-    "key":"money salaryUnit",
-    "sendFormat":"Double String"
   },
   {
     "type":"SINGLE_INPUT",

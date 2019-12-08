@@ -108,10 +108,6 @@ class SupplyFragment:Fragment(){
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, submit.context)
             val provider=NetworkAdapter.Provider(mAdapter!!.mData,submit.context)
             if(networkAdapter.check()){
-                if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0))
-                    provider.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
-                else
-                {
                     for(i in mAdapter!!.mData ) {
                         when (i.options){
                             MultiStyleItem.Options.INPUT_WITH_UNIT->{
@@ -310,7 +306,6 @@ class SupplyFragment:Fragment(){
                                         it.printStackTrace()
                                     }
                                 )
-                    }
                 }
             }
         }

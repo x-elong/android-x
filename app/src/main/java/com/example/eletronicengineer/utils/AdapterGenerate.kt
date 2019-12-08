@@ -4182,13 +4182,18 @@ class AdapterGenerate {
                 adapter.mData[2].singleDisplayRightContent = if (Listdata.requirementMajor == null) {" "} else { Listdata.requirementMajor }
                 adapter.mData[3].singleDisplayRightContent = UnSerializeDataBase.idCardName
                 adapter.mData[4].singleDisplayRightContent =UnSerializeDataBase.userPhone
+                if(Listdata.salaryUnit=="面议"){
+                    adapter.mData[5].singleDisplayRightContent= Listdata.salaryUnit
+                }else {
+                    adapter.mData[5].singleDisplayRightContent= "${Listdata.salaryStandard} ${Listdata.salaryUnit}"
+                }
                 //////成员清册查看
                 //
                 if(Listdata.needPeopleNumber.isEmpty()||Listdata.needPeopleNumber=="0")
                 {
-                    mData[5].buttonListener= arrayListOf( View.OnClickListener {
+                    mData[6].buttonListener= arrayListOf( View.OnClickListener {
                         ToastHelper.mToast(context,"成员清册人数为空 不能填写")})
-                    mData[5].necessary =true
+                    mData[6].necessary =true
                 }
                 else{
                     memberListData.add(
@@ -4233,13 +4238,13 @@ class AdapterGenerate {
                             memberListData.add(MultiStyleItem(MultiStyleItem.Options.BLANK, " "))
                         }
                     }
-                    mData[5].buttonListener = arrayListOf(View.OnClickListener {
-                        mData[0].selected = 5
+                    mData[6].buttonListener = arrayListOf(View.OnClickListener {
+                        mData[0].selected = 6
                         mdata.putString("type", "成员清册")
-                        mData[5].itemMultiStyleItem = memberListData
+                        mData[6].itemMultiStyleItem = memberListData
                         mdata.putSerializable(
                             "inventory",
-                            mData[5].itemMultiStyleItem as Serializable
+                            mData[6].itemMultiStyleItem as Serializable
                         )
                         FragmentHelper.switchFragment(
                             activity as DemandDisplayActivity,
@@ -4638,8 +4643,7 @@ class AdapterGenerate {
             //非开挖 桩基
             Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal, //桩基
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{//非开挖
-                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPile" +
-                        "Foundation.json")
+                mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPileFoundation.json")
                 adapter = RecyclerviewAdapter(mData)
                 mData[5].necessary=true
                 lateinit var listData1: List<RequirementCarList>
@@ -5115,7 +5119,7 @@ class AdapterGenerate {
                 for (i in styleTypeNum) {
                     adapter.mData[i].styleType = "NUMBER"//限制为数字类型
                 }
-                val necessaryNum = arrayListOf(0, 1, 2, 4, 5)
+                val necessaryNum = arrayListOf(0, 1, 2, 4)
                 for (j in necessaryNum) {
                     adapter.mData[j].necessary = true//true为必选项
                 }
@@ -5125,11 +5129,11 @@ class AdapterGenerate {
                 mData =
                     itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVehicleList.json")
                 adapter = RecyclerviewAdapter(mData)
-                val styleTypeNum = arrayListOf(2)
+                val styleTypeNum = arrayListOf(2,7)
                 for (i in styleTypeNum) {
                     adapter.mData[i].styleType = "NUMBER"//限制为数字类型
                 }
-                val necessaryNum = arrayListOf(0, 1, 2, 4, 5)
+                val necessaryNum = arrayListOf(0, 1, 2, 4, 5,6,7)
                 for (j in necessaryNum) {
                     adapter.mData[j].necessary = true//true为必选项
                 }
@@ -5149,7 +5153,7 @@ class AdapterGenerate {
                 mData =
                     itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVehicleHireList.json")
                 adapter = RecyclerviewAdapter(mData)
-                val styleTypeNum = arrayListOf(4)
+                val styleTypeNum = arrayListOf(4,3)
                 for (i in styleTypeNum) {
                     adapter.mData[i].styleType = "NUMBER"//限制为数字类型
                 }

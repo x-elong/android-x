@@ -26,6 +26,11 @@
     "singleDisplayRightContent":"***"
   },
   {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"薪资标准:",
+    "singleDisplayRightContent":""
+  },
+  {
     "type":"MULTI_BUTTON",
     "buttonTitle":"成员清册：",
     "buttonName":["上传"],

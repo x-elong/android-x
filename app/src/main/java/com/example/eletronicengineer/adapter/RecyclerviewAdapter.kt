@@ -1014,14 +1014,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.etSingleInputContent.hint="规格/型号状态"
                 }
                 when(mData[position].inputSingleTitle){
-                    "年龄"->{
+                    "年龄","驾驶员年龄"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
                         vh.etSingleInputContent.hint="16-60岁"
                     }
-                    "数量","工作经验"->{
+                    "单价","报价清单(按单价)","数量","工作经验"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
-                    }
-                    "单价","报价清单(按单价)"->{
                     }
                     "法人代表电话","电话","手机号码"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_PHONE
