@@ -4,25 +4,25 @@
     "singleDisplayRightTitle": "发布类别",
     "singleDisplayRightContent": "跨越架施工队"
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册",
-    "buttonName":["在线编辑"],
-    "key":"provideCrewLists",
+{
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "provideCrewLists",
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆",
-    "buttonName":["在线编辑"],
-    "key":"provideTransportMachines",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "provideTransportMachines",
     "sendFormat": "JsonArray"
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"工器具清册",
-    "buttonName":["在线编辑"],
-    "key":"constructionToolLists",
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工器具清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "constructionToolLists",
     "sendFormat": "JsonArray"
   },
   {

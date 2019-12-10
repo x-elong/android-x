@@ -19,10 +19,10 @@
     "singleDisplayRightTitle":"联系人电话：",
     "singleDisplayRightContent":"***"
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"租赁清册：",
-    "buttonName":["上传"],
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁清册：",
+    "singleDisplayRightContent":"  上传  ",
     "key": "enrollRequirementLeaseList",
     "sendFormat": "JsonArray"
   },

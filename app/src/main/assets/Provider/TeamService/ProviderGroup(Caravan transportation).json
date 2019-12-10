@@ -5,9 +5,9 @@
     "singleDisplayRightContent":"马帮运输"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册",
-    "buttonName":["点击查看"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册",
+    "singleDisplayRightContent":"  上传  ",
     "key": "provideCrewLists",
     "sendFormat": "JsonArray"
   },

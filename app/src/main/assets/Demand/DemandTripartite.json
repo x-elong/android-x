@@ -7,10 +7,10 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"三方服务清单",
-    "buttonName":["在线编辑"],
-    "key":"thirdLists",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"三方服务清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "thirdLists",
     "sendFormat": "JsonArray"
   },
   {

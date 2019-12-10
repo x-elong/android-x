@@ -1569,13 +1569,19 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)
                 }
-                if(mData[position].singleDisplayRightContent.contains("查看")){
+                if(mData[position].singleDisplayRightContent.replace(" ","")=="上传"||
+                    mData[position].singleDisplayRightContent.replace(" ","")=="点击查看"){
+                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].buttonListener[0])
+                }
+                when(mData[position].singleDisplayRightContent.replace(" ","")){
+                   "查看","上传","点击查看"->{
                     val spannable = SpannableStringBuilder(vh.tvsingleDisplayRightContent.text)
                     spannable.setSpan(BackgroundColorSpan(Color.parseColor("#248aff")),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                     spannable.setSpan(ForegroundColorSpan(Color.WHITE),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                     vh.tvsingleDisplayRightContent.setText(spannable)
 //                        vh.tvsingleDisplayRightContent.setBackgroundResource(R.drawable.btn_style3)
-                }
+                       }
+                    }
                 if (mData[position].necessary)
                 {
                     val context=vh.itemView.context

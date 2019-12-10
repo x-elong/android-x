@@ -20,26 +20,26 @@
     "singleDisplayRightContent":"***"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
-    "buttonName":["上传"],
-    "key": "enrollCars",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册:",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "enrollProvideCrewList",
+    "sendFormat": "JsonArray"
+  },
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册:",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册：",
-    "buttonName":["上传"],
-    "key": "enrollProvideCrewLists",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"机械清册:",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
-  {
-  "type":"MULTI_BUTTON",
-  "buttonTitle":"机械清册：",
-  "buttonName":["上传"],
-    "key": "enrollMachineries",
-    "sendFormat": "JsonArray"
-   },
   {
     "type": "HINT",
     "hintContent": "*同意甲方要求请填写上列清册并报名",

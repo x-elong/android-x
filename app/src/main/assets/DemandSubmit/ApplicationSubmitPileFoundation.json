@@ -20,17 +20,17 @@
     "singleDisplayRightContent":"***"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
-    "buttonName":["上传"],
-    "key": "enrollCars",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册:",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"机械清册：",
-    "buttonName":["上传"],
-    "key": "enrollMachineries",
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"机械清册:",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
   {

@@ -19,10 +19,10 @@
     "singleDisplayRightTitle":"施工工期(月):",
     "singleDisplayRightContent":""
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
-    "buttonName":["点击查看"]
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册：",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

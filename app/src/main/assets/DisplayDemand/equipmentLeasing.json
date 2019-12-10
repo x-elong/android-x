@@ -19,10 +19,10 @@
     "singleDisplayRightTitle":"施工工期(月):",
     "singleDisplayRightContent":""
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"需求租赁清单：",
-    "buttonName":["在线查看"]
+    {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁清册：",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

@@ -5,10 +5,10 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"三方服务清单：",
-    "buttonName":["在线查看"]
-  },
+  "type":"SINGLE_DISPLAY_RIGHT",
+  "singleDisplayRightTitle":"三方服务清单：",
+  "singleDisplayRightContent":"点击查看"
+   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"合作方属性:",

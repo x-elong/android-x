@@ -9,10 +9,10 @@
   "singleDisplayRightTitle":"负责人：",
   "singleDisplayRightContent":""
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册：",
-    "buttonName":["在线编辑"]
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册：",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

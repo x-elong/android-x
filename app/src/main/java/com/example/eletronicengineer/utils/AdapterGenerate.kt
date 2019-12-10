@@ -1791,7 +1791,7 @@ class AdapterGenerate {
         when(bundle.getInt("type"))
         {
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="工器具租赁清单"
+                mData[8].singleDisplayRightTitle="工器具租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -1800,7 +1800,7 @@ class AdapterGenerate {
                 })
             }
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="机械租赁清单"
+                mData[8].singleDisplayRightTitle="机械租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -1809,7 +1809,7 @@ class AdapterGenerate {
                 })
             }
             Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="设备租赁清单"
+                mData[8].singleDisplayRightTitle="设备租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -3933,13 +3933,13 @@ class AdapterGenerate {
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/equipmentLeasing.json")
         when(type){
             "工器具租赁"->{
-                mData[8].buttonTitle="工器具租赁清册"
+                mData[8].singleDisplayRightTitle="工器具租赁清册"
             }
             "设备租赁"->{
-                mData[8].buttonTitle="设备租赁清册"
+                mData[8].singleDisplayRightTitle="设备租赁清册"
             }
             "机械租赁"->{
-                mData[8].buttonTitle="机械租赁清册"
+                mData[8].singleDisplayRightTitle="机械租赁清册"
             }
         }
         val adapter = RecyclerviewAdapter(mData)

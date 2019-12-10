@@ -31,9 +31,9 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册：",
-    "buttonName":["上传"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册:",
+    "singleDisplayRightContent":"  上传  ",
     "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },

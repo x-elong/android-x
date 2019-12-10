@@ -27,12 +27,12 @@
         "sendFormat":"Long"
     },
     {
-        "type":"MULTI_BUTTON",
-        "buttonTitle":"车辆",
-        "buttonName":["车辆清册"],
-        "key":"requirementCarLists",
-        "sendFormat":"JsonArray"
-    },
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "requirementCarLists",
+    "sendFormat": "JsonArray"
+  },
     {
         "type":"MULTI_CHECKBOX",
         "checkboxTitle":"作业类别",

@@ -40,9 +40,9 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"专业证书附件",
-    "buttonName":["点击查看"]
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"专业证书附件",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

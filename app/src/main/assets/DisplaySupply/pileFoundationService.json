@@ -10,14 +10,14 @@
   "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"人员清册：",
-    "buttonName":["点击查看"]
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册:",
+    "singleDisplayRightContent":"点击查看"
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
-    "buttonName":["点击查看"]
+ {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册：",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -35,9 +35,9 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"机械设备：",
-    "buttonName":["点击查看"]
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"机械设备：",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
