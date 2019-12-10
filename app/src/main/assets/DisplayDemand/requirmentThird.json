@@ -1,32 +1,32 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目名称：",
+    "singleDisplayRightTitle":"项目名称:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"项目特征描述：",
+    "singleDisplayRightTitle":"项目特征描述:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"计量单位：",
+    "singleDisplayRightTitle":"计量单位:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"数量：",
+    "singleDisplayRightTitle":"数量:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"报价清单：",
+    "singleDisplayRightTitle":"报价清单:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"详细说明：",
+    "singleDisplayRightTitle":"附加信息:",
     "singleDisplayRightContent":""
   }
 ]

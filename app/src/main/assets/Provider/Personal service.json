@@ -43,14 +43,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"姓名:",
+    "singleDisplayRightTitle":"姓名",
     "singleDisplayRightContent":" ",
     "key":"contact",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"contactPhone",
     "sendFormat":"String"
@@ -76,7 +76,7 @@
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"",
     "necessary": true,
     "key": "remark",

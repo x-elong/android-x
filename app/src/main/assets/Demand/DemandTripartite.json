@@ -29,14 +29,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightTitle":"联系人",
     "singleDisplayRightContent":" ",
     "key":"name",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"phone",
     "sendFormat":"String"

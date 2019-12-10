@@ -1,27 +1,27 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"岗位类别：",
+    "singleDisplayRightTitle":"岗位类别:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"需要人数：",
+    "singleDisplayRightTitle":"需要人数:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资标准：",
+    "singleDisplayRightTitle":"薪资标准:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"个人证件名称：",
+    "singleDisplayRightTitle":"个人证件名称:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注：",
+    "singleDisplayRightTitle":"备注:",
     "singleDisplayRightContent":""
   }
 ]

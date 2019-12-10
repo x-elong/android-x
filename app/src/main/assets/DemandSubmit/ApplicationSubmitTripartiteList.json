@@ -35,7 +35,7 @@
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"详细说明",
+    "textAreaTitle":"备注",
     "textAreaContent":"",
     "necessary":false,
     "key":"detailsExplain",

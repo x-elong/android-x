@@ -1,27 +1,27 @@
 [
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"机械类型：",
+  "singleDisplayRightTitle":"机械类型:",
   "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"特征描述：",
+    "singleDisplayRightTitle":"特征描述:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"数量：",
+    "singleDisplayRightTitle":"数量:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位：",
+    "singleDisplayRightTitle":"单位:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"备注：",
+    "singleDisplayRightTitle":"备注:",
     "singleDisplayRightContent":""
   }
 ]

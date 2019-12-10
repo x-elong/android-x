@@ -1,47 +1,47 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆类型：",
+    "singleDisplayRightTitle":"车辆类型:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车牌号码：",
+    "singleDisplayRightTitle":"车牌号码:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"核载乘客：",
+    "singleDisplayRightTitle":"核载乘客:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"最大载重：",
+    "singleDisplayRightTitle":"最大载重:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车厢结构：",
+    "singleDisplayRightTitle":"车厢结构:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车厢长度：",
+    "singleDisplayRightTitle":"车厢长度:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否配备驾驶员：",
+    "singleDisplayRightTitle":"是否配备驾驶员:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"保险状态：",
+    "singleDisplayRightTitle":"保险状态:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆照片：",
+    "singleDisplayRightTitle":"车辆照片:",
     "singleDisplayRightContent":""
   }
 ]

@@ -1,37 +1,37 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"姓名：",
+    "singleDisplayRightTitle":"姓名:",
     "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"性别：",
+  "singleDisplayRightTitle":"性别:",
   "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"年龄：",
+    "singleDisplayRightTitle":"年龄:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工作类型：",
+    "singleDisplayRightTitle":"工作类型:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"工作经验：",
+    "singleDisplayRightTitle":"工作经验:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资要求：",
+    "singleDisplayRightTitle":"薪资要求:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"薪资单位：",
+    "singleDisplayRightTitle":"薪资单位:",
     "singleDisplayRightContent":""
   }
 ]

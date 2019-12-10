@@ -1,62 +1,62 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"租赁类型：",
+    "singleDisplayRightTitle":"租赁类型:",
     "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"出租方单位名称：",
+  "singleDisplayRightTitle":"出租方单位名称:",
   "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位简称：",
+    "singleDisplayRightTitle":"单位简称:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"单位地址：",
+    "singleDisplayRightTitle":"单位地址:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人代表姓名：",
+    "singleDisplayRightTitle":"法人代表姓名:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话：",
+    "singleDisplayRightTitle":"联系电话:",
     "singleDisplayRightContent":""
   },
    {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人身份证照片：",
+    "singleDisplayRightTitle":"法人身份证照片:",
     "singleDisplayRightContent":"点击查看"
   },
    {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"营业执照：",
+    "singleDisplayRightTitle":"营业执照:",
     "singleDisplayRightContent":"点击查看"
   },
    {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"租赁清册：",
+  "singleDisplayRightTitle":"租赁清册:",
   "singleDisplayRightContent":"点击查看"
    },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"租赁合同：",
+  "singleDisplayRightTitle":"租赁合同:",
   "singleDisplayRightContent":"点击查看"
    },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否配送：",
+    "singleDisplayRightTitle":"是否配送:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"运送财产保险：",
+    "singleDisplayRightTitle":"运送财产保险:",
     "singleDisplayRightContent":""
   },
   {

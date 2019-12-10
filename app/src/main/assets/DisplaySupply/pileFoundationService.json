@@ -1,12 +1,12 @@
 [
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布类别：",
+    "singleDisplayRightTitle":"发布类别:",
     "singleDisplayRightContent":""
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人：",
+  "singleDisplayRightTitle":"负责人:",
   "singleDisplayRightContent":""
   },
   {
@@ -16,27 +16,27 @@
   },
  {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆清册：",
+    "singleDisplayRightTitle":"车辆清册:",
     "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"可作业范围：",
+    "singleDisplayRightTitle":"可作业范围:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"作业最大直径：",
+    "singleDisplayRightTitle":"作业最大直径:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"队部所在区域：",
+    "singleDisplayRightTitle":"队部所在区域:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"机械设备：",
+    "singleDisplayRightTitle":"机械设备:",
     "singleDisplayRightContent":"点击查看"
   },
   {
