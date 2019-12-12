@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="center" android:drawable="@drawable/ic_back" android:width="@dimen/general_30" android:height="@dimen/general_30">
-
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#248bfe"/>
+            <gradient android:startColor="#248bfe" android:endColor="#ffffff" android:angle="90" android:type="linear"/>
+        </shape>
     </item>
-</layer-list>
+    <item android:state_pressed="false">
+        <shape android:shape="oval">
+            <solid android:color="#248bfe"/>
+            <gradient android:startColor="#248bfe" android:endColor="#248bfe" android:angle="90" android:type="linear"/>
+        </shape>
+    </item>
+</selector>

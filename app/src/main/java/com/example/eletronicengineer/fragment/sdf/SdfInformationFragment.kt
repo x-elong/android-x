@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.sdf_information.view.demand_release_tv
 class SdfInformationFragment:Fragment(){
     lateinit var titleReturn:View
     lateinit var titleContent:TextView
-    lateinit var addInformation:TextView
+    lateinit var addInformation:ImageButton
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.sdf_information,container,false)
         titleReturn=activity!!.return_iv

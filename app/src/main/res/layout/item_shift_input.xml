@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/item_background"
-    android:padding="@dimen/general_10">
+    android:background="@drawable/item_background">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        android:id="@+id/tv_shift_input_title"
+           android:id="@+id/tv_shift_input_title"
+           android:layout_marginTop="@dimen/top_10"
+          android:layout_marginStart="@dimen/left_5"
+           android:layout_marginBottom="@dimen/bottom_10"
             android:layout_weight="1"
             android:textSize="@dimen/font_tv_hint_15"
             android:hint="xxxx"
@@ -23,8 +25,9 @@
             android:textSize="@dimen/font_tv_hint_15"
             android:gravity="center|right"
             android:textColor="@color/black"
-            android:layout_marginLeft="@dimen/left_10"
-            android:layout_marginRight="@dimen/right_10"/>
+            android:layout_marginTop="@dimen/top_10"
+           android:layout_marginStart="@dimen/left_5"
+           android:layout_marginBottom="@dimen/bottom_10"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:visibility="gone"
         android:id="@+id/iv_shift_input_picture"
@@ -36,12 +39,14 @@
         android:layout_marginRight="@dimen/right_4"
         />
     <TextView
-            android:layout_marginTop="@dimen/top_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_shift_input_show"
             android:background="@drawable/ic_expand"
-            android:layout_marginRight="@dimen/right_2"
+           android:layout_marginTop="@dimen/top_10"
+           android:layout_marginStart="@dimen/left_5"
+            android:layout_marginBottom="@dimen/bottom_10"
+        android:layout_marginEnd="@dimen/right_20"
             android:gravity="center"
             android:textSize="@dimen/font_tv_hint_15"/>
 </LinearLayout>

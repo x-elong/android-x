@@ -82,7 +82,7 @@
         android:id="@+id/demand_release_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
         android:text="需求"
         android:textColor="@drawable/text_style3"

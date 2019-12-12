@@ -18,6 +18,7 @@ import android.text.*
 import android.text.method.ScrollingMovementMethod
 import android.text.style.*
 import android.util.TypedValue
+import android.view.Gravity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -843,15 +844,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val item=radioGroup.getChildAt(1-mData[position].radioButtonValue.toInt()) as RadioButton
                     item.isChecked=true
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
                 vh.llContainer.addView(radioGroup)
             }
             MULTI_CHECKBOX_TYPE->
@@ -893,15 +900,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val item=vh.llContainer.getChildAt(i) as CheckBox
                     item.isChecked=mData[position].checkboxValueList[i]
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   } else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             MULTI_HYBRID_TYPE->
             {
@@ -980,19 +993,26 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_INPUT_TYPE->
             {
+                val context=vh.itemView.context
                 vh.tvSingleInputTitle.text=mData[position].inputSingleTitle
                 if(mData[position].inputSingleHint!=""){
                     vh.etSingleInputContent.hint=mData[position].inputSingleHint
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                   }
                 vh.etSingleInputContent.addTextChangedListener(object: TextWatcher {
                     override fun afterTextChanged(p0: Editable?) {
 
@@ -1032,6 +1052,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             INPUT_WITH_UNIT_TYPE->
             {
+                val context=vh.itemView.context
                 vh.tvInputUnitTitle.text=mData[position].inputUnitTitle
                 vh.tvInputUnit.text=mData[position].inputUnit
                 when(mData[position].inputUnitTitle){
@@ -1079,18 +1100,25 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         vh.etInputUnitValue.inputType=InputType.TYPE_CLASS_NUMBER
                     }
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             TWO_PAIR_INPUT_TYPE->
             {
+                val context=vh.itemView.context
                 vh.tvTwoPairInputTitle.text=mData[position].twoPairInputTitle
                 vh.tvTwoPairInputItem1.text=mData[position].twoPairInputItem1
                 vh.tvTwoPairInputItem2.text=mData[position].twoPairInputItem2
@@ -1129,15 +1157,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.etTwoPairInputValue2.setText(mData[position].twoPairInputValue2)
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   } else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                    }
 
             }
             FOUR_DISPLAY_TYPE->
@@ -1251,15 +1285,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     mData[position].inputMultiSelectUnit=mData[position].inputMultiUnit[0]
                     vh.spMultiInputUnit.setSelection(0)
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                    }
             }
             INPUT_RANGE_TYPE->
             {
@@ -1315,19 +1355,26 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SHIFT_INPUT_TYPE->
             {
+                val context=vh.itemView.context
                 vh.tvShiftInputTitle.text=mData[position].shiftInputTitle
                     vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                   }
+                   }else{
+                    val tvNecessary=TextView(context)
+                    tvNecessary.text="  "
+                    tvNecessary.gravity=Gravity.START
+                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                    }
                 if(mData[position].shiftInputPicture!=""){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
                     GlideLoader().loadImage(vh.ivShiftInputPicture,"http://"+mData[position].shiftInputPicture)
@@ -1335,6 +1382,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SELECT_DIALOG_TYPE->
             {
+                val context=vh.itemView.context
+                vh.itemView.setOnClickListener {
+                    vh.tvDialogSelectShow.callOnClick()
+                }
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 if(mData[position].selectContent==""){
                     mData[position].selectContent=mData[position].selectOption1Items[0]
@@ -1351,18 +1402,29 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
+
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             TWO_OPTIONS_SELECT_DIALOG_TYPE->
             {
+                val context=vh.itemView.context
+                vh.itemView.setOnClickListener {
+                    vh.tvDialogSelectShow.callOnClick()
+                }
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 if (mData[position].selectContent!="")
@@ -1373,26 +1435,29 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
                     selectDialog.show()
                 }
-                vh.itemView.setOnClickListener{
-                    val selectDialog=CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,vh.tvDialogSelectTitle.context,vh.mHandler,mData[position].selectOption1Items,mData[position].selectOption2Items).multiDialog
-                    selectDialog.show()
-                }
                 if(mData[position].selectListener!=null)
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             THREE_OPTIONS_SELECT_DIALOG_TYPE->
             {
+                val context=vh.itemView.context
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 //vh.etDialogSelectItem.text=mData[position].selectOption1Items[0]
                 vh.tvDialogSelectShow.setOnClickListener {
@@ -1411,15 +1476,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     vh.tvDialogSelectShow.setOnClickListener(mData[position].selectListener)
                 }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             HINT_TYPE->
             {
@@ -1559,6 +1630,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             }
             SINGLE_DISPLAY_RIGHT_TYPE->
             {
+                val context=vh.itemView.context
                 val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
                 val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
                 val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
@@ -1582,15 +1654,21 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 //                        vh.tvsingleDisplayRightContent.setBackgroundResource(R.drawable.btn_style3)
                        }
                     }
-                if (mData[position].necessary)
+                 if (mData[position].necessary)
                 {
-                    val context=vh.itemView.context
                     val tvNecessary=TextView(context)
                     tvNecessary.text="*"
+                    tvNecessary.gravity=Gravity.START
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(context.resources.getColor(R.color.red))
+                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                }
+                   }else{
+                     val tvNecessary=TextView(context)
+                     tvNecessary.text="  "
+                     tvNecessary.gravity=Gravity.START
+                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                 }
             }
             //业主单位
             TWO_TEXT_DIALOG_TYPE->
