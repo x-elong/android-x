@@ -30,7 +30,7 @@
   {
     "type":"SINGLE_INPUT",
     "inputSingleTitle":"报价清单(按单价)",
-    "key":" quotationList",
+    "key":"quotationList",
     "sendFormat": "Double"
   },
   {
@@ -38,7 +38,7 @@
     "textAreaTitle":"详细说明",
     "textAreaContent":"",
     "necessary":false,
-    "key":"additionalExplain",
+    "key":"detailsExplain",
     "sendFormat": "String"
   }
 ]

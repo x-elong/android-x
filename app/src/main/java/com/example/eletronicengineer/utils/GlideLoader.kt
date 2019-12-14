@@ -25,7 +25,14 @@ class GlideLoader : ImageLoader{
         if(imageView is CircleImageView)
             scaleType = ImageView.ScaleType.CENTER_CROP
         imageView!!.scaleType = scaleType
-        val imagePath = if(imagePath.contains("www.ycdlfw.com")) "http://${imagePath}"  else imagePath
+        val imagePath =
+            if(imagePath.contains("www.ycdlfw.com")) {
+                if(imagePath.contains("http://") )
+                    imagePath
+                else
+                    "http://${imagePath}"
+            } else
+                imagePath
         Glide.with(imageView.context).load(imagePath).apply(mOptions).into(imageView)
     }
     fun loadImage(imageView: ImageView?, imageID: Int) {
@@ -40,7 +47,7 @@ class GlideLoader : ImageLoader{
         if(imageView is CircleImageView)
             scaleType = ImageView.ScaleType.CENTER_CROP
         imageView!!.scaleType = scaleType
-        val imagePath = if(imagePath.contains("www.ycdlfw.com")) "http://${imagePath}"  else imagePath
+        val imagePath = if(imagePath.contains(" http://")) imagePath  else "http://${imagePath}"
         Glide.with(imageView.context).load(imagePath).apply(mPreOptions).into(imageView)
     }
     fun loadPreImage(imageView: ImageView?, imageID: Int) {

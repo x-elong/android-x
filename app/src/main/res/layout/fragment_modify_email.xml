@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/view_modify_email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_modify_email_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ic_back_xml"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_modify_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_modify_email"/>
+
+    <TextView
+        android:id="@+id/tv_modify_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="修改邮箱"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toTopOf="@+id/view_modify_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view_modify_email"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:background="@drawable/view_style2"
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        android:layout_marginTop="@dimen/top_40"
+        app:layout_constraintTop_toBottomOf="@id/view_modify_email"
+        />
+    <TextView
+        android:id="@+id/tv_old_email_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="邮箱验证码"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line3"
+        app:layout_constraintStart_toStartOf="@+id/line3"
+        app:layout_constraintTop_toTopOf="@+id/line3"
+        tools:ignore="MissingConstraints"/>
+
+    <EditText
+        android:id="@+id/et_old_email_password"
+        android:layout_width="@dimen/general_140"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_17"
+        android:background="@color/white"
+        android:hint="请输入验证码"
+        android:maxLength="6"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line3"
+        app:layout_constraintStart_toEndOf="@+id/tv_old_email_check"
+        app:layout_constraintTop_toTopOf="@+id/line3"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/tv_get_old_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/right_15"
+        android:background="@drawable/btn_style1"
+        android:gravity="center"
+        android:paddingLeft="@dimen/general_6"
+        android:paddingTop="@dimen/general_4"
+        android:paddingRight="@dimen/general_6"
+        android:paddingBottom="@dimen/general_4"
+        tools:ignore="MissingConstraints"
+        android:text="获取验证码"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/line3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line3" />
+
+    <View
+        android:background="@drawable/view_style2"
+        android:id="@+id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        android:layout_marginTop="@dimen/top_10"
+        app:layout_constraintTop_toBottomOf="@id/line3"
+        />
+
+    <TextView
+        android:id="@+id/tv_new_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="新邮箱"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line4"
+        app:layout_constraintStart_toStartOf="@+id/line4"
+        app:layout_constraintTop_toTopOf="@+id/line4" />
+
+    <EditText
+        android:id="@+id/et_new_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="请输入新邮箱"
+        android:layout_marginStart="@dimen/left_17"
+        android:maxLength="11"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line4"
+        app:layout_constraintStart_toEndOf="@+id/tv_new_email"
+        app:layout_constraintTop_toTopOf="@+id/line4" />
+    <View
+        android:background="@drawable/view_style2"
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        android:layout_marginTop="@dimen/top_10"
+        app:layout_constraintTop_toBottomOf="@id/line4"
+        />
+    <TextView
+        android:id="@+id/tv_new_email_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="邮箱验证码"
+        android:textColor="#505050"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line5"
+        app:layout_constraintStart_toStartOf="@+id/line5"
+        app:layout_constraintTop_toTopOf="@+id/line5"
+        tools:ignore="MissingConstraints"/>
+
+    <EditText
+        android:id="@+id/et_new_email_password"
+        android:layout_width="@dimen/general_140"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_17"
+        android:background="@color/white"
+        android:hint="请输入验证码"
+        android:maxLength="6"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/line5"
+        app:layout_constraintStart_toEndOf="@+id/tv_old_email_check"
+        app:layout_constraintTop_toTopOf="@+id/line5"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        android:id="@+id/tv_get_new_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/right_15"
+        android:background="@drawable/btn_style1"
+        android:gravity="center"
+        android:paddingLeft="@dimen/general_6"
+        android:paddingTop="@dimen/general_4"
+        android:paddingRight="@dimen/general_6"
+        android:paddingBottom="@dimen/general_4"
+        tools:ignore="MissingConstraints"
+        android:text="获取验证码"
+        android:textSize="@dimen/font_tv_hint_14"
+        app:layout_constraintBottom_toBottomOf="@+id/line5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line5" />
+
+    <Button
+        android:id="@+id/btn_modify_email"
+        android:layout_width="@dimen/general_200"
+        android:layout_height="@dimen/general_48"
+        android:background="@drawable/btn_style4"
+        android:text="提交"
+        android:textSize="@dimen/font_tv_hint_14"
+        android:textColor="#2a82e4"
+        android:layout_marginTop="@dimen/top_40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

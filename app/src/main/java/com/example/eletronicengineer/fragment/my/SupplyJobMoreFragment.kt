@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.GetQRCodeActivity
-import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.fragment.my.SupplyModifyJobInformationFragment
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -22,33 +22,34 @@ import com.example.eletronicengineer.utils.getSupplyMajorNetWork
 import com.example.eletronicengineer.utils.getSupplyPersonDetail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_supply_display.view.*
+import kotlinx.android.synthetic.main.fragment_job_more.view.*
 import java.io.Serializable
 
 
-class SupplyDisplayFragment:Fragment() {
+class SupplyJobMoreFragment:Fragment() {
     companion object{
-        fun newInstance(args: Bundle): SupplyDisplayFragment
+        fun newInstance(args: Bundle): SupplyJobMoreFragment
         {
-            val fragment= SupplyDisplayFragment()
-            fragment.arguments=args
-            return fragment
+            val supplyJobMoreFragment= SupplyJobMoreFragment()
+            supplyJobMoreFragment.arguments=args
+            return supplyJobMoreFragment
         }
     }
     var mdata=Bundle()
     var type:Int=0
     lateinit var id:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_supply_display, container, false)
+        val view = inflater.inflate(R.layout.fragment_job_more, container, false)
         id=arguments!!.getString("id")
         type = arguments!!.getInt("type")
+
         initFragment(view)
         return view
     }
 
     private fun initFragment(view: View) {
-        view.tv_supply_display_back.setOnClickListener {
-            activity!!.finish()
+        view.tv_job_more_back.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
         }
         val adapterGenerate = AdapterGenerate()
         adapterGenerate.context = view.context
@@ -59,7 +60,7 @@ class SupplyDisplayFragment:Fragment() {
                 adapter = adapterGenerate.supplyIndividualDisplay()
                 val result = getSupplyPersonDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                        var data=it.message
+                        val data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.issuerWorkType==null) {
                             " " } else{ data.issuerWorkType }
                         adapter.mData[1].singleDisplayRightContent=if(data.issuerWorkerKind==null) {
@@ -80,7 +81,7 @@ class SupplyDisplayFragment:Fragment() {
                             adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
                         }
                         adapter.mData[7].singleDisplayRightContent=if(data.contactPhone==null) {
-                            " " } else{ "联系对方时可见"}
+                            " " } else{ data.contactPhone}
                         if(data.certificatePath==null)
                         {
                             adapter.mData[8].buttonListener = listOf(View.OnClickListener {
@@ -102,27 +103,26 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite}
                         adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
                             " " } else{ data.remark}
-                        view.button_supply.setOnClickListener {
-                            if(data.contactPhone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                        else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            val typeStr =
+                                if(data.issuerWorkType in arrayListOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类"))
+                                    "个人劳务 ${data.issuerWorkType}"
+                                else
+                                    "个人劳务 其他"
+                            val type = adapterGenerate.getType(typeStr)
+                            bundle.putInt("type", type)
+                            bundle.putString("id", data.id)
+                            bundle.putSerializable("data", data)
+                            FragmentHelper.switchFragment(
+                                activity!!,
+                                SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,
+                                "register"
+                            )
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -158,7 +158,7 @@ class SupplyDisplayFragment:Fragment() {
                                             val listData = data.provideCrewLists
                                             mdata.putSerializable("listData7", listData as Serializable)
                                             mdata.putString("type","供应人员清册查看")
-                                            (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                                 })
                         }
@@ -176,7 +176,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -232,7 +232,7 @@ class SupplyDisplayFragment:Fragment() {
                                         val listData = data.constructionToolLists
                                         mdata.putSerializable("listData9", listData as Serializable)
                                          mdata.putString("type","供应工器具清册查看")
-                                        (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                        FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -244,27 +244,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.majorNetwork.issuerName}
                         adapter.mData[13].singleDisplayRightContent=if(data.majorNetwork.phone==null) {
                             " " } else{ data.majorNetwork.phone}
-                        view.button_supply.setOnClickListener {
-                            if(data.majorNetwork.phone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.majorNetwork.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -300,7 +289,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -318,7 +307,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -374,7 +363,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -386,27 +375,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.distribuionNetwork.issuerName}
                         adapter.mData[13].singleDisplayRightContent=if(data.distribuionNetwork.phone==null) {
                             " " } else{ data.distribuionNetwork.phone}
-                        view.button_supply.setOnClickListener {
-                            if(data.distribuionNetwork.phone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.distribuionNetwork.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -442,7 +420,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -460,7 +438,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -516,7 +494,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -528,27 +506,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.powerTransformation.issuerName}
                         adapter.mData[13].singleDisplayRightContent=if(data.powerTransformation.phone==null) {
                             " " } else{ data.powerTransformation.phone}
-                        view.button_supply.setOnClickListener {
-                            if(data.powerTransformation.phone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.powerTransformation.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -584,7 +551,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -602,7 +569,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -658,7 +625,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -670,27 +637,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.measureDesign.issuerName}
                         adapter.mData[13].singleDisplayRightContent=if(data.measureDesign.phone==null) {
                             " " } else{ data.measureDesign.phone}
-                        view.button_supply.setOnClickListener {
-                            if(data.measureDesign.phone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.measureDesign.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -716,7 +672,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -726,27 +682,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.caravanTransport.validTime}
                         adapter.mData[5].singleDisplayRightContent=if(data.caravanTransport.issuerBelongSite==null) {
                             " " } else{ data.caravanTransport.issuerBelongSite}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage("10086")
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal)
+                            bundle.putString("id",data.caravanTransport.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -772,7 +717,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -790,7 +735,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -843,7 +788,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -851,27 +796,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.pileFoundation.validTime}
                         adapter.mData[9].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
                             " " } else{ data.pileFoundation.issuerBelongSite}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage("10086")
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal)
+                            bundle.putString("id",data.pileFoundation.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -897,7 +831,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -915,7 +849,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -961,7 +895,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -969,27 +903,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        view.button_supply.setOnClickListener {
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage("10086")
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1015,7 +938,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1033,7 +956,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1091,7 +1014,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1099,27 +1022,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage("10086")
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1145,7 +1057,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1163,7 +1075,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1209,7 +1121,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1217,27 +1129,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage("10086")
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1263,7 +1164,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1281,7 +1182,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putInt("type",8)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1343,7 +1244,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1351,27 +1252,16 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[9].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        view.button_supply.setOnClickListener{
-                            //                            if(data.contactPhone!=null)
-//                            {
-                            var dialog = AlertDialog.Builder(this.context)
-                                .setTitle("对方联系电话:")
-                                .setMessage("10086")
-                                .setNegativeButton("联系对方") { dialog, which ->
-                                    val intent = Intent(Intent.ACTION_DIAL)
-                                    intent.setData(Uri.parse("tel:10086"))
-                                    startActivity(intent)
-                                }
-                                .setPositiveButton("确定") { dialog, which ->
-                                    dialog.dismiss() }.create()
-                            dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type",Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal)
+                            bundle.putString("id",data.id)
+                            bundle.putSerializable("data",data as Serializable)
+                            FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,"register")
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1380,7 +1270,7 @@ class SupplyDisplayFragment:Fragment() {
                 adapter = adapterGenerate.supplyTeamDisplayVehicleLeasing()
                 val result = getSupplyLeaseCar(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                        var data=it.message
+                        val data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.variety==null) {
                             " " } else{ data.variety }
                         adapter.mData[1].singleDisplayRightContent=if(data.carTable.carNumber==null) {
@@ -1440,27 +1330,20 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite }
                         adapter.mData[17].singleDisplayRightContent=if(data.comment==null) {
                             " " } else{ data.comment }
-                        view.button_supply.setOnClickListener{
-                            if(data.contactPhone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type", Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
+                            bundle.putString("id", data.id)
+                            bundle.putSerializable("data", data)
+                            FragmentHelper.switchFragment(
+                                activity!!,
+                                SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,
+                                "register"
+                            )
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1529,7 +1412,7 @@ class SupplyDisplayFragment:Fragment() {
                                         mdata.putString("type","设备租赁清册查看")
                                         mdata.putString("type","机械租赁清册查看")
                                         mdata.putSerializable("listData10",listData as Serializable)
-                                        (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                        FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                     }
                                 })
                             }
@@ -1562,27 +1445,20 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseConstructionTool.validTime }
                         adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
-                            if(data.leaseConstructionTool.contactPhone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseConstructionTool.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseConstructionTool.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type", Constants.FragmentType.TOOL_LEASING_TYPE.ordinal)
+                            bundle.putString("id", data.leaseConstructionTool.id)
+                            bundle.putSerializable("data", data)
+                            FragmentHelper.switchFragment(
+                                activity!!,
+                                SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,
+                                "register"
+                            )
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1649,7 +1525,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.leaseList
                                     mdata.putString("type","设备租赁清册查看")
                                     mdata.putSerializable("listData10",listData as Serializable)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1682,27 +1558,20 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseFacility.validTime }
                         adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
-                            if(data.leaseFacility.contactPhone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseFacility.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseFacility.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type", Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal)
+                            bundle.putString("id", data.leaseConstructionTool.id)
+                            bundle.putSerializable("data", data)
+                            FragmentHelper.switchFragment(
+                                activity!!,
+                                SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,
+                                "register"
+                            )
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1769,7 +1638,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.leaseList
                                     mdata.putString("type","机械租赁清册查看")
                                     mdata.putSerializable("listData10",listData as Serializable)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_my_release,"")
                                 }
                             })
                         }
@@ -1802,27 +1671,20 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseMachinery.validTime }
                         adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
-                            if(data.leaseMachinery.contactPhone!=null)
-                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseMachinery.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseMachinery.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-                            }
-                            else{
-                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                            }
+                        view.btn_edit_job_information.setOnClickListener{
+                            val bundle = Bundle()
+                            bundle.putInt("type", Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal)
+                            bundle.putString("id", data.leaseConstructionTool.id)
+                            bundle.putSerializable("data", data)
+                            FragmentHelper.switchFragment(
+                                activity!!,
+                                SupplyModifyJobInformationFragment.newInstance(bundle),
+                                R.id.frame_my_release,
+                                "register"
+                            )
                         }
-                        view.rv_supply_display_content.adapter = adapter
-                        view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+                        view.rv_job_more_content.adapter = adapter
+                        view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
                     },{
                         it.printStackTrace()
                     })
@@ -1899,82 +1761,27 @@ class SupplyDisplayFragment:Fragment() {
                                 " " } else{ data.businessScope }
                            adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                           view.button_supply.setOnClickListener{
-                                if(data.contactPhone!=null)
-                                {
-                                    var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话:")
-                                            .setMessage(data.contactPhone)
-                                            .setNegativeButton("联系对方") { dialog, which ->
-                                                val intent = Intent(Intent.ACTION_DIAL)
-                                                intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                                startActivity(intent)
-                                            }
-                                            .setPositiveButton("确定") { dialog, which ->
-                                                dialog.dismiss() }.create()
-                                    dialog.show()
-                                }
-                                else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            view.rv_supply_display_content.adapter = adapter
-                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
-                        },{
-                            it.printStackTrace()
-                        })
-            }
-            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{//资质合作
-                adapter = adapterGenerate.supplyTeamDisplayDemandTripartiteCooperation()
-                val result = getSupplyThirdPartyDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                            var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.serveType==null) {
-                                " " } else{ data.serveType }
-                            adapter.mData[1].singleDisplayRightContent=if(data.cooperationObject==null) {
-                                " " } else{ data.cooperationObject }
-                            adapter.mData[2].singleDisplayRightContent=if(data.companyName==null) {
-                                " " } else{ data.companyName }
-                            adapter.mData[3].singleDisplayRightContent=if(data.companySite==null) {
-                                " " } else{ data.companySite }
-                            adapter.mData[4].singleDisplayRightContent=if(data.legalPersonName==null) {
-                                " " } else{ data.legalPersonName }
-                            adapter.mData[5].singleDisplayRightContent=if(data.cooperationAreas==null) {
-                                " " } else{ data.cooperationAreas }
-                            adapter.mData[6].singleDisplayRightContent=if(data.qualificationCondition==null) {
-                                " " } else{ data.qualificationCondition }
-                            adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                                " " } else{ data.issuerBelongSite }
-                            adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
-                                " " } else{ data.contact }
-                            adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
-                                " " } else{ "联系对方时可见"}
-                            adapter.mData[11].submitListener = View.OnClickListener {
-                                if(data.contactPhone!=null)
-                                {
-                                    var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话:")
-                                            .setMessage(data.contactPhone)
-                                            .setNegativeButton("联系对方") { dialog, which ->
-                                                val intent = Intent(Intent.ACTION_DIAL)
-                                                intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                                startActivity(intent)
-                                            }
-                                            .setPositiveButton("确定") { dialog, which ->
-                                                dialog.dismiss() }.create()
-                                    dialog.show()
-                                }
-                                else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            view.rv_supply_display_content.adapter = adapter
-                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
-                        },{
-                            it.printStackTrace()
-                        })
-            }
 
+                           view.btn_edit_job_information.setOnClickListener{
+                                val bundle = Bundle()
+                               val typeStr =
+                                   if(data.serveType in arrayListOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务"))
+                                       "三方服务 ${data.serveType}"
+                                   else
+                                       "三方服务 其他"
+                               val type = adapterGenerate.getType(typeStr)
+                               bundle.putInt("type",type)
+                               bundle.putString("id",data.id)
+                               bundle.putSerializable("data",data as Serializable)
+                               FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
+                                   R.id.frame_my_release,"register")
+                            }
+                            view.rv_job_more_content.adapter = adapter
+                            view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
+                        },{
+                            it.printStackTrace()
+                        })
+            }
         }
 
     }

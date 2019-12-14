@@ -123,7 +123,7 @@ class JobMoreFragment : Fragment() {
                             data.roomBoardStandard == "0" -> adapter.mData[8].singleDisplayRightContent =
                                 "全包"
                             data.roomBoardStandard == "1" -> adapter.mData[8].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             else -> {
                                 adapter.mData[8].singleDisplayRightContent = " "
                             }
@@ -265,7 +265,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -495,7 +495,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -641,7 +641,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -797,7 +797,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -955,7 +955,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[8].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[8].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1107,7 +1107,7 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1257,7 +1257,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[10].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[10].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1411,7 +1411,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[11].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[11].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1571,7 +1571,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[9].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[9].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1728,7 +1728,7 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.roomBoardStandard == "0" -> adapter.mData[8].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             data.roomBoardStandard == "1" -> adapter.mData[8].singleDisplayRightContent =
                                 "全包"
                             else -> {
@@ -1889,7 +1889,7 @@ class JobMoreFragment : Fragment() {
                             data.roomBoardStandard == "0" -> adapter.mData[6].singleDisplayRightContent =
                                 "全包"
                             data.roomBoardStandard == "1" -> adapter.mData[6].singleDisplayRightContent =
-                                "队部自理"
+                                "自理"
                             else -> {
                                 adapter.mData[6].singleDisplayRightContent = " "
                             }

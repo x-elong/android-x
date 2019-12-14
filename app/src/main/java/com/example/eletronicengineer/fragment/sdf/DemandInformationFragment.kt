@@ -593,8 +593,6 @@ class DemandInformationFragment: Fragment(){
         mIsLoadingThird = false
     }
     fun _loadDemandPersonData() {
-//        val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
-//        loadingDialog.show()
         val result= Observable.create<RequestBody> {
             //建立网络请求体 (类型，内容)
             val jsonObject = JSONObject()
@@ -610,12 +608,6 @@ class DemandInformationFragment: Fragment(){
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val pageCount = it.message.pageCount
-//                            loadingDialog.dismiss()
-//                            if (json.getInt("code") == 200) {
-//                                Toast.makeText(context, "加载成功", Toast.LENGTH_SHORT).show()
-//                            } else if (json.getInt("code") == 400) {
-//                                Toast.makeText(context, "加载失败", Toast.LENGTH_SHORT).show()
-//                            }
                             val data = it.message.data
                             for (j in data) {
                                 var temp1: String
@@ -638,10 +630,6 @@ class DemandInformationFragment: Fragment(){
                             else
                                 mPageNumberForPerson ++
                         }, {
-//                            loadingDialog.dismiss()
-//                            val toast = Toast.makeText(context, "加载超时", Toast.LENGTH_SHORT)
-//                            toast.setGravity(Gravity.CENTER, 0, 0)
-//                            toast.show()
                             it.printStackTrace()
                         })
             }

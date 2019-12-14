@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyRunningMaintain(
     var id:String,
     var vipId:String,
@@ -21,4 +23,4 @@ class SupplyRunningMaintain(
     var constructionToolLists:List<constructionToolLists>?,
     var voltages:List<voltages>?,
     var implementationRanges:String
-)
+):Serializable

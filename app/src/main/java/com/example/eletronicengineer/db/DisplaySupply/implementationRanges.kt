@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class implementationRanges(
     var id:String,
     var teamServeId:String,
@@ -10,4 +12,4 @@ class implementationRanges(
     var alterPeople:String?,
     var delFlag:String?,
     var version:String?
-)
+):Serializable

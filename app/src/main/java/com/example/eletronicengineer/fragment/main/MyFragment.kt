@@ -138,7 +138,7 @@ class MyFragment : Fragment() {
             val intent = Intent(activity,MyReleaseActivity::class.java)
             startActivity(intent)
         }
-        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"分销",false))
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"分销中心",false))
         mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,RetailStoreActivity::class.java)
             startActivity(intent)

@@ -30,7 +30,7 @@
     "type":"MULTI_BUTTON",
     "buttonTitle":"成员清册:",
     "buttonName":["上传"],
-    "key": "enrollProvideCrewList",
+    "key": "enrollProvideCrewLists",
     "sendFormat": "JsonArray"
   },
   {

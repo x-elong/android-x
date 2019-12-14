@@ -53,7 +53,7 @@
         android:id="@+id/btn_log_out"
         android:layout_width="@dimen/general_258"
         android:layout_height="@dimen/general_43"
-        android:layout_marginBottom="@dimen/bottom_35"
+        android:layout_marginBottom="@dimen/bottom_15"
         android:background="@drawable/btn_style3"
         android:text="退出"
         android:textColor="@color/white"

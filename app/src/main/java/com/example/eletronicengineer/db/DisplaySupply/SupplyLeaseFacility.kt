@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyLeaseFacility(
     var id:String,
     var leaseServeId:String,
@@ -18,4 +20,4 @@ class SupplyLeaseFacility(
     var delFlag:String,
     var version:String,
     var validTime:String
-)
+):Serializable

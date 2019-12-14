@@ -1,8 +1,8 @@
 [
     {
-        "type":"SELECT_DIALOG",
-        "selectTitle":"服务类型",
-        "selectOption1Items":["培训办证","审计咨询","会计事务","标书服务","法律咨询","法律咨询","其他"],
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"服务类型",
+        "singleDisplayRightContent":"",
         "key": "serveType",
         "sendFormat": "String"
     },

@@ -106,10 +106,6 @@ class DemandFragment:Fragment() {
 
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, submit.context)
             if(networkAdapter.check()){
-                if (UnSerializeDataBase.fileList.size!=0||(UnSerializeDataBase.imgList.size!=0))
-                    networkAdapter.generateMultiPartRequestBody(UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
-                else
-                {
                     val json= JSONObject()
                     json.put("requirementType", selectContent2)
                     val loadingDialog = LoadingDialog(mView.context, "正在发布中...", R.mipmap.ic_dialog_loading)
@@ -136,7 +132,6 @@ class DemandFragment:Fragment() {
                                         }
                                     )
                         }
-                }
             }
         }
     }

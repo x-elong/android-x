@@ -17,14 +17,13 @@
     "radioButtonName":["男","女"],
     "radioButtonTitle":"驾驶员性别",
     "key":"sex",
-    "sendFormat":"String"
+    "sendFormat":"Long"
   },
   {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"驾驶员年龄",
-    "inputUnit":"(岁)",
-    "key":"age",
-    "sendFormat":"Long"
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"驾驶员年龄",
+    "key": "age",
+    "sendFormat": "Long"
   },
   {
     "type":"INPUT_WITH_UNIT",

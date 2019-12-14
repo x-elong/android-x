@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyThirdParty(
     var id:String,
     var serveType:String,
@@ -16,4 +18,4 @@ class SupplyThirdParty(
     var issuerBelongSite:String,
     var contact:String,
     var contactPhone:String
-)
+):Serializable

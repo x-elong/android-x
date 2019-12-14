@@ -96,7 +96,7 @@
         app:layout_constraintTop_toTopOf="@+id/view7" />
 
     <Button
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/btn_registration_more"
         android:layout_width="@dimen/general_60"
         android:layout_height="@dimen/general_30"

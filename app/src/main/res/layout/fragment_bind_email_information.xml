@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <View
-        android:id="@+id/view_forget_password"
+        android:id="@+id/view_bind_email_information"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="#218bfc"
@@ -24,19 +24,19 @@
         android:background="@drawable/ic_back_xml"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/top_4"
-        app:layout_constraintBottom_toBottomOf="@+id/view_forget_password"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bind_email_information"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_forget_password" />
+        app:layout_constraintTop_toTopOf="@+id/view_bind_email_information" />
 
     <TextView
-        android:id="@+id/tv_forget_password_title"
+        android:id="@+id/tv_bind_email_information_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
-        android:text="忘记密码"
+        android:text="邮箱绑定"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/view_forget_password"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bind_email_information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -45,19 +45,19 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_6"
         android:background="#e5e5e5"
-        app:layout_constraintTop_toBottomOf="@+id/view_forget_password"
+        app:layout_constraintTop_toBottomOf="@+id/view_bind_email_information"
         />
     <TextView
-        android:id="@+id/tv_forget_password_text"
+        android:id="@+id/tv_bind_email_information_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="填写手机号，并通过短信验证"
+        android:text="填写邮箱，并通过验证"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginLeft="@dimen/general_15"
         android:layout_marginTop="@dimen/general_20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_forget_password"
+        app:layout_constraintTop_toBottomOf="@id/view_bind_email_information"
         />
     <View
         android:id="@+id/line1"
@@ -68,10 +68,10 @@
         app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
-        android:id="@+id/tv_forget_password_phone"
+        android:id="@+id/tv_bind_email_information"
         android:layout_width="@dimen/general_80"
         android:layout_height="wrap_content"
-        android:text="手机号"
+        android:text="邮箱"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginLeft="@dimen/general_15"
@@ -80,15 +80,15 @@
         app:layout_constraintBottom_toTopOf="@id/line2"
         />
     <EditText
-        android:id="@+id/et_forget_password_number"
+        android:id="@+id/et_bind_email_information_number"
         android:layout_width="@dimen/general_240"
         android:layout_height="wrap_content"
-        android:hint="请输入11位注册手机号"
+        android:hint="请输入邮箱"
         android:background="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        android:inputType="number"
+        android:inputType="textEmailAddress"
         android:layout_marginLeft="@dimen/general_15"
-        app:layout_constraintStart_toEndOf="@+id/tv_forget_password_phone"
+        app:layout_constraintStart_toEndOf="@+id/tv_bind_email_information"
         app:layout_constraintTop_toBottomOf="@id/line1"
         app:layout_constraintBottom_toTopOf="@id/line2"
         />
@@ -106,10 +106,10 @@
         app:layout_constraintTop_toBottomOf="@id/line1"
         />
     <TextView
-        android:id="@+id/tv_forget_password_check"
+        android:id="@+id/tv_email_code"
         android:layout_width="@dimen/general_80"
         android:layout_height="wrap_content"
-        android:text="短信验证码"
+        android:text="验证码"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginLeft="@dimen/general_15"
@@ -118,20 +118,21 @@
         app:layout_constraintBottom_toTopOf="@id/line3"
         />
     <EditText
-        android:id="@+id/et_forget_password"
+        android:id="@+id/et_email_code"
         android:layout_width="@dimen/general_140"
         android:layout_height="wrap_content"
         android:hint="请输入验证码"
         android:background="@color/white"
         android:inputType="number"
         android:textSize="@dimen/font_tv_normal_16"
+        android:maxLength="6"
         android:layout_marginLeft="@dimen/general_15"
-        app:layout_constraintStart_toEndOf="@+id/tv_forget_password_check"
+        app:layout_constraintStart_toEndOf="@+id/tv_email_code"
         app:layout_constraintTop_toBottomOf="@id/line2"
         app:layout_constraintBottom_toTopOf="@id/line3"
         />
     <TextView
-        android:id="@+id/tv_forget_password_get_check"
+        android:id="@+id/tv_email_code_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_style1"
@@ -168,20 +169,7 @@
         app:layout_constraintTop_toBottomOf="@id/line3"
         app:layout_constraintBottom_toTopOf="@id/line22"
         />
-    <EditText
-        android:visibility="gone"
-        android:id="@+id/et_forget_password_three_number"
-        android:layout_width="@dimen/general_250"
-        android:layout_height="wrap_content"
-        android:hint="8-30位，包含字母和数字"
-        android:inputType="textPassword"
-        android:background="@color/white"
-        android:textSize="@dimen/font_tv_normal_16"
-        android:layout_marginLeft="@dimen/general_15"
-        app:layout_constraintStart_toEndOf="@+id/tv_forget_password_three_new"
-        app:layout_constraintTop_toBottomOf="@id/line3"
-        app:layout_constraintBottom_toTopOf="@id/line22"
-        />
+
 
     <View
         android:visibility="gone"
@@ -233,6 +221,7 @@
         app:layout_constraintTop_toBottomOf="@id/line22"
         />
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_forget_password_three_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -248,12 +237,12 @@
         />
 
     <TextView
-        android:id="@+id/tv_forget_password_next"
+        android:id="@+id/tv_bind_email_submit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_35"
         android:background="#218bfc"
         android:gravity="center"
-        android:text="下一步"
+        android:text="确认绑定"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_17"
         android:layout_marginLeft="@dimen/general_15"

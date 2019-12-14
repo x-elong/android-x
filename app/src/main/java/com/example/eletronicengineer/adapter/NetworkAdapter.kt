@@ -133,6 +133,9 @@ class NetworkAdapter {
                         "String" -> {
                             jsonObject.put(i.key, parseToString(i))
                         }
+                        "Boolean" -> {
+                            jsonObject.put(i.key, parseToBoolean(i))
+                        }
                         "Int" -> {
                             jsonObject.put(i.key, parseToInt(i).toString())
                         }
@@ -245,7 +248,13 @@ class NetworkAdapter {
             var result = false
             when (data.options) {
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
-                    result = data.radioButtonValue.toBoolean()
+                    if(data.radioButtonValue=="1"){
+                        result = true
+                    }
+                   else if(data.radioButtonValue=="0"){
+                        result = false
+                    }
+
                 }
                 MultiStyleItem.Options.SELECT_DIALOG ->{
                     if(data.selectOption1Items.indexOf(data.selectContent)==0){
@@ -788,7 +797,12 @@ class NetworkAdapter {
         var result = false
         when (data.options) {
             MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
-                result = data.radioButtonValue.toBoolean()
+                if(data.radioButtonValue=="1"){
+                    result = true
+                }
+                else if(data.radioButtonValue=="0"){
+                    result = false
+                }
             }
             MultiStyleItem.Options.SELECT_DIALOG ->{
                 result = (data.selectOption1Items.indexOf(data.selectContent)).toString().toBoolean()
@@ -5723,7 +5737,7 @@ class NetworkAdapter {
                 MultiStyleItem.Options.SINGLE_INPUT -> {
                     if(j.necessary==true){//输入必选限制条件
                         when(j.inputSingleTitle){
-                            "年龄"->{//报名限制
+                            "年龄","驾驶员年龄"->{//报名限制
                                 if (j.inputSingleContent == "")
                                 { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                                 else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)

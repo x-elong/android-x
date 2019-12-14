@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class voltages(
     var id:String,
     var teamServeId:String,
@@ -10,4 +12,4 @@ class voltages(
     var alterPeople:String,
     var delFlag:String,
     var version:String
-)
+):Serializable

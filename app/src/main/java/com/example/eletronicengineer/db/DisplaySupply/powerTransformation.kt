@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class powerTransformation(
     var id:String,
     var vipId:String,
@@ -17,4 +19,4 @@ class powerTransformation(
     var issuerBelongSite:String,
     var issuerName:String,
     var phone:String
-)
+):Serializable

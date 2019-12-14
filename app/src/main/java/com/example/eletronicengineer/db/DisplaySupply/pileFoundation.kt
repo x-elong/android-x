@@ -1,4 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
+
+import java.io.Serializable
+
 class pileFoundation(
     var id:String,
     var vipId:String,
@@ -18,4 +21,4 @@ class pileFoundation(
     var issuerBelongSite:String,
     var issuerName:String,
     var phone:String
-)
+):Serializable

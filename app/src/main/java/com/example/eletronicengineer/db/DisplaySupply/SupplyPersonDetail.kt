@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyPersonDetail(
     var id:String,
     var certificatePath:String,
@@ -15,4 +17,4 @@ class SupplyPersonDetail(
     var contact:String,
     var sex:String,
     var age:String
-)
+):Serializable

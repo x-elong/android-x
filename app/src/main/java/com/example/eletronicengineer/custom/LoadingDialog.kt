@@ -50,8 +50,8 @@ class LoadingDialog : Dialog {
         val windowManager = window!!.windowManager
         val screenWidth = windowManager.defaultDisplay.width
         val attributes = window!!.attributes
-        attributes.alpha = 0.3f
-        attributes.width = screenWidth / 3
+        attributes.alpha = 0.5f
+        attributes.width = screenWidth / 2
         attributes.height = attributes.width
         window!!.attributes = attributes
         setCancelable(mCancelable)

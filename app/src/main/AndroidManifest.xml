@@ -122,7 +122,8 @@
         <activity android:name=".activity.AddChatGroupActivity" />
         <activity android:name=".activity.AddFriendActivity" />
         <activity android:name=".activity.RetailStoreActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.LoginActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

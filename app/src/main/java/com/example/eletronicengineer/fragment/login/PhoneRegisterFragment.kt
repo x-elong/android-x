@@ -134,7 +134,6 @@ class   PhoneRegisterFragment: Fragment()  {
     fun ispsd(psd: String): Boolean {
         val p = Pattern.compile("^[A-Za-z].*[0-9]|[0-9].*[A-Za-z]")
         val m = p.matcher(psd)
-
         return m.matches()
     }
 

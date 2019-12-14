@@ -164,6 +164,21 @@ class MyInformationFragment : Fragment() {
 //                mMultiStyleItemList.add(item)
                 item = MultiStyleItem(MultiStyleItem.Options.HINT, "账号信息")
                 mMultiStyleItemList.add(item)
+                if(true){
+                    val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"邮箱","未绑定")
+                    var email =""
+                    if(user.email!=null && user.email!=""){
+                        email = user.email.toString()
+                        item.shiftInputContent = email
+                    }
+
+                    item.jumpListener = View.OnClickListener {
+                        val bundle = Bundle()
+                        bundle.putString("email",email)
+                        FragmentHelper.switchFragment(activity!!,BindEmailFragment.newInstance(bundle),R.id.frame_my_information,"bindEmail")
+                    }
+                    mMultiStyleItemList.add(item)
+                }
                 item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "手机", user.phone)
                 item.jumpListener = View.OnClickListener {
                     val bundle = Bundle()
@@ -176,7 +191,7 @@ class MyInformationFragment : Fragment() {
 //                mMultiStyleItemList.add(item)
 //                item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "邮箱", "换绑")
 //                mMultiStyleItemList.add(item)
-                item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "修改密码", "去修改")
+                item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "密码", "* * * * * * * * *")
                 item.jumpListener = View.OnClickListener {
                     FragmentHelper.switchFragment(activity!!,ChangePasswordFragment(),R.id.frame_my_information,"")
                 }
@@ -204,11 +219,13 @@ class MyInformationFragment : Fragment() {
                     }
                     mMultiStyleItemList.add(item)
                     item.jumpListener = View.OnClickListener {
-                        var checkedItem = 0
                         val items = arrayListOf("女", "男")
+                        var checkedItem = 0
+                        if(item.shiftInputContent!="未设置")
+                            items.indexOf(item.shiftInputContent)
                         val dialog = AlertDialog.Builder(context!!)
                             .setTitle("性别")
-                            .setSingleChoiceItems(items.toTypedArray(), 0, object : DialogInterface.OnClickListener {
+                            .setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
                                 override fun onClick(p0: DialogInterface?, p1: Int) {
                                     checkedItem = p1
                                 }
@@ -308,15 +325,18 @@ class MyInformationFragment : Fragment() {
                             2->item.shiftInputContent = "A型"
                             3->item.shiftInputContent = "AB型"
                             4->item.shiftInputContent = "O型"
+                            else -> "其他"
                         }
                     }
                     mMultiStyleItemList.add(item)
                     item.jumpListener = View.OnClickListener {
                         val items = arrayListOf("A型", "B型", "AB型", "O型","其他")
                         var checkedItem = 0
+                        if(item.shiftInputContent!="未设置")
+                            items.indexOf(item.shiftInputContent)
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("血型")
-                        builder.setSingleChoiceItems(items.toTypedArray(), 0, object : DialogInterface.OnClickListener {
+                        builder.setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
                             override fun onClick(p0: DialogInterface?, p1: Int) {
                                 checkedItem = p1
                             }
@@ -374,7 +394,7 @@ class MyInformationFragment : Fragment() {
                                     //val imagePath = upImage(key)
                                     //var jsonObject= json.put(key,upImage(key))
                                     val jsonObject = userJson.put("nation", dialogView.et_dialog.text)
-                                    Log.i("json ,,", jsonObject.toString())
+                                    Log.i("json ", jsonObject.toString())
                                     val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
                                     it.onNext(requestBody)
                                 }.subscribe {
@@ -411,9 +431,11 @@ class MyInformationFragment : Fragment() {
                     item.jumpListener = View.OnClickListener {
                         val items = arrayListOf("未婚", "已婚")
                         var checkedItem = 0
+                            if(item.shiftInputContent!="未设置")
+                                items.indexOf(item.shiftInputContent)
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("婚姻状况")
-                        builder.setSingleChoiceItems(items.toTypedArray(), 0, object : DialogInterface.OnClickListener {
+                        builder.setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
                             override fun onClick(p0: DialogInterface?, p1: Int) {
                                 checkedItem = p1
                             }
@@ -509,10 +531,12 @@ class MyInformationFragment : Fragment() {
                     item.jumpListener = View.OnClickListener {
                         val items = arrayListOf("非农户口", "农业户口")
                         var checkedItem = 0
+                        if(item.shiftInputContent!="未设置")
+                            items.indexOf(item.shiftInputContent)
                         var isChecked = false
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("户籍类型")
-                        builder.setSingleChoiceItems(items.toTypedArray(), 0, object : DialogInterface.OnClickListener {
+                        builder.setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
                             override fun onClick(p0: DialogInterface?, p1: Int) {
                                 checkedItem = p1
                                 isChecked = true
@@ -787,6 +811,10 @@ class MyInformationFragment : Fragment() {
                 adapter = RecyclerviewAdapter(mMultiStyleItemList)
                 mView.rv_my_information_content.adapter = adapter
                 mView.rv_my_information_content.layoutManager = LinearLayoutManager(context)
+    }
+    fun update(email:String){
+        adapter!!.mData[2].shiftInputContent = email
+        adapter!!.notifyItemRangeChanged(2,1)
     }
 }
 

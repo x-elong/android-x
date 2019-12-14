@@ -16,10 +16,9 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MainActivity
-import com.example.eletronicengineer.utils.FragmentHelper
-import com.example.eletronicengineer.utils.UnSerializeDataBase
+import com.example.eletronicengineer.custom.LoadingDialog
+import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.sendLogin
-import com.example.eletronicengineer.utils.sendRegister
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -33,25 +32,25 @@ class LoginFragment: Fragment() {
     private var username = ""
     private var password = ""
     private lateinit var pref: SharedPreferences
+    lateinit var mView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
-        val a = arrayListOf("","")
-        initFragment(view)
-        return view
+        mView = inflater.inflate(R.layout.fragment_login, container, false)
+        initFragment()
+        return mView
     }
 
-    private fun initFragment(v: View) {
+    private fun initFragment() {
         pref = PreferenceManager.getDefaultSharedPreferences(context)
         username = pref.getString("username","")
         password = pref.getString("password","")
-        v.et_login_name.setText(username)
-        v.et_login_password.setText(password)
-        v.tv_login_back.setOnClickListener {
+        mView.et_login_name.setText(username)
+        mView.et_login_password.setText(password)
+        mView.tv_login_back.setOnClickListener {
             activity!!.finish()
         }
-        v.tv_login_confirm.setOnClickListener {
-            username = v.et_login_name.text.toString()
-            password = v.et_login_password.text.toString()
+        mView.tv_login_confirm.setOnClickListener {
+            username = mView.et_login_name.text.toString()
+            password = mView.et_login_password.text.toString()
             if(!username.isBlank() && !password.isBlank()){
                 val key= arrayListOf("username","password")
 //                val value= arrayListOf("13575232531","123456")
@@ -65,27 +64,29 @@ class LoginFragment: Fragment() {
                 Toast.makeText(context,"请输入登陆账号及密码",Toast.LENGTH_SHORT).show()
             }
         }
-        v.tv_login_register.setOnClickListener {
+        mView.tv_login_register.setOnClickListener {
             FragmentHelper.switchFragment(activity!!,PhoneRegisterFragment(),R.id.frame_login,"")
         }
-        v.tv_forget_password.setOnClickListener {
+        mView.tv_forget_password.setOnClickListener {
             FragmentHelper.switchFragment(activity!!,ForgetPasswordFragment(),R.id.frame_login,"")
         }
-        v.tv_login_problem.setOnClickListener {
+        mView.tv_login_problem.setOnClickListener {
             FragmentHelper.switchFragment(activity!!,ProblemFragment(),R.id.frame_login,"")
         }
-        v.cb_pwd_display.setOnClickListener {
-            if(v.cb_pwd_display.isChecked)
-                v.et_login_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        mView.cb_pwd_display.setOnClickListener {
+            if(mView.cb_pwd_display.isChecked)
+                mView.et_login_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             else
-                v.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            v.et_login_password.setSelection(v.et_login_password.length())
+                mView.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            mView.et_login_password.setSelection(mView.et_login_password.length())
         }
-        if(username!="" && password!="")
-            v.tv_login_confirm.callOnClick()
+//        if(username!="" && password!="")
+//            v.tv_login_confirm.callOnClick()
 
     }
     fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>) {
+        val loadingDialog = LoadingDialog(mView.context,"正在登录...")
+        loadingDialog.show()
         val result= Observable.create<RequestBody> {
             //建立网络请求体 (类型，内容)
             var jsonObject = JSONObject()
@@ -98,6 +99,7 @@ class LoginFragment: Fragment() {
             .subscribe {
                 val result = sendLogin(it,UnSerializeDataBase.upmsBasePath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
+                        loadingDialog.dismiss()
                         Log.i("111hy",it.code)
                         if(it.code=="200")
                         {
@@ -112,19 +114,18 @@ class LoginFragment: Fragment() {
                             editor.putString("username",username)
                             editor.putString("password",password)
                             editor.apply()
-                            Toast.makeText(context,"登录成功",Toast.LENGTH_SHORT).show()
+                            ToastHelper.mToast(mView.context,"登录成功")
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
 
                         }else{
-                            Toast.makeText(context,"登录失败, 请输入正确的用户名和密码",Toast.LENGTH_SHORT).show()
+                            ToastHelper.mToast(mView.context,"登录失败, 请输入正确的用户名和密码")
                         }
                     },
                     {
-                        val toast = Toast.makeText(context,"登录异常",Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.CENTER,0,0)
-                        toast.show()
+                        loadingDialog.dismiss()
+                        ToastHelper.mToast(mView.context,"登录异常")
                         it.printStackTrace()
                     }
                 )

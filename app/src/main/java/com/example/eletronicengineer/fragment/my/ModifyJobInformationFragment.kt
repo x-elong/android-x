@@ -186,9 +186,6 @@ class ModifyJobInformationFragment :Fragment(){
             Constants.FragmentType.PERSONAL_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 initDemandIndividual(adapter)
-                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
-                adapter.mData[0].inputSingleContent = adapter.mData[0].singleDisplayRightContent
                 adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
                 adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
                 adapter.mData[1].inputSingleContent = adapter.mData[1].selectContent
@@ -394,6 +391,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -514,6 +512,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -636,6 +635,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -757,6 +757,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -929,6 +930,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1011,6 +1013,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1092,6 +1095,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1224,6 +1228,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1334,6 +1339,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1691,10 +1697,6 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
-        UnSerializeDataBase.inventoryIdKey = "requirementThirdPartyId"
-        UnSerializeDataBase.inventoryId = requirementThirdPartyDetail.requirementThirdPartyId
-        adapter.mData[0].singleDisplayRightContent = requirementThirdPartyDetail.requirementVariety
-
         val itemMultiStyleItems = ArrayList<MultiStyleItem>()
         val thirdLists = requirementThirdPartyDetail.thirdLists
         if(thirdLists!=null)

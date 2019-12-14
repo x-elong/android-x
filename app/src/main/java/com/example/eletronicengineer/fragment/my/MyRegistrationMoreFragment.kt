@@ -163,6 +163,19 @@ class MyRegistrationMoreFragment :Fragment(){
                                 it.printStackTrace()
                             })
                 }
+                when(requirementTeamRegistrationEntity.requirementTeamLoggingCheck.type){
+                    "马帮运输"->{
+                        val mData = adapter.mData.toMutableList()
+                        for (j in 0 until 3)
+                            mData.removeAt(3)
+                        adapter.mData = mData
+                    }
+                    "桩基服务","非开挖顶拉管作业"->{
+                        val mData = adapter.mData.toMutableList()
+                        mData.removeAt(3)
+                        adapter.mData = mData
+                    }
+                }
             }
             Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal-> {
                 adapter = adapterGenerate.registrationDisplayDemandLease()

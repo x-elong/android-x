@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyLeaseConstructionTool(
     var id:String,
     var legalPersonName:String,
@@ -16,4 +18,4 @@ class SupplyLeaseConstructionTool(
     var alterPeople:String,
     var delFlag:String,
     var version:String
-)
+):Serializable

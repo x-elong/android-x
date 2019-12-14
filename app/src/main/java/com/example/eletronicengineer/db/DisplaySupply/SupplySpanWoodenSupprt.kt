@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplySpanWoodenSupprt(
     var id:String,
     var vipId:String,
@@ -18,4 +20,4 @@ class SupplySpanWoodenSupprt(
     var provideCrewLists:List<provideCrewLists>,
     var provideTransportMachines:List<provideTransportMachines>,
     var constructionToolLists:List<constructionToolLists>
-)
+):Serializable
