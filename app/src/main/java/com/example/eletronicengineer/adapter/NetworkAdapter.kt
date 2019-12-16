@@ -438,37 +438,42 @@ class NetworkAdapter {
                     result = data.textAreaContent
                 }
                 MultiStyleItem.Options.SHIFT_INPUT -> {
-                    val results = try {
-                        for (j in UnSerializeDataBase.imgList) {
-                            if (j.key == data.key) {
-                                val imagePath = j.path.split("|")
-                                for (k in imagePath) {
-                                    val file = File(k)
-                                    val imagePart = MultipartBody.Part.createFormData(
-                                        "file",
-                                        file.name,
-                                        RequestBody.create(MediaType.parse("image/*"), file)
-                                    )
-                                    uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                        {
-                                            //Log.i("responseBody",it.string())
-                                            if (result != "")
-                                                result += "|"
-                                            val json = JSONObject(it.string())
-                                            if(json.getBoolean("success")){
-                                                result += json.getString("httpUrl")
-                                            }else{
-                                                result += ""
-                                            }
-                                        },
-                                        {
-                                            it.printStackTrace()
-                                        })
+                    if(data.shiftInputTitle=="可服务地域"){
+                        result=data.shiftInputContent
+                    }else {
+                        val results = try {
+                            for (j in UnSerializeDataBase.imgList) {
+                                if (j.key == data.key) {
+                                    val imagePath = j.path.split("|")
+                                    for (k in imagePath) {
+                                        val file = File(k)
+                                        val imagePart = MultipartBody.Part.createFormData(
+                                            "file",
+                                            file.name,
+                                            RequestBody.create(MediaType.parse("image/*"), file)
+                                        )
+                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                {
+                                                    //Log.i("responseBody",it.string())
+                                                    if (result != "")
+                                                        result += "|"
+                                                    val json = JSONObject(it.string())
+                                                    if (json.getBoolean("success")) {
+                                                        result += json.getString("httpUrl")
+                                                    } else {
+                                                        result += ""
+                                                    }
+                                                },
+                                                {
+                                                    it.printStackTrace()
+                                                })
+                                    }
                                 }
                             }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
                     }
                 }
                 MultiStyleItem.Options.SINGLE_INPUT -> {

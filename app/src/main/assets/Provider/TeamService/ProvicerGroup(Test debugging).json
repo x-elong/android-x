@@ -19,9 +19,9 @@
     "sendFormat": "JsonArray"
   },
   {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": ""
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"可服务地域",
+    "necessary":false
   },
   {
     "type":"MULTI_CHECKBOX",

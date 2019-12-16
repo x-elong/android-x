@@ -135,23 +135,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.majorNetwork.name==null) {
                             " " } else{ data.majorNetwork.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
-                        when {
-                            data.majorNetwork.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
-                            data.majorNetwork.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
-                        }
-                        when {
-                            data.majorNetwork.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
-                            data.majorNetwork.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
-                        }
                         if(data.provideCrewLists==null)
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                         Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -165,11 +154,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                         Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -181,33 +170,33 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[3].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[3].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         var str=""
                         for(i in data.voltages!!)
                         {
@@ -215,18 +204,18 @@ class SupplyDisplayFragment:Fragment() {
                                 str+="、"
                                 str+="${i.voltageDegree}"
                         }
-                        adapter.mData[7].singleDisplayRightContent=str
-                        adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
+                        adapter.mData[3].singleDisplayRightContent=str
+                        adapter.mData[4].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -237,13 +226,13 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.majorNetwork.validTime==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.majorNetwork.validTime==null) {
                             " " } else{ data.majorNetwork.validTime}
-                        adapter.mData[11].singleDisplayRightContent=if(data.majorNetwork.issuerBelongSite==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.majorNetwork.issuerBelongSite==null) {
                             " " } else{ data.majorNetwork.issuerBelongSite}
-                        adapter.mData[12].singleDisplayRightContent=if(data.majorNetwork.issuerName==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.majorNetwork.issuerName==null) {
                             " " } else{ data.majorNetwork.issuerName}
-                        adapter.mData[13].singleDisplayRightContent=if(data.majorNetwork.phone==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.majorNetwork.phone==null) {
                             " " } else{ data.majorNetwork.phone}
                         view.button_supply.setOnClickListener {
                             if(data.majorNetwork.phone!=null)
@@ -253,7 +242,7 @@ class SupplyDisplayFragment:Fragment() {
                                     .setMessage(data.majorNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.majorNetwork.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -277,23 +266,23 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.distribuionNetwork.name==null) {
                             " " } else{ data.distribuionNetwork.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
-                        when {
-                            data.distribuionNetwork.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
-                            data.distribuionNetwork.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
-                        }
-                        when {
-                            data.distribuionNetwork.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
-                            data.distribuionNetwork.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
-                        }
+//                        adapter.mData[1].singleDisplayRightContent=" "
+//                        when {
+//                            data.distribuionNetwork.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
+//                            data.distribuionNetwork.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
+//                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
+//                        }
+//                        when {
+//                            data.distribuionNetwork.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
+//                            data.distribuionNetwork.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
+//                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
+//                        }
                         if(data.provideCrewLists==null)
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -307,11 +296,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -323,33 +312,33 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         var str=""
                         for(i in data.voltages!!)
                         {
@@ -357,18 +346,18 @@ class SupplyDisplayFragment:Fragment() {
                                 str+="、"
                             str+="${i.voltageDegree}"
                         }
-                        adapter.mData[7].singleDisplayRightContent=str
-                        adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
+                        adapter.mData[3].singleDisplayRightContent=str
+                        adapter.mData[4].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -379,13 +368,13 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.distribuionNetwork.validTime==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.distribuionNetwork.validTime==null) {
                             " " } else{ data.distribuionNetwork.validTime}
-                        adapter.mData[11].singleDisplayRightContent=if(data.distribuionNetwork.issuerBelongSite==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.distribuionNetwork.issuerBelongSite==null) {
                             " " } else{ data.distribuionNetwork.issuerBelongSite}
-                        adapter.mData[12].singleDisplayRightContent=if(data.distribuionNetwork.issuerName==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.distribuionNetwork.issuerName==null) {
                             " " } else{ data.distribuionNetwork.issuerName}
-                        adapter.mData[13].singleDisplayRightContent=if(data.distribuionNetwork.phone==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.distribuionNetwork.phone==null) {
                             " " } else{ data.distribuionNetwork.phone}
                         view.button_supply.setOnClickListener {
                             if(data.distribuionNetwork.phone!=null)
@@ -395,7 +384,7 @@ class SupplyDisplayFragment:Fragment() {
                                     .setMessage(data.distribuionNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.distribuionNetwork.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -419,23 +408,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.powerTransformation.name==null) {
                             " " } else{ data.powerTransformation.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
-                        when {
-                            data.powerTransformation.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
-                            data.powerTransformation.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
-                        }
-                        when {
-                            data.powerTransformation.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
-                            data.powerTransformation.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
-                        }
                         if(data.provideCrewLists==null)
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -449,11 +427,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -465,33 +443,33 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         var str=""
                         for(i in data.voltages!!)
                         {
@@ -499,18 +477,18 @@ class SupplyDisplayFragment:Fragment() {
                                 str+="、"
                             str+="${i.voltageDegree}"
                         }
-                        adapter.mData[7].singleDisplayRightContent=str
-                        adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
+                        adapter.mData[3].singleDisplayRightContent=str
+                        adapter.mData[4].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -521,13 +499,13 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.powerTransformation.validTime==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.powerTransformation.validTime==null) {
                             " " } else{ data.powerTransformation.validTime}
-                        adapter.mData[11].singleDisplayRightContent=if(data.powerTransformation.issuerBelongSite==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.powerTransformation.issuerBelongSite==null) {
                             " " } else{ data.powerTransformation.issuerBelongSite}
-                        adapter.mData[12].singleDisplayRightContent=if(data.powerTransformation.issuerName==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.powerTransformation.issuerName==null) {
                             " " } else{ data.powerTransformation.issuerName}
-                        adapter.mData[13].singleDisplayRightContent=if(data.powerTransformation.phone==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.powerTransformation.phone==null) {
                             " " } else{ data.powerTransformation.phone}
                         view.button_supply.setOnClickListener {
                             if(data.powerTransformation.phone!=null)
@@ -537,7 +515,7 @@ class SupplyDisplayFragment:Fragment() {
                                     .setMessage(data.powerTransformation.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.powerTransformation.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -561,23 +539,23 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.measureDesign.name==null) {
                             " " } else{ data.measureDesign.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
-                        when {
-                            data.measureDesign.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
-                            data.measureDesign.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
-                        }
-                        when {
-                            data.measureDesign.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
-                            data.measureDesign.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
-                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
-                        }
+//                        adapter.mData[1].singleDisplayRightContent=" "
+//                        when {
+//                            data.measureDesign.isCar=="true" -> adapter.mData[2].singleDisplayRightContent="提供"
+//                            data.measureDesign.isCar=="false" -> adapter.mData[2].singleDisplayRightContent="不提供"
+//                            else -> { adapter.mData[2].singleDisplayRightContent=" "}
+//                        }
+//                        when {
+//                            data.measureDesign.isConstructionTool=="true" -> adapter.mData[3].singleDisplayRightContent="提供"
+//                            data.measureDesign.isConstructionTool=="false" -> adapter.mData[3].singleDisplayRightContent="不提供"
+//                            else -> { adapter.mData[3].singleDisplayRightContent=" "}
+//                        }
                         if(data.provideCrewLists==null)
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -591,11 +569,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -607,33 +585,7 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+
                         var str=""
                         for(i in data.voltages!!)
                         {
@@ -641,18 +593,18 @@ class SupplyDisplayFragment:Fragment() {
                                 str+="、"
                             str+="${i.voltageDegree}"
                         }
-                        adapter.mData[7].singleDisplayRightContent=str
-                        adapter.mData[8].singleDisplayRightContent=if(data.implementationRanges.name==null) {
+                        adapter.mData[3].singleDisplayRightContent=str
+                        adapter.mData[4].singleDisplayRightContent=if(data.implementationRanges.name==null) {
                             " " } else{ data.implementationRanges.name }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[9].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -663,13 +615,13 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[10].singleDisplayRightContent=if(data.measureDesign.validTime==null) {
+                        adapter.mData[6].singleDisplayRightContent=if(data.measureDesign.validTime==null) {
                             " " } else{ data.measureDesign.validTime}
-                        adapter.mData[11].singleDisplayRightContent=if(data.measureDesign.issuerBelongSite==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.measureDesign.issuerBelongSite==null) {
                             " " } else{ data.measureDesign.issuerBelongSite}
-                        adapter.mData[12].singleDisplayRightContent=if(data.measureDesign.issuerName==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.measureDesign.issuerName==null) {
                             " " } else{ data.measureDesign.issuerName}
-                        adapter.mData[13].singleDisplayRightContent=if(data.measureDesign.phone==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.measureDesign.phone==null) {
                             " " } else{ data.measureDesign.phone}
                         view.button_supply.setOnClickListener {
                             if(data.measureDesign.phone!=null)
@@ -679,7 +631,7 @@ class SupplyDisplayFragment:Fragment() {
                                     .setMessage(data.measureDesign.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.measureDesign.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -703,13 +655,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.caravanTransport.name==null) {
                             " " } else{ data.caravanTransport.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -721,21 +672,25 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[3].singleDisplayRightContent=if(data.caravanTransport.horseNumber==null) {
+                        adapter.mData[2].singleDisplayRightContent=if(data.caravanTransport.horseNumber==null) {
                             " " } else{ data.caravanTransport.horseNumber}
-                        adapter.mData[4].singleDisplayRightContent=if(data.caravanTransport.validTime==null) {
+                        adapter.mData[3].singleDisplayRightContent=if(data.caravanTransport.validTime==null) {
                             " " } else{ data.caravanTransport.validTime}
-                        adapter.mData[5].singleDisplayRightContent=if(data.caravanTransport.issuerBelongSite==null) {
+                        adapter.mData[4].singleDisplayRightContent=if(data.caravanTransport.issuerName==null) {
+                            " " } else{ data.caravanTransport.issuerName}
+                        adapter.mData[5].singleDisplayRightContent=if(data.caravanTransport.phone==null) {
+                            " " } else{ data.caravanTransport.phone}
+                        adapter.mData[6].singleDisplayRightContent=if(data.caravanTransport.issuerBelongSite==null) {
                             " " } else{ data.caravanTransport.issuerBelongSite}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
                                     .setTitle("对方联系电话：")
-                                    .setMessage("10086")
+                                    .setMessage(data.caravanTransport.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.caravanTransport.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -759,13 +714,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.pileFoundation.name==null) {
                             " " } else{ data.pileFoundation.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -779,11 +733,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -824,20 +778,20 @@ class SupplyDisplayFragment:Fragment() {
 //                        }
                         val implementationRanges = data.implementationRanges
                         if(implementationRanges!=null)
-                            adapter.mData[4].singleDisplayRightContent=implementationRanges.name
-                        adapter.mData[5].singleDisplayRightContent=if(data.pileFoundation.workDia==null) {
+                            adapter.mData[3].singleDisplayRightContent=implementationRanges.name
+                        adapter.mData[4].singleDisplayRightContent=if(data.pileFoundation.workDia==null) {
                             " " } else{ data.pileFoundation.workDia }
-                        adapter.mData[6].singleDisplayRightContent=if(data.pileFoundation.location==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.pileFoundation.location==null) {
                             " " } else{ data.pileFoundation.location }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -848,19 +802,23 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[8].singleDisplayRightContent=if(data.pileFoundation.validTime==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.pileFoundation.validTime==null) {
                             " " } else{ data.pileFoundation.validTime}
-                        adapter.mData[9].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.pileFoundation.issuerName==null) {
+                            " " } else{ data.pileFoundation.issuerName}
+                        adapter.mData[9].singleDisplayRightContent=if(data.pileFoundation.phone==null) {
+                            " " } else{ data.pileFoundation.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
                             " " } else{ data.pileFoundation.issuerBelongSite}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
                                     .setTitle("对方联系电话：")
-                                    .setMessage("10086")
+                                    .setMessage(data.pileFoundation.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.pileFoundation.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -884,13 +842,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -904,11 +861,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -920,42 +877,42 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -966,8 +923,12 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[6].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[4].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
+                        adapter.mData[5].singleDisplayRightContent=if(data.issuerName==null) {
+                            " " } else{ data.issuerName}
+                        adapter.mData[6].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener {
@@ -975,10 +936,10 @@ class SupplyDisplayFragment:Fragment() {
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
                                     .setTitle("对方联系电话：")
-                                    .setMessage("10086")
+                                    .setMessage(data.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -1002,13 +963,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1022,11 +982,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应运输清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应运输清册查看
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1038,33 +998,33 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         var str=""
                         for(i in data.voltages!!)
                         {
@@ -1072,20 +1032,20 @@ class SupplyDisplayFragment:Fragment() {
                                 str+="、"
                             str+="${i.voltageDegree}"
                         }
-                        adapter.mData[5].singleDisplayRightContent=str
-                        adapter.mData[6].singleDisplayRightContent=if(data.testWorkTypes==null) {
+                        adapter.mData[3].singleDisplayRightContent=str
+                        adapter.mData[4].singleDisplayRightContent=if(data.testWorkTypes==null) {
                             " " } else{ data.testWorkTypes }
-                        adapter.mData[7].singleDisplayRightContent=if(data.operateDegree==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.operateDegree==null) {
                             " " } else{  data.operateDegree }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1096,8 +1056,12 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[9].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
+                        adapter.mData[8].singleDisplayRightContent=if(data.issuerName==null) {
+                            " " } else{ data.issuerName}
+                        adapter.mData[9].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener{
@@ -1105,10 +1069,10 @@ class SupplyDisplayFragment:Fragment() {
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
                                     .setTitle("对方联系电话：")
-                                    .setMessage("10086")
+                                    .setMessage(data.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -1132,13 +1096,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1152,11 +1115,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener { //车辆清册
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //车辆清册
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //车辆清册
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1168,42 +1131,42 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        if(data.provideTransportMachines==null)
-                        {
-                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            for(i in data.provideTransportMachines!!)
-                            {
-                                if(i.carPhotoPath == null)
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                                    })
-                                }
-                                else
-                                {
-                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                        intent.putExtra("imagePath", i.carPhotoPath)
-                                        startActivity(intent)
-                                    })
-                                }
-                            }
-                        }
+//                        if(data.provideTransportMachines==null)
+//                        {
+//                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            for(i in data.provideTransportMachines!!)
+//                            {
+//                                if(i.carPhotoPath == null)
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                                    })
+//                                }
+//                                else
+//                                {
+//                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
+//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        intent.putExtra("imagePath", i.carPhotoPath)
+//                                        startActivity(intent)
+//                                    })
+//                                }
+//                            }
+//                        }
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[5].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1214,8 +1177,12 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[6].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[4].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
+                        adapter.mData[5].singleDisplayRightContent=if(data.issuerName==null) {
+                            " " } else{ data.issuerName}
+                        adapter.mData[6].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener{
@@ -1223,10 +1190,10 @@ class SupplyDisplayFragment:Fragment() {
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
                                     .setTitle("对方联系电话：")
-                                    .setMessage("10086")
+                                    .setMessage(data.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:10086"))
+                                        intent.setData(Uri.parse("tel:${data.phone}"))
                                         startActivity(intent)
                                     }
                                     .setPositiveButton("确定") { dialog, which ->
@@ -1250,13 +1217,12 @@ class SupplyDisplayFragment:Fragment() {
                         var data=it.message
                         adapter.mData[0].singleDisplayRightContent=if(data.name==null) {
                             " " } else{ data.name }
-                        adapter.mData[1].singleDisplayRightContent=" "
                         if(data.provideCrewLists==null)
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener { //供应人员清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
+                            adapter.mData[1].buttonListener = listOf(View.OnClickListener {  //供应人员清册查看
                                 if(data.provideCrewLists!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1270,11 +1236,11 @@ class SupplyDisplayFragment:Fragment() {
                         }
 
                         if(data.provideTransportMachines==null)
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener { //车辆清册
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener { //车辆清册
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         else{
-                            adapter.mData[3].buttonListener = listOf(View.OnClickListener {  //车辆清册
+                            adapter.mData[2].buttonListener = listOf(View.OnClickListener {  //车辆清册
                                 if(data.provideTransportMachines!!.isEmpty())
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
@@ -1314,7 +1280,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            }
 //                        }
                         if(data.voltages==null){
-                            adapter.mData[4].singleDisplayRightContent=""
+                            adapter.mData[3].singleDisplayRightContent=""
                         }else{
                             var str=""
                             for(i in data.voltages!!)
@@ -1323,21 +1289,21 @@ class SupplyDisplayFragment:Fragment() {
                                     str+="、"
                                 str+="${i.voltageDegree}"
                             }
-                            adapter.mData[4].singleDisplayRightContent=str
+                            adapter.mData[3].singleDisplayRightContent=str
                         }
-                        adapter.mData[5].singleDisplayRightContent=if(data.implementationRanges==null) {
+                        adapter.mData[4].singleDisplayRightContent=if(data.implementationRanges==null) {
                             " " } else{  data.implementationRanges }
-                        adapter.mData[6].singleDisplayRightContent=if(data.workTerritory==null) {
+                        adapter.mData[5].singleDisplayRightContent=if(data.workTerritory==null) {
                             " " } else{  data.workTerritory}
                         if(data.constructionToolLists==null)
                         {
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 //供应工器具清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else{
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {  //供应工器具清册查看
                                 if(data.constructionToolLists!!.isEmpty())  Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1348,19 +1314,23 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-                        adapter.mData[8].singleDisplayRightContent=if(data.validTime==null) {
+                        adapter.mData[7].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[9].singleDisplayRightContent=if(data.issuerBelongSite==null) {
+                        adapter.mData[8].singleDisplayRightContent=if(data.issuerName==null) {
+                            " " } else{ data.issuerName}
+                        adapter.mData[9].singleDisplayRightContent=if(data.phone==null) {
+                            " " } else{ data.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
                         view.button_supply.setOnClickListener{
                             //                            if(data.contactPhone!=null)
 //                            {
                             var dialog = AlertDialog.Builder(this.context)
                                 .setTitle("对方联系电话：")
-                                .setMessage("10086")
+                                .setMessage(data.phone)
                                 .setNegativeButton("联系对方") { dialog, which ->
                                     val intent = Intent(Intent.ACTION_DIAL)
-                                    intent.setData(Uri.parse("tel:10086"))
+                                    intent.setData(Uri.parse("tel:${data.phone}"))
                                     startActivity(intent)
                                 }
                                 .setPositiveButton("确定") { dialog, which ->
@@ -1561,8 +1531,12 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseConstructionTool.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseConstructionTool.validTime==null) {
                             " " } else{ data.leaseConstructionTool.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent=if(data.leaseConstructionTool.contact==null) {
+                            " " } else{ data.leaseConstructionTool.contact }
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseConstructionTool.contactPhone==null) {
+                            " " } else{ data.leaseConstructionTool.contactPhone }
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseConstructionTool.issuerBelongSite==null) {
+                            " " } else{ data.leaseConstructionTool.issuerBelongSite }
                         view.button_supply.setOnClickListener{
                             if(data.leaseConstructionTool.contactPhone!=null)
                             {
@@ -1681,8 +1655,12 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseFacility.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseFacility.validTime==null) {
                             " " } else{ data.leaseFacility.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent=if(data.leaseFacility.contact==null) {
+                            " " } else{ data.leaseFacility.contact }
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseFacility.contactPhone==null) {
+                            " " } else{ data.leaseFacility.contactPhone }
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseFacility.issuerBelongSite==null) {
+                            " " } else{ data.leaseFacility.issuerBelongSite }
                         view.button_supply.setOnClickListener{
                             if(data.leaseFacility.contactPhone!=null)
                             {
@@ -1801,8 +1779,12 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseMachinery.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseMachinery.validTime==null) {
                             " " } else{ data.leaseMachinery.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent=if(data.leaseMachinery.contact==null) {
+                            " " } else{ data.leaseMachinery.contact }
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseMachinery.contactPhone==null) {
+                            " " } else{ data.leaseMachinery.contactPhone }
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseMachinery.issuerBelongSite==null) {
+                            " " } else{ data.leaseMachinery.issuerBelongSite }
                         view.button_supply.setOnClickListener{
                             if(data.leaseMachinery.contactPhone!=null)
                             {
@@ -1845,31 +1827,31 @@ class SupplyDisplayFragment:Fragment() {
                                 " " } else{ data.legalPersonName }
                             adapter.mData[5].singleDisplayRightContent=if(data.companyCredential.legalPersonPhone==null) {
                                 " " } else{ data.companyCredential.legalPersonPhone }
-                        if(data.companyCredential.legalPersonIdCardPath==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
-                                startActivity(intent)
-                            })
-                        }
+//                        if(data.companyCredential.legalPersonIdCardPath==null)
+//                        {
+//                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
+//                            })
+//                        }
+//                        else
+//                        {
+//                            //显示图片
+//                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
+//                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
+//                                startActivity(intent)
+//                            })
+//                        }
                         if(data.companyCredential.businessLicensePath==null)
                         {
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 val intent = Intent(activity, GetQRCodeActivity::class.java)
                                 intent.putExtra("imagePath", data.companyCredential.businessLicensePath)
                                 startActivity(intent)
@@ -1877,29 +1859,30 @@ class SupplyDisplayFragment:Fragment() {
                         }
                         if(data.thirdServicesContractPath==null)
                         {
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             })
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[8].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[7].buttonListener = listOf(View.OnClickListener {
                                 val intent = Intent(activity, GetQRCodeActivity::class.java)
                                 intent.putExtra("imagePath", data.thirdServicesContractPath)
                                 startActivity(intent)
                             })
                         }
-                            adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
-                                " " } else{ data.contact }
-                            adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
-                                " " } else{ "联系对方时可见"}
-                            adapter.mData[11].singleDisplayRightContent=if(data.validTime==null) {
+
+                            adapter.mData[8].singleDisplayRightContent=if(data.validTime==null) {
                                 " " } else{ data.validTime }
-                            adapter.mData[12].singleDisplayRightContent=if(data.businessScope==null) {
-                                " " } else{ data.businessScope }
-                           adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
+                        adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
+                            " " } else{ data.contact }
+                        adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
+                            " " } else{ data.contactPhone }
+                           adapter.mData[11].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
+                        adapter.mData[12].singleDisplayRightContent=if(data.businessScope==null) {
+                            " " } else{ data.businessScope }
                            view.button_supply.setOnClickListener{
                                 if(data.contactPhone!=null)
                                 {

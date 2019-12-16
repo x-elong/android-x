@@ -5,11 +5,6 @@
     "singleDisplayRightContent":""
   },
   {
-  "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人:",
-  "singleDisplayRightContent":""
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
     "singleDisplayRightContent":"点击查看"
@@ -45,8 +40,19 @@
     "singleDisplayRightContent":""
   },
   {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"负责人:",
+        "singleDisplayRightContent":""
+  },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"负责人电话:",
+        "singleDisplayRightContent":""
+    },
+  {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布人所属地点:",
+    "singleDisplayRightTitle":"可服务地域:",
     "singleDisplayRightContent":""
   }
+
 ]

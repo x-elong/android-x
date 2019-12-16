@@ -16,6 +16,8 @@ class SupplyTest(
     var teamServeId:String,
     var validTime:String,
     var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String,
     var provideCrewLists:List<provideCrewLists>?,
     var provideTransportMachines:List<provideTransportMachines>?,
     var constructionToolLists:List<constructionToolLists>?,

@@ -5,21 +5,6 @@
     "singleDisplayRightContent":""
   },
   {
-  "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人:",
-  "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"是否提供车辆:",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"施工工器具:",
-    "singleDisplayRightContent":""
-  },
-  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
     "singleDisplayRightContent":"点击查看"
@@ -27,11 +12,6 @@
  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆清册:",
-    "singleDisplayRightContent":"点击查看"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆照片:",
     "singleDisplayRightContent":"点击查看"
   },
   {
@@ -56,17 +36,17 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布人所属地点:",
+    "singleDisplayRightTitle":"可服务地域:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布人姓名:",
+    "singleDisplayRightTitle":"负责人:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"负责人电话:",
     "singleDisplayRightContent":""
   }
 ]
