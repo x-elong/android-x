@@ -143,10 +143,10 @@ interface HttpHelper {
     fun getSupplyMeasureDesign(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Network>>
     //马帮运输
     @GET(Constants.HttpUrlPath.DisplayForSupply.CaravanTransport)
-    fun getSupplyCaravanTransport(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<caravan>>
+    fun getSupplyCaravanTransport(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Caravan>>
     //桩机服务
     @GET(Constants.HttpUrlPath.DisplayForSupply.PileFoundation)
-    fun getSupplyPileFoundation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<pile>>
+    fun getSupplyPileFoundation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Pile>>
     //非开挖顶管拉管作业
     @GET(Constants.HttpUrlPath.DisplayForSupply.Unexcavation)
     fun getSupplyUnexcavation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<SupplyUnexcavation>>
@@ -1876,7 +1876,7 @@ internal fun getSupplyMeasureDesign(id: String,token: String,baseUrl: String):Ob
     return httpHelper.getSupplyMeasureDesign(id,token)
 }
 //马帮
-internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String):Observable<HttpResult<caravan>>
+internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String):Observable<HttpResult<Caravan>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1885,7 +1885,7 @@ internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String)
     return httpHelper.getSupplyCaravanTransport(id,token)
 }
 //桩基
-internal fun getSupplyPileFoundation(id: String,token: String,baseUrl: String):Observable<HttpResult<pile>>
+internal fun getSupplyPileFoundation(id: String,token: String,baseUrl: String):Observable<HttpResult<Pile>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

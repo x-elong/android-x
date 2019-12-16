@@ -36,11 +36,13 @@ class MySettingFragment :Fragment() {
             val dialog = BottomSheetDialog(context!!)
             val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_log_out,null)
             dialogView.btn_switch_login.setOnClickListener {
+                dialog.dismiss()
                 val intent = Intent(context,LoginActivity::class.java)
                 intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             }
             dialogView.btn_sign_out.setOnClickListener {
+                dialog.dismiss()
                 SysApplication.getInstance().exit()
             }
             dialogView.btn_cancel.setOnClickListener {

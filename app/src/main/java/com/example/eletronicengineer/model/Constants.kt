@@ -402,33 +402,43 @@ class Constants {
                 //变电
                 const val PowerTransformation = "/PowerTransformation/insertPowerTransformation/"
                 const val deletePowerTransformation="PowerTransformation/deletePowerTransformation/{id}"
+                const val updatePowerTransformation = "PowerTransformation/updatePowerTransformation/"
                 //主网
                 const val MajorNetwork = "MajorNetwork/insertMajorNetwork/"
                 const val deleteMajorNetwork = "MajorNetwork/deleteMajorNetwork/{id}"
+                const val updateMajorNetwork = "MajorNetwork/updateMajorNetwork/"
                 //配网
                 const val DistribuionNetwork = "DistribuionNetwork/insertDistribuionNetwork/"
                 const val  deleteDistribuionNetwork = "DistribuionNetwork/deleteDistribuionNetwork/{id}"
+                const val updateDistribuionNetworkDTO = "DistribuionNetwork/updateDistribuionNetworkDTO/"
                 //测量设计
                 const val MeasureDesign = "MeasureDesign/insertMeasureDesign/"
                 const val deleteMeasureDesign = "MeasureDesign/deleteMeasureDesign/{id}"
+                const val updateMeasureDesign = "MeasureDesign/updateMeasureDesign/"
                 //马帮
                 const val CaravanTransport = "CaravanTransport/insertCaravanTransport/"
                 const val deleteCaravanTransport = "CaravanTransport/deleteCaravanTransport/{id}"
+                const val updateCaravanTransport = "CaravanTransport/updateCaravanTransport/"
                 //桩基
                 const val PileFoundation = "PileFoundation/insertPileFoundation/"
                 const val deletePileFoundation = "PileFoundation/deletePileFoundation/{id}"
+                const val updatePileFoundation = "PileFoundation/updatePileFoundation/"
                 //非开挖
                 const val Unexcavation = "Unexcavation/saveUnexcavation/"
                 const val deleteUnexcavation = "Unexcavation/deleteUnexcavation/{id}"
+                const val updateUnexcavation = "Unexcavation/updateUnexcavation/"
                 //试验调试
                 const val TestTeam = "TestTeam/saveTestTeam/"
                 const val deleteTestTeam =  "TestTeam/deleteTestTeam/{id}"
+                const val updateTestTeam = "TestTeam/updateTestTeam/"
                 //跨越架
                 const val SpanWoodenSupprt = "SpanWoodenSupprt/saveSpanWoodenSupprt/"
                 const val deleteSpanWoodenSupprt = "SpanWoodenSupprt/deleteSpanWoodenSupprt/{id}"
+                const val updateSpanWoodenSupprt = "SpanWoodenSupprt/updateSpanWoodenSupprt/"
                 //运维
                 const val RunningMaintain = "RunningMaintain/saveRunningMaintain/"
                 const val deleteRunningMaintain = "RunningMaintain/deleteRunningMaintain/{id}"
+                const val updateRunningMaintain ="RunningMaintain/updateRunningMaintain/"
 
 
                 //三方

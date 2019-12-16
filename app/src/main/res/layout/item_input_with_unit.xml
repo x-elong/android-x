@@ -8,16 +8,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_input_unit_title"
             android:textSize="@dimen/font_tv_hint_15" android:layout_marginTop="@dimen/top_10"
-            android:layout_marginLeft="@dimen/left_10"
-        android:layout_marginBottom="@dimen/bottom_10"
-            android:textColor="@android:color/black"
-        android:layout_weight="1"/>
+            android:layout_marginStart="@dimen/left_5" android:layout_marginBottom="@dimen/bottom_10"
+            android:textColor="@android:color/black" android:layout_weight="1"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_input_unit"
         android:textColor="@color/text_hint_gray"
-            android:textSize="@dimen/font_tv_hint_12" android:layout_marginTop="@dimen/top_10"
+            android:textSize="@dimen/font_tv_hint_12"
+        android:layout_marginTop="@dimen/top_10"
             android:layout_marginBottom="@dimen/bottom_10"
         android:layout_weight="1"/>
     <EditText

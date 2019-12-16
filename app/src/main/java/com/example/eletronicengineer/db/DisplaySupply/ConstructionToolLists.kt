@@ -2,19 +2,20 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class leaseList(
+class ConstructionToolLists(
     var id:String,
-    var leaseServeId:String,
+    var teamServeId:String,
     var serialNumber:String,
+    var category:String,
     var type:String,
-    var specificationsModels:String,
+    var specificationsModel:String,
     var quantity:String,
     var unit:String,
-    var remark:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,
     var alterPeople:String,
     var delFlag:String,
-    var version:String
+    var version:String,
+    var remark:String
 ): Serializable

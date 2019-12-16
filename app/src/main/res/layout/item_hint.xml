@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/left_10"
-    android:paddingRight="@dimen/right_10"
+              android:layout_height="wrap_content" android:padding="@dimen/general_2"
     android:background="@color/dark_gray_bg">
 
     <TextView
-            android:layout_height="30dp" android:layout_width="match_parent"
-        android:textSize="@dimen/font_tv_hint_15"
-        android:gravity="center_vertical"
-            android:minHeight="@dimen/general_180" android:id="@+id/tv_hint_content"
-            android:text="TextView"
+            android:layout_height="wrap_content" android:layout_width="match_parent" android:textSize="@dimen/font_tv_hint_12"
+             android:id="@+id/tv_hint_content"
+             android:gravity="top"
+        android:layout_marginLeft="@dimen/general_5"
+        tools:layout_editor_absoluteX="7dp" tools:layout_editor_absoluteY="7dp" android:text="TextView"
             />
 </LinearLayout>

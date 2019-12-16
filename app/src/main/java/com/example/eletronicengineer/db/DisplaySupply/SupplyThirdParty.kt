@@ -5,7 +5,7 @@ import java.io.Serializable
 class SupplyThirdParty(
     var id:String,
     var serveType:String,
-    var companyCredential:companyCredential,
+    var companyCredential:CompanyCredential,
     var businessScope:String,
     var validTime:String,
     var thirdServicesContractPath:String,

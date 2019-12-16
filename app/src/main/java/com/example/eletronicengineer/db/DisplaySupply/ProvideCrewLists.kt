@@ -2,21 +2,21 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class powerTransformation(
+class ProvideCrewLists(
     var id:String,
-    var vipId:String,
+    var teamServeId:String,
     var name:String,
-    var isCar:String,
-    var isConstructionTool:String,
+    var sex:String,
+    var age:String,
+    var wokerType:String,
+    var workExperience:String,
+    var money:String,
+    var salaryUnit:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,
     var alterPeople:String,
     var delFlag:String,
     var version:String,
-    var teamServeId:String,
-    var validTime:String,
-    var issuerBelongSite:String,
-    var issuerName:String,
-    var phone:String
+    var remark:String
 ):Serializable

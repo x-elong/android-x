@@ -2,14 +2,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"发布类别",
-    "singleDisplayRightContent":"普工",
+    "singleDisplayRightContent":"其他",
     "key": "issuerWorkType",
     "sendFormat": "String"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"专业工种",
-    "selectOption1Items":["普工"],
+    "selectOption1Items":["其他"],
     "key": "issuerWorkerKind",
     "sendFormat": "String"
   },
@@ -43,14 +43,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"姓名:",
+    "singleDisplayRightTitle":"姓名",
     "singleDisplayRightContent":" ",
     "key":"contact",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"contactPhone",
     "sendFormat":"String"
@@ -76,7 +76,7 @@
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息",
     "textAreaContent":"",
     "necessary": true,
     "key": "remark",

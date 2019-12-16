@@ -5,36 +5,47 @@
     "singleDisplayRightContent":"马帮运输"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册",
-    "buttonName":["点击查看"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册",
+    "singleDisplayRightContent":"  上传  ",
     "key": "provideCrewLists",
     "sendFormat": "JsonArray"
   },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"马匹数量",
-    "inputUnit":"(匹)"
-  },
-  {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
-  },
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": ""
-  },
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": ""
+    "inputUnit":"(匹)",
+    "key": "horseNumber",
+    "sendFormat": "String"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人",
+    "singleDisplayRightContent": "",
+    "key": "issuerName",
+    "sendFormat": "String"
+  },
+  {
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人电话",
+    "singleDisplayRightContent": "",
+    "key": "phone",
+    "sendFormat": "String"
+  },
+
+  {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)",
+    "key": "validTime",
+    "sendFormat": "String"
   },
   {
     "type": "HINT",

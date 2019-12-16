@@ -2,7 +2,7 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class implementationRanges(
+class ImplementationRanges(
     var id:String,
     var teamServeId:String,
     var name:String,

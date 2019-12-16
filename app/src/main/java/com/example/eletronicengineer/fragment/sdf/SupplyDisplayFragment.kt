@@ -794,7 +794,7 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -803,7 +803,7 @@ class SupplyDisplayFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {
@@ -1285,7 +1285,7 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -1294,7 +1294,7 @@ class SupplyDisplayFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {

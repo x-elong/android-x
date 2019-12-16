@@ -2,7 +2,7 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class voltages(
+class Voltages(
     var id:String,
     var teamServeId:String,
     var voltageDegree:String,

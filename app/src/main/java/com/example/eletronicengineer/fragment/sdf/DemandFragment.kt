@@ -199,10 +199,12 @@ class DemandFragment:Fragment() {
             }
             Constants.FragmentType.PERSONAL_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
-                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
-                adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
+                adapter.mData[0].singleDisplayRightContent = "其他"
+                adapter.mData[1].selectOption1Items = listOf("其他")
+//                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
+//                adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
             }
             Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()

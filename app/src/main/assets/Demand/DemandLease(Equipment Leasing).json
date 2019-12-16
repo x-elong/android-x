@@ -27,11 +27,11 @@
     "sendFormat":"Long"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"需求租赁清单",
-    "buttonName":["在线编辑"],
-    "key":"requirementLeaseLists",
-    "sendFormat":"JsonArray"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "requirementLeaseLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_RADIO_BUTTON",
@@ -63,14 +63,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightTitle":"联系人",
     "singleDisplayRightContent":" ",
     "key":"name",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"phone",
     "sendFormat":"String"

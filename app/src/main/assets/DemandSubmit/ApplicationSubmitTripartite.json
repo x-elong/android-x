@@ -14,16 +14,16 @@
     "singleDisplayRightTitle":"联系人电话:",
     "singleDisplayRightContent":"***"
   },
-  {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"三方服务清册:",
-    "buttonName":["上传"],
+   {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"三方服务清册:",
+    "singleDisplayRightContent":"  上传  ",
     "key": "enrollThirdLists",
     "sendFormat": "JsonArray"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息:",
     "textAreaContent":"",
     "necessary":true
   }

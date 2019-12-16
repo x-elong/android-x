@@ -2,19 +2,19 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
-    "singleDisplayRightContent": "试验调试施工队"
+    "singleDisplayRightContent": "试验调试"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"成员清册",
-    "buttonName":["在线编辑"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册",
+    "singleDisplayRightContent":"  上传  ",
     "key": "provideCrewLists",
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆",
-    "buttonName":["在线编辑"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册",
+    "singleDisplayRightContent":"  上传  ",
     "key": "provideTransportMachines",
     "sendFormat": "JsonArray"
   },
@@ -45,9 +45,9 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"工器具清册",
-    "buttonName":["在线编辑"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"工器具清册",
+    "singleDisplayRightContent":"  上传  ",
     "key": "constructionToolLists",
     "sendFormat": "JsonArray"
   },

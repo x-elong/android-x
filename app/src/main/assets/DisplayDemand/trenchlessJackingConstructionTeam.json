@@ -20,9 +20,9 @@
     "singleDisplayRightContent":""
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆",
-    "buttonName":["车辆清册"]
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册:",
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -99,7 +99,7 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"附加:",
+    "singleDisplayRightTitle":"附加信息:",
     "singleDisplayRightContent":""
   }
 ]

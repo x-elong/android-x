@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
@@ -39,10 +40,6 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
         private fun initFragment() {
             var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
             mView.tv_inventory_item_more_back.setOnClickListener {
-                mData[0].selected =0//点击了返回按钮，*去掉
-                val fragment =
-                    activity!!.supportFragmentManager.findFragmentByTag("publishInventory") as SupplyPublishInventoryFragment
-                fragment.update(adapter.mData)
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
             type = arguments!!.getString("type")
@@ -66,7 +63,7 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
         adapterGenerate.context= context!!
         val bundle = Bundle()
         val mData:List<MultiStyleItem>
-        adapterGenerate.activity=activity as SupplyActivity
+        adapterGenerate.activity= activity as AppCompatActivity
         when(type){
             "成员清册发布"->
             {

@@ -17,11 +17,9 @@ import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
-import com.example.eletronicengineer.distributionFileSave.OtherLease
-import com.example.eletronicengineer.distributionFileSave.SupplyLeaseCar
-import com.example.eletronicengineer.distributionFileSave.SupplyPersonDetail
-import com.example.eletronicengineer.distributionFileSave.SupplyThirdParty
+import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.fragment.sdf.PublishInventoryItemMoreFragment
+import com.example.eletronicengineer.fragment.sdf.SupplyPublishInventoryItemMoreFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.putSimpleMessage
@@ -71,7 +69,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
 
     var type = 0
     lateinit var mView:View
-    var  title:String=""
     lateinit var id:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i("onCreateView","running")
@@ -224,22 +221,22 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     json.put("id",id)
                     when(arguments!!.getInt("type")) {
                         Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
-                            json.put("majorNetwork",
+                            json.put("MajorNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
-                            json.put("distribuionNetwork",
+                            json.put("DistribuionNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
-                            json.put("powerTransformation",
+                            json.put("PowerTransformation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
-                            json.put("measureDesign",
+                            json.put("MeasureDesign",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
@@ -252,7 +249,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         }
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
-                            json.put("pileFoundation",
+                            json.put("PileFoundation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                 .put("workDia",workDia.toString())
@@ -405,7 +402,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "变电施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 name =singleDisplayRightContent//名称
-                adapter.urlPath=Constants.HttpUrlPath.Provider.PowerTransformation
+                adapter.urlPath=Constants.HttpUrlPath.Provider.updatePowerTransformation
+                initProviderGroupPowerTransformation(adapter)
             }
             //团队服务——主网施工
             Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{
@@ -413,7 +411,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "主网施工队"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath=Constants.HttpUrlPath.Provider.MajorNetwork
+                adapter.urlPath=Constants.HttpUrlPath.Provider.updateMajorNetwork
+                initProviderGroupMajorNetwork(adapter)
 
             }
             //团队服务——配网施工
@@ -422,7 +421,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "配网施工队"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath=Constants.HttpUrlPath.Provider.DistribuionNetwork
+                adapter.urlPath=Constants.HttpUrlPath.Provider.updateDistribuionNetworkDTO
+                initProviderGroupDistribuionNetwork(adapter)
             }
             //团队服务——测量设计
             Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{
@@ -430,7 +430,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "测量设计"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateMeasureDesign
+                initProviderGroupMeasurementDesign(adapter)
             }
             //团队服务——马帮运输
             Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{
@@ -438,7 +439,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "马帮运输"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateCaravanTransport
+                initProviderGroupCaravanTransportation(adapter)
             }
             //团队服务——桩基
             Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
@@ -446,38 +448,45 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "桩基服务"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updatePileFoundation
+                initProviderGroupPileFoundationConstruction(adapter)
             }
             //团队服务——非开挖
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{/////////////
                 adapter=adapterGenerate.ProviderGroupNonExcavation()
-                val singleDisplayRightContent = "非开挖"
+                val singleDisplayRightContent = "非开挖顶拉管作业"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateUnexcavation
+                initProviderGroupNonExcavation(adapter)
 
             }
             //团队服务——试验调试
             Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupTestDebugging()
                 val singleDisplayRightContent = "实验调试"
+                name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
-                adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateTestTeam
+                initProviderGroupTestDebugging(adapter)
             }
             //团队服务——跨越架
             Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{
                 adapter=adapterGenerate.ProviderGroupCrossingFrame()
-                adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateSpanWoodenSupprt
                 val singleDisplayRightContent = "跨越架"
+                name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                initProviderGroupCrossingFrame(adapter)
             }
             //团队服务——运维
             Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{
                 adapter=adapterGenerate.OperationAndMaintenance()
-                adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
+                adapter.urlPath = Constants.HttpUrlPath.Provider.updateRunningMaintain
                 val singleDisplayRightContent = "运行维护"
                 name =singleDisplayRightContent//名称
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                initOperationAndMaintenance(adapter)
             }
             //租赁服务——车辆
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{
@@ -564,6 +573,1246 @@ class SupplyModifyJobInformationFragment:Fragment(){
         return adapter
     }
 
+    /**
+     * @变电
+     */
+    private fun initProviderGroupPowerTransformation(adapter: RecyclerviewAdapter) {
+        val network = arguments!!.getSerializable("data") as Network
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = network.powerTransformation.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = network.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = network.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[3].singleDisplayRightContent = network.powerTransformation.issuerBelongSite
+        val voltages = network.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+            for (j in voltages)
+                voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val implementationRanges = network.implementationRanges.name.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = network.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[9].inputUnitContent = network.powerTransformation.validTime
+    }
+
+    /**
+     * @主网
+     */
+    private fun initProviderGroupMajorNetwork(adapter: RecyclerviewAdapter) {
+        val network = arguments!!.getSerializable("data") as Network
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = network.majorNetwork.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = network.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = network.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[3].singleDisplayRightContent = network.majorNetwork.issuerBelongSite
+        val voltages = network.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+            for (j in voltages)
+                voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val implementationRanges = network.implementationRanges.name.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = network.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[9].inputUnitContent = network.majorNetwork.validTime
+    }
+
+    /**
+     * @配网
+     */
+    private fun initProviderGroupDistribuionNetwork(adapter: RecyclerviewAdapter) {
+        val network = arguments!!.getSerializable("data") as Network
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = network.distribuionNetwork.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = network.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = network.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[3].singleDisplayRightContent = network.distribuionNetwork.issuerBelongSite
+        val voltages = network.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+            for (j in voltages)
+                voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val implementationRanges = network.implementationRanges.name.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = network.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[9].inputUnitContent = network.distribuionNetwork.validTime
+    }
+
+    /**
+     * @测量设计
+     */
+    private fun initProviderGroupMeasurementDesign(adapter: RecyclerviewAdapter) {
+        val network = arguments!!.getSerializable("data") as Network
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = network.measureDesign.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = network.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = network.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[3].singleDisplayRightContent = network.measureDesign.issuerBelongSite
+        val voltages = network.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+            for (j in voltages)
+                voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val implementationRanges = network.implementationRanges.name.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = network.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[9].inputUnitContent = network.measureDesign.validTime
+    }
+
+    /**
+     * @马帮运输
+     */
+    private fun initProviderGroupCaravanTransportation(adapter: RecyclerviewAdapter) {
+        val caravan = arguments!!.getSerializable("data") as Caravan
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = caravan.caravanTransport.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = caravan.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[2].inputUnitContent = caravan.caravanTransport.horseNumber
+        //3
+        adapter.mData[6].inputUnitContent = caravan.caravanTransport.validTime
+    }
+
+    /**
+     * @桩基服务
+     */
+    private fun initProviderGroupPileFoundationConstruction(adapter: RecyclerviewAdapter) {
+        val pile = arguments!!.getSerializable("data") as Pile
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = pile.pileFoundation.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = pile.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = pile.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        //adapter.mData[3].singleDisplayRightContent = supplyTest.issuerBelongSite
+        val implementationRanges = pile.implementationRanges.name.split("、")
+        adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+        for (j in adapter.mData[4].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[4].checkboxValueList.add(true)
+            else
+                adapter.mData[4].checkboxValueList.add(false)
+        }
+
+        adapter.mData[5].selectContent = adapter.mData[5].selectOption1Items[pile.pileFoundation.workDia.toInt()-1]
+        adapter.mData[6].selectContent = pile.pileFoundation.location
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = pile.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[10].inputUnitContent = pile.pileFoundation.validTime
+    }
+
+    /**
+     * @非开挖
+     */
+    private fun initProviderGroupNonExcavation(adapter: RecyclerviewAdapter) {
+        val supplyUnexcavation = arguments!!.getSerializable("data") as SupplyUnexcavation
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = supplyUnexcavation.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = supplyUnexcavation.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = supplyUnexcavation.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = supplyUnexcavation.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
+        }
+        //4
+        adapter.mData[7].inputUnitContent = supplyUnexcavation.validTime
+    }
+
+    /**
+     * @实验调试
+     */
+    private fun initProviderGroupTestDebugging(adapter: RecyclerviewAdapter) {
+        val supplyTest = arguments!!.getSerializable("data") as SupplyTest
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = supplyTest.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = supplyTest.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = supplyTest.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        //adapter.mData[3].singleDisplayRightContent = supplyTest.issuerBelongSite
+        val voltages = supplyTest.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+            for (j in voltages)
+                voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val testWorkTypes =supplyTest.testWorkTypes.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = testWorkTypes.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        adapter.mData[6].selectContent = supplyTest.operateDegree
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = supplyTest.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[10].inputUnitContent = supplyTest.validTime
+    }
+
+    /**
+     * @跨越架
+     */
+    private fun initProviderGroupCrossingFrame(adapter: RecyclerviewAdapter) {
+        val supplySpanWoodenSupprt = arguments!!.getSerializable("data") as SupplySpanWoodenSupprt
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = supplySpanWoodenSupprt.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = supplySpanWoodenSupprt.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = supplySpanWoodenSupprt.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = supplySpanWoodenSupprt.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
+        }
+        //4
+        adapter.mData[7].inputUnitContent = supplySpanWoodenSupprt.validTime
+    }
+
+    /**
+     * @运行维护
+     */
+    private fun initOperationAndMaintenance(adapter: RecyclerviewAdapter) {
+        val supplyRunningMaintain = arguments!!.getSerializable("data") as SupplyRunningMaintain
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "团队服务"
+        }
+        val adapterGenerate= AdapterGenerate()
+        adapterGenerate.context= context!!
+        adapterGenerate.activity=activity as MyReleaseActivity
+        adapter.mData[0].singleDisplayRightContent = supplyRunningMaintain.name
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideCrewLists = supplyRunningMaintain.provideCrewLists
+            if(provideCrewLists!=null)
+                for(j in provideCrewLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.name,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","成员清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.name
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].selectContent = if(j.sex=="true") "女" else "男"
+                    mData[2].inputSingleContent = j.age
+                    mData[3].selectContent = j.wokerType
+                    mData[4].inputSingleContent = j.workExperience
+                    mData[5].inputSingleContent = j.money
+                    if(j.remark!=null)
+                        mData[7].textAreaContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","成员清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+        }
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val provideTransportMachines = supplyRunningMaintain.provideTransportMachines
+            if(provideTransportMachines!=null)
+                for(j in provideTransportMachines){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.carType,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","车辆清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].selectContent = j.carType
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.carNumber
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[3].inputUnitContent = j.maxPassengers
+                    mData[4].inputUnitContent = j.maxWeight
+                    mData[5].inputUnitContent = j.lenghtCar
+                    mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
+                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
+                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","车辆清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[3].singleDisplayRightContent = supplyRunningMaintain.issuerBelongSite
+        val voltages = supplyRunningMaintain.voltages
+        if(voltages!=null){
+            val voltageDegrees = ArrayList<String>()
+                for (j in voltages)
+                    voltageDegrees.add(j.voltageDegree)
+            adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
+            for (j in adapter.mData[4].checkboxNameList){
+                val position = voltageDegrees.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].checkboxValueList.add(true)
+                else
+                    adapter.mData[4].checkboxValueList.add(false)
+            }
+        }
+        adapter.mData[5].checkboxValueList = ArrayList(adapter.mData[5].checkboxNameList.size)
+        val implementationRanges = supplyRunningMaintain.implementationRanges.split("、")
+        for (j in adapter.mData[5].checkboxNameList){
+            val position = implementationRanges.indexOf(j)
+            if(position>=0)
+                adapter.mData[5].checkboxValueList.add(true)
+            else
+                adapter.mData[5].checkboxValueList.add(false)
+        }
+        adapter.mData[6].selectContent = supplyRunningMaintain.workTerritory.replace(" / "," ")
+        if(true){
+            val itemMultiStyleItem = ArrayList<MultiStyleItem>()
+            val constructionToolLists = supplyRunningMaintain.constructionToolLists
+            if(constructionToolLists!=null)
+                for(j in constructionToolLists){
+                    itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
+                    val bundle = Bundle()
+                    val mData:List<MultiStyleItem>
+                    bundle.putString("type","工器具清册发布")
+                    mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                    mData[0].inputSingleContent = j.type
+//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    mData[0].id = j.id
+                    mData[1].inputSingleContent = j.specificationsModel
+                    mData[2].inputSingleContent = j.unit
+                    mData[3].inputSingleContent = j.quantity
+                    if(j.remark!=null)
+                        mData[5].inputSingleContent = j.remark
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
+                    itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
+                        itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
+                        val bundle = Bundle()
+                        val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
+                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        bundle.putString("type","工器具清册发布")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    }
+                }
+            adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
+        }
+        adapter.mData[10].inputUnitContent = supplyRunningMaintain.validTime
+    }
+
 
     /**
      * @个人劳务
@@ -571,7 +1820,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
     private fun initPersonalService(adapter: RecyclerviewAdapter) {
         adapter.urlPath = Constants.HttpUrlPath.Provider.updatePersonalIssue
         val supplyPersonDetail = arguments!!.getSerializable("data") as SupplyPersonDetail
-        title = supplyPersonDetail.issuerWorkType
         activity?.runOnUiThread{
             mView.tv_modify_job_information_title.text = "个人劳务"
         }
@@ -602,7 +1850,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
      */
     private fun initVehicleRental(adapter: RecyclerviewAdapter) {
         val supplyLeaseCar = arguments!!.getSerializable("data") as SupplyLeaseCar
-        title = supplyLeaseCar.variety
         activity?.runOnUiThread{
             mView.tv_modify_job_information_title.text = "租赁服务"
         }
@@ -618,8 +1865,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[6].selectContent = if(supplyLeaseCar.carTable.construction=="1") "箱式" else "敞篷"
         adapter.mData[7].radioButtonValue = if(supplyLeaseCar.carTable.isDriver=="true") "1" else "0"
         adapter.mData[8].radioButtonValue = if(supplyLeaseCar.carTable.isInsurance=="true") "1" else "0"
-        //9
-        adapter.mData[10].selectContent = supplyLeaseCar.site.replace(" / "," ")
+        if(supplyLeaseCar.carTable.carPhotoPath!=null &&  supplyLeaseCar.carTable.carPhotoPath!="")
+            UnSerializeDataBase.imgList.add(BitmapMap(supplyLeaseCar.carTable.carPhotoPath, adapter.mData[9].key))
+        adapter.mData[10].inputSingleContent = supplyLeaseCar.site
         if(supplyLeaseCar.money=="-1.0"){
             adapter.mData[11].singleDisplayRightContent= "面议"
         }else {
@@ -636,7 +1884,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
      */
     private fun initEquipmentLeasing(adapter: RecyclerviewAdapter) {
         val otherLease = arguments!!.getSerializable("data") as OtherLease
-        title = otherLease.leaseConstructionTool.variety
         activity?.runOnUiThread{
             mView.tv_modify_job_information_title.text = "租赁服务"
         }
@@ -662,15 +1909,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
 //        adapter.mData[8].radioButtonValue = if(supplyLeaseCar.carTable.isInsurance=="true") "1" else "0"
         //9
         val itemMultiStyleItem = ArrayList<MultiStyleItem>()
-        val requirementCarLists = otherLease.leaseList
-        if(requirementCarLists!=null)
-            for(j in requirementCarLists){
+        val leaseList = otherLease.leaseList
+        if(leaseList!=null)
+            for(j in leaseList){
                 itemMultiStyleItem.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,j.type,true))
                 val bundle = Bundle()
                 val mData:List<MultiStyleItem>
-                bundle.putString("type","租赁清册发布")
-                mData = adapterGenerate.PublishDetailList(bundle).mData
-                mData[0].selectContent = j.type
+                bundle.putString("type","工器具清册发布")
+                mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
+                mData[0].inputSingleContent = j.type
 //                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
 //                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
@@ -685,10 +1932,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
                     bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
-                    bundle.putString("type","租赁清册发布")
-                    FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
-                        R.id.frame_my_release,"")
+                    bundle.putString("type","工器具清册发布")
+                    FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
                 }
             }
         adapter.mData[8].itemMultiStyleItem = itemMultiStyleItem
@@ -704,7 +1949,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
     private fun initTripartiteServices(adapter: RecyclerviewAdapter) {
         adapter.urlPath = Constants.HttpUrlPath.Provider.updateThirdServices
         val supplyThirdParty = arguments!!.getSerializable("data") as SupplyThirdParty
-        title = supplyThirdParty.serveType
         activity?.runOnUiThread{
             mView.tv_modify_job_information_title.text = "三方服务"
         }
@@ -716,7 +1960,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[0].id = supplyThirdParty.id
         adapter.mData[0].singleDisplayRightContent = supplyThirdParty.serveType
         adapter.mData[1].inputSingleContent = supplyThirdParty.companyCredential.companyName
-        adapter.mData[2].inputSingleContent = supplyThirdParty.companyCredential.companyAbbreviation
+        if(supplyThirdParty.companyCredential.companyAbbreviation!=null)
+            adapter.mData[2].inputSingleContent = supplyThirdParty.companyCredential.companyAbbreviation
         adapter.mData[3].inputSingleContent = supplyThirdParty.companyCredential.companyAddress
         adapter.mData[4].inputSingleContent = supplyThirdParty.companyCredential.legalPersonName
         adapter.mData[5].inputSingleContent = supplyThirdParty.companyCredential.legalPersonPhone

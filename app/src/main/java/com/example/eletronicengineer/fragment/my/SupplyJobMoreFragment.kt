@@ -247,7 +247,7 @@ class SupplyJobMoreFragment:Fragment() {
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
-                            bundle.putString("id",data.id)
+                            bundle.putString("id",data.majorNetwork.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,"register")
@@ -378,7 +378,7 @@ class SupplyJobMoreFragment:Fragment() {
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
-                            bundle.putString("id",data.id)
+                            bundle.putString("id",data.distribuionNetwork.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,"register")
@@ -509,7 +509,7 @@ class SupplyJobMoreFragment:Fragment() {
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
-                            bundle.putString("id",data.id)
+                            bundle.putString("id",data.powerTransformation.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,"register")
@@ -640,7 +640,7 @@ class SupplyJobMoreFragment:Fragment() {
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
-                            bundle.putString("id",data.id)
+                            bundle.putString("id",data.measureDesign.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,"register")
@@ -739,7 +739,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -748,7 +748,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {
@@ -1186,7 +1186,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -1195,7 +1195,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {
@@ -1754,7 +1754,7 @@ class SupplyJobMoreFragment:Fragment() {
                             adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
                                 " " } else{ data.contact }
                             adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
-                                " " } else{ "联系对方时可见"}
+                                " " } else{ data.contactPhone}
                             adapter.mData[11].singleDisplayRightContent=if(data.validTime==null) {
                                 " " } else{ data.validTime }
                             adapter.mData[12].singleDisplayRightContent=if(data.businessScope==null) {

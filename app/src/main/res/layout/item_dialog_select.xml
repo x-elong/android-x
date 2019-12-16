@@ -8,7 +8,10 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_title" android:layout_weight="1"
-            android:layout_margin="@dimen/general_10" android:textSize="@dimen/font_tv_hint_15"
+            android:layout_marginTop="@dimen/top_10"
+            android:layout_marginStart="@dimen/left_5"
+            android:layout_marginBottom="@dimen/bottom_10"
+           android:textSize="@dimen/font_tv_hint_15"
             android:textColor="@android:color/black"/>
     <EditText
             android:layout_width="wrap_content"

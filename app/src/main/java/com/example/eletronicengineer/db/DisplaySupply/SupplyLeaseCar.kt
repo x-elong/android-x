@@ -13,6 +13,6 @@ class SupplyLeaseCar(
     var issuerBelongSite:String,
     var site:String,
     var comment:String,
-    var carTable:provideTransportMachines,
+    var carTable:ProvideTransportMachines,
     var variety:String
 ):Serializable

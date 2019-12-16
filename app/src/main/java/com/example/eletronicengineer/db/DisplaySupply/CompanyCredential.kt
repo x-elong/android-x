@@ -1,6 +1,8 @@
 package com.example.eletronicengineer.distributionFileSave
 
-class companyCredential(
+import java.io.Serializable
+
+class CompanyCredential(
     var id:String,
     var legalPersonName:String,
     var legalPersonIdCardPath:String,
@@ -16,4 +18,4 @@ class companyCredential(
     var alterPeople:String,
     var delFlag:String,
     var version:String
-)
+):Serializable

@@ -2,7 +2,7 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class provideTransportMachines(
+class ProvideTransportMachines(
     var id:String,
     var leaseCarId:String,
     var carNumber:String,

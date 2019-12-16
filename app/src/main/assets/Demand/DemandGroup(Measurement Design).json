@@ -27,11 +27,11 @@
     "sendFormat":"Long"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆",
-    "buttonName":["车辆清册"],
-    "key":"requirementCarLists",
-    "sendFormat":"JsonArray"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "requirementCarLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_CHECKBOX",
@@ -90,11 +90,11 @@
     "sendFormat":"String"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"岗位及薪资标准",
-    "buttonName":["成员清册"],
-    "key":"requirementMembersLists",
-    "sendFormat":"JsonArray"
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"成员清册",
+    "singleDisplayRightContent":"  上传  ",
+    "key": "requirementMembersLists",
+    "sendFormat": "JsonArray"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -112,14 +112,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightTitle":"联系人",
     "singleDisplayRightContent":" ",
     "key":"name",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"phone",
     "sendFormat":"String"

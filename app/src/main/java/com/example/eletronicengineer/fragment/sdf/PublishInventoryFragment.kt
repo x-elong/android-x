@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
+import com.example.eletronicengineer.activity.MyRegistrationActivity
 import com.example.eletronicengineer.activity.MyReleaseActivity
+import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.my.ModifyJobInformationFragment
 import com.example.eletronicengineer.utils.AdapterGenerate
@@ -37,6 +39,10 @@ class PublishInventoryFragment:Fragment() {
             mView.tv_inventory_title.setText(type)
         if(activity is MyReleaseActivity)
             frame = R.id.frame_my_release
+        else if(activity is MyRegistrationActivity)
+            frame = R.id.frame_my_registration
+        else if(activity is SupplyDisplayActivity)
+            frame = R.id.frame_display_supply
             if(adapter==null){
                 val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
                 if(multiStyleItemList.isEmpty())

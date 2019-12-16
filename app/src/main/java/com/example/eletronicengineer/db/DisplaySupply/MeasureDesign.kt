@@ -2,21 +2,21 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class provideCrewLists(
+class MeasureDesign(
     var id:String,
-    var teamServeId:String,
+    var vipId:String,
     var name:String,
-    var sex:String,
-    var age:String,
-    var wokerType:String,
-    var workExperience:String,
-    var money:String,
-    var salaryUnit:String,
+    var isCar:String,
+    var isConstructionTool:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,
     var alterPeople:String,
     var delFlag:String,
     var version:String,
-    var remark:String
+    var teamServeId:String,
+    var validTime:String,
+    var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String
 ):Serializable

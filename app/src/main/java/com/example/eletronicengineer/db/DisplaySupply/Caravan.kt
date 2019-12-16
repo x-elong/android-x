@@ -2,7 +2,7 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class caravan(
-    var provideCrewLists:List<provideCrewLists>,
+class Caravan(
+    var provideCrewLists:List<ProvideCrewLists>,
     var caravanTransport:SupplyCaravanTransport
 ):Serializable

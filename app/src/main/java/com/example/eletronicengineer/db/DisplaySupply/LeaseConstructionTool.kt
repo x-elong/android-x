@@ -2,23 +2,23 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class pileFoundation(
+class LeaseConstructionTool(
     var id:String,
+    var leaseServeId:String,
     var vipId:String,
-    var name:String,
-    var isCar:String,
-    var isConstructionTool:String,
-    var workDia:String,
-    var location:String,
+    var companyCredentialId:String,
+    var leaseConTractPath:String,
+    var isDistribution:String,
+    var conveyancePropertyInsurance:String,
+    var contact:String,
+    var contactPhone:String,
+    var issuerBelongSite:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,
     var alterPeople:String,
     var delFlag:String,
     var version:String,
-    var teamServeId:String,
     var validTime:String,
-    var issuerBelongSite:String,
-    var issuerName:String,
-    var phone:String
+    var variety:String
 ):Serializable

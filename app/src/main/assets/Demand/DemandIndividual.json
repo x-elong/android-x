@@ -2,14 +2,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"",
+    "singleDisplayRightContent":"其他",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"需求专业",
-    "selectOption1Items":["x"],
+    "selectOption1Items":["其他"],
     "key":"requirementMajor",
     "sendFormat": "String"
   },
@@ -92,14 +92,14 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系人:",
+    "singleDisplayRightTitle":"联系人",
     "singleDisplayRightContent":" ",
     "key":"name",
     "sendFormat":"String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"联系电话:",
+    "singleDisplayRightTitle":"联系电话",
     "singleDisplayRightContent":" ",
     "key":"phone",
     "sendFormat":"String"

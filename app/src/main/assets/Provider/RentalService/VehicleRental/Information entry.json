@@ -52,11 +52,8 @@
     "key": "carPhotoPath"
   },
   {
-    "type":"THREE_OPTIONS_SELECT_DIALOG",
-    "selectTitle":"所在地址",
-    "placePath": "pca.json",
-    "key":"site",
-    "sendFormat":"String"
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"所在地址"
   },
   {
     "type":"INPUT_WITH_MULTI_UNIT",

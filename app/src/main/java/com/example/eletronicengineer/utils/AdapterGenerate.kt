@@ -1354,6 +1354,7 @@ class AdapterGenerate {
     */
     //个人劳务
     fun PersonalService(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Provider/Personal service.json")
@@ -1372,8 +1373,8 @@ class AdapterGenerate {
              val data = Bundle()
             data.putString("key", mData[8].key)
             data.putString("title", mData[8].shiftInputTitle)
-            (activity as SupplyActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_supply, "Capture")
-               }
+            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data),frame,"Capture")
+        }
 
         adapter.urlPath = Constants.HttpUrlPath.Provider.PersonalService
         return adapter
@@ -1382,6 +1383,7 @@ class AdapterGenerate {
 
     //团队服务——变电施工
     fun ProviderGroupSubstationConstruction(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context  //
         val mData = itemGenerate.getJsonFromAsset("Provider/TeamService/ProviderGroup(Substation Construction).json")
@@ -1401,19 +1403,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[6].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 6
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
 //        adapter.urlPath = Constants.HttpUrlPath.Provider.mainPath
         return adapter
@@ -1448,6 +1450,7 @@ class AdapterGenerate {
 
     //团队服务——测量设计
     fun ProviderGroupMeasurementDesign(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mdata=Bundle()
@@ -1467,19 +1470,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[6].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 6
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
         return adapter
@@ -1518,6 +1521,7 @@ class AdapterGenerate {
 
     //团队服务——马帮运输
     fun ProviderGroupCaravanTransportation(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mdata=Bundle()
@@ -1537,7 +1541,7 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
         return adapter
@@ -1546,6 +1550,7 @@ class AdapterGenerate {
 
     //团队服务——桩机服务
     fun ProviderGroupPileFoundationConstruction(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         val mdata=Bundle()
         itemGenerate.context = context
@@ -1566,19 +1571,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 7
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
         return adapter
@@ -1586,6 +1591,7 @@ class AdapterGenerate {
 
     //团队服务——非开挖
     fun ProviderGroupNonExcavation(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         val mdata=Bundle()
         itemGenerate.context = context
@@ -1605,19 +1611,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[3].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 3
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[3].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
         return adapter
@@ -1625,6 +1631,7 @@ class AdapterGenerate {
 
     //团队服务——试验调试
     fun ProviderGroupTestDebugging(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         val mdata = Bundle()
         lateinit var adapter: RecyclerviewAdapter
@@ -1645,19 +1652,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 7
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
         return adapter
@@ -1665,6 +1672,7 @@ class AdapterGenerate {
 
     //团队服务——跨越架
     fun ProviderGroupCrossingFrame(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         val mdata = Bundle()
         lateinit var adapter: RecyclerviewAdapter
@@ -1685,19 +1693,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[3].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 3
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[3].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
         return adapter
@@ -1705,6 +1713,7 @@ class AdapterGenerate {
 
     //团队服务——运行维护
     fun OperationAndMaintenance(): RecyclerviewAdapter {
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         val mdata = Bundle()
         itemGenerate.context = context
@@ -1724,19 +1733,19 @@ class AdapterGenerate {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
             mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected =7
             mdata.putString("type","工器具清册发布")
             mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,SupplyPublishInventoryFragment.newInstance(mdata), R.id.frame_supply, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
         return adapter
@@ -1764,7 +1773,7 @@ class AdapterGenerate {
             val data = Bundle()
             data.putString("key", mData[9].key)
             data.putString("title", mData[9].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(mdata), frame, "Capture")
+            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
         }
         return adapter
     }
@@ -1772,8 +1781,8 @@ class AdapterGenerate {
     //租赁服务——工器具租赁
     fun EquipmentLeasing(bundle: Bundle): RecyclerviewAdapter {
         val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
-        val itemGenerate = ItemGenerate()
         val mdata = Bundle()
+        val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Provider/RentalService/Equipment Leasing/Information entry.json")
         val adapter = RecyclerviewAdapter(mData)
@@ -1790,7 +1799,7 @@ class AdapterGenerate {
         when(bundle.getInt("type"))
         {
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="工器具租赁清单"
+                mData[8].singleDisplayRightTitle="工器具租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -1799,7 +1808,7 @@ class AdapterGenerate {
                 })
             }
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="机械租赁清单"
+                mData[8].singleDisplayRightTitle="机械租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -1808,7 +1817,7 @@ class AdapterGenerate {
                 })
             }
             Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
-                mData[8].buttonTitle="设备租赁清单"
+                mData[8].singleDisplayRightTitle="设备租赁清单"
                 mData[8].buttonListener= arrayListOf( View.OnClickListener {
                     mData[0].selected =8
                     mdata.putString("type","租赁清册发布")
@@ -1842,19 +1851,19 @@ class AdapterGenerate {
         mData[6].jumpListener = View.OnClickListener {
             val data = Bundle()
             data.putString("key", mData[6].key)
-            FragmentHelper.switchFragment(activity,UpIdCardFragment.newInstance(mdata), frame, "Capture")
+            FragmentHelper.switchFragment(activity,UpIdCardFragment.newInstance(data), frame, "Capture")
         }
         mData[7].jumpListener = View.OnClickListener {
             val data = Bundle()
             data.putString("key", mData[7].key)
             data.putInt("total", 1)
-            FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(mdata), frame, "Capture")
+            FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data), frame, "Capture")
         }
         mData[9].jumpListener = View.OnClickListener {
             val data = Bundle()
             data.putString("key", mData[9].key)
             data.putString("title", mData[9].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(mdata), frame, "Capture")
+            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
         }
 //        mData[9].buttonListener = uploadContractButtonListListeners
         return adapter
@@ -1947,6 +1956,7 @@ class AdapterGenerate {
     }
     ////////
      fun SupplyPublishDetailList(bundle: Bundle):RecyclerviewAdapter{//供应清册发布
+        val frame = if(activity is SupplyActivity) R.id.frame_supply else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         lateinit var mData:List<MultiStyleItem>
@@ -1981,7 +1991,7 @@ class AdapterGenerate {
                     val data = Bundle()
                     data.putString("key", mData[7].key)
                     data.putString("title", mData[7].shiftInputTitle)
-                    (activity as SupplyActivity).switchFragment(ImageFragment.newInstance(data), R.id.frame_supply, "Capture")
+                    FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
                 }
             }
             "工器具清册发布"->{
@@ -3726,21 +3736,6 @@ class AdapterGenerate {
         return adapter
     }
 
-    fun inventoryType():RecyclerviewAdapter{
-        val itemGenerate = ItemGenerate()
-        itemGenerate.context = context
-        val mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
-        mData[6].buttonListener = arrayListOf(View.OnClickListener {
-            mData[0].selected = 6
-            val bundle = Bundle()
-            bundle.putInt("position",6)
-            bundle.putString("type","成员清册")
-            bundle.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity as SupplyActivity,InventoryFragment.newInstance(bundle), R.id.frame_supply, "inventory")
-        })
-        val adapter = RecyclerviewAdapter(mData)
-        return adapter
-    }
 
     fun inventoryItemType():RecyclerviewAdapter{
         val itemGenerate = ItemGenerate()
@@ -3921,13 +3916,13 @@ class AdapterGenerate {
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/equipmentLeasing.json")
         when(type){
             "工器具租赁"->{
-                mData[8].buttonTitle="工器具租赁清册"
+                mData[8].singleDisplayRightTitle="工器具租赁清册"
             }
             "设备租赁"->{
-                mData[8].buttonTitle="设备租赁清册"
+                mData[8].singleDisplayRightTitle="设备租赁清册"
             }
             "机械租赁"->{
-                mData[8].buttonTitle="机械租赁清册"
+                mData[8].singleDisplayRightTitle="机械租赁清册"
             }
         }
         val adapter = RecyclerviewAdapter(mData)
@@ -4112,7 +4107,7 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/provideCrewLists.json")
         val adapter = RecyclerviewAdapter(mData)
-        var listData7 = bundle.getSerializable("listData7") as provideCrewLists
+        var listData7 = bundle.getSerializable("listData7") as ProvideCrewLists
         adapter.mData[0].singleDisplayRightContent = if(listData7.name==null){" "}else{ listData7.name }
            when(listData7.sex){
                "true"->{ adapter.mData[1].singleDisplayRightContent = "男" }
@@ -4132,7 +4127,7 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/provideTransportMachines.json")
         val adapter = RecyclerviewAdapter(mData)
-        var listData8 = bundle.getSerializable("listData8") as provideTransportMachines
+        var listData8 = bundle.getSerializable("listData8") as ProvideTransportMachines
         adapter.mData[0].singleDisplayRightContent = if(listData8.carType==null){" "}else{ listData8.carType }
         adapter.mData[1].singleDisplayRightContent = if(listData8.carNumber==null){" "}else{ listData8.carNumber }
         adapter.mData[2].singleDisplayRightContent = if(listData8.maxPassengers==null){" "}else{ listData8.maxPassengers }
@@ -4163,7 +4158,7 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/constructionToolLists.json")
         val adapter = RecyclerviewAdapter(mData)
-        var listData9 = bundle.getSerializable("listData9") as constructionToolLists
+        var listData9 = bundle.getSerializable("listData9") as ConstructionToolLists
         adapter.mData[0].singleDisplayRightContent = if(listData9.type==null){" "}else{ listData9.type }
         adapter.mData[1].singleDisplayRightContent = if(listData9.specificationsModel==null){" "}else{ listData9.specificationsModel }
         adapter.mData[2].singleDisplayRightContent = if(listData9.quantity==null){" "}else{ listData9.quantity }
@@ -4177,7 +4172,7 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("DisplayDemand/requirementPowerTransformationSalary.json")
         val adapter = RecyclerviewAdapter(mData)
-        var listData10 = bundle.getSerializable("listData10") as leaseList
+        var listData10 = bundle.getSerializable("listData10") as LeaseList
         adapter.mData[0].singleDisplayRightContent = if(listData10.type==null){" "}else{ listData10.type }
         adapter.mData[1].singleDisplayRightContent = if(listData10.specificationsModels==null){" "}else{ listData10.specificationsModels }
         adapter.mData[2].singleDisplayRightContent = if(listData10.quantity==null){" "}else{ listData10.quantity }

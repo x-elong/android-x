@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandDisplayActivity
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
@@ -22,6 +23,9 @@ import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
 import com.example.eletronicengineer.utils.uploadImage
 import com.lcw.library.imagepicker.ImagePicker
+import com.yancy.gallerypick.config.GalleryConfig
+import com.yancy.gallerypick.config.GalleryPick
+import com.yancy.gallerypick.inter.IHandlerCallBack
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_image.view.*
@@ -40,34 +44,54 @@ class ImageFragment:Fragment(){
             return imageFragment
         }
     }
-    val glideLoader = GlideLoader()
     lateinit var mView:View
     lateinit var mAdapter:ImageAdapter
     lateinit var key:String
     private var mImagePaths: ArrayList<String> = ArrayList()
     var mImagesPath =""
+    val iHandlerCallBack = object : IHandlerCallBack {
+        override fun onFinish() {
+        }
+
+        override fun onCancel() {
+        }
+
+        override fun onError() {
+        }
+
+        override fun onStart() {
+        }
+
+        override fun onSuccess(photoList: MutableList<String>) {
+//            val fragment=activity!!.supportFragmentManager.findFragmentByTag("Capture")!!
+            NetworkAdapter(mView.context).upImage(photoList[0],this@ImageFragment)
+//            photoAdapter.notifyDataSetChanged()
+        }
+    }
+    val glideImageLoader = GlideImageLoader()
+    val galleryConfig = GalleryConfig.Builder()
+        .imageLoader(glideImageLoader)    // ImageLoader 加载框架（必填）
+        .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+        .provider("com.example.eletronicengineer.fileProvider")   // provider (必填)
+//        .pathList(mImagePaths)                         // 记录已选的图片
+        .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+        .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+        .crop(true, 1F, 1F, 500, 500)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
+        .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+        .filePath("/Gallery/Pictures")          // 图片存放路径
+        .build()
     val lastImage = Image("",View.OnClickListener {
-        ImagePicker.getInstance()
-            .setTitle("图片")//设置标题
-            .showCamera(true)//设置是否显示拍照按钮
-            .showImage(true)//设置是否展示图片
-            .showVideo(true)//设置是否展示视频
-            .showVideo(true)//设置是否展示视频
-            .setSingleType(true)//设置图片视频不能同时选择
-            .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-            //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-            .setImageLoader(glideLoader)//设置自定义图片加载器
-            .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+        GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
     })
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         key = arguments!!.getString("key")
         val title = arguments!!.getString("title")
         mView=inflater.inflate(R.layout.fragment_image,container,false)
-        if(activity is SupplyActivity || activity is DemandDisplayActivity)
+        if(activity is SupplyActivity || activity is DemandDisplayActivity || activity is MyReleaseActivity)
             mView.bt_image.visibility = View.GONE
         mView.tv_image_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
-            if((activity is  SupplyActivity) || activity is DemandDisplayActivity)
+            if((activity is  SupplyActivity) || activity is DemandDisplayActivity || activity is MyReleaseActivity)
                 Log.i("","")
             else
                 UnSerializeDataBase.imgList.clear()

@@ -2,7 +2,7 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class majorNetwork(
+class DistribuionNetwork(
     var id:String,
     var vipId:String,
     var name:String,

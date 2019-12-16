@@ -2,12 +2,14 @@ package com.example.eletronicengineer.distributionFileSave
 
 import java.io.Serializable
 
-class distribuionNetwork(
+class PileFoundation(
     var id:String,
     var vipId:String,
     var name:String,
     var isCar:String,
     var isConstructionTool:String,
+    var workDia:String,
+    var location:String,
     var foundTime:String,
     var founder:String,
     var alterTime:String,

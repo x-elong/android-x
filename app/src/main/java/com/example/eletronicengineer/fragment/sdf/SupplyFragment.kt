@@ -220,22 +220,22 @@ class SupplyFragment:Fragment(){
                     val json=JSONObject()
                     when(arguments!!.getInt("type")) {
                         Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
-                            json.put("majorNetwork",
+                            json.put("MajorNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
-                            json.put("distribuionNetwork",
+                            json.put("DistribuionNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
-                            json.put("powerTransformation",
+                            json.put("PowerTransformation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
-                            json.put("measureDesign",
+                            json.put("MeasureDesign",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString()))
                         }
@@ -248,7 +248,7 @@ class SupplyFragment:Fragment(){
                         }
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
-                            json.put("pileFoundation",
+                            json.put("PileFoundation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                 .put("workDia",workDia.toString())
@@ -370,10 +370,12 @@ class SupplyFragment:Fragment(){
             }
             Constants.FragmentType.PERSONAL_OTHER_TYPE.ordinal->{
                 adapter=adapterGenerate.PersonalService()
-                adapter.mData[0].options=MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[1].singleDisplayRightTitle
-                adapter.mData[1].options=MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[1].inputSingleTitle=adapter.mData[2].selectTitle
+                adapter.mData[0].singleDisplayRightContent = "其他"
+                adapter.mData[1].selectOption1Items = listOf("其他")
+//                adapter.mData[0].options=MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[0].inputSingleTitle=adapter.mData[1].singleDisplayRightTitle
+//                adapter.mData[1].options=MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[1].inputSingleTitle=adapter.mData[2].selectTitle
             }
             //团队服务——变电施工
             Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{
@@ -522,8 +524,6 @@ class SupplyFragment:Fragment(){
             //三方其他
             Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{
                 adapter=adapterGenerate.ServiceInformationEntry()
-                adapter.mData[0].options=MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
             }
         }
         return adapter

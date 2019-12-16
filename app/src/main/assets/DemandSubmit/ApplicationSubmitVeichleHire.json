@@ -25,15 +25,15 @@
     "singleDisplayRightContent":"***"
   },
   {
-    "type":"MULTI_BUTTON",
-    "buttonTitle":"车辆清册：",
-    "buttonName":["上传"],
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"车辆清册:",
+    "singleDisplayRightContent":"  上传  ",
     "key": "enrollCar",
     "sendFormat": "JsonArray"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",
-    "textAreaTitle":"备注",
+    "textAreaTitle":"附加信息:",
     "textAreaContent":"",
     "necessary":true
   }
