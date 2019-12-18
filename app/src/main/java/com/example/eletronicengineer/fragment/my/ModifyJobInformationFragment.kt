@@ -88,10 +88,7 @@ class ModifyJobInformationFragment :Fragment(){
                     var json= JSONObject()
                     json.put("id",id)
                     json.put("requirementType", title)
-                    if((title in arrayListOf("需求个人","需求三方"))){
-                        requirmentTeamServeId = ""
-                    }else
-                        json.put("requirmentTeamServeId",arguments!!.getString("requirmentTeamServeId"))
+                    json.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
                     networkAdapter.generateJsonRequestBody(json).subscribe {
                         val result = putSimpleMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
                             .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
@@ -189,9 +186,6 @@ class ModifyJobInformationFragment :Fragment(){
             Constants.FragmentType.PERSONAL_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 initDemandIndividual(adapter)
-                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
-                adapter.mData[0].inputSingleContent = adapter.mData[0].singleDisplayRightContent
                 adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
                 adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
                 adapter.mData[1].inputSingleContent = adapter.mData[1].selectContent
@@ -349,8 +343,12 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[9].selectContent = requirementPersonDetail.journeySalary
         adapter.mData[10].selectContent = requirementPersonDetail.journeyCarFare
         adapter.mData[11].inputUnitContent = requirementPersonDetail.needPeopleNumber
-        adapter.mData[12].inputMultiContent = requirementPersonDetail.salaryStandard
-        adapter.mData[12].inputMultiSelectUnit = requirementPersonDetail.salaryUnit
+        if(requirementPersonDetail.salaryStandard!="-1.0"){
+            adapter.mData[12].inputMultiContent = requirementPersonDetail.salaryStandard
+            adapter.mData[12].inputMultiSelectUnit = requirementPersonDetail.salaryUnit
+        }else{
+            adapter.mData[12].inputMultiSelectUnit = "面议"
+        }
         adapter.mData[13].singleDisplayRightContent = requirementPersonDetail.name
         adapter.mData[14].singleDisplayRightContent = requirementPersonDetail.phone
         adapter.mData[15].inputUnitContent = requirementPersonDetail.validTime
@@ -368,6 +366,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementPowerTransformation.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementPowerTransformation.requirementVariety
         adapter.mData[1].inputSingleContent = requirementPowerTransformation.projectName
         adapter.mData[2].selectContent = requirementPowerTransformation.projectSite.replace(" / ", " ")
@@ -382,8 +382,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -391,6 +391,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -445,8 +446,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -486,6 +487,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementMajorNetWork.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementMajorNetWork.requirementVariety
         adapter.mData[1].inputSingleContent = requirementMajorNetWork.projectName
         adapter.mData[2].selectContent = requirementMajorNetWork.projectSite.replace(" / ", " ")
@@ -500,8 +503,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -509,6 +512,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -563,8 +567,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -605,6 +609,9 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementDistributionNetwork.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementDistributionNetwork.requirementVariety
         adapter.mData[1].inputSingleContent = requirementDistributionNetwork.projectName
         adapter.mData[2].selectContent = requirementDistributionNetwork.projectSite.replace(" / ", " ")
@@ -619,8 +626,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -628,6 +635,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -682,8 +690,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -724,6 +732,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementMeasureDesign.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementMeasureDesign.requirementVariety
         adapter.mData[1].inputSingleContent = requirementMeasureDesign.projectName
         adapter.mData[2].selectContent = requirementMeasureDesign.projectSite.replace(" / ", " ")
@@ -738,8 +748,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -747,6 +757,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -801,8 +812,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -844,6 +855,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementCaravanTransport.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementCaravanTransport.requirementVariety
         adapter.mData[1].inputSingleContent = requirementCaravanTransport.projectName
         adapter.mData[2].selectContent = requirementCaravanTransport.projectSite.replace(" / ", " ")
@@ -891,6 +904,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementPileFoundation.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementPileFoundation.requirementVariety
         adapter.mData[1].inputSingleContent = requirementPileFoundation.projectName
         adapter.mData[2].selectContent = requirementPileFoundation.projectSite.replace(" / ", " ")
@@ -906,8 +921,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -915,6 +930,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -971,6 +987,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementUnexcavation.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementUnexcavation.requirementVariety
         adapter.mData[1].inputSingleContent = requirementUnexcavation.projectName
         adapter.mData[2].selectContent = requirementUnexcavation.projectSite.replace(" / ", " ")
@@ -986,8 +1004,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -995,6 +1013,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1051,6 +1070,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementTest.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementTest.requirementVariety
         adapter.mData[1].inputSingleContent = requirementTest.projectName
         adapter.mData[2].selectContent = requirementTest.projectSite.replace(" / ", " ")
@@ -1065,8 +1086,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -1074,6 +1095,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1138,8 +1160,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -1181,6 +1203,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementSpanWoodenSupprt.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementSpanWoodenSupprt.requirementVariety
         adapter.mData[1].inputSingleContent = requirementSpanWoodenSupprt.projectName
         adapter.mData[2].selectContent = requirementSpanWoodenSupprt.projectSite.replace(" / ", " ")
@@ -1195,8 +1219,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -1204,6 +1228,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1247,8 +1272,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -1289,6 +1314,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementRunningMaintain.requirmentTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementRunningMaintain.requirementVariety
         adapter.mData[1].inputSingleContent = requirementRunningMaintain.projectName
         adapter.mData[2].selectContent = requirementRunningMaintain.projectSite.replace(" / ", " ")
@@ -1303,8 +1330,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -1312,6 +1339,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1354,8 +1382,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","成员清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.positionType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needPeopleNumber
                 mData[2].inputMultiSelectUnit = j.salaryStandard.substring(j.salaryStandard.indexOf("元"))
@@ -1405,6 +1433,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+        UnSerializeDataBase.inventoryId = requirementLeaseCar.requirementTeamServeId
         adapter.mData[0].singleDisplayRightContent = requirementLeaseCar.requirementVariety
         adapter.mData[1].inputSingleContent = requirementLeaseCar.projectName
         adapter.mData[2].selectContent = requirementLeaseCar.projectSite.replace(" / ", " ")
@@ -1419,8 +1449,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","车辆清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].selectContent = j.carType
-                mData[0].inventoryIdKey = "requirementTeamServeId"
-                mData[0].inventoryId = j.requirementTeamServeId
+                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
+                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
                 mData[0].id = j.id
                 mData[1].inputUnitContent = j.needCarNumber
                 mData[2].selectContent = if(j.construction.toInt()==1) "箱式" else "敞篷"
@@ -1428,6 +1458,7 @@ class ModifyJobInformationFragment :Fragment(){
                 mData[4].selectContent = if(j.isDriver.toInt()==1) "是" else "否"
                 mData[5].inputUnitContent = j.haveDriver
                 mData[6].inputUnitContent = j.noDriver
+                if(j.remark!=null)
                 mData[8].textAreaContent = j.remark
                 itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
@@ -1448,12 +1479,16 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[7].selectContent = requirementLeaseCar.journeyCarFare
         adapter.mData[8].selectContent = requirementLeaseCar.journeySalary
 
-        adapter.mData[9].inputMultiContent = requirementLeaseCar.salaryStandard
-        adapter.mData[9].inputMultiSelectUnit = requirementLeaseCar.salaryUnit
+        if(requirementLeaseCar.salaryStandard!="-1.0"){
+            adapter.mData[9].inputMultiContent = requirementLeaseCar.salaryStandard
+            adapter.mData[9].inputMultiSelectUnit = requirementLeaseCar.salaryUnit
+        }else{
+            adapter.mData[9].inputMultiSelectUnit = "面议"
+        }
         adapter.mData[10].singleDisplayRightContent = requirementLeaseCar.name
         adapter.mData[11].singleDisplayRightContent = requirementLeaseCar.phone
         adapter.mData[12].inputUnitContent = requirementLeaseCar.validTime
-
+        if(requirementLeaseCar.additonalExplain!=null)
         adapter.mData[14].textAreaContent = requirementLeaseCar.additonalExplain
     }
 
@@ -1469,6 +1504,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+        UnSerializeDataBase.inventoryId = requirementLeaseConstructionTool.requiremenLeaseServeId
         adapter.mData[0].singleDisplayRightContent = requirementLeaseConstructionTool.requirementVariety
         adapter.mData[1].inputSingleContent = requirementLeaseConstructionTool.projectName
         adapter.mData[2].selectContent = requirementLeaseConstructionTool.projectSite.replace(" / ", " ")
@@ -1485,11 +1522,12 @@ class ModifyJobInformationFragment :Fragment(){
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].inputSingleContent = j.projectName
                 mData[0].id = j.id
-                mData[0].inventoryIdKey = "requiremenLeaseServeId"
-                mData[0].inventoryId = j.requiremenLeaseServeId
+                UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+                UnSerializeDataBase.inventoryId = j.requiremenLeaseServeId
                 mData[1].inputSingleContent = j.specificationsModels
                 mData[2].inputSingleContent = j.units
                 mData[3].inputSingleContent = j.quantity
+                if(j.detailsExplain!=null)
                 mData[6].textAreaContent = j.detailsExplain
                 itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItems[itemMultiStyleItems.size-1].jumpListener = View.OnClickListener {
@@ -1514,6 +1552,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[9].singleDisplayRightContent = requirementLeaseConstructionTool.name
         adapter.mData[10].singleDisplayRightContent = requirementLeaseConstructionTool.phone
         adapter.mData[11].inputUnitContent = requirementLeaseConstructionTool.validTime
+        if(requirementLeaseConstructionTool.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseConstructionTool.additonalExplain
     }
 
@@ -1528,6 +1567,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+        UnSerializeDataBase.inventoryId = requirementLeaseMachinery.requiremenLeaseServeId
         adapter.mData[0].singleDisplayRightContent = requirementLeaseMachinery.requirementVariety
         adapter.mData[1].inputSingleContent = requirementLeaseMachinery.projectName
         adapter.mData[2].selectContent = requirementLeaseMachinery.projectSite.replace(" / ", " ")
@@ -1544,11 +1585,12 @@ class ModifyJobInformationFragment :Fragment(){
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].inputSingleContent = j.projectName
                 mData[0].id = j.id
-                mData[0].inventoryIdKey = "requiremenLeaseServeId"
-                mData[0].inventoryId = j.requiremenLeaseServeId
+                UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+                UnSerializeDataBase.inventoryId = j.requiremenLeaseServeId
                 mData[1].inputSingleContent = j.specificationsModels
                 mData[2].inputSingleContent = j.units
                 mData[3].inputSingleContent = j.quantity
+                if(j.detailsExplain!=null)
                 mData[6].textAreaContent = j.detailsExplain
                 itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItems[itemMultiStyleItems.size-1].jumpListener = View.OnClickListener {
@@ -1574,6 +1616,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[9].singleDisplayRightContent = requirementLeaseMachinery.name
         adapter.mData[10].singleDisplayRightContent = requirementLeaseMachinery.phone
         adapter.mData[11].inputUnitContent = requirementLeaseMachinery.validTime
+        if(requirementLeaseMachinery.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseMachinery.additonalExplain
     }
 
@@ -1588,6 +1631,8 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
+        UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+        UnSerializeDataBase.inventoryId = requirementLeaseFacility.requiremenLeaseServeId
         adapter.mData[0].singleDisplayRightContent = requirementLeaseFacility.requirementVariety
         adapter.mData[1].inputSingleContent = requirementLeaseFacility.projectName
         adapter.mData[2].selectContent = requirementLeaseFacility.projectSite.replace(" / ", " ")
@@ -1604,11 +1649,12 @@ class ModifyJobInformationFragment :Fragment(){
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].inputSingleContent = j.projectName
                 mData[0].id = j.id
-                mData[0].inventoryIdKey = "requiremenLeaseServeId"
-                mData[0].inventoryId = j.requiremenLeaseServeId
+                UnSerializeDataBase.inventoryIdKey = "requiremenLeaseServeId"
+                UnSerializeDataBase.inventoryId = j.requiremenLeaseServeId
                 mData[1].inputSingleContent = j.specificationsModels
                 mData[2].inputSingleContent = j.units
                 mData[3].inputSingleContent = j.quantity
+                if(j.detailsExplain!=null)
                 mData[6].textAreaContent = j.detailsExplain
                 itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem = mData
                 itemMultiStyleItems[itemMultiStyleItems.size-1].jumpListener = View.OnClickListener {
@@ -1634,6 +1680,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[9].singleDisplayRightContent = requirementLeaseFacility.name
         adapter.mData[10].singleDisplayRightContent = requirementLeaseFacility.phone
         adapter.mData[11].inputUnitContent = requirementLeaseFacility.validTime
+        if(requirementLeaseFacility.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseFacility.additonalExplain
     }
 
@@ -1650,8 +1697,6 @@ class ModifyJobInformationFragment :Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
-        adapter.mData[0].singleDisplayRightContent = requirementThirdPartyDetail.requirementVariety
-
         val itemMultiStyleItems = ArrayList<MultiStyleItem>()
         val thirdLists = requirementThirdPartyDetail.thirdLists
         if(thirdLists!=null)
@@ -1662,8 +1707,8 @@ class ModifyJobInformationFragment :Fragment(){
                 bundle.putString("type","三方服务清册发布")
                 mData = adapterGenerate.PublishDetailList(bundle).mData
                 mData[0].inputSingleContent = j.projectName
-                mData[0].inventoryId=j.requirementThirdPartyId
-                mData[0].inventoryIdKey = "requirementThirdPartyId"
+                UnSerializeDataBase.inventoryId=j.requirementThirdPartyId
+                UnSerializeDataBase.inventoryIdKey = "requirementThirdPartyId"
                 mData[0].id = j.id
                 mData[1].inputSingleContent = j.specificationsModels
                 mData[2].inputSingleContent = j.units

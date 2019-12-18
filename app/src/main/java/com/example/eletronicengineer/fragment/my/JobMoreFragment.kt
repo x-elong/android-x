@@ -140,9 +140,9 @@ class JobMoreFragment : Fragment() {
 
                             data.needPeopleNumber
 
-                        adapter.mData[12].singleDisplayRightContent =
-
+                        adapter.mData[12].singleDisplayRightContent = if(data.salaryStandard!="-1.0")
                             "${data.salaryStandard} ${data.salaryUnit}"
+                        else "面议"
 
                         adapter.mData[14].singleDisplayRightContent =
                             data.name
@@ -1902,8 +1902,8 @@ class JobMoreFragment : Fragment() {
 
                             data.journeySalary
 
-                        if(data.salaryUnit=="面议"){
-                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        if(data.salaryStandard=="-1.0"){
+                            adapter.mData[9].singleDisplayRightContent= "面议"
                         }else {
                             adapter.mData[9].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
                         }
@@ -1917,7 +1917,7 @@ class JobMoreFragment : Fragment() {
 
                         adapter.mData[13].singleDisplayRightContent =
                             data.validTime
-
+                        if(data.additonalExplain!=null)
                         adapter.mData[14].singleDisplayRightContent = data.additonalExplain
                         mView.rv_job_more_content.adapter = adapter
                         mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
@@ -1928,6 +1928,7 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requirementTeamServeId",data.requirementTeamServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
@@ -2039,6 +2040,7 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
@@ -2149,6 +2151,7 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
@@ -2259,6 +2262,7 @@ class JobMoreFragment : Fragment() {
                                 adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
                             )
                             bundle.putString("id", data.id)
+                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,

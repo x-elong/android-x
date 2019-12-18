@@ -131,9 +131,9 @@ class ApplicationSubmitFragment:Fragment() {
                         ).put("name",UnSerializeDataBase.idCardName).put("phone",UnSerializeDataBase.userPhone)
                     }
                 }
+                val loadingDialog = LoadingDialog(mView.context,"正在提交...")
+                loadingDialog.show()
                 networkAdapter.generateJsonRequestBody(json).subscribe {
-                    val loadingDialog = LoadingDialog(mView.context, "正在报名...", R.mipmap.ic_dialog_loading)
-                    loadingDialog.show()
                     val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+adapter!!.urlPath).subscribeOn(
                         Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

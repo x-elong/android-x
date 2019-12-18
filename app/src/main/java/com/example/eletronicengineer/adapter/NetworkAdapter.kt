@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
@@ -22,6 +23,8 @@ import com.example.eletronicengineer.db.My.*
 import com.example.eletronicengineer.fragment.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
+import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
+import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.model.*
 import com.example.eletronicengineer.utils.*
@@ -105,9 +108,8 @@ class NetworkAdapter {
                     "Long String" -> {
                         val longAlsoString = parseToLongAndString(i)
                         val keys = i.key.split(" ")
-                        if (longAlsoString.second != i.inputMultiAbandonInput)
                             jsonObject.put(keys[0], longAlsoString.first)
-                        jsonObject.put(keys[1], longAlsoString.second)
+                            jsonObject.put(keys[1], longAlsoString.second)
                     }
                     "JsonArray"->
                     {
@@ -170,7 +172,6 @@ class NetworkAdapter {
                         }
                     }
                 }
-              Log.i(" xxxxxxxxxxxxxxxxxxc","")
                 //建立网络请求体 (类型，内容)
                 val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
                 it.onNext(requestBody)
@@ -541,10 +542,6 @@ class NetworkAdapter {
     fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
     {
         val jsonObject = JSONObject()
-        if(mData[0].inventoryIdKey!="" && mData[0].inventoryId!="" && mData[0].id!=""){
-            jsonObject.put(mData[0].inventoryIdKey,mData[0].id)
-            jsonObject.put("id",mData[0].id)
-        }
         for (i in mData) {
             when (i.sendFormat) {
                 "Long" -> {
@@ -1875,7 +1872,7 @@ class NetworkAdapter {
                         )
                     )
                 for (j in entity2) {
-                    Log.i("", j.aerialExcavationSoilProportion.toString())
+                    Log.i("xxx", j.aerialExcavationSoilProportion.toString())
                     // val json = JSONObject(j.aerialExcavationSoilProportion.toString())
                     val expandList: MutableList<MultiStyleItem> = ArrayList()
                     val shape =
@@ -5661,6 +5658,40 @@ class NetworkAdapter {
                         }
                     )
         }
+    }
+
+    fun upImage(imagePath: String,fragment:Fragment){
+        val loadingDialog = LoadingDialog(context,"正在上传...")
+        loadingDialog.show()
+        var result = ""
+        val file = File(imagePath)
+        val imagePart = MultipartBody.Part.createFormData("file", file.name,
+            RequestBody.create(MediaType.parse("image/*"), file))
+        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                loadingDialog.dismiss()
+                val json = JSONObject(it.string())
+                Log.i("json",json.toString())
+                if(json.getBoolean("success")){
+                    ToastHelper.mToast(context,"上传成功")
+                    result = json.getString("httpUrl")
+                    val mImagePaths = arrayListOf(result)
+                    if(fragment is UploadPhoneFragment) {
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is UpIdCardFragment){
+                        fragment.refresh(mImagePaths)
+                    }else if(fragment is ImageFragment){
+                        fragment.refresh(mImagePaths)
+                    }
+                }else{
+                    ToastHelper.mToast(context,"上传失败")
+                }
+            },
+            {
+                loadingDialog.dismiss()
+                ToastHelper.mToast(context,"上传失败")
+                it.printStackTrace()
+            })
     }
 
     fun upImage(data: Serializable, baseUrl: String, key: String, fragment: ImageFragment): String {

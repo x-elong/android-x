@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
 import com.example.eletronicengineer.distributionFileSave.*
-import com.example.eletronicengineer.utils.AdapterGenerate
-import kotlinx.android.synthetic.main.fragment_demand_display.view.*
 import kotlinx.android.synthetic.main.fragment_project_display.view.*
 
 class ProjectListDetailFragment:Fragment() {
@@ -35,10 +31,10 @@ class ProjectListDetailFragment:Fragment() {
     lateinit var listData4: requirementLeaseProjectList
     lateinit var listData5: thirdLists
 
-    lateinit var listData7:provideCrewLists
-    lateinit var listData8:provideTransportMachines
-    lateinit var listData9:constructionToolLists
-    lateinit var listData10:leaseList
+    lateinit var listData7:ProvideCrewLists
+    lateinit var listData8:ProvideTransportMachines
+    lateinit var listData9:ConstructionToolLists
+    lateinit var listData10:LeaseList
     var needPeopleNumberNum:Int=0
     var mdata=Bundle()
     lateinit var mView: View
@@ -181,7 +177,7 @@ class ProjectListDetailFragment:Fragment() {
 
 //            8->//车辆清册
 //            {
-//                adapter = adapterGenerate.provideTransportMachines()
+//                adapter = adapterGenerate.ProvideTransportMachines()
 //                adapter.mData[0].singleDisplayRightContent = if(listData8.carNumber==null){"无数据"}else{ listData8.carNumber}
 //                adapter.mData[1].singleDisplayRightContent = if(listData8.carType==null){"无数据"}else{ listData8.carType }
 //                adapter.mData[2].singleDisplayRightContent = if(listData8.maxPassengers==null){"无数据"}else{ listData8.maxPassengers }
@@ -195,7 +191,7 @@ class ProjectListDetailFragment:Fragment() {
 //            }
 //            9->//机械清册
 //            {
-//                adapter = adapterGenerate.constructionToolLists()
+//                adapter = adapterGenerate.ConstructionToolLists()
 //                adapter.mData[0].singleDisplayRightContent = if(listData9.serialNumber==null){"无数据"}else{ listData9.serialNumber }
 //                adapter.mData[1].singleDisplayRightContent = if(listData9.type==null){"无数据"}else{ listData9.type }
 //                adapter.mData[2].singleDisplayRightContent = if(listData9.specificationsModel==null){"无数据"}else{ listData9.specificationsModel }
@@ -207,7 +203,7 @@ class ProjectListDetailFragment:Fragment() {
 //            }
 //            10->//工器具
 //            {
-//               adapter = adapterGenerate.constructionToolLists()
+//               adapter = adapterGenerate.ConstructionToolLists()
 //                adapter.mData[0].singleDisplayRightContent = if(listData10.serialNumber==null){"无数据"}else{ listData10.serialNumber }
 //                adapter.mData[1].singleDisplayRightContent = if(listData10.type==null){"无数据"}else{ listData10.type }
 //                adapter.mData[2].singleDisplayRightContent = if(listData10.specificationsModels==null){"无数据"}else{ listData10.specificationsModels }

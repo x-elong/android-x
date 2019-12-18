@@ -67,12 +67,12 @@ dependencies {
 
     implementation 'com.lxj:xpopup:1.6.2'
 
-    implementation 'com.lcw.library:imagepicker:2.2.2'
+    implementation 'com.lcw.library:imagepicker:2.2.7'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     implementation 'com.carson_ho:SearchLayout:1.0.1'
     //圆形图片
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 
     implementation 'com.chooseedittext:library:1.0.0'
 
@@ -85,4 +85,5 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.4'
     //可以手势缩放图片
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.github.YancyYe:GalleryPick:1.2.1'
 }

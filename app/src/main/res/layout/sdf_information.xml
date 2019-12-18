@@ -56,12 +56,12 @@
         android:id="@+id/supply_announcement_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
         android:layout_marginTop="10dp"
         android:text="供应"
         android:textColor="@drawable/text_style3"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/demand_release_tv"
+        app:layout_constraintEnd_toEndOf="@+id/supply_announcement_ib"
+        app:layout_constraintStart_toStartOf="@+id/supply_announcement_ib"
         app:layout_constraintTop_toBottomOf="@+id/supply_announcement_ib"
         tools:ignore="MissingConstraints" />
 
@@ -82,12 +82,12 @@
         android:id="@+id/demand_release_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
         android:text="需求"
         android:textColor="@drawable/text_style3"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/demand_release_ib"
+        app:layout_constraintStart_toStartOf="@+id/demand_release_ib"
         app:layout_constraintTop_toBottomOf="@+id/demand_release_ib"
         tools:ignore="MissingConstraints" />
 
@@ -108,12 +108,12 @@
         android:id="@+id/hangye_release_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
         android:layout_marginTop="10dp"
         android:text="行业黄页"
         android:textColor="@drawable/text_style3"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/supply_announcement_tv"
+        app:layout_constraintEnd_toEndOf="@+id/yellow_pages_ib"
+        app:layout_constraintStart_toStartOf="@+id/yellow_pages_ib"
         app:layout_constraintTop_toBottomOf="@+id/yellow_pages_ib"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

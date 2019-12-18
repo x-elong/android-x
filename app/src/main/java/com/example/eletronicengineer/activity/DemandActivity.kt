@@ -17,6 +17,7 @@ import com.bin.david.form.data.table.TableData
 import com.codekidlabs.storagechooser.StorageChooser
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.sdf.*
 import com.example.eletronicengineer.model.Constants
@@ -74,14 +75,8 @@ class DemandActivity : AppCompatActivity() {
         Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
         {
           val mImagePaths = data!!.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES)
-          val fragment=this@DemandActivity.supportFragmentManager.findFragmentByTag("Capture")
-          if(fragment is UploadPhoneFragment) {
-            fragment.refresh(mImagePaths[0])
-          }else if(fragment is UpIdCardFragment){
-            fragment.refresh(mImagePaths)
-          }else if(fragment is ImageFragment){
-            fragment.refresh(mImagePaths)
-          }
+          val fragment=this@DemandActivity.supportFragmentManager.findFragmentByTag("Capture")!!
+          NetworkAdapter(this).upImage(mImagePaths[0],fragment)
         }
       }
     }

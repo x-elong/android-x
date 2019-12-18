@@ -20,9 +20,9 @@ import java.io.File
 object UnSerializeDataBase
 {
   const val ip = "www.ycdlfw.com"
-//  const val upmsBasePath = "http://192.168.1.132:8026/"
-//  const val dmsBasePath = "http://192.168.1.132:8012/"
-//  const val mineBasePath = "http://192.168.1.132:8032/"
+//  const val upmsBasePath = "http://192.168.1.149:8026/"
+//  const val dmsBasePath = "http://${ip}/dms/"
+//  const val mineBasePath = "http://192.168.1.149:8032/"
   const val upmsBasePath = "http://${ip}/upms/"
   const val dmsBasePath = "http://${ip}/dms/"
   const val mineBasePath = "http://${ip}/mine/"
@@ -34,7 +34,9 @@ object UnSerializeDataBase
   var userVipLevel = 0
   var isLogined=false
   var vipOpenState = -1
-  var isCertificate = false
+  var isCertificate = true
+  var inventoryIdKey = ""
+  var inventoryId = ""
   //需求模块 由于是填完后一次性上传 故只保存图片和文件
   val fileList:MutableList<FileMap> =ArrayList()
   val imgList:MutableList<BitmapMap> =ArrayList()

@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyCaravanTransport(
     var id:String,
     var vipId:String,
@@ -16,4 +18,4 @@ class SupplyCaravanTransport(
     var issuerBelongSite:String,
     var issuerName:String,
     var phone:String
-)
+): Serializable

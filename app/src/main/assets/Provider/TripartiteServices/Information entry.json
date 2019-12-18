@@ -2,7 +2,7 @@
     {
         "type":"SINGLE_DISPLAY_RIGHT",
         "singleDisplayRightTitle":"服务类型",
-        "singleDisplayRightContent":"",
+        "singleDisplayRightContent":"其他",
         "key": "serveType",
         "sendFormat": "String"
     },

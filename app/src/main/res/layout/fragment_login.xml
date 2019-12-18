@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <View
-        android:id="@+id/view5"
+        android:id="@+id/view_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="#218bfc"
@@ -20,26 +20,25 @@
         android:id="@+id/tv_login_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="8dp"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/view_login"
+        app:layout_constraintTop_toTopOf="@+id/view_login"
+        app:layout_constraintBottom_toBottomOf="@+id/view_login"/>
 
     <TextView
         android:id="@+id/tv_login_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="登录"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view_login"
+        app:layout_constraintEnd_toEndOf="@+id/view_login"
+        app:layout_constraintStart_toStartOf="@+id/view_login"
+        app:layout_constraintTop_toTopOf="@+id/view_login"
         tools:ignore="MissingConstraints" />
 
     <TextView

@@ -21,16 +21,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view_problem"
+        app:layout_constraintTop_toTopOf="@+id/view_problem" />
 
     <TextView
         android:id="@+id/tv_problem_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="遇到问题"
         android:textColor="@color/white"

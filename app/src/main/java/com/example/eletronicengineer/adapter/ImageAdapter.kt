@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.aninterface.Image
+import com.example.eletronicengineer.utils.GlideImageLoader
 import com.example.eletronicengineer.utils.GlideLoader
 import kotlinx.android.synthetic.main.image.view.*
 
@@ -48,11 +49,11 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>{
         }
 
         if(position==mImageList.size-1 && image.imagePath==""){
-            GlideLoader().loadImage(holder.ivImage,R.drawable.photo)
+            GlideImageLoader().displayImage(holder.ivImage,R.drawable.photo)
 //            holder.ivImage.setImageResource(R.drawable.add)
         }
         else
-            GlideLoader().loadImage(holder.ivImage,image.imagePath)
+            GlideImageLoader().displayImage(holder.ivImage,image.imagePath)
         if(image.imageListener==null){
             holder.ivImage.setOnClickListener {
                 val intent = Intent(holder.ivImage.context, ImageDisplayActivity::class.java)

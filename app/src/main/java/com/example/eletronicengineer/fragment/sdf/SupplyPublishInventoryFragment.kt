@@ -1,22 +1,23 @@
 package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandActivity
-import com.example.eletronicengineer.activity.DemandDisplayActivity
+import com.example.eletronicengineer.activity.MyRegistrationActivity
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.activity.SupplyActivity
+import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.distributionFileSave.Supply
+import com.example.eletronicengineer.fragment.my.SupplyModifyJobInformationFragment
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
 class SupplyPublishInventoryFragment:Fragment() {
@@ -34,9 +35,15 @@ class SupplyPublishInventoryFragment:Fragment() {
         var adapter: RecyclerviewAdapter?=null
         var frame = R.id.frame_supply
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            mView = inflater.inflate(R.layout.fragemt_with_inventory, container, false)
+            mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
             type = arguments!!.getString("type")
             mView.tv_inventory_title.setText(type+"列表")
+            if(activity is MyReleaseActivity)
+                frame = R.id.frame_my_release
+            else if(activity is MyRegistrationActivity)
+                frame = R.id.frame_my_registration
+            else if(activity is SupplyDisplayActivity)
+                frame = R.id.frame_display_supply
             if(adapter==null){
                 val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
                 if(multiStyleItemList.isEmpty())
@@ -91,7 +98,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         private fun switchAdapter():List<MultiStyleItem>{
             val adapterGenerate= AdapterGenerate()
             adapterGenerate.context= context!!
-            adapterGenerate.activity=activity as SupplyActivity
+            adapterGenerate.activity=activity as AppCompatActivity
             val mData:List<MultiStyleItem>
             when(type){
                 "成员清册发布"->
@@ -155,8 +162,8 @@ class SupplyPublishInventoryFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",mData[mData.size-1].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as SupplyActivity,SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
-                        R.id.frame_supply,"")
+                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
+                        frame,"")
                 }
                 adapter!!.mData = mData
                 adapter!!.notifyItemInserted(mData.size-1)
@@ -179,7 +186,10 @@ class SupplyPublishInventoryFragment:Fragment() {
                     adapter!!.mData[adapter!!.mData[0].selected].necessary = true
                 }
             }
-            val fragment = activity!!.supportFragmentManager.findFragmentByTag("register") as SupplyFragment
-            fragment.update(adapter!!.mData)
+            val fragment = activity!!.supportFragmentManager.findFragmentByTag("register")
+            if(fragment is SupplyModifyJobInformationFragment)
+                fragment.update(adapter!!.mData)
+            else if(fragment is SupplyFragment)
+                fragment.update(adapter!!.mData)
         }
 }

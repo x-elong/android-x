@@ -14,12 +14,16 @@
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"马匹数量",
-    "inputUnit":"(匹)"
+    "inputUnit":"(匹)",
+    "key": "horseNumber",
+    "sendFormat": "String"
   },
   {
-    "type":"INPUT_WITH_UNIT",
-    "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "负责人所在地",
+    "singleDisplayRightContent": "",
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
@@ -31,10 +35,15 @@
     "singleDisplayRightTitle": "负责人电话",
     "singleDisplayRightContent": ""
   },
-  {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"可服务地域",
-    "necessary":false
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "可服务地域",
+        "necessary": false
+    },
+    {
+    "type":"INPUT_WITH_UNIT",
+    "inputUnitTitle":"有效期",
+    "inputUnit":"(天)"
   },
   {
     "type": "HINT",

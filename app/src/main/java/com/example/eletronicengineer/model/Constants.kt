@@ -167,6 +167,9 @@ class Constants {
                 const val upateDTO1 = "TUpmsUser/upateDTO1/"
                 const val upateBankCar = "TUpmsUser/upateBankCar/"
 
+                //邮箱
+                const val sendEmailCode= "Mail/sendMailCode/{receiver}"
+                const val bindEmail = "Mail/validMailCode/{receiver}/{mailCode}"
                 //个人学历
                 const val getEducationBackground = "TUpmsUser/getAllEducationBackground/"
                 const val updateEducationBackground = "TUpmsUser/updateEducationBackground/"
@@ -198,21 +201,31 @@ class Constants {
                 const val getDemandGroup = "RequirementTeam/getRequirementTeamDTOListByFounder/"
                 const val getDemandLease = "RequirementLease/getRequirementLeaseDTOListByFounder/"
                 const val getDemandTripartite = "RequirementThirdParty/getAllByFounder/"
-                const val getPersonalIssue = "PersonalIssue/insertOneselfPersonalIssue/{page}/{pageSize}"
+                const val getPersonalIssue = "PersonalIssue/insertListPersonalIssueBytoken/"
                 const val getTeamService = "RunningMaintain/getRunningMaintainALLDTOPerson/"
-                const val getLeaseService = "LeaseCar/getAllByVipId/{page}/{pageSize}"
-                const val getThridService = "Third/insertOneselfThirdServices/{pageSize}/{page}"
+                const val getLeaseService = "Lease/getLeaseDTOListByFounder/"
+                const val getThridService = "Third/selectByToken/"
 
                 const val  getPersonalIssueMore = "PersonalIssue/insertPersonalIssue/{id}"
                 const val getRequirementPersonMore = "RequirementPerson/getRequirementPerson/{id}"
                 /**
-                 * 报名
+                 * @报名
                  */
                 const val getRegistration = "LeaseLoggingCheck/getByVip/"
                 const val getPersonRequirement = "PersonRequirementInformationCheck/getList2PersonRequirementInformationCheck/"
                 const val getRequirementTeam = "RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck2/"
                 const val getLease= "LeaseLoggingCheck/getList2LeaseLoggingCheckController/"
                 const val getRequirementThird= "RequirementThirdLoggingCheck/getList2RequirementThirdLoggingCheck/"
+
+                //需求个人
+                const val deletePersonRequirementInformationCheck="PersonRequirementInformationCheck/deletePersonRequirementInformationCheck/{id}"
+                //需求团队
+                const val deleteRequirementTeamLoggingCheck= "RequirementTeamLoggingCheck/deleteRequirementTeamLoggingCheck/{id}"
+                //车辆租赁
+                const val deleteLeaseLoggingCheckController = "LeaseLoggingCheck/deleteLeaseLoggingCheckController/{id}"
+                //需求三方
+                const val deleteRequirementThirdLoggingCheck="RequirementThirdLoggingCheck/deleteRequirementThirdLoggingCheck/{id}"
+
                 /**
                  * @认证
                  */
@@ -353,7 +366,7 @@ class Constants {
                 //设备租赁
                 const val deleteRequirementLeaseFacility = "RequirementLeaseFacility/deleteRequirementLeaseFacility/{id}"
                 //机械租赁
-                const val deleteRequirementLeaseMachinery = "/RequirementLeaseMachinery/deleteRequirementLeaseMachinery/{id}"
+                const val deleteRequirementLeaseMachinery = "RequirementLeaseMachinery/deleteRequirementLeaseMachinery/{id}"
                 //需求三方
                 const val deleteRequirementThirdParty="RequirementThirdParty/deleteRequirementThirdParty/{id}"
             }
@@ -363,47 +376,75 @@ class Constants {
             companion object {
                 //个人劳务
                 const val PersonalService = "PersonalIssue/savePersonalIssue/"
-                //主网
-                const val mainPath = "MajorNetwork/"
-                const val saveMajorNetwork = mainPath + "saveMajorNetwork"
+                const val  updatePersonalIssue = "PersonalIssue/updatePersonalIssue/"
+                const val deletePersonalIssue = "PersonalIssue/deletePersonalIssue/{id}"
+
+
                 //      const val deleteMajorNetworkById= mainPath+"/deleteMajorNetwork/{id}"
 //      const val deleteMajorNetworkAll= mainPath+"/deleteMajorNetwork"
-                const val updateMajorNetwork = mainPath + "updateMajorNetwork"
-                const val getAllMajorNetwork = mainPath + "selectAllMajorNetwork"
 
                 //车辆租赁
                 const val requirementLeaseCar = "LeaseCar/saveLeaseCar/"
+                const val deleteLeaseCar = "LeaseCar/deleteLeaseCar/{id}"
+                const val  updateLeaseCar = "LeaseCar/updateLeaseCar/"
                 //工器具
                 const val LcTool = "LeaseConstructionTool/insertLeaseConstructionTool/"
+                const val deleteLeaseConstructionTool = "LeaseConstructionTool/deleteLeaseConstructionTool/{id}"
+                const val  updateLeaseConstructionTool = "LeaseConstructionTool/updateLeaseConstructionTool/"
                 //设备
                 const val LeaseFacility = "LeaseFacility/insertLeaseFacility/"
+                const val deleteLeaseFacility = "LeaseFacility/deleteLeaseFacility/{id}"
+                const val  updateLeaseFacility = "LeaseFacility/updateLeaseFacility/"
                 //机械
                 const val LeaseMachinery = "LeaseMachinery/insertLeaseMachinery/"
-
+                const val  deleteLeaseMachinery = "LeaseMachinery/deleteLeaseMachinery/{id}"
+                const val updateLeaseMachinery = "LeaseMachinery/updateLeaseFacility/"
                 //变电
                 const val PowerTransformation = "/PowerTransformation/insertPowerTransformation/"
+                const val deletePowerTransformation="PowerTransformation/deletePowerTransformation/{id}"
+                const val updatePowerTransformation = "PowerTransformation/updatePowerTransformation/"
                 //主网
                 const val MajorNetwork = "MajorNetwork/insertMajorNetwork/"
+                const val deleteMajorNetwork = "MajorNetwork/deleteMajorNetwork/{id}"
+                const val updateMajorNetwork = "MajorNetwork/updateMajorNetwork/"
                 //配网
                 const val DistribuionNetwork = "DistribuionNetwork/insertDistribuionNetwork/"
+                const val  deleteDistribuionNetwork = "DistribuionNetwork/deleteDistribuionNetwork/{id}"
+                const val updateDistribuionNetworkDTO = "DistribuionNetwork/updateDistribuionNetworkDTO/"
                 //测量设计
                 const val MeasureDesign = "MeasureDesign/insertMeasureDesign/"
+                const val deleteMeasureDesign = "MeasureDesign/deleteMeasureDesign/{id}"
+                const val updateMeasureDesign = "MeasureDesign/updateMeasureDesign/"
                 //马帮
                 const val CaravanTransport = "CaravanTransport/insertCaravanTransport/"
+                const val deleteCaravanTransport = "CaravanTransport/deleteCaravanTransport/{id}"
+                const val updateCaravanTransport = "CaravanTransport/updateCaravanTransport/"
                 //桩基
                 const val PileFoundation = "PileFoundation/insertPileFoundation/"
+                const val deletePileFoundation = "PileFoundation/deletePileFoundation/{id}"
+                const val updatePileFoundation = "PileFoundation/updatePileFoundation/"
                 //非开挖
                 const val Unexcavation = "Unexcavation/saveUnexcavation/"
+                const val deleteUnexcavation = "Unexcavation/deleteUnexcavation/{id}"
+                const val updateUnexcavation = "Unexcavation/updateUnexcavation/"
                 //试验调试
                 const val TestTeam = "TestTeam/saveTestTeam/"
+                const val deleteTestTeam =  "TestTeam/deleteTestTeam/{id}"
+                const val updateTestTeam = "TestTeam/updateTestTeam/"
                 //跨越架
                 const val SpanWoodenSupprt = "SpanWoodenSupprt/saveSpanWoodenSupprt/"
+                const val deleteSpanWoodenSupprt = "SpanWoodenSupprt/deleteSpanWoodenSupprt/{id}"
+                const val updateSpanWoodenSupprt = "SpanWoodenSupprt/updateSpanWoodenSupprt/"
                 //运维
                 const val RunningMaintain = "RunningMaintain/saveRunningMaintain/"
+                const val deleteRunningMaintain = "RunningMaintain/deleteRunningMaintain/{id}"
+                const val updateRunningMaintain ="RunningMaintain/updateRunningMaintain/"
 
 
                 //三方
                 const val ThirdServices = "Third//saveThirdServicesAndroid/"
+                const val deleteThirdServices = "Third/deleteThirdServices/{id}"
+                const val  updateThirdServices = "Third/updateThirdServices/"
             }
         }
 
@@ -647,8 +688,10 @@ class Constants {
         class Login{
             companion object{
                 const val sendCode="Jmessage/sendCode/{mobileNumber}"
-                const val sendRegister="user/regist"
+                const val sendRegister="user/regist/"
                 const val sendLogin="user/login"
+                const val validFindCode = "Jmessage/validFindCode/{mobileNumber}/{code}"
+                const val findPassword = "userInfo/findPassword/"
             }
         }
         class DisplayForRequirement {

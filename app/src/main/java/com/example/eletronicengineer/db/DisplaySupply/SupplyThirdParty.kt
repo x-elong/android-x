@@ -1,10 +1,12 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyThirdParty(
     var id:String,
     var serveType:String,
-    var companyCredential:companyCredential,
-    var businessScope:String,//附加信息
+    var companyCredential:CompanyCredential,
+    var businessScope:String,
     var validTime:String,
     var thirdServicesContractPath:String,
     var cooperationObject:String,
@@ -16,4 +18,4 @@ class SupplyThirdParty(
     var issuerBelongSite:String,
     var contact:String,
     var contactPhone:String
-)
+):Serializable

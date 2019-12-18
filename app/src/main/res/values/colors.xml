@@ -4,6 +4,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#248bfe</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="gallery_blue">#248bfe</color>//配置图片选择器主题色
     <color name="dark_gray_bg">#E5E5E5E5</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="eighty_percent_transparent">#80AD9797</color>

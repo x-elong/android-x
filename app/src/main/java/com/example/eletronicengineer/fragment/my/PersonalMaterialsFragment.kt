@@ -230,7 +230,6 @@ class PersonalMaterialsFragment :Fragment(){
                     RequestBody.create(MediaType.parse("image/*"),file))
                 uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
-
                             insertCertificate(it.string())
                     },
                     {

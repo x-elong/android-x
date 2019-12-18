@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
@@ -13,7 +14,7 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.distributionFileSave.Supply
 import com.example.eletronicengineer.utils.AdapterGenerate
-import kotlinx.android.synthetic.main.fragemt_inventory_item_more.view.*
+import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 
 class SupplyPublishInventoryItemMoreFragment:Fragment(){
         companion object{
@@ -31,12 +32,13 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            mView = inflater.inflate(R.layout.fragemt_inventory_item_more,container,false)
+            mView = inflater.inflate(R.layout.fragment_inventory_item_more,container,false)
             initFragment()
             return mView
         }
 
         private fun initFragment() {
+            var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
             mView.tv_inventory_item_more_back.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
@@ -61,7 +63,7 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
         adapterGenerate.context= context!!
         val bundle = Bundle()
         val mData:List<MultiStyleItem>
-        adapterGenerate.activity=activity as SupplyActivity
+        adapterGenerate.activity= activity as AppCompatActivity
         when(type){
             "成员清册发布"->
             {

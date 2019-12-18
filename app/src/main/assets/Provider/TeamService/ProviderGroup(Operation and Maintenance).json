@@ -2,7 +2,9 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
-    "singleDisplayRightContent": "运行维护施工队"
+    "singleDisplayRightContent": "运行维护",
+    "key": "category",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

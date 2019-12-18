@@ -41,21 +41,9 @@ class MyRegistrationFragment :Fragment(){
                 adapter.mData = ArrayList()
                 adapter.notifyDataSetChanged()
                 val selectContent=it.data.getString("selectContent")
+                tvMode = selectContent
                 mView.tv_mode_content.text=selectContent
-                when(selectContent){
-                    "需求 需求个人"->{
-                        getDataDemandIndividual()
-                    }
-                    "需求 需求团队"->{
-                        getDataDemandGroup()
-                    }
-                    "需求 需求租赁"->{
-                        getDataDemandLease()
-                    }
-                    "需求 需求三方"->{
-                        getDataDemandTripartite()
-                    }
-                }
+                initData()
 //                mView.sp_demand_moder.
                 false
             }
@@ -69,7 +57,7 @@ class MyRegistrationFragment :Fragment(){
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     var page = 1
     var pageCount = 1
-
+    var tvMode = "需求 需求个人"
     var adapter = RecyclerviewAdapter(ArrayList())
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_my_registration,container,false)
@@ -86,29 +74,18 @@ class MyRegistrationFragment :Fragment(){
                     Log.i("page","$page")
                     page++
                     Toast.makeText(mView.context,"滑动到底了", Toast.LENGTH_SHORT).show()
-                    when(mView.tv_mode_content.text){
-                        "需求 需求个人"->{
-                            getDataDemandIndividual()
-                        }
-                        "需求 需求团队"->{
-                            getDataDemandGroup()
-                        }
-                        "需求 需求租赁"->{
-                            getDataDemandLease()
-                        }
-                        "需求 需求三方"->{
-                            getDataDemandTripartite()
-                        }
-                        else->{
-                            getDataRegistration()
-                        }
-                    }
+                    initData()
                 }
             }
         })
     }
 
     private fun initFragment() {
+        if(tvMode!=""){
+            mView.tv_mode_content.text = tvMode
+            page = 1
+            pageCount = 1
+        }
         mMultiStyleItemList.clear()
         adapter.mData = mMultiStyleItemList
         mView.tv_my_registration_back.setOnClickListener {
@@ -120,49 +97,29 @@ class MyRegistrationFragment :Fragment(){
             val selectDialog= CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,context!!,mHandler,Option1Items,Option2Items).multiDialog
             selectDialog.show()
         }
-
         mView.rv_my_registration_content.adapter=adapter
         mView.rv_my_registration_content.layoutManager=LinearLayoutManager(context)
-        getDataDemandIndividual()
-//        initData()
+        initData()
     }
 
     private fun initData() {
-        mMultiStyleItemList.clear()
-        var item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求个人","普工|普工","湖南神华永州电力新建工程")
-        item.jumpListener=View.OnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("type",Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal)
-            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
+        when(mView.tv_mode_content.text){
+            "需求 需求个人"->{
+                getDataDemandIndividual()
+            }
+            "需求 需求团队"->{
+                getDataDemandGroup()
+            }
+            "需求 需求租赁"->{
+                getDataDemandLease()
+            }
+            "需求 需求三方"->{
+                getDataDemandTripartite()
+            }
+            else->{
+                getDataRegistration()
+            }
         }
-        mMultiStyleItemList.add(item)
-
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求团队","变电施工队","湖南神华永州电力新建工程")
-        item.jumpListener=View.OnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("type",Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal)
-            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
-        }
-        mMultiStyleItemList.add(item)
-
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求租赁","车辆租赁","湖南神华永州电力新建工程")
-        item.jumpListener=View.OnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("type",Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal)
-            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
-        }
-        mMultiStyleItemList.add(item)
-
-        item = MultiStyleItem(MultiStyleItem.Options.DEMAND_ITEM,"需求三方","培训办证","")
-        item.jumpListener=View.OnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("type",Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal)
-            FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_registration,"")
-        }
-        mMultiStyleItemList.add(item)
-        val adapter=RecyclerviewAdapter(mMultiStyleItemList)
-        mView.rv_my_registration_content.adapter=adapter
-        mView.rv_my_registration_content.layoutManager=LinearLayoutManager(context)
     }
     private fun getDataRegistration() {
         val result = Observable.create<RequestBody> {

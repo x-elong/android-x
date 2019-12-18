@@ -24,7 +24,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_id_card_name"
-        android:text="身份证姓名："
+        android:text="身份证姓名:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_id_card_name"
         app:layout_constraintTop_toTopOf="@+id/view_id_card_name"
@@ -58,7 +58,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_id_card_number"
-        android:text="身份证号码："
+        android:text="身份证号码:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_id_card_number"
         app:layout_constraintTop_toTopOf="@+id/view_id_card_number"

@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,6 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.aninterface.PersonalIssue
 import com.example.eletronicengineer.custom.CustomDialog
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getSupplyPerson
 import com.example.eletronicengineer.utils.getSupplyTeam

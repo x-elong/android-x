@@ -52,10 +52,15 @@ class CustomDialog {
                     } else {
                         mHandler.obtainMessage(RecyclerviewAdapter.MESSAGE_SELECT_CHECK_OK)
                     }
-                    for(i in 0 until  mPalceIsCheck.size)
-                    {
-                        if(mPalceIsCheck[i]){
-                            selectCheckContent.add(contentList[i])
+                    if(mPalceIsCheck[0]){
+                        selectCheckContent.add(contentList[0])
+
+                    }else{
+                        for(i in 1 until  mPalceIsCheck.size)
+                        {
+                            if(mPalceIsCheck[i]){
+                                selectCheckContent.add(contentList[i])
+                            }
                         }
                     }
                     for(i in selectCheckContent ){

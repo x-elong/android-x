@@ -39,7 +39,7 @@
     "singleDisplayRightContent":"  上传  ",
     "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
-  },
+   },
   {
     "type": "HINT",
     "hintContent": "*同意甲方要求请填写上列清册并报名",

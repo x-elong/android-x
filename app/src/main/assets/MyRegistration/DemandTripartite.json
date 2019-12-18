@@ -1,23 +1,23 @@
 [
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"需求类别：",
+        "singleDisplayRightTitle":"需求类别:",
         "singleDisplayRightContent":"普工"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人名字：",
+        "singleDisplayRightTitle": "联系人名字:",
         "singleDisplayRightContent":"王一"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人电话：",
+        "singleDisplayRightTitle": "联系人电话:",
         "singleDisplayRightContent":"18300000000"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "单位名称：",
-        "singleDisplayRightContent":"xxxxxxxx"
+        "singleDisplayRightTitle": "三方服务清单:",
+        "singleDisplayRightContent":"查看"
     },
     {
         "type":"INPUT_WITH_TEXTAREA",

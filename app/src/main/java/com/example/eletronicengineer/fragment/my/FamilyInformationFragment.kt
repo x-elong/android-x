@@ -1,6 +1,5 @@
 package com.example.eletronicengineer.fragment.my
 
-import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -8,25 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.db.My.HomeChildrensEntity
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.deleteChildren
-import com.example.eletronicengineer.utils.getUser
 import com.example.eletronicengineer.utils.putSimpleMessage
 import com.example.eletronicengineer.utils.startSendMessage
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -208,7 +202,7 @@ class FamilyInformationFragment :Fragment(){
                                                                         it.onNext(requestBody)
                                                                     }.subscribe {
                                                                         val result =
-                                                                            putSimpleMessage(it, UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
+                                                                            putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.updateHomeChildren).observeOn(AndroidSchedulers.mainThread())
                                                                                 .subscribeOn(Schedulers.io())
                                                                                 .subscribe(
                                                                                     {

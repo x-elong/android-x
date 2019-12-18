@@ -19,19 +19,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view_bank_card_more"
+        app:layout_constraintTop_toTopOf="@+id/view_bank_card_more" />
 
     <TextView
         android:id="@+id/tv_bank_card_more_title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
+        android:layout_height="wrap_content"
         android:text="银行卡详情"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="@id/view_bank_card_more"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,9 +64,11 @@
 
     <TextView
         android:id="@+id/tv_bank_number"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:ellipsize = "middle"
+        android:singleLine="true"
         android:text="11111111111111111"
         android:layout_marginTop="@dimen/top_30"
         android:textSize="@dimen/font_tv_normal_16"

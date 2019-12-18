@@ -28,7 +28,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_institution_name"
-        android:text="机构名称："
+        android:text="机构名称:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_institution_name"
         app:layout_constraintTop_toTopOf="@+id/view_institution_name"
@@ -63,7 +63,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_social_credit_code"
-        android:text="社会信用代码："
+        android:text="社会信用代码:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_social_credit_code"
         app:layout_constraintTop_toTopOf="@+id/view_social_credit_code"
@@ -99,7 +99,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_main_code"
-        android:text="主营："
+        android:text="主营:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_main_code"
         app:layout_constraintTop_toTopOf="@+id/view_main_code"
@@ -241,7 +241,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_administrator_name"
-        android:text="管理员身份证姓名："
+        android:text="管理员身份证姓名:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_administrator_name"
         app:layout_constraintTop_toTopOf="@+id/view_administrator_name"
@@ -276,7 +276,7 @@
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_administrator_number"
-        android:text="管理员身份证号码："
+        android:text="管理员身份证号码:"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/view_administrator_number"
         app:layout_constraintTop_toTopOf="@+id/view_administrator_number"

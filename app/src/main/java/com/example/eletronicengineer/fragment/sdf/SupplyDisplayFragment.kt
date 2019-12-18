@@ -16,7 +16,6 @@ import com.example.eletronicengineer.activity.GetQRCodeActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getSupplyMajorNetWork
@@ -107,7 +106,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -238,7 +237,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.majorNetwork.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.majorNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -380,7 +379,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.distribuionNetwork.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.distribuionNetwork.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -511,7 +510,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.powerTransformation.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.powerTransformation.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -627,7 +626,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.measureDesign.phone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.measureDesign.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -749,7 +748,7 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -758,7 +757,7 @@ class SupplyDisplayFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {
@@ -935,6 +934,7 @@ class SupplyDisplayFragment:Fragment() {
 //                            if(data.contactPhone!=null)
 //                            {
                                 var dialog = AlertDialog.Builder(this.context)
+                                    .setTitle("对方联系电话:")
                                     .setTitle("对方联系电话：")
                                     .setMessage(data.phone)
                                     .setNegativeButton("联系对方") { dialog, which ->
@@ -1252,7 +1252,7 @@ class SupplyDisplayFragment:Fragment() {
                                 }
                             })
                         }
-//                        if(data.provideTransportMachines==null)
+//                        if(data.ProvideTransportMachines==null)
 //                        {
 //                            adapter.mData[4].buttonListener = listOf(View.OnClickListener {
 //                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
@@ -1261,7 +1261,7 @@ class SupplyDisplayFragment:Fragment() {
 //                        else
 //                        {
 //                            //显示图片
-//                            for(i in data.provideTransportMachines!!)
+//                            for(i in data.ProvideTransportMachines!!)
 //                            {
 //                                if(i.carPhotoPath == null)
 //                                {
@@ -1415,7 +1415,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1541,7 +1541,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseConstructionTool.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseConstructionTool.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1665,7 +1665,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseFacility.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseFacility.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1789,7 +1789,7 @@ class SupplyDisplayFragment:Fragment() {
                             if(data.leaseMachinery.contactPhone!=null)
                             {
                                 var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
+                                    .setTitle("对方联系电话:")
                                     .setMessage(data.leaseMachinery.contactPhone)
                                     .setNegativeButton("联系对方") { dialog, which ->
                                         val intent = Intent(Intent.ACTION_DIAL)
@@ -1887,7 +1887,7 @@ class SupplyDisplayFragment:Fragment() {
                                 if(data.contactPhone!=null)
                                 {
                                     var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话：")
+                                            .setTitle("对方联系电话:")
                                             .setMessage(data.contactPhone)
                                             .setNegativeButton("联系对方") { dialog, which ->
                                                 val intent = Intent(Intent.ACTION_DIAL)
@@ -1937,7 +1937,7 @@ class SupplyDisplayFragment:Fragment() {
                                 if(data.contactPhone!=null)
                                 {
                                     var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话：")
+                                            .setTitle("对方联系电话:")
                                             .setMessage(data.contactPhone)
                                             .setNegativeButton("联系对方") { dialog, which ->
                                                 val intent = Intent(Intent.ACTION_DIAL)

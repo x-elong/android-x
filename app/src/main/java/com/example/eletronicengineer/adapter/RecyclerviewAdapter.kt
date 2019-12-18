@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.adapter
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -27,6 +28,7 @@ import com.amap.api.location.AMapLocationListener
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.custom.CustomDialog
 import com.electric.engineering.model.MultiStyleItem
+import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.aninterface.ExpandMenuItem
 import com.example.eletronicengineer.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
@@ -1269,6 +1271,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                             //vh.etMultiInputContent.inputType= InputType.TYPE_NULL
                             vh.etMultiInputContent.isEnabled=false
                             vh.etMultiInputContent.hint=""
+                            vh.etMultiInputContent.setText("")
                         }
 
                         else{
@@ -1393,15 +1396,17 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     }
                 if(mData[position].shiftInputPicture!=""){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
-                    GlideLoader().loadImage(vh.ivShiftInputPicture,"http://"+mData[position].shiftInputPicture)
+                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
+                    vh.ivShiftInputPicture.setOnClickListener {
+                        val intent = Intent(vh.ivShiftInputPicture.context,ImageDisplayActivity::class.java)
+                        intent.putExtra("imagePath",mData[position].shiftInputPicture)
+                        vh.ivShiftInputPicture.context.startActivity(intent)
+                    }
                 }
             }
             SELECT_DIALOG_TYPE->
             {
                 val context=vh.itemView.context
-                vh.itemView.setOnClickListener {
-                    vh.tvDialogSelectShow.callOnClick()
-                }
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 if(mData[position].selectContent==""){
                     mData[position].selectContent=mData[position].selectOption1Items[0]
@@ -1412,6 +1417,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvDialogSelectShow.setOnClickListener{
                     val selectDialog=CustomDialog(CustomDialog.Options.SELECT_DIALOG,vh.itemView.context,mData[position].selectOption1Items,vh.mHandler).dialog
                     selectDialog.show()
+                }
+                vh.itemView.setOnClickListener {
+                    vh.tvDialogSelectShow.callOnClick()
                 }
                 if(mData[position].selectListener!=null)
                 {
@@ -1649,10 +1657,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 val startPosition = mData[position].singleDisplayRightTitle.indexOf('(')
                 val endPosition = mData[position].singleDisplayRightTitle.indexOf(')')+1
                 val sp = SpannableStringBuilder(mData[position].singleDisplayRightTitle)
-                if(startPosition>-1)
-                    sp.setSpan(AbsoluteSizeSpan((14*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                if(startPosition>-1){
+                    sp.setSpan(AbsoluteSizeSpan((12*vh.tvsingleDisplayRightTitle.resources.displayMetrics.scaledDensity+0.5f).toInt()),startPosition,endPosition,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    sp.setSpan(ForegroundColorSpan(Color.parseColor("#a6a6a6")),startPosition,endPosition,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                }
                 vh.tvsingleDisplayRightTitle.text=sp
-                vh.tvsingleDisplayRightContent.text=mData[position].singleDisplayRightContent
                 if(mData[position].jumpListener!=null){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)
                 }
@@ -1660,15 +1669,24 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     mData[position].singleDisplayRightContent.replace(" ","")=="点击查看"){
                     vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].buttonListener[0])
                 }
-                when(mData[position].singleDisplayRightContent.replace(" ","")){
-                   "查看","上传","点击查看"->{
-                    val spannable = SpannableStringBuilder(vh.tvsingleDisplayRightContent.text)
-                    spannable.setSpan(BackgroundColorSpan(Color.parseColor("#248aff")),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    spannable.setSpan(ForegroundColorSpan(Color.WHITE),0,mData[position].singleDisplayRightContent.length,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    vh.tvsingleDisplayRightContent.setText(spannable)
-//                        vh.tvsingleDisplayRightContent.setBackgroundResource(R.drawable.btn_style3)
-                       }
-                    }
+                val spannable = SpannableStringBuilder(mData[position].singleDisplayRightContent)
+                when(mData[position].singleDisplayRightContent.replace(" ","")) {
+                    "查看", "上传", "点击查看" -> {
+                            spannable.setSpan(
+                                BackgroundColorSpan(Color.parseColor("#248aff")),
+                                0,
+                                mData[position].singleDisplayRightContent.length,
+                                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                            )
+                            spannable.setSpan(
+                                ForegroundColorSpan(Color.WHITE),
+                                0,
+                                mData[position].singleDisplayRightContent.length,
+                                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                            )
+                        }
+                }
+                vh.tvsingleDisplayRightContent.setText(spannable)
                  if (mData[position].necessary)
                 {
                     val tvNecessary=TextView(context)

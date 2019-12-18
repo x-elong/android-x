@@ -5,12 +5,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eletronicengineer.R
@@ -18,8 +16,6 @@ import com.example.eletronicengineer.adapter.ListAdapterForDemand
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.custom.CustomDialog
-import com.example.eletronicengineer.custom.LoadingDialog
-import com.example.eletronicengineer.model.ApiConfig
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getRequirementLease
 import com.example.eletronicengineer.utils.getRequirementPerson

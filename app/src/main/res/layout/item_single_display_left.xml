@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tv_single_display_expand_title"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_tv_hint_15"
             android:layout_marginLeft="@dimen/general_2"/>
     <TextView
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_single_display_expand_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:gravity="center"
             android:layout_marginLeft="@dimen/left_10"
             android:textSize="@dimen/font_tv_hint_15"/>

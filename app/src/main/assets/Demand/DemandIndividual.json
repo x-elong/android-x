@@ -2,14 +2,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"需求类别",
-    "singleDisplayRightContent":"",
+    "singleDisplayRightContent":"其他",
     "key":"requirementVariety",
     "sendFormat": "String"
   },
   {
     "type":"SELECT_DIALOG",
     "selectTitle":"需求专业",
-    "selectOption1Items":["x"],
+    "selectOption1Items":["其他"],
     "key":"requirementMajor",
     "sendFormat": "String"
   },
@@ -85,7 +85,7 @@
   {
     "type":"INPUT_WITH_MULTI_UNIT",
     "inputMultiUnitTitle":"薪资标准",
-    "inputMultiUnit":["面议","元/天","元/月","元/年"],
+    "inputMultiUnit":["面议","元/日","元/月","元/年"],
     "key":"salaryStandard salaryUnit",
     "sendFormat":"Double String"
 

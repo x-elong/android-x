@@ -12,8 +12,7 @@ import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.AdapterGenerate
-import kotlinx.android.synthetic.main.fragemt_inventory_item_more.view.*
-
+import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 class SubmitInventoryItemMoreFragment : Fragment(){
     companion object{
         fun newInstance(args: Bundle):SubmitInventoryItemMoreFragment{
@@ -30,13 +29,15 @@ class SubmitInventoryItemMoreFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.fragemt_inventory_item_more,container,false)
+        mView = inflater.inflate(R.layout.fragment_inventory_item_more,container,false)
         initFragment()
         return mView
     }
 
     private fun initFragment() {
+        var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
        mView.tv_inventory_item_more_back.setOnClickListener {
+           activity!!.supportFragmentManager.popBackStackImmediate()
         }
         type = arguments!!.getString("type")
         mView.tv_inventory_item_more_title.setText(type + "详情")

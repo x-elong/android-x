@@ -143,10 +143,10 @@ interface HttpHelper {
     fun getSupplyMeasureDesign(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Network>>
     //马帮运输
     @GET(Constants.HttpUrlPath.DisplayForSupply.CaravanTransport)
-    fun getSupplyCaravanTransport(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<caravan>>
+    fun getSupplyCaravanTransport(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Caravan>>
     //桩机服务
     @GET(Constants.HttpUrlPath.DisplayForSupply.PileFoundation)
-    fun getSupplyPileFoundation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<pile>>
+    fun getSupplyPileFoundation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<Pile>>
     //非开挖顶管拉管作业
     @GET(Constants.HttpUrlPath.DisplayForSupply.Unexcavation)
     fun getSupplyUnexcavation(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<SupplyUnexcavation>>
@@ -205,20 +205,11 @@ interface HttpHelper {
     @GET(Constants.HttpUrlPath.My.numPayCreatOrder)
     fun numPayCreatOrder(@Path("productId") productId: String): Observable<ResponseBody>
 
-    @GET(Constants.HttpUrlPath.My.getPersonalIssue)
-    fun getPersonalIssue(@Path("page") page: Int,@Path("pageSize") pageSize:Int): Observable<ResponseBody>
-
     @GET(Constants.HttpUrlPath.My.getRequirementPersonMore)
     fun getRequirementPersonMore(@Path("id") id: String): Observable<ResponseBody>
 
     @GET(Constants.HttpUrlPath.My.getPersonalIssueMore)
     fun getPersonalIssueMore(@Path("id") id: String): Observable<ResponseBody>
-
-    @GET(Constants.HttpUrlPath.My.getLeaseService)
-    fun getLeaseService(@Path("page") page: Int,@Path("pageSize") pageSize:Int): Observable<ResponseBody>
-
-    @GET(Constants.HttpUrlPath.My.getThridService)
-    fun getThridService(@Path("pageSize") page: Int,@Path("page") pageSize:Int): Observable<ResponseBody>
 
     @GET(Constants.HttpUrlPath.My.getUser)
     fun getUser():Observable<HttpResult<UserEntity>>
@@ -258,6 +249,16 @@ interface HttpHelper {
 
     @GET(Constants.HttpUrlPath.Login.sendCode)
     fun sendMobile(@Path("mobileNumber") mobileNumber: String): Observable<HttpResult<String>>
+
+    @GET(Constants.HttpUrlPath.Login.validFindCode)
+    fun validFindCode(@Path("mobileNumber") mobileNumber: String,@Path("code") code: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.sendEmailCode)
+    fun sendEmailCode(@Path("receiver") receiver: String): Observable<ResponseBody>
+
+    @GET(Constants.HttpUrlPath.My.bindEmail)
+    fun validBindEmail(@Path("receiver") receiver: String,@Path("mailCode") mailCode: String): Observable<ResponseBody>
+
 
     @POST(Constants.HttpUrlPath.Login.sendRegister)
     fun sendRegister(@Body data:RequestBody): Observable<HttpResult<String>>
@@ -495,6 +496,68 @@ interface HttpHelper {
 
     @DELETE(Constants.HttpUrlPath.Requirement.deleteRequirementThirdParty)
     fun deleteRequirementThirdParty(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deletePersonalIssue)
+    fun deletePersonalIssue(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteMajorNetwork)
+    fun deleteMajorNetwork(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deletePowerTransformation)
+    fun deletePowerTransformation(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteDistribuionNetwork)
+    fun deleteDistribuionNetwork(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteMeasureDesign)
+    fun deleteMeasureDesign(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteCaravanTransport)
+    fun deleteCaravanTransport(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deletePileFoundation)
+    fun deletePileFoundation(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteUnexcavation)
+    fun deleteUnexcavation(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteTestTeam)
+    fun deleteTestTeam(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteSpanWoodenSupprt)
+    fun deleteSpanWoodenSupprt(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteRunningMaintain)
+    fun deleteRunningMaintain(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteLeaseCar)
+    fun deleteLeaseCar(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteLeaseConstructionTool)
+    fun deleteLeaseConstructionTool(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteLeaseFacility)
+    fun deleteLeaseFacility(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteLeaseMachinery)
+    fun deleteLeaseMachinery(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.Provider.deleteThirdServices)
+    fun deleteThirdServices(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.My.deletePersonRequirementInformationCheck)
+    fun deletePersonRequirementInformationCheck(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.My.deleteRequirementTeamLoggingCheck)
+    fun deleteRequirementTeamLoggingCheck(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.My.deleteLeaseLoggingCheckController)
+    fun deleteLeaseLoggingCheckController(@Path("id") id:String):Observable<ResponseBody>
+
+    @DELETE(Constants.HttpUrlPath.My.deleteRequirementThirdLoggingCheck)
+    fun deleteRequirementThirdLoggingCheck(@Path("id") id:String):Observable<ResponseBody>
+
+
 
 }
 
@@ -1266,12 +1329,46 @@ internal fun sendMobile(mobileNumber: String, baseUrl: String): Observable<HttpR
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.sendMobile(mobileNumber)
 }
+
+internal fun validFindCode(mobileNumber: String,code:String): Observable<ResponseBody> {
+    val retrofit = Retrofit.Builder().baseUrl(UnSerializeDataBase.upmsBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.validFindCode(mobileNumber,code)
+}
+
+
+internal fun sendEmailCode(receiver: String): Observable<ResponseBody> {
+    val interceptor = Interceptor {
+        Log.i("body", it.call().request().body().toString())
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.sendEmailCode(receiver)
+}
+
+internal fun validBindEmail(receiver: String,mailCode:String): Observable<ResponseBody> {
+    val interceptor = Interceptor {
+        Log.i("body", it.call().request().body().toString())
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.validBindEmail(receiver,mailCode)
+}
+
 internal fun sendRegister(requestBody: RequestBody, baseUrl: String): Observable<HttpResult<String>> {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.sendRegister(requestBody)
 }
+
 internal fun sendLogin(requestBody: RequestBody,baseUrl: String): Observable<HttpResult<login<resources<Int>>>> {
 
     val interceptor = Interceptor {
@@ -1441,15 +1538,6 @@ internal fun deleteCertificate(id:String):Observable<ResponseBody>{
     return httpHelper.deleteCertificate(id)
 }
 
-internal fun getPersonalIssue(page: Int,pageSize: Int):Observable<ResponseBody>{
-    val interceptor = Interceptor {
-        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
-    }
-    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getPersonalIssue(page,pageSize)
-}
 
 internal fun getRequirementPersonMore(id: String):Observable<ResponseBody>{
     val interceptor = Interceptor {
@@ -1471,26 +1559,6 @@ internal fun getPersonalIssueMore(id: String):Observable<ResponseBody>{
     return httpHelper.getPersonalIssueMore(id)
 }
 
-
-internal fun getLeaseService(page: Int,pageSize: Int):Observable<ResponseBody>{
-    val interceptor = Interceptor {
-        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
-    }
-    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getLeaseService(page,pageSize)
-}
-
-internal fun getThridService(page: Int,pageSize: Int):Observable<ResponseBody>{
-    val interceptor = Interceptor {
-        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
-    }
-    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
-    val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.getThridService(pageSize,page)
-}
 
 /**
  * @用户支付后开通权限接口
@@ -1808,7 +1876,7 @@ internal fun getSupplyMeasureDesign(id: String,token: String,baseUrl: String):Ob
     return httpHelper.getSupplyMeasureDesign(id,token)
 }
 //马帮
-internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String):Observable<HttpResult<caravan>>
+internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String):Observable<HttpResult<Caravan>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1817,7 +1885,7 @@ internal fun getSupplyCaravanTransport(id: String,token: String,baseUrl: String)
     return httpHelper.getSupplyCaravanTransport(id,token)
 }
 //桩基
-internal fun getSupplyPileFoundation(id: String,token: String,baseUrl: String):Observable<HttpResult<pile>>
+internal fun getSupplyPileFoundation(id: String,token: String,baseUrl: String):Observable<HttpResult<Pile>>
 {
     val retrofit = Retrofit.Builder().baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1937,6 +2005,191 @@ internal fun deleteRequirementPerson(id:String):Observable<ResponseBody>{
 }
 
 //删除发布 需求团队 变电
+internal fun deletePowerTransformation(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deletePowerTransformation(id)
+}
+
+//删除发布 需求团队 主网
+internal fun deleteMajorNetwork(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteMajorNetwork(id)
+}
+
+//删除发布 需求团队 配网
+internal fun deleteDistribuionNetwork(id:String):Observable<ResponseBody> {
+    val interceptor = Interceptor {
+        it.proceed(
+            it.request().newBuilder().addHeader(
+                "zouxiaodong",
+                UnSerializeDataBase.userToken
+            ).build()
+        )
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteDistribuionNetwork(id)
+}
+
+//删除发布 测量设计
+internal fun deleteMeasureDesign(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteMeasureDesign(id)
+}
+
+//删除发布 马帮运输
+internal fun deleteCaravanTransport(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteCaravanTransport(id)
+}
+
+//删除发布 桩基服务
+internal fun deletePileFoundation(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deletePileFoundation(id)
+}
+
+//删除发布 非开挖
+internal fun deleteUnexcavation(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteUnexcavation(id)
+}
+
+//删除发布 试验调试
+internal fun deleteTestTeam(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteTestTeam(id)
+}
+
+//删除发布 跨越架
+internal fun deleteSpanWoodenSupprt(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteSpanWoodenSupprt(id)
+}
+
+//删除发布 运行维护
+internal fun deleteRunningMaintain(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRunningMaintain(id)
+}
+//删除发布 车辆租赁
+internal fun deleteRequirementLeaseCar(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseCar(id)
+}
+
+//删除发布 工器具租赁
+internal fun deleteRequirementLeaseConstructionTool(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseConstructionTool(id)
+}
+
+//删除发布 设备租赁
+internal fun deleteRequirementLeaseFacility(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseFacility(id)
+}
+
+//删除发布 机械租赁
+internal fun deleteRequirementLeaseMachinery(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementLeaseMachinery(id)
+}
+
+//删除发布 需求三方
+internal fun deleteRequirementThirdParty(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementThirdParty(id)
+}
+
+/**
+ * @删除供应发布
+ */
+
+//删除发布 供应个人
+internal fun deletePersonalIssue(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deletePersonalIssue(id)
+}
+
+//删除发布 团队服务 变电
 internal fun deleteRequirementPowerTransformation(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
@@ -1947,7 +2200,7 @@ internal fun deleteRequirementPowerTransformation(id:String):Observable<Response
     return httpHelper.deleteRequirementPowerTransformation(id)
 }
 
-//删除发布 需求团队 主网
+//删除发布 团队服务 主网
 internal fun deleteRequirementMajorNetwork(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
@@ -1958,7 +2211,7 @@ internal fun deleteRequirementMajorNetwork(id:String):Observable<ResponseBody>{
     return httpHelper.deleteRequirementMajorNetwork(id)
 }
 
-//删除发布 需求团队 配网
+//删除发布 团队服务 配网
 internal fun deleteRequirementDistribuionNetwork(id:String):Observable<ResponseBody> {
     val interceptor = Interceptor {
         it.proceed(
@@ -2051,60 +2304,108 @@ internal fun deleteRequirementRunningMaintain(id:String):Observable<ResponseBody
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.deleteRequirementRunningMaintain(id)
 }
-//删除发布 车辆租赁
-internal fun deleteRequirementLeaseCar(id:String):Observable<ResponseBody>{
+
+//删除发布 供应车辆租赁
+internal fun deleteLeaseCar(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteRequirementLeaseCar(id)
+    return httpHelper.deleteLeaseCar(id)
 }
 
-//删除发布 工器具租赁
-internal fun deleteRequirementLeaseConstructionTool(id:String):Observable<ResponseBody>{
+//删除发布 供应设备
+internal fun deleteLeaseFacility(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteRequirementLeaseConstructionTool(id)
+    return httpHelper.deleteLeaseFacility(id)
 }
 
-//删除发布 设备租赁
-internal fun deleteRequirementLeaseFacility(id:String):Observable<ResponseBody>{
+//删除发布 供应工器具
+internal fun deleteLeaseConstructionTool(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteRequirementLeaseFacility(id)
+    return httpHelper.deleteLeaseConstructionTool(id)
 }
 
-//删除发布 机械租赁
-internal fun deleteRequirementLeaseMachinery(id:String):Observable<ResponseBody>{
+//删除发布 供应机械
+internal fun deleteLeaseMachinery(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteRequirementLeaseMachinery(id)
+    return httpHelper.deleteLeaseMachinery(id)
 }
 
-//删除发布 需求三方
-internal fun deleteRequirementThirdParty(id:String):Observable<ResponseBody>{
+//删除发布 供应三方
+internal fun deleteThirdServices(id:String):Observable<ResponseBody>{
     val interceptor = Interceptor {
         it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.deleteRequirementThirdParty(id)
+    return httpHelper.deleteThirdServices(id)
 }
+/**
+ * @删除我的报名信息
+ */
+//个人
+internal fun deletePersonRequirementInformationCheck(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deletePersonRequirementInformationCheck(id)
+}
+
+//团队
+internal fun deleteRequirementTeamLoggingCheck(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementTeamLoggingCheck(id)
+}
+
+//租赁
+internal fun deleteLeaseLoggingCheckController(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteLeaseLoggingCheckController(id)
+}
+
+//三方
+internal fun deleteRequirementThirdLoggingCheck(id:String):Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.dmsBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.deleteRequirementThirdLoggingCheck(id)
+}
+
 
 
 

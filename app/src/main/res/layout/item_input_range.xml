@@ -16,15 +16,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_range_unit1"
-            android:textSize="@dimen/general_10"/>
+            android:textColor="@color/text_hint_gray"
+            android:textSize="@dimen/font_tv_hint_12"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="3"
             android:inputType="number"
-            android:hint="最小"
+            android:hint="16"
             android:gravity="center"
-            android:id="@+id/et_range_value1" android:layout_marginLeft="@dimen/left_40"
+            android:id="@+id/et_range_value1"
+            android:layout_marginLeft="@dimen/left_40"
             android:textSize="@dimen/font_tv_hint_15"
             android:layout_marginRight="@dimen/right_5"/>
     <TextView
@@ -36,7 +38,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="3"
-            android:hint="最大"
+            android:hint="60"
             android:gravity="center"
             android:id="@+id/et_range_value2" android:textSize="@dimen/font_tv_hint_15"
             android:layout_marginLeft="@dimen/left_5"/>

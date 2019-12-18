@@ -31,7 +31,7 @@
         android:id="@+id/tv_expand_list_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintBottom_toBottomOf="@+id/tv_expand_list_button"
         app:layout_constraintEnd_toEndOf="parent"

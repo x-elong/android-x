@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:background="@drawable/item_background">
+              android:layout_height="wrap_content"
+    android:id="@+id/ll_select"
+    android:background="@drawable/item_background">
 
     <TextView
             android:layout_width="wrap_content"
@@ -20,9 +22,10 @@
             android:hint="请选择"
             android:textColor="@color/black" android:gravity="right"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_show"
-            android:background="@drawable/ic_expand"
+            android:layout_width="@dimen/general_10"
+            android:layout_height="@dimen/general_15"
+        android:id="@+id/tv_dialog_select_show"
+            android:background="@drawable/jump"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/right_10"
             android:textSize="@dimen/font_tv_hint_15"/>

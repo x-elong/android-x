@@ -19,19 +19,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view_retail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_retail" />
 
     <TextView
         android:id="@+id/tv_retail_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
-        android:text="分销"
+        android:text="分销中心"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintTop_toTopOf="@+id/view_retail"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,9 +144,9 @@
         android:background="@drawable/btn_style3"
         android:layout_width="@dimen/general_60"
         android:layout_height="@dimen/general_30"
-        android:text="商城"
+        android:text="兑换"
         android:gravity="center"
-        android:id="@+id/tv_total_score_store"
+        android:id="@+id/tv_total_score_switch"
         android:textSize="@dimen/font_tv_normal_17"
         app:layout_constraintTop_toBottomOf="@id/view_retail_bg_first"
         app:layout_constraintTop_toTopOf="@id/view_retail_bg_second"
@@ -154,19 +155,6 @@
         android:textColor="@color/white"
         android:layout_marginLeft="@dimen/left_5"
         android:layout_marginRight="@dimen/right_5"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="兑换"
-        android:id="@+id/tv_total_score_switch"
-        android:textSize="@dimen/font_tv_normal_17"
-        app:layout_constraintTop_toBottomOf="@id/view_retail_bg_first"
-        app:layout_constraintTop_toTopOf="@id/view_retail_bg_second"
-        app:layout_constraintBottom_toBottomOf="@id/view_retail_bg_second"
-        app:layout_constraintRight_toLeftOf="@id/tv_total_score_store"
-        android:textColor="@color/black"
-        android:layout_marginRight="@dimen/right_10"
         />
     <View
         android:layout_marginVertical="@dimen/general_6"

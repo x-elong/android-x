@@ -1,5 +1,7 @@
 package com.example.eletronicengineer.distributionFileSave
 
+import java.io.Serializable
+
 class SupplyTest(
     var id:String,
     var vipId:String,
@@ -18,9 +20,9 @@ class SupplyTest(
     var issuerBelongSite:String,
     var issuerName:String,
     var phone:String,
-    var provideCrewLists:List<provideCrewLists>?,
-    var provideTransportMachines:List<provideTransportMachines>?,
-    var constructionToolLists:List<constructionToolLists>?,
-    var voltages:List<voltages>?,
+    var provideCrewLists:List<ProvideCrewLists>?,
+    var provideTransportMachines:List<ProvideTransportMachines>?,
+    var constructionToolLists:List<ConstructionToolLists>?,
+    var voltages:List<Voltages>?,
     var testWorkTypes:String
-)
+):Serializable

@@ -1,22 +1,22 @@
 [
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"需求类型：",
+        "singleDisplayRightTitle":"需求类型:",
         "singleDisplayRightContent":"普工"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"需求专业：",
+        "singleDisplayRightTitle":"需求专业:",
         "singleDisplayRightContent":"普工"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人名字：",
+        "singleDisplayRightTitle": "联系人名字:",
         "singleDisplayRightContent":"王一"
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "联系人电话：",
+        "singleDisplayRightTitle": "联系人电话:",
         "singleDisplayRightContent":"18300000000"
     },
     {

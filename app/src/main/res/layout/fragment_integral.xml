@@ -20,10 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
-        android:layout_marginTop="@dimen/general_5"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/top_4"
+        app:layout_constraintBottom_toBottomOf="@+id/title_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title_view"
         />
 
     <TextView
@@ -34,7 +35,6 @@
         android:text="1"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />

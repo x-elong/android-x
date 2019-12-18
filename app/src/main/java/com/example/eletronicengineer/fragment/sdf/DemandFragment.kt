@@ -37,7 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_demand.*
 import kotlinx.android.synthetic.main.activity_demand.view.*
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
+import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -199,10 +199,12 @@ class DemandFragment:Fragment() {
             }
             Constants.FragmentType.PERSONAL_OTHER_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
-                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
-                adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
-                adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
+                adapter.mData[0].singleDisplayRightContent = "其他"
+                adapter.mData[1].selectOption1Items = listOf("其他")
+//                adapter.mData[0].options= MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[0].inputSingleTitle=adapter.mData[0].singleDisplayRightTitle
+//                adapter.mData[1].options= MultiStyleItem.Options.SINGLE_INPUT
+//                adapter.mData[1].inputSingleTitle=adapter.mData[1].selectTitle
             }
             Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandGroupSubstationConstruction()

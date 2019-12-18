@@ -20,18 +20,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        android:textSize="@dimen/font_tv_normal_18"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_logout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view_logout" />
     <TextView
         android:id="@+id/tv_logout_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
         android:text="注销账号"
-        android:textColor="#383838"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/view_logout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +107,7 @@
 6.发布的信息已删除。\n
 7.账号未绑定中国网络经纪人账号。\n\n
 注销账号须知\n
-1.账号注销后，会清空账号的所有身份信息和账号信息：包括但不限于用户名、认证和密保手机号、邮箱、qq、微博、微信，以及解除该账号对外授权的绑定关系。该操作不可逆，请谨慎操作。\n
+1.账号注销后，会清空账号的所有身份信息和账号信息:包括但不限于用户名、认证和密保手机号、邮箱、qq、微博、微信，以及解除该账号对外授权的绑定关系。该操作不可逆，请谨慎操作。\n
 2.账号注销后，优惠券、会员权益、账号余额将被清除且无法恢复。\n
 3.注销账号是不可恢复操作，操作之前，请确认电企通账号内所有服务均已进行妥善处理。如因注销账号造成的损失由用户自行承担。\n
 4.注销账号并不代表本账号注销前的账号行为和相关责任得到豁免或减轻。\n

@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.DemandActivity
-import com.example.eletronicengineer.activity.DemandDisplayActivity
-import com.example.eletronicengineer.activity.MyReleaseActivity
-import com.example.eletronicengineer.activity.SupplyDisplayActivity
+import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.ProjectListAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.ProjectList
@@ -21,8 +18,6 @@ import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
 import com.example.eletronicengineer.distributionFileSave.*
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
-import kotlinx.android.synthetic.main.fragemt_with_inventory.view.*
-import kotlinx.android.synthetic.main.fragment_demand_display.view.*
 import kotlinx.android.synthetic.main.fragment_project_display.view.*
 import java.io.Serializable
 
@@ -42,10 +37,10 @@ class ProjectListFragment:Fragment() {
     lateinit var listData5:List<thirdLists>//三方清册查看
 
     lateinit var listData3:List<requirementSecondProvideMaterialsList>
-    lateinit var listData7:List<provideCrewLists>//供应人员清册查看
-    lateinit var listData8:List<provideTransportMachines>//供应运输清册查看
-    lateinit var listData9:List<constructionToolLists>//供应工器具清册查看
-    lateinit var listData10:List<leaseList>//租赁清册
+    lateinit var listData7:List<ProvideCrewLists>//供应人员清册查看
+    lateinit var listData8:List<ProvideTransportMachines>//供应运输清册查看
+    lateinit var listData9:List<ConstructionToolLists>//供应工器具清册查看
+    lateinit var listData10:List<LeaseList>//租赁清册
 
     var mProjectList = mutableListOf<ProjectList>()
     lateinit var listListener:View.OnClickListener
@@ -65,6 +60,10 @@ class ProjectListFragment:Fragment() {
         }
         if(activity is MyReleaseActivity)
             frame = R.id.frame_my_release
+        else if(activity is MyRegistrationActivity)
+            frame = R.id.frame_my_registration
+        else if(activity is SupplyDisplayActivity)
+            frame = R.id.frame_display_supply
         if(adapter==null){
             initData()
             switchAdapter()
@@ -98,24 +97,24 @@ class ProjectListFragment:Fragment() {
             //供应人员清册查看
             "供应人员清册查看"->{
                 if(arguments!!.getSerializable("listData7")!= null)
-                    listData7 = arguments!!.getSerializable("listData7") as List<provideCrewLists>
+                    listData7 = arguments!!.getSerializable("listData7") as List<ProvideCrewLists>
             }
             //供应运输清册查看供应工器具清册查看
             "供应运输清册查看"->{
                 if(arguments!!.getSerializable("listData8")!= null)
-                    listData8 = arguments!!.getSerializable("listData8") as List<provideTransportMachines>
+                    listData8 = arguments!!.getSerializable("listData8") as List<ProvideTransportMachines>
             }
             //供应工器具清册查看
             "供应工器具清册查看"->{
                 if(arguments!!.getSerializable("listData9")!= null)
-                    listData9 = arguments!!.getSerializable("listData9") as List<constructionToolLists>
+                    listData9 = arguments!!.getSerializable("listData9") as List<ConstructionToolLists>
             }
             //租赁清册
            "工器具租赁清册查看",
            "设备租赁清册查看",
            "机械租赁清册查看"->{
                if(arguments!!.getSerializable("listData10")!= null)
-                   listData10 = arguments!!.getSerializable("listData10") as List<leaseList>
+                   listData10 = arguments!!.getSerializable("listData10") as List<LeaseList>
            }
 
 
@@ -139,10 +138,10 @@ class ProjectListFragment:Fragment() {
 //                }
 //            }
 //
-//            7 -> listData7 = arguments!!.getSerializable("listData7") as List<provideCrewLists>
-//            8 -> listData8 = arguments!!.getSerializable("listData8") as List<provideTransportMachines>
-//            9 -> listData9 = arguments!!.getSerializable("listData9") as List<constructionToolLists>
-//            10 -> listData10 = arguments!!.getSerializable("listData10") as List<leaseList>
+//            7 -> listData7 = arguments!!.getSerializable("listData7") as List<ProvideCrewLists>
+//            8 -> listData8 = arguments!!.getSerializable("listData8") as List<ProvideTransportMachines>
+//            9 -> listData9 = arguments!!.getSerializable("listData9") as List<ConstructionToolLists>
+//            10 -> listData10 = arguments!!.getSerializable("listData10") as List<LeaseList>
 //
 //            //成员清册
 //            20->needPeopleNumber=if(arguments!!.getString("needPeopleNumber")==null){"0"} else{arguments!!.getString("needPeopleNumber")}
@@ -364,7 +363,7 @@ class ProjectListFragment:Fragment() {
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
                     FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_supply,"")
+                        frame,"")
                 }
             }
             "供应运输清册查看"->//供应运输清册查看
@@ -383,7 +382,7 @@ class ProjectListFragment:Fragment() {
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
                     FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_supply,"")
+                        frame,"")
                 }
             }
             //供应工器具清册查看
@@ -403,7 +402,7 @@ class ProjectListFragment:Fragment() {
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
                     FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_supply,"")
+                        frame,"")
                 }
             }
             //租赁清册
@@ -423,8 +422,8 @@ class ProjectListFragment:Fragment() {
                     val bundle = Bundle()
                     bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(mView.context as SupplyDisplayActivity,ProjectListDetailFragment.newInstance(bundle),
-                        R.id.frame_display_supply,"")
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                        frame,"")
                 }
 
             }

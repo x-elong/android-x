@@ -20,7 +20,7 @@
             android:id="@+id/et_input_content" android:gravity="right"
             android:background="@color/transparent" android:textSize="@dimen/font_tv_hint_15"
             android:layout_marginTop="@dimen/top_10"
-            android:layout_marginEnd="@dimen/general_20"
+            android:layout_marginEnd="@dimen/general_10"
             android:layout_marginStart="@dimen/left_10"
             android:layout_marginBottom="@dimen/bottom_10"/>
 </LinearLayout>

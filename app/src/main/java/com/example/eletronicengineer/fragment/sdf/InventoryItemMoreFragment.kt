@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import kotlinx.android.synthetic.main.fragemt_inventory_item_more.view.*
+import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 
 class InventoryItemMoreFragment : Fragment(){
     companion object{
@@ -26,7 +26,7 @@ class InventoryItemMoreFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.fragemt_inventory_item_more,container,false)
+        mView = inflater.inflate(R.layout.fragment_inventory_item_more,container,false)
         initFragment()
         return mView
     }

@@ -88,11 +88,16 @@ class MyFragment : Fragment() {
         mView.tv_my_vip_level.text = this.vipType
     }
     private fun initData() {
-        GlideLoader().loadImage(mView.iv_my_header,"http://"+headerImg)
+        GlideLoader().loadImage(mView.iv_my_header,headerImg)
         mView.tv_my_phone.text = UnSerializeDataBase.userPhone
     }
 
     private fun initOnClick() {
+        mView.iv_my_header.setOnClickListener {
+            val intent = Intent(activity,ImageDisplayActivity::class.java)
+            intent.putExtra("imagePath",headerImg)
+            startActivity(intent)
+        }
         mView.view_my.setOnClickListener {
             val intent =Intent(activity,MyInformationActivity::class.java)
             startActivity(intent)
@@ -115,10 +120,13 @@ class MyFragment : Fragment() {
             val intent =Intent(activity,VipActivity::class.java)
             startActivity(intent)
         }
+        mView.view_vip.setOnClickListener {
+            val intent =Intent(activity,VipActivity::class.java)
+            startActivity(intent)
+        }
         mView.btn_my_vip_privileges.setOnClickListener {
             val intent = Intent(activity,MyVipActivity::class.java)
             startActivity(intent)
-
         }
     }
 
@@ -130,7 +138,7 @@ class MyFragment : Fragment() {
             val intent = Intent(activity,MyReleaseActivity::class.java)
             startActivity(intent)
         }
-        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"分销",false))
+        mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"分销中心",false))
         mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
             val intent = Intent(activity,RetailStoreActivity::class.java)
             startActivity(intent)

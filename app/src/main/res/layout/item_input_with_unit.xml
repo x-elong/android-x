@@ -12,9 +12,13 @@
             android:textColor="@android:color/black" android:layout_weight="1"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_input_unit"
-            android:textSize="@dimen/general_10" android:layout_marginTop="@dimen/top_10"
-            android:layout_marginBottom="@dimen/bottom_10" android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_input_unit"
+        android:textColor="@color/text_hint_gray"
+            android:textSize="@dimen/font_tv_hint_12"
+        android:layout_marginTop="@dimen/top_10"
+            android:layout_marginBottom="@dimen/bottom_10"
+        android:layout_weight="1"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +26,8 @@
             android:ems="3"
             android:hint="请输入"
             android:id="@+id/et_input_unit_value" android:textSize="@dimen/font_tv_hint_15"
-            android:background="@color/transparent" android:layout_marginTop="@dimen/top_10"
-            android:layout_marginLeft="@dimen/left_10" android:layout_marginBottom="@dimen/bottom_10"
-            android:layout_weight="80"  android:layout_marginRight="@dimen/general_20" android:gravity="right"/>
+            android:background="@color/transparent"
+        android:layout_margin="@dimen/general_10"
+
+            android:layout_weight="80"  android:gravity="right"/>
 </LinearLayout>
