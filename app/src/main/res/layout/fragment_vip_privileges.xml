@@ -41,7 +41,7 @@
 
     <TextView
         android:id="@+id/tv_vip1"
-        android:layout_width="@dimen/general_320"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/general_80"
         android:background="@drawable/vip1"
         android:layout_marginTop="@dimen/top_20"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_vip_privileges" />
     <TextView
         android:id="@+id/tv_vip2"
-        android:layout_width="@dimen/general_320"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/general_80"
         android:background="@drawable/vip2"
         android:layout_marginTop="@dimen/top_20"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_vip1"/>
     <TextView
         android:id="@+id/tv_vip3"
-        android:layout_width="@dimen/general_320"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/general_80"
         android:background="@drawable/vip3"
         android:layout_marginTop="@dimen/top_20"

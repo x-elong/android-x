@@ -75,6 +75,10 @@ class NetworkAdapter {
         fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
         {
             val jsonObject = JSONObject()
+            if(mData[0].id!="" && UnSerializeDataBase.inventoryIdKey!="" && UnSerializeDataBase.inventoryId!="" ){
+                jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+                jsonObject.put("id",mData[0].id)
+            }
             for (i in mData) {
                 when (i.sendFormat) {
                     "Long" -> {
@@ -538,6 +542,10 @@ class NetworkAdapter {
     fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
     {
         val jsonObject = JSONObject()
+        if(mData[0].id!="" && UnSerializeDataBase.inventoryIdKey!="" && UnSerializeDataBase.inventoryId!="" ){
+            jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+            jsonObject.put("id",mData[0].id)
+        }
         for (i in mData) {
             when (i.sendFormat) {
                 "Long" -> {

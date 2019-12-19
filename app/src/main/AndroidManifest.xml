@@ -49,7 +49,7 @@
         <activity
             android:name=".activity.VipActivity"
             android:label="@string/title_activity_vip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.MyVipActivity" />
         <activity android:name=".activity.MyReleaseActivity" />
         <activity android:name=".activity.HelpCenterActivity" />

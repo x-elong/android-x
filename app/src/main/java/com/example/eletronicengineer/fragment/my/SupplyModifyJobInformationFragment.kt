@@ -250,10 +250,18 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
                             json.put("PileFoundation",
-                                JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString())
-                                .put("workDia",workDia.toString())
-                                .put("location",location))
+                                JSONObject().put("id",id)
+                                    .put("name","桩基服务")
+                                    .put("isCar",if(mAdapter!!.mData[2].itemMultiStyleItem.isEmpty()) "fasle" else "true")
+                                    .put("isConstructionTool",if(mAdapter!!.mData[7].itemMultiStyleItem.isEmpty()) "fasle" else "true")
+                                    .put("workDia",mAdapter!!.mData[5].selectOption1Items.indexOf(mAdapter!!.mData[5].selectContent)+1)
+                                    .put("location",mAdapter!!.mData[6].selectContent.replace(" "," / "))
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("issuerName",mAdapter!!.mData[8].singleDisplayRightContent)
+                                    .put("phone",mAdapter!!.mData[9].singleDisplayRightContent)
+                                    .put("validTime",mAdapter!!.mData[10].inputUnitContent)
+                                    .put("issuerBelongSite","")
+                            )
                         }
                         //团队服务——非开挖
                         Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal-> {
@@ -573,6 +581,40 @@ class SupplyModifyJobInformationFragment:Fragment(){
         return adapter
     }
 
+
+
+    /**
+     * @个人劳务
+     */
+    private fun initPersonalService(adapter: RecyclerviewAdapter) {
+        adapter.urlPath = Constants.HttpUrlPath.Provider.updatePersonalIssue
+        val supplyPersonDetail = arguments!!.getSerializable("data") as SupplyPersonDetail
+        activity?.runOnUiThread{
+            mView.tv_modify_job_information_title.text = "个人劳务"
+        }
+        adapter.mData[0].singleDisplayRightContent = supplyPersonDetail.issuerWorkType
+        adapter.mData[1].selectContent = supplyPersonDetail.issuerWorkerKind
+        adapter.mData[2].radioButtonValue = supplyPersonDetail.sex
+        adapter.mData[3].inputUnitContent = supplyPersonDetail.age
+        adapter.mData[4].inputUnitContent = supplyPersonDetail.workExperience
+
+        if(supplyPersonDetail.salaryUnit!="-1.0"){
+            adapter.mData[5].inputMultiContent = supplyPersonDetail.workMoney
+            adapter.mData[5].inputMultiSelectUnit = supplyPersonDetail.salaryUnit
+        }else{
+            adapter.mData[5].inputMultiSelectUnit = "面议"
+        }
+
+        adapter.mData[6].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        adapter.mData[7].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        //专业证书附件上传 8
+        adapter.mData[9].inputUnitContent = supplyPersonDetail.validTime
+        // 10
+        if(supplyPersonDetail.remark!=null)
+            adapter.mData[11].textAreaContent = supplyPersonDetail.remark
+    }
+
+
     /**
      * @变电
      */
@@ -596,8 +638,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -629,8 +671,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -688,8 +730,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -734,8 +776,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -767,8 +809,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -826,8 +868,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -872,8 +914,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -905,8 +947,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -964,8 +1006,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1010,8 +1052,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1043,8 +1085,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1102,8 +1144,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1149,8 +1191,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1199,8 +1241,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1232,8 +1274,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1280,8 +1322,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1327,8 +1369,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1360,8 +1402,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1395,8 +1437,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1442,8 +1484,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1475,8 +1517,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1535,8 +1577,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1582,8 +1624,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1615,8 +1657,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1650,8 +1692,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1697,8 +1739,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","成员清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.name
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].selectContent = if(j.sex=="true") "女" else "男"
                     mData[2].inputSingleContent = j.age
@@ -1730,8 +1772,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","车辆清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].selectContent = j.carType
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
                     mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
@@ -1790,8 +1832,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     bundle.putString("type","工器具清册发布")
                     mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                     mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
+                    UnSerializeDataBase.inventoryIdKey = "teamServeId"
+                    UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.specificationsModel
                     mData[2].inputSingleContent = j.unit
@@ -1814,36 +1856,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
     }
 
 
-    /**
-     * @个人劳务
-     */
-    private fun initPersonalService(adapter: RecyclerviewAdapter) {
-        adapter.urlPath = Constants.HttpUrlPath.Provider.updatePersonalIssue
-        val supplyPersonDetail = arguments!!.getSerializable("data") as SupplyPersonDetail
-        activity?.runOnUiThread{
-            mView.tv_modify_job_information_title.text = "个人劳务"
-        }
-        adapter.mData[0].singleDisplayRightContent = supplyPersonDetail.issuerWorkType
-        adapter.mData[1].selectContent = supplyPersonDetail.issuerWorkerKind
-        adapter.mData[2].radioButtonValue = supplyPersonDetail.sex
-        adapter.mData[3].inputUnitContent = supplyPersonDetail.age
-        adapter.mData[4].inputUnitContent = supplyPersonDetail.workExperience
-
-        if(supplyPersonDetail.salaryUnit!="-1.0"){
-            adapter.mData[5].inputMultiContent = supplyPersonDetail.workMoney
-            adapter.mData[5].inputMultiSelectUnit = supplyPersonDetail.salaryUnit
-        }else{
-            adapter.mData[5].inputMultiSelectUnit = "面议"
-        }
-
-        adapter.mData[6].singleDisplayRightContent = UnSerializeDataBase.idCardName
-        adapter.mData[7].singleDisplayRightContent = UnSerializeDataBase.userPhone
-        //专业证书附件上传 8
-        adapter.mData[9].inputUnitContent = supplyPersonDetail.validTime
-        // 10
-        if(supplyPersonDetail.remark!=null)
-        adapter.mData[11].textAreaContent = supplyPersonDetail.remark
-    }
 
     /**
      * @车辆租赁
@@ -1918,9 +1930,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 bundle.putString("type","工器具清册发布")
                 mData = adapterGenerate.SupplyPublishDetailList(bundle).mData
                 mData[0].inputSingleContent = j.type
-//                UnSerializeDataBase.inventoryIdKey = "requirementTeamServeId"
-//                UnSerializeDataBase.inventoryId = j.requirementTeamServeId
-                mData[0].id = j.id
+                    UnSerializeDataBase.inventoryIdKey = "leaseServeId"
+                    UnSerializeDataBase.inventoryId = j.leaseServeId
+                    mData[0].id = j.id
                 mData[1].inputSingleContent = j.specificationsModels
                 mData[2].inputSingleContent = j.unit
                 mData[3].inputSingleContent = j.quantity

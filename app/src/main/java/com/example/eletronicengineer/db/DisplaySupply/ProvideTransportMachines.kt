@@ -4,6 +4,7 @@ import java.io.Serializable
 
 class ProvideTransportMachines(
     var id:String,
+    var teamServeId:String,
     var leaseCarId:String,
     var carNumber:String,
     var carType:String,

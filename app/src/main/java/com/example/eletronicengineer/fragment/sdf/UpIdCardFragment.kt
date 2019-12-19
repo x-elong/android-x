@@ -2,6 +2,8 @@ package com.example.eletronicengineer.fragment.sdf
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,6 +91,7 @@ class UpIdCardFragment :Fragment(){
         mView.iv_id_people_content.setOnClickListener {
             if (mImagePaths1.size == 0) {
                 selectImage=0
+                Log.i("looper",(Looper.myLooper()==Looper.getMainLooper() ).toString())
                 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
                 //REQEST_SELECT_IMAGES_CODE为Intent调用的requestCode
             } else {

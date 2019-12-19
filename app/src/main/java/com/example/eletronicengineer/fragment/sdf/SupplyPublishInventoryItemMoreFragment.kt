@@ -95,6 +95,7 @@ class SupplyPublishInventoryItemMoreFragment:Fragment(){
     fun copyData(dataList: List<MultiStyleItem>): List<MultiStyleItem> {
         val data = dataList
         val mData = (arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+        data[0].id = mData[0].id
         for (j in mData) {
             val position = mData.indexOf(j)
             when (j.options) {

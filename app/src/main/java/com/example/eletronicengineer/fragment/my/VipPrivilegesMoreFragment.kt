@@ -19,6 +19,7 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.GlideImageLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import kotlinx.android.synthetic.main.fragment_vip_privileges_more.view.*
 
@@ -62,30 +63,19 @@ class VipPrivilegesMoreFragment :Fragment(){
             }
             1->{
                 price = 50.00
-                mView.tv_vip_name.text = "精英"
-                mView.view_vip_information.setBackgroundColor(ContextCompat.getColor(mView.context,R.color.vip2))
-                mView.tv_vip_logo.setBackgroundResource(R.drawable.vip2_logo)
+//                mView.view_vip_information.setBackgroundColor(ContextCompat.getColor(mView.context,R.color.vip2))
+                GlideImageLoader().displayImage(mView.view_vip_information,R.drawable.vip2)
+//                mView.view_vip_information.setBackgroundResource(R.drawable.vip2)
             }
             2->{
                 price = 100.00
-                mView.tv_vip_name.text = "黄金"
-                mView.view_vip_information.setBackgroundColor(ContextCompat.getColor(mView.context,R.color.vip3))
-                mView.tv_vip_logo.setBackgroundResource(R.drawable.vip3_logo)
+//                mView.view_vip_information.setBackgroundColor(ContextCompat.getColor(mView.context,R.color.vip3))
+                GlideImageLoader().displayImage(mView.view_vip_information,R.drawable.vip3)
+//                mView.view_vip_information.setBackgroundResource(R.drawable.vip3)
             }
         }
         if(price!=0.toDouble())
             mView.tv_vip_price.text = "${price}元/年"
-        val sp = SpannableStringBuilder(mView.tv_explain.text)
-        sp.setSpan(ForegroundColorSpan(Color.GREEN)
-            ,3
-            ,9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        sp.setSpan(ForegroundColorSpan(Color.YELLOW)
-            ,9
-            ,21, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        sp.setSpan(ForegroundColorSpan(Color.RED)
-            ,21
-            ,26, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mView.tv_explain.text=sp
         mView.btn_subscribe.setOnClickListener {
             val productId = when(type){
                 1->Constants.Goods.ELITE_VIP

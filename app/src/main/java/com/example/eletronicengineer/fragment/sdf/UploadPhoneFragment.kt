@@ -88,6 +88,7 @@ class UploadPhoneFragment:Fragment(){
         mView.tv_upload_photo_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
+
         imageViewContent = mView.iv_uplaod_photo_content
 
         for (j in 0 until total){
@@ -141,7 +142,6 @@ class UploadPhoneFragment:Fragment(){
                     if(j!=total-1)
                     imagesPath+="|"
                 }
-
                 val Paths = imagesPath.split("|")
                 UnSerializeDataBase.imgList.add(BitmapMap(imagesPath,key))
             }

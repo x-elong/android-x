@@ -1,6 +1,7 @@
 package com.example.eletronicengineer.fragment.sdf
 
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -81,6 +82,7 @@ class ImageFragment:Fragment(){
         .filePath("/Gallery/Pictures")          // 图片存放路径
         .build()
     val lastImage = Image("",View.OnClickListener {
+        Log.i("looper",(Looper.myLooper()== Looper.getMainLooper() ).toString())
         GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
     })
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
