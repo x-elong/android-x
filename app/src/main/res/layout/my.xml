@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray_bg">
+    android:background="@drawable/my_big_bg">
+<!--    android:background="#248bfe"-->
 <View
     android:id="@+id/view_my_title_bg"
     android:layout_width="match_parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:background="#248bfe"
     android:layout_height="@dimen/general_190"/>
     <TextView
         android:id="@+id/my_setting"
@@ -38,7 +38,7 @@
         android:id="@+id/view_my"
         android:layout_width="@dimen/general_340"
         android:layout_height="@dimen/general_130"
-        android:background="@drawable/btn_style4"
+        android:background="@drawable/my_small_bg"
         app:layout_constraintBottom_toBottomOf="@+id/view_my_title_bg"
         app:layout_constraintEnd_toEndOf="@id/view_my_title_bg"
         app:layout_constraintStart_toStartOf="@id/view_my_title_bg"

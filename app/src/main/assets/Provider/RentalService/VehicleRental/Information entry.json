@@ -72,23 +72,18 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "联系电话",
-    "singleDisplayRightContent": "",
-    "key": "contactPhone",
-    "sendFormat": "String"
+    "singleDisplayRightContent": ""
   },
   {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": "",
-    "key": "issuerBelongSite",
-    "sendFormat": "String"
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"可服务地域",
+    "necessary":true
   },
+
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)",
-    "key": "validTime",
-    "sendFormat": "Long"
+    "inputUnit":"(天)"
   },
   {
     "type": "HINT",

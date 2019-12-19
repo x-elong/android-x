@@ -28,24 +28,22 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": "",
-    "key": "issuerName",
-    "sendFormat": "String"
+    "singleDisplayRightContent": ""
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": "",
-    "key": "phone",
-    "sendFormat": "String"
+    "singleDisplayRightContent": ""
   },
-
-  {
+    {
+        "type": "SHIFT_INPUT",
+        "shiftInputTitle": "可服务地域",
+        "necessary": false
+    },
+    {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)",
-    "key": "validTime",
-    "sendFormat": "String"
+    "inputUnit":"(天)"
   },
   {
     "type": "HINT",

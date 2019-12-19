@@ -119,6 +119,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         const val REGISTRATION_ITEM_TYPE=39
         const val BLANK_TYPE=50
         const val MESSAGE_SELECT_OK:Int=100
+        const val MESSAGE_SELECT_CHECK_OK:Int=101
     }
     fun dataToMap(adapter: RecyclerviewAdapter):Map<String,String>
     {
@@ -381,6 +382,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         etDialogSelectItem.setText(selectContent)
                         mData[itemPosition].selectContent=selectContent!!
                     }
+                    false
+                }
+                MESSAGE_SELECT_CHECK_OK->
+                {
+                    val selectContent=it.data.getString("selectContent")
+                    val selectContent1=it.data.getBooleanArray("selectContent1")
+                    mData[position].shiftInputContent=selectContent
+                    mData[position].placeCheckBoolenArray=selectContent1
                     false
                 }
                 else->
@@ -1363,6 +1372,13 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
+                if(mData[position].shiftInputTitle=="可服务地域"){
+                    vh.tvShiftInputShow.setOnClickListener{
+                        val selectDialog=CustomDialog(CustomDialog.Options.SELECT_CHECK_DIALOG,vh.itemView.context,mData[position].placeCheckArray,mData[position].placeCheckBoolenArray,vh.mHandler).dialog
+                        selectDialog.show()
+                    }
+                    vh.itemView.setOnClickListener{vh.tvShiftInputShow.callOnClick()}
+                }
                 if (mData[position].necessary)
                 {
                     val tvNecessary=TextView(context)

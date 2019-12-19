@@ -70,9 +70,11 @@
     "sendFormat": "Long"
   },
   {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "发布者所在地",
-    "singleDisplayRightContent": ""
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"可服务地域",
+    "necessary":false,
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_TEXTAREA",

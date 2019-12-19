@@ -4,11 +4,6 @@
     "singleDisplayRightTitle":"供应类别:",
     "singleDisplayRightContent":""
   },
-  {
-  "type":"SINGLE_DISPLAY_RIGHT",
-  "singleDisplayRightTitle":"负责人:",
-  "singleDisplayRightContent":""
-  },
  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
@@ -24,9 +19,19 @@
     "singleDisplayRightTitle":"有效期(天):",
     "singleDisplayRightContent":""
   },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"负责人:",
+        "singleDisplayRightContent":""
+    },
+    {
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"负责人电话:",
+        "singleDisplayRightContent":""
+    },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"发布人所属地点:",
+    "singleDisplayRightTitle":"可服务地域:",
     "singleDisplayRightContent":""
   }
 ]

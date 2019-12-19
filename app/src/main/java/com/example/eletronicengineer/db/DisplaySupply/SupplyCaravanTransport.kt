@@ -15,5 +15,7 @@ class SupplyCaravanTransport(
     var version:String,
     var teamServeId:String,
     var validTime:String,
-    var issuerBelongSite:String
-):Serializable
+    var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String
+): Serializable

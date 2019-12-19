@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.news -> {
                     if (lastfragment != 0) {
                         lastfragment=0
+                        //ToastHelper.mToast(this,"正在开发中")
                         switchFragment(fragmentList[lastfragment],R.id.frame_main)
                     }
                     return@OnNavigationItemSelectedListener true
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.frame_main, sdrFragment)
         transaction.commit()
         bnv.setOnNavigationItemSelectedListener(changeFragment)
-        bnv.menu.getItem(1).isChecked = true
+        bnv.menu.getItem(0).isChecked = true
         //sdrFragment.initindex(lastfragment);
     }
 

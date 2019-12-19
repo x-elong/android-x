@@ -10,6 +10,7 @@
         android:id="@+id/view14"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_37"
+        android:visibility="gone"
         android:background="@color/colorPrimaryDark"
         tools:ignore="MissingConstraints" />
 
@@ -60,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_157"
         android:layout_below="@id/tv_title"
-        android:background="@drawable/advertisement_background"
+        android:background="@drawable/advertisement_background1"
         app:layout_constraintTop_toBottomOf="@+id/view14"
         tools:layout_editor_absoluteX="0dp" />
 

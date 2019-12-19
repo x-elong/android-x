@@ -31,11 +31,6 @@
   },
    {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人身份证照片:",
-    "singleDisplayRightContent":"点击查看"
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"营业执照:",
     "singleDisplayRightContent":"点击查看"
   },
@@ -44,6 +39,11 @@
   "singleDisplayRightTitle":"三方服务合同:",
   "singleDisplayRightContent":"点击查看"
    },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"有效期(天):",
+    "singleDisplayRightContent":""
+  },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人姓名:",
@@ -56,17 +56,12 @@
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"有效期(天):",
+    "singleDisplayRightTitle":"可服务地域:",
     "singleDisplayRightContent":""
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"经营范围:",
-    "singleDisplayRightContent":""
-  },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"负责人所在地:",
+    "singleDisplayRightTitle":"附加信息:",
     "singleDisplayRightContent":""
   }
 ]

@@ -17,6 +17,8 @@ class SupplyUnexcavation(
     var teamServeId:String,
     var validTime:String,
     var issuerBelongSite:String,
+    var issuerName:String,
+    var phone:String,
     var provideCrewLists:List<ProvideCrewLists>,
     var provideTransportMachines:List<ProvideTransportMachines>,
     var constructionToolLists:List<ConstructionToolLists>
