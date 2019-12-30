@@ -6,5 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
-    <include layout="@layout/fragment_message" android:orientation="horizontal" android:id="@+id/layout_main_content"/>
+<!--   <include layout="@layout/fragment_message" android:orientation="horizontal" android:id="@+id/layout_main_content"/>  -->
+
 </LinearLayout>

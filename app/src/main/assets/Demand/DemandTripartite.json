@@ -60,6 +60,7 @@
     "textAreaTitle":"附加信息",
     "textAreaContent":"有不良记录者请勿联系",
     "necessary": true,
+    "hint": "有不良记录者请勿联系",
     "key":"additionalExplain",
     "sendFormat":"String"
   }

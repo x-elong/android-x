@@ -13,7 +13,9 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
-class SubmitInventoryItemMoreFragment : Fragment(){
+import java.io.Serializable
+
+class SubmitInventoryItemMoreFragment : Fragment(), Serializable {
     companion object{
         fun newInstance(args: Bundle):SubmitInventoryItemMoreFragment{
             val inventoryItemMoreFragment = SubmitInventoryItemMoreFragment()

@@ -20,13 +20,6 @@
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": "",
-    "key": "issuerBelongSite",
-    "sendFormat": "String"
-  },
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
     "singleDisplayRightContent": ""
   },
@@ -51,5 +44,11 @@
     "customFontColor":"#FFFF0000",
     "startPosition":6,
     "endPosition":7
+  },
+  {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加信息",
+    "textAreaContent":"",
+    "necessary": true
   }
 ]

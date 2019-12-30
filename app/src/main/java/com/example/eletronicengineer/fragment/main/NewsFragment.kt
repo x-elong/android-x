@@ -58,21 +58,21 @@ class NewsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.news, container, false)
-        initRegister()
-        Thread{
-            val inputName= EditText(context)
-            inputName.hint="请输入要登录的账号"
-            val dialog= AlertDialog.Builder(context!!).setView(inputName).setPositiveButton("确认",object: DialogInterface.OnClickListener{
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-
-                }
-            })
-            activity!!.runOnUiThread {
-//                dialog.show()
-                initMenu()
-                initData(true)
-            }
-        }.start()
+//        initRegister()
+//        Thread{
+//            val inputName= EditText(context)
+//            inputName.hint="请输入要登录的账号"
+//            val dialog= AlertDialog.Builder(context!!).setView(inputName).setPositiveButton("确认",object: DialogInterface.OnClickListener{
+//                override fun onClick(p0: DialogInterface?, p1: Int) {
+//
+//                }
+//            })
+//            activity!!.runOnUiThread {
+////                dialog.show()
+//                initMenu()
+//                initData(true)
+//            }
+//        }.start()
         return view
     }
 

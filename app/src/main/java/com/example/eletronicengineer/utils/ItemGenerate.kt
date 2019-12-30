@@ -175,7 +175,7 @@ class ItemGenerate
                     val selectOption1Items:MutableList<String> =ArrayList()
                     val selectOption2Items:MutableList<MutableList<String>> =ArrayList()
                     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
-                    if(jsonObject.getString("placePath")!=null){
+                    if(jsonObject.getString("placePath")!=""){
                         val resultBuilder= StringBuilder()
                         val bf= BufferedReader(InputStreamReader(context!!.assets.open("pca.json")))
                         try {
@@ -344,7 +344,8 @@ class ItemGenerate
                     val textAreaTitle=jsonObject.getString("textAreaTitle")
                     val textAreaContent=jsonObject.getString("textAreaContent")
                     val necessary = jsonObject.getBoolean("necessary")
-                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle,textAreaContent,necessary)
+                    val hint=if(jsonObject.has("hint")){jsonObject.getString("hint")} else {""}
+                    multiStyleItem=MultiStyleItem(MultiStyleItem.Options.INPUT_WITH_TEXTAREA,textAreaTitle,textAreaContent,necessary,hint)
 
                 }
                 "SHIFT_INPUT"->

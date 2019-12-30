@@ -225,6 +225,9 @@ class NetworkAdapter {
                     if (data.inputRangeValue2 != "")
                         resultList.add(data.inputRangeValue2)
                 }
+                MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->{
+                    resultList=data.selectContent.split(" ") as MutableList<String>
+                }
             }
             return resultList
         }
@@ -235,10 +238,10 @@ class NetworkAdapter {
                     if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                         doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                     else
-                        doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                        doubleAlsoString = Pair(-1.0, data.inputMultiSelectUnit)
                 }
                 else -> {
-                    doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                    doubleAlsoString = Pair(-1.0, "")
                 }
             }
             return doubleAlsoString
@@ -442,39 +445,44 @@ class NetworkAdapter {
                     if(data.shiftInputTitle=="可服务地域"){
                         result=data.shiftInputContent
                     }else {
-                        val results = try {
-                            for (j in UnSerializeDataBase.imgList) {
-                                if (j.key == data.key) {
-                                    val imagePath = j.path.split("|")
-                                    for (k in imagePath) {
-                                        val file = File(k)
-                                        val imagePart = MultipartBody.Part.createFormData(
-                                            "file",
-                                            file.name,
-                                            RequestBody.create(MediaType.parse("image/*"), file)
-                                        )
-                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                {
-                                                    //Log.i("responseBody",it.string())
-                                                    if (result != "")
-                                                        result += "|"
-                                                    val json = JSONObject(it.string())
-                                                    if (json.getBoolean("success")) {
-                                                        result += json.getString("httpUrl")
-                                                    } else {
-                                                        result += ""
-                                                    }
-                                                },
-                                                {
-                                                    it.printStackTrace()
-                                                })
-                                    }
-                                }
+                        for(j in UnSerializeDataBase.imgList){
+                            if(j.key==data.key){
+                                result=j.path
                             }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
                         }
+//                        val results = try {
+//                            for (j in UnSerializeDataBase.imgList) {
+//                                if (j.key == data.key) {
+//                                    val imagePath = j.path.split("|")
+//                                    for (k in imagePath) {
+//                                        val file = File(k)
+//                                        val imagePart = MultipartBody.Part.createFormData(
+//                                            "file",
+//                                            file.name,
+//                                            RequestBody.create(MediaType.parse("image/*"), file)
+//                                        )
+//                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribe(
+//                                                {
+//                                                    //Log.i("responseBody",it.string())
+//                                                    if (result != "")
+//                                                        result += "|"
+//                                                    val json = JSONObject(it.string())
+//                                                    if (json.getBoolean("success")) {
+//                                                        result += json.getString("httpUrl")
+//                                                    } else {
+//                                                        result += ""
+//                                                    }
+//                                                },
+//                                                {
+//                                                    it.printStackTrace()
+//                                                })
+//                                    }
+//                                }
+//                            }
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
                     }
                 }
                 MultiStyleItem.Options.SINGLE_INPUT -> {
@@ -862,34 +870,39 @@ class NetworkAdapter {
                     ""
             }
             MultiStyleItem.Options.SHIFT_INPUT -> {
-                val results = try {
-                    for (j in UnSerializeDataBase.imgList) {
-                        if (j.key == data.key) {
-                            val imagePath = j.path.split("|")
-                            for (k in imagePath) {
-                                val file = File(k)
-                                val imagePart = MultipartBody.Part.createFormData(
-                                    "file",
-                                    file.name,
-                                    RequestBody.create(MediaType.parse("image/*"), file)
-                                )
-                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                    {
-                                        //Log.i("responseBody",it.string())
-                                        if (result != "")
-                                            result += "|"
-                                        result += it.string()
-                                        Log.i("result url", result)
-                                    },
-                                    {
-                                        it.printStackTrace()
-                                    })
-                            }
-                        }
+                for(j in UnSerializeDataBase.imgList){
+                    if(j.key==data.key){
+                        result=j.path
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
+//                val results = try {
+//                    for (j in UnSerializeDataBase.imgList) {
+//                        if (j.key == data.key) {
+//                            val imagePath = j.path.split("|")
+//                            for (k in imagePath) {
+//                                val file = File(k)
+//                                val imagePart = MultipartBody.Part.createFormData(
+//                                    "file",
+//                                    file.name,
+//                                    RequestBody.create(MediaType.parse("image/*"), file)
+//                                )
+//                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+//                                    {
+//                                        //Log.i("responseBody",it.string())
+//                                        if (result != "")
+//                                            result += "|"
+//                                        result += it.string()
+//                                        Log.i("result url", result)
+//                                    },
+//                                    {
+//                                        it.printStackTrace()
+//                                    })
+//                            }
+//                        }
+//                    }
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
             }
             MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                 result = if (data.selectContent != "")
@@ -1022,10 +1035,10 @@ class NetworkAdapter {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                     doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                 else
-                    doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                    doubleAlsoString = Pair(-1.0, data.inputMultiSelectUnit)
             }
             else -> {
-                doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                doubleAlsoString = Pair(-1.0, "")
             }
         }
         return doubleAlsoString
@@ -5750,7 +5763,8 @@ class NetworkAdapter {
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
                             "报价清单(按单价)","个人证件名称","工作经验" ,
                             "项目","项目特征描述","计量单位",
-                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量"->{
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量",
+                            "公司名称","注册地址","经营范围"->{
                                 if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                             }
                         }
@@ -5943,7 +5957,7 @@ class NetworkAdapter {
                     if(j.necessary==true) {//为true此项为必填需检验
                         when (j.selectTitle) {
                             "项目地点", "孔洞最大直径","岗位类别",
-                            "可实施地域","运送财产保险" -> {
+                            "可实施地域","运送财产保险","资质类别及等级" -> {
                                 if (j.selectContent == "") {
                                     result = "${j.selectTitle.replace("：", "")}没有选择"
                                 }

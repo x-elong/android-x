@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/top_1"
+    android:id="@+id/yellow_pages_release"
+    android:layout_below="@+id/advertisement_iv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditText
+        android:id="@+id/et_yellow_pages_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_45"
+        android:hint="请输入企业名称"
+        android:paddingBottom="@dimen/bottom_10"
+        android:paddingTop="@dimen/top_10"
+        android:paddingStart="@dimen/general_20"
+        android:paddingEnd="@dimen/general_20"
+        android:layout_marginStart="@dimen/general_5"
+       android:layout_marginEnd="@dimen/general_18"
+        android:gravity="center_horizontal"
+        android:background="@drawable/text_style1"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_name_clear"
+        android:layout_width="@dimen/general_15"
+        android:layout_height="@dimen/general_15"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_yellow_pages_name"
+        app:layout_constraintStart_toEndOf="@+id/et_yellow_pages_name"
+        app:layout_constraintTop_toTopOf="@+id/et_yellow_pages_name" />
+
+    <TextView
+        android:id="@+id/tv_yellow_pages_type_select"
+        android:layout_width="@dimen/bottom_100"
+        android:layout_marginTop="@dimen/general_5"
+        android:layout_height="@dimen/general_35"
+        android:layout_marginEnd="@dimen/general_15"
+        android:paddingLeft="@dimen/left_5"
+        android:paddingRight="@dimen/left_5"
+        android:background="@drawable/text_style1"
+        android:scrollbars="horizontal"
+        android:maxLines="1"
+        android:gravity="center"
+        android:text="行业类别及名称"
+        app:layout_constraintTop_toBottomOf="@id/et_yellow_pages_name"
+        app:layout_constraintEnd_toStartOf="@id/tv_yellow_pages_grade_select"
+        app:layout_constraintStart_toStartOf="@+id/et_yellow_pages_name"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_type_clear"
+        android:layout_width="@dimen/general_15"
+        android:layout_height="@dimen/general_15"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_type_select"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_type_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_type_select" />
+
+    <TextView
+        android:visibility="gone"
+        android:scrollbars="horizontal"
+        android:maxLines="1"
+        android:id="@+id/tv_yellow_pages_grade_select"
+        android:layout_width="@dimen/bottom_100"
+        android:layout_height="@dimen/general_35"
+        android:paddingLeft="@dimen/left_5"
+        android:paddingRight="@dimen/left_5"
+        android:layout_marginEnd="@dimen/general_15"
+        android:background="@drawable/text_style1"
+        android:gravity="center"
+        android:text="请选择类别及等级"
+        app:layout_constraintEnd_toStartOf="@id/tv_yellow_pages_site_select"
+        app:layout_constraintTop_toTopOf="@id/tv_yellow_pages_type_select"
+        app:layout_constraintBottom_toBottomOf="@id/tv_yellow_pages_type_select"
+        app:layout_constraintStart_toEndOf="@id/tv_yellow_pages_type_select"
+         />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_grade_clear"
+        android:layout_width="@dimen/general_15"
+        android:layout_height="@dimen/general_15"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_grade_select"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_grade_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_grade_select" />
+
+    <TextView
+        android:scrollbars="horizontal"
+        android:maxLines="1"
+        android:visibility="visible"
+        android:id="@+id/tv_yellow_pages_site_select"
+        android:layout_width="@dimen/bottom_100"
+        android:layout_height="@dimen/general_35"
+        android:background="@drawable/text_style1"
+        android:paddingLeft="@dimen/left_5"
+        android:paddingRight="@dimen/left_5"
+        android:layout_marginEnd="@dimen/general_15"
+        android:gravity="center"
+        android:text="选择地点"
+        app:layout_constraintEnd_toStartOf="@id/tv_yellow_pages_elect_standard_select"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_type_select"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_grade_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_type_select" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_site_clear"
+        android:layout_width="@dimen/general_15"
+        android:layout_height="@dimen/general_15"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_site_select"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_site_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_site_select" />
+    <TextView
+        android:scrollbars="horizontal"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_elect_standard_select"
+        android:layout_width="@dimen/bottom_100"
+        android:layout_height="@dimen/general_35"
+        android:background="@drawable/text_style1"
+        android:paddingLeft="@dimen/left_5"
+        android:paddingRight="@dimen/left_5"
+        android:gravity="center"
+        android:text="选择电压等级"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_site_select"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_site_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_site_select" />
+    <Button
+        android:visibility="gone"
+        android:id="@+id/tv_yellow_pages_elect_standars_clear"
+        android:layout_width="@dimen/general_15"
+        android:layout_height="@dimen/general_15"
+        android:background="@drawable/ic_clear_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_yellow_pages_elect_standard_select"
+        app:layout_constraintStart_toEndOf="@+id/tv_yellow_pages_elect_standard_select"
+        app:layout_constraintTop_toTopOf="@+id/tv_yellow_pages_elect_standard_select" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tv_yellow_pages_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/general_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_yellow_pages_type_select"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

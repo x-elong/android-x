@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_marginTop="@dimen/top_8"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/demand_release"
     android:layout_below="@+id/advertisement_iv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -25,14 +25,17 @@
 
     <TextView
         android:id="@+id/tv_demand_type_select"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/general_100"
         android:layout_marginTop="@dimen/general_5"
         android:layout_height="@dimen/general_35"
-        android:paddingLeft="@dimen/left_5"
+        android:paddingLeft="@dimen/left_2"
         android:paddingRight="@dimen/left_5"
+        android:layout_marginEnd="@dimen/general_5"
         android:background="@drawable/text_style1"
         android:gravity="center"
         android:text="选择需求类别"
+        android:scrollbars="horizontal"
+        android:maxLines="1"
         app:layout_constraintEnd_toStartOf="@+id/tv_demand_site_select"
         app:layout_constraintStart_toStartOf="@+id/demand_direction"
         app:layout_constraintTop_toBottomOf="@+id/demand_direction" />
@@ -50,13 +53,16 @@
     <TextView
         android:visibility="visible"
         android:id="@+id/tv_demand_site_select"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/general_100"
         android:layout_height="@dimen/general_35"
         android:background="@drawable/text_style1"
         android:paddingLeft="@dimen/left_5"
         android:paddingRight="@dimen/left_5"
+        android:layout_marginEnd="@dimen/general_5"
         android:gravity="center"
         android:text="选择地点"
+        android:scrollbars="horizontal"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@+id/tv_demand_type_select"
         app:layout_constraintEnd_toStartOf="@+id/tv_demand_elect_standard_select"
         app:layout_constraintStart_toEndOf="@+id/tv_demand_type_select"
@@ -73,13 +79,16 @@
     <TextView
         android:visibility="gone"
         android:id="@+id/tv_demand_elect_standard_select"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/general_100"
         android:layout_height="@dimen/general_35"
         android:background="@drawable/text_style1"
         android:paddingLeft="@dimen/left_5"
         android:paddingRight="@dimen/left_5"
+        android:layout_marginEnd="@dimen/general_5"
         android:gravity="center"
         android:text="选择电压等级"
+        android:scrollbars="horizontal"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@+id/tv_demand_type_select"
         app:layout_constraintEnd_toEndOf="@+id/demand_direction"
         app:layout_constraintStart_toEndOf="@+id/tv_demand_site_select"
@@ -93,13 +102,21 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_demand_elect_standard_select"
         app:layout_constraintStart_toEndOf="@+id/tv_demand_elect_standard_select"
         app:layout_constraintTop_toTopOf="@+id/tv_demand_elect_standard_select" />
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_1"
+        android:background="@color/white_smoke"
+        android:layout_marginTop="@dimen/general_2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_demand_type_select"
+        tools:ignore="MissingConstraints" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tv_demand_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/general_5"
         android:layout_height="0dp"
+        android:background="@color/white_smoke"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/demand_direction"
         app:layout_constraintStart_toStartOf="@+id/demand_direction"
-        app:layout_constraintTop_toBottomOf="@+id/tv_demand_type_select" />
+        app:layout_constraintTop_toBottomOf="@+id/view_line" />
 </androidx.constraintlayout.widget.ConstraintLayout>

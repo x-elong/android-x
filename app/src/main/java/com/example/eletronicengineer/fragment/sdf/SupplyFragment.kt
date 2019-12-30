@@ -65,6 +65,10 @@ class SupplyFragment:Fragment(){
     var carNumber:String=""//拍照号码
     //负责人所在地
     var issuerBelongSite:String=""
+    var remark:String=""
+    //营业执照
+    var businessLicensePath:String=""
+
     lateinit var mView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i("onCreateView","running")
@@ -106,7 +110,6 @@ class SupplyFragment:Fragment(){
         }
         //发布
         mView.submit.setOnClickListener{
-
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, submit.context)
             val provider=NetworkAdapter.Provider(mAdapter!!.mData,submit.context)
             if(networkAdapter.check()){
@@ -126,6 +129,14 @@ class SupplyFragment:Fragment(){
                                     "核载乘客"->{
                                         val tmp = i.inputUnitContent.toLongOrNull()
                                         maxPassengers =if (tmp != null) { tmp } else {10}
+                                    }
+                                }
+                            }
+                            //remark
+                            MultiStyleItem.Options.INPUT_WITH_TEXTAREA->{
+                                when(i.textAreaTitle){
+                                    "附加信息"->{
+                                        remark=i.textAreaContent
                                     }
                                 }
                             }
@@ -155,6 +166,14 @@ class SupplyFragment:Fragment(){
                                     "可服务地域"-> {
                                         issuerBelongSite=i.shiftInputContent
                                     }
+                                    "营业执照"->{
+                                        for(j in UnSerializeDataBase.imgList){
+                                            if(j.key==i.key){
+                                                businessLicensePath=j.path
+                                            }
+                                        }
+                                    }
+
                                 }
                             }
                             MultiStyleItem.Options.SINGLE_INPUT -> {
@@ -192,39 +211,43 @@ class SupplyFragment:Fragment(){
                     val json=JSONObject()
                     when(arguments!!.getInt("type")) {
                         Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
-                            json.put("MajorNetwork",
+                            json.put("majorNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                     .put("issuerBelongSite",issuerBelongSite)
-                                .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
-                            json.put("DistribuionNetwork",
+                            json.put("distribuionNetwork",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                     .put("issuerBelongSite",issuerBelongSite)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
-                            json.put("PowerTransformation",
+                            json.put("powerTransformation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                     .put("issuerBelongSite",issuerBelongSite)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
-                            json.put("MeasureDesign",
+                            json.put("measureDesign",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                     .put("issuerBelongSite",issuerBelongSite)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         //团队服务——马帮运输
@@ -236,11 +259,12 @@ class SupplyFragment:Fragment(){
                                     .put("issuerBelongSite",issuerBelongSite)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
-                            json.put("PileFoundation",
+                            json.put("pileFoundation",
                                 JSONObject().put("name",name)
                                     .put("validTime",validTime.toString())
                                 .put("workDia",workDia.toString())
@@ -248,6 +272,7 @@ class SupplyFragment:Fragment(){
                                     .put("issuerBelongSite",issuerBelongSite)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark",remark)
                             )
                         }
                         //团队服务——非开挖
@@ -256,11 +281,13 @@ class SupplyFragment:Fragment(){
                                 .put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
                                 .put("phone",UnSerializeDataBase.userPhone)
+                                .put("remark",remark)
                         }
                         Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{//实验调试
                             json.put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
                                 .put("phone",UnSerializeDataBase.userPhone)
+                                .put("remark",remark)
 
                         }
                         Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
@@ -268,11 +295,13 @@ class SupplyFragment:Fragment(){
                                 .put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
                                 .put("phone",UnSerializeDataBase.userPhone)
+                                .put("remark",remark)
                         }
                         Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{//运维
                             json.put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
                                 .put("phone",UnSerializeDataBase.userPhone)
+                                .put("remark",remark)
 
                         }
                         Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{//车辆租赁
@@ -289,7 +318,25 @@ class SupplyFragment:Fragment(){
                             )
                                 .put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
-                                .put("phone",UnSerializeDataBase.userPhone)
+                                .put("contactPhone",UnSerializeDataBase.userPhone)
+                        }
+                        //三方服务
+                        Constants.FragmentType.TRIPARTITE_TRAINING_CERTIFICATE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_FINANCIAL_ACCOUNTING_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_AGENCY_QUALIFICATION_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_TENDER_SERVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_LEGAL_ADVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_SOFTWARE_SERVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal
+                        ->{
+                            json.put("companyCredential",
+                                JSONObject().put("legalPersonName",mAdapter!!.mData[4].inputSingleContent)
+                                    .put("legalPersonPhone",mAdapter!!.mData[5].inputSingleContent)
+                                    .put("companyName",mAdapter!!.mData[1].inputSingleContent)
+                                    .put("companyAbbreviation",mAdapter!!.mData[2].inputSingleContent)
+                                    .put("businessLicensePath",businessLicensePath)
+                                    .put("companyAddress",mAdapter!!.mData[3].inputSingleContent)
+                            )
                         }
                     }
                     provider.generateJsonRequestBody(json).subscribe {
@@ -329,6 +376,30 @@ class SupplyFragment:Fragment(){
                 adapter=adapterGenerate.PersonalService()
                 val singleDisplayRightContent = "普工"
                 val selectOption1Items: List<String> = listOf("普工")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
+            Constants.FragmentType.PERSONAL_LEADING_CADRE_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                var singleDisplayRightContent = "负责人"
+                var selectOption1Items: List<String> =
+                    listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
+            Constants.FragmentType.PERSONAL_ENGINEER_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                var singleDisplayRightContent = "工程师"
+                var selectOption1Items: List<String> =
+                    listOf("助理工程师", "中级工程师", "高级工程师")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
+            Constants.FragmentType.PERSONAL_DESIGNER_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                var singleDisplayRightContent = "设计员"
+                var selectOption1Items: List<String> =
+                    listOf("主网", "配网", "变电")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
             }

@@ -17,8 +17,11 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.DemandActivity
 import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.activity.SupplyActivity
+import com.example.eletronicengineer.activity.YellowPagesActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.fragment.yellowpages.IndustryYellowPagesFragment
+import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.sdf.*
 import kotlinx.android.synthetic.main.sdf_information.*
@@ -72,12 +75,12 @@ class SdfInformationFragment:Fragment(){
         }
         view.demand_release_ib.setOnClickListener {
             switchFragment(DemandInformationFragment(),R.id.fragment_sdf)
-            titleContent.text="需求发布"
+            titleContent.text="需求列表"
             addInformation.visibility = View.VISIBLE
             view14.visibility = View.VISIBLE
             addInformation.setOnClickListener {
                 val Option1Items = listOf("需求个人","需求团队","需求租赁","需求三方")
-                val Option2Items:List<List<String>> = listOf(listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
+                val Option2Items:List<List<String>> = listOf(listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
                 var mHandler:Handler= Handler(Handler.Callback {
                     when(it.what)
                     {
@@ -104,9 +107,10 @@ class SdfInformationFragment:Fragment(){
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
-                titleReturn.visibility=View.INVISIBLE
-                titleContent.text="招投供需"
+                view14.visibility = View.GONE
+//                addInformation.visibility = View.GONE
+//                titleReturn.visibility=View.INVISIBLE
+//                titleContent.text="招投供需"
             }
         }
         view.supply_announcement_tv.setOnClickListener {
@@ -114,12 +118,12 @@ class SdfInformationFragment:Fragment(){
         }
         view.supply_announcement_ib.setOnClickListener {
             switchFragment(SupplyInformationFragment(),R.id.fragment_sdf)
-            titleContent.text="供应发布"
+            titleContent.text="供应列表"
             addInformation.visibility = View.VISIBLE
             view14.visibility = View.VISIBLE
             addInformation.setOnClickListener {
                 val option1Items= listOf("个人劳务","团队服务","租赁服务","三方服务")
-                val option2Items= listOf(listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
+                val option2Items= listOf(listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他"), listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护"), listOf("车辆租赁","工器具租赁","机械租赁","设备租赁"), listOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务","其他"))
                 val mHander=Handler(Handler.Callback {
                     when(it.what){
                         RecyclerviewAdapter.MESSAGE_SELECT_OK->{
@@ -144,9 +148,44 @@ class SdfInformationFragment:Fragment(){
             titleReturn.visibility=View.VISIBLE
             titleReturn.setOnClickListener {
                 activity!!.supportFragmentManager.popBackStackImmediate()
-                addInformation.visibility = View.GONE
-                titleReturn.visibility=View.INVISIBLE
-                titleContent.text="招投供需"
+                view14.visibility = View.GONE
+//                addInformation.visibility = View.GONE
+//                titleReturn.visibility=View.INVISIBLE
+//                titleContent.text="招投供需"
+            }
+        }
+        view.yellow_pages_ib.setOnClickListener {
+            switchFragment(IndustryYellowPagesFragment(),R.id.fragment_sdf)
+            titleContent.text="行业黄页"
+            addInformation.visibility = View.VISIBLE
+            view14.visibility = View.VISIBLE
+            addInformation.setOnClickListener {
+                val option1Items= listOf("安装类","勘察设计类","监理类","通讯类")
+                val mHander=Handler(Handler.Callback {
+                    when(it.what){
+                        RecyclerviewAdapter.MESSAGE_SELECT_OK->{
+                            val selectContent=it.data.getString("selectContent")
+                            val intent = Intent(context, YellowPagesActivity::class.java)
+                            intent.putExtra("type", Constants.FragmentType.INDUSTRYYELLOWPAGES_TYPE.ordinal)
+                            intent.putExtra("selectContent",selectContent)
+                            startActivity(intent)
+                            false
+                        }
+                        else->{
+                            false
+                        }
+                    }
+                })
+                val selectDialog = CustomDialog(CustomDialog.Options.SELECT_DIALOG,view.context,option1Items,mHander).dialog
+                selectDialog.show()
+            }
+            titleReturn.visibility=View.VISIBLE
+            titleReturn.setOnClickListener {
+                activity!!.supportFragmentManager.popBackStackImmediate()
+                view14.visibility = View.GONE
+//                addInformation.visibility = View.GONE
+//                titleReturn.visibility=View.INVISIBLE
+//                titleContent.text="招投供需"
             }
         }
     }

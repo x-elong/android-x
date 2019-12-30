@@ -43,13 +43,13 @@
         app:layout_constraintTop_toTopOf="@+id/view14" />
     <ImageButton
         android:id="@+id/addInformation"
-        android:layout_width="@dimen/general_20"
-        android:layout_height="@dimen/general_20"
+        android:layout_width="@dimen/general_25"
+        android:layout_height="@dimen/general_25"
         android:gravity="center"
         android:scaleType="centerInside"
         android:textColor="@color/black"
         android:layout_marginEnd="@dimen/top_8"
-        android:background="@drawable/add_white"
+        android:background="@drawable/add_white_1"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintEnd_toEndOf="parent"

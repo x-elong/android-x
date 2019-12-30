@@ -106,7 +106,7 @@
   {
     "type":"MULTI_RADIO_BUTTON",
     "radioButtonTitle":"机械设备",
-    "radioButtonName":["全部提供","不需提供"],
+    "radioButtonName":["提供","不需提供"],
     "key":"equipment",
     "sendFormat":"Long"
   },

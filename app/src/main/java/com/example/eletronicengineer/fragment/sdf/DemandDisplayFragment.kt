@@ -97,7 +97,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.journeyCarFare}
                         adapter.mData[11].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
-                        if(data.salaryUnit=="面议"){
+                        if(data.salaryUnit=="面议"||data.salaryStandard=="-1"){
                             adapter.mData[12].singleDisplayRightContent= data.salaryUnit
                         }else {
                             adapter.mData[12].singleDisplayRightContent= "${data.salaryStandard} ${data.salaryUnit}"
@@ -262,8 +262,8 @@ class DemandDisplayFragment:Fragment() {
                             //薪资标准
                         }*/
                         when {
-                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{adapter.mData[14].singleDisplayRightContent=" " }
                         }
                         if(data.requirementMembersLists == null)
@@ -388,8 +388,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[13].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
                         when {
-                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{ adapter.mData[14].singleDisplayRightContent=" "}
                         }
                         if(data.requirementMembersLists == null)
@@ -513,8 +513,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[13].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
                         when {
-                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.constructionEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.constructionEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{adapter.mData[14].singleDisplayRightContent=" "}
                         }
                         if(data.requirementMembersLists == null)
@@ -638,8 +638,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[13].singleDisplayRightContent=if(data.needPeopleNumber==null) {
                             " " } else{ data.needPeopleNumber}
                         when {
-                            data.equipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.equipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.equipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.equipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{adapter.mData[14].singleDisplayRightContent=" " }
                         }
                         if(data.requirementMembersLists == null)
@@ -865,8 +865,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundationEquipment==null) {
                             " " } else{ data.needPileFoundationEquipment}
                         when {
-                            data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不需要提供"
-                            data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="全部提供"
+                            data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不提供"
+                            data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="提供"
                             else->{adapter.mData[15].singleDisplayRightContent=" " }
                         }
                         adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
@@ -963,8 +963,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[14].singleDisplayRightContent=if(data.needPileFoundation==null) {
                             " " } else{ data.needPileFoundation}
                         when {
-                            data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不需要提供"
-                            data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="全部提供"
+                            data.otherMachineEquipment=="0" -> adapter.mData[15].singleDisplayRightContent="不提供"
+                            data.otherMachineEquipment=="1" -> adapter.mData[15].singleDisplayRightContent="提供"
                             else->{adapter.mData[15].singleDisplayRightContent=" " }
                         }
                         adapter.mData[17].singleDisplayRightContent=if(data.name==null) {
@@ -1080,8 +1080,8 @@ class DemandDisplayFragment:Fragment() {
                             }
                         }
                         when {
-                            data.machineEquipment=="0" -> adapter.mData[16].singleDisplayRightContent="不需要提供"
-                            data.machineEquipment=="1" -> adapter.mData[16].singleDisplayRightContent="全部提供"
+                            data.machineEquipment=="0" -> adapter.mData[16].singleDisplayRightContent="不提供"
+                            data.machineEquipment=="1" -> adapter.mData[16].singleDisplayRightContent="提供"
                             else->{adapter.mData[16].singleDisplayRightContent=" " }
                         }
                         adapter.mData[18].singleDisplayRightContent=if(data.name==null) {
@@ -1194,8 +1194,8 @@ class DemandDisplayFragment:Fragment() {
                             }
                         }
                         when {
-                            data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{ adapter.mData[14].singleDisplayRightContent=" "}
                         }
                         adapter.mData[16].singleDisplayRightContent=if(data.name==null) {
@@ -1308,8 +1308,8 @@ class DemandDisplayFragment:Fragment() {
                         adapter.mData[13].singleDisplayRightContent=if(data.vehicle==null) {
                             " " } else{ data.vehicle}
                         when {
-                            data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不需要提供"
-                            data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="全部提供"
+                            data.machineEquipment=="0" -> adapter.mData[14].singleDisplayRightContent="不提供"
+                            data.machineEquipment=="1" -> adapter.mData[14].singleDisplayRightContent="提供"
                             else->{ adapter.mData[14].singleDisplayRightContent=" "}
                         }
                         adapter.mData[15].singleDisplayRightContent=if(data.requirementConstructionWorkKind==null) {

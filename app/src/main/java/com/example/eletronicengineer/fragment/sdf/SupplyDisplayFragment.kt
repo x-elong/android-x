@@ -74,7 +74,7 @@ class SupplyDisplayFragment:Fragment() {
                         }else{ adapter.mData[4].singleDisplayRightContent=data.age }
                         adapter.mData[5].singleDisplayRightContent=if(data.workExperience==null) {
                             " " } else{ data.workExperience}
-                        if(data.salaryUnit=="面议"){
+                        if(data.salaryUnit=="面议"||data.workMoney=="-1"){
                             adapter.mData[6].singleDisplayRightContent= data.salaryUnit
                         }else {
                             adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
@@ -233,6 +233,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.majorNetwork.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.majorNetwork.phone==null) {
                             " " } else{ data.majorNetwork.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.majorNetwork.remark==null) {
+                            " " } else{ data.majorNetwork.remark}
                         view.button_supply.setOnClickListener {
                             if(data.majorNetwork.phone!=null)
                             {
@@ -375,6 +377,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.distribuionNetwork.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.distribuionNetwork.phone==null) {
                             " " } else{ data.distribuionNetwork.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.distribuionNetwork.remark==null) {
+                            " " } else{ data.distribuionNetwork.remark}
                         view.button_supply.setOnClickListener {
                             if(data.distribuionNetwork.phone!=null)
                             {
@@ -506,6 +510,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.powerTransformation.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.powerTransformation.phone==null) {
                             " " } else{ data.powerTransformation.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.powerTransformation.remark==null) {
+                            " " } else{ data.powerTransformation.remark}
                         view.button_supply.setOnClickListener {
                             if(data.powerTransformation.phone!=null)
                             {
@@ -622,6 +628,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.measureDesign.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.measureDesign.phone==null) {
                             " " } else{ data.measureDesign.phone}
+                        adapter.mData[10].singleDisplayRightContent=if(data.measureDesign.remark==null) {
+                            " " } else{ data.measureDesign.remark}
                         view.button_supply.setOnClickListener {
                             if(data.measureDesign.phone!=null)
                             {
@@ -681,6 +689,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.caravanTransport.phone}
                         adapter.mData[6].singleDisplayRightContent=if(data.caravanTransport.issuerBelongSite==null) {
                             " " } else{ data.caravanTransport.issuerBelongSite}
+                        adapter.mData[7].singleDisplayRightContent=if(data.caravanTransport.remark==null) {
+                            " " } else{ data.caravanTransport.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
@@ -809,6 +819,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.pileFoundation.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
                             " " } else{ data.pileFoundation.issuerBelongSite}
+                        adapter.mData[11].singleDisplayRightContent=if(data.pileFoundation.remark==null) {
+                            " " } else{ data.pileFoundation.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
@@ -930,6 +942,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
+                        adapter.mData[8].singleDisplayRightContent=if(data.remark==null) {
+                            " " } else{ data.remark}
                         view.button_supply.setOnClickListener {
 //                            if(data.contactPhone!=null)
 //                            {
@@ -1064,6 +1078,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
+                        adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
+                            " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
@@ -1185,6 +1201,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
+                        adapter.mData[8].singleDisplayRightContent=if(data.remark==null) {
+                            " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
 //                            {
@@ -1322,6 +1340,8 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
+                        adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
+                            " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
                             //                            if(data.contactPhone!=null)
 //                            {
@@ -1379,7 +1399,7 @@ class SupplyDisplayFragment:Fragment() {
                             "false"->{adapter.mData[8].singleDisplayRightContent="脱保"}
                             else->{adapter.mData[8].singleDisplayRightContent=""}
                         }
-                        if(data.salaryUnit=="面议"){
+                        if(data.salaryUnit=="面议"||data.money=="-1"){
                             adapter.mData[9].singleDisplayRightContent= data.salaryUnit
                         }else {
                             adapter.mData[9].singleDisplayRightContent= "${data.money} ${data.salaryUnit}"
@@ -1842,7 +1862,7 @@ class SupplyDisplayFragment:Fragment() {
 //                                startActivity(intent)
 //                            })
 //                        }
-                        if(data.companyCredential.businessLicensePath==null)
+                        if(data.companyCredential.businessLicensePath==null||data.companyCredential.businessLicensePath=="")
                         {
                             adapter.mData[6].buttonListener = listOf(View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()

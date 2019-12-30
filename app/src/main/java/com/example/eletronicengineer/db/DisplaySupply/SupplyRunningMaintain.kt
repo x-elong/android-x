@@ -20,6 +20,7 @@ class SupplyRunningMaintain(
     var issuerBelongSite:String,
     var issuerName:String,
     var phone:String,
+    var remark:String,
     var provideCrewLists:List<ProvideCrewLists>?,
     var provideTransportMachines:List<ProvideTransportMachines>?,
     var constructionToolLists:List<ConstructionToolLists>?,

@@ -92,7 +92,8 @@
   {
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"附加信息",
-    "textAreaContent":"有不良记录者请勿联系",
+    "textAreaContent":"",
+    "hint": "有不良记录者请勿联系",
     "necessary": true,
     "key":"additonalExplain",
     "sendFormat":"String"

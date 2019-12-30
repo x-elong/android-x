@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.news -> {
                     if (lastfragment != 0) {
                         lastfragment=0
-                        //ToastHelper.mToast(this,"正在开发中")
+                        ToastHelper.mToast(this,"正在开发中")
                         switchFragment(fragmentList[lastfragment],R.id.frame_main)
                     }
                     return@OnNavigationItemSelectedListener true
