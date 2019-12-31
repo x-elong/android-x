@@ -107,9 +107,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_1"
         android:background="@color/white_smoke"
-        android:layout_marginTop="@dimen/general_2"
+        android:layout_marginTop="@dimen/general_7"
         app:layout_constraintTop_toBottomOf="@+id/tv_demand_type_select"
         tools:ignore="MissingConstraints" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/demand_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/general_5"
+        app:layout_constraintTop_toBottomOf="@+id/view_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tv_demand_content"
         android:layout_width="match_parent"
@@ -119,4 +128,5 @@
         app:layout_constraintEnd_toEndOf="@+id/demand_direction"
         app:layout_constraintStart_toStartOf="@+id/demand_direction"
         app:layout_constraintTop_toBottomOf="@+id/view_line" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

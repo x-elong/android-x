@@ -2,6 +2,7 @@ package com.example.eletronicengineer.fragment.yellowpages
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.ListAdapterForDemand
 import com.example.eletronicengineer.adapter.ListAdapterForSupply
@@ -67,6 +69,7 @@ class IndustryYellowPagesFragment: Fragment(){
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.yellowpages, container, false)
+        mView.yellow_pages_swipe_refresh.setColorSchemeColors(Color.rgb(47,223,189))
         //类别
         val Option1Items= listOf("安装类","勘察设计类","监理类","通讯类") as MutableList<String>
         mView.tv_yellow_pages_type_select.movementMethod=ScrollingMovementMethod.getInstance()
@@ -146,12 +149,12 @@ class IndustryYellowPagesFragment: Fragment(){
                     initYellowPagesGrade1(mView,Option1Items,Option2Items,Option3Items,d_temp)
                 }
                 "监理类"->{
-                    val Option1Items= listOf("工程监理电力工程专业甲级","工程监理电力工程专业乙级","工程监理电力工程专业丙级","") as MutableList<String>
+                    val Option1Items= listOf("工程监理电力工程专业甲级","工程监理电力工程专业乙级","工程监理电力工程专业丙级") as MutableList<String>
                     initYellowPagesGrade2(mView,Option1Items,d_temp)
                 }
                 "通讯类"->{
                     val Option1Items= listOf("电子与智能化工程专业承包一级","电子与智能化工程专业承包二级","电子与智能化工程专业承包三级",
-                        "通信工程施工总承包一级","通信工程施工总承包二级","通信工程施工总承包三级","") as MutableList<String>
+                        "通信工程施工总承包一级","通信工程施工总承包二级","通信工程施工总承包三级") as MutableList<String>
                     initYellowPagesGrade2(mView,Option1Items,d_temp)
                 }
             }
@@ -233,8 +236,8 @@ class IndustryYellowPagesFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPersonalIssueAdapter = ListAdapterForSupply(activity!!)
-        key = arrayListOf("page","number")
-        value = arrayListOf(mPageNumberForYellowPages,mCountPerPageForPerson) as MutableList<String>
+        key = arrayListOf("page","number","firstQualification","secondQualification","thirdQualification","companyType","companyAddress","companyName")
+        value = arrayListOf(mPageNumberForYellowPages,mCountPerPageForPerson, yellowPagesGrade[0],yellowPagesGrade[1],yellowPagesGrade[2], yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
         demandYellowPages(view)
     }
     //
@@ -251,8 +254,18 @@ class IndustryYellowPagesFragment: Fragment(){
 
                 var m = view.tv_yellow_pages_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
-                    selectScroll(theflag,view)
+                    selectScroll(theflag)
                 }
+            }
+        })
+        view.yellow_pages_swipe_refresh.setOnRefreshListener(object :SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                mView.yellow_pages_swipe_refresh.isRefreshing=false
+                mPageNumberForYellowPages=1
+                mPersonalIssueAdapter!!.notifyData()
+                value = arrayListOf(mPageNumberForYellowPages,mCountPerPageForPerson, yellowPagesGrade[0],yellowPagesGrade[1],yellowPagesGrade[2],
+                    yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
+                _loadYellowPagesData()
             }
         })
     }
@@ -308,7 +321,7 @@ class IndustryYellowPagesFragment: Fragment(){
                                             " "
                                         else j.companyName
                                         for(str in Qualification){
-                                            if(str!=null){
+                                            if(str!=null&&str!=""){
                                                 if(temp3!="")
                                                     temp3+="|"
                                                 temp3+=str
@@ -380,6 +393,7 @@ class IndustryYellowPagesFragment: Fragment(){
             when(it.what)
             {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
+                    mPageNumberForYellowPages = 1
                     val selectContent=it.data.getString("selectContent")
                     view.tv_yellow_pages_grade_select.text=selectContent
                     view.tv_yellow_pages_grade_clear.visibility=View.VISIBLE
@@ -410,6 +424,7 @@ class IndustryYellowPagesFragment: Fragment(){
             when(it.what)
             {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
+                    mPageNumberForYellowPages = 1
                     val selectContent=it.data.getString("selectContent")
                     view.tv_yellow_pages_grade_select.text=selectContent
                     view.tv_yellow_pages_grade_clear.visibility=View.VISIBLE
@@ -440,6 +455,7 @@ class IndustryYellowPagesFragment: Fragment(){
             when(it.what)
             {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
+                    mPageNumberForYellowPages = 1
                     view.tv_yellow_pages_grade_select.visibility=View.VISIBLE
                     yellowPagesType=it.data.getString("selectContent")
                     view.tv_yellow_pages_type_select.text=yellowPagesType
@@ -466,6 +482,7 @@ class IndustryYellowPagesFragment: Fragment(){
         var mHandler: Handler = Handler(Handler.Callback {
             when (it.what) {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK -> {
+                    mPageNumberForYellowPages = 1
                     val selectContent = it.data.getString("selectContent")
                     view.tv_yellow_pages_site_select.text = selectContent
                     view.tv_yellow_pages_site_clear.visibility = View.VISIBLE
@@ -500,6 +517,7 @@ class IndustryYellowPagesFragment: Fragment(){
     }
    // 公司名称
    fun initName(view:View,name:String){
+       mPageNumberForYellowPages = 1
        mView.tv_yellow_pages_name_clear.visibility=View.VISIBLE
        yellowPagesName=name
        key = arrayListOf("page","number","firstQualification","secondQualification","thirdQualification","companyType","companyAddress","companyName")
@@ -509,9 +527,8 @@ class IndustryYellowPagesFragment: Fragment(){
        mIsLastPageForYellowPages = false
        mPersonalIssueAdapter!!.notifyData()
        demandYellowPages(view)
-       yellowPagesName=""
    }
-    fun selectScroll(theflag:Int,view:View){
+    fun selectScroll(theflag:Int){
         when(theflag)
         {
             1->{

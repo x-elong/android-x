@@ -65,7 +65,7 @@ class YellowPagesDisplayFragment:Fragment() {
                         val Qualification:List<String> = listOf(data.firstQualification,data.secondQualification,data.thirdQualification)
                         var temp=""
                         for(str in Qualification){
-                            if(str!=null){
+                            if(str!=null&&str!=""){
                                 if(temp!="")
                                     temp+="|"
                                 temp+=str

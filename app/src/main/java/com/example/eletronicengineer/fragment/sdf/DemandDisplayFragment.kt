@@ -108,7 +108,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[16].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[17].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[17].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener{
                             mdata.putSerializable("RequirementPersonDetail",data)
@@ -294,7 +294,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -420,7 +420,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementDistributionNetwork",data as Serializable)
@@ -545,7 +545,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -670,7 +670,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalDxplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalDxplain==null) {
                             " " } else{ data.additonalDxplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -778,7 +778,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[15].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[16].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[16].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementCaravanTransport",data as Serializable)
@@ -875,7 +875,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -973,7 +973,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[19].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[20].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[20].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -1090,7 +1090,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[21].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -1204,7 +1204,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[18].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[19].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[19].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -1322,7 +1322,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[20].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[21].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[21].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -1402,7 +1402,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[13].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[14].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[14].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("listData1",data.requirementCarLists as Serializable) //车辆清册查看
@@ -1486,7 +1486,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[12].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[13].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementLeaseConstructionTool",data as Serializable)
@@ -1572,7 +1572,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[12].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[13].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementLeaseFacility",data as Serializable)
@@ -1657,7 +1657,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[12].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[13].singleDisplayRightContent=if(data.additonalExplain==null) {
+                        adapter.mData[13].textAreaContent=if(data.additonalExplain==null) {
                             " " } else{ data.additonalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementLeaseMachinery",data as Serializable)
@@ -1728,7 +1728,7 @@ class DemandDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.validTime==null) {
                             " " } else{ data.validTime}
-                        adapter.mData[8].singleDisplayRightContent=if(data.additionalExplain==null) {
+                        adapter.mData[8].textAreaContent=if(data.additionalExplain==null) {
                             " " } else{ data.additionalExplain}
                         view.button.setOnClickListener {
                             mdata.putSerializable("RequirementThirdPartyDetail",data as Serializable)
