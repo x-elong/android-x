@@ -74,10 +74,15 @@ class LoginFragment: Fragment() {
             FragmentHelper.switchFragment(activity!!,ProblemFragment(),R.id.frame_login,"")
         }
         mView.cb_pwd_display.setOnClickListener {
-            if(mView.cb_pwd_display.isChecked)
+            Log.i("","${mView.cb_pwd_display.isChecked}")
+            if(mView.cb_pwd_display.isChecked){
                 mView.et_login_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            else
+                mView.cb_pwd_display.background = mView.context.getDrawable(R.drawable.eys_open)
+            }
+            else{
                 mView.et_login_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                mView.cb_pwd_display.background = mView.context.getDrawable(R.drawable.eys_close)
+            }
             mView.et_login_password.setSelection(mView.et_login_password.length())
         }
 //        if(username!="" && password!="")

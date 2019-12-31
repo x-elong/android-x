@@ -17,7 +17,7 @@ import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
-import com.example.eletronicengineer.distributionFileSave.*
+import com.example.eletronicengineer.db.DisplaySupply.*
 import com.example.eletronicengineer.fragment.sdf.PublishInventoryItemMoreFragment
 import com.example.eletronicengineer.fragment.sdf.SupplyPublishInventoryItemMoreFragment
 import com.example.eletronicengineer.model.Constants
@@ -49,24 +49,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
     }
     var mAdapter:RecyclerviewAdapter?=null
-    var comment:String=""//备注
-    var isCar:Boolean=true
-    var isConstructionTool:Boolean=true
-    var validTime:Long?= Long.MIN_VALUE//有效期
-    var horseNumber:Long?= Long.MIN_VALUE//马匹数量
     var name:String=""//名称
-    var voltages:ArrayList<String> = arrayListOf() //电压表等级
-    var workDia:Int= Int.MIN_VALUE//作业直径
-    var location:String=""//队部所在区域
-    //车辆表
-    var carType:String=""//车辆类型
-    var maxPassengers:Long= Long.MIN_VALUE//
-    var construction:Int=-1//车辆结构
-    var isDriver:Boolean =false
-    var isInsurance:Boolean =false
-    var carPhotoPath:String=""//车辆照片
-    var carNumber:String=""//拍照号码
-
     var type = 0
     lateinit var mView:View
     lateinit var id:String
@@ -108,185 +91,140 @@ class SupplyModifyJobInformationFragment:Fragment(){
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, mView.context)
             val provider=NetworkAdapter.Provider(mAdapter!!.mData,mView.context)
             if(networkAdapter.check()){
-                    for(i in mAdapter!!.mData ) {
-                        when (i.options){
-                            MultiStyleItem.Options.INPUT_WITH_UNIT->{
-
-                                when(i.inputUnitTitle){
-                                        "有效期"->{
-                                            val tmp = i.inputUnitContent.toLongOrNull()
-                                            validTime = if (tmp != null) { tmp } else {10}
-                                        }
-                                    "马匹数量"->{
-                                        val tmp = i.inputUnitContent.toLongOrNull()
-                                        horseNumber = if (tmp != null) { tmp } else {10}
-                                    }
-                                    "核载乘客"->{
-                                        val tmp = i.inputUnitContent.toLongOrNull()
-                                        maxPassengers =if (tmp != null) { tmp } else {10}
-                                    }
-                                }
-                            }
-                            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
-                                when(i.radioButtonTitle) {
-                                    "是否配驾驶员"->{
-
-                                     val   tmp = i.radioButtonValue
-                                       if(tmp=="1"){
-                                           isDriver=true
-                                       }else{
-                                           isDriver=false
-                                       }
-                                    }
-                                    "保险状态"->{
-                                        val   tmp = i.radioButtonValue
-                                        if(tmp=="1"){
-                                            isInsurance=true
-                                        }else{
-                                            isInsurance=false
-                                        }
-                                    }
-                                }
-                            }
-//                            MultiStyleItem.Options.SHIFT_INPUT -> {
-//                                when(i.shiftInputTitle) {
-//                                    "车辆照片"->{
-//                                        val results = try {
-//                                            for (j in UnSerializeDataBase.imgList) {
-//                                                if (j.key == i.key) {
-//                                                    val imagePath = j.path.split("|")
-//                                                    for (k in imagePath) {
-//                                                        val file = File(k)
-//                                                        val imagePart = MultipartBody.Part.createFormData(
-//                                                            "file",
-//                                                            file.name,
-//                                                            RequestBody.create(MediaType.parse("image/*"), file)
-//                                                        )
-//                                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-//                                                            {
-//                                                                if (carPhotoPath != "")
-//                                                                    carPhotoPath += "|"
-//                                                                val json = JSONObject(it.string())
-//                                                                if(json.getBoolean("success")){
-//                                                                    carPhotoPath += json.getString("httpUrl")
-//                                                                }else{
-//                                                                    carPhotoPath += ""
-//                                                                }
-//                                                            },
-//                                                            {
-//                                                                it.printStackTrace()
-//                                                            })
-//                                                    }
-//                                                }
-//                                            }
-//                                        } catch (e: Exception) {
-//                                            e.printStackTrace()
-//                                        }
-//                                    }
-//                                }
-//                            }
-                            MultiStyleItem.Options.SINGLE_INPUT -> {
-                                when(i.inputSingleTitle) {
-                                    "牌照号码"->{
-                                        carNumber = i.inputSingleContent
-                                    }
-                                }
-
-                            }
-                            MultiStyleItem.Options.SELECT_DIALOG ->{
-                                when(i.selectTitle) {
-                                    "作业最大直径"->{
-                                        workDia = 1-i.selectOption1Items.indexOf(i.selectContent)
-                                    }//Int
-                                    "车辆类型"->{
-                                        carType =if (i.selectContent != "") {i.selectContent} else { "" }//String
-                                    }
-                                    "车厢结构"->{
-                                        construction = 1-i.selectOption1Items.indexOf(i.selectContent)    //Int
-                                    }
-                                }
-                            }
-                            MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->{//String
-                                when(i.selectTitle) {
-                                    "队部所在区域"->{
-                                        location = if (i.selectContent != "") {i.selectContent} else { "" }
-                                    }
-
-                                }
-                            }
-
-                        }
-                    }
                     val json=JSONObject()
                     json.put("id",id)
                     when(arguments!!.getInt("type")) {
                         Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
-                            json.put("MajorNetwork",
+                            json.put("majorNetwork",
                                 JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString()))
+                                    .put("validTime",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[9]).toString())
+                                    .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("id",id)
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                    .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                            )
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
-                            json.put("DistribuionNetwork",
+                            json.put("distribuionNetwork",
                                 JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString()))
+                                    .put("validTime",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[9]).toString())
+                                    .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("id",id)
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                    .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                            )
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
-                            json.put("PowerTransformation",
+                            json.put("powerTransformation",
                                 JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString()))
+                                    .put("validTime",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[9]).toString())
+                                    .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("id",id)
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                    .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                            )
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
-                            json.put("MeasureDesign",
+                            json.put("measureDesign",
                                 JSONObject().put("name",name)
-                                    .put("validTime",validTime.toString()))
+                                    .put("validTime",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[9]).toString())
+                                    .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("id",id)
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                    .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                            )
+                                .put("implementationRanges",NetworkAdapter().parseToString(mAdapter!!.mData[5]))
+                                .put("voltages",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[4]))
                         }
                         //团队服务——马帮运输
                         Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal->{
                             json.put("caravanTransport",
                                 JSONObject().put("name",name)
-                                .put("validTime",validTime.toString())
-                                .put("horseNumber",horseNumber.toString()))
+                                .put("validTime",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[6]).toString())
+                                .put("horseNumber",NetworkAdapter.Provider().parseToInt(mAdapter!!.mData[2]).toString())
+                                    .put("issuerBelongSite",mAdapter!!.mData[5].shiftInputContent)
+                                    .put("issuerName",UnSerializeDataBase.idCardName)
+                                    .put("phone",UnSerializeDataBase.userPhone)
+                                    .put("remark","")
+                                    .put("id",id)
+                                    .put("teamServeId",UnSerializeDataBase.inventoryId)
+                            )
                         }
                         //团队服务——桩基
                         Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{
-                            json.put("PileFoundation",
+                            json.put("pileFoundation",
                                 JSONObject().put("id",id)
                                     .put("name","桩基服务")
-                                    .put("isCar",if(mAdapter!!.mData[2].itemMultiStyleItem.isEmpty()) "fasle" else "true")
-                                    .put("isConstructionTool",if(mAdapter!!.mData[7].itemMultiStyleItem.isEmpty()) "fasle" else "true")
+//                                    .put("isCar",if(mAdapter!!.mData[2].itemMultiStyleItem.isEmpty()) "fasle" else "true")
+//                                    .put("isConstructionTool",if(mAdapter!!.mData[7].itemMultiStyleItem.isEmpty()) "fasle" else "true")
                                     .put("workDia",mAdapter!!.mData[5].selectOption1Items.indexOf(mAdapter!!.mData[5].selectContent)+1)
                                     .put("location",mAdapter!!.mData[6].selectContent.replace(" "," / "))
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("issuerName",mAdapter!!.mData[8].singleDisplayRightContent)
                                     .put("phone",mAdapter!!.mData[9].singleDisplayRightContent)
                                     .put("validTime",mAdapter!!.mData[10].inputUnitContent)
-                                    .put("issuerBelongSite","")
+                                    .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                    .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                    .put("isConstructionTool",mAdapter!!.mData[7].itemMultiStyleItem.isNotEmpty())
                             )
                         }
                         //团队服务——非开挖
                         Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal-> {
-                            json.put("validTime",validTime.toString())
+                            json.put("id",id)
+                                .put("issuerBelongSite",mAdapter!!.mData[4].shiftInputContent)
+                                .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+                                .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                .put("isConstructionTool",mAdapter!!.mData[3].itemMultiStyleItem.isNotEmpty())
                         }
                         Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{//实验调试
-
+                            json.put("id",id)
+                                .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+                                .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                .put("isConstructionTool",mAdapter!!.mData[7].itemMultiStyleItem.isNotEmpty())
                         }
                         Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
-                            json.put("validTime",validTime.toString())
+                            json.put("id",id)
+                                .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+                                .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
+                                .put("isConstructionTool",mAdapter!!.mData[3].itemMultiStyleItem.isNotEmpty())
                         }
                         Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{//运维
+                            val isCar= mAdapter!!.mData[1].itemMultiStyleItem.isNotEmpty()
+                            json.put("id",id)
+                                .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
+                                .put("isCar",mAdapter!!.mData[1].itemMultiStyleItem.isNotEmpty())
+                                .put("isConstructionTool",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
 
+//                                .put("name",name)
+//                                .put("issuerName",UnSerializeDataBase.idCardName)
+//                                .put("phone",UnSerializeDataBase.userPhone)
                         }
                         Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal->{//车辆租赁
                             json.put("carTable",
-                                JSONObject().put("carType",carType)
-                                    .put("maxPassengers",maxPassengers.toString())
+                                JSONObject().put("carType",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[1]))
+                                    .put("maxPassengers",mAdapter!!.mData[3].inputUnitContent.toLongOrNull().toString())
                                     .put("maxWeight",mAdapter!!.mData[4].inputUnitContent.toLongOrNull().toString())
-                                    .put("construction",construction.toString())
+                                    .put("construction",(1-mAdapter!!.mData[6].selectOption1Items.indexOf(mAdapter!!.mData[6].selectContent)).toString())
                                     .put("lenghtCar",mAdapter!!.mData[5].inputUnitContent.toLongOrNull().toString())
-                                    .put("isDriver",isDriver)
-                                    .put("isInsurance",isInsurance)
-                                    .put("carPhotoPath",carPhotoPath)
-                                    .put("carNumber",carNumber)
+                                    .put("isDriver",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[7]))
+                                    .put("isInsurance",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[8]))
+                                    .put("carPhotoPath","")
+                                    .put("carNumber",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[2]))
+                                    .put("remark","")
                                     .put("id",UnSerializeDataBase.inventoryIdKey)
                                     .put("leaseCarId",UnSerializeDataBase.inventoryId)
                             )
@@ -312,9 +250,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     },
                                     {
                                         loadingDialog.dismiss()
-                                        val toast = Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT)
-                                        toast.setGravity(Gravity.CENTER, 0, 0)
-                                        toast.show()
+                                        ToastHelper.mToast(mView.context,"服务器异常")
                                         it.printStackTrace()
                                     }
                                 )
@@ -627,6 +563,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = network.powerTransformation.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = network.powerTransformation.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = network.provideCrewLists
@@ -658,7 +596,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
                     }
                 }
+            adapter.mData[1].necessary = false
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -675,7 +616,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -695,12 +636,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        adapter.mData[3].singleDisplayRightContent = network.powerTransformation.issuerBelongSite
+        if(network.powerTransformation.issuerBelongSite!=null){
+            val issuerBelongSite = network.powerTransformation.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = network.powerTransformation.issuerBelongSite
+        }
         val voltages = network.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
             for (j in voltages)
-                voltageDegrees.add(j.voltageDegree)
+                voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -765,6 +714,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = network.majorNetwork.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = network.majorNetwork.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = network.provideCrewLists
@@ -797,6 +748,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -813,7 +766,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -833,12 +786,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        adapter.mData[3].singleDisplayRightContent = network.majorNetwork.issuerBelongSite
+        if(network.majorNetwork.issuerBelongSite!=null){
+            val issuerBelongSite = network.majorNetwork.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = network.majorNetwork.issuerBelongSite
+        }
         val voltages = network.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
             for (j in voltages)
-                voltageDegrees.add(j.voltageDegree)
+                voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -903,6 +864,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = network.distribuionNetwork.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = network.distribuionNetwork.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = network.provideCrewLists
@@ -935,6 +898,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -951,7 +916,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -971,12 +936,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        adapter.mData[3].singleDisplayRightContent = network.distribuionNetwork.issuerBelongSite
+        if(network.distribuionNetwork.issuerBelongSite!=null){
+            val issuerBelongSite = network.distribuionNetwork.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = network.distribuionNetwork.issuerBelongSite
+        }
         val voltages = network.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
             for (j in voltages)
-                voltageDegrees.add(j.voltageDegree)
+                voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -1041,6 +1014,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = network.measureDesign.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = network.measureDesign.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = network.provideCrewLists
@@ -1073,6 +1048,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1089,7 +1066,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1109,12 +1086,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        adapter.mData[3].singleDisplayRightContent = network.measureDesign.issuerBelongSite
+        if(network.measureDesign.issuerBelongSite!=null){
+            val issuerBelongSite = network.measureDesign.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = network.measureDesign.issuerBelongSite
+        }
         val voltages = network.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
             for (j in voltages)
-                voltageDegrees.add(j.voltageDegree)
+                voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -1180,6 +1165,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = caravan.caravanTransport.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = caravan.caravanTransport.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = caravan.provideCrewLists
@@ -1212,9 +1199,19 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         adapter.mData[2].inputUnitContent = caravan.caravanTransport.horseNumber
-        //3
+        if(caravan.caravanTransport.issuerBelongSite!=null){
+            val issuerBelongSite = caravan.caravanTransport.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[5].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[5].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[5].shiftInputContent = caravan.caravanTransport.issuerBelongSite
+        }
         adapter.mData[6].inputUnitContent = caravan.caravanTransport.validTime
     }
 
@@ -1230,6 +1227,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = pile.pileFoundation.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = pile.pileFoundation.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = pile.provideCrewLists
@@ -1262,6 +1261,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1278,7 +1279,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1298,7 +1299,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        //adapter.mData[3].singleDisplayRightContent = supplyTest.issuerBelongSite
+        if(pile.pileFoundation.issuerBelongSite!=null){
+            val issuerBelongSite = pile.pileFoundation.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = pile.pileFoundation.issuerBelongSite
+        }
         val implementationRanges = pile.implementationRanges.name.split("、")
         adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
         for (j in adapter.mData[4].checkboxNameList){
@@ -1310,7 +1319,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
 
         adapter.mData[5].selectContent = adapter.mData[5].selectOption1Items[pile.pileFoundation.workDia.toInt()-1]
-        adapter.mData[6].selectContent = pile.pileFoundation.location
+        adapter.mData[6].selectContent = pile.pileFoundation.location.replace(" / "," ")
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val constructionToolLists = pile.constructionToolLists
@@ -1358,6 +1367,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = supplyUnexcavation.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = supplyUnexcavation.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = supplyUnexcavation.provideCrewLists
@@ -1390,6 +1401,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1406,7 +1419,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1457,7 +1470,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
         }
-        //4
+        if(supplyUnexcavation.issuerBelongSite!=null){
+            val issuerBelongSite = supplyUnexcavation.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[4].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[4].shiftInputContent = supplyUnexcavation.issuerBelongSite
+        }
         adapter.mData[7].inputUnitContent = supplyUnexcavation.validTime
     }
 
@@ -1473,6 +1494,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = supplyTest.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = supplyTest.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = supplyTest.provideCrewLists
@@ -1505,6 +1528,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1521,7 +1546,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1541,12 +1566,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        //adapter.mData[3].singleDisplayRightContent = supplyTest.issuerBelongSite
+        if(supplyTest.issuerBelongSite!=null){
+            val issuerBelongSite = supplyTest.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = supplyTest.issuerBelongSite
+        }
         val voltages = supplyTest.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
             for (j in voltages)
-                voltageDegrees.add(j.voltageDegree)
+                voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -1613,6 +1646,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = supplySpanWoodenSupprt.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = supplySpanWoodenSupprt.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = supplySpanWoodenSupprt.provideCrewLists
@@ -1645,6 +1680,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1661,7 +1698,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1713,6 +1750,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
         }
         //4
+        if(supplySpanWoodenSupprt.issuerBelongSite!=null){
+            val issuerBelongSite = supplySpanWoodenSupprt.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[4].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[4].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[4].shiftInputContent = supplySpanWoodenSupprt.issuerBelongSite
+        }
         adapter.mData[7].inputUnitContent = supplySpanWoodenSupprt.validTime
     }
 
@@ -1728,6 +1774,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
         adapter.mData[0].singleDisplayRightContent = supplyRunningMaintain.name
+        UnSerializeDataBase.inventoryIdKey = "teamServeId"
+        UnSerializeDataBase.inventoryId = supplyRunningMaintain.teamServeId
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
             val provideCrewLists = supplyRunningMaintain.provideCrewLists
@@ -1760,6 +1808,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
+            if(adapter.mData[1].itemMultiStyleItem.isEmpty())
+                adapter.mData[1].necessary = false
         }
         if(true){
             val itemMultiStyleItem = ArrayList<MultiStyleItem>()
@@ -1776,7 +1826,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     UnSerializeDataBase.inventoryId = j.teamServeId
                     mData[0].id = j.id
                     mData[1].inputSingleContent = j.carNumber
-                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()]
+                    mData[2].selectContent = mData[2].selectOption1Items[j.construction.toInt()-1]
                     mData[3].inputUnitContent = j.maxPassengers
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
@@ -1796,12 +1846,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
         }
-        adapter.mData[3].singleDisplayRightContent = supplyRunningMaintain.issuerBelongSite
+        if(supplyRunningMaintain.issuerBelongSite!=null){
+            val issuerBelongSite = supplyRunningMaintain.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[3].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[3].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[3].shiftInputContent = supplyRunningMaintain.issuerBelongSite
+        }
         val voltages = supplyRunningMaintain.voltages
         if(voltages!=null){
             val voltageDegrees = ArrayList<String>()
                 for (j in voltages)
-                    voltageDegrees.add(j.voltageDegree)
+                    voltageDegrees.addAll(j.voltageDegree.split("、"))
             adapter.mData[4].checkboxValueList = ArrayList(adapter.mData[4].checkboxNameList.size)
             for (j in adapter.mData[4].checkboxNameList){
                 val position = voltageDegrees.indexOf(j)
@@ -1885,7 +1943,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }else {
             adapter.mData[11].singleDisplayRightContent= "${supplyLeaseCar.money} ${supplyLeaseCar.salaryUnit}"
         }
-        // 14
+        if(supplyLeaseCar.issuerBelongSite!=null){
+            val issuerBelongSite = supplyLeaseCar.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[14].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[14].shiftInputContent = supplyLeaseCar.issuerBelongSite
+        }
         adapter.mData[15].inputUnitContent = supplyLeaseCar.validTime
         if(supplyLeaseCar.comment!=null)
             adapter.mData[17].textAreaContent = supplyLeaseCar.comment
@@ -1902,10 +1968,18 @@ class SupplyModifyJobInformationFragment:Fragment(){
         val adapterGenerate= AdapterGenerate()
         adapterGenerate.context= context!!
         adapterGenerate.activity=activity as MyReleaseActivity
-        UnSerializeDataBase.inventoryId
-        UnSerializeDataBase.inventoryIdKey
-        adapter.mData[0].id = otherLease.leaseConstructionTool.id
-        adapter.mData[0].singleDisplayRightContent = otherLease.leaseConstructionTool.variety
+        UnSerializeDataBase.inventoryIdKey = "leaseServeId"
+        when(adapter.mData[0].singleDisplayRightContent){
+            "工器具租赁"-> {
+                UnSerializeDataBase.inventoryId = otherLease.leaseConstructionTool.leaseServeId
+            }
+            "机械租赁"-> {
+                UnSerializeDataBase.inventoryId = otherLease.leaseMachinery.leaseServeId
+            }
+            "设备租赁"-> {
+                UnSerializeDataBase.inventoryId = otherLease.leaseFacility.leaseServeId
+            }
+        }
         adapter.mData[1].inputSingleContent = otherLease.companyCredential.companyName
         adapter.mData[2].inputSingleContent = otherLease.companyCredential.companyAbbreviation
         adapter.mData[3].inputSingleContent = otherLease.companyCredential.companyAddress
@@ -1949,9 +2023,18 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 }
             }
         adapter.mData[8].itemMultiStyleItem = itemMultiStyleItem
+
         adapter.mData[10].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
         adapter.mData[11].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
-        // 14
+        if(otherLease.issuerBelongSite!=null){
+            val issuerBelongSite = otherLease.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[14].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[14].shiftInputContent = otherLease.issuerBelongSite
+        }
         adapter.mData[15].inputUnitContent = otherLease.leaseConstructionTool.validTime
     }
 
@@ -1984,7 +2067,15 @@ class SupplyModifyJobInformationFragment:Fragment(){
             UnSerializeDataBase.imgList.add(BitmapMap(supplyThirdParty.companyCredential.businessLicensePath, adapter.mData[7].key))
         }
         //10
-        //11
+        if(supplyThirdParty.issuerBelongSite!=null){
+            val issuerBelongSite = supplyThirdParty.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[11].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[11].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[11].shiftInputContent = supplyThirdParty.issuerBelongSite
+        }
         adapter.mData[12].inputUnitContent = supplyThirdParty.validTime
         if(supplyThirdParty.businessScope!=null)
         adapter.mData[13].inputUnitContent = supplyThirdParty.businessScope

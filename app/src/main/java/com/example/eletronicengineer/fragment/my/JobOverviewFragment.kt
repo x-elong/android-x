@@ -16,6 +16,8 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.StoreTypeAdapter
 import com.example.eletronicengineer.aninterface.StoresName
 import com.example.eletronicengineer.model.Constants
+import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.startSendMessage
 import io.reactivex.Observable
@@ -72,11 +74,29 @@ class JobOverviewFragment :Fragment(){
     }
 
     private fun getData() {
-        baseUrl+=when(type){
-            "需求个人"->Constants.HttpUrlPath.My.getPersonRequirement
-            "需求团队"->Constants.HttpUrlPath.My.getRequirementTeam
-            "需求租赁"->Constants.HttpUrlPath.My.getLease
-            else->Constants.HttpUrlPath.My.getRequirementThird
+        lateinit var dbKey:String
+        val dbType:Int
+        when(type){
+            "需求个人"->{
+                baseUrl+=Constants.HttpUrlPath.My.getPersonRequirement
+                dbKey = "demandIndividual"
+                dbType = Constants.FragmentType.DEMAND_INDIVIDUAL_TYPE.ordinal
+            }
+            "需求团队"->{
+                baseUrl+=Constants.HttpUrlPath.My.getRequirementTeam
+                dbKey = "demandGroup"
+                dbType = Constants.FragmentType.DEMAND_GROUP_TYPE.ordinal
+            }
+            "需求租赁"->{
+                baseUrl+=Constants.HttpUrlPath.My.getLease
+                dbKey = "demandLease"
+                dbType = Constants.FragmentType.DEMAND_LEASE_TYPE.ordinal
+            }
+            else->{
+                baseUrl+=Constants.HttpUrlPath.My.getRequirementThird
+                dbKey = "demandTripartite"
+                dbType = Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal
+            }
         }
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("checkId",checkId).put("page",page).put("pageSize",5)
@@ -86,6 +106,7 @@ class JobOverviewFragment :Fragment(){
             val result = startSendMessage(it,baseUrl)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
+                    Log.i("jsonObject",jsonObject.toString())
                     val code = jsonObject.getInt("code")
                     var result = ""
                     if(code==200){
@@ -101,6 +122,13 @@ class JobOverviewFragment :Fragment(){
                             val js = jsonArray.getJSONObject(j)
                             val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,js.getString("name"),js.getString("phone"))
 //                            val item = MultiStyleItem(MultiStyleItem.Options.STORE,"","张凌","44岁 | 湖南省 长沙市雨花区","普工 | 面议","0")
+
+                            item.jumpListener = View.OnClickListener {
+                                val bundle = Bundle()
+                                bundle.putString(dbKey,js.toString())
+                                bundle.putInt("type",dbType)
+                                FragmentHelper.switchFragment(activity!!,MyRegistrationMoreFragment.newInstance(bundle),R.id.frame_my_release,"")
+                            }
                             data.add(item)
                         }
                         adapter.mData = data
@@ -113,6 +141,7 @@ class JobOverviewFragment :Fragment(){
                     }
                     Toast.makeText(context,result, Toast.LENGTH_SHORT).show()
                 },{
+                    ToastHelper.mToast(mView.context,"获取报名列表异常")
                     it.printStackTrace()
                 })
         }

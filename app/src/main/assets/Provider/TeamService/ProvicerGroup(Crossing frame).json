@@ -2,7 +2,9 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
-    "singleDisplayRightContent": "跨越架"
+    "singleDisplayRightContent": "跨越架",
+      "key": "name",
+      "sendFormat": "String"
   },
 {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -31,20 +33,26 @@
         "necessary":false
     },
 
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": ""
-  },
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": ""
-  },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "负责人",
+        "singleDisplayRightContent": "",
+        "key": "issuerName",
+        "sendFormat": "String"
+    },
+    {
+        "type": "SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle": "负责人电话",
+        "singleDisplayRightContent": "",
+        "key": "phone",
+        "sendFormat": "String"
+    },
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
+    "inputUnit":"(天)",
+      "key": "validTime",
+      "sendFormat": "Int"
   },
   {
     "type":"HINT",

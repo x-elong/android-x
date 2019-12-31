@@ -24,9 +24,8 @@ import com.example.eletronicengineer.adapter.EngineeringAppLiancesAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.CheckBoxStyle
 import com.example.eletronicengineer.aninterface.EngineeringAppliances
-import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
-import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
-import com.example.eletronicengineer.distributionFileSave.*
+import com.example.eletronicengineer.db.DisplayDemand.*
+import com.example.eletronicengineer.db.DisplaySupply.*
 import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.*
@@ -1527,8 +1526,8 @@ class AdapterGenerate {
         val mdata=Bundle()
         val mData = itemGenerate.getJsonFromAsset("Provider/TeamService/ProviderGroup(Caravan transportation).json")
         val adapter = RecyclerviewAdapter(mData)
-        mData[4].singleDisplayRightContent = UnSerializeDataBase.idCardName
-        mData[5].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        mData[3].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[4].singleDisplayRightContent = UnSerializeDataBase.userPhone
         val styleTypeNum = arrayListOf(2,3)
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
@@ -3916,13 +3915,13 @@ class AdapterGenerate {
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/equipmentLeasing.json")
         when(type){
             "工器具租赁"->{
-                mData[8].singleDisplayRightTitle="工器具租赁清册"
+                mData[8].singleDisplayRightTitle="工器具租赁清册:"
             }
             "设备租赁"->{
-                mData[8].singleDisplayRightTitle="设备租赁清册"
+                mData[8].singleDisplayRightTitle="设备租赁清册:"
             }
             "机械租赁"->{
-                mData[8].singleDisplayRightTitle="机械租赁清册"
+                mData[8].singleDisplayRightTitle="机械租赁清册:"
             }
         }
         val adapter = RecyclerviewAdapter(mData)

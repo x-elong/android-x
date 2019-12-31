@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
-import com.example.eletronicengineer.distributionFileSave.*
+import com.example.eletronicengineer.db.DisplayDemand.*
+import com.example.eletronicengineer.db.DisplaySupply.*
 import kotlinx.android.synthetic.main.fragment_project_display.view.*
 
 class ProjectListDetailFragment:Fragment() {
@@ -31,7 +31,7 @@ class ProjectListDetailFragment:Fragment() {
     lateinit var listData4: requirementLeaseProjectList
     lateinit var listData5: thirdLists
 
-    lateinit var listData7:ProvideCrewLists
+    lateinit var listData7: ProvideCrewLists
     lateinit var listData8:ProvideTransportMachines
     lateinit var listData9:ConstructionToolLists
     lateinit var listData10:LeaseList

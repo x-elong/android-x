@@ -43,21 +43,21 @@
         app:layout_constraintTop_toTopOf="@+id/view14" />
     <ImageButton
         android:id="@+id/addInformation"
-        android:layout_width="@dimen/general_20"
+        android:layout_width="@dimen/general_40"
         android:layout_height="@dimen/general_20"
         android:gravity="center"
         android:scaleType="centerInside"
         android:textColor="@color/black"
         android:layout_marginEnd="@dimen/top_8"
-        android:background="@drawable/add_white"
+        android:background="@drawable/add"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view14"
         />
 
-    <ImageView
-        android:id="@+id/advertisement_background_iv"
+    <View
+        android:id="@+id/view_advertisement_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_157"
         android:layout_below="@id/tv_title"
@@ -65,17 +65,17 @@
         app:layout_constraintTop_toBottomOf="@+id/view14"
         tools:layout_editor_absoluteX="0dp" />
 
-    <ImageView
-        android:id="@+id/advertisement_iv"
+    <View
+        android:id="@+id/view_advertisement"
         android:layout_width="@dimen/general_302"
         android:layout_height="@dimen/general_102"
         android:layout_below="@id/tv_title"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/advertisement_text"
-        app:layout_constraintBottom_toBottomOf="@+id/advertisement_background_iv"
-        app:layout_constraintEnd_toEndOf="@+id/advertisement_background_iv"
-        app:layout_constraintStart_toStartOf="@+id/advertisement_background_iv"
-        app:layout_constraintTop_toTopOf="@+id/advertisement_background_iv" />
+        android:background="@drawable/advertisement_text"
+        app:layout_constraintBottom_toBottomOf="@+id/view_advertisement_background"
+        app:layout_constraintEnd_toEndOf="@+id/view_advertisement_background"
+        app:layout_constraintStart_toStartOf="@+id/view_advertisement_background"
+        app:layout_constraintTop_toTopOf="@+id/view_advertisement_background" />
 
     <FrameLayout
         android:id="@+id/fragment_sdf"
@@ -83,7 +83,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/general_8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advertisement_background_iv"
+        app:layout_constraintTop_toBottomOf="@+id/view_advertisement_background"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

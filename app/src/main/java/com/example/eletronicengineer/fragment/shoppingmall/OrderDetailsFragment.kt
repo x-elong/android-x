@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment.shopping
+package com.example.eletronicengineer.fragment.shoppingmall
 
 import android.os.Bundle
 import android.view.LayoutInflater

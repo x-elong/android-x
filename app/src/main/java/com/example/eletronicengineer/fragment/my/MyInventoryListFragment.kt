@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MyRegistrationActivity
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.db.My.*
 import com.example.eletronicengineer.utils.AdapterGenerate
@@ -27,6 +29,7 @@ class MyInventoryListFragment :Fragment(){
         }
     }
     lateinit var mView: View
+    var frame = R.id.frame_my_registration
     var adapter: RecyclerviewAdapter?=null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,8 @@ class MyInventoryListFragment :Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         mView = inflater.inflate(R.layout.fragment_with_inventory,container,false)
+        if(activity is MyReleaseActivity)
+            frame = R.id.frame_my_release
         if(adapter==null){
             initFragment()
         }
@@ -53,7 +58,7 @@ class MyInventoryListFragment :Fragment(){
         }
         val adapterGenerate = AdapterGenerate()
         adapterGenerate.context = mView.context
-        adapterGenerate.activity = activity as MyRegistrationActivity
+        adapterGenerate.activity = activity as AppCompatActivity
         val mMultiStyleItemList = ArrayList<MultiStyleItem>()
         when(type){
             "成员清册"->{
@@ -84,7 +89,7 @@ class MyInventoryListFragment :Fragment(){
                             bundle.putString("title","成员清册")
                             val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                             fragment.item = itemMultiStyleItem
-                            FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                            FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                         }
                     }
                 }
@@ -106,7 +111,7 @@ class MyInventoryListFragment :Fragment(){
                             bundle.putString("title","成员清册")
                             val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                             fragment.item = itemMultiStyleItem
-                            FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                            FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                         }
                     }
                 }
@@ -129,7 +134,7 @@ class MyInventoryListFragment :Fragment(){
                         bundle.putString("title","机械设备")
                         val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                         fragment.item = itemMultiStyleItem
-                        FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                        FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                     }
                 }
             }
@@ -168,7 +173,7 @@ class MyInventoryListFragment :Fragment(){
                             bundle.putString("title","车辆清册")
                             val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                             fragment.item = itemMultiStyleItem
-                            FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                            FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                         }
                     }
                 }
@@ -194,7 +199,7 @@ class MyInventoryListFragment :Fragment(){
                             bundle.putString("title","车辆清册")
                             val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                             fragment.item = itemMultiStyleItem
-                            FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                            FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                         }
                     }
                 }
@@ -220,7 +225,7 @@ class MyInventoryListFragment :Fragment(){
                         bundle.putString("title","租赁清单")
                         val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                         fragment.item = itemMultiStyleItem
-                        FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                        FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                     }
                 }
             }
@@ -243,7 +248,7 @@ class MyInventoryListFragment :Fragment(){
                         bundle.putString("title","三方服务清单")
                         val fragment = MyInventoryItemMoreFragment.newInstance(bundle)
                         fragment.item = itemMultiStyleItem
-                        FragmentHelper.switchFragment(activity!!,fragment,R.id.frame_my_registration,"")
+                        FragmentHelper.switchFragment(activity!!,fragment,frame,"")
                     }
                 }
             }

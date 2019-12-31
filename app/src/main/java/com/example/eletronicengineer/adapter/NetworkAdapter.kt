@@ -20,7 +20,11 @@ import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
 import com.example.eletronicengineer.db.My.*
-import com.example.eletronicengineer.fragment.ProjectDiskFragment
+import com.example.eletronicengineer.fragment.my.EnterpriseCertificationFragment
+import com.example.eletronicengineer.fragment.my.EnterpriseReCertificationFragment
+import com.example.eletronicengineer.fragment.my.PersonalCertificationFragment
+import com.example.eletronicengineer.fragment.my.PersonalReCertificationFragment
+import com.example.eletronicengineer.fragment.projectdisk.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
@@ -55,9 +59,10 @@ import kotlin.collections.HashMap
 class NetworkAdapter {
     //供
     class Provider {
-        var mData: List<MultiStyleItem>
-        var context: Context
+        lateinit var mData: List<MultiStyleItem>
+        lateinit var context: Context
         lateinit var jsonObject: JSONObject
+        constructor(){}
         constructor(mData: List<MultiStyleItem>, context: Context) {
             this.mData = mData
             this.context = context
@@ -75,9 +80,11 @@ class NetworkAdapter {
         fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
         {
             val jsonObject = JSONObject()
-            if(mData[0].id!="" && UnSerializeDataBase.inventoryIdKey!="" && UnSerializeDataBase.inventoryId!="" ){
-                jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
+            if(mData[0].id!=""){
                 jsonObject.put("id",mData[0].id)
+            }
+            if(UnSerializeDataBase.inventoryIdKey!="" && UnSerializeDataBase.inventoryId!="" ){
+                jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
             }
             for (i in mData) {
                 when (i.sendFormat) {
@@ -248,7 +255,7 @@ class NetworkAdapter {
             return doubleAlsoString
         }
 
-        private fun parseToBoolean(data: MultiStyleItem): Boolean {
+        fun parseToBoolean(data: MultiStyleItem): Boolean {
             var result = false
             when (data.options) {
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
@@ -423,7 +430,7 @@ class NetworkAdapter {
             return result
         }
 
-        private fun parseToInt(data: MultiStyleItem): Int {
+        fun parseToInt(data: MultiStyleItem): Int {
             var result = Int.MIN_VALUE
             when (data.options) {
                 MultiStyleItem.Options.INPUT_WITH_UNIT -> {
@@ -436,7 +443,7 @@ class NetworkAdapter {
             return result
         }
 
-        private fun parseToString(data: MultiStyleItem): String {
+        fun parseToString(data: MultiStyleItem): String {
             var result = ""
             when (data.options) {
                 MultiStyleItem.Options.INPUT_WITH_TEXTAREA -> {
@@ -446,6 +453,10 @@ class NetworkAdapter {
                     if(data.shiftInputTitle=="可服务地域"){
                         result=data.shiftInputContent
                     }else {
+//                        for(j in UnSerializeDataBase.imgList){
+//                            if(j.key==data.key)
+//                                result = j.path
+//                        }
                         val results = try {
                             for (j in UnSerializeDataBase.imgList) {
                                 if (j.key == data.key) {
@@ -498,14 +509,8 @@ class NetworkAdapter {
                         if (data.checkboxValueList[j]) {
                             ch.add(data.checkboxNameList[j])
                         }
-                    if(data.checkboxTitle=="可操作电压等级"){
-                        result = ch.toString().replace(", ", "|")
-                        result = result.substring(1, result.length - 1)
-                    }else{
                         result = ch.toString().replace(", ", "、")
                         result = result.substring(1, result.length - 1)
-                    }
-
                 }
                 MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                     val position = 1 - data.radioButtonValue.toInt()
@@ -516,7 +521,7 @@ class NetworkAdapter {
         }
     }
 
-    //data source  需
+    //data source  需1
     var mData: List<MultiStyleItem> = ArrayList()
     lateinit var context: Context
     constructor(){}
@@ -5675,7 +5680,7 @@ class NetworkAdapter {
         val file = File(imagePath)
         val imagePart = MultipartBody.Part.createFormData("file", file.name,
             RequestBody.create(MediaType.parse("image/*"), file))
-        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        val results = uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 loadingDialog.dismiss()
                 val json = JSONObject(it.string())
@@ -5684,12 +5689,14 @@ class NetworkAdapter {
                     ToastHelper.mToast(context,"上传成功")
                     result = json.getString("httpUrl")
                     val mImagePaths = arrayListOf(result)
-                    if(fragment is UploadPhoneFragment) {
-                        fragment.refresh(mImagePaths[0])
-                    }else if(fragment is UpIdCardFragment){
-                        fragment.refresh(mImagePaths)
-                    }else if(fragment is ImageFragment){
-                        fragment.refresh(mImagePaths)
+                    when(fragment){
+                        is UploadPhoneFragment->fragment.refresh(mImagePaths[0])
+                        is UpIdCardFragment->fragment.refresh(mImagePaths)
+                        is ImageFragment->fragment.refresh(mImagePaths)
+                        is PersonalCertificationFragment ->fragment.refresh(mImagePaths[0])
+                        is EnterpriseCertificationFragment ->fragment.refresh(mImagePaths[0])
+                        is PersonalReCertificationFragment ->fragment.refresh(mImagePaths[0])
+                        is EnterpriseReCertificationFragment -> fragment.refresh(mImagePaths[0])
                     }
                 }else{
                     ToastHelper.mToast(context,"上传失败")

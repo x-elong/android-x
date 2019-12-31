@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.retailstore.SupplyDisplayFragment
+import com.example.eletronicengineer.fragment.sdf.SupplyDisplayFragment
 
 class SupplyDisplayActivity : AppCompatActivity() {
   lateinit var id:String

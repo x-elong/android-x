@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
-import com.example.eletronicengineer.fragment.AddFriendMainFragment
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.fragment.main.AddFriendMainFragment
 
 class AddFriendActivity:AppCompatActivity()
 {
@@ -14,7 +14,7 @@ class AddFriendActivity:AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_friend)
         supportActionBar?.hide()
-        val fragment=AddFriendMainFragment()
+        val fragment= AddFriendMainFragment()
         replaceFragment(R.id.fl_add_friend_container,fragment,"mainFragment")
     }
     fun replaceFragment(layoutId:Int,fragment: Fragment)

@@ -35,4 +35,11 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="eysCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/eys_style</item>
+        <item name="android:width">@dimen/general_30</item>
+        <item name="android:height">@dimen/general_30</item>
+    </style>
 </resources>

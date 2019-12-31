@@ -16,14 +16,7 @@
     "inputUnitTitle":"马匹数量",
     "inputUnit":"(匹)",
     "key": "horseNumber",
-    "sendFormat": "String"
-  },
-  {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": "",
-    "key": "issuerBelongSite",
-    "sendFormat": "String"
+    "sendFormat": "Int"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",

@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_qr_code"
         tools:ignore="MissingConstraints" />
 
-    <com.example.eletronicengineer.custom.MyQrCodeView
+    <ImageView
         android:id="@+id/logo_iv"
         android:elevation="@dimen/general_10"
         android:layout_width="@dimen/general_286"
@@ -48,7 +48,16 @@
         android:layout_marginTop="@dimen/top_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_qr_code_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_qr_code_title"/>
+<!--    <com.example.eletronicengineer.custom.MyQrCodeView-->
+<!--        android:id="@+id/logo_iv"-->
+<!--        android:elevation="@dimen/general_10"-->
+<!--        android:layout_width="@dimen/general_286"-->
+<!--        android:layout_height="@dimen/general_330"-->
+<!--        android:layout_marginTop="@dimen/top_20"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_qr_code_title" />-->
 
     <Button
         android:id="@+id/btn_my_qrcode_save_qrcode"

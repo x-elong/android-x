@@ -23,15 +23,25 @@ import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 class BindEmailInformationFragment :Fragment(){
+    lateinit var title:String
     private var mDisposable: Disposable? = null
+    companion object{
+        fun newInstance(args:Bundle):BindEmailInformationFragment{
+            val bindEmailInformationFragment = BindEmailInformationFragment()
+            bindEmailInformationFragment.arguments = args
+            return bindEmailInformationFragment
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bind_email_information,container,false)
-        view.et_bind_email_information_number.setOnClickListener {
-
+        title = arguments!!.getString("title")
+        view.tv_bind_email_information_title.setText(title)
+        view.tv_forget_password_back.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
         }
         view.tv_email_code_check.setOnClickListener {
             val receiver = view.et_bind_email_information_number.text.toString().trim()
@@ -95,7 +105,7 @@ class BindEmailInformationFragment :Fragment(){
                             ToastHelper.mToast(view.context, message)
                         }, {
                             loadingDialog.dismiss()
-                            ToastHelper.mToast(view.context, "绑定邮箱异常")
+                            ToastHelper.mToast(view.context, "${title}异常")
                             it.printStackTrace()
                         })
                 }

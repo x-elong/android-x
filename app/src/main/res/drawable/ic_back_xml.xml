@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@drawable/back" android:width="@dimen/general_10" android:height="@dimen/general_15">
+  <item android:drawable="@drawable/back" android:width="@dimen/general_20" android:height="@dimen/general_15">
 
   </item>
 </layer-list>

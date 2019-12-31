@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.distributionFileSave
+package com.example.eletronicengineer.db.DisplaySupply
 
 class Supply<T>(
     var pageCount:Long,

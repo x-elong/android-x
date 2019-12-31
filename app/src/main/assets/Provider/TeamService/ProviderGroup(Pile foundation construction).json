@@ -2,7 +2,9 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
-    "singleDisplayRightContent": "桩机服务"
+    "singleDisplayRightContent": "桩机服务",
+    "key": "name",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

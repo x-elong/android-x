@@ -5,7 +5,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textSize="@dimen/font_tv_normal_18"
+    android:gravity="center"
+    android:textColor="@color/black"
+    android:text="正在开发中..."/>
     <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
@@ -13,6 +19,7 @@
             android:background="#64ffffff"
             android:gravity="center_vertical"
             android:text="电企通应用"
+         android:visibility="gone"
             android:textColor="#505050"
             android:textSize="@dimen/font_tv_hint_15"
             app:layout_constraintTop_toTopOf="parent"
@@ -23,6 +30,7 @@
             android:id="@+id/advertisement_background_iv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/general_157"
+        android:visibility="gone"
             android:layout_below="@id/tv_title"
             android:background="@drawable/advertisement_background"
             tools:layout_editor_absoluteX="26dp"
@@ -31,6 +39,7 @@
     <ImageView
             android:id="@+id/advertisement_iv"
             android:layout_width="@dimen/general_302"
+        android:visibility="gone"
             android:layout_height="@dimen/general_102"
             android:src="@drawable/advertisement_text"
             android:layout_below="@id/tv_title"
@@ -46,6 +55,7 @@
             android:layout_below="@+id/advertisement_background_iv"
             android:background="#ffffff"
             android:elevation="@dimen/general_4"
+        android:visibility="gone"
             android:gravity="center"
             android:textColor="#505050"
             android:textSize="@dimen/font_tv_hint_12" tools:layout_editor_absoluteX="38dp" android:layout_marginTop="8dp"
@@ -55,6 +65,7 @@
             android:id="@+id/i_iv"
             android:paddingTop="@dimen/top_12"
             android:layout_width="@dimen/general_34"
+        android:visibility="gone"
             android:layout_height="@dimen/general_40"
             android:elevation="@dimen/general_4"
             android:paddingLeft="@dimen/left_12"
@@ -65,6 +76,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/i_tv"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

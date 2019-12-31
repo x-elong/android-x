@@ -67,11 +67,6 @@
     "inputUnit":"(天)"
   },
   {
-    "type": "SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle": "负责人所在地",
-    "singleDisplayRightContent": ""
-  },
-  {
     "type": "HINT",
     "hintContent": "注:字符前有*为必填。",
     "customFontColor":"#FFFF0000",

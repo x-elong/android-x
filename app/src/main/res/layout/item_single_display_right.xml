@@ -13,15 +13,18 @@
             android:layout_height="wrap_content" android:id="@+id/tv_single_display_title"
             android:gravity="center" android:textColor="@android:color/black"
             android:textSize="@dimen/font_tv_hint_15"/>
-    <EditText
+    <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_single_display_content"
             android:gravity="right"
-            android:focusable="false"
             android:singleLine="true"
             android:inputType="none"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_marginTop="@dimen/top_10"
             android:layout_marginStart="@dimen/left_10"
             android:layout_marginBottom="@dimen/bottom_10"

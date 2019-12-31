@@ -54,14 +54,15 @@
         android:id="@+id/tv_vip_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_marginStart="@dimen/left_10"
-        android:layout_marginBottom="@dimen/bottom_10"
         android:text="免费"
-        android:visibility="gone"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/view_vip_information"
-        app:layout_constraintStart_toStartOf="@+id/view_vip_information" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/vip_state"
+        app:layout_constraintEnd_toEndOf="@+id/vip_state"
+        app:layout_constraintStart_toStartOf="@+id/vip_state"
+        app:layout_constraintTop_toTopOf="@+id/view_vip_information" />
     <TextView
         android:id="@+id/vip_state"
         android:layout_width="wrap_content"
@@ -82,7 +83,6 @@
         android:layout_marginStart="@dimen/left_12"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_vip_information" />
 
@@ -97,13 +97,12 @@
     <Button
         android:id="@+id/btn_subscribe"
         android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_48"
-        android:layout_marginStart="@dimen/left_10"
-        android:layout_marginEnd="@dimen/right_10"
-        android:background="@drawable/btn_style4"
+        android:layout_width="@dimen/general_140"
+        android:layout_height="@dimen/general_36"
+        android:layout_margin="@dimen/general_10"
+        android:background="@drawable/btn_style3"
         android:text="立即开通"
-        android:textColor="#2a82e4"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

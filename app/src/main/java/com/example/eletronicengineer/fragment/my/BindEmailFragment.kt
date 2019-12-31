@@ -29,23 +29,23 @@ class BindEmailFragment :Fragment(){
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         email = arguments!!.getString("email")
-
         return mView
     }
 
     override fun onStart() {
         super.onStart()
+
         if(email==""){
             mView.tv_bind_email_number.text = "当前未绑定邮箱"
             mView.btn_modify_email.text = "绑定邮箱"
-            mView.btn_modify_email.setOnClickListener {
-                FragmentHelper.switchFragment(activity!!,BindEmailInformationFragment(),R.id.frame_my_information,"")
-            }
+
         }else{
             mView.tv_bind_email_number.text="当前绑定邮箱:"+email
-            mView.btn_modify_email.setOnClickListener {
-                FragmentHelper.switchFragment(activity!!,ModifyEmailFragment(),R.id.frame_my_information,"")
-            }
+        }
+        mView.btn_modify_email.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("title",mView.btn_modify_email.text.toString())
+            FragmentHelper.switchFragment(activity!!,BindEmailInformationFragment.newInstance(bundle),R.id.frame_my_information,"")
         }
     }
     fun update(email:String){

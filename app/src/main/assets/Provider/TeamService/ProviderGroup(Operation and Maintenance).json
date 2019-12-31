@@ -3,7 +3,7 @@
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
     "singleDisplayRightContent": "运行维护",
-    "key": "category",
+    "key": "name",
     "sendFormat": "String"
   },
   {
@@ -23,7 +23,9 @@
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"可服务地域",
-    "necessary":false
+    "necessary":false,
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
   },
   {
     "type":"MULTI_CHECKBOX",
@@ -56,12 +58,16 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "issuerName",
+    "sendFormat": "String"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "phone",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_UNIT",

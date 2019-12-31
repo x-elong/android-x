@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.*
+import com.example.eletronicengineer.fragment.projectdisk.*
 import com.example.eletronicengineer.utils.PermissionHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_project_disk.*

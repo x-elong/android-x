@@ -5,14 +5,61 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_gray_bg">
+    android:background="@color/white">
 
 
     <View
+        android:id="@+id/view_personal_certification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_37"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_personal_certification_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/top_4"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ic_back_xml"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/view_personal_certification"
+        app:layout_constraintTop_toTopOf="@+id/view_personal_certification" />
+    <TextView
+        android:id="@+id/tv_personal_certification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/general_30"
+        android:gravity="center"
+        android:text="个人认证"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_personal_certification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_personal_certification"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_personal_certification_add"
+        android:layout_width="@dimen/general_40"
+        android:layout_height="@dimen/general_20"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/add"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/view_personal_certification"
+        app:layout_constraintEnd_toEndOf="@+id/view_personal_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_personal_certification"
+        />
+    <View
         android:id="@+id/view_id_card_name"
         android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_personal_certification"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
         android:layout_height="@dimen/general_40"/>
     <TextView
         android:id="@+id/tv_id_card_name"
@@ -26,22 +73,22 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_id_card_name_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
-        android:layout_marginStart="@dimen/left_10"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tv_id_card_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_id_card_name"
         app:layout_constraintTop_toTopOf="@+id/view_id_card_name"
         app:layout_constraintBottom_toBottomOf="@+id/view_id_card_name"
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
     <View
-        android:layout_marginTop="@dimen/top_4"
         android:id="@+id/view_id_card_number"
         android:background="@color/white"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
         app:layout_constraintTop_toBottomOf="@+id/view_id_card_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
@@ -57,57 +104,39 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_id_card_number_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
-        android:layout_marginStart="@dimen/left_10"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tv_id_card_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_id_card_number"
         app:layout_constraintTop_toTopOf="@+id/view_id_card_number"
         app:layout_constraintBottom_toBottomOf="@+id/view_id_card_number"
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
 
-    <View
-        android:id="@+id/view_personal_id_card"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_260"
-        android:layout_marginTop="@dimen/general_8"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/view_id_card_number"
-        />
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_8"
-        android:text="身份证正反照:"
-        android:layout_marginTop="@dimen/general_8"
-        android:textSize="@dimen/font_tv_hint_14"
-        app:layout_constraintStart_toStartOf="@+id/view_personal_id_card"
-        app:layout_constraintTop_toTopOf="@+id/view_personal_id_card" />
-
     <ImageView
         android:id="@+id/iv_id_card_people_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        app:layout_constraintEnd_toEndOf="@+id/view_personal_id_card"
-        app:layout_constraintStart_toStartOf="@+id/view_personal_id_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:layout_marginTop="@dimen/top_10"
+        android:layout_marginStart="@dimen/left_10"
+        android:background="@drawable/id_card_people"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_id_card_number" />
 
     <ImageView
         android:id="@+id/iv_id_card_nation_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/iv_id_card_people_show"
-        app:layout_constraintStart_toStartOf="@+id/iv_id_card_people_show"
-        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people_show" />
+        android:background="@drawable/id_card_nation"
+        android:layout_marginEnd="@dimen/right_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_id_card_people_show" />
 
     <Button
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/btn_personal_re_certification"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"
@@ -117,5 +146,5 @@
         android:background="@drawable/btn_style3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_personal_id_card" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people_show" />
 </androidx.constraintlayout.widget.ConstraintLayout>

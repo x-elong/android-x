@@ -40,32 +40,33 @@ class MainActivity : AppCompatActivity() {
     val changeFragment =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.news -> {
-                    if (lastfragment != 0) {
-                        lastfragment=0
-                        //ToastHelper.mToast(this,"正在开发中")
-                        switchFragment(fragmentList[lastfragment],R.id.frame_main)
-                    }
-                    return@OnNavigationItemSelectedListener true
-                }
+//                R.id.news -> {
+//                    if (lastfragment != 0) {
+//                        lastfragment=0
+//                        //ToastHelper.mToast(this,"正在开发中")
+//                        switchFragment(fragmentList[lastfragment],R.id.frame_main)
+//                    }
+//                    return@OnNavigationItemSelectedListener true
+//                }
                 R.id.sdr -> {
                     if (lastfragment != 1) {
-                        lastfragment = 1
-                        switchFragment(fragmentList[lastfragment],R.id.frame_main)
+//                        lastfragment = 1
+                        switchFragment(fragmentList[1],R.id.frame_main)
                     }
                     supportFragmentManager.popBackStackImmediate(null,1)
                     return_iv.visibility=View.INVISIBLE
                     tv_title.text="招投供需"
                     return@OnNavigationItemSelectedListener true
                 }
-                /*
+
                 R.id.application -> {
                     if (lastfragment != 2) {
-                        lastfragment = 2
-                        switchFragment(fragmentList[lastfragment],R.id.frame_main)
+//                        lastfragment = 2
+                        switchFragment(fragmentList[2],R.id.frame_main)
                     }
                     return@OnNavigationItemSelectedListener true
                 }
+                    /*
                 R.id.shopping_mall->{
                     if(lastfragment != 3) {
                         lastfragment = 3
@@ -75,8 +76,8 @@ class MainActivity : AppCompatActivity() {
                 }*/
                 R.id.my -> {
                     if (lastfragment != 4) {
-                        lastfragment = 4
-                        switchFragment(fragmentList[lastfragment],R.id.frame_main)
+//                        lastfragment = 4
+                        switchFragment(fragmentList[4],R.id.frame_main)
                     }
                     return@OnNavigationItemSelectedListener true
                 }
@@ -104,20 +105,20 @@ class MainActivity : AppCompatActivity() {
         val newsFragment = NewsFragment()
         val sdrFragment = SdrFragment()
         val applicationFragment = ApplicationFragment()
-        applicationFragment.setClickListener(View.OnClickListener{
-            if (lastfragment != 1) {
-                lastfragment = 1
-                switchFragment(fragmentList[lastfragment],R.id.frame_main)
-            }
-            supportFragmentManager.popBackStackImmediate(null,1)
-            return_iv.visibility=View.INVISIBLE
-            tv_title.text="招投供需"
-            bnv.menu.getItem(1).isChecked=true
-        })
+//        applicationFragment.setClickListener(View.OnClickListener{
+//            if (lastfragment != 1) {
+//                lastfragment = 1
+//                switchFragment(fragmentList[lastfragment],R.id.frame_main)
+//            }
+//            supportFragmentManager.popBackStackImmediate(null,1)
+//            return_iv.visibility=View.INVISIBLE
+//            tv_title.text="招投供需"
+//            bnv.menu.getItem(1).isChecked=true
+//        })
         val mallFragment = MallFragment()
         val myFragment = MyFragment()
         fragmentList = ArrayList(Arrays.asList<Fragment>(newsFragment, sdrFragment, applicationFragment, mallFragment, myFragment))
-        lastfragment = 1
+        lastfragment = 0
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_main, sdrFragment)
         transaction.commit()
@@ -130,6 +131,10 @@ class MainActivity : AppCompatActivity() {
     fun switchFragment(fragment: Fragment,frameLayout:Int) {
         val transaction = supportFragmentManager.beginTransaction()
         //隐藏上个Fragment
+        if(!transaction.isEmpty){
+            transaction.hide(fragmentList[lastfragment])
+            lastfragment = fragmentList.indexOf(fragment)
+        }
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.replace(frameLayout, fragment)
         transaction.commit()

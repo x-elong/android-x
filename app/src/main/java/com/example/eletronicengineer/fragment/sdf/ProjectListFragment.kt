@@ -13,9 +13,8 @@ import com.example.eletronicengineer.activity.*
 import com.example.eletronicengineer.adapter.ProjectListAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.ProjectList
-import com.example.eletronicengineer.db.DisplayDemand.RequirementCarList
-import com.example.eletronicengineer.db.DisplayDemand.RequirementMembersList
-import com.example.eletronicengineer.distributionFileSave.*
+import com.example.eletronicengineer.db.DisplaySupply.*
+import com.example.eletronicengineer.db.DisplayDemand.*
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_project_display.view.*

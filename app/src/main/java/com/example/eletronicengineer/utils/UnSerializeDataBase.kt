@@ -13,16 +13,16 @@ import java.io.File
  * @供需模块端口:8012
  * @我的模块端口:8032
  * @学校服务器 10.1.5.141
- * @联通服务器 ycdlfw.com
+ * @联通服务器 www.ycdlfw.com
  * @新服务器 111.230.150.200
- * @某人本地服务器 192.168.1.132
+ * @某人本地服务器 邦:192.168.1.132 赵:192.168.1.65
  */
 object UnSerializeDataBase
 {
   const val ip = "www.ycdlfw.com"
-//  const val upmsBasePath = "http://192.168.1.149:8026/"
-//  const val dmsBasePath = "http://${ip}/dms/"
-//  const val mineBasePath = "http://192.168.1.149:8032/"
+//  const val upmsBasePath = "http://${ip}:8026/"
+//  const val dmsBasePath = "http://${ip}:8012/"
+//  const val mineBasePath = "http://${ip}:8032/"
   const val upmsBasePath = "http://${ip}/upms/"
   const val dmsBasePath = "http://${ip}/dms/"
   const val mineBasePath = "http://${ip}/mine/"
@@ -37,6 +37,7 @@ object UnSerializeDataBase
   var isCertificate = true
   var inventoryIdKey = ""
   var inventoryId = ""
+  const val filePath = "/storage/emulated/0/ycdlfw"
   //需求模块 由于是填完后一次性上传 故只保存图片和文件
   val fileList:MutableList<FileMap> =ArrayList()
   val imgList:MutableList<BitmapMap> =ArrayList()

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="@dimen/left_2"
-    android:layout_marginRight="@dimen/right_2"
+    android:layout_marginStart="@dimen/left_2"
+    android:layout_marginEnd="@dimen/right_2"
     android:layout_marginBottom="@dimen/bottom_2"
     android:elevation="@dimen/general_2"
     android:background="@drawable/view_style2"
@@ -79,10 +79,12 @@
         android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_50"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/view9"
         />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_delete"
         android:layout_width="@dimen/general_60"
         android:layout_height="@dimen/general_30"
@@ -109,6 +111,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintTop_toTopOf="@+id/view7" />
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_share"
         android:layout_width="@dimen/general_60"
         android:layout_height="@dimen/general_30"

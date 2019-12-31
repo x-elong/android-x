@@ -387,9 +387,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 MESSAGE_SELECT_CHECK_OK->
                 {
                     val selectContent=it.data.getString("selectContent")
-                    val selectContent1=it.data.getBooleanArray("selectContent1")
-                    mData[position].shiftInputContent=selectContent
-                    mData[position].placeCheckBoolenArray=selectContent1
+                    mData[itemPosition].shiftInputContent=selectContent
+                    notifyDataSetChanged()
+//                    notifyItemRangeChanged(itemPosition,1)
                     false
                 }
                 else->
@@ -1374,7 +1374,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
                 if(mData[position].shiftInputTitle=="可服务地域"){
                     vh.tvShiftInputShow.setOnClickListener{
-                        val selectDialog=CustomDialog(CustomDialog.Options.SELECT_CHECK_DIALOG,vh.itemView.context,mData[position].placeCheckArray,mData[position].placeCheckBoolenArray,vh.mHandler).dialog
+                        val selectDialog=CustomDialog(CustomDialog.Options.SELECT_CHECK_DIALOG,vh.itemView.context,mData[position].placeCheckArray,mData[position].shiftInputContent,vh.mHandler).dialog
                         selectDialog.show()
                     }
                     vh.itemView.setOnClickListener{vh.tvShiftInputShow.callOnClick()}
@@ -2037,8 +2037,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
             }
             REGISTRATION_ITEM_TYPE->{
-                if(mData[position].necessary)
-                    vh.btnRegistrationMore.visibility = View.VISIBLE
+//                if(mData[position].necessary)
+//                    vh.btnRegistrationMore.visibility = View.VISIBLE
                 vh.tvRegistrationItemType.text=mData[position].registrationItemType
                 vh.tvRegistrationItemInformation1.text=mData[position].registrationItemInformation1
                 vh.tvRegistrationItemInformation2.text=mData[position].registrationItemInformation2

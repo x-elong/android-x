@@ -15,7 +15,6 @@ import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SearchActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.fragment.shopping.GoodsDetailsFragment
 import com.library.OnChooseEditTextListener
 import kotlinx.android.synthetic.main.fragment_search.view.*
 

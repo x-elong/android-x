@@ -15,8 +15,8 @@ import com.example.eletronicengineer.activity.SearchActivity
 import com.example.eletronicengineer.activity.ShippingAddressActivity
 import com.example.eletronicengineer.adapter.ShippingAddressAdapter
 import com.example.eletronicengineer.aninterface.ShippingAddress
-import com.example.eletronicengineer.fragment.shopping.AddressFragment
-import com.example.eletronicengineer.fragment.shopping.OrderConfirmFragment
+import com.example.eletronicengineer.fragment.shoppingmall.AddressFragment
+import com.example.eletronicengineer.fragment.shoppingmall.OrderConfirmFragment
 import kotlinx.android.synthetic.main.fragment_reseive_addr.view.*
 import kotlinx.android.synthetic.main.fragment_shipping_address.*
 import kotlinx.android.synthetic.main.fragment_shipping_address.view.*

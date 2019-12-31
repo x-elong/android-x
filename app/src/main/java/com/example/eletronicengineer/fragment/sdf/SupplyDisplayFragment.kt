@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment.retailstore
+package com.example.eletronicengineer.fragment.sdf
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -80,7 +80,7 @@ class SupplyDisplayFragment:Fragment() {
                             adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
                         }
                         adapter.mData[7].singleDisplayRightContent=if(data.contactPhone==null) {
-                            " " } else{ "联系对方时可见"}
+                            " " } else{ data.contactPhone}
                         if(data.certificatePath==null)
                         {
                             adapter.mData[8].buttonListener = listOf(View.OnClickListener {
@@ -147,7 +147,8 @@ class SupplyDisplayFragment:Fragment() {
                                             val listData = data.provideCrewLists
                                             mdata.putSerializable("listData7", listData as Serializable)
                                             mdata.putString("type","供应人员清册查看")
-                                            (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
+
                                 }
                                 })
                         }
@@ -165,7 +166,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -221,7 +222,8 @@ class SupplyDisplayFragment:Fragment() {
                                         val listData = data.constructionToolLists
                                         mdata.putSerializable("listData9", listData as Serializable)
                                          mdata.putString("type","供应工器具清册查看")
-                                        (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
+
                                 }
                             })
                         }
@@ -289,7 +291,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -307,7 +309,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -363,7 +365,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -420,7 +422,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -438,7 +440,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -494,7 +496,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -562,7 +564,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -580,7 +582,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -610,7 +612,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -667,7 +669,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -726,7 +728,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -744,7 +746,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -797,7 +799,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -854,7 +856,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -872,7 +874,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -918,7 +920,8 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
+
                                 }
                             })
                         }
@@ -976,7 +979,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -994,7 +997,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1052,7 +1055,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1109,7 +1112,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1127,7 +1130,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putString("type","供应运输清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1173,7 +1176,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1230,7 +1233,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideCrewLists
                                     mdata.putSerializable("listData7", listData as Serializable)
                                     mdata.putString("type","供应人员清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1248,7 +1251,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.provideTransportMachines
                                     mdata.putSerializable("listData8", listData as Serializable)
                                     mdata.putInt("type",8)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1310,7 +1313,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.constructionToolLists
                                     mdata.putSerializable("listData9", listData as Serializable)
                                     mdata.putString("type","供应工器具清册查看")
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1500,7 +1503,7 @@ class SupplyDisplayFragment:Fragment() {
                                         mdata.putString("type","设备租赁清册查看")
                                         mdata.putString("type","机械租赁清册查看")
                                         mdata.putSerializable("listData10",listData as Serializable)
-                                        (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                        FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                     }
                                 })
                             }
@@ -1624,7 +1627,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.leaseList
                                     mdata.putString("type","设备租赁清册查看")
                                     mdata.putSerializable("listData10",listData as Serializable)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1748,7 +1751,7 @@ class SupplyDisplayFragment:Fragment() {
                                     val listData = data.leaseList
                                     mdata.putString("type","机械租赁清册查看")
                                     mdata.putSerializable("listData10",listData as Serializable)
-                                    (activity as SupplyDisplayActivity).switchFragment(ProjectListFragment.newInstance(mdata))
+                                    FragmentHelper.switchFragment(activity!!,ProjectListFragment.newInstance(mdata),R.id.frame_display_supply,"")
                                 }
                             })
                         }
@@ -1908,56 +1911,56 @@ class SupplyDisplayFragment:Fragment() {
                             it.printStackTrace()
                         })
             }
-            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{//资质合作
-                adapter = adapterGenerate.supplyTeamDisplayDemandTripartiteCooperation()
-                val result = getSupplyThirdPartyDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                            var data=it.message
-                            adapter.mData[0].singleDisplayRightContent=if(data.serveType==null) {
-                                " " } else{ data.serveType }
-                            adapter.mData[1].singleDisplayRightContent=if(data.cooperationObject==null) {
-                                " " } else{ data.cooperationObject }
-                            adapter.mData[2].singleDisplayRightContent=if(data.companyName==null) {
-                                " " } else{ data.companyName }
-                            adapter.mData[3].singleDisplayRightContent=if(data.companySite==null) {
-                                " " } else{ data.companySite }
-                            adapter.mData[4].singleDisplayRightContent=if(data.legalPersonName==null) {
-                                " " } else{ data.legalPersonName }
-                            adapter.mData[5].singleDisplayRightContent=if(data.cooperationAreas==null) {
-                                " " } else{ data.cooperationAreas }
-                            adapter.mData[6].singleDisplayRightContent=if(data.qualificationCondition==null) {
-                                " " } else{ data.qualificationCondition }
-                            adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                                " " } else{ data.issuerBelongSite }
-                            adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
-                                " " } else{ data.contact }
-                            adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
-                                " " } else{ "联系对方时可见"}
-                            adapter.mData[11].submitListener = View.OnClickListener {
-                                if(data.contactPhone!=null)
-                                {
-                                    var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话:")
-                                            .setMessage(data.contactPhone)
-                                            .setNegativeButton("联系对方") { dialog, which ->
-                                                val intent = Intent(Intent.ACTION_DIAL)
-                                                intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                                startActivity(intent)
-                                            }
-                                            .setPositiveButton("确定") { dialog, which ->
-                                                dialog.dismiss() }.create()
-                                    dialog.show()
-                                }
-                                else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                            view.rv_supply_display_content.adapter = adapter
-                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
-                        },{
-                            it.printStackTrace()
-                        })
-            }
+//            Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{//资质合作
+//                adapter = adapterGenerate.supplyTeamDisplayDemandTripartiteCooperation()
+//                val result = getSupplyThirdPartyDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+//                            var data=it.message
+//                            adapter.mData[0].singleDisplayRightContent=if(data.serveType==null) {
+//                                " " } else{ data.serveType }
+//                            adapter.mData[1].singleDisplayRightContent=if(data.cooperationObject==null) {
+//                                " " } else{ data.cooperationObject }
+//                            adapter.mData[2].singleDisplayRightContent=if(data.companyName==null) {
+//                                " " } else{ data.companyName }
+//                            adapter.mData[3].singleDisplayRightContent=if(data.companySite==null) {
+//                                " " } else{ data.companySite }
+//                            adapter.mData[4].singleDisplayRightContent=if(data.legalPersonName==null) {
+//                                " " } else{ data.legalPersonName }
+//                            adapter.mData[5].singleDisplayRightContent=if(data.cooperationAreas==null) {
+//                                " " } else{ data.cooperationAreas }
+//                            adapter.mData[6].singleDisplayRightContent=if(data.qualificationCondition==null) {
+//                                " " } else{ data.qualificationCondition }
+//                            adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
+//                                " " } else{ data.issuerBelongSite }
+//                            adapter.mData[9].singleDisplayRightContent=if(data.contact==null) {
+//                                " " } else{ data.contact }
+//                            adapter.mData[10].singleDisplayRightContent=if(data.contactPhone==null) {
+//                                " " } else{ "联系对方时可见"}
+//                            adapter.mData[11].submitListener = View.OnClickListener {
+//                                if(data.contactPhone!=null)
+//                                {
+//                                    var dialog = AlertDialog.Builder(this.context)
+//                                            .setTitle("对方联系电话:")
+//                                            .setMessage(data.contactPhone)
+//                                            .setNegativeButton("联系对方") { dialog, which ->
+//                                                val intent = Intent(Intent.ACTION_DIAL)
+//                                                intent.setData(Uri.parse("tel:${data.contactPhone}"))
+//                                                startActivity(intent)
+//                                            }
+//                                            .setPositiveButton("确定") { dialog, which ->
+//                                                dialog.dismiss() }.create()
+//                                    dialog.show()
+//                                }
+//                                else{
+//                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+//                                }
+//                            }
+//                            view.rv_supply_display_content.adapter = adapter
+//                            view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
+//                        },{
+//                            it.printStackTrace()
+//                        })
+//            }
 
         }
 

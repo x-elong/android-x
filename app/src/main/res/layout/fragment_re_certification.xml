@@ -5,9 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray_bg">
+    android:background="@color/white">
     <View
-        android:id="@+id/view_information_re_certification"
+        android:id="@+id/view_enterprise_re_certification"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -15,45 +15,47 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="MissingConstraints" />
     <TextView
-        android:id="@+id/tv_information_re_certification_back"
+        android:id="@+id/tv_enterprise_re_certification_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/top_4"
         android:background="@drawable/ic_back_xml"
-        app:layout_constraintBottom_toBottomOf="@+id/view_information_re_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_re_certification"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_information_re_certification" />
+        app:layout_constraintTop_toTopOf="@+id/view_enterprise_re_certification" />
     <TextView
-        android:id="@+id/tv_information_re_certification_title"
+        android:id="@+id/tv_enterprise_re_certification_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="信息重新认证"
+        android:text="企业重新认证"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/view_information_re_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_re_certification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_information_re_certification"
+        app:layout_constraintTop_toTopOf="@+id/view_enterprise_re_certification"
         tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/general_30"
         android:layout_margin="@dimen/general_10"
+        android:gravity="center"
         android:text="主体类型:"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_information_re_certification_title" />
+        app:layout_constraintTop_toBottomOf="@+id/view_enterprise_re_certification" />
 
     <TextView
         android:id="@+id/tv_main_type"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="个人"
+        android:layout_height="@dimen/general_30"
+        android:text=""
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_hint_15"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
@@ -67,10 +69,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21">
 
-        <FrameLayout
-            android:id="@+id/frame_re_certification_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#efefef" />
+        <include layout="@layout/fragment_enterprise_re_certification"/>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

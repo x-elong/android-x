@@ -24,7 +24,7 @@ class PersonalIssueViewHolder(inflater: LayoutInflater, vg: ViewGroup) :
     }
 
     fun bind(data:PersonalIssue) {
-        name?.visibility=View.VISIBLE
+        name?.visibility=View.GONE
         name?.text = data.name
         sex?.text = data.sex
         major?.text = data.major

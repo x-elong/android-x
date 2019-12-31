@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
+import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap
@@ -83,6 +85,9 @@ class UploadPhoneFragment:Fragment(){
         //获取当前照片的所在位置 若只有一张照片则不必传值 默认为0
         position=arguments!!.getInt("position",0)
         total = arguments!!.getInt("total")
+        if(activity is MyCertificationActivity){
+            mView.tv_upload_photo_title.setText(arguments!!.getString("title")+"上传")
+        }
         //refresh(mImagePaths!!)
         if(total==0)total=3
         mView.tv_upload_photo_back.setOnClickListener {
@@ -118,6 +123,7 @@ class UploadPhoneFragment:Fragment(){
         return mView
     }
     fun refresh(imagePaths: String) {
+        Log.i("",imagePaths)
         if(mImagePaths[position]==""){
             var isInList = false
             for (j in UnSerializeDataBase.imgList){

@@ -16,4 +16,8 @@ class VipActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vip)
         FragmentHelper.addFragment(this, VipPrivilegesFragment(),R.id.frame_vip,"")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

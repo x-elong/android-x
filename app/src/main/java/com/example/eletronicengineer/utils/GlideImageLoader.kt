@@ -30,12 +30,12 @@ class GlideImageLoader : ImageLoader {
     fun displayImage(galleryImageView: ImageView, path: String){
 //         galleryImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
         val imagePath =
-            if(path.contains("www.ycdlfw.com")) {
-                if(path.contains("http://") )
-                    path
-                else
-                    "http://${path}"
-            } else
+//            if(path.contains("www.ycdlfw.com")) {
+//                if(path.contains("http://") )
+//                    path
+//                else
+//                    "http://${path}"
+//            } else
                 path
         Glide.with(galleryImageView.context).load(imagePath).placeholder(R.mipmap.gallery_pick_photo).centerCrop()
             .into(galleryImageView)

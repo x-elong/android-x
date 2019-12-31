@@ -177,7 +177,7 @@ class ItemGenerate
                     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
                     if(jsonObject.getString("placePath")!=null){
                         val resultBuilder= StringBuilder()
-                        val bf= BufferedReader(InputStreamReader(context!!.assets.open("pca.json")))
+                        val bf= BufferedReader(InputStreamReader(context.assets.open(jsonObject.getString("placePath"))))
                         try {
                             var line=bf.readLine()
                             while (line!=null)

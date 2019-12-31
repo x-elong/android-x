@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -13,6 +14,7 @@ import cn.jpush.im.api.BasicCallback
 import com.amap.api.col.sl2.it
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
+import com.example.eletronicengineer.activity.ServiceTermsActivity
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.example.eletronicengineer.utils.sendMobile
@@ -43,6 +45,9 @@ class   PhoneRegisterFragment: Fragment()  {
     private fun initFragment(v: View) {
         v.tv_register_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
+        }
+        v.tv_login_confirm2.setOnClickListener {
+            activity!!.startActivity(Intent(activity!!, ServiceTermsActivity::class.java))
         }
         v.tv_get_check.setOnClickListener {
             //获取手机号

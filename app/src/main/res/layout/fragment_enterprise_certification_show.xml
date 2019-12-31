@@ -5,14 +5,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_gray_bg">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginTop="10dp"
         android:text="主体信息"
         android:textColor="#248bfe"
         android:textSize="@dimen/font_tv_normal_20"
@@ -22,8 +22,10 @@
     <View
         android:layout_marginTop="@dimen/top_8"
         android:id="@+id/view_institution_name"
-        android:background="@color/white"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
     <TextView
@@ -38,15 +40,14 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_institution_name_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-
+        android:ems="3"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toEndOf="@+id/tv_institution_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_institution_name"
         app:layout_constraintTop_toTopOf="@+id/view_institution_name"
         app:layout_constraintBottom_toBottomOf="@+id/view_institution_name"
         android:gravity="right"
@@ -55,7 +56,9 @@
     <View
         android:layout_marginTop="@dimen/top_4"
         android:id="@+id/view_social_credit_code"
-        android:background="@color/white"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/view_institution_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
@@ -71,15 +74,14 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_social_credit_code_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        android:textColor="@color/black"
+        android:ems="3"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tv_social_credit_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_social_credit_code"
         app:layout_constraintTop_toTopOf="@+id/view_social_credit_code"
         app:layout_constraintBottom_toBottomOf="@+id/view_social_credit_code"
         android:gravity="right"
@@ -87,9 +89,10 @@
         />
 
     <View
-        android:layout_marginTop="@dimen/top_4"
         android:id="@+id/view_main_code"
-        android:background="@color/white"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/view_social_credit_code"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
@@ -105,17 +108,15 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_main_code_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textColor="@color/black"
         android:ems="3"
-
+        android:inputType="text"
+        android:textColor="@color/black"
         android:background="@color/transparent"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toEndOf="@+id/tv_main_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_main_code"
         app:layout_constraintTop_toTopOf="@+id/view_main_code"
         app:layout_constraintBottom_toBottomOf="@+id/view_main_code"
         android:gravity="right"
@@ -123,106 +124,82 @@
         />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tv_business_license_and_official_picture"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="营业执照:"
+        android:layout_height="@dimen/general_40"
+        android:text="营业执照(左)和公函图片(右):"
         android:textColor="@android:color/black"
         android:textSize="@dimen/font_tv_hint_15"
-        app:layout_constraintTop_toBottomOf="@+id/view_main_code"
-        tools:ignore="MissingConstraints" />
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/view_main_code"
+        app:layout_constraintTop_toBottomOf="@+id/view_main_code" />
+    <ImageView
+        android:id="@+id/iv_business_license_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginTop="@dimen/top_10"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_business_license_content_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_business_license_and_official_picture" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/top_4"
-        android:text="公函图片:"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/font_tv_hint_15"
-        app:layout_constraintTop_toBottomOf="@+id/rv_business_license_content_show"
-        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/iv_official_picture_show"
+        android:layout_width="@dimen/general_160"
+        android:layout_height="@dimen/general_104"
+        android:layout_marginEnd="@dimen/right_10"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="@dimen/top_4"
-        android:id="@+id/rv_official_picture_content_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_business_license_show" />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginTop="@dimen/top_10"
         android:text="法人信息登记"
         android:textColor="#248bfe"
         android:textSize="@dimen/font_tv_normal_20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_official_picture_content_show" />
-
-    <View
-        android:id="@+id/view_legal_personal_id_card"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_260"
-        android:layout_marginTop="@dimen/general_8"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        />
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_8"
-        android:text="法人身份证正反照:"
-        android:layout_marginTop="@dimen/general_8"
-        android:textSize="@dimen/font_tv_hint_14"
-        app:layout_constraintStart_toStartOf="@+id/view_legal_personal_id_card"
-        app:layout_constraintTop_toTopOf="@+id/view_legal_personal_id_card" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_business_license_show" />
 
     <ImageView
         android:id="@+id/iv_legal_id_card_people_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:background="@drawable/id_card_people"
-        app:layout_constraintEnd_toEndOf="@+id/view_legal_personal_id_card"
-        app:layout_constraintStart_toStartOf="@+id/view_legal_personal_id_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:layout_marginTop="@dimen/top_10"
+
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/iv_legal_id_card_nation_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/id_card_nation"
-        app:layout_constraintEnd_toEndOf="@+id/iv_legal_id_card_people_show"
-        app:layout_constraintStart_toStartOf="@+id/iv_legal_id_card_people_show"
-        app:layout_constraintTop_toBottomOf="@+id/iv_legal_id_card_people_show" />
+
+        android:layout_marginEnd="@dimen/right_10"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_legal_id_card_people_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_legal_id_card_people_show"
+        />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginTop="@dimen/top_10"
         android:text="管理员信息登记"
         android:textColor="#248bfe"
         android:textSize="@dimen/font_tv_normal_20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_legal_personal_id_card" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_legal_id_card_people_show" />
 
     <View
-        android:layout_marginTop="@dimen/top_8"
         android:id="@+id/view_administrator_name"
-        android:background="@color/white"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
@@ -238,23 +215,23 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_administrator_name_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:ems="3"
         android:background="@color/transparent"
-        android:layout_marginStart="@dimen/left_10"
-        app:layout_constraintStart_toEndOf="@+id/view_administrator_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintStart_toEndOf="@+id/tv_administrator_name"
+        app:layout_constraintEnd_toEndOf="@+id/view_administrator_name"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="@+id/view_administrator_name"
         app:layout_constraintBottom_toBottomOf="@+id/view_administrator_name"
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
     <View
-        android:layout_marginTop="@dimen/top_4"
         android:id="@+id/view_administrator_number"
-        android:background="@color/white"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/view_administrator_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_40"/>
@@ -270,57 +247,39 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_administrator_number_data"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:ems="3"
         android:background="@color/transparent"
-        android:layout_marginStart="@dimen/left_10"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tv_administrator_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/right_40"
+        app:layout_constraintEnd_toEndOf="@+id/view_administrator_number"
         app:layout_constraintTop_toTopOf="@+id/view_administrator_number"
         app:layout_constraintBottom_toBottomOf="@+id/view_administrator_number"
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
-    <View
-        android:id="@+id/view_administrator_id_card"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_260"
-        android:layout_marginTop="@dimen/general_8"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/view_administrator_number"
-        />
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_8"
-        android:text="管理员身份证正反照:"
-        android:layout_marginTop="@dimen/general_8"
-        android:textSize="@dimen/font_tv_hint_14"
-        app:layout_constraintStart_toStartOf="@+id/view_administrator_id_card"
-        app:layout_constraintTop_toTopOf="@+id/view_administrator_id_card" />
 
     <ImageView
         android:id="@+id/iv_administrator_id_card_people_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:background="@drawable/id_card_people"
-        app:layout_constraintEnd_toEndOf="@+id/view_administrator_id_card"
-        app:layout_constraintStart_toStartOf="@+id/view_administrator_id_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginTop="@dimen/top_10"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_administrator_number" />
 
     <ImageView
         android:id="@+id/iv_administrator_id_card_nation_show"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/id_card_nation"
-        app:layout_constraintEnd_toEndOf="@+id/iv_administrator_id_card_people_show"
-        app:layout_constraintStart_toStartOf="@+id/iv_administrator_id_card_people_show"
-        app:layout_constraintTop_toBottomOf="@+id/iv_administrator_id_card_people_show" />
+        android:layout_marginEnd="@dimen/right_10"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_administrator_id_card_people_show" />
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_enterprise_re_certification"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"
@@ -330,5 +289,5 @@
         android:background="@drawable/btn_style3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_administrator_id_card" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_administrator_id_card_people_show" />
 </androidx.constraintlayout.widget.ConstraintLayout>

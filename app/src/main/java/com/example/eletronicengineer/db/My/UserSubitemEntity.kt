@@ -41,7 +41,7 @@ class UserSubitemEntity (
     var totalIntegral:Double?,
     var vipLevel:Boolean?,
     var ifBlacklist:Boolean?,
-    var twoDimensionCode:Int?,
+    var twoDimensionCode:String?,
     var headPortrait:String?,
     var nation:String?,
     var marriageState:Int?,

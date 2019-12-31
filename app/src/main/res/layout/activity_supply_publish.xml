@@ -50,11 +50,11 @@
 
         <TextView
             android:id="@+id/tv_select_add"
-            android:layout_width="@dimen/general_20"
+            android:layout_width="@dimen/general_40"
             android:layout_height="@dimen/general_20"
             android:layout_gravity="center"
             android:layout_marginRight="8dp"
-            android:background="@drawable/add_white"
+            android:background="@drawable/add"
             android:gravity="center"
             android:visibility="gone" />
         <TextView

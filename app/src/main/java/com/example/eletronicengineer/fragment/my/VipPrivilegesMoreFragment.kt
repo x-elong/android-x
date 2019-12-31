@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.my
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
@@ -59,7 +61,7 @@ class VipPrivilegesMoreFragment :Fragment(){
         }
         when(type){
             0->{
-
+                mView.btn_subscribe.text = "立即认证"
             }
             1->{
                 price = 50.00
@@ -77,15 +79,23 @@ class VipPrivilegesMoreFragment :Fragment(){
         if(price!=0.toDouble())
             mView.tv_vip_price.text = "${price}元/年"
         mView.btn_subscribe.setOnClickListener {
+            Log.i("type",type.toString())
             val productId = when(type){
                 1->Constants.Goods.ELITE_VIP
                 2->Constants.Goods.GOLD_VIP
                 else->"0"
             }
-            val bundle = Bundle()
-            bundle.putDouble("paymentAmount",price)
-            bundle.putString("productId",productId)
-            FragmentHelper.switchFragment(activity!!,PaymentFragment.newInstance(bundle),R.id.frame_vip,"payment")
+            if(productId=="0"){
+                UnSerializeDataBase.isCertificate = false
+                val intent = Intent(activity!!,MyCertificationActivity::class.java)
+                activity!!.startActivity(intent)
+//                activity!!.finish()
+            } else{
+                val bundle = Bundle()
+                bundle.putDouble("paymentAmount",price)
+                bundle.putString("productId",productId)
+                FragmentHelper.switchFragment(activity!!,PaymentFragment.newInstance(bundle),R.id.frame_vip,"payment")
+            }
         }
         val adapterGenerate = AdapterGenerate()
         adapterGenerate.context = mView.context

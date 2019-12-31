@@ -10,7 +10,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyOrderActivity
 import com.example.eletronicengineer.adapter.StoreTypeAdapter
 import com.example.eletronicengineer.aninterface.StoresName
-import com.example.eletronicengineer.fragment.shopping.OrderDetailsFragment
+import com.example.eletronicengineer.fragment.shoppingmall.OrderDetailsFragment
 import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_my_order.view.*
 
@@ -37,7 +37,8 @@ class MyOrderFragment:Fragment() {
         //给链表赋值
         for (j in 0 until 6){
             storesName = StoresName(R.drawable.storename.toString(),"九朗{$j}KW屋顶太阳能发……","280w","2019-06-06 20:06:00",View.OnClickListener {
-                FragmentHelper.switchFragment(activity!!,OrderDetailsFragment(),R.id.frame_my_order,"")
+                FragmentHelper.switchFragment(activity!!,
+                    OrderDetailsFragment(),R.id.frame_my_order,"")
             },1)
             mShopList.add(storesName)
         }

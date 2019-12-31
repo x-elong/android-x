@@ -20,7 +20,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 
 class PersonalCertificationShowFragment :Fragment(){
-    val glideLoader = GlideLoader()
+    var isCertification = false
     val mMultiStyleItemList:MutableList<MultiStyleItem> = ArrayList()
     lateinit var mView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,10 +30,19 @@ class PersonalCertificationShowFragment :Fragment(){
     }
 
     private fun initFragment() {
+        mView.tv_personal_certification_back.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
+        }
+        mView.tv_personal_certification_add.setOnClickListener {
+            if(isCertification){
+                ToastHelper.mToast(mView.context,"已经认证过，无法再次认证。\n若想修改认证，请重新认证！")
+            }else{
+                FragmentHelper.switchFragment(activity!!,PersonalCertificationFragment(),R.id.frame_my_certification,"Certification")
+            }
+        }
+
         mView.btn_personal_re_certification.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("mainType","个人")
-            FragmentHelper.switchFragment(activity!!,ReCertificationFragment.newInstance(bundle),R.id.frame_my_certification,"MyCertification")
+            FragmentHelper.switchFragment(activity!!,PersonalReCertificationFragment(),R.id.frame_my_certification,"MyCertification")
         }
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("mainType","个人")
@@ -48,21 +57,22 @@ class PersonalCertificationShowFragment :Fragment(){
                     if(code==200){
                         if(jsonObject.getString("desc")=="FAIL"){
                             result = jsonObject.getString("message")
-                            mView.btn_personal_re_certification.visibility = View.GONE
                         }
                         else{
+                            isCertification = true
+                            mView.btn_personal_re_certification.visibility = View.VISIBLE
                             val js = jsonObject.getJSONObject("message")
                             result = "获取数据成功"
                             mView.tv_id_card_name_data.text = js.getString("vipName")
                             mView.tv_id_card_number_data.text = js.getString("identifyCard")
-                            GlideLoader().loadImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
-                            GlideLoader().loadImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
+                            GlideImageLoader().displayImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
+                            GlideImageLoader().displayImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
                         }
                     }
 
                     ToastHelper.mToast(mView.context,result)
                 },{
-                    ToastHelper.mToast(mView.context,"获取信息异常")
+                    ToastHelper.mToast(mView.context,"网络异常")
                     it.printStackTrace()
                 })
         }

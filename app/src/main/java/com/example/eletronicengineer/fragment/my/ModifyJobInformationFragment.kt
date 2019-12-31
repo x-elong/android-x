@@ -15,7 +15,7 @@ import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
-import com.example.eletronicengineer.distributionFileSave.*
+import com.example.eletronicengineer.db.DisplayDemand.*
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.fragment.sdf.PublishInventoryFragment
 import com.example.eletronicengineer.fragment.sdf.PublishInventoryItemMoreFragment
@@ -44,6 +44,7 @@ class ModifyJobInformationFragment :Fragment(){
     lateinit var mData: List<MultiStyleItem>
     lateinit var requirmentTeamServeId:String
     lateinit var multiButtonListeners: MutableList<View.OnClickListener>
+    var validTime = "0"
     var mAdapter: RecyclerviewAdapter?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_modify_job_information,container,false)
@@ -75,6 +76,8 @@ class ModifyJobInformationFragment :Fragment(){
             mView.rv_job_information_content.layoutManager = LinearLayoutManager(mView.context)
         }
         //发布
+        if(validTime.toInt()<=0)
+            mView.btn_modify_job_information.text = "发布"
         mView.btn_modify_job_information.setOnClickListener{
 
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, mView.context)
@@ -90,22 +93,30 @@ class ModifyJobInformationFragment :Fragment(){
                     json.put("requirementType", title)
                     json.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
                     networkAdapter.generateJsonRequestBody(json).subscribe {
-                        val result = putSimpleMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
+                        var message = "修改"
+                        if(validTime.toInt()<=0)
+                            message = "发布"
+                        val result =
+                            (if(validTime.toInt()<=0)
+                                startSendMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
+                        else
+                                putSimpleMessage(it,UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath))
+
                             .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                             .subscribe({
                                 loadingDialog.dismiss()
                                 val jsonObject = JSONObject(it.string())
                                 if(jsonObject.getInt("code")==200){
-                                    ToastHelper.mToast(mView.context,"修改成功")
+                                    ToastHelper.mToast(mView.context,"${message}成功")
                                     activity!!.supportFragmentManager.popBackStackImmediate()
                                 }
                                 else{
-                                    ToastHelper.mToast(mView.context,"修改失败")
+                                    ToastHelper.mToast(mView.context,"${message}失败")
                                 }
 
                             },{
                                 loadingDialog.dismiss()
-                                ToastHelper.mToast(mView.context,"修改信息异常")
+                                ToastHelper.mToast(mView.context,"服务器异常")
                                 it.printStackTrace()
                             })
                     }
@@ -195,6 +206,8 @@ class ModifyJobInformationFragment :Fragment(){
                 val singleDisplayRightContent = "变电施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementPowerTransformation
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPowerTransformation
                 initDemandGroupPowerTransformation(adapter,arguments!!.getSerializable("data") as RequirementPowerTransformation)
             }
             Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal -> {
@@ -202,6 +215,8 @@ class ModifyJobInformationFragment :Fragment(){
                 val singleDisplayRightContent = "主网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementMajorNetwork
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementMajorNetwork
                 initDemandGroupMajorNetwork(adapter,arguments!!.getSerializable("data") as RequirementMajorNetWork)
             }
             Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal -> {
@@ -209,59 +224,81 @@ class ModifyJobInformationFragment :Fragment(){
                 val singleDisplayRightContent = "配网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementDistribuionNetwork
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementDistribuionNetwork
                 initDemandGroupDistribuionNetwork(adapter,arguments!!.getSerializable("data") as RequirementDistributionNetwork)
             }
             Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal -> {//测量设计
                 adapter = adapterGenerate.DemandGroupMeasurementDesign()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementMeasureDesign
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementMeasureDesign
                 initDemandGroupMeasurementDesign(adapter,arguments!!.getSerializable("data") as RequirementMeasureDesign)
             }
             Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal -> {//马帮运输
                 adapter = adapterGenerate.DemandGroupCaravanTransportation()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementCaravanTransport
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementCaravanTransport
                 initDemandGroupCaravanTransportation(adapter,arguments!!.getSerializable("data") as RequirementCaravanTransport)
             }
             Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal -> {//桩基服务
                 adapter = adapterGenerate.DemandGroupPileFoundationConstruction()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementPileFoundation
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPileFoundation
                 initDemandGroupPileFoundationConstruction(adapter,arguments!!.getSerializable("data") as RequirementPileFoundation)
             }
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal -> {//非开挖
                 adapter = adapterGenerate.DemandGroupNonExcavation()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementUnexcavation
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementUnexcavation
                 initDemandGroupNonExcavation(adapter,arguments!!.getSerializable("data") as RequirementUnexcavation)
             }
             Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal -> {//试验调试
                 adapter = adapterGenerate.DemandGroupTestDebugging()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementTest
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementTest
                 initDemandGroupTestDebugging(adapter,arguments!!.getSerializable("data") as RequirementTest)
             }
             Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal -> {//跨越架
                 adapter = adapterGenerate.DemandGroupCrossingFrame()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementSpanWoodenSupprt
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementSpanWoodenSupprt
                 initDemandGroupCrossingFrame(adapter,arguments!!.getSerializable("data") as RequirementSpanWoodenSupprt)
             }
             Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal -> {//运行维护
                 adapter = adapterGenerate.DemandGroupOperationAndMaintenance()
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementRunningMaintain
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementRunningMaintain
                 initDemandGroupOperationAndMaintenance(adapter,arguments!!.getSerializable("data") as RequirementRunningMaintain)
             }
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal -> {//车辆租赁
                 adapter = adapterGenerate.DemandLeaseVehicleLeasing()
                 adapter.mData[0].singleDisplayRightContent="车辆租赁"
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementLeaseCar
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseCar
                 initDemandLeaseVehicleLeasing(adapter,arguments!!.getSerializable("data") as RequirementLeaseCar)
             }
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal -> {//工器具租赁
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent="工器具租赁"
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementLeaseConstructionTool
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseConstructionTool
                 initDemandEquipmentLeasing(adapter,arguments!!.getSerializable("data") as RequirementLeaseConstructionTool)
             }
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal -> {
                 val singleDisplayRightContent = "机械租赁"
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseMachinery
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementLeaseMachinery
                 initDemandMachineryLeasing(adapter,arguments!!.getSerializable("data") as RequirementLeaseMachinery)
             }
@@ -270,6 +307,8 @@ class ModifyJobInformationFragment :Fragment(){
                 adapter = adapterGenerate.DemandEquipmentLeasing()
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementLeaseFacility
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementLeaseFacility
                 initDemandEquipmentLeasing(adapter,arguments!!.getSerializable("data") as RequirementLeaseFacility)
             }
             Constants.FragmentType.TRIPARTITE_TRAINING_CERTIFICATE_TYPE.ordinal -> {
@@ -324,7 +363,6 @@ class ModifyJobInformationFragment :Fragment(){
      * @需求个人
      */
     private fun initDemandIndividual(adapter: RecyclerviewAdapter) {
-        adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementPerson
         val requirementPersonDetail = arguments!!.getSerializable("data") as RequirementPersonDetail
         title = requirementPersonDetail.requirementType
         activity?.runOnUiThread{
@@ -349,10 +387,13 @@ class ModifyJobInformationFragment :Fragment(){
         }else{
             adapter.mData[12].inputMultiSelectUnit = "面议"
         }
-        adapter.mData[13].singleDisplayRightContent = requirementPersonDetail.name
-        adapter.mData[14].singleDisplayRightContent = requirementPersonDetail.phone
         adapter.mData[15].inputUnitContent = requirementPersonDetail.validTime
+        validTime = requirementPersonDetail.validTime
         adapter.mData[17].textAreaContent = requirementPersonDetail.additonalExplain
+
+        adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementPerson
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementPerson
     }
 
     /**
@@ -471,9 +512,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[14].singleDisplayRightContent = requirementPowerTransformation.needPeopleNumber
         adapter.mData[15].radioButtonValue = requirementPowerTransformation.constructionEquipment
-        adapter.mData[16].singleDisplayRightContent = requirementPowerTransformation.name
-        adapter.mData[17].singleDisplayRightContent = requirementPowerTransformation.phone
         adapter.mData[18].inputUnitContent = requirementPowerTransformation.validTime
+        validTime = requirementPowerTransformation.validTime
         adapter.mData[20].textAreaContent = requirementPowerTransformation.additonalExplain
     }
     /**
@@ -592,9 +632,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[14].singleDisplayRightContent = requirementMajorNetWork.needPeopleNumber
         adapter.mData[15].radioButtonValue = requirementMajorNetWork.constructionEquipment
-        adapter.mData[16].singleDisplayRightContent = requirementMajorNetWork.name
-        adapter.mData[17].singleDisplayRightContent = requirementMajorNetWork.phone
         adapter.mData[18].inputUnitContent = requirementMajorNetWork.validTime
+        validTime = requirementMajorNetWork.validTime
         adapter.mData[20].textAreaContent = requirementMajorNetWork.additonalExplain
     }
 
@@ -715,9 +754,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[14].singleDisplayRightContent = requirementDistributionNetwork.needPeopleNumber
         adapter.mData[15].radioButtonValue = requirementDistributionNetwork.constructionEquipment
-        adapter.mData[16].singleDisplayRightContent = requirementDistributionNetwork.name
-        adapter.mData[17].singleDisplayRightContent = requirementDistributionNetwork.phone
         adapter.mData[18].inputUnitContent = requirementDistributionNetwork.validTime
+        validTime = requirementDistributionNetwork.validTime
         adapter.mData[20].textAreaContent = requirementDistributionNetwork.additonalExplain
     }
 
@@ -837,9 +875,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[14].singleDisplayRightContent = requirementMeasureDesign.needPeopleNumber
         adapter.mData[15].radioButtonValue = requirementMeasureDesign.equipment
-        adapter.mData[16].singleDisplayRightContent = requirementMeasureDesign.name
-        adapter.mData[17].singleDisplayRightContent = requirementMeasureDesign.phone
         adapter.mData[18].inputUnitContent = requirementMeasureDesign.validTime
+        validTime = requirementMeasureDesign.validTime
         adapter.mData[20].textAreaContent = requirementMeasureDesign.additonalDxplain
 
     }
@@ -886,9 +923,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[11].inputUnitContent = requirementCaravanTransport.needHorseNumber
         if(requirementCaravanTransport.salaryStandard!=null)
         adapter.mData[12].radioButtonValue = requirementCaravanTransport.salaryStandard
-        adapter.mData[13].singleDisplayRightContent = requirementCaravanTransport.name
-        adapter.mData[14].singleDisplayRightContent = requirementCaravanTransport.phone
         adapter.mData[15].inputUnitContent = requirementCaravanTransport.validTime
+        validTime = requirementCaravanTransport.validTime
         adapter.mData[17].textAreaContent = requirementCaravanTransport.additonalExplain
 
     }
@@ -970,9 +1006,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].inputUnitContent = requirementPileFoundation.needPileFoundationEquipment
         adapter.mData[14].radioButtonValue = requirementPileFoundation.salaryStandard
         adapter.mData[15].radioButtonValue = requirementPileFoundation.otherMachineEquipment
-        adapter.mData[16].singleDisplayRightContent = requirementPileFoundation.name
-        adapter.mData[17].singleDisplayRightContent = requirementPileFoundation.phone
         adapter.mData[18].inputUnitContent = requirementPileFoundation.validTime
+        validTime = requirementPileFoundation.validTime
         adapter.mData[20].textAreaContent = requirementPileFoundation.additonalExplain
     }
 
@@ -1053,9 +1088,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].inputUnitContent = requirementUnexcavation.needPileFoundation
         adapter.mData[14].radioButtonValue = requirementUnexcavation.salaryStandard
         adapter.mData[15].radioButtonValue = requirementUnexcavation.otherMachineEquipment
-        adapter.mData[16].singleDisplayRightContent = requirementUnexcavation.name
-        adapter.mData[17].singleDisplayRightContent = requirementUnexcavation.phone
         adapter.mData[18].inputUnitContent = requirementUnexcavation.validTime
+        validTime = requirementUnexcavation.validTime
         adapter.mData[20].textAreaContent = requirementUnexcavation.additonalExplain
     }
 
@@ -1185,9 +1219,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[15].singleDisplayRightContent = requirementTest.needPeopleNumber
         adapter.mData[16].radioButtonValue = requirementTest.machineEquipment
-        adapter.mData[17].singleDisplayRightContent = requirementTest.name
-        adapter.mData[19].singleDisplayRightContent = requirementTest.phone
         adapter.mData[19].inputUnitContent = requirementTest.validTime
+        validTime = requirementTest.validTime
         adapter.mData[21].textAreaContent = requirementTest.additonalExplain
 
     }
@@ -1297,9 +1330,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[12].itemMultiStyleItem[0].PeopleNumber = requirementSpanWoodenSupprt.needPeopleNumber.toInt()
         adapter.mData[13].singleDisplayRightContent = requirementSpanWoodenSupprt.needPeopleNumber
         adapter.mData[14].radioButtonValue = requirementSpanWoodenSupprt.machineEquipment
-        adapter.mData[15].singleDisplayRightContent = requirementSpanWoodenSupprt.name
-        adapter.mData[16].singleDisplayRightContent = requirementSpanWoodenSupprt.phone
         adapter.mData[17].inputUnitContent = requirementSpanWoodenSupprt.validTime
+        validTime = requirementSpanWoodenSupprt.validTime
         adapter.mData[19].textAreaContent = requirementSpanWoodenSupprt.additonalExplain
     }
 
@@ -1407,9 +1439,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[13].singleDisplayRightContent = requirementRunningMaintain.needPeopleNumber
         adapter.mData[14].radioButtonValue = requirementRunningMaintain.machineEquipment
-        adapter.mData[15].singleDisplayRightContent = requirementRunningMaintain.name
-        adapter.mData[16].singleDisplayRightContent = requirementRunningMaintain.phone
         adapter.mData[17].inputUnitContent = requirementRunningMaintain.validTime
+        validTime = requirementRunningMaintain.validTime
         val requirementTeamVoltageClasses = requirementRunningMaintain.requirementTeamVoltageClasses.split("、")
         for (j in adapter.mData[18].checkboxNameList){
             val i = adapter.mData[18].checkboxNameList.indexOf(j)
@@ -1485,9 +1516,8 @@ class ModifyJobInformationFragment :Fragment(){
         }else{
             adapter.mData[9].inputMultiSelectUnit = "面议"
         }
-        adapter.mData[10].singleDisplayRightContent = requirementLeaseCar.name
-        adapter.mData[11].singleDisplayRightContent = requirementLeaseCar.phone
         adapter.mData[12].inputUnitContent = requirementLeaseCar.validTime
+        validTime = requirementLeaseCar.validTime
         if(requirementLeaseCar.additonalExplain!=null)
         adapter.mData[14].textAreaContent = requirementLeaseCar.additonalExplain
     }
@@ -1548,10 +1578,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[7].radioButtonValue = requirementLeaseConstructionTool.partnerAttribute
         adapter.mData[8].radioButtonValue = requirementLeaseConstructionTool.hireFareStandard
 
-
-        adapter.mData[9].singleDisplayRightContent = requirementLeaseConstructionTool.name
-        adapter.mData[10].singleDisplayRightContent = requirementLeaseConstructionTool.phone
         adapter.mData[11].inputUnitContent = requirementLeaseConstructionTool.validTime
+        validTime = requirementLeaseConstructionTool.validTime
         if(requirementLeaseConstructionTool.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseConstructionTool.additonalExplain
     }
@@ -1613,9 +1641,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[8].radioButtonValue = requirementLeaseMachinery.hireFareStandard
 
 
-        adapter.mData[9].singleDisplayRightContent = requirementLeaseMachinery.name
-        adapter.mData[10].singleDisplayRightContent = requirementLeaseMachinery.phone
         adapter.mData[11].inputUnitContent = requirementLeaseMachinery.validTime
+        validTime = requirementLeaseMachinery.validTime
         if(requirementLeaseMachinery.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseMachinery.additonalExplain
     }
@@ -1677,9 +1704,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[8].radioButtonValue = requirementLeaseFacility.hireFareStandard
 
 
-        adapter.mData[9].singleDisplayRightContent = requirementLeaseFacility.name
-        adapter.mData[10].singleDisplayRightContent = requirementLeaseFacility.phone
         adapter.mData[11].inputUnitContent = requirementLeaseFacility.validTime
+        validTime = requirementLeaseFacility.validTime
         if(requirementLeaseFacility.additonalExplain!=null)
         adapter.mData[13].textAreaContent = requirementLeaseFacility.additonalExplain
     }
@@ -1688,7 +1714,7 @@ class ModifyJobInformationFragment :Fragment(){
      * @需求三方
      */
     private fun initDemandTripartite(adapter: RecyclerviewAdapter) {
-        adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementThirdParty
+
         val requirementThirdPartyDetail = arguments!!.getSerializable("data") as RequirementThirdPartyDetail
         title = requirementThirdPartyDetail.requirementType
         activity?.runOnUiThread{
@@ -1730,11 +1756,13 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[2].radioButtonValue = requirementThirdPartyDetail.partnerAttribute
         adapter.mData[3].radioButtonValue = requirementThirdPartyDetail.fareStandard
-
-        adapter.mData[4].singleDisplayRightContent = requirementThirdPartyDetail.name
-        adapter.mData[5].singleDisplayRightContent = requirementThirdPartyDetail.phone
         adapter.mData[6].inputUnitContent = requirementThirdPartyDetail.validTime
+        validTime = requirementThirdPartyDetail.validTime
         adapter.mData[8].textAreaContent = requirementThirdPartyDetail.additionalExplain
+
+        adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementThirdParty
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Requirement.requirementThirdParty
     }
     fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
 

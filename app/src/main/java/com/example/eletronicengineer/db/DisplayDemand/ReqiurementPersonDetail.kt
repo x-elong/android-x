@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.distributionFileSave
+package com.example.eletronicengineer.db.DisplayDemand
 
 class ReqiurementPersonDetail(
     var id:String,

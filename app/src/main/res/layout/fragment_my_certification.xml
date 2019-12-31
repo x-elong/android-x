@@ -5,9 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray_bg">
+    android:background="@color/white">
     <View
-        android:id="@+id/view_my_certification"
+        android:id="@+id/view_enterprise_certification"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
         android:background="@color/colorPrimaryDark"
@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="MissingConstraints" />
     <TextView
-        android:id="@+id/tv_my_certification_back"
+        android:id="@+id/tv_enterprise_certification_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -23,33 +23,33 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/ic_back_xml"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/view_my_certification"
-        app:layout_constraintTop_toTopOf="@+id/view_my_certification" />
+        app:layout_constraintBottom_toBottomOf="@id/view_enterprise_certification"
+        app:layout_constraintTop_toTopOf="@+id/view_enterprise_certification" />
     <TextView
-        android:id="@+id/tv_my_certification_title"
+        android:id="@+id/tv_enterprise_certification_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/general_30"
         android:gravity="center"
-        android:text="我的认证"
+        android:text="企业认证"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/view_my_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_certification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_my_certification"
+        app:layout_constraintTop_toTopOf="@+id/view_enterprise_certification"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tv_my_certification_add"
-        android:layout_width="@dimen/general_20"
+        android:id="@+id/tv_enterprise_certification_add"
+        android:layout_width="@dimen/general_40"
         android:layout_height="@dimen/general_20"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/add_white"
+        android:background="@drawable/add"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="@+id/view_my_certification"
-        app:layout_constraintEnd_toEndOf="@+id/view_my_certification"
-        app:layout_constraintBottom_toBottomOf="@+id/view_my_certification"
+        app:layout_constraintTop_toTopOf="@+id/view_enterprise_certification"
+        app:layout_constraintEnd_toEndOf="@+id/view_enterprise_certification"
+        app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_certification"
          />
     <View
         android:id="@+id/view_sp_company"
@@ -59,7 +59,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="@dimen/left_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_my_certification"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_enterprise_certification"/>
 
     <TextView
         android:id="@+id/tv_company_content"
@@ -69,7 +70,7 @@
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/tv_company_under"
-        app:layout_constraintEnd_toStartOf="@+id/tv_company_under"
+        app:layout_constraintEnd_toEndOf="@+id/view_sp_company"
         app:layout_constraintStart_toStartOf="@+id/view_sp_company"
         app:layout_constraintTop_toTopOf="@+id/tv_company_under" />
     <TextView
@@ -84,10 +85,11 @@
     <View
         android:id="@+id/view_subject_category_sp"
         android:background="@drawable/view_style2"
-        android:layout_width="@dimen/general_200"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/general_36"
         android:layout_marginTop="8dp"
         android:layout_marginStart="@dimen/left_1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_sp_company"/>
 
@@ -99,7 +101,7 @@
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintBottom_toBottomOf="@+id/tv_subject_category_under"
-        app:layout_constraintEnd_toStartOf="@+id/tv_subject_category_under"
+        app:layout_constraintEnd_toEndOf="@+id/view_subject_category_sp"
         app:layout_constraintStart_toStartOf="@+id/view_subject_category_sp"
         app:layout_constraintTop_toTopOf="@+id/tv_subject_category_under" />
 
@@ -113,18 +115,24 @@
         app:layout_constraintEnd_toEndOf="@+id/view_subject_category_sp"
         app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
 
+    <TextView
+        android:id="@+id/tv_certification_status"
+        android:text="认证状态:未认证"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_10"
+        app:layout_constraintTop_toBottomOf="@+id/view_subject_category_sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_subject_category_sp">
-
-        <FrameLayout
-            android:id="@+id/frame_certification_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#efefef" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_certification_status">
+        <include layout="@layout/fragment_enterprise_certification_show"/>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

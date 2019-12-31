@@ -72,6 +72,16 @@
         app:layout_constraintEnd_toEndOf="@+id/view_sp"
         app:layout_constraintTop_toTopOf="@+id/view_sp" />
 
+    <CheckBox
+        android:id="@+id/checkbox_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看历史"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintBottom_toBottomOf="@+id/view_sp"
+        android:layout_marginEnd="@dimen/right_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_sp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_release_content"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment
+package com.example.eletronicengineer.fragment.main
 
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable

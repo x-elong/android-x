@@ -10,16 +10,21 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
 import com.lcw.library.imagepicker.ImagePicker
+import com.yancy.gallerypick.config.GalleryConfig
+import com.yancy.gallerypick.config.GalleryPick
+import com.yancy.gallerypick.inter.IHandlerCallBack
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_enterprise_re_certification.view.*
 import kotlinx.android.synthetic.main.fragment_information_certification.*
+import kotlinx.android.synthetic.main.fragment_re_certification.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,93 +39,81 @@ class EnterpriseReCertificationFragment :Fragment(){
             return enterpriseReCertificationFragment
         }
     }
-    val glideLoader = GlideLoader()
     var selectImage=-1
-    lateinit var blAdapter:ImageAdapter
-    lateinit var opAdapter:ImageAdapter
     lateinit var mView:View
     lateinit var mainType:String
+    var businessLicenseMap = BitmapMap("","businessLicense")
+    var officialPictureMap = BitmapMap("","officialPicturePath")
     var legalIdCardPeopleMap = BitmapMap("","legalPersonPositivePath")
     var legalIdCardNationMap = BitmapMap("","legalPersonNegativePath")
     var administratorIdCardPeopleMap = BitmapMap("","identifyCardPathFront")
     var administratorIdCardNationMap = BitmapMap("","identifyCardPathContrary")
-    val imagePaths = ArrayList<String>()
+
     var isCertification = false
+    val iHandlerCallBack = object : IHandlerCallBack {
+        override fun onFinish() {
+        }
+
+        override fun onCancel() {
+        }
+
+        override fun onError() {
+        }
+
+        override fun onStart() {
+        }
+
+        override fun onSuccess(photoList: MutableList<String>) {
+//            val fragment=activity!!.supportFragmentManager.findFragmentByTag("Capture")!!
+            NetworkAdapter(mView.context).upImage(photoList[0],this@EnterpriseReCertificationFragment)
+//            photoAdapter.notifyDataSetChanged()
+        }
+    }
+    val glideImageLoader = GlideImageLoader()
+    val galleryConfig = GalleryConfig.Builder()
+        .imageLoader(glideImageLoader)    // ImageLoader 加载框架（必填）
+        .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+        .provider("com.example.eletronicengineer.fileProvider")   // provider (必填)
+//        .pathList(mImagePaths)                         // 记录已选的图片
+        .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+        .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+        .crop(true, 1F, 1F, 500, 500)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
+        .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+        .filePath("/Gallery/Pictures")          // 图片存放路径
+        .build()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mView = inflater.inflate(R.layout.fragment_enterprise_re_certification,container,false)
+        mView = inflater.inflate(R.layout.fragment_re_certification,container,false)
         mainType = arguments!!.getString("mainType").replace("/"," ")
-        initAdapter()
         initFragment()
         return mView
     }
-    private fun initAdapter() {
-        val imageList:MutableList<Image> = ArrayList()
-        imageList.add(Image("",View.OnClickListener {
-            selectImage = 5
-            ImagePicker.getInstance()
-                .setTitle("图片")//设置标题
-                .showCamera(true)//设置是否显示拍照按钮
-                .showImage(true)//设置是否展示图片
-                .showVideo(true)//设置是否展示视频
-                .showVideo(true)//设置是否展示视频
-                .setSingleType(true)//设置图片视频不能同时选择
-                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                .setImageLoader(glideLoader)//设置自定义图片加载器
-                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }))
-        imageList[imageList.size-1].isX =false
-        blAdapter = ImageAdapter(imageList)
-        mView.rv_business_license_content.adapter = blAdapter
-        mView.rv_business_license_content.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-        val mImageList:MutableList<Image> = ArrayList()
-        mImageList.add(Image("",View.OnClickListener {
-            selectImage = 6
-            ImagePicker.getInstance()
-                .setTitle("图片")//设置标题
-                .showCamera(true)//设置是否显示拍照按钮
-                .showImage(true)//设置是否展示图片
-                .showVideo(true)//设置是否展示视频
-                .showVideo(true)//设置是否展示视频
-                .setSingleType(true)//设置图片视频不能同时选择
-                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                .setImageLoader(glideLoader)//设置自定义图片加载器
-                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-        }))
-        mImageList[0].isX =false
-        opAdapter = ImageAdapter(mImageList)
-        mView.rv_official_picture_content.adapter = opAdapter
-        mView.rv_official_picture_content.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-    }
     private fun initFragment() {
+        mView.tv_enterprise_re_certification_back.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
+        }
         mView.iv_legal_id_card_people.setOnClickListener{
             selectImage=1
-            ImagePicker.getInstance()
-                .setTitle("图片")//设置标题
-                .showCamera(true)//设置是否显示拍照按钮
-                .showImage(true)//设置是否展示图片
-                .showVideo(true)//设置是否展示视频
-                .showVideo(true)//设置是否展示视频
-                .setSingleType(true)//设置图片视频不能同时选择
-                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                .setImageLoader(glideLoader)//设置自定义图片加载器
-                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
         }
         mView.iv_legal_id_card_nation.setOnClickListener {
             selectImage=2
-            ImagePicker.getInstance()
-                .setTitle("图片")//设置标题
-                .showCamera(true)//设置是否显示拍照按钮
-                .showImage(true)//设置是否展示图片
-                .showVideo(true)//设置是否展示视频
-                .showVideo(true)//设置是否展示视频
-                .setSingleType(true)//设置图片视频不能同时选择
-                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                .setImageLoader(glideLoader)//设置自定义图片加载器
-                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+        }
+        mView.iv_administrator_id_card_people.setOnClickListener{
+            selectImage=3
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+        }
+        mView.iv_administrator_id_card_nation.setOnClickListener {
+            selectImage=4
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+        }
+        mView.iv_business_license.setOnClickListener{
+            selectImage=5
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+        }
+        mView.iv_official_picture.setOnClickListener {
+            selectImage=6
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
         }
         val results = Observable.create<RequestBody> {
             val json = JSONObject().put("mainType",mainType.replace(" ","/"))
@@ -135,194 +128,129 @@ class EnterpriseReCertificationFragment :Fragment(){
                     if (code == 200) {
                         val js = jsonObject.getJSONObject("message")
                         result = "获取数据成功"
-                        mView.et_institution_name.setText (js.getString("organizationName"))
-                        mView.et_institution_name.isEnabled = false
-                        mView.et_social_credit_code.setText (js.getString("socialCreditCode"))
-                        mView.et_social_credit_code.isEnabled = false
+                        mView.tv_institution_name_data.setText (js.getString("organizationName"))
+
+                        mView.tv_social_credit_code_data.setText (js.getString("socialCreditCode"))
+
                         mView.et_main_code.setText (js.getString("mainBusiness"))
-                        val legalPersonPositivePath = js.getString("legalPersonPositivePath")
-                        val legalPersonNegativePath = js.getString("legalPersonNegativePath")
-                        GlideLoader().loadImage(
-                            mView.iv_legal_id_card_people,
-                            legalPersonPositivePath
-                        )
-                        GlideLoader().loadImage(
-                            mView.iv_legal_id_card_nation,
-                            legalPersonNegativePath
-                        )
-                        legalIdCardPeopleMap.path = legalPersonPositivePath
-                        legalIdCardNationMap.path = legalPersonNegativePath
-                        val blImagePath = js.getString("businessLicense").split("|")
-                        val blImageList = ArrayList<Image>()
-                        for (j in blImagePath) {
-                            blImageList.add(Image(j, null))
-                        }
-                        blImageList.add(blAdapter.mImageList[0])
-                        val opImageList = ArrayList<Image>()
-                        val opImagePath = js.getString("officialPicturePath").split("|")
-                        for (j in opImagePath) {
-                            opImageList.add(Image(j, null))
-                        }
-                        opImageList.add(opAdapter.mImageList[0])
-                        blAdapter.mImageList = blImageList
-                        blAdapter.notifyDataSetChanged()
-                        opAdapter.mImageList = opImageList
-                        opAdapter.notifyDataSetChanged()
-                    } else
-                        result = "获取数据失败"
-                    ToastHelper.mToast(context!!, result)
-                }, {
-                    it.printStackTrace()
-                })
-        }
-        val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("mainType","个人")
-            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
-            it.onNext(requestBody)
-        }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                    val jsonObject = JSONObject(it.string())
-                    val code = jsonObject.getInt("code")
-                    var result = ""
-                    if(code==200){
-                        val js = jsonObject.getJSONObject("message")
-                        result = "管理员已认证"
-                        mView.et_administrator_name.setText(js.getString("vipName"))
-                        mView.et_administrator_number.setText(js.getString("identifyCard"))
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_people,js.getString("identifyCardPathFront"))
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_nation,js.getString("identifyCardPathContrary"))
-                        mView.et_administrator_name.isEnabled=false
-                        mView.et_administrator_number.isEnabled=false
+                        businessLicenseMap.path = js.getString("businessLicense")
+                        officialPictureMap.path = js.getString("officialPicturePath")
+
+                        legalIdCardPeopleMap.path = js.getString("legalPersonPositivePath")
+                        legalIdCardNationMap.path = js.getString("legalPersonNegativePath")
+
                         administratorIdCardPeopleMap.path = js.getString("identifyCardPathFront")
                         administratorIdCardNationMap.path = js.getString("identifyCardPathContrary")
-                        isCertification = true
-                    }
-                    else{
-                        result = "管理员未认证"
-                        mView.iv_administrator_id_card_people.setOnClickListener{
-                            selectImage=3
-                            ImagePicker.getInstance()
-                                .setTitle("图片")//设置标题
-                                .showCamera(true)//设置是否显示拍照按钮
-                                .showImage(true)//设置是否展示图片
-                                .showVideo(true)//设置是否展示视频
-                                .showVideo(true)//设置是否展示视频
-                                .setSingleType(true)//设置图片视频不能同时选择
-                                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                                .setImageLoader(glideLoader)//设置自定义图片加载器
-                                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-                        }
-                        mView.iv_administrator_id_card_nation.setOnClickListener {
-                            selectImage=4
-                            ImagePicker.getInstance()
-                                .setTitle("图片")//设置标题
-                                .showCamera(true)//设置是否显示拍照按钮
-                                .showImage(true)//设置是否展示图片
-                                .showVideo(true)//设置是否展示视频
-                                .showVideo(true)//设置是否展示视频
-                                .setSingleType(true)//设置图片视频不能同时选择
-                                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                                .setImageLoader(glideLoader)//设置自定义图片加载器
-                                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
-                        }
+                        mView.tv_institution_name.text = js.getString("organizationName")
+                        mView.tv_social_credit_code.text = js.getString("socialCreditCode")
+                        mView.tv_main_code.text = js.getString("mainBusiness")
+                        GlideImageLoader().displayImage(mView.iv_business_license,businessLicenseMap.path)
+                        GlideImageLoader().displayImage(mView.iv_official_picture,officialPictureMap.path)
+                        GlideImageLoader().displayImage(mView.iv_legal_id_card_people,legalIdCardPeopleMap.path)
+                        GlideImageLoader().displayImage(mView.iv_legal_id_card_nation,legalIdCardNationMap.path)
+                        mView.tv_administrator_name_data.text = js.getString("vipName")
+                        mView.tv_administrator_number_data.text = js.getString("identifyCard")
+                        GlideImageLoader().displayImage(mView.iv_administrator_id_card_people,administratorIdCardPeopleMap.path)
+                        GlideImageLoader().displayImage(mView.iv_administrator_id_card_nation,administratorIdCardNationMap.path)
+                    } else{
+                        result = "获取数据失败"
+                        ImageLoadUtil.loadBackgound(mView.iv_business_license,mView.context,R.drawable.business_license)
+                        ImageLoadUtil.loadBackgound(mView.iv_official_picture,mView.context,R.drawable.official_picture)
+                        ImageLoadUtil.loadBackgound(mView.iv_legal_id_card_people,mView.context,R.drawable.id_card_people)
+                        ImageLoadUtil.loadBackgound(mView.iv_legal_id_card_nation,mView.context,R.drawable.id_card_nation)
+                        ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_people,mView.context,R.drawable.id_card_people)
+                        ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_nation,mView.context,R.drawable.id_card_nation)
                     }
 
-                    ToastHelper.mToast(context!!,result)
-                },{
+                    ToastHelper.mToast(context!!, result)
+                }, {
+                    ImageLoadUtil.loadBackgound(mView.iv_business_license,mView.context,R.drawable.business_license)
+                    ImageLoadUtil.loadBackgound(mView.iv_official_picture,mView.context,R.drawable.official_picture)
+                    ImageLoadUtil.loadBackgound(mView.iv_legal_id_card_people,mView.context,R.drawable.id_card_people)
+                    ImageLoadUtil.loadBackgound(mView.iv_legal_id_card_nation,mView.context,R.drawable.id_card_nation)
+                    ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_people,mView.context,R.drawable.id_card_people)
+                    ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_nation,mView.context,R.drawable.id_card_nation)
+                    ToastHelper.mToast(context!!, "服务器异常")
                     it.printStackTrace()
                 })
         }
-        activity!!.btn_information_certification.setOnClickListener {
-            mView.btn_re_enterprise_certification.callOnClick()
-        }
+//        val result = Observable.create<RequestBody> {
+//            val json = JSONObject().put("mainType","个人")
+//            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+//            it.onNext(requestBody)
+//        }.subscribe {
+//            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
+//                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+//                    val jsonObject = JSONObject(it.string())
+//                    val code = jsonObject.getInt("code")
+//                    var result = ""
+//                    if(code==200){
+//                        val js = jsonObject.getJSONObject("message")
+//                        result = "管理员已认证"
+//                        mView.tv_administrator_name_data.setText(js.getString("vipName"))
+//                        mView.tv_administrator_number_data.setText(js.getString("identifyCard"))
+//                        GlideLoader().loadImage(mView.iv_administrator_id_card_people,js.getString("identifyCardPathFront"))
+//                        GlideLoader().loadImage(mView.iv_administrator_id_card_nation,js.getString("identifyCardPathContrary"))
+//                        administratorIdCardPeopleMap.path = js.getString("identifyCardPathFront")
+//                        administratorIdCardNationMap.path = js.getString("identifyCardPathContrary")
+//                        isCertification = true
+//                    }
+//                    else{
+//                        result = "管理员未认证"
+//                        mView.iv_administrator_id_card_people.setOnClickListener{
+//                            selectImage=3
+//                            ImagePicker.getInstance()
+//                                .setTitle("图片")//设置标题
+//                                .showCamera(true)//设置是否显示拍照按钮
+//                                .showImage(true)//设置是否展示图片
+//                                .showVideo(true)//设置是否展示视频
+//                                .showVideo(true)//设置是否展示视频
+//                                .setSingleType(true)//设置图片视频不能同时选择
+//                                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
+//                                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
+//                                .setImageLoader(glideLoader)//设置自定义图片加载器
+//                                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//                        }
+//                        mView.iv_administrator_id_card_nation.setOnClickListener {
+//                            selectImage=4
+//                            ImagePicker.getInstance()
+//                                .setTitle("图片")//设置标题
+//                                .showCamera(true)//设置是否显示拍照按钮
+//                                .showImage(true)//设置是否展示图片
+//                                .showVideo(true)//设置是否展示视频
+//                                .showVideo(true)//设置是否展示视频
+//                                .setSingleType(true)//设置图片视频不能同时选择
+//                                .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
+//                                //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
+//                                .setImageLoader(glideLoader)//设置自定义图片加载器
+//                                .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+//                        }
+//                    }
+//
+//                    ToastHelper.mToast(context!!,result)
+//                },{
+//                    it.printStackTrace()
+//                })
+//        }
         mView.btn_re_enterprise_certification.setOnClickListener {
-            initImagePath()
-            uploadImg()
-        }
-    }
-
-    private fun initImagePath() {
-        imagePaths.clear()
-        imagePaths.add(legalIdCardPeopleMap.path)
-        imagePaths.add(legalIdCardNationMap.path)
-        for(j in blAdapter.mImageList)
-            imagePaths.add(j.imagePath)
-        imagePaths.removeAt(imagePaths.size-1)
-        for(j in opAdapter.mImageList)
-            imagePaths.add(j.imagePath)
-        imagePaths.removeAt(imagePaths.size-1)
-        if(!isCertification){
-            imagePaths.add(administratorIdCardPeopleMap.path)
-            imagePaths.add(administratorIdCardNationMap.path)
-        }
-    }
-    fun uploadImg(){
-        var result = ""
-        val results = try {
-            for (j in 0 until imagePaths.size){
-                if(imagePaths[j].contains("https://i.bmp.ovh/imgs")){
-                    result+="|"
-                    continue
-                }
-                val file = File(imagePaths[j])
-                Log.i("File path is : ",file.path)
-                val imagePart = MultipartBody.Part.createFormData("file",file.name,
-                    RequestBody.create(MediaType.parse("image/*"),file))
-                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        imagePaths[j] = it.string()
-                        result += "|"
-                        Log.i("result url", result)
-                        if(result.split("|").size-1==imagePaths.size){
-                            certification()
-                        }else{
-//                            ToastHelper.mToast(context!!,"提交失败")
-                        }
-                    },
-                    {
-                        it.printStackTrace()
-                    })
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+            certification()
         }
     }
     fun certification(){
         val result = Observable.create<RequestBody> {
-            var businessLicenseImagePaths = ""
-            for(j in 0 until blAdapter.mImageList.size-1){
-                if(businessLicenseImagePaths!="")
-                    businessLicenseImagePaths += "|"
-                businessLicenseImagePaths += imagePaths[2+j]
-            }
-            var officialPicturePath = ""
 
-            for(j in 0 until opAdapter.mImageList.size-1){
-                if(officialPicturePath!="")
-                    officialPicturePath += "|"
-                officialPicturePath += imagePaths[2+j+blAdapter.mImageList.size-1]
-            }
-            var identifyCardPathFront = administratorIdCardPeopleMap.path
-            var identifyCardPathContrary = administratorIdCardNationMap.path
-            if(!isCertification){
-                identifyCardPathFront = imagePaths[imagePaths.size-2]
-                identifyCardPathContrary = imagePaths[imagePaths.size-1]
-            }
             val json = JSONObject().put("mainType",mainType.replace(" ","/"))
-                .put("organizationName",mView.et_institution_name.text)
+                .put("organizationName",mView.tv_institution_name_data.text)
                 .put("mainBusiness",mView.et_main_code.text)
-                .put("socialCreditCode",mView.et_social_credit_code.text)
-                .put("businessLicense"  ,businessLicenseImagePaths)
-                .put("officialPicturePath",officialPicturePath)
-                .put("legalPersonPositivePath",imagePaths[0])
-                .put("legalPersonNegativePath",imagePaths[1])
-                .put("identifyCardPathFront",identifyCardPathFront)
-                .put("identifyCardPathContrary",identifyCardPathContrary)
-                .put("vipName",mView.et_administrator_name.text)
-                .put("identifyCard",mView.et_administrator_number.text)
+                .put("socialCreditCode",mView.tv_social_credit_code_data.text)
+                .put("businessLicense",businessLicenseMap.path)
+                .put("officialPicturePath",officialPictureMap.path)
+                .put("legalPersonPositivePath",legalIdCardPeopleMap.path)
+                .put("legalPersonNegativePath",legalIdCardNationMap.path)
+                .put("identifyCardPathFront",administratorIdCardPeopleMap.path)
+                .put("identifyCardPathContrary",administratorIdCardNationMap.path)
+                .put("vipName",mView.tv_administrator_name_data.text)
+                .put("identifyCard",mView.tv_administrator_number_data.text)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -347,31 +275,27 @@ class EnterpriseReCertificationFragment :Fragment(){
         when(selectImage){
             1->{
                 legalIdCardPeopleMap.path=imagePath
-                glideLoader.loadImage(mView.iv_legal_id_card_people,imagePath)
+                glideImageLoader.displayImage(mView.iv_legal_id_card_people,imagePath)
             }
             2->{
                 legalIdCardNationMap.path=imagePath
-                glideLoader.loadImage(mView.iv_legal_id_card_nation,imagePath)
+                glideImageLoader.displayImage(mView.iv_legal_id_card_nation,imagePath)
             }
             3->{
                 administratorIdCardPeopleMap.path=imagePath
-                glideLoader.loadImage(mView.iv_administrator_id_card_people,imagePath)
+                glideImageLoader.displayImage(mView.iv_administrator_id_card_people,imagePath)
             }
             4->{
                 administratorIdCardNationMap.path=imagePath
-                glideLoader.loadImage(mView.iv_administrator_id_card_nation,imagePath)
+                glideImageLoader.displayImage(mView.iv_administrator_id_card_nation,imagePath)
             }
             5->{
-                val imageList = blAdapter.mImageList.toMutableList()
-                imageList.add(imageList.size-1,Image(imagePath,null))
-                blAdapter.mImageList = imageList
-                blAdapter.notifyDataSetChanged()
+                businessLicenseMap.path=imagePath
+                glideImageLoader.displayImage(mView.iv_business_license,imagePath)
             }
             6->{
-                val imageList = opAdapter.mImageList.toMutableList()
-                imageList.add(imageList.size-1,Image(imagePath,null))
-                opAdapter.mImageList = imageList
-                opAdapter.notifyDataSetChanged()
+                officialPictureMap.path=imagePath
+                glideImageLoader.displayImage(mView.iv_official_picture,imagePath)
             }
         }
     }

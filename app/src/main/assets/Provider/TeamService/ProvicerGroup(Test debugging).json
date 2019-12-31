@@ -2,7 +2,9 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "发布类别",
-    "singleDisplayRightContent": "试验调试"
+    "singleDisplayRightContent": "试验调试",
+    "key": "name",
+    "sendFormat": "String"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
@@ -54,12 +56,16 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "issuerName",
+    "sendFormat": "String"
   },
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "负责人电话",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "phone",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_UNIT",

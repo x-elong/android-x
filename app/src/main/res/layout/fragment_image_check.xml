@@ -43,9 +43,9 @@
 
     <TextView
         android:id="@+id/tv_add_select"
-        android:layout_width="@dimen/general_20"
+        android:layout_width="@dimen/general_40"
         android:layout_height="@dimen/general_20"
-        android:background="@drawable/add_white"
+        android:background="@drawable/add"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/view_image_check"
         app:layout_constraintEnd_toEndOf="@+id/view_image_check"

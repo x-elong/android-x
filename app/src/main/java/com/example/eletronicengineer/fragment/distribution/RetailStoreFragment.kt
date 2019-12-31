@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment.retailstore
+package com.example.eletronicengineer.fragment.distribution
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,15 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.GetQRCodeActivity
-import com.example.eletronicengineer.activity.ImageDisplayActivity
-import com.example.eletronicengineer.activity.MainActivity
-import com.example.eletronicengineer.activity.RetailStoreActivity
-import com.example.eletronicengineer.fragment.distribution.IntegralFragment
-import com.example.eletronicengineer.utils.FragmentHelper
+import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getOwnIntegral
 import com.example.eletronicengineer.utils.getQRCode
 import com.example.eletronicengineer.utils.getUserIncome
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_retail_store.view.*
@@ -33,10 +28,12 @@ class RetailStoreFragment:Fragment() {
         }
     }
     lateinit var title:String
+    lateinit var headerImg:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_retail_store, container, false)
 //        title=arguments!!.getString("title")
 //        view.tv_retail_title.text=title
+        headerImg = arguments!!.getString("headerImg","")
         initFragment(view)
         return view
     }
@@ -45,11 +42,13 @@ class RetailStoreFragment:Fragment() {
         view.tv_retail_back.setOnClickListener {
             activity!!.finish()
         }
+        GlideImageLoader().displayImage(view.iv_retail_header,headerImg)
+        view.tv_retail_person_name.text = UnSerializeDataBase.userPhone
         val data = Bundle()
 
         //二维码按钮监听
         view.tv_retail_two_dimensional_code_image.setOnClickListener{
-            val result = getQRCode("http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
+            val result = getQRCode().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
                     val path = it.message
                     //将拿到的路径访问文件服务器，拿到照片，然后进入碎片显示

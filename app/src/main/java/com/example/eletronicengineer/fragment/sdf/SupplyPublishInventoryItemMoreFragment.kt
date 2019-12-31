@@ -12,7 +12,6 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.distributionFileSave.Supply
 import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
 

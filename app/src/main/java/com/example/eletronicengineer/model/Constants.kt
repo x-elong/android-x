@@ -150,6 +150,7 @@ class Constants {
         class My{
             companion object{
 
+                const val getRemoteCode = "UserGoodsPower/getRemoteCode/"
                 /**
                  * @VIP会员
                  */
@@ -198,9 +199,17 @@ class Constants {
                  *我的发布
                  */
                 const val getDemandIndividual = "RequirementPerson/getOwnByQueryConditions/"
+                const val updateCheckDemandIndividual = "PersonRequirementInformationCheck/registrationNumber/{requirementPersonId}"
+
                 const val getDemandGroup = "RequirementTeam/getRequirementTeamDTOListByFounder/"
+                const val updateCheckDemandGroup = "RequirementTeamLoggingCheck/registrationNumber/{requirementTeamId}"
+
                 const val getDemandLease = "RequirementLease/getRequirementLeaseDTOListByFounder/"
+                const val updateCheckDemandLease = "LeaseLoggingCheck/registrationNumber/{requirementLeaseId}"
+
                 const val getDemandTripartite = "RequirementThirdParty/getAllByFounder/"
+                const val updateCheckDemandTripartite = "RequirementThirdLoggingCheck/registrationNumber/{requirementThirdId}"
+
                 const val getPersonalIssue = "PersonalIssue/insertListPersonalIssueBytoken/"
                 const val getTeamService = "RunningMaintain/getRunningMaintainALLDTOPerson/"
                 const val getLeaseService = "Lease/getLeaseDTOListByFounder/"
@@ -212,10 +221,15 @@ class Constants {
                  * @报名
                  */
                 const val getRegistration = "LeaseLoggingCheck/getByVip/"
-                const val getPersonRequirement = "PersonRequirementInformationCheck/getList2PersonRequirementInformationCheck/"
-                const val getRequirementTeam = "RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck2/"
-                const val getLease= "LeaseLoggingCheck/getList2LeaseLoggingCheckController/"
-                const val getRequirementThird= "RequirementThirdLoggingCheck/getList2RequirementThirdLoggingCheck/"
+                const val getPersonRequirement = "PersonRequirementInformationCheck/getListPersonRequirementInformationCheck/"
+                const val getRequirementTeam = "RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck/"
+                const val getLease = "LeaseLoggingCheck/getListLeaseLoggingCheckController/"
+                const val getRequirementThird = "RequirementThirdLoggingCheck/getListRequirementThirdLoggingCheck/"
+
+                const val getPersonRequirement2 = "PersonRequirementInformationCheck/getList2PersonRequirementInformationCheck/"
+                const val getRequirementTeam2 = "RequirementTeamLoggingCheck/getRequirementTeamLoggingCheck2/"
+                const val getLease2 = "LeaseLoggingCheck/getList2LeaseLoggingCheckController/"
+                const val getRequirementThird2 = "RequirementThirdLoggingCheck/getList2RequirementThirdLoggingCheck/"
 
                 //需求个人
                 const val deletePersonRequirementInformationCheck="PersonRequirementInformationCheck/deletePersonRequirementInformationCheck/{id}"
@@ -229,8 +243,10 @@ class Constants {
                 /**
                  * @认证
                  */
+
                 const val enterpriseCertification = "OrganizationCertification/insertOrganizationCertification/"
                 const val enterpriseReCertification = "OrganizationCertification/updateOrganizationCertificatio/"
+
                 const val personalCertification = "OrganizationCertification/insertOneOrganizationCertification/"
                 const val certificationMore = "OrganizationCertification/getOrganizationCertificationDTOALL/"
 

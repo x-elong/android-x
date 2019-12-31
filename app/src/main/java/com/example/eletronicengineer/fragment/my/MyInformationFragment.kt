@@ -26,6 +26,9 @@ import com.example.eletronicengineer.utils.uploadImage
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.lcw.library.imagepicker.ImagePicker
+import com.yancy.gallerypick.config.GalleryConfig
+import com.yancy.gallerypick.config.GalleryPick
+import com.yancy.gallerypick.inter.IHandlerCallBack
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -43,9 +46,31 @@ import kotlin.collections.ArrayList
 
 
 class MyInformationFragment : Fragment() {
-    val glideLoader = GlideLoader()
     var adapter:RecyclerviewAdapter?=null
     lateinit var mView: View
+
+    val iHandlerCallBack = object : IHandlerCallBack {
+        override fun onFinish() {
+        }
+
+        override fun onCancel() {
+        }
+
+        override fun onError() {
+        }
+
+        override fun onStart() {
+        }
+
+        override fun onSuccess(photoList: MutableList<String>) {
+//            val fragment=activity!!.supportFragmentManager.findFragmentByTag("Capture")!!
+            refresh(photoList[0])
+//            photoAdapter.notifyDataSetChanged()
+        }
+    }
+    val glideImageLoader = GlideImageLoader()
+    var galleryConfig = GalleryConfig.Builder().build()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_my_information, container, false)
         mView.tv_my_information_back.setOnClickListener {
@@ -61,11 +86,22 @@ class MyInformationFragment : Fragment() {
         }
         return mView
     }
+    private fun initGalleryConfig(){
+        galleryConfig = GalleryConfig.Builder().imageLoader(glideImageLoader)    // ImageLoader 加载框架（必填）
+            .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+            .provider("com.example.eletronicengineer.fileProvider")   // provider (必填)
+//        .pathList(mImagePaths)                         // 记录已选的图片
+            .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+            .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+            .crop(true, 1F, 1F, 500, 500)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
+            .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+            .filePath("/Gallery/Pictures")          // 图片存放路径
+            .build()
+    }
     private fun initFragment() {
         val result = NetworkAdapter().getDataUser().subscribe {
             initDataUser(it)
         }
-
         (mView.rv_my_information_content.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
     }
     //将照片设置在对于的控件上
@@ -127,23 +163,13 @@ class MyInformationFragment : Fragment() {
                     val dialog = BottomSheetDialog(context!!)
                     val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_upload, null)
                     dialogView.btn_photograph.setOnClickListener {
-                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        // UnSerializeDataBase.imgList.add(BitmapMap("", mData[5].additionalKey))
-                        activity!!.startActivityForResult(intent, Constants.RequestCode.REQUEST_PHOTOGRAPHY.ordinal)
+                        initGalleryConfig()
+                        GalleryPick.getInstance().setGalleryConfig(galleryConfig).openCamera(activity)
                         dialog.dismiss()
                     }
                     dialogView.btn_album.setOnClickListener {
-                        ImagePicker.getInstance()
-                            .setTitle("图片")//设置标题
-                            .showCamera(true)//设置是否显示拍照按钮
-                            .showImage(true)//设置是否展示图片
-                            .showVideo(true)//设置是否展示视频
-                            .showVideo(true)//设置是否展示视频
-                            .setSingleType(true)//设置图片视频不能同时选择
-                            .setMaxCount(1)//设置最大选择图片数目(默认为1，单选)
-                            //.setImagePaths(mImagePaths)//保存上一次选择图片的状态，如果不需要可以忽略
-                            .setImageLoader(glideLoader)//设置自定义图片加载器
-                            .start(activity, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+                        initGalleryConfig()
+                        GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
                         dialog.dismiss()
                     }
                     dialogView.btn_cancel.setOnClickListener {
@@ -207,8 +233,50 @@ class MyInformationFragment : Fragment() {
                 if(user.identifyCard!=null)
                     item.singleDisplayRightContent = user.identifyCard.toString()
                 mMultiStyleItemList.add(item)
-                item = MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT, "电企通帐号", user.userName)
-                mMultiStyleItemList.add(item)
+                if(true){
+                    val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "昵称", user.userName)
+                    item.jumpListener = View.OnClickListener {
+                        val dialog = AlertDialog.Builder(context!!)
+                        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null)
+                        if(item.shiftInputContent!="未设置")
+                            dialogView.et_dialog.setText(item.shiftInputContent)
+                        dialogView.et_dialog.setSelection(dialogView.et_dialog.text.length)
+                        dialog.setTitle("昵称")
+                            .setView(dialogView)
+                            .setNegativeButton("取消",null)
+                            .setPositiveButton("确定",DialogInterface.OnClickListener() { _, _ ->
+                                val result = Observable.create<RequestBody> {
+                                    //json.remove(key)
+                                    //val imagePath = upImage(key)
+                                    //var jsonObject= json.put(key,upImage(key))
+                                    val jsonObject = userJson.put("userName", dialogView.et_dialog.text)
+                                    Log.i("json ,,", jsonObject.toString())
+                                    val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
+                                    it.onNext(requestBody)
+                                }.subscribe {
+                                    val result =
+                                        putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+                                            .subscribeOn(Schedulers.io())
+                                            .subscribe(
+                                                {
+                                                    //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
+                                                    if (JSONObject(it.string()).getInt("code") == 200) {
+                                                        adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
+                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                    }
+                                                },
+                                                {
+                                                    it.printStackTrace()
+                                                }
+                                            )
+                                }
+                            })
+                            .create()
+                            .show()
+                    }
+                    mMultiStyleItemList.add(item)
+                }
+
 
                 if (true) {
                     val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "性别", "未设置")

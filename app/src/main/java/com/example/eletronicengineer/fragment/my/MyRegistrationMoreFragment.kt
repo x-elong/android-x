@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.My.RequirementLeaseRegistrationEntity
@@ -37,10 +38,13 @@ class MyRegistrationMoreFragment :Fragment(){
     lateinit var mView: View
     val mMultiStyleItemList:MutableList<MultiStyleItem> =ArrayList()
     var type = -1
+    var frame = R.id.frame_my_registration
     val gson = GsonBuilder().create()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_my_registration_more,container,false)
         type = arguments!!.getInt("type")
+        if(activity is MyReleaseActivity)
+            frame = R.id.frame_my_release
         initFragment()
         return mView
     }
@@ -71,7 +75,7 @@ class MyRegistrationMoreFragment :Fragment(){
                         val bundle = Bundle()
                         bundle.putSerializable("inventoryList",requirementPersonalRegistrationEntity as Serializable)
                         bundle.putString("type", "成员清册")
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                     }
                     else
                         ToastHelper.mToast(mView.context, "没有数据")
@@ -113,7 +117,7 @@ class MyRegistrationMoreFragment :Fragment(){
                         bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
                         bundle.putInt("requirementType",1)
                         bundle.putString("type", "成员清册")
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                     }
                     else
                         ToastHelper.mToast(mView.context, "没有数据")
@@ -125,7 +129,7 @@ class MyRegistrationMoreFragment :Fragment(){
                         bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
                         bundle.putString("type", "车辆清册")
                         bundle.putInt("requirementType",1)
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                     }
                     else
                         ToastHelper.mToast(mView.context, "没有数据")
@@ -135,7 +139,7 @@ class MyRegistrationMoreFragment :Fragment(){
                         val bundle = Bundle()
                         bundle.putSerializable("inventoryList",requirementTeamRegistrationEntity as Serializable)
                         bundle.putString("type", "机械设备")
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                     }
                     else
                         ToastHelper.mToast(mView.context, "没有数据")
@@ -192,7 +196,7 @@ class MyRegistrationMoreFragment :Fragment(){
                             val bundle = Bundle()
                             bundle.putSerializable("inventoryList",requirementLeaseRegistrationEntity as Serializable)
                             bundle.putString("type", "车辆清册")
-                            FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                            FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                         }
                         else
                             ToastHelper.mToast(mView.context, "没有数据")
@@ -205,7 +209,7 @@ class MyRegistrationMoreFragment :Fragment(){
                             val bundle = Bundle()
                             bundle.putSerializable("inventoryList",requirementLeaseRegistrationEntity as Serializable)
                             bundle.putString("type", "租赁清单")
-                            FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                            FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                         }
                         else
                             ToastHelper.mToast(mView.context, "没有数据")
@@ -249,7 +253,7 @@ class MyRegistrationMoreFragment :Fragment(){
                         val bundle = Bundle()
                         bundle.putSerializable("inventoryList",requirementThirdRegistrationEntity as Serializable)
                         bundle.putString("type", "三方服务清单")
-                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), R.id.frame_my_registration, "register")
+                        FragmentHelper.switchFragment(activity!!, MyInventoryListFragment.newInstance(bundle), frame, "register")
                     }
                     else
                         ToastHelper.mToast(mView.context, "没有数据")

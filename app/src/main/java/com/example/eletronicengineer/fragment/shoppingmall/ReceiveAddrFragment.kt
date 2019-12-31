@@ -10,7 +10,6 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.PersonInformationActivity
 import com.example.eletronicengineer.adapter.ShippingAddressAdapter
 import com.example.eletronicengineer.aninterface.ShippingAddress
-import com.example.eletronicengineer.fragment.shopping.AddressFragment
 import com.example.eletronicengineer.utils.FragmentHelper
 import kotlinx.android.synthetic.main.fragment_reseive_addr.view.*
 

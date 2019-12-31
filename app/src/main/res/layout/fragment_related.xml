@@ -104,7 +104,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_detect_new_version"
         app:layout_constraintEnd_toEndOf="@+id/view_detect_new_version"
         app:layout_constraintTop_toTopOf="@+id/view_detect_new_version" />
-
     <View
         android:id="@+id/view_terms_of_service"
         android:layout_width="match_parent"
@@ -138,12 +137,13 @@
         app:layout_constraintTop_toTopOf="@+id/view_terms_of_service" />
 
     <TextView
-        android:visibility="gone"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_40"
-        android:textSize="@dimen/font_tv_hint_15"
         android:text="Copyringht@2019宇畅\nYCDLFW.COM版权所有"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_terms_of_service" />

@@ -67,6 +67,7 @@ class MyReleaseFragment :Fragment(){
         initOnScrollListener()
         return mView
     }
+    var historyFlag = false
     private fun initOnScrollListener() {
         mView.rv_my_release_content.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -81,12 +82,7 @@ class MyReleaseFragment :Fragment(){
         })
     }
     private fun initFragment() {
-        adapter = RecyclerviewAdapter(ArrayList())
-        if(tvMode!=""){
-            mView.tv_mode_content.text = tvMode
-            page = 1
-            pageCount = 1
-        }
+
         mView.tv_my_release_back.setOnClickListener {
             activity!!.finish()
         }
@@ -97,10 +93,26 @@ class MyReleaseFragment :Fragment(){
             selectDialog.show()
         }
         //        (mView.rv_my_release_content.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        adapter = RecyclerviewAdapter(ArrayList())
+        if(tvMode!=""){
+            mView.tv_mode_content.text = tvMode
+            page = 1
+            pageCount = 1
+        }
+        mView.checkbox_history.isChecked = historyFlag
+        initData()
         mView.rv_my_release_content.adapter=adapter
         mView.rv_my_release_content.layoutManager=LinearLayoutManager(context)
-        initData()
-
+        mView.checkbox_history.setOnClickListener {
+            historyFlag = mView.checkbox_history.isChecked
+            page = 1
+            pageCount = 1
+            adapter = RecyclerviewAdapter(ArrayList())
+            mView.rv_my_release_content.adapter=adapter
+            mView.rv_my_release_content.layoutManager=LinearLayoutManager(context)
+            Log.i("","${mView.checkbox_history.isChecked}")
+            initData()
+        }
     }
     fun initData(){
         when(tvMode){
@@ -133,6 +145,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataDemandIndividual() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("number",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -195,6 +208,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
@@ -204,6 +218,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataDemandGroup() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("number",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -490,6 +505,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
@@ -499,6 +515,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataDemandLease() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("number",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -643,6 +660,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
@@ -652,6 +670,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataDemandTripartite(){
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("number",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -717,6 +736,7 @@ class MyReleaseFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context,result)
                 },{
                     it.printStackTrace()
@@ -727,6 +747,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataPersonalIssue() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("pageSize",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -801,6 +822,7 @@ class MyReleaseFragment :Fragment(){
                         result = "当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context, result)
                 }, {
                     it.printStackTrace()
@@ -811,6 +833,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataTeamService() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("pageSize",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -1106,6 +1129,7 @@ class MyReleaseFragment :Fragment(){
                             adapter.notifyItemRangeInserted(size, adapter.mData.size - size)
                         }
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context,result)
                 }, {
                     it.printStackTrace()
@@ -1116,6 +1140,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataLeaseService() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("number",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -1294,6 +1319,7 @@ class MyReleaseFragment :Fragment(){
                         result = "当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context, result)
                 }, {
                     it.printStackTrace()
@@ -1304,6 +1330,7 @@ class MyReleaseFragment :Fragment(){
     private fun getDataThridService() {
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("page",page).put("pageSize",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -1385,6 +1412,7 @@ class MyReleaseFragment :Fragment(){
                         result = "当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context, result)
                 }, {
                     it.printStackTrace()

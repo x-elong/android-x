@@ -156,6 +156,7 @@ class MyRegistrationFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
                 },{
                     it.printStackTrace()
@@ -168,7 +169,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getPersonRequirement)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getPersonRequirement2)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -197,6 +198,7 @@ class MyRegistrationFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
                 },{
                     it.printStackTrace()
@@ -209,7 +211,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementTeam)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementTeam2)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -238,6 +240,7 @@ class MyRegistrationFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
                 },{
                     it.printStackTrace()
@@ -250,7 +253,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getLease)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getLease2)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -282,6 +285,7 @@ class MyRegistrationFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
                 },{
                     it.printStackTrace()
@@ -294,7 +298,7 @@ class MyRegistrationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementThird)
+            val result = startSendMessage(it,UnSerializeDataBase.dmsBasePath+Constants.HttpUrlPath.My.getRequirementThird2)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")
@@ -324,6 +328,7 @@ class MyRegistrationFragment :Fragment(){
                         result="当前数据为空"
                         pageCount = 0
                     }
+                    if(result!="当前数据获取成功")
                     Toast.makeText(context,result,Toast.LENGTH_SHORT).show()
                 },{
                     it.printStackTrace()

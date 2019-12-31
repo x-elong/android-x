@@ -72,7 +72,7 @@
         android:id="@+id/et_login_name"
         android:layout_width="@dimen/general_250"
         android:layout_height="wrap_content"
-        android:hint="请输入登录账号"
+        android:hint="请输入手机号或邮箱"
         android:background="@color/white"
         android:inputType="number"
         android:textSize="@dimen/font_tv_normal_16"
@@ -128,8 +128,11 @@
 
     <CheckBox
         android:id="@+id/cb_pwd_display"
-        android:layout_width="@dimen/general_30"
-        android:layout_height="@dimen/general_30"
+        android:layout_width="@dimen/general_20"
+        android:layout_height="@dimen/general_20"
+        android:background="@drawable/eys_close"
+        android:button="@null"
+        android:alpha="0.3"
         app:layout_constraintBottom_toBottomOf="@+id/et_login_password"
         app:layout_constraintEnd_toEndOf="@+id/tv_login_down_list"
         app:layout_constraintStart_toStartOf="@+id/tv_login_down_list"

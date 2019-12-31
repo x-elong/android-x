@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.login.LoginFragment
+import com.example.eletronicengineer.utils.AddUtil
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.PermissionHelper
 import com.example.eletronicengineer.utils.SysApplication
@@ -18,5 +19,6 @@ class LoginActivity: AppCompatActivity() {
         SysApplication.getInstance().addActivity(this)
         PermissionHelper.getPermission(this,1)
         FragmentHelper.addFragment(this,LoginFragment(),R.id.frame_login,"")
+//        AddUtil.addContact(this)
     }
 }

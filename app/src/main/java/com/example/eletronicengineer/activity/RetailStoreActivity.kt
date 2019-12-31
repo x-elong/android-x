@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.retailstore.RetailStoreFragment
+import com.example.eletronicengineer.fragment.distribution.RetailStoreFragment
 import com.example.eletronicengineer.utils.FragmentHelper
 
 
@@ -19,8 +19,10 @@ class RetailStoreActivity : AppCompatActivity() {
     private fun initFragment() {
 //        initData()
         val data = Bundle()
+        data.putString("headerImg",getIntent().getStringExtra("headerImg"))
 //        data.putString("title", title)
-         FragmentHelper.addFragment(this,RetailStoreFragment.newInstance(data),R.id.frame_retail_store,"")
+         FragmentHelper.addFragment(this,
+             RetailStoreFragment.newInstance(data),R.id.frame_retail_store,"")
     }
 
     //获取加载的界面类型

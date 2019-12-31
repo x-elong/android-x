@@ -3,6 +3,7 @@ package com.example.eletronicengineer.db.My
 import java.io.Serializable
 
 class UserEntity (
+    var vipLevel:String,
     var user:UserSubitemEntity,
     var bankCards:List<BankCardsEntity>?,
     var educationBackgrounds:List<EducationBackgroundsEntity>?,

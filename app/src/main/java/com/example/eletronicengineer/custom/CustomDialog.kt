@@ -11,6 +11,7 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.utils.ToastHelper
 import kotlinx.android.synthetic.main.dialog_select.view.*
 
 
@@ -27,7 +28,7 @@ class CustomDialog {
     SELECT_DIALOG,TWO_OPTIONS_SELECT_DIALOG,THREE_OPTIONS_SELECT_DIALOG,SELECT_CHECK_DIALOG
   }
   var options:Options
-    constructor(options:Options,context: Context,contentList:Array<String>,palceIsCheck:BooleanArray,handler:Handler)
+    constructor(options:Options,context: Context,contentList:Array<String>,selectContentStr:String,handler:Handler)
     {
         this.options=options
         this.mHandler=handler
@@ -35,10 +36,26 @@ class CustomDialog {
         {
             Options.SELECT_CHECK_DIALOG->
             {
-                var mPalceIsCheck:BooleanArray = booleanArrayOf(false)
-                mPalceIsCheck=palceIsCheck
+                var mPalceIsCheck:BooleanArray = booleanArrayOf(
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false,false,
+                    false,false,false
+                )
+
+                var selectContentList = selectContentStr.split("、")
+                for (j in 0 until selectContentList.size){
+                    val position = contentList.indexOf(selectContentList[j])
+                    if(position>=0)
+                        mPalceIsCheck[position] = true
+                }
                 val builder=AlertDialog.Builder(context)
-                builder.setMultiChoiceItems(contentList,palceIsCheck,DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                builder.setMultiChoiceItems(contentList,mPalceIsCheck,DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                     if(isChecked){
                         mPalceIsCheck[which]=true
                     }else{
@@ -54,7 +71,6 @@ class CustomDialog {
                     }
                     if(mPalceIsCheck[0]){
                         selectCheckContent.add(contentList[0])
-
                     }else{
                         for(i in 1 until  mPalceIsCheck.size)
                         {
@@ -63,16 +79,26 @@ class CustomDialog {
                             }
                         }
                     }
-                    for(i in selectCheckContent ){
-                        if(selectContent!="")
-                            selectContent+="、"
-                           selectContent+=i
+                    if(selectCheckContent.size==mPalceIsCheck.size-1 && !mPalceIsCheck[0]){
+                        selectCheckContent.clear()
+                        selectCheckContent.add(contentList[0])
+                        mPalceIsCheck[0]=true
                     }
-                    val data= Bundle()
-                    data.putString("selectContent",selectContent)
-                    data.putBooleanArray("selectContent1",mPalceIsCheck)
-                    msg.data=data
-                    mHandler.sendMessage(msg)
+
+                    if(selectCheckContent.size>10){
+                        ToastHelper.mToast(context,"所选省份不能超过10个!请重新选择!")
+                    }
+                    else{
+                        for(i in selectCheckContent ){
+                            if(selectContent!="")
+                                selectContent+="、"
+                            selectContent+=i
+                        }
+                        val data= Bundle()
+                        data.putString("selectContent",selectContent)
+                        msg.data=data
+                        mHandler.sendMessage(msg)
+                    }
                 }
                 this.dialog=builder.create()
             }

@@ -132,7 +132,6 @@ class SupplyFragment:Fragment(){
                             MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
                                 when(i.radioButtonTitle) {
                                     "是否配驾驶员"->{
-
                                      val   tmp = i.radioButtonValue
                                        if(tmp=="1"){
                                            isDriver=true
@@ -261,7 +260,6 @@ class SupplyFragment:Fragment(){
                             json.put("issuerBelongSite",issuerBelongSite)
                                 .put("issuerName",UnSerializeDataBase.idCardName)
                                 .put("phone",UnSerializeDataBase.userPhone)
-
                         }
                         Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
                             json.put("validTime",validTime.toString())
@@ -300,6 +298,7 @@ class SupplyFragment:Fragment(){
                                     {
                                         loadingDialog.dismiss()
                                         val json = JSONObject(it.string())
+                                        Log.i("",json.toString())
                                         if (json.getInt("code") == 200) {
                                                 Toast.makeText(context, "请求成功", Toast.LENGTH_SHORT).show()
                                                 mView.tv_title_back.callOnClick()

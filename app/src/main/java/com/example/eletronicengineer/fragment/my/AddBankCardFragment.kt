@@ -44,7 +44,8 @@ class AddBankCardFragment :Fragment(){
         mView.btn_add_bank_card.setOnClickListener {
             val result = Observable.create<RequestBody>{
                 val jsonObject = JSONObject().put("bankCardNumber",editTextContent.replace(" ",""))
-                    .put("bankType",mView.sp_bank.selectedItem.toString())
+                    .put("bankType",mView.et_bank_name.text.toString())
+//                    .put("bankType",mView.sp_bank.selectedItem.toString())
                 val requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString())
                 it.onNext(requestBody)
             }.subscribe {

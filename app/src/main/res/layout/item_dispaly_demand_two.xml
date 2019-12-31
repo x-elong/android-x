@@ -55,15 +55,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_7"
+        android:lines="1"
+        android:ellipsize="end"
         android:text="湖南省娄底市娄星区人文科技学gfhgfhgfhfghgfhhfghgfhgfhfghgf院"
         android:textColor="@color/font_color_blue"
         android:textSize="@dimen/font_tv_hint_14"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/tv_display_demand_team_title2"
-        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_team_content1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@id/tv_display_demand_team_content1"
+        app:layout_constraintTop_toBottomOf="@id/tv_display_demand_team_content1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

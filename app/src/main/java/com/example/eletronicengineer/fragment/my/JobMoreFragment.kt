@@ -14,6 +14,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.fragment.sdf.ApplicationSubmitFragment
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.Constants
@@ -140,9 +141,10 @@ class JobMoreFragment : Fragment() {
 
                             data.needPeopleNumber
 
-                        adapter.mData[12].singleDisplayRightContent = if(data.salaryStandard!="-1.0")
-                            "${data.salaryStandard} ${data.salaryUnit}"
-                        else "面议"
+                        adapter.mData[12].singleDisplayRightContent =
+                            if (data.salaryStandard != "-1.0")
+                                "${data.salaryStandard} ${data.salaryUnit}"
+                            else "面议"
 
                         adapter.mData[14].singleDisplayRightContent =
                             data.name
@@ -151,7 +153,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[16].singleDisplayRightContent =
-                            data.validTime
+                            if (data.validTime.toInt() <= 0) "已过期" else data.validTime
 
                         adapter.mData[17].singleDisplayRightContent =
 
@@ -160,27 +162,118 @@ class JobMoreFragment : Fragment() {
 
                         mView.rv_job_more_content.adapter = adapter
                         mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog =
+                                LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementPerson(id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if (JSONObject(it.string()).getInt("code") == 200) {
+                                        ToastHelper.mToast(mView.context, "删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    } else
+                                        ToastHelper.mToast(mView.context, "删除失败")
+                                }, {
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context, "删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            val typeStr =
-                                if(data.requirementVariety in arrayListOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类"))
-                                    "${data.requirementType} ${data.requirementVariety}"
-                                else
-                                    "${data.requirementType} 其他"
-                            val type = adapterGenerate.getType(typeStr)
-                            bundle.putInt(
-                                "type",
-                                type
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putSerializable("data", data)
+                            bundle.putString("CheckId", id)
+                            bundle.putString("type", "需求个人")
                             FragmentHelper.switchFragment(
                                 activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
+                                JobOverviewFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                ""
                             )
                         }
+                        if (data.validTime.toInt() <= 0) {
+                            if (data.validTime.toInt() <= 0) {
+                                mView.btn_edit_job_information.text = "重新发布"
+                            }
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                val typeStr =
+                                    if (data.requirementVariety in arrayListOf(
+                                            "普工",
+                                            "特种作业",
+                                            "专业操作",
+                                            "测量工",
+                                            "驾驶员",
+                                            "九大员",
+                                            "注册类"
+                                        )
+                                    )
+                                        "${data.requirementType} ${data.requirementVariety}"
+                                    else
+                                        "${data.requirementType} 其他"
+                                val type = adapterGenerate.getType(typeStr)
+                                bundle.putInt(
+                                    "type",
+                                    type
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context, "正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandIndividual(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if (json.getInt("code") == 200) {
+                                        val bundle = Bundle()
+                                        val typeStr =
+                                            if (data.requirementVariety in arrayListOf(
+                                                    "普工",
+                                                    "特种作业",
+                                                    "专业操作",
+                                                    "测量工",
+                                                    "驾驶员",
+                                                    "九大员",
+                                                    "注册类"
+                                                )
+                                            )
+                                                "${data.requirementType} ${data.requirementVariety}"
+                                            else
+                                                "${data.requirementType} 其他"
+                                        val type = adapterGenerate.getType(typeStr)
+                                        bundle.putInt(
+                                            "type",
+                                            type
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    } else {
+                                        ToastHelper.mToast(mView.context, json.getString("message"))
+                                    }
+                                }, {
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context, "验证异常")
+                                    it.printStackTrace()
+                                })
+                        }
+                    }
                     }, {
                         it.printStackTrace()
                     })
@@ -231,7 +324,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                "register"
+                                        "register"
                                     )
                                 })
                             }
@@ -376,7 +469,7 @@ class JobMoreFragment : Fragment() {
                                         activity!!,
                                         ProjectListFragment.newInstance(bundle),
                                         R.id.frame_my_release,
-                                "register"
+                                        "register"
                                     )
                                 })//乙方材料清册
                             }
@@ -388,7 +481,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[19].singleDisplayRightContent =
-                            data.validTime
+                            if (data.validTime.toInt() <= 0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent =
 
@@ -396,22 +489,117 @@ class JobMoreFragment : Fragment() {
 
                         mView.rv_job_more_content.adapter = adapter
                         mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog =
+                                LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementMajorNetwork(id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if (JSONObject(it.string()).getInt("code") == 200) {
+                                        ToastHelper.mToast(mView.context, "删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    } else
+                                        ToastHelper.mToast(mView.context, "删除失败")
+                                }, {
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context, "删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
+                            bundle.putString("CheckId", id)
+                            bundle.putString("type", "需求团队")
                             FragmentHelper.switchFragment(
                                 activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
+                                JobOverviewFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                ""
                             )
                         }
+                        if (data.validTime.toInt() <= 0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString(
+                                    "requirmentTeamServeId",
+                                    data.requirmentTeamServeId
+                                )
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val message =
+                                if (data.validTime.toInt() <= 0) "正在验证是否可重新发布..." else "正在验证是否可编辑..."
+                            val loadingDialog = LoadingDialog(mView.context, message)
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if (json.getInt("code") == 200) {
+                                        val loadingDialog = LoadingDialog(mView.context, message)
+                                        loadingDialog.show()
+                                        updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                            .subscribeOn(Schedulers.io()).subscribe({
+                                                loadingDialog.dismiss()
+                                                val json = JSONObject(it.string())
+                                                if (json.getInt("code") == 200) {
+                                                    val bundle = Bundle()
+                                                    bundle.putInt(
+                                                        "type",
+                                                        adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                                    )
+                                                    bundle.putString("id", data.id)
+                                                    bundle.putString(
+                                                        "requirmentTeamServeId",
+                                                        data.requirmentTeamServeId
+                                                    )
+                                                    bundle.putSerializable("data", data)
+                                                    FragmentHelper.switchFragment(
+                                                        activity!!,
+                                                        ModifyJobInformationFragment.newInstance(
+                                                            bundle
+                                                        ),
+                                                        R.id.frame_my_release,
+                                                        "register"
+                                                    )
+                                                } else {
+                                                    ToastHelper.mToast(
+                                                        mView.context,
+                                                        json.getString("message")
+                                                    )
+                                                }
+                                            }, {
+                                                loadingDialog.dismiss()
+                                                ToastHelper.mToast(mView.context, "验证异常")
+                                                it.printStackTrace()
+                                            })
+                                    } else {
+                                        ToastHelper.mToast(mView.context, json.getString("message"))
+                                    }
+                                }, {
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context, "验证异常")
+                                    it.printStackTrace()
+                                })
+                        }
+                    }
                     }, {
                         it.printStackTrace()
                     })
@@ -553,29 +741,101 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[19].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent =
 
                             data.additonalExplain
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementDistribuionNetwork(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString(
+                                    "requirmentTeamServeId",
+                                    data.requirmentTeamServeId
+                                )
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            } else {
+                                val loadingDialog = LoadingDialog(mView.context, "正在验证是否可编辑...")
+                                loadingDialog.show()
+                                updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io()).subscribe({
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                            val bundle = Bundle()
+                                            bundle.putInt(
+                                                "type",
+                                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                            )
+                                            bundle.putString("id", data.id)
+                                            bundle.putString(
+                                                "requirmentTeamServeId",
+                                                data.requirmentTeamServeId
+                                            )
+                                            bundle.putSerializable("data", data)
+                                            FragmentHelper.switchFragment(
+                                                activity!!,
+                                                ModifyJobInformationFragment.newInstance(bundle),
+                                                R.id.frame_my_release,
+                                                "register"
+                                            )
+                                        } else {
+                                            ToastHelper.mToast(
+                                                mView.context,
+                                                json.getString("message")
+                                            )
+                                        }
+
+                                    }, {
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context, "验证异常")
+                                        it.printStackTrace()
+                                    })
+                            }
                         }
                     }, {
                         it.printStackTrace()
@@ -690,28 +950,98 @@ class JobMoreFragment : Fragment() {
 
                         adapter.mData[18].singleDisplayRightContent = data.phone
 
-                        adapter.mData[19].singleDisplayRightContent = data.validTime
+                        adapter.mData[19].singleDisplayRightContent = if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent = data.additonalExplain
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementPowerTransformation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString(
+                                    "requirmentTeamServeId",
+                                    data.requirmentTeamServeId
+                                )
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            } else {
+                                val loadingDialog = LoadingDialog(mView.context, "正在验证是否可编辑...")
+                                loadingDialog.show()
+                                updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io()).subscribe({
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                            val bundle = Bundle()
+                                            bundle.putInt(
+                                                "type",
+                                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                            )
+                                            bundle.putString("id", data.id)
+                                            bundle.putString(
+                                                "requirmentTeamServeId",
+                                                data.requirmentTeamServeId
+                                            )
+                                            bundle.putSerializable("data", data)
+                                            FragmentHelper.switchFragment(
+                                                activity!!,
+                                                ModifyJobInformationFragment.newInstance(bundle),
+                                                R.id.frame_my_release,
+                                                "register"
+                                            )
+                                        } else {
+                                            ToastHelper.mToast(
+                                                mView.context,
+                                                json.getString("message")
+                                            )
+                                        }
+                                    }, {
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context, "验证异常")
+                                        it.printStackTrace()
+                                    })
+                            }
                         }
                     }, {
                         it.printStackTrace()
@@ -855,7 +1185,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[19].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent =
 
@@ -863,22 +1193,92 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementMeasureDesign(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString(
+                                    "requirmentTeamServeId",
+                                    data.requirmentTeamServeId
+                                )
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            } else {
+                                val loadingDialog = LoadingDialog(mView.context, "正在验证是否可编辑...")
+                                loadingDialog.show()
+                                updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io()).subscribe({
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                            val bundle = Bundle()
+                                            bundle.putInt(
+                                                "type",
+                                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                            )
+                                            bundle.putString("id", data.id)
+                                            bundle.putString(
+                                                "requirmentTeamServeId",
+                                                data.requirmentTeamServeId
+                                            )
+                                            bundle.putSerializable("data", data)
+                                            FragmentHelper.switchFragment(
+                                                activity!!,
+                                                ModifyJobInformationFragment.newInstance(bundle),
+                                                R.id.frame_my_release,
+                                                "register"
+                                            )
+                                        } else {
+                                            ToastHelper.mToast(
+                                                mView.context,
+                                                json.getString("message")
+                                            )
+                                        }
+                                    }, {
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context, "验证异常")
+                                        it.printStackTrace()
+                                    })
+                            }
                         }
                     }, {
                         it.printStackTrace()
@@ -1002,30 +1402,90 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[15].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[16].singleDisplayRightContent =
 
                             data.additonalExplain
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementCaravanTransport(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -1151,30 +1611,90 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[19].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent =
 
                             data.additonalExplain
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementPileFoundation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -1301,30 +1821,90 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[19].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[20].singleDisplayRightContent =
 
                             data.additonalExplain
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementUnexcavation(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -1469,30 +2049,90 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[20].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[21].singleDisplayRightContent =
 
                             data.additonalExplain
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementTest(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -1629,7 +2269,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[18].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[19].singleDisplayRightContent =
 
@@ -1637,23 +2277,83 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementSpanWoodenSupprt(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -1798,7 +2498,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[20].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[21].singleDisplayRightContent =
 
@@ -1806,22 +2506,118 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementRunningMaintain(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
+                        }
+
+                        mView.btn_registration_more.setOnClickListener {
                             val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirmentTeamServeId",data.requirmentTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求团队")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if (data.validTime.toInt() <= 0) {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString(
+                                    "requirmentTeamServeId",
+                                    data.requirmentTeamServeId
+                                )
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(
+                                        bundle
+                                    ),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            } else {
+                                val loadingDialog = LoadingDialog(mView.context, "正在验证是否可编辑...")
+                                loadingDialog.show()
+                                updateCheckDemandGroup(data.id).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io()).subscribe({
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        if (json.getInt("code") == 200) {
+                                            val loadingDialog =
+                                                LoadingDialog(mView.context, "正在验证是否可编辑...")
+                                            loadingDialog.show()
+                                            updateCheckDemandGroup(data.id).observeOn(
+                                                AndroidSchedulers.mainThread()
+                                            )
+                                                .subscribeOn(Schedulers.io()).subscribe({
+                                                    loadingDialog.dismiss()
+                                                    val json = JSONObject(it.string())
+                                                    if (json.getInt("code") == 200) {
+                                                        val bundle = Bundle()
+                                                        bundle.putInt(
+                                                            "type",
+                                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                                        )
+                                                        bundle.putString("id", data.id)
+                                                        bundle.putString(
+                                                            "requirmentTeamServeId",
+                                                            data.requirmentTeamServeId
+                                                        )
+                                                        bundle.putSerializable("data", data)
+                                                        FragmentHelper.switchFragment(
+                                                            activity!!,
+                                                            ModifyJobInformationFragment.newInstance(
+                                                                bundle
+                                                            ),
+                                                            R.id.frame_my_release,
+                                                            "register"
+                                                        )
+                                                    } else {
+                                                        ToastHelper.mToast(
+                                                            mView.context,
+                                                            json.getString("message")
+                                                        )
+                                                    }
+                                                }, {
+                                                    loadingDialog.dismiss()
+                                                    ToastHelper.mToast(mView.context, "验证异常")
+                                                    it.printStackTrace()
+                                                })
+                                        } else {
+                                            ToastHelper.mToast(
+                                                mView.context,
+                                                json.getString("message")
+                                            )
+                                        }
+                                    }, {
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context, "验证异常")
+                                        it.printStackTrace()
+                                    })
+
+                            }
                         }
                     }, {
                         it.printStackTrace()
@@ -1916,27 +2712,87 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[13].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
                         if(data.additonalExplain!=null)
                         adapter.mData[14].singleDisplayRightContent = data.additonalExplain
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requirementTeamServeId",data.requirementTeamServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementLeaseCar(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求租赁")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requirementTeamServeId",data.requirementTeamServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandLease(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requirementTeamServeId",data.requirementTeamServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -2024,7 +2880,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[12].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[13].singleDisplayRightContent =
 
@@ -2032,23 +2888,83 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementLeaseConstructionTool(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求租赁")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandLease(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -2135,7 +3051,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[12].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[13].singleDisplayRightContent =
 
@@ -2143,23 +3059,84 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementLeaseFacility(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求租赁")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandLease(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -2246,7 +3223,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[12].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[13].singleDisplayRightContent =
 
@@ -2254,23 +3231,83 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            bundle.putInt(
-                                "type",
-                                adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementLeaseMachinery(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求租赁")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandLease(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        bundle.putInt(
+                                            "type",
+                                            adapterGenerate.getType("${data.requirementType} ${data.requirementVariety}")
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putString("requiremenLeaseServeId",data.requiremenLeaseServeId)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
@@ -2335,7 +3372,7 @@ class JobMoreFragment : Fragment() {
                             data.phone
 
                         adapter.mData[7].singleDisplayRightContent =
-                            data.validTime
+                            if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
                         adapter.mData[8].singleDisplayRightContent =
 
@@ -2343,27 +3380,91 @@ class JobMoreFragment : Fragment() {
 
 
                         mView.rv_job_more_content.adapter = adapter
-                        mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
-                        mView.btn_edit_job_information.setOnClickListener {
-                            val bundle = Bundle()
-                            val typeStr =
-                                if(data.requirementVariety in arrayListOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务"))
-                                    "${data.requirementType} ${data.requirementVariety}"
-                                else
-                                    "${data.requirementType} 其他"
-                            val type = adapterGenerate.getType(typeStr)
-                            bundle.putInt(
-                                "type",type
-                            )
-                            bundle.putString("id", data.id)
-                            bundle.putSerializable("data", data)
-                            FragmentHelper.switchFragment(
-                                activity!!,
-                                ModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,
-                                "register"
-                            )
+                                                mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
+
+                        mView.btn_delete.setOnClickListener {
+                            val loadingDialog = LoadingDialog(mView.context, "正在删除中...", R.mipmap.ic_dialog_loading)
+                            loadingDialog.show()
+                            deleteRequirementThirdParty(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                                .subscribe({
+                                    loadingDialog.dismiss()
+                                    if(JSONObject(it.string()).getInt("code")==200){
+                                        ToastHelper.mToast(mView.context,"删除成功")
+                                        activity!!.supportFragmentManager.popBackStackImmediate()
+                                    }
+                                    else
+                                        ToastHelper.mToast(mView.context,"删除失败")
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"删除信息异常")
+                                    it.printStackTrace()
+                                })
                         }
+
+                        mView.btn_registration_more.setOnClickListener {
+                            val bundle = Bundle()
+                            bundle.putString("CheckId",id)
+                            bundle.putString("type","需求三方")
+                            FragmentHelper.switchFragment(activity!!,JobOverviewFragment.newInstance(bundle),R.id.frame_my_release,"")
+                        }
+                                                if(data.validTime.toInt()<=0) {
+                            mView.btn_edit_job_information.text = "重新发布"
+                        }
+                        mView.btn_edit_job_information.setOnClickListener {
+                            if(data.validTime.toInt()<=0){
+                                val bundle = Bundle()
+                                val typeStr =
+                                    if(data.requirementVariety in arrayListOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务"))
+                                        "${data.requirementType} ${data.requirementVariety}"
+                                    else
+                                        "${data.requirementType} 其他"
+                                val type = adapterGenerate.getType(typeStr)
+                                bundle.putInt(
+                                    "type",type
+                                )
+                                bundle.putString("id", data.id)
+                                bundle.putSerializable("data", data)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    ModifyJobInformationFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    "register"
+                                )
+                            }else{
+                            val loadingDialog = LoadingDialog(mView.context,"正在验证是否可编辑...")
+                            loadingDialog.show()
+                            updateCheckDemandTripartite(data.id).observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()).subscribe({
+                                    loadingDialog.dismiss()
+                                    val json = JSONObject(it.string())
+                                    if(json.getInt("code")==200){
+                                        val bundle = Bundle()
+                                        val typeStr =
+                                            if(data.requirementVariety in arrayListOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务"))
+                                                "${data.requirementType} ${data.requirementVariety}"
+                                            else
+                                                "${data.requirementType} 其他"
+                                        val type = adapterGenerate.getType(typeStr)
+                                        bundle.putInt(
+                                            "type",type
+                                        )
+                                        bundle.putString("id", data.id)
+                                        bundle.putSerializable("data", data)
+                                        FragmentHelper.switchFragment(
+                                            activity!!,
+                                            ModifyJobInformationFragment.newInstance(bundle),
+                                            R.id.frame_my_release,
+                                            "register"
+                                        )
+                                    }else{
+                                        ToastHelper.mToast(mView.context,json.getString("message"))
+                                    }
+                                },{
+                                    loadingDialog.dismiss()
+                                    ToastHelper.mToast(mView.context,"验证异常")
+                                    it.printStackTrace()
+                                })
+                        }}
                     }, {
                         it.printStackTrace()
                     })
