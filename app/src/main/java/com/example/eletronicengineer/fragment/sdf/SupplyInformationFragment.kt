@@ -453,10 +453,11 @@ class SupplyInformationFragment : Fragment() {
           override fun onRefresh() {
               mView.demand_swipe_refresh.isRefreshing=false
               mPageNumberForPerson=1
+              mIsLastPageForPerson=false
               mPersonalIssueAdapter!!.notifyData()
               valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,
                   supplyVariety) as MutableList<String>
-              _loadSupplyPersonData()
+              selectScroll(theflag,view)
           }
       })
   }
@@ -482,11 +483,12 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForTeam=1
+                mIsLastPageForTeam=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
                     selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
                     selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                _loadSupplyTeamData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -512,10 +514,11 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForLease=1
+                mIsLastPageForLease=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
                     supplyVehicle) as MutableList<String>
-                _loadSupplyLeaseData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -540,10 +543,11 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForThird=1
+                mIsLastPageForThird=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
                     supplyVariety) as MutableList<String>
-                _loadSupplyThirdData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -580,7 +584,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyPersonData()
-        mIsLoadingPerson = false
     }
     fun loadSupplyTeamData() {
         if (mIsLastPageForTeam)
@@ -589,7 +592,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyTeamData()
-        mIsLoadingTeam = false
     }
     fun loadSupplyLeaseData() {
         if (mIsLastPageForLease)
@@ -598,7 +600,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyLeaseData()
-        mIsLoadingLease = false
     }
     fun loadSupplyThirdData() {
         if (mIsLastPageForThird)
@@ -607,7 +608,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyThirdData()
-        mIsLoadingThird = false
     }
 
   fun _loadSupplyPersonData() {
@@ -628,6 +628,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingPerson = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -685,6 +686,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingTeam = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -731,6 +733,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingLease = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -789,6 +792,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingThird = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
