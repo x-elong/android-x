@@ -88,6 +88,8 @@
         <activity android:name=".activity.DemandActivity" />
         <activity android:name=".activity.DemandDisplayActivity" />
         <activity android:name=".activity.SupplyDisplayActivity" />
+        <activity android:name=".activity.YellowPagesDisplayActivity" />
+        <activity android:name=".activity.YellowPagesActivity" />
         <activity android:name=".activity.FriendRequestActivity" /> <!-- Required SDK核心功能 -->
         <service
             android:name=".service.PushService"

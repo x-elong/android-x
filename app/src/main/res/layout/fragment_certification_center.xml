@@ -52,7 +52,7 @@
         android:layout_marginEnd="@dimen/right_40"
         android:background="@drawable/btn_style3"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/top_160"
+        android:layout_marginTop="@dimen/top_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_certification_center" />
 

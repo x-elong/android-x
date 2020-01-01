@@ -41,7 +41,8 @@ class EnterpriseReCertificationFragment :Fragment(){
     }
     var selectImage=-1
     lateinit var mView:View
-    lateinit var mainType:String
+    lateinit var organizationName:String
+    var mainType = ""
     var businessLicenseMap = BitmapMap("","businessLicense")
     var officialPictureMap = BitmapMap("","officialPicturePath")
     var legalIdCardPeopleMap = BitmapMap("","legalPersonPositivePath")
@@ -83,7 +84,7 @@ class EnterpriseReCertificationFragment :Fragment(){
         .build()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_re_certification,container,false)
-        mainType = arguments!!.getString("mainType").replace("/"," ")
+        organizationName = arguments!!.getString("organizationName").replace("/"," ")
         initFragment()
         return mView
     }
@@ -116,7 +117,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
         }
         val results = Observable.create<RequestBody> {
-            val json = JSONObject().put("mainType",mainType.replace(" ","/"))
+            val json = JSONObject().put("organizationName",organizationName)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -128,6 +129,8 @@ class EnterpriseReCertificationFragment :Fragment(){
                     if (code == 200) {
                         val js = jsonObject.getJSONObject("message")
                         result = "获取数据成功"
+                        mainType = js.getString("mainType")
+                        mView.tv_main_type.setText(mainType)
                         mView.tv_institution_name_data.setText (js.getString("organizationName"))
 
                         mView.tv_social_credit_code_data.setText (js.getString("socialCreditCode"))
@@ -161,7 +164,7 @@ class EnterpriseReCertificationFragment :Fragment(){
                         ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_people,mView.context,R.drawable.id_card_people)
                         ImageLoadUtil.loadBackgound(mView.iv_administrator_id_card_nation,mView.context,R.drawable.id_card_nation)
                     }
-
+                    if(result!="获取数据成功")
                     ToastHelper.mToast(context!!, result)
                 }, {
                     ImageLoadUtil.loadBackgound(mView.iv_business_license,mView.context,R.drawable.business_license)

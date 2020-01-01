@@ -11,6 +11,7 @@ import com.example.eletronicengineer.ViewHolder.MovieViewHolder
 import com.example.eletronicengineer.ViewHolder.PersonalIssueViewHolder
 import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
+import com.example.eletronicengineer.activity.YellowPagesDisplayActivity
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.aninterface.PersonalIssue
 import com.example.eletronicengineer.model.Constants
@@ -28,11 +29,21 @@ class ListAdapterForSupply(activity: Activity): RecyclerView.Adapter<PersonalIss
         val inflater = LayoutInflater.from(vg.context)
         var view = PersonalIssueViewHolder(inflater, vg)
         view.itemView.setOnClickListener{
+            when(view.type){
+                "个人劳务"->{
+                    val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
+                    intent.putExtra("type", Constants.FragmentType.PERSONAL_TYPE.ordinal)//个人劳务
+                    intent.putExtra("id",view.mId)
+                    mActivity.startActivity(intent)
+                }
+                "行业黄页"->{
+                    val intent = Intent(vg.context, YellowPagesDisplayActivity::class.java)
+                    intent.putExtra("type", Constants.FragmentType.INDUSTRYYELLOWPAGES_TYPE.ordinal)//黄页
+                    intent.putExtra("id",view.mId)
+                    mActivity.startActivity(intent)
+                }
+            }
 
-            val intent = Intent(vg.context, SupplyDisplayActivity::class.java)
-            intent.putExtra("type", Constants.FragmentType.PERSONAL_TYPE.ordinal)
-            intent.putExtra("id",view.mId)
-            mActivity.startActivity(intent)
 
         }
         return view

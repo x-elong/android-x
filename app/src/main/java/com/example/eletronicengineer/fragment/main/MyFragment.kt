@@ -145,9 +145,9 @@ class MyFragment : Fragment() {
 //            startActivity(intent)
 //        }
         mView.tv_qr_code.setOnClickListener {
-            val intent =Intent(activity,MyQRCodeActivity::class.java)
-            intent.putExtra("headerImg",headerImg)
-            startActivity(intent)
+//            val intent =Intent(activity,MyQRCodeActivity::class.java)
+//            intent.putExtra("headerImg",headerImg)
+//            startActivity(intent)
         }
         mView.my_setting.setOnClickListener {
             val intent =Intent(activity,MySettingActivity::class.java)
@@ -268,8 +268,9 @@ class MyFragment : Fragment() {
 //                                    wechatIntent.setComponent(cop)
                                     wechatIntent.setPackage("com.tencent.mm")
                                     wechatIntent.setType("image/*")
-                                    wechatIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
                                     wechatIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    wechatIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
+
                                     startActivity(Intent.createChooser(wechatIntent, "推荐电企通"))
                                     dialog.dismiss()
                                 }

@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/general_5"
+    android:layout_marginStart="@dimen/general_5"
+    android:layout_marginEnd="@dimen/general_5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:layout_marginStart="@dimen/left_5"
-    android:layout_marginEnd="@dimen/right_5"
     android:padding="@dimen/general_5"
-    android:background="@drawable/item_background">
+    android:background="@drawable/recycler_background">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
         android:text="需求类别:"
         android:visibility="gone"
         android:textSize="@dimen/font_tv_hint_14"
-        android:textColor="@color/white"
+        android:textColor="@color/font_color_blue"
         android:layout_marginStart="@dimen/general_8"
         android:id="@+id/tv_display_demand_team_title1"
         app:layout_constraintStart_toStartOf="parent"

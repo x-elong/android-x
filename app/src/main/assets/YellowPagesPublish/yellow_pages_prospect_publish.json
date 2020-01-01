@@ -1,0 +1,55 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"公司类别",
+    "singleDisplayRightContent":"",
+    "key": "companyType",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"公司名称",
+    "key": "companyName",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"注册地址",
+    "key": "companyAddress",
+    "sendFormat": "String"
+  },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"经营范围",
+        "key": "businessScope",
+        "sendFormat": "String"
+    },
+  {
+  "type": "THREE_OPTIONS_SELECT_DIALOG",
+  "selectTitle": "资质类别及等级",
+  "selectOption1Items": ["工程设计电力行业送电工程专业甲级","工程设计电力行业送电工程专业乙级","工程设计电力行业送电工程专业丙级",""],
+  "selectOption2Items":[["工程设计电力行业变电工程专业甲级","工程设计电力行业变电工程专业乙级","工程设计电力行业变电工程专业丙级",""],["工程设计电力行业变电工程专业甲级","工程设计电力行业变电工程专业乙级","工程设计电力行业变电工程专业丙级",""],
+    ["工程设计电力行业变电工程专业甲级","工程设计电力行业变电工程专业乙级","工程设计电力行业变电工程专业丙级",""],["工程设计电力行业变电工程专业甲级","工程设计电力行业变电工程专业乙级","工程设计电力行业变电工程专业丙级",""]],
+    "selectOption3Items":[[["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""]],
+        [["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""]],
+        [["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""]],
+        [["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""],["工程勘察工程测量专业甲级","工程勘察工程测量专业乙级","工程勘察工程测量专业丙级",""]]],
+    "placePath":"",
+  "key":"firstQualification secondQualification thirdQualification",
+  "sendFormat": "String[]"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人",
+    "singleDisplayRightContent":" ",
+    "key":"name",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话",
+    "singleDisplayRightContent":" ",
+    "key":"phone",
+    "sendFormat":"String"
+  }
+]

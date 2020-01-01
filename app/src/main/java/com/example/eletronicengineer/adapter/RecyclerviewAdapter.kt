@@ -1031,7 +1031,6 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                             mData[position].inputSingleContent = p0.toString()
                     }
-
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
 
@@ -1348,6 +1347,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
             INPUT_WITH_TEXTAREA_TYPE->
             {
                 vh.tvTextAreaTitle.text=mData[position].textAreaTitle
+                vh.etTextAreaContent.hint=mData[position].hint
                 vh.etTextAreaContent.addTextChangedListener(object:TextWatcher{
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     }

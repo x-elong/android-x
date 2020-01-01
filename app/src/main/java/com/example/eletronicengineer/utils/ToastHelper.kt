@@ -11,6 +11,11 @@ class ToastHelper {
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
+        fun netWorkToast(context: Context){
+            val toast = Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
+        }
     }
 }
 

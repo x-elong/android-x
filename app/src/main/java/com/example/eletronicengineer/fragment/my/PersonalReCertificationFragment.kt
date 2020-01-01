@@ -169,7 +169,7 @@ class PersonalReCertificationFragment : Fragment() {
                         val jsonObject = JSONObject(it.string())
                         val code = jsonObject.getInt("code")
                         var result = ""
-                        if(code==200){
+                        if(code==200 && jsonObject.getString("desc")=="OK"){
                             result = "提交成功"
                             activity!!.supportFragmentManager.popBackStackImmediate()
                         }

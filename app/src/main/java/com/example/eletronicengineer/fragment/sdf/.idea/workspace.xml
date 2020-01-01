@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f3de48f-197a-4427-b571-5dafeccf4920" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../../../assets/DisplayYellowPages/displayYellowPages.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../activity/YellowPagesActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../activity/YellowPagesDisplayActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../db/DisplayYellowPages/YellowPages.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../db/DisplayYellowPages/YellowPagesDetail.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../yellowpages/IndustryYellowPagesFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../yellowpages/YellowPagesDisplayFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../yellowpages/YellowPagesFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../res/layout/activity_yellow_pages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../res/layout/activity_yellow_pages_display.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../res/layout/fragment_yellow_pages_display.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../res/layout/yellowpages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Crossing frame).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Crossing frame).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Measurement Design).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Measurement Design).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Non-excavation).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Non-excavation).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Operation and Maintenance).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Operation and Maintenance).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Pile foundation construction).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Pile foundation construction).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Substation Construction).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Substation Construction).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Test debugging).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandGroup(Test debugging).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandLease(Equipment Leasing).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandLease(Equipment Leasing).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandLease(Vehicle Leasing).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandLease(Vehicle Leasing).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandTripartite.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Demand/DemandTripartite.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/crossFrame.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/crossFrame.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/equipmentLeasing.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/equipmentLeasing.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/gangTransportation.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/gangTransportation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/operationAndMaintenance.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/operationAndMaintenance.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/pileFoundationService.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/pileFoundationService.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/supplyIndividual.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/supplyIndividual.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/supplyTeam.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/supplyTeam.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/testAndDebugging.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/testAndDebugging.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/trenchlessJackingConstructionTeam.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/DisplaySupply/trenchlessJackingConstructionTeam.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/RentalService/VehicleRental/Information entry.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/RentalService/VehicleRental/Information entry.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProvicerGroup(Crossing frame).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProvicerGroup(Crossing frame).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProvicerGroup(Test debugging).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProvicerGroup(Test debugging).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Caravan transportation).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Caravan transportation).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Measurement Design).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Measurement Design).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Non-excavation).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Non-excavation).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Operation and Maintenance).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Operation and Maintenance).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Pile foundation construction).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Pile foundation construction).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Substation Construction).json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TeamService/ProviderGroup(Substation Construction).json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../assets/Provider/TripartiteServices/Information entry.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../assets/Provider/TripartiteServices/Information entry.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../activity/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../activity/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../adapter/ListAdapterForSupply.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../adapter/ListAdapterForSupply.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../adapter/NetworkAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../adapter/NetworkAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../adapter/RecyclerviewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../adapter/RecyclerviewAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/DistribuionNetwork.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/DistribuionNetwork.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/MajorNetwork.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/MajorNetwork.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/MeasureDesign.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/MeasureDesign.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/PileFoundation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/PileFoundation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/PowerTransformation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/PowerTransformation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyCaravanTransport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyCaravanTransport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyRunningMaintain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyRunningMaintain.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/SupplySpanWoodenSupprt.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/SupplySpanWoodenSupprt.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyUnexcavation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/DisplaySupply/SupplyUnexcavation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../main/NewsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../main/NewsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my/JobMoreFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../my/JobMoreFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DemandDisplayFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/DemandDisplayFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DemandInformationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/DemandInformationFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SdfInformationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/SdfInformationFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SupplyDisplayFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/SupplyDisplayFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SupplyFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/SupplyFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SupplyInformationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/SupplyInformationFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../model/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../model/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../model/MultiStyleItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../model/MultiStyleItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../utils/AdapterGenerate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../utils/AdapterGenerate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../utils/HttpHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../utils/HttpHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../utils/ItemGenerate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../utils/ItemGenerate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../utils/UnSerializeDataBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../utils/UnSerializeDataBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/drawable-xhdpi/my.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/drawable-xhdpi/my.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/drawable/text_style1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/drawable/text_style1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/layout/demand.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/layout/demand.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/layout/item_dispaly_demand_two.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/layout/item_dispaly_demand_two.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/layout/news.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/layout/news.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/layout/sdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/layout/sdf.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../res/values/colors.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../../../../.." />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="492" />
+    <option name="y" value="16" />
+    <option name="width" value="866" />
+    <option name="height" value="768" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f3de48f-197a-4427-b571-5dafeccf4920" name="Default Changelist" comment="" />
+      <created>1577627966729</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1577627966729</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <layout>
+      <window_info id="Capture Tool" />
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.3296131" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+</project>

@@ -1,0 +1,48 @@
+[
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"公司类别",
+    "singleDisplayRightContent":"",
+    "key": "companyType",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"公司名称",
+    "key": "companyName",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"注册地址",
+    "key": "companyAddress",
+    "sendFormat": "String"
+  },
+    {
+        "type":"SINGLE_INPUT",
+        "inputSingleTitle":"经营范围",
+        "key": "businessScope",
+        "sendFormat": "String"
+    },
+  {
+    "type": "SELECT_DIALOG",
+    "selectTitle": "资质类别及等级",
+    "selectOption1Items": ["工程监理电力工程专业甲级","电子与智能化工程专业承包乙级","电子与智能化工程专业承包丙级",""],
+    "key":"firstQualification",
+    "sendFormat": "String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系人",
+    "singleDisplayRightContent":" ",
+    "key":"name",
+    "sendFormat":"String"
+  },
+  {
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"联系电话",
+    "singleDisplayRightContent":" ",
+    "key":"phone",
+    "sendFormat":"String"
+  }
+]

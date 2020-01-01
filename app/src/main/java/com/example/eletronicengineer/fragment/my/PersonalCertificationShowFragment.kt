@@ -68,8 +68,9 @@ class PersonalCertificationShowFragment :Fragment(){
                             GlideImageLoader().displayImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
                             GlideImageLoader().displayImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
                         }
+                    }else if(code==500){
+                        result = "服务器异常"
                     }
-
                     ToastHelper.mToast(mView.context,result)
                 },{
                     ToastHelper.mToast(mView.context,"网络异常")

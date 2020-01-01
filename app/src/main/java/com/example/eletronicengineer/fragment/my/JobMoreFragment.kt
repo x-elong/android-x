@@ -193,9 +193,6 @@ class JobMoreFragment : Fragment() {
                             )
                         }
                         if (data.validTime.toInt() <= 0) {
-                            if (data.validTime.toInt() <= 0) {
-                                mView.btn_edit_job_information.text = "重新发布"
-                            }
                             mView.btn_edit_job_information.text = "重新发布"
                         }
                         mView.btn_edit_job_information.setOnClickListener {
@@ -203,13 +200,7 @@ class JobMoreFragment : Fragment() {
                                 val bundle = Bundle()
                                 val typeStr =
                                     if (data.requirementVariety in arrayListOf(
-                                            "普工",
-                                            "特种作业",
-                                            "专业操作",
-                                            "测量工",
-                                            "驾驶员",
-                                            "九大员",
-                                            "注册类"
+                                            "普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类"
                                         )
                                     )
                                         "${data.requirementType} ${data.requirementVariety}"
@@ -444,9 +435,9 @@ class JobMoreFragment : Fragment() {
                         }*/
                         when {
                             data.constructionEquipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.constructionEquipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }
@@ -704,9 +695,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.constructionEquipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.constructionEquipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }
@@ -916,9 +907,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.constructionEquipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.constructionEquipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }
@@ -1148,9 +1139,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.equipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.equipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }
@@ -1597,9 +1588,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.otherMachineEquipment == "0" -> adapter.mData[15].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.otherMachineEquipment == "1" -> adapter.mData[15].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[15].singleDisplayRightContent = " "
                             }
@@ -1807,9 +1798,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.otherMachineEquipment == "0" -> adapter.mData[15].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.otherMachineEquipment == "1" -> adapter.mData[15].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[15].singleDisplayRightContent = " "
                             }
@@ -2035,9 +2026,9 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.machineEquipment == "0" -> adapter.mData[16].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.machineEquipment == "1" -> adapter.mData[16].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[16].singleDisplayRightContent = " "
                             }
@@ -2255,9 +2246,9 @@ class JobMoreFragment : Fragment() {
                         }
                         when {
                             data.machineEquipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.machineEquipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }
@@ -2476,9 +2467,9 @@ class JobMoreFragment : Fragment() {
 
                         when {
                             data.machineEquipment == "0" -> adapter.mData[14].singleDisplayRightContent =
-                                "不需要提供"
+                                "不提供"
                             data.machineEquipment == "1" -> adapter.mData[14].singleDisplayRightContent =
-                                "全部提供"
+                                "提供"
                             else -> {
                                 adapter.mData[14].singleDisplayRightContent = " "
                             }

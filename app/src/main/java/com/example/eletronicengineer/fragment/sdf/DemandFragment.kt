@@ -149,6 +149,30 @@ class DemandFragment:Fragment() {
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
             }
+            Constants.FragmentType.PERSONAL_LEADING_CADRE_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                var singleDisplayRightContent = "负责人"
+                var selectOption1Items: List<String> =
+                    listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
+            Constants.FragmentType.PERSONAL_ENGINEER_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                var singleDisplayRightContent = "工程师"
+                var selectOption1Items: List<String> =
+                    listOf("助理工程师", "中级工程师", "高级工程师")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
+            Constants.FragmentType.PERSONAL_DESIGNER_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                var singleDisplayRightContent = "设计员"
+                var selectOption1Items: List<String> =
+                    listOf("主网", "配网", "变电")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+            }
             Constants.FragmentType.PERSONAL_SPECIAL_WORK_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 var singleDisplayRightContent = "特种作业"

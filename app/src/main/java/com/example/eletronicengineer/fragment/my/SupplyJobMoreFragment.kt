@@ -1,4 +1,4 @@
-package com.example.eletronicengineer.fragment.retailstore
+package com.example.eletronicengineer.fragment.my
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -79,8 +79,8 @@ class SupplyJobMoreFragment:Fragment() {
                         }else{ adapter.mData[4].singleDisplayRightContent=data.age }
                         adapter.mData[5].singleDisplayRightContent=if(data.workExperience==null) {
                             " " } else{ data.workExperience}
-                        if(data.salaryUnit=="面议"){
-                            adapter.mData[6].singleDisplayRightContent= data.salaryUnit
+                        if(data.salaryUnit=="面议" || data.workMoney=="-1.0"){
+                            adapter.mData[6].singleDisplayRightContent= "面议"
                         }else {
                             adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
                         }
@@ -130,10 +130,14 @@ class SupplyJobMoreFragment:Fragment() {
                                     it.printStackTrace()
                                 })
                         }
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             val typeStr =
-                                if(data.issuerWorkType in arrayListOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类"))
+                                if(data.issuerWorkType in arrayListOf(
+                                        "普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类"))
                                     "个人劳务 ${data.issuerWorkType}"
                                 else
                                     "个人劳务 其他"
@@ -289,6 +293,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.majorNetwork.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal)
@@ -445,6 +452,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.distribuionNetwork.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal)
@@ -590,6 +600,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.powerTransformation.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal)
@@ -720,6 +733,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.measureDesign.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal)
@@ -793,6 +809,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.caravanTransport.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.CARAVAN_TRANSPORTATION_TYPE.ordinal)
@@ -936,6 +955,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.pileFoundation.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal)
@@ -1071,6 +1093,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener {
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal)
@@ -1218,6 +1243,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal)
@@ -1352,6 +1380,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal)
@@ -1502,6 +1533,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type",Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal)
@@ -1548,8 +1582,8 @@ class SupplyJobMoreFragment:Fragment() {
                             "false"->{adapter.mData[8].singleDisplayRightContent="脱保"}
                             else->{adapter.mData[8].singleDisplayRightContent=""}
                         }
-                        if(data.salaryUnit=="面议"){
-                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        if(data.salaryUnit=="面议" || data.money=="-1.0"){
+                            adapter.mData[9].singleDisplayRightContent= "面议"
                         }else {
                             adapter.mData[9].singleDisplayRightContent= "${data.money} ${data.salaryUnit}"
                         }
@@ -1604,6 +1638,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type", Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal)
@@ -1718,8 +1755,10 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.leaseConstructionTool.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseConstructionTool.validTime==null) {
                             " " } else{ data.leaseConstructionTool.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent =data.leaseConstructionTool.contact
+                        adapter.mData[14].singleDisplayRightContent = data.leaseConstructionTool.contactPhone
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseConstructionTool.issuerBelongSite==null) {
+                            " " } else{ data.leaseConstructionTool.issuerBelongSite }
                                                 view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
                                 view.context,
@@ -1745,6 +1784,9 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.leaseConstructionTool.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type", Constants.FragmentType.TOOL_LEASING_TYPE.ordinal)
@@ -1856,8 +1898,11 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.leaseFacility.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseFacility.validTime==null) {
                             " " } else{ data.leaseFacility.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+
+                        adapter.mData[13].singleDisplayRightContent =data.leaseFacility.contact
+                        adapter.mData[14].singleDisplayRightContent = data.leaseFacility.contactPhone
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseFacility.issuerBelongSite==null) {
+                            " " } else{ data.leaseFacility.issuerBelongSite }
                                                 view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
                                 view.context,
@@ -1883,10 +1928,13 @@ class SupplyJobMoreFragment:Fragment() {
                                 })
                         }
 
+                        if (data.leaseFacility.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type", Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal)
-                            bundle.putString("id", data.leaseConstructionTool.id)
+                            bundle.putString("id", data.leaseFacility.id)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
@@ -1994,8 +2042,10 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.leaseMachinery.conveyancePropertyInsurance }
                         adapter.mData[12].singleDisplayRightContent=if(data.leaseMachinery.validTime==null) {
                             " " } else{ data.leaseMachinery.validTime }
-                        adapter.mData[13].singleDisplayRightContent=if(data.issuerBelongSite==null) {
-                            " " } else{ data.issuerBelongSite }
+                        adapter.mData[13].singleDisplayRightContent =data.leaseMachinery.contact
+                        adapter.mData[14].singleDisplayRightContent = data.leaseMachinery.contactPhone
+                        adapter.mData[15].singleDisplayRightContent=if(data.leaseMachinery.issuerBelongSite==null) {
+                            " " } else{ data.leaseMachinery.issuerBelongSite }
                         view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
                                 view.context,
@@ -2020,10 +2070,13 @@ class SupplyJobMoreFragment:Fragment() {
                                     it.printStackTrace()
                                 })
                         }
+                        if (data.leaseMachinery.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
                         view.btn_edit_job_information.setOnClickListener{
                             val bundle = Bundle()
                             bundle.putInt("type", Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal)
-                            bundle.putString("id", data.leaseConstructionTool.id)
+                            bundle.putString("id", data.leaseMachinery.id)
                             bundle.putSerializable("data", data)
                             FragmentHelper.switchFragment(
                                 activity!!,
@@ -2135,7 +2188,10 @@ class SupplyJobMoreFragment:Fragment() {
                                     it.printStackTrace()
                                 })
                         }
-                           view.btn_edit_job_information.setOnClickListener{
+                           if (data.validTime.toInt() <= 0) {
+                            view.btn_edit_job_information.text = "重新发布"
+                        }
+                        view.btn_edit_job_information.setOnClickListener{
                                 val bundle = Bundle()
                                val typeStr =
                                    if(data.serveType in arrayListOf("培训办证","财务记账","代办资格","标书服务","法律咨询","软件服务"))

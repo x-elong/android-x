@@ -19,6 +19,8 @@ class Constants {
     }
 
     enum class FragmentType {
+        //行业黄页
+        INDUSTRYYELLOWPAGES_TYPE,//行业黄页
         DEMAND_INDIVIDUAL_TYPE,
         DEMAND_GROUP_TYPE,
         DEMAND_LEASE_TYPE,
@@ -26,9 +28,12 @@ class Constants {
         PERSONAL_TYPE,//个人
         TRIPARTITE_TYPE,//三方
         PERSONAL_GENERAL_WORKERS_TYPE,  //个人普工
+        PERSONAL_LEADING_CADRE_TYPE,//个人负责人
+        PERSONAL_ENGINEER_TYPE,//个人工程师
+        PERSONAL_DESIGNER_TYPE,//个人设计员
         PERSONAL_SPECIAL_WORK_TYPE,  //个人特种作业
         PERSONAL_PROFESSIONAL_OPERATION_TYPE,    //个人专业操作
-        PERSONAL_SURVEYOR_TYPE,  //个人测量工
+        PERSONAL_SURVEYOR_TYPE,  //个人勘测员
         PERSONAL_DRIVER_TYPE,    //个人驾驶员
         PERSONAL_NINE_MEMBERS_TYPE,  //个人九大员
         PERSONAL_REGISTRATION_CLASS_TYPE,    //个人注册类
@@ -250,6 +255,7 @@ class Constants {
                 const val personalCertification = "OrganizationCertification/insertOneOrganizationCertification/"
                 const val certificationMore = "OrganizationCertification/getOrganizationCertificationDTOALL/"
 
+                const val getALLOrganizationCertificationDTOList= "OrganizationCertification/getALLOrganizationCertificationDTOList/"
             }
         }
 
@@ -387,6 +393,12 @@ class Constants {
                 const val deleteRequirementThirdParty="RequirementThirdParty/deleteRequirementThirdParty/{id}"
             }
         }
+        //行业黄页
+        class YellowPages{
+            companion object{
+                const val yellowPagesPublish = "IndustryYellowPages/insertIndustryYellowPages/"
+            }
+        }
 
         class Provider {
             companion object {
@@ -400,7 +412,7 @@ class Constants {
 //      const val deleteMajorNetworkAll= mainPath+"/deleteMajorNetwork"
 
                 //车辆租赁
-                const val requirementLeaseCar = "LeaseCar/saveLeaseCar/"
+                const val LeaseCar = "LeaseCar/saveLeaseCar/"
                 const val deleteLeaseCar = "LeaseCar/deleteLeaseCar/{id}"
                 const val  updateLeaseCar = "LeaseCar/updateLeaseCar/"
                 //工器具
@@ -416,7 +428,7 @@ class Constants {
                 const val  deleteLeaseMachinery = "LeaseMachinery/deleteLeaseMachinery/{id}"
                 const val updateLeaseMachinery = "LeaseMachinery/updateLeaseFacility/"
                 //变电
-                const val PowerTransformation = "/PowerTransformation/insertPowerTransformation/"
+                const val PowerTransformation = "PowerTransformation/insertPowerTransformation/"
                 const val deletePowerTransformation="PowerTransformation/deletePowerTransformation/{id}"
                 const val updatePowerTransformation = "PowerTransformation/updatePowerTransformation/"
                 //主网
@@ -458,7 +470,7 @@ class Constants {
 
 
                 //三方
-                const val ThirdServices = "Third//saveThirdServicesAndroid/"
+                const val ThirdServices = "/Third/saveThirdServices/"
                 const val deleteThirdServices = "Third/deleteThirdServices/{id}"
                 const val  updateThirdServices = "Third/updateThirdServices/"
             }
@@ -710,6 +722,14 @@ class Constants {
                 const val findPassword = "userInfo/findPassword/"
             }
         }
+        class DisplayForYellowPages{
+            companion object{
+                //根据查询条件查询黄页的数量
+                const val YellowPages="IndustryYellowPages/getIndustryYellowPagesDTOList"
+                //                //根据id查询黄页详情
+                const val YellowPagesDetail="IndustryYellowPages/getIndustryYellowPages/{id}"
+            }
+        }
         class DisplayForRequirement {
             companion object {
                 //根据查询条件查询需求个人的数量
@@ -760,9 +780,9 @@ class Constants {
         class DisplayForSupply{
             companion object{
                 //个人劳务根据查询条件查询数量
-                const val PersonalIssue="PersonalIssue/insertListPersonalIssue"
+                const val PersonalIssue="PersonalIssue/selectListPersonalIssue"
                 //个人劳务根据id查询
-                const val PersonalIssueDetail="PersonalIssue/insertPersonalIssue/{id}"
+                const val PersonalIssueDetail="PersonalIssue/selectPersonalIssue/{id}"
 
                 //团队服务根据查询条件查询数量
                 const val TeamIssue="RunningMaintain/getRunningMaintainALLDTOALL"

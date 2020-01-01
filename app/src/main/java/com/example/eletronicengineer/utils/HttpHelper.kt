@@ -1,6 +1,8 @@
 package com.example.eletronicengineer.utils
 
 import android.util.Log
+import com.example.eletronicengineer.DisplayYellowPages.YellowPages
+import com.example.eletronicengineer.DisplayYellowPages.YellowPagesDetail
 import com.example.eletronicengineer.db.DistributionFileSave.*
 import com.example.eletronicengineer.db.DisplayDemand.*
 import com.example.eletronicengineer.db.DisplaySupply.*
@@ -56,6 +58,14 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 interface HttpHelper {
+    //行业黄页获取数量
+    @POST(Constants.HttpUrlPath.DisplayForYellowPages.YellowPages)
+    fun getYellowPages(@Body data:RequestBody,@Header("zouxiaodong")token:String):Observable<HttpResult<YellowPages<YellowPagesDetail>>>
+    //行业黄页通过id查找详情
+    @GET(Constants.HttpUrlPath.DisplayForYellowPages.YellowPagesDetail)
+    fun getYellowPagesDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<YellowPagesDetail>>
+
+
     //需求个人获取数量
     @POST(Constants.HttpUrlPath.DisplayForRequirement.RequirementPerson)
     fun getRequirementPerson(@Body data:RequestBody,@Header("zouxiaodong")token:String):Observable<HttpResult<Requirement<RequirementPersonDetail>>>
@@ -252,6 +262,13 @@ interface HttpHelper {
     @DELETE(Constants.HttpUrlPath.My.deleteCertificate)
     fun deleteCertificate(@Path("id") id: String): Observable<ResponseBody>
 
+    @GET(Constants.HttpUrlPath.My.getALLOrganizationCertificationDTOList)
+    fun getALLOrganizationCertificationDTOList():Observable<ResponseBody>
+
+
+    /**
+     * @登录
+     */
     @GET(Constants.HttpUrlPath.Login.sendCode)
     fun sendMobile(@Path("mobileNumber") mobileNumber: String): Observable<HttpResult<String>>
 
@@ -1552,6 +1569,15 @@ internal fun deleteCertificate(id:String):Observable<ResponseBody>{
     return httpHelper.deleteCertificate(id)
 }
 
+internal fun getALLOrganizationCertificationDTOList():Observable<ResponseBody>{
+    val interceptor = Interceptor {
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit =  Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getALLOrganizationCertificationDTOList()
+}
 
 internal fun getRequirementPersonMore(id: String):Observable<ResponseBody>{
     val interceptor = Interceptor {
@@ -1648,6 +1674,31 @@ internal fun numPayCreatOrder(productId:String):Observable<ResponseBody>{
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.numPayCreatOrder(productId)
 }
+/*
+      行业黄页
+ */
+
+//行页黄页数量
+internal fun getYellowPages(requestBody: RequestBody,token: String,baseUrl: String): Observable<HttpResult<YellowPages<YellowPagesDetail>>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getYellowPages(requestBody,token)
+}
+//根据id查询行页黄页详情
+internal fun getYellowPagesDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<YellowPagesDetail>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper. getYellowPagesDetail( id,token)
+}
+
+
+
 
 //供需查看
 //查询需求个人数量

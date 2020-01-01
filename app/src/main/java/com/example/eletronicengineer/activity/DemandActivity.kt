@@ -7,35 +7,19 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
-import android.view.View
-import android.widget.Adapter
 import androidx.fragment.app.Fragment
-import com.bin.david.form.data.Column
-import com.bin.david.form.data.table.TableData
-import com.codekidlabs.storagechooser.StorageChooser
-import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.NetworkAdapter
-import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.fragment.sdf.*
 import com.example.eletronicengineer.model.Constants
-import com.example.eletronicengineer.model.User
 import com.example.eletronicengineer.utils.*
-import com.example.eletronicengineer.utils.downloadFile
 import com.lcw.library.imagepicker.ImagePicker
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_demand.*
-import kotlinx.android.synthetic.main.item_public_point_position1.*
+import kotlinx.android.synthetic.main.activity_photo_upload.view.*
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
+
 class DemandActivity : AppCompatActivity() {
 
   var type:Int=0
@@ -72,11 +56,45 @@ class DemandActivity : AppCompatActivity() {
     {
       when(requestCode)
       {
+        Constants.RequestCode.REQUEST_PHOTOGRAPHY.ordinal->{
+          val bmp=data?.extras?.get("data") as Bitmap
+          val file= File(this@DemandActivity.filesDir.absolutePath+"tmp.png")
+          val fos= FileOutputStream(file)
+          bmp.compress(Bitmap.CompressFormat.PNG,100,fos)
+          //val bmpToDrawable=BitmapDrawable.createFromPath(file.absolutePath)
+          val fragment=this@DemandActivity.supportFragmentManager.findFragmentByTag("Capture")
+          fragment!!.view!!.iv_uplaod_photo_content.setImageBitmap(bmp)
+          //UnSerializeDataBase.imgList.add(BitmapMap(file.path,""))
+        }
         Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal->
         {
           val mImagePaths = data!!.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES)
           val fragment=this@DemandActivity.supportFragmentManager.findFragmentByTag("Capture")!!
           NetworkAdapter(this).upImage(mImagePaths[0],fragment)
+        }
+        Constants.RequestCode.REQUEST_PICK_FILE.ordinal -> {
+          val uri = data!!.data
+          var path:String?=null
+          if (uri!!.toString().contains("content")) {
+            path = getRealPathFromURI(uri)
+            Log.i("path", path)
+            val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+            fileMap.path=path!!
+            UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
+          }
+          else
+          {
+            val file = File(uri.toString())
+            if (file.exists())
+            {
+              Log.i("file", file.name)
+            }
+            val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+            fileMap.path=uri.toString()
+            UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
+          }
+
+          //val resultFile= File()
         }
       }
     }
@@ -84,7 +102,7 @@ class DemandActivity : AppCompatActivity() {
     {
       if (UnSerializeDataBase.fileList.size!=0)
       {
-        val fileMap= UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
+        val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
         if (fileMap.path=="")
         {
           UnSerializeDataBase.fileList.removeAt(UnSerializeDataBase.fileList.size-1)
@@ -92,14 +110,42 @@ class DemandActivity : AppCompatActivity() {
       }
       else if(UnSerializeDataBase.imgList.size!=0)
       {
-        val imgMap= UnSerializeDataBase.imgList.get(UnSerializeDataBase.imgList.size-1)
+        val imgMap=UnSerializeDataBase.imgList.get(UnSerializeDataBase.imgList.size-1)
         if (imgMap.path=="")
         {
           UnSerializeDataBase.imgList.removeAt(UnSerializeDataBase.imgList.size-1)
         }
       }
+
     }
   }
+  fun getRealPathFromURI(contentUri: Uri): String? {
+    var res: String? = null
+    val projection: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+    var cursor = contentResolver.query(contentUri, projection, null, null, null)
+    try {
+      if (cursor != null) {
+        val column = cursor.getColumnIndexOrThrow(projection[0])
+        if (cursor.moveToFirst()) {
+          res = cursor.getString(column)
+        }
+        cursor.close()
+      }
+      if (res == null) {
+        cursor =
+          contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, null)
+        if (cursor != null) {
+          val column = cursor.getColumnIndexOrThrow(projection[0])
+          if (cursor.moveToFirst()) {
+            res = cursor.getString(column)
+          }
+          cursor.close()
+        }
+      }
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
 
-
+    return res
+  }
 }

@@ -138,13 +138,39 @@ class ModifyJobInformationFragment :Fragment(){
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 initDemandIndividual(adapter)
-
+            }
+            Constants.FragmentType.PERSONAL_LEADING_CADRE_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                val singleDisplayRightContent = "负责人"
+                val selectOption1Items: List<String> =
+                    listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+                initDemandIndividual(adapter)
+            }
+            Constants.FragmentType.PERSONAL_ENGINEER_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                val singleDisplayRightContent = "工程师"
+                val selectOption1Items: List<String> =
+                    listOf("助理工程师", "中级工程师", "高级工程师")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+                initDemandIndividual(adapter)
+            }
+            Constants.FragmentType.PERSONAL_DESIGNER_TYPE.ordinal -> {
+                adapter = adapterGenerate.DemandIndividual()
+                val singleDisplayRightContent = "设计员"
+                val selectOption1Items: List<String> =
+                    listOf("主网", "配网", "变电")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+                initDemandIndividual(adapter)
             }
             Constants.FragmentType.PERSONAL_SPECIAL_WORK_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 val singleDisplayRightContent = "特种作业"
                 val selectOption1Items: List<String> =
-                    listOf("低压电工作业", "高压电工作业", "电力电缆作业", "继电保护作业", "电气试验作业", "融化焊接与热切割作业", "登高架设作业")
+                    listOf("低压作业", "高压作业", "电力电缆作业", "继电保护作业", "电气试验作业", "融化焊接与热切割作业", "登高架设作业")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 initDemandIndividual(adapter)
@@ -154,15 +180,15 @@ class ModifyJobInformationFragment :Fragment(){
                 adapter = adapterGenerate.DemandIndividual()
                 val singleDisplayRightContent = "专业操作"
                 val selectOption1Items: List<String> =
-                    listOf("压接操作", "机动绞磨操作", "牵张设备操作", "起重机械操作", "钢筋工", "混凝土工", "木工", "模板工", "油漆工", "砌筑工", "通风工", "打桩工", "架子工工")
+                    listOf("压接操作", "机动绞磨操作", "牵张设备操作", "起重机械操作", "钢筋工", "混凝土工", "木工", "模板工", "油漆工", "砌筑工", "通风工", "打桩工", "架子工")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 initDemandIndividual(adapter)
             }
             Constants.FragmentType.PERSONAL_SURVEYOR_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
-                val singleDisplayRightContent = "测量工"
-                val selectOption1Items: List<String> = listOf("测量工")
+                val singleDisplayRightContent = "勘测员"
+                val selectOption1Items: List<String> = listOf("勘察","测量")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 initDemandIndividual(adapter)
@@ -189,7 +215,7 @@ class ModifyJobInformationFragment :Fragment(){
             Constants.FragmentType.PERSONAL_REGISTRATION_CLASS_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 val singleDisplayRightContent = "注册类"
-                val selectOption1Items: List<String> = listOf("造价工程师", "一级建造师", "安全工程师", "电气工程师")
+                val selectOption1Items: List<String> = listOf("造价工程师", "一级建造师", "二级建造师", "安全工程师", "电气工程师")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 initDemandIndividual(adapter)

@@ -49,11 +49,15 @@
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"车辆照片",
     "necessary":false,
-    "key": "carPhotoPath"
+    "key": "carPhotoPath",
+    "sendFormat": "String"
   },
   {
-    "type":"SINGLE_INPUT",
-    "inputSingleTitle":"所在地址"
+    "type":"SHIFT_INPUT",
+    "shiftInputTitle":"可服务地域",
+    "necessary":true,
+    "key": "issuerBelongSite",
+    "sendFormat": "String"
   },
   {
     "type":"INPUT_WITH_MULTI_UNIT",
@@ -72,18 +76,22 @@
   {
     "type": "SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle": "联系电话",
-    "singleDisplayRightContent": ""
+    "singleDisplayRightContent": "",
+    "key": "contactPhone",
+    "sendFormat": "String"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"可服务地域",
-    "necessary":true
+    "type":"SINGLE_INPUT",
+    "inputSingleTitle":"所在地址",
+    "key": "site",
+    "sendFormat": "String"
   },
-
   {
     "type":"INPUT_WITH_UNIT",
     "inputUnitTitle":"有效期",
-    "inputUnit":"(天)"
+    "inputUnit":"(天)",
+    "key": "validTime",
+    "sendFormat": "Int"
   },
   {
     "type": "HINT",
@@ -96,6 +104,7 @@
     "type":"INPUT_WITH_TEXTAREA",
     "textAreaTitle":"附加信息",
     "textAreaContent":"",
+    "hint": "附加条款：1、车辆来回的油费、过路费归老板负责。2、车辆来回的时间要算路程工资，可以带货。",
     "necessary": true,
     "key": "comment",
     "sendFormat": "String"

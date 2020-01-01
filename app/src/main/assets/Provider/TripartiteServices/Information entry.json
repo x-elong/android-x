@@ -38,13 +38,6 @@
     },
     {
         "type":"SHIFT_INPUT",
-        "shiftInputTitle":"法人身份证照片",
-        "necessary":true,
-        "key":"legalPersonIdCardPath",
-        "sendFormat": "String"
-    },
-    {
-        "type":"SHIFT_INPUT",
         "shiftInputTitle":"营业执照",
         "necessary":true,
         "key":"businessLicensePath",
@@ -74,7 +67,9 @@
     {
         "type":"SHIFT_INPUT",
         "shiftInputTitle":"可服务地域",
-        "necessary":false
+        "necessary":false,
+        "key": "issuerBelongSite",
+        "sendFormat": "String"
     },
     {
         "type":"INPUT_WITH_UNIT",
@@ -84,18 +79,19 @@
         "sendFormat": "Int"
     },
     {
-        "type":"INPUT_WITH_TEXTAREA",
-        "textAreaTitle":"附加(经营范围)",
-        "textAreaContent":"",
-        "necessary": true,
-        "key": "businessScope",
-        "sendFormat": "String"
-    },
-    {
         "type":"HINT",
         "hintContent":"注:字符前有 * 为必填。",
         "customFontColor": "#FF0000",
         "startPosition": "6",
         "endPosition": "8"
+    },
+    {
+        "type":"INPUT_WITH_TEXTAREA",
+        "textAreaTitle":"附加信息",
+        "textAreaContent":"",
+        "hint": "经营范围（详细、简单）：",
+        "necessary": true,
+        "key": "businessScope",
+        "sendFormat": "String"
     }
 ]

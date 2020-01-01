@@ -20,7 +20,6 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
-import com.example.eletronicengineer.fragment.retailstore.SupplyJobMoreFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage

@@ -3,15 +3,17 @@
     <item android:state_pressed="true">
         <shape>
             <solid android:color="#A1A1A1"/>
-            <corners android:radius="@dimen/general_20"/>
+            <corners android:bottomLeftRadius="@dimen/general_10" android:bottomRightRadius="@dimen/general_10"
+                android:topLeftRadius="@dimen/general_10" android:topRightRadius="@dimen/general_10"/>
             <gradient android:startColor="#A1A1A1" android:endColor="#ffffff" android:type="linear"/>
         </shape>
     </item>
     <item android:state_pressed="false">
         <shape>
-            <corners android:radius="@dimen/general_30"/>
-            <stroke android:color="@color/gray" android:width="@dimen/general_1"/>
-            <gradient android:startColor="#80AD9797" android:endColor="#ffffff" android:type="linear"/>
+            <corners android:bottomLeftRadius="@dimen/general_10" android:bottomRightRadius="@dimen/general_10"
+                android:topLeftRadius="@dimen/general_10" android:topRightRadius="@dimen/general_10"/>
+            <stroke android:color="@color/colorPrimaryDark" android:width="@dimen/general_1"/>
+            <gradient android:startColor="@color/ghost_white" android:endColor="#ffffff" android:type="linear"/>
         </shape>
     </item>
 </selector>

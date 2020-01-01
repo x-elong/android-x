@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.eletronicengineer.adapter.ListAdapterForDemand
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Movie
 import com.example.eletronicengineer.custom.CustomDialog
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.getRequirementLease
 import com.example.eletronicengineer.utils.getRequirementPerson
@@ -42,14 +44,16 @@ class DemandInformationFragment: Fragment(){
     val selectOption2Items:MutableList<MutableList<String>> =ArrayList()
     val selectOption3Items:MutableList<MutableList<MutableList<String>>> =ArrayList()
     var mPersonAdapter:ListAdapterForDemand?=null
+    var checkedItems= arrayOf(false,false,false,false,false,false)
+    var selectContentElect = arrayOf("", "", "", "", "", "")
 
-    val mCountPerPageForPerson = 10000
+    val mCountPerPageForPerson = 30
     var mPageNumberForPerson = 1
-    val mCountPerPageForTeam = 10000
+    val mCountPerPageForTeam = 30
     var mPageNumberForTeam = 1
-    val mCountPerPageForLease = 10000
+    val mCountPerPageForLease = 30
     var mPageNumberForLease = 1
-    val mCountPerPageForThird = 10000
+    val mCountPerPageForThird = 30
     var mPageNumberForThird = 1
     var mIsLastPageForPerson = false
     var mIsLastPageForTeam = false
@@ -60,20 +64,32 @@ class DemandInformationFragment: Fragment(){
     var mIsLoadingLease = false
     var mIsLoadingThird = false
     lateinit var mView: View
+    //搜索栏三个变量
+    var demandSite:String=""
+    var demandVariety:String=""
+    var demandElect:String=""
+    //
+    var theflag=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
     }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
           mView = inflater.inflate(R.layout.demand, container, false)
-        val Option1Items= listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他") as MutableList<String>
-        val Option2Items= listOf(listOf("普工"), listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
+        val Option1Items= listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他") as MutableList<String>
+        val Option2Items= listOf(listOf("普工"),
+            listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人"),
+            listOf("助理工程师", "中级工程师", "高级工程师"),
+            listOf("主网", "配网", "变电"),
+            listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
             listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
             listOf("测量工"), listOf("驾驶证A1","驾驶证A2","驾驶证A3","驾驶证B1","驾驶证B2","驾驶证C1","驾驶证C2","驾驶证C3","驾驶证D","驾驶证E"),
             listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
             listOf("")) as MutableList<MutableList<String>>
+        mView.tv_demand_type_select.movementMethod=ScrollingMovementMethod.getInstance()
+        mView.tv_demand_site_select.movementMethod=ScrollingMovementMethod.getInstance()
+        mView.tv_demand_elect_standard_select.movementMethod=ScrollingMovementMethod.getInstance()
         mView.tv_demand_type_select.setOnClickListener {
 
             initDemandPerson(mView,Option1Items,Option2Items,1)
@@ -85,21 +101,11 @@ class DemandInformationFragment: Fragment(){
         mView.tv_demand_site_clear.setOnClickListener {
             mView.tv_demand_site_select.text="选择地点"
             mView.tv_demand_site_clear.visibility=View.GONE
-            if(mView.tv_demand_type_select.text!="选择需求类别")
+            demandSite=""
+            if(mView.tv_demand_type_select.text.toString()!="选择需求类别")
             {
-                val  str=mView.tv_demand_type_select.text.split(" ")
-                var type=""
-                var flagfortype=0
-                for(temp in str) {
-                    flagfortype += 1
-                    if (flagfortype<2) {
-                        type=""
-                    } else {
-                        type+=temp
-                    }
-                }
                 key= arrayListOf("page","number","requirementMajor")
-                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,type) as MutableList<String>
+                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandVariety) as MutableList<String>
             }
             else
             {
@@ -114,21 +120,11 @@ class DemandInformationFragment: Fragment(){
         mView.tv_demand_type_clear.setOnClickListener {
             mView.tv_demand_type_select.text="选择需求类别"
             mView.tv_demand_type_clear.visibility=View.GONE
-            if(mView.tv_demand_site_select.text!="选择地点")
+            demandVariety=""
+            if(mView.tv_demand_site_select.text.toString()!="选择地点")
             {
-                val  str=mView.tv_demand_site_select.text.split(" ")
-                var site=""
-                var flagforsite=0
-                for(temp in str) {
-                    flagforsite += 1
-                    site += if (flagforsite<3) {
-                        "$temp / "
-                    } else {
-                        temp
-                    }
-                }
                 key= arrayListOf("page","number","projectSite")
-                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,site) as MutableList<String>
+                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite) as MutableList<String>
             }
             else
             {
@@ -154,6 +150,7 @@ class DemandInformationFragment: Fragment(){
     //需求个人
     private fun demandPerson(view:View) {
         loadDemandPersonData()
+        theflag=1
         view.tv_demand_content.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mPersonAdapter
@@ -164,8 +161,7 @@ class DemandInformationFragment: Fragment(){
 
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
-                    value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
-                    loadDemandPersonData()
+                    selectScroll(theflag,view)
                 }
             }
         })
@@ -173,6 +169,7 @@ class DemandInformationFragment: Fragment(){
     //需求团队
     private fun demandTeam(view:View) {
         loadDemandTeamData()
+        theflag=2
         view.tv_demand_content.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mPersonAdapter
@@ -182,8 +179,7 @@ class DemandInformationFragment: Fragment(){
                 super.onScrolled(recyclerView, dx, dy)
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
-                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
-                    loadDemandTeamData()
+                    selectScroll(theflag,view)
                 }
             }
         })
@@ -191,6 +187,7 @@ class DemandInformationFragment: Fragment(){
     //需求租赁
     private fun demandLease(view:View) {
         loadDemandLeaseData()
+        theflag=3
         view.tv_demand_content.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mPersonAdapter
@@ -201,8 +198,7 @@ class DemandInformationFragment: Fragment(){
 
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
-                    value= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
-                    loadDemandLeaseData()
+                    selectScroll(theflag,view)
                 }
             }
         })
@@ -210,6 +206,7 @@ class DemandInformationFragment: Fragment(){
     //需求三方
     private fun demandThird(view:View) {
         loadDemandThirdData()
+        theflag=4
         view.tv_demand_content.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mPersonAdapter
@@ -220,8 +217,7 @@ class DemandInformationFragment: Fragment(){
 
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
-                    value= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
-                    loadDemandThirdData()
+                    selectScroll(theflag,view)
                 }
             }
         })
@@ -254,8 +250,12 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_elect_standard_select.visibility=View.GONE
                         view.tv_demand_site_select.visibility=View.VISIBLE
                         view.tv_demand_type_select.visibility=View.VISIBLE
-                        val Option1Items= listOf("普工","特种作业","专业操作","测量工","驾驶员","九大员","注册类","其他") as MutableList<String>
-                        val Option2Items= listOf(listOf("普工"), listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
+                        val Option1Items= listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他") as MutableList<String>
+                        val Option2Items= listOf(listOf("普工"),
+                            listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人"),
+                            listOf("助理工程师", "中级工程师", "高级工程师"),
+                            listOf("主网", "配网", "变电"),
+                            listOf("低压电工作业","高压电工作业","电力电缆作业","继电保护作业","电气试验作业","融化焊接与热切割作业","登高架设作业"),
                             listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
                             listOf("测量工"), listOf("驾驶证A1","驾驶证A2","驾驶证A3","驾驶证B1","驾驶证B2","驾驶证C1","驾驶证C2","驾驶证C3","驾驶证D","驾驶证E"),
                             listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
@@ -266,21 +266,11 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_site_clear.setOnClickListener {
                             view.tv_demand_site_select.text="选择地点"
                             view.tv_demand_site_clear.visibility=View.GONE
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            demandSite=""
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
                             {
-                                val  str=view.tv_demand_type_select.text.split(" ")
-                                var type=""
-                                var flagfortype=0
-                                for(temp in str) {
-                                    flagfortype += 1
-                                    if (flagfortype<2) {
-                                        type=""
-                                    } else {
-                                        type+=temp
-                                    }
-                                }
                                 key= arrayListOf("page","number","requirementMajor")
-                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,type) as MutableList<String>
+                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandVariety) as MutableList<String>
                             }
                             else
                             {
@@ -295,21 +285,11 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_type_clear.setOnClickListener {
                             view.tv_demand_type_select.text="选择需求类别"
                             view.tv_demand_type_clear.visibility=View.GONE
-                            if(view.tv_demand_site_select.text!="选择地点")
+                            demandVariety=""
+                            if(view.tv_demand_site_select.text.toString()!="选择地点")
                             {
-                                val  str=view.tv_demand_site_select.text.split(" ")
-                                var site=""
-                                var flagforsite=0
-                                for(temp in str) {
-                                    flagforsite += 1
-                                    site += if (flagforsite<3) {
-                                        "$temp / "
-                                    } else {
-                                        temp
-                                    }
-                                }
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,site) as MutableList<String>
+                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite) as MutableList<String>
                             }
                             else
                             {
@@ -349,16 +329,52 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_elect_standard_select.setOnClickListener {
                             initElectDialog(view, Option2Items as MutableList<String>)
                         }
+                        //清空电压等级筛选
+                        view.tv_demand_elect_standars_clear.setOnClickListener {
+                            view.tv_demand_elect_standard_select.text="选择电压等级"
+                            view.tv_demand_elect_standars_clear.visibility=View.GONE
+                             checkedItems= arrayOf(false,false,false,false,false,false)
+                             selectContentElect = arrayOf("", "", "", "", "", "")
+                            demandElect=""
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                            {
+                                key= arrayListOf("page","number","projectSite","requirementVariety")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"){
+                                key= arrayListOf("page","number","requirementVariety")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"){
+                                key= arrayListOf("page","number","projectSite")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite) as MutableList<String>
+                            }else{
+                                key= arrayListOf("page","number")
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
+                            }
+                            mPageNumberForTeam = 1
+                            mIsLastPageForTeam = false
+                            mPersonAdapter!!.notifyMovie()
+                            demandTeam(view)
+                        }
+                        //清空地点筛选
                         view.tv_demand_site_clear.setOnClickListener {
                             view.tv_demand_site_select.text="选择地点"
                             view.tv_demand_site_clear.visibility=View.GONE
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            demandSite=""
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
                             {
-                                val  str=view.tv_demand_type_select.text
+                                key= arrayListOf("page","number","requirementVariety","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
                                 key= arrayListOf("page","number","requirementVariety")
-                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,str) as MutableList<String>
-                            }
-                            else
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                                key= arrayListOf("page","number","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else
                             {
                                 key= arrayListOf("page","number")
                                 value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
@@ -368,27 +384,26 @@ class DemandInformationFragment: Fragment(){
                             mPersonAdapter!!.notifyMovie()
                             demandTeam(view)
                         }
+                        //清空类别筛选
                         view.tv_demand_type_clear.setOnClickListener {
                             view.tv_demand_type_select.text="选择需求类别"
                             view.tv_demand_type_clear.visibility=View.GONE
-                            if(view.tv_demand_site_select.text!="选择地点")
+                            demandVariety=""
+                            if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
                             {
-                                val  str=view.tv_demand_site_select.text.split(" ")
-                                var site=""
-                                var flagforsite=0
-                                for(temp in str) {
-                                    flagforsite += 1
-                                    site += if (flagforsite<3) {
-                                        "$temp / "
-                                    } else {
-                                        temp
-                                    }
-                                }
+                                key= arrayListOf("page","number","projectSite","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,site) as MutableList<String>
-                            }
-                            else
-                            {
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite) as MutableList<String>
+                            }else if(view.tv_demand_site_select.text.toString()=="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                                key= arrayListOf("page","number","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else{
                                 key= arrayListOf("page","number")
                                 value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
                             }
@@ -417,36 +432,19 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_type_select.visibility=View.VISIBLE
                         view.tv_demand_site_select.visibility=View.VISIBLE
                         val Option1Items= listOf("车辆租赁","工器具租赁","机械租赁","设备租赁") as MutableList<String>
-                        val Option2Items= listOf(listOf("皮卡车","单排座工程车","双排座工程车","多排座工程车","载重自卸车","载重平板车","随吊车"),
-                            listOf(""), listOf(""), listOf("")) as MutableList<MutableList<String>>
                         view.tv_demand_type_select.setOnClickListener {
-                            initDemandPerson(view,Option1Items, Option2Items,2)
+                            initDemandTeam(view,Option1Items,3)
                         }
                         view.tv_demand_site_clear.setOnClickListener {
                             view.tv_demand_site_select.text="选择地点"
                             view.tv_demand_site_clear.visibility=View.GONE
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            demandSite=""
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
                             {
-                                val  strfortype=view.tv_demand_type_select.text.split(" ")
-                                var type=""
-                                var flagfortype=0
-                                for(temp in strfortype) {
-                                    flagfortype += 1
-                                    if(flagfortype==1)
-                                        type+=temp
-                                    else if(flagfortype==2)
-                                    {
-                                        if(temp=="")//不是车辆租赁
-                                        {
-                                            key= arrayListOf("page","number","requirementVariety")
-                                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,type) as MutableList<String>
-                                        } else//车辆租赁
-                                        {
-                                            key= arrayListOf("page","number","requirementVariety","vehicleType")
-                                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,type,temp) as MutableList<String>
-                                        }
-                                    }
-                                }
+
+                                key= arrayListOf("page","number","requirementVariety")
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandVariety) as MutableList<String>
+
                             }
                             else
                             {
@@ -461,26 +459,16 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_type_clear.setOnClickListener {
                             view.tv_demand_type_select.text="选择需求类别"
                             view.tv_demand_type_clear.visibility=View.GONE
-                            if(view.tv_demand_site_select.text!="选择地点")
+                            demandVariety=""
+                            if(view.tv_demand_site_select.text.toString()!="选择地点")
                             {
-                                val  str=view.tv_demand_site_select.text.split(" ")
-                                var site=""
-                                var flagforsite=0
-                                for(temp in str) {
-                                    flagforsite += 1
-                                    site += if (flagforsite<3) {
-                                        "$temp / "
-                                    } else {
-                                        temp
-                                    }
-                                }
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForLease,mPageNumberForLease,site) as MutableList<String>
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite) as MutableList<String>
                             }
                             else
                             {
                                 key= arrayListOf("page","number")
-                                value= arrayListOf(mPageNumberForLease,mPageNumberForLease) as MutableList<String>
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
                             }
                             mPageNumberForLease = 1
                             mIsLastPageForLease = false
@@ -603,33 +591,44 @@ class DemandInformationFragment: Fragment(){
             it.onNext(requestBody)
         }
             .subscribe {
+                val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
                 val result =
                     getRequirementPerson(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                            val pageCount = it.message.pageCount
-                            val data = it.message.data
-                            for (j in data) {
-                                var temp1: String
-                                var temp2: String
-                                var temp3:String
-                                temp1 = if(j.requirementMajor==null )
-                                    " "
-                                else j.requirementMajor
-                                temp2 = if(j.projectSite == null)
-                                    " "
-                                else j.projectSite
-                                temp3 = if(j.id == null)
-                                    " "
+                            val code = it.code
+                            loadingDialog.dismiss()
+                            if(code=="200"){
+                                val data = it.message.data
+                                for (j in data) {
+                                    var temp1: String
+                                    var temp2: String
+                                    var temp3:String
+                                    temp1 = if(j.requirementMajor==null )
+                                        " "
+                                    else j.requirementMajor
+                                    temp2 = if(j.projectSite == null)
+                                        " "
+                                    else j.projectSite
+                                    temp3 = if(j.id == null)
+                                        " "
+                                    else
+                                        j.id
+                                    mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求个人"))
+                                }
+                                if (data.size < mCountPerPageForPerson)
+                                    mIsLastPageForPerson = true
                                 else
-                                    j.id
-                                mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求个人"))
+                                    mPageNumberForPerson ++
+                            }else if(code=="400" && code=="没有该数据"){
+                                ToastHelper.mToast(context!!,"数据为空")
+                            }else{
+                                ToastHelper.mToast(context!!,"加载失败")
                             }
-                            if (data.size < mCountPerPageForPerson)
-                                mIsLastPageForPerson = true
-                            else
-                                mPageNumberForPerson ++
+
                         }, {
+                            loadingDialog.dismiss()
                             it.printStackTrace()
                         })
             }
@@ -646,34 +645,44 @@ class DemandInformationFragment: Fragment(){
             it.onNext(requestBody)
         }
             .subscribe {
+                val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
                 val result =
                     getRequirementTeam(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                            Log.i("s",it.code + " " + it.desc)
-                            val pageCount = it.message.pageCount
-                            val data = it.message.data
-                            for (j in data) {
-                                var temp1: String
-                                var temp2: String
-                                var temp3:String
-                                temp1 = if(j.requirementVariety==null )
-                                    " "
-                                else j.requirementVariety
-                                temp2 = if(j.projectSite == null)
-                                    " "
-                                else j.projectSite
-                                temp3 = if(j.requirementTeamId == null)
-                                    " "
+                            val code = it.code
+                            loadingDialog.dismiss()
+                            if(code=="200"){
+                                val data = it.message.data
+                                for (j in data) {
+                                    var temp1: String
+                                    var temp2: String
+                                    var temp3:String
+                                    temp1 = if(j.requirementVariety==null )
+                                        " "
+                                    else j.requirementVariety
+                                    temp2 = if(j.projectSite == null)
+                                        " "
+                                    else j.projectSite
+                                    temp3 = if(j.requirementTeamId == null)
+                                        " "
+                                    else
+                                        j.requirementTeamId
+                                    mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求团队"))
+                                }
+                                if (data.size < mCountPerPageForTeam)
+                                    mIsLastPageForTeam = true
                                 else
-                                    j.requirementTeamId
-                                mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求团队"))
+                                    mPageNumberForTeam ++
+                            }else if(code=="400" && code=="没有该数据"){
+                                ToastHelper.mToast(context!!,"数据为空")
+                            }else{
+                                ToastHelper.mToast(context!!,"加载失败")
                             }
-                            if (data.size < mCountPerPageForTeam)
-                                mIsLastPageForTeam = true
-                            else
-                                mPageNumberForTeam ++
+
                         }, {
+                            loadingDialog.dismiss()
                             it.printStackTrace()
                         })
             }
@@ -689,54 +698,65 @@ class DemandInformationFragment: Fragment(){
             it.onNext(requestBody)
         }
             .subscribe {
+                val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
                 val result =
                     getRequirementLease(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                            val pageCount = it.message.pageCount
-                            val data = it.message.data
-                            for (j in data) {
-                                if(j.requirementVariety=="车辆租赁")
-                                {
-                                    var temp1: String
-                                    var temp2: String
-                                    var temp3:String
-                                    temp1 = if(j.requirementVariety==null )
-                                        " "
-                                    else j.requirementVariety
-                                    temp2 = if(j.projectSite == null)
-                                        " "
-                                    else j.projectSite
-                                    temp3 = if(j.requirementLeaseId == null)
-                                        " "
+                            val code = it.code
+                            loadingDialog.dismiss()
+                            if(code=="200"){
+                                val data = it.message.data
+                                for (j in data) {
+                                    if(j.requirementVariety=="车辆租赁")
+                                    {
+                                        var temp1: String
+                                        var temp2: String
+                                        var temp3:String
+                                        temp1 = if(j.requirementVariety==null )
+                                            " "
+                                        else j.requirementVariety
+                                        temp2 = if(j.projectSite == null)
+                                            " "
+                                        else j.projectSite
+                                        temp3 = if(j.requirementLeaseId == null)
+                                            " "
+                                        else
+                                            j.requirementLeaseId
+                                        mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求车辆租赁"))
+                                    }
                                     else
-                                        j.requirementLeaseId
-                                    mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求车辆租赁"))
+                                    {
+                                        var temp1: String
+                                        var temp2: String
+                                        var temp3:String
+                                        temp1 = if(j.requirementVariety==null )
+                                            " "
+                                        else j.requirementVariety
+                                        temp2 = if(j.projectSite == null)
+                                            " "
+                                        else j.projectSite
+                                        temp3 = if(j.requirementLeaseId == null)
+                                            " "
+                                        else
+                                            j.requirementLeaseId
+                                        mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求租赁"))
+                                    }
                                 }
+                                if (data.size < mCountPerPageForLease)
+                                    mIsLastPageForLease = true
                                 else
-                                {
-                                    var temp1: String
-                                    var temp2: String
-                                    var temp3:String
-                                    temp1 = if(j.requirementVariety==null )
-                                        " "
-                                    else j.requirementVariety
-                                    temp2 = if(j.projectSite == null)
-                                        " "
-                                    else j.projectSite
-                                    temp3 = if(j.requirementLeaseId == null)
-                                        " "
-                                    else
-                                        j.requirementLeaseId
-                                    mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求租赁"))
-                                }
+                                    mPageNumberForLease ++
+                            }else if(code=="400" && code=="没有该数据"){
+                                ToastHelper.mToast(context!!,"数据为空")
+                            }else{
+                                ToastHelper.mToast(context!!,"加载失败")
                             }
-                            if (data.size < mCountPerPageForLease)
-                                mIsLastPageForLease = true
-                            else
-                                mPageNumberForLease ++
+
 
                         }, {
+                            loadingDialog.dismiss()
                             it.printStackTrace()
                         })
             }
@@ -752,61 +772,72 @@ class DemandInformationFragment: Fragment(){
             it.onNext(requestBody)
         }
             .subscribe {
+                val loadingDialog = LoadingDialog(mView.context, "正在加载...", R.mipmap.ic_dialog_loading)
+                loadingDialog.show()
                 val result =
                     getRequirementThirdParty(it,UnSerializeDataBase.userToken,UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                            val pageCount = it.message.pageCount
-                            val data = it.message.data
-                            for (j in data) {
-                                if(j.requirementVariety=="资质合作")
-                                {
-                                    var temp1: String
-                                    var temp2: String
-                                    var temp3:String
-                                    temp1 = if(j.requirementVariety==null )
-                                        " "
-                                    else j.requirementVariety
-                                    temp2 = if(j.cooperationRegion == null)
-                                        " "
-                                    else j.cooperationRegion
-                                    temp3 = if(j.id == null)
-                                        " "
-                                    else
-                                        j.id
-                                    mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求三方"))
+                            val code = it.code
+                            loadingDialog.dismiss()
+                            if(code=="200"){
+                                val data = it.message.data
+                                for (j in data) {
+                                    if(j.requirementVariety=="资质合作")
+                                    {
+                                        var temp1: String
+                                        var temp2: String
+                                        var temp3:String
+                                        temp1 = if(j.requirementVariety==null )
+                                            " "
+                                        else j.requirementVariety
+                                        temp2 = if(j.cooperationRegion == null)
+                                            " "
+                                        else j.cooperationRegion
+                                        temp3 = if(j.id == null)
+                                            " "
+                                        else
+                                            j.id
+                                        mPersonAdapter?.addMovie(Movie(temp1,temp2, temp3,"需求三方"))
+                                    }
+                                    else{
+                                        var str: String
+                                        str=if(j.partnerAttribute=="1")
+                                        {
+                                            "单位"
+                                        }
+                                        else if(j.partnerAttribute==null)
+                                        {
+                                            " "
+                                        }
+                                        else
+                                        {
+                                            "个人"
+                                        }
+                                        var temp1: String
+                                        var temp3:String
+                                        temp1 = if(j.requirementVariety==null )
+                                            " "
+                                        else j.requirementVariety
+                                        temp3 = if(j.id == null)
+                                            " "
+                                        else
+                                            j.id
+                                        mPersonAdapter?.addMovie(Movie(temp1,str, temp3,"需求三方"))
+                                    }
                                 }
-                                else{
-                                    var str: String
-                                    str=if(j.partnerAttribute=="1")
-                                    {
-                                        "单位"
-                                    }
-                                    else if(j.partnerAttribute==null)
-                                    {
-                                        " "
-                                    }
-                                    else
-                                    {
-                                        "个人"
-                                    }
-                                    var temp1: String
-                                    var temp3:String
-                                    temp1 = if(j.requirementVariety==null )
-                                        " "
-                                    else j.requirementVariety
-                                    temp3 = if(j.id == null)
-                                        " "
-                                    else
-                                        j.id
-                                    mPersonAdapter?.addMovie(Movie(temp1,str, temp3,"需求三方"))
-                                }
+                                if (data.size < mCountPerPageForThird)
+                                    mIsLastPageForThird = true
+                                else
+                                    mPageNumberForThird ++
+                            }else if(code=="400" && code=="没有该数据"){
+                                ToastHelper.mToast(context!!,"数据为空")
+                            }else{
+                                ToastHelper.mToast(context!!,"加载失败")
                             }
-                            if (data.size < mCountPerPageForThird)
-                                mIsLastPageForThird = true
-                            else
-                                mPageNumberForThird ++
+
 
                         }, {
+                            loadingDialog.dismiss()
                             it.printStackTrace()
                         })
             }
@@ -852,23 +883,21 @@ class DemandInformationFragment: Fragment(){
         var mHandler: Handler = Handler(Handler.Callback {
             when (it.what) {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK -> {
+                    mPageNumberForPerson=1
+                    mPageNumberForTeam=1
+                    mPageNumberForLease=1
                     val selectContent = it.data.getString("selectContent")
                     view.tv_demand_site_select.text = selectContent
                     view.tv_demand_site_clear.visibility = View.VISIBLE
                     val  str=selectContent.split(" ")
-                    var site=""
-                    var flagforsite=0
                     for(temp in str) {
-                        flagforsite += 1
-                        site += if (flagforsite<3) {
-                            "$temp "
-                        } else {
-                            temp
-                        }
+                        if(demandSite!="")
+                            demandSite+=" / "
+                        demandSite+=temp
                     }
                     when (flag) {
                         1-> {//需求个人加载
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
                             {
                                 val  str=view.tv_demand_type_select.text.split(" ")
                                 var type=""
@@ -882,12 +911,12 @@ class DemandInformationFragment: Fragment(){
                                     }
                                 }
                                 key= arrayListOf("page","number","projectSite","requirementMajor")
-                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,site,type) as MutableList<String>
+                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,type) as MutableList<String>
                             }
                             else
                             {
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,site) as MutableList<String>
+                                value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite) as MutableList<String>
                             }
                             mPageNumberForPerson = 1
                             mIsLastPageForPerson = false
@@ -895,16 +924,24 @@ class DemandInformationFragment: Fragment(){
                             demandPerson(view)
                         }
                         2 -> {//需求团队加载
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
                             {
-                                val  str=view.tv_demand_type_select.text
+                                key= arrayListOf("page","number","projectSite","requirementVariety","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
                                 key= arrayListOf("page","number","projectSite","requirementVariety")
-                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,site,str) as MutableList<String>
-                            }
-                            else
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety) as MutableList<String>
+                            }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                                key= arrayListOf("page","number","projectSite","v1","v2","v3","v4","v5","v6")
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,
+                                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                            }else
                             {
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,site) as MutableList<String>
+                                value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite) as MutableList<String>
                             }
                             mPageNumberForTeam = 1
                             mIsLastPageForTeam = false
@@ -912,33 +949,15 @@ class DemandInformationFragment: Fragment(){
                             demandTeam(view)
                         }
                         3 -> {//需求租赁加载
-                            if(view.tv_demand_type_select.text!="选择需求类别")
+                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
                             {
-                                val  str=view.tv_demand_type_select.text.split(" ")
-                                var type=""
-                                var flagfortype=0
-                                for(temp in str) {
-                                    flagfortype += 1
-                                    if (flagfortype==1)
-                                        type = temp
-                                    else if(flagfortype==2)
-                                    {
-                                        if(temp=="")//不是车辆租赁
-                                        {
-                                            key= arrayListOf("page","number","projectSite","requirementVariety")
-                                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site,type) as MutableList<String>
-                                        } else//车辆租赁
-                                        {
-                                            key= arrayListOf("page","number","projectSite","requirementVariety","vehicleType")
-                                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site,type,temp) as MutableList<String>
-                                        }
-                                    }
-                                }
+                                key= arrayListOf("page","number","projectSite","requirementVariety")
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
                             }
                             else
                             {
                                 key= arrayListOf("page","number","projectSite")
-                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site) as MutableList<String>
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite) as MutableList<String>
                             }
                             mPageNumberForLease = 1
                             mIsLastPageForLease = false
@@ -969,115 +988,36 @@ class DemandInformationFragment: Fragment(){
             when(it.what)
             {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
+                    mPageNumberForPerson=1
                     val selectContent=it.data.getString("selectContent")
                     view.tv_demand_type_select.text=selectContent
                     view.tv_demand_type_clear.visibility=View.VISIBLE
 
                     if(flag==1){//需求个人
                         val  str=selectContent.split(" ")
-                        var type=""
                         var flagfortype=0
                         for(temp in str) {
                             flagfortype += 1
                             if (flagfortype<2) {
-                                type=""
+                                demandVariety=""
                             } else {
-                                type+=temp
+                                demandVariety+=temp
                             }
                         }
-                        if(view.tv_demand_site_select.text!="选择地点")
+                        if(view.tv_demand_site_select.text.toString()!="选择地点")
                         {
-                            val  str=view.tv_demand_site_select.text.split(" ")
-                            var site=""
-                            var flagforsite=0
-                            for(temp in str) {
-                                flagforsite += 1
-                                site += if (flagforsite<3) {
-                                    "$temp / "
-                                } else {
-                                    temp
-                                }
-                            }
                             key= arrayListOf("page","number","projectSite","requirementMajor")
-                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site,type) as MutableList<String>
+                            value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
                         }
                         else
                         {
                             key= arrayListOf("page","number","requirementMajor")
-                            value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,type) as MutableList<String>
+                            value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandVariety) as MutableList<String>
                         }
-
                         mPageNumberForPerson = 1
                         mIsLastPageForPerson = false
                         mPersonAdapter!!.notifyMovie()
                         demandPerson(view)
-                    }
-                    else if(flag==2)//需求租赁
-                    {
-                        if(view.tv_demand_site_select.text!="选择地点")
-                        {
-                            val  strforsite=view.tv_demand_site_select.text.split(" ")
-                            var site=""
-                            var flagforsite=0
-                            for(temp in strforsite) {
-                                flagforsite += 1
-                                site += if (flagforsite<3) {
-                                    "$temp / "
-                                } else {
-                                    temp
-                                }
-                            }
-
-                            val  strfortype=selectContent.split(" ")
-                            var type=""
-                            var flagfortype=0
-                            for(temp in strfortype) {
-                                flagfortype += 1
-                                if(flagfortype==1)
-                                    type+=temp
-                                else if(flagfortype==2)
-                                {
-                                    if(temp=="")//不是车辆租赁
-                                    {
-                                        key= arrayListOf("page","number","projectSite","requirementVariety")
-                                        value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site,type) as MutableList<String>
-                                    } else//车辆租赁
-                                    {
-                                        key= arrayListOf("page","number","projectSite","requirementVariety","vehicleType")
-                                        value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,site,type,temp) as MutableList<String>
-                                    }
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            val  strfortype=selectContent.split(" ")
-                            var type=""
-                            var flagfortype=0
-                            for(temp in strfortype) {
-                                flagfortype += 1
-                                if(flagfortype==1)
-                                    type+=temp
-                                else if(flagfortype==2)
-                                {
-                                    if(temp=="")//不是车辆租赁
-                                    {
-                                        key= arrayListOf("page","number","requirementVariety")
-                                        value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,type) as MutableList<String>
-
-                                    } else//车辆租赁
-                                    {
-                                        key= arrayListOf("page","number","requirementVariety","vehicleType")
-                                        value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,type,temp) as MutableList<String>
-                                    }
-                                }
-                            }
-                        }
-                        mPageNumberForLease = 1
-                        mIsLastPageForLease = false
-                        mPersonAdapter!!.notifyMovie()
-                        demandLease(view)
                     }
                     false
                 }
@@ -1090,36 +1030,36 @@ class DemandInformationFragment: Fragment(){
         val selectDialog= CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,view.context,mHandler,Option1Items,Option2Items).multiDialog
         selectDialog.show()
     }
-    //需求团队 三方服务弹窗
+    //需求团队 三方服务弹窗 租赁
     fun initDemandTeam(view:View,Option1Items:MutableList<String>,flag: Int){
         var mHandler:Handler= Handler(Handler.Callback {
             when(it.what)
             {
                 RecyclerviewAdapter.MESSAGE_SELECT_OK ->{
-                    val selectContent=it.data.getString("selectContent")
-                    view.tv_demand_type_select.text=selectContent
+                    mPageNumberForTeam=1
+                    mPageNumberForThird=1
+                    mPageNumberForLease=1
+                   demandVariety=it.data.getString("selectContent")
+                    view.tv_demand_type_select.text=demandVariety
                     view.tv_demand_type_clear.visibility=View.VISIBLE
                     if(flag==1){//需求团队
-                        if(view.tv_demand_site_select.text!="选择地点")
+                        if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
                         {
-                            val  str=view.tv_demand_site_select.text.split(" ")
-                            var site=""
-                            var flagforsite=0
-                            for(temp in str) {
-                                flagforsite += 1
-                                site += if (flagforsite<3) {
-                                    "$temp / "
-                                } else {
-                                    temp
-                                }
-                            }
+                            key= arrayListOf("page","number","projectSite","requirementVariety","v1","v2","v3","v4","v5","v6")
+                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
+                                selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                        }else if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
                             key= arrayListOf("page","number","projectSite","requirementVariety")
-                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,site,selectContent) as MutableList<String>
-                        }
-                        else
-                        {
+                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety) as MutableList<String>
+                        }else if(view.tv_demand_site_select.text.toString()=="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                            key= arrayListOf("page","number","requirementVariety","v1","v2","v3","v4","v5","v6")
+                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety,
+                                selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                        }else{
                             key= arrayListOf("page","number","requirementVariety")
-                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,selectContent) as MutableList<String>
+                            value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety) as MutableList<String>
                         }
                         mPageNumberForTeam = 1
                         mIsLastPageForTeam = false
@@ -1129,11 +1069,27 @@ class DemandInformationFragment: Fragment(){
                     else if(flag==2)//需三方
                     {
                         key= arrayListOf("page","number","requirementVariety")
-                        value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,selectContent) as MutableList<String>
+                        value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
                         mPageNumberForThird = 1
                         mIsLastPageForThird = false
                         mPersonAdapter!!.notifyMovie()
                         demandThird(view)
+                    }else if(flag==3){//需租赁
+                            if(view.tv_demand_site_select.text.toString()!="选择地点")
+                            {
+                                key= arrayListOf("page","number","projectSite","requirementVariety")
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
+                            }
+                            else
+                            {
+                                key= arrayListOf("page","number","requirementVariety")
+                                value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandVariety) as MutableList<String>
+                            }
+                            mPageNumberForLease = 1
+                            mIsLastPageForLease = false
+                            mPersonAdapter!!.notifyMovie()
+                            demandLease(view)
+
                     }
                     false
                 }
@@ -1148,7 +1104,7 @@ class DemandInformationFragment: Fragment(){
     }
     //电压等级弹窗
     fun initElectDialog(view:View,Option1Items:MutableList<String>){
-        var checkedItems= arrayOf(false,false,false,false,false,false)
+        mPageNumberForTeam=1
         var dialog = AlertDialog.Builder(this.context)
             .setMultiChoiceItems(Option1Items.toTypedArray() as Array<out CharSequence>,checkedItems.toBooleanArray()) { dialog: DialogInterface?, which: Int, isChecked: Boolean ->
                 checkedItems[which]=isChecked
@@ -1156,13 +1112,123 @@ class DemandInformationFragment: Fragment(){
             .setPositiveButton("确定") { dialog, which ->
                 for (i in checkedItems.indices) {
                     if (checkedItems[i]) {
-                        val selectContent=Option1Items[i]
-                        key= arrayListOf("page","number","v1","v2","v3","v4","v5","v6")
-                        value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,selectContent) as MutableList<String>
+                        selectContentElect[i] = Option1Items[i]
+                        if(demandElect!="")
+                            demandElect+=" "
+                        demandElect+=Option1Items[i]
                     }
                 }
+                view.tv_demand_elect_standard_select.text=demandElect
+                    view.tv_demand_elect_standars_clear.visibility=View.VISIBLE
+                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                {
+                    key= arrayListOf("page","number","projectSite","requirementVariety","v1","v2","v3","v4","v5","v6")
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"){
+                    key= arrayListOf("page","number","requirementVariety","v1","v2","v3","v4","v5","v6")
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"){
+                    key= arrayListOf("page","number","projectSite","v1","v2","v3","v4","v5","v6")
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else{
+                    key= arrayListOf("page","number","v1","v2","v3","v4","v5","v6")
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }
+                        mPageNumberForTeam = 1
+                        mIsLastPageForTeam = false
+                        mPersonAdapter!!.notifyMovie()
+                        demandTeam(view)
                 dialog.dismiss()
             }.create()
         dialog.show()
+    }
+    fun selectScroll(theflag:Int,view:View){
+        when(theflag)
+        {
+            1->{
+                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandVariety,demandSite) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandVariety) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite) as MutableList<String>
+                }else{
+                    value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
+                }
+                loadDemandPersonData()
+            }
+            2->{
+                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"&&
+                    view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
+                {
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"&&
+                    view.tv_demand_elect_standard_select.text.toString()=="选择电压等级")
+                {
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
+                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"
+                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
+                    &&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandVariety) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"
+                    &&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
+                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
+                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                }else{
+                    value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
+                }
+                loadDemandTeamData()
+            }
+            3->{
+                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandVariety,demandSite) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandVariety) as MutableList<String>
+                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
+                {
+                    value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite) as MutableList<String>
+                }else{
+                    value= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
+                }
+                loadDemandLeaseData()
+            }
+            4->{
+                if(view.tv_demand_type_select.text.toString()!="选择需求类别")
+                {
+                    value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
+                }else{
+                    value= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
+                }
+                loadDemandThirdData()
+            }
+            else->{
+            }
+        }
     }
 }

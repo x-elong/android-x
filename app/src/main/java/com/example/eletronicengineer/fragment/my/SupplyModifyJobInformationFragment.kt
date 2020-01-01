@@ -51,8 +51,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
     var mAdapter:RecyclerviewAdapter?=null
     var name:String=""//名称
     var type = 0
+    var validTime = "0"
     lateinit var mView:View
     lateinit var id:String
+    lateinit var companyCredentialId:String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i("onCreateView","running")
         mView= inflater.inflate(R.layout.fragment_modify_job_information,container,false)
@@ -85,7 +87,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
             mView.rv_job_information_content.adapter=mAdapter
             mView.rv_job_information_content.layoutManager= LinearLayoutManager(context)
         }
-        //发布
+        if(validTime.toInt()<=0)
+            mView.btn_modify_job_information.text = "发布"
+
         mView.btn_modify_job_information.setOnClickListener{
 
             val networkAdapter= NetworkAdapter(mAdapter!!.mData, mView.context)
@@ -93,7 +97,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
             if(networkAdapter.check()){
                     val json=JSONObject()
                     json.put("id",id)
-                    when(arguments!!.getInt("type")) {
+                    when(type) {
                         Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal->{//主网
                             json.put("majorNetwork",
                                 JSONObject().put("name",name)
@@ -229,23 +233,80 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("leaseCarId",UnSerializeDataBase.inventoryId)
                             )
                         }
+                        Constants.FragmentType.TOOL_LEASING_TYPE.ordinal,
+                        Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal,
+                        Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
+//                            val key = when(type){
+//                                Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->"leaseConstructionTool"
+//                                Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->"leaseMachinery"
+//                                Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->"leaseFacility"
+//                                else -> ""
+//                            }
+//                            json.put("companyCredential",
+//                                JSONObject().put("id",companyCredentialId)
+//                                    .put("legalPersonName",mAdapter!!.mData[4].inputSingleContent)
+//                                    .put("legalPersonIdCardPath","")
+//                                    .put("legalPersonPhone",mAdapter!!.mData[5].inputSingleContent)
+//                                    .put("companyName",mAdapter!!.mData[1].inputSingleContent)
+//                                    .put("companyAbbreviation",mAdapter!!.mData[2].inputSingleContent)
+//                                    .put("businessLicensePath","")
+//                                    .put("companyAddress",mAdapter!!.mData[3].inputSingleContent)
+//                            )
+//                                .put(key,JSONObject().put("id",id)
+//                                    .put("leaseServeId",UnSerializeDataBase.inventoryId)
+//                                    .put("conveyancePropertyInsurance",mAdapter!!.mData[11].selectContent)
+//                                    .put("contact",mAdapter!!.mData[12].singleDisplayRightContent)
+//                                    .put("contactPhone",mAdapter!!.mData[13].singleDisplayRightContent)
+//                                    .put("issuerBelongSite",mAdapter!!.mData[14].shiftInputContent)
+//                                    .put("isDistribution",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[10]))
+//                                    .put("leaseConTractPath","")
+//                                    .put("validTime",mAdapter!!.mData[15].inputUnitContent)
+//                                    .put("variety",mAdapter!!.mData[0].singleDisplayRightContent)
+//                                )
+                        }
+                        //三方服务
+                        Constants.FragmentType.TRIPARTITE_TRAINING_CERTIFICATE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_FINANCIAL_ACCOUNTING_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_AGENCY_QUALIFICATION_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_TENDER_SERVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_LEGAL_ADVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_SOFTWARE_SERVICE_TYPE.ordinal,
+                        Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal
+                        ->{
+                            json.put("companyCredential",
+                                JSONObject().put("legalPersonName",mAdapter!!.mData[4].inputSingleContent)
+                                    .put("legalPersonPhone",mAdapter!!.mData[5].inputSingleContent)
+                                    .put("companyName",mAdapter!!.mData[1].inputSingleContent)
+                                    .put("companyAbbreviation",mAdapter!!.mData[2].inputSingleContent)
+                                    .put("businessLicensePath",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[6]))
+                                    .put("companyAddress",mAdapter!!.mData[3].inputSingleContent)
+                            )
+                        }
                     }
+
                     provider.generateJsonRequestBody(json).subscribe {
+                        var message = "修改"
+                        if(validTime.toInt()<=0)
+                            message = "发布"
                         val loadingDialog = LoadingDialog(mView.context, "正在请求...", R.mipmap.ic_dialog_loading)
                         loadingDialog.show()
-                        val result = putSimpleMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        val result = (if(validTime.toInt()<=0)
+                            startSendMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath)
+                        else
+                            putSimpleMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath))
+                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
                                     {
                                         loadingDialog.dismiss()
                                         val json = JSONObject(it.string())
                                         Log.i("json",json.toString())
                                         if (json.getString("desc") == "OK") {
-                                                Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show()
+                                            ToastHelper.mToast(mView.context,"${message}成功")
                                                 mView.tv_modify_job_information_back.callOnClick()
                                         }else if(json.getInt("code") == 403){
-                                            Toast.makeText(context, "${json.getString("desc")} 请升级为更高级会员", Toast.LENGTH_SHORT).show()
+                                            ToastHelper.mToast(mView.context,"${json.getString("desc")} 请升级为更高级会员")
                                         } else if (json.getString("desc") == "FAIL") {
-                                            Toast.makeText(context, "修改失败", Toast.LENGTH_SHORT).show()
+                                            ToastHelper.mToast(mView.context,"${message}失败")
                                         }
                                     },
                                     {
@@ -272,6 +333,33 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
                 adapter.urlPath = Constants.HttpUrlPath.Provider.updatePersonalIssue
+                initPersonalService(adapter)
+            }
+            Constants.FragmentType.PERSONAL_LEADING_CADRE_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                val singleDisplayRightContent = "负责人"
+                val selectOption1Items: List<String> =
+                    listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+                initPersonalService(adapter)
+            }
+            Constants.FragmentType.PERSONAL_ENGINEER_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                val singleDisplayRightContent = "工程师"
+                val selectOption1Items: List<String> =
+                    listOf("助理工程师", "中级工程师", "高级工程师")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
+                initPersonalService(adapter)
+            }
+            Constants.FragmentType.PERSONAL_DESIGNER_TYPE.ordinal -> {
+                adapter = adapterGenerate.PersonalService()
+                val singleDisplayRightContent = "设计员"
+                val selectOption1Items: List<String> =
+                    listOf("主网", "配网", "变电")
+                adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
+                adapter.mData[1].selectOption1Items = selectOption1Items
                 initPersonalService(adapter)
             }
             Constants.FragmentType.PERSONAL_SPECIAL_WORK_TYPE.ordinal->{
@@ -449,7 +537,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 val singleDisplayRightContent = "工器具租赁"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Provider.updateLeaseConstructionTool
-                adapter.mData[13].key="validTime"
                 initEquipmentLeasing(adapter)
             }
             //租赁服务--机械
@@ -534,7 +621,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[3].inputUnitContent = supplyPersonDetail.age
         adapter.mData[4].inputUnitContent = supplyPersonDetail.workExperience
 
-        if(supplyPersonDetail.salaryUnit!="-1.0"){
+        if(supplyPersonDetail.salaryUnit!="面议" || supplyPersonDetail.workMoney!="-1.0" ){
             adapter.mData[5].inputMultiContent = supplyPersonDetail.workMoney
             adapter.mData[5].inputMultiSelectUnit = supplyPersonDetail.salaryUnit
         }else{
@@ -548,6 +635,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
         // 10
         if(supplyPersonDetail.remark!=null)
             adapter.mData[11].textAreaContent = supplyPersonDetail.remark
+        validTime = supplyPersonDetail.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.PersonalService
+
     }
 
 
@@ -700,6 +791,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[9].inputUnitContent = network.powerTransformation.validTime
+        validTime = network.powerTransformation.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.PowerTransformation
+
     }
 
     /**
@@ -850,6 +945,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[9].inputUnitContent = network.majorNetwork.validTime
+        validTime = network.majorNetwork.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.MajorNetwork
+
     }
 
     /**
@@ -1000,6 +1099,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[9].inputUnitContent = network.distribuionNetwork.validTime
+        validTime = network.distribuionNetwork.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.DistribuionNetwork
+
     }
 
     /**
@@ -1150,6 +1253,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[9].inputUnitContent = network.measureDesign.validTime
+        validTime = network.measureDesign.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
+
     }
 
     /**
@@ -1213,6 +1320,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[5].shiftInputContent = caravan.caravanTransport.issuerBelongSite
         }
         adapter.mData[6].inputUnitContent = caravan.caravanTransport.validTime
+        validTime = caravan.caravanTransport.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
+
     }
 
     /**
@@ -1352,6 +1463,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[10].inputUnitContent = pile.pileFoundation.validTime
+        validTime = pile.pileFoundation.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
+
     }
 
     /**
@@ -1480,6 +1595,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[4].shiftInputContent = supplyUnexcavation.issuerBelongSite
         }
         adapter.mData[7].inputUnitContent = supplyUnexcavation.validTime
+        validTime = supplyUnexcavation.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
+
     }
 
     /**
@@ -1631,6 +1750,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[10].inputUnitContent = supplyTest.validTime
+        validTime = supplyTest.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
+
     }
 
     /**
@@ -1760,6 +1883,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[4].shiftInputContent = supplySpanWoodenSupprt.issuerBelongSite
         }
         adapter.mData[7].inputUnitContent = supplySpanWoodenSupprt.validTime
+        validTime = supplySpanWoodenSupprt.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
+
     }
 
     /**
@@ -1911,6 +2038,10 @@ class SupplyModifyJobInformationFragment:Fragment(){
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
         }
         adapter.mData[10].inputUnitContent = supplyRunningMaintain.validTime
+        validTime = supplyRunningMaintain.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
+
     }
 
 
@@ -1929,16 +2060,19 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[0].singleDisplayRightContent = supplyLeaseCar.variety
         adapter.mData[1].selectContent = supplyLeaseCar.carTable.carType
         adapter.mData[2].inputSingleContent = supplyLeaseCar.carTable.carNumber
-        adapter.mData[3].inputUnitContent = supplyLeaseCar.carTable.maxPassengers
-        adapter.mData[4].inputUnitContent = supplyLeaseCar.carTable.maxWeight
-        adapter.mData[5].inputUnitContent = supplyLeaseCar.carTable.lenghtCar
+        if(supplyLeaseCar.carTable.maxPassengers!=null)
+            adapter.mData[3].inputUnitContent = supplyLeaseCar.carTable.maxPassengers
+        if(supplyLeaseCar.carTable.maxWeight!=null)
+            adapter.mData[4].inputUnitContent = supplyLeaseCar.carTable.maxWeight
+        if(supplyLeaseCar.carTable.lenghtCar!=null)
+            adapter.mData[5].inputUnitContent = supplyLeaseCar.carTable.lenghtCar
         adapter.mData[6].selectContent = if(supplyLeaseCar.carTable.construction=="1") "箱式" else "敞篷"
         adapter.mData[7].radioButtonValue = if(supplyLeaseCar.carTable.isDriver=="true") "1" else "0"
         adapter.mData[8].radioButtonValue = if(supplyLeaseCar.carTable.isInsurance=="true") "1" else "0"
         if(supplyLeaseCar.carTable.carPhotoPath!=null &&  supplyLeaseCar.carTable.carPhotoPath!="")
             UnSerializeDataBase.imgList.add(BitmapMap(supplyLeaseCar.carTable.carPhotoPath, adapter.mData[9].key))
-        adapter.mData[10].inputSingleContent = supplyLeaseCar.site
-        if(supplyLeaseCar.money=="-1.0"){
+        adapter.mData[14].inputSingleContent = supplyLeaseCar.site
+        if(supplyLeaseCar.money=="-1.0" || supplyLeaseCar.salaryUnit=="面议"){
             adapter.mData[11].singleDisplayRightContent= "面议"
         }else {
             adapter.mData[11].singleDisplayRightContent= "${supplyLeaseCar.money} ${supplyLeaseCar.salaryUnit}"
@@ -1946,13 +2080,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
         if(supplyLeaseCar.issuerBelongSite!=null){
             val issuerBelongSite = supplyLeaseCar.issuerBelongSite.split("、")
             for (j in issuerBelongSite){
-                val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                val position = adapter.mData[10].placeCheckArray.indexOf(j)
                 if(position>=0)
-                    adapter.mData[14].placeCheckBoolenArray[position] = true
+                    adapter.mData[10].placeCheckBoolenArray[position] = true
             }
-            adapter.mData[14].shiftInputContent = supplyLeaseCar.issuerBelongSite
+            adapter.mData[10].shiftInputContent = supplyLeaseCar.issuerBelongSite
         }
         adapter.mData[15].inputUnitContent = supplyLeaseCar.validTime
+        validTime = supplyLeaseCar.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.LeaseCar
+
         if(supplyLeaseCar.comment!=null)
             adapter.mData[17].textAreaContent = supplyLeaseCar.comment
     }
@@ -1972,14 +2110,66 @@ class SupplyModifyJobInformationFragment:Fragment(){
         when(adapter.mData[0].singleDisplayRightContent){
             "工器具租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseConstructionTool.leaseServeId
+                companyCredentialId = otherLease.leaseConstructionTool.companyCredentialId
+                adapter.mData[10].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
+                adapter.mData[11].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
+                adapter.mData[15].inputUnitContent = otherLease.leaseConstructionTool.validTime
+                validTime = otherLease.leaseConstructionTool.validTime
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Provider.LcTool
+
+                if(otherLease.leaseConstructionTool.issuerBelongSite!=null){
+                    val issuerBelongSite = otherLease.leaseConstructionTool.issuerBelongSite.split("、")
+                    for (j in issuerBelongSite){
+                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        if(position>=0)
+                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                    }
+                    adapter.mData[14].shiftInputContent = otherLease.leaseConstructionTool.issuerBelongSite
+                }
             }
             "机械租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseMachinery.leaseServeId
+                companyCredentialId = otherLease.leaseMachinery.companyCredentialId
+                adapter.mData[10].radioButtonValue = if(otherLease.leaseMachinery.isDistribution=="true") "1" else "0"
+                adapter.mData[11].selectContent = otherLease.leaseMachinery.conveyancePropertyInsurance
+                adapter.mData[15].inputUnitContent = otherLease.leaseMachinery.validTime
+                validTime = otherLease.leaseMachinery.validTime
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Provider.LeaseMachinery
+
+                if(otherLease.leaseMachinery.issuerBelongSite!=null){
+                    val issuerBelongSite = otherLease.leaseMachinery.issuerBelongSite.split("、")
+                    for (j in issuerBelongSite){
+                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        if(position>=0)
+                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                    }
+                    adapter.mData[14].shiftInputContent = otherLease.leaseMachinery.issuerBelongSite
+                }
             }
             "设备租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseFacility.leaseServeId
+                companyCredentialId = otherLease.leaseFacility.companyCredentialId
+                adapter.mData[10].radioButtonValue = if(otherLease.leaseFacility.isDistribution=="true") "1" else "0"
+                adapter.mData[11].selectContent = otherLease.leaseFacility.conveyancePropertyInsurance
+                adapter.mData[15].inputUnitContent = otherLease.leaseFacility.validTime
+                validTime = otherLease.leaseFacility.validTime
+                if(validTime.toInt()<=0)
+                    adapter.urlPath = Constants.HttpUrlPath.Provider.LeaseFacility
+
+                if(otherLease.leaseFacility.issuerBelongSite!=null){
+                    val issuerBelongSite = otherLease.leaseFacility.issuerBelongSite.split("、")
+                    for (j in issuerBelongSite){
+                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        if(position>=0)
+                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                    }
+                    adapter.mData[14].shiftInputContent = otherLease.leaseFacility.issuerBelongSite
+                }
             }
         }
+
         adapter.mData[1].inputSingleContent = otherLease.companyCredential.companyName
         adapter.mData[2].inputSingleContent = otherLease.companyCredential.companyAbbreviation
         adapter.mData[3].inputSingleContent = otherLease.companyCredential.companyAddress
@@ -2024,18 +2214,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
             }
         adapter.mData[8].itemMultiStyleItem = itemMultiStyleItem
 
-        adapter.mData[10].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
-        adapter.mData[11].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
-        if(otherLease.issuerBelongSite!=null){
-            val issuerBelongSite = otherLease.issuerBelongSite.split("、")
-            for (j in issuerBelongSite){
-                val position = adapter.mData[14].placeCheckArray.indexOf(j)
-                if(position>=0)
-                    adapter.mData[14].placeCheckBoolenArray[position] = true
-            }
-            adapter.mData[14].shiftInputContent = otherLease.issuerBelongSite
-        }
-        adapter.mData[15].inputUnitContent = otherLease.leaseConstructionTool.validTime
+
     }
 
     /**
@@ -2060,25 +2239,25 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[3].inputSingleContent = supplyThirdParty.companyCredential.companyAddress
         adapter.mData[4].inputSingleContent = supplyThirdParty.companyCredential.legalPersonName
         adapter.mData[5].inputSingleContent = supplyThirdParty.companyCredential.legalPersonPhone
-        if(supplyThirdParty.companyCredential.legalPersonIdCardPath!=null && supplyThirdParty.companyCredential.legalPersonIdCardPath!=""){
-            UnSerializeDataBase.imgList.add(BitmapMap(supplyThirdParty.companyCredential.legalPersonIdCardPath, adapter.mData[6].key))
-        }
         if(supplyThirdParty.companyCredential.businessLicensePath!=null && supplyThirdParty.companyCredential.businessLicensePath!=""){
-            UnSerializeDataBase.imgList.add(BitmapMap(supplyThirdParty.companyCredential.businessLicensePath, adapter.mData[7].key))
+            UnSerializeDataBase.imgList.add(BitmapMap(supplyThirdParty.companyCredential.businessLicensePath, adapter.mData[6].key))
         }
-        //10
+        //9
         if(supplyThirdParty.issuerBelongSite!=null){
             val issuerBelongSite = supplyThirdParty.issuerBelongSite.split("、")
             for (j in issuerBelongSite){
-                val position = adapter.mData[11].placeCheckArray.indexOf(j)
+                val position = adapter.mData[10].placeCheckArray.indexOf(j)
                 if(position>=0)
-                    adapter.mData[11].placeCheckBoolenArray[position] = true
+                    adapter.mData[10].placeCheckBoolenArray[position] = true
             }
-            adapter.mData[11].shiftInputContent = supplyThirdParty.issuerBelongSite
+            adapter.mData[10].shiftInputContent = supplyThirdParty.issuerBelongSite
         }
-        adapter.mData[12].inputUnitContent = supplyThirdParty.validTime
+        adapter.mData[11].inputUnitContent = supplyThirdParty.validTime
+        validTime = supplyThirdParty.validTime
+        if(validTime.toInt()<=0)
+            adapter.urlPath = Constants.HttpUrlPath.Provider.ThirdServices
         if(supplyThirdParty.businessScope!=null)
-        adapter.mData[13].inputUnitContent = supplyThirdParty.businessScope
+        adapter.mData[13].textAreaContent = supplyThirdParty.businessScope
     }
 
 

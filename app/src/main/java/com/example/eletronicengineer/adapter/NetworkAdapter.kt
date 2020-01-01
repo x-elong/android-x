@@ -62,11 +62,11 @@ class NetworkAdapter {
         lateinit var mData: List<MultiStyleItem>
         lateinit var context: Context
         lateinit var jsonObject: JSONObject
-        constructor(){}
         constructor(mData: List<MultiStyleItem>, context: Context) {
             this.mData = mData
             this.context = context
         }
+        constructor(){}
         fun generateJsonArray(data: List<MultiStyleItem>):JSONArray
         {
             val array=JSONArray()
@@ -80,12 +80,6 @@ class NetworkAdapter {
         fun generateJsonObject(mData: List<MultiStyleItem>):JSONObject
         {
             val jsonObject = JSONObject()
-            if(mData[0].id!=""){
-                jsonObject.put("id",mData[0].id)
-            }
-            if(UnSerializeDataBase.inventoryIdKey!="" && UnSerializeDataBase.inventoryId!="" ){
-                jsonObject.put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
-            }
             for (i in mData) {
                 when (i.sendFormat) {
                     "Long" -> {
@@ -236,6 +230,9 @@ class NetworkAdapter {
                     if (data.inputRangeValue2 != "")
                         resultList.add(data.inputRangeValue2)
                 }
+                MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG->{
+                    resultList=data.selectContent.split(" ") as MutableList<String>
+                }
             }
             return resultList
         }
@@ -246,10 +243,10 @@ class NetworkAdapter {
                     if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                         doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                     else
-                        doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                        doubleAlsoString = Pair(-1.0, data.inputMultiSelectUnit)
                 }
                 else -> {
-                    doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                    doubleAlsoString = Pair(-1.0, "")
                 }
             }
             return doubleAlsoString
@@ -453,43 +450,44 @@ class NetworkAdapter {
                     if(data.shiftInputTitle=="可服务地域"){
                         result=data.shiftInputContent
                     }else {
-//                        for(j in UnSerializeDataBase.imgList){
-//                            if(j.key==data.key)
-//                                result = j.path
-//                        }
-                        val results = try {
-                            for (j in UnSerializeDataBase.imgList) {
-                                if (j.key == data.key) {
-                                    val imagePath = j.path.split("|")
-                                    for (k in imagePath) {
-                                        val file = File(k)
-                                        val imagePart = MultipartBody.Part.createFormData(
-                                            "file",
-                                            file.name,
-                                            RequestBody.create(MediaType.parse("image/*"), file)
-                                        )
-                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                {
-                                                    //Log.i("responseBody",it.string())
-                                                    if (result != "")
-                                                        result += "|"
-                                                    val json = JSONObject(it.string())
-                                                    if (json.getBoolean("success")) {
-                                                        result += json.getString("httpUrl")
-                                                    } else {
-                                                        result += ""
-                                                    }
-                                                },
-                                                {
-                                                    it.printStackTrace()
-                                                })
-                                    }
-                                }
+                        for(j in UnSerializeDataBase.imgList){
+                            if(j.key==data.key){
+                                result=j.path
                             }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
                         }
+//                        val results = try {
+//                            for (j in UnSerializeDataBase.imgList) {
+//                                if (j.key == data.key) {
+//                                    val imagePath = j.path.split("|")
+//                                    for (k in imagePath) {
+//                                        val file = File(k)
+//                                        val imagePart = MultipartBody.Part.createFormData(
+//                                            "file",
+//                                            file.name,
+//                                            RequestBody.create(MediaType.parse("image/*"), file)
+//                                        )
+//                                        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribe(
+//                                                {
+//                                                    //Log.i("responseBody",it.string())
+//                                                    if (result != "")
+//                                                        result += "|"
+//                                                    val json = JSONObject(it.string())
+//                                                    if (json.getBoolean("success")) {
+//                                                        result += json.getString("httpUrl")
+//                                                    } else {
+//                                                        result += ""
+//                                                    }
+//                                                },
+//                                                {
+//                                                    it.printStackTrace()
+//                                                })
+//                                    }
+//                                }
+//                            }
+//                        } catch (e: Exception) {
+//                            e.printStackTrace()
+//                        }
                     }
                 }
                 MultiStyleItem.Options.SINGLE_INPUT -> {
@@ -521,7 +519,7 @@ class NetworkAdapter {
         }
     }
 
-    //data source  需1
+    //data source  需
     var mData: List<MultiStyleItem> = ArrayList()
     lateinit var context: Context
     constructor(){}
@@ -875,34 +873,39 @@ class NetworkAdapter {
                     ""
             }
             MultiStyleItem.Options.SHIFT_INPUT -> {
-                val results = try {
-                    for (j in UnSerializeDataBase.imgList) {
-                        if (j.key == data.key) {
-                            val imagePath = j.path.split("|")
-                            for (k in imagePath) {
-                                val file = File(k)
-                                val imagePart = MultipartBody.Part.createFormData(
-                                    "file",
-                                    file.name,
-                                    RequestBody.create(MediaType.parse("image/*"), file)
-                                )
-                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                                    {
-                                        //Log.i("responseBody",it.string())
-                                        if (result != "")
-                                            result += "|"
-                                        result += it.string()
-                                        Log.i("result url", result)
-                                    },
-                                    {
-                                        it.printStackTrace()
-                                    })
-                            }
-                        }
+                for(j in UnSerializeDataBase.imgList){
+                    if(j.key==data.key){
+                        result=j.path
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
+//                val results = try {
+//                    for (j in UnSerializeDataBase.imgList) {
+//                        if (j.key == data.key) {
+//                            val imagePath = j.path.split("|")
+//                            for (k in imagePath) {
+//                                val file = File(k)
+//                                val imagePart = MultipartBody.Part.createFormData(
+//                                    "file",
+//                                    file.name,
+//                                    RequestBody.create(MediaType.parse("image/*"), file)
+//                                )
+//                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+//                                    {
+//                                        //Log.i("responseBody",it.string())
+//                                        if (result != "")
+//                                            result += "|"
+//                                        result += it.string()
+//                                        Log.i("result url", result)
+//                                    },
+//                                    {
+//                                        it.printStackTrace()
+//                                    })
+//                            }
+//                        }
+//                    }
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
             }
             MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                 result = if (data.selectContent != "")
@@ -1035,10 +1038,10 @@ class NetworkAdapter {
                 if (data.inputMultiSelectUnit != data.inputMultiAbandonInput)
                     doubleAlsoString = Pair(data.inputMultiContent.toDoubleOrNull(), data.inputMultiSelectUnit)
                 else
-                    doubleAlsoString = Pair(Double.MIN_VALUE, data.inputMultiSelectUnit)
+                    doubleAlsoString = Pair(-1.0, data.inputMultiSelectUnit)
             }
             else -> {
-                doubleAlsoString = Pair(Double.MIN_VALUE, "")
+                doubleAlsoString = Pair(-1.0, "")
             }
         }
         return doubleAlsoString
@@ -5680,7 +5683,7 @@ class NetworkAdapter {
         val file = File(imagePath)
         val imagePart = MultipartBody.Part.createFormData("file", file.name,
             RequestBody.create(MediaType.parse("image/*"), file))
-        val results = uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 loadingDialog.dismiss()
                 val json = JSONObject(it.string())
@@ -5689,14 +5692,12 @@ class NetworkAdapter {
                     ToastHelper.mToast(context,"上传成功")
                     result = json.getString("httpUrl")
                     val mImagePaths = arrayListOf(result)
-                    when(fragment){
-                        is UploadPhoneFragment->fragment.refresh(mImagePaths[0])
-                        is UpIdCardFragment->fragment.refresh(mImagePaths)
-                        is ImageFragment->fragment.refresh(mImagePaths)
-                        is PersonalCertificationFragment ->fragment.refresh(mImagePaths[0])
-                        is EnterpriseCertificationFragment ->fragment.refresh(mImagePaths[0])
-                        is PersonalReCertificationFragment ->fragment.refresh(mImagePaths[0])
-                        is EnterpriseReCertificationFragment -> fragment.refresh(mImagePaths[0])
+                    if(fragment is UploadPhoneFragment) {
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is UpIdCardFragment){
+                        fragment.refresh(mImagePaths)
+                    }else if(fragment is ImageFragment){
+                        fragment.refresh(mImagePaths)
                     }
                 }else{
                     ToastHelper.mToast(context,"上传失败")
@@ -5765,7 +5766,8 @@ class NetworkAdapter {
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
                             "报价清单(按单价)","个人证件名称","工作经验" ,
                             "项目","项目特征描述","计量单位",
-                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量"->{
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量",
+                            "公司名称","注册地址","经营范围"->{
                                 if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                             }
                         }
@@ -5958,7 +5960,7 @@ class NetworkAdapter {
                     if(j.necessary==true) {//为true此项为必填需检验
                         when (j.selectTitle) {
                             "项目地点", "孔洞最大直径","岗位类别",
-                            "可实施地域","运送财产保险" -> {
+                            "可实施地域","运送财产保险","资质类别及等级" -> {
                                 if (j.selectContent == "") {
                                     result = "${j.selectTitle.replace("：", "")}没有选择"
                                 }

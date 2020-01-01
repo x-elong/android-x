@@ -18,7 +18,7 @@ import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
-class SubmitInventoryFragment : Fragment() {
+class SubmitInventoryFragment : Fragment(),Serializable {
     companion object{
         fun newInstance(args: Bundle): SubmitInventoryFragment
         {
