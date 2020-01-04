@@ -109,6 +109,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                     .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                                    .put("remark",mAdapter!!.mData[11].textAreaContent)
                             )
                         }
                         Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal->{//配网
@@ -122,6 +123,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                     .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                                    .put("remark",mAdapter!!.mData[11].textAreaContent)
                             )
                         }
                         Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal->{//变电
@@ -135,6 +137,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                     .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                                    .put("remark",mAdapter!!.mData[11].textAreaContent)
                             )
                         }
                         Constants.FragmentType.MEASUREMENT_DESIGN_TYPE.ordinal->{//测量设计
@@ -148,6 +151,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                     .put("isConstructionTool",mAdapter!!.mData[6].itemMultiStyleItem.isNotEmpty())
+                                    .put("remark",mAdapter!!.mData[11].textAreaContent)
                             )
                                 .put("implementationRanges",NetworkAdapter().parseToString(mAdapter!!.mData[5]))
                                 .put("voltages",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[4]))
@@ -164,6 +168,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("remark","")
                                     .put("id",id)
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
+                                    .put("remark",mAdapter!!.mData[8].textAreaContent)
                             )
                         }
                         //团队服务——桩基
@@ -182,6 +187,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
                                     .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                     .put("isConstructionTool",mAdapter!!.mData[7].itemMultiStyleItem.isNotEmpty())
+                                    .put("remark",mAdapter!!.mData[12].textAreaContent)
                             )
                         }
                         //团队服务——非开挖
@@ -191,6 +197,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                 .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
                                 .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                 .put("isConstructionTool",mAdapter!!.mData[3].itemMultiStyleItem.isNotEmpty())
+                                .put("remark",mAdapter!!.mData[9].textAreaContent)
                         }
                         Constants.FragmentType.TEST_DEBUGGING_TYPE.ordinal->{//实验调试
                             json.put("id",id)
@@ -198,6 +205,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                 .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
                                 .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                 .put("isConstructionTool",mAdapter!!.mData[7].itemMultiStyleItem.isNotEmpty())
+                                .put("remark",mAdapter!!.mData[12].textAreaContent)
                         }
                         Constants.FragmentType.CROSSING_FRAME_TYPE.ordinal->{//跨越架
                             json.put("id",id)
@@ -205,6 +213,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                 .put(UnSerializeDataBase.inventoryIdKey,UnSerializeDataBase.inventoryId)
                                 .put("isCar",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
                                 .put("isConstructionTool",mAdapter!!.mData[3].itemMultiStyleItem.isNotEmpty())
+                                .put("remark",mAdapter!!.mData[9].textAreaContent)
                         }
                         Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->{//运维
                             val isCar= mAdapter!!.mData[1].itemMultiStyleItem.isNotEmpty()
@@ -212,7 +221,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                 .put("issuerBelongSite",mAdapter!!.mData[3].shiftInputContent)
                                 .put("isCar",mAdapter!!.mData[1].itemMultiStyleItem.isNotEmpty())
                                 .put("isConstructionTool",mAdapter!!.mData[2].itemMultiStyleItem.isNotEmpty())
-
+                                .put("remark",mAdapter!!.mData[12].textAreaContent)
 //                                .put("name",name)
 //                                .put("issuerName",UnSerializeDataBase.idCardName)
 //                                .put("phone",UnSerializeDataBase.userPhone)
@@ -228,7 +237,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("isInsurance",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[8]))
                                     .put("carPhotoPath","")
                                     .put("carNumber",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[2]))
-                                    .put("remark","")
+                                    .put("comment",mAdapter!!.mData[17].textAreaContent)
                                     .put("id",UnSerializeDataBase.inventoryIdKey)
                                     .put("leaseCarId",UnSerializeDataBase.inventoryId)
                             )
@@ -280,6 +289,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("companyAbbreviation",mAdapter!!.mData[2].inputSingleContent)
                                     .put("businessLicensePath",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[6]))
                                     .put("companyAddress",mAdapter!!.mData[3].inputSingleContent)
+                                    .put("businessScope",mAdapter!!.mData[13].textAreaContent)
                             )
                         }
                     }
@@ -792,6 +802,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[9].inputUnitContent = network.powerTransformation.validTime
         validTime = network.powerTransformation.validTime
+        if(network.powerTransformation.remark!=null)
+            adapter.mData[11].textAreaContent = network.powerTransformation.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.PowerTransformation
 
@@ -946,6 +958,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[9].inputUnitContent = network.majorNetwork.validTime
         validTime = network.majorNetwork.validTime
+        if(network.majorNetwork.remark!=null)
+            adapter.mData[11].textAreaContent = network.majorNetwork.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.MajorNetwork
 
@@ -1100,6 +1114,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[9].inputUnitContent = network.distribuionNetwork.validTime
         validTime = network.distribuionNetwork.validTime
+        if(network.distribuionNetwork.remark!=null)
+            adapter.mData[11].textAreaContent = network.distribuionNetwork.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.DistribuionNetwork
 
@@ -1254,6 +1270,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[9].inputUnitContent = network.measureDesign.validTime
         validTime = network.measureDesign.validTime
+        if(network.measureDesign.remark!=null)
+            adapter.mData[11].textAreaContent = network.measureDesign.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
 
@@ -1321,6 +1339,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[6].inputUnitContent = caravan.caravanTransport.validTime
         validTime = caravan.caravanTransport.validTime
+        if(caravan.caravanTransport.remark!=null)
+            adapter.mData[8].textAreaContent = caravan.caravanTransport.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
 
@@ -1464,6 +1484,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[10].inputUnitContent = pile.pileFoundation.validTime
         validTime = pile.pileFoundation.validTime
+        if(pile.pileFoundation.remark!=null)
+            adapter.mData[12].textAreaContent = pile.pileFoundation.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
 
@@ -1596,6 +1618,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[7].inputUnitContent = supplyUnexcavation.validTime
         validTime = supplyUnexcavation.validTime
+        if(supplyUnexcavation.remark!=null)
+            adapter.mData[9].textAreaContent = supplyUnexcavation.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
 
@@ -1751,6 +1775,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[10].inputUnitContent = supplyTest.validTime
         validTime = supplyTest.validTime
+        if(supplyTest.remark!=null)
+            adapter.mData[12].textAreaContent = supplyTest.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
 
@@ -1884,6 +1910,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[7].inputUnitContent = supplySpanWoodenSupprt.validTime
         validTime = supplySpanWoodenSupprt.validTime
+        if(supplySpanWoodenSupprt.remark!=null)
+            adapter.mData[9].textAreaContent = supplySpanWoodenSupprt.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
 
@@ -2039,6 +2067,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[10].inputUnitContent = supplyRunningMaintain.validTime
         validTime = supplyRunningMaintain.validTime
+        if(supplyRunningMaintain.remark!=null)
+            adapter.mData[12].textAreaContent = supplyRunningMaintain.remark
         if(validTime.toInt()<=0)
             adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
 

@@ -250,7 +250,7 @@ class Constants {
                  */
 
                 const val enterpriseCertification = "OrganizationCertification/insertOrganizationCertification/"
-                const val enterpriseReCertification = "OrganizationCertification/updateOrganizationCertificatio/"
+                const val reCertification = "OrganizationCertification/updateOrganizationCertification/"
 
                 const val personalCertification = "OrganizationCertification/insertOneOrganizationCertification/"
                 const val certificationMore = "OrganizationCertification/getOrganizationCertificationDTOALL/"
@@ -304,7 +304,7 @@ class Constants {
                 const val requirementLeaseMachinery =
                     "RequirementLeaseMachinery/insertRequirementLeaseMachinery/"
                 //车辆租赁
-                const val requirementLeaseCar = "RequirementLeaseCar/insertRequirementLeaseCarAndroid/"
+                const val requirementLeaseCar = "/RequirementLeaseCar/insertRequirementLeaseCar/"
                 //工器具租赁
                 const val requirementLeaseConstructionTool =
                     "RequirementLeaseConstructionTool/insertRequirementLeaseConstructionTool/"

@@ -2,6 +2,7 @@ package com.example.eletronicengineer.fragment.sdf
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.ScrollingMovementMethod
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.adapter.ListAdapterForDemand
@@ -84,6 +86,8 @@ class SupplyInformationFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
       mView = inflater.inflate(R.layout.demand, container, false)
+      mView.demand_swipe_refresh.setColorSchemeColors(Color.rgb(47,223,189))
+      mView.tv_demand_type_select.setText("选择供应类别")
       val Option1Items= listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他") as MutableList<String>
       val Option2Items= listOf(listOf("普工"),
           listOf("配网项目负责人", "配网班组负责人", "主网项目负责人", "主网基础负责人", "主网组塔负责人","主网架线负责人","变电项目负责人","变电土建负责人","变电一次负责人","变电二次负责人","变电调试负责人"),
@@ -93,7 +97,7 @@ class SupplyInformationFragment : Fragment() {
           listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
           listOf("测量工"), listOf("驾驶证A1","驾驶证A2","驾驶证A3","驾驶证B1","驾驶证B2","驾驶证C1","驾驶证C2","驾驶证C3","驾驶证D","驾驶证E"),
           listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
-          listOf("")) as MutableList<MutableList<String>>
+          listOf("其他")) as MutableList<MutableList<String>>
       mView.tv_demand_type_select.movementMethod= ScrollingMovementMethod.getInstance()
       mView.tv_demand_site_select.movementMethod= ScrollingMovementMethod.getInstance()
       mView.tv_demand_elect_standard_select.movementMethod= ScrollingMovementMethod.getInstance()
@@ -111,27 +115,21 @@ class SupplyInformationFragment : Fragment() {
           for(i in 0 until mData.placeCheckBoolenArray.size){
               mData.placeCheckBoolenArray[i]=false
           }
-          if(mView.tv_demand_type_select.text.toString()!="选择需求类别")
-          {
-              keyforsupply= arrayListOf("page","pageSize","kind")
-              valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplyVariety) as MutableList<String>
-          }
-          else
-          {
-              keyforsupply= arrayListOf("page","pageSize")
-              valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
-          }
+          keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+          valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+              supplySite,supplyVariety) as MutableList<String>
           mPageNumberForPerson = 1
           mIsLastPageForPerson = false
           mPersonalIssueAdapter!!.notifyData()
           supplyPerson(mView)
       }
       mView.tv_demand_type_clear.setOnClickListener {
-          mView.tv_demand_type_select.text="选择需求类别"
+          mView.tv_demand_type_select.text="选择供应类别"
           mView.tv_demand_type_clear.visibility=View.GONE
           supplyVariety=""
-          keyforsupply= arrayListOf("page","pageSize")
-          valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
+          keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+          valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+              supplySite,supplyVariety) as MutableList<String>
           mPageNumberForPerson = 1
           mIsLastPageForPerson = false
           mPersonalIssueAdapter!!.notifyData()
@@ -143,8 +141,9 @@ class SupplyInformationFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
       mPersonAdapter = ListAdapterForDemand(activity!!)
       mPersonalIssueAdapter = ListAdapterForSupply(activity!!)
-      keyforsupply= arrayListOf("page","pageSize")
-      valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
+      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+      valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+          supplySite,supplyVariety) as MutableList<String>
       supplyPerson(view)
       select(view)
   }
@@ -160,14 +159,20 @@ class SupplyInformationFragment : Fragment() {
         //                添加选中Tab的逻辑
         when (tab.text) {
           "个人劳务"->{
+               supplySite=""
+               supplyVariety=""
+               supplyElect=""
+               selectContentElect = arrayOf("", "", "", "", "", "")
+               supplyVehicle=""
               mPageNumberForPerson = 1
               mIsLastPageForPerson = false
               mPersonalIssueAdapter!!.notifyData()
-              keyforsupply= arrayListOf("page","pageSize")
-              valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
+              keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+              valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+                  supplySite,supplyVariety) as MutableList<String>
               supplyPerson(view)
               view.tv_demand_site_select.text="选择地点"
-              view.tv_demand_type_select.text="选择需求类别"
+              view.tv_demand_type_select.text="选择供应类别"
               view.tv_demand_site_clear.visibility=View.GONE
               view.tv_demand_type_clear.visibility=View.GONE
               view.tv_demand_elect_standars_clear.visibility=View.GONE
@@ -183,7 +188,7 @@ class SupplyInformationFragment : Fragment() {
                   listOf("压接操作","机动绞磨操作","牵张设备操作","起重机械操作","钢筋工","混凝土工","木工","模板工","油漆工","砌筑工","通风工","打桩工","架子工"),
                   listOf("测量工"), listOf("驾驶证A1","驾驶证A2","驾驶证A3","驾驶证B1","驾驶证B2","驾驶证C1","驾驶证C2","驾驶证C3","驾驶证D","驾驶证E"),
                   listOf("施工员","安全员","质量员","材料员","资料员","预算员","标准员","机械员","劳务员"), listOf("造价工程师","一级建造师","安全工程师","电气工程师"),
-                  listOf("")) as MutableList<MutableList<String>>
+                  listOf("其他")) as MutableList<MutableList<String>>
               view.tv_demand_type_select.setOnClickListener {
                   initDemandPerson(view,Option1Items,Option2Items,1)
               }
@@ -197,16 +202,9 @@ class SupplyInformationFragment : Fragment() {
                   for(i in 0 until mData.placeCheckBoolenArray.size){
                       mData.placeCheckBoolenArray[i]=false
                   }
-                  if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","kind")
-                      valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplyVariety) as MutableList<String>
-                  }
-                  else
-                  {
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+                  valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+                      supplySite,supplyVariety) as MutableList<String>
                   mPageNumberForPerson = 1
                   mIsLastPageForPerson = false
                   mPersonalIssueAdapter!!.notifyData()
@@ -214,11 +212,12 @@ class SupplyInformationFragment : Fragment() {
               }
 
               view.tv_demand_type_clear.setOnClickListener {
-                  view.tv_demand_type_select.text="选择需求类别"
+                  view.tv_demand_type_select.text="选择供应类别"
                   view.tv_demand_type_clear.visibility=View.GONE
                   supplyVariety=""
-                  keyforsupply= arrayListOf("page","pageSize")
-                  valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+                  valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+                      supplySite,supplyVariety) as MutableList<String>
                   mPageNumberForPerson = 1
                   mIsLastPageForPerson = false
                   mPersonalIssueAdapter!!.notifyData()
@@ -226,17 +225,24 @@ class SupplyInformationFragment : Fragment() {
               }
           }
           "团队服务"->{
+              supplySite=""
+              supplyVariety=""
+              supplyElect=""
+              selectContentElect = arrayOf("", "", "", "", "", "")
+              supplyVehicle=""
               mPageNumberForTeam = 1
               mIsLastPageForTeam = false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 2)
               }
-              keyforsupply= arrayListOf("page","pageSize")
-              valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
+              keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+              valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                  selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                  selectContentElect[4],selectContentElect[5]) as MutableList<String>
               supplyTeam(view)
               view.tv_demand_site_select.text="选择地点"
-              view.tv_demand_type_select.text="选择需求类别"
+              view.tv_demand_type_select.text="选择供应类别"
               view.tv_demand_elect_standard_select.text="选择电压等级"
               view.tv_demand_site_clear.visibility=View.GONE
               view.tv_demand_type_clear.visibility=View.GONE
@@ -259,20 +265,10 @@ class SupplyInformationFragment : Fragment() {
                   checkedItems= arrayOf(false,false,false,false,false,false)
                   selectContentElect = arrayOf("", "", "", "", "", "")
                   supplyElect=""
-                  if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety) as MutableList<String>
-                  }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"){
-                      keyforsupply= arrayListOf("page","pageSize","name")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety) as MutableList<String>
-                  }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"){
-                      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite) as MutableList<String>
-                  }else{
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                  valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                      selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                      selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
                   mPersonAdapter!!.notifyMovie()
@@ -285,52 +281,23 @@ class SupplyInformationFragment : Fragment() {
                   for(i in 0 until mData.placeCheckBoolenArray.size){
                       mData.placeCheckBoolenArray[i]=false
                   }
-                  if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","name","v1","v2","v3","v4","v5","v6")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety,
-                          selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                          selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                  }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
-                      keyforsupply= arrayListOf("page","pageSize","name")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety) as MutableList<String>
-                  }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                      keyforsupply= arrayListOf("page","pageSize","v1","v2","v3","v4","v5","v6")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
-                          selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                          selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                  }else
-                  {
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                  valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                      selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                      selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
                   mPersonAdapter!!.notifyMovie()
                   supplyTeam(view)
               }
               view.tv_demand_type_clear.setOnClickListener {
-                  view.tv_demand_type_select.text="选择需求类别"
+                  view.tv_demand_type_select.text="选择供应类别"
                   view.tv_demand_type_clear.visibility=View.GONE
                   supplyVariety=""
-                  if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","v1","v2","v3","v4","v5","v6")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,
-                          selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                          selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                  }else if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
-                      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite) as MutableList<String>
-                  }else if(view.tv_demand_site_select.text.toString()=="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                      keyforsupply= arrayListOf("page","pageSize","v1","v2","v3","v4","v5","v6")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
-                          selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                          selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                  }else{
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                  valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                      selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                      selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
                   mPersonAdapter!!.notifyMovie()
@@ -338,17 +305,23 @@ class SupplyInformationFragment : Fragment() {
               }
           }
           "租赁服务"->{
+              supplySite=""
+              supplyVariety=""
+              supplyElect=""
+              selectContentElect = arrayOf("", "", "", "", "", "")
+              supplyVehicle=""
               mPageNumberForLease = 1
               mIsLastPageForLease = false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 3)
               }
-              keyforsupply= arrayListOf("page","number")
-              valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
+              keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
+              valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                  supplyVehicle) as MutableList<String>
               supplyLease(view)
               view.tv_demand_site_select.text="选择地点"
-              view.tv_demand_type_select.text="选择需求类别"
+              view.tv_demand_type_select.text="选择供应类别"
               view.tv_demand_site_clear.visibility=View.GONE
               view.tv_demand_type_clear.visibility=View.GONE
               view.tv_demand_elect_standars_clear.visibility=View.GONE
@@ -368,42 +341,22 @@ class SupplyInformationFragment : Fragment() {
                   for(i in 0 until mData.placeCheckBoolenArray.size){
                       mData.placeCheckBoolenArray[i]=false
                   }
-                  if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                  {
-                              if(supplyVehicle=="")//不是车辆租赁
-                              {
-                                  keyforsupply= arrayListOf("page","number","type")
-                                  valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety) as MutableList<String>
-                              } else//车辆租赁
-                              {
-                                  keyforsupply= arrayListOf("page","number","type","carType")
-                                  valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety,supplyVehicle) as MutableList<String>
-                              }
-
-                  }else{
-                      keyforsupply= arrayListOf("page","number")
-                      valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
+                  valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                      supplyVehicle) as MutableList<String>
                   mPageNumberForLease = 1
                   mIsLastPageForLease = false
                   mPersonAdapter!!.notifyMovie()
                   supplyLease(view)
               }
               view.tv_demand_type_clear.setOnClickListener {
-                  view.tv_demand_type_select.text="选择需求类别"
+                  view.tv_demand_type_select.text="选择供应类别"
                   view.tv_demand_type_clear.visibility=View.GONE
                   supplyVariety=""
                   supplyVehicle=""
-                  if(view.tv_demand_site_select.text.toString()!="选择地点")
-                  {
-                      keyforsupply= arrayListOf("page","number","issuerBelongSite")
-                      valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite) as MutableList<String>
-                  }
-                  else
-                  {
-                      keyforsupply= arrayListOf("page","number")
-                      valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
+                  valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                      supplyVehicle) as MutableList<String>
                   mPageNumberForLease = 1
                   mIsLastPageForLease = false
                   mPersonAdapter!!.notifyMovie()
@@ -411,16 +364,22 @@ class SupplyInformationFragment : Fragment() {
               }
           }
           "三方服务"->{
+              supplySite=""
+              supplyVariety=""
+              supplyElect=""
+              selectContentElect = arrayOf("", "", "", "", "", "")
+              supplyVehicle=""
               mPageNumberForThird = 1
               mIsLastPageForThird = false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 1)
               }
-              keyforsupply= arrayListOf("page","pageSize")
-              valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
+              keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
+              valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
+                  supplyVariety) as MutableList<String>
               supplyThird(view)
-              view.tv_demand_type_select.text="选择需求类别"
+              view.tv_demand_type_select.text="选择供应类别"
               view.tv_demand_site_clear.visibility=View.GONE
               view.tv_demand_type_clear.visibility=View.GONE
               view.tv_demand_elect_standars_clear.visibility=View.GONE
@@ -432,19 +391,12 @@ class SupplyInformationFragment : Fragment() {
                   initDemandTeam(view,Option1Items,2)
               }
               view.tv_demand_type_clear.setOnClickListener {
-                  view.tv_demand_type_select.text="选择需求类别"
+                  view.tv_demand_type_select.text="选择供应类别"
                   view.tv_demand_type_clear.visibility=View.GONE
                   supplyVariety=""
-                  if(view.tv_demand_site_select.text.toString()!="选择地点")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","issuerBelongSite")
-                      valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite) as MutableList<String>
-                  }
-                  else
-                  {
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
+                  valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
+                      supplyVariety) as MutableList<String>
                   mPageNumberForThird = 1
                   mIsLastPageForThird = false
                   mPersonAdapter!!.notifyMovie()
@@ -457,16 +409,9 @@ class SupplyInformationFragment : Fragment() {
                   for(i in 0 until mData.placeCheckBoolenArray.size){
                       mData.placeCheckBoolenArray[i]=false
                   }
-                  if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                  {
-                      keyforsupply= arrayListOf("page","pageSize","serveType")
-                      valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplyVariety) as MutableList<String>
-                  }
-                  else
-                  {
-                      keyforsupply= arrayListOf("page","pageSize")
-                      valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
-                  }
+                  keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
+                  valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
+                      supplyVariety) as MutableList<String>
                   mPageNumberForThird = 1
                   mIsLastPageForThird = false
                   mPersonAdapter!!.notifyMovie()
@@ -504,6 +449,16 @@ class SupplyInformationFragment : Fragment() {
               }
           }
       })
+      view.demand_swipe_refresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+          override fun onRefresh() {
+              mView.demand_swipe_refresh.isRefreshing=false
+              mPageNumberForPerson=1
+              mPersonalIssueAdapter!!.notifyData()
+              valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,
+                  supplyVariety) as MutableList<String>
+              _loadSupplyPersonData()
+          }
+      })
   }
     //团队服务
     private fun supplyTeam(view:View) {
@@ -521,6 +476,17 @@ class SupplyInformationFragment : Fragment() {
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
                     selectScroll(theflag,view)
                 }
+            }
+        })
+        view.demand_swipe_refresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                mView.demand_swipe_refresh.isRefreshing=false
+                mPageNumberForTeam=1
+                mPersonAdapter!!.notifyMovie()
+                valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
+                _loadSupplyTeamData()
             }
         })
     }
@@ -542,6 +508,16 @@ class SupplyInformationFragment : Fragment() {
                 }
             }
         })
+        view.demand_swipe_refresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                mView.demand_swipe_refresh.isRefreshing=false
+                mPageNumberForLease=1
+                mPersonAdapter!!.notifyMovie()
+                valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                    supplyVehicle) as MutableList<String>
+                _loadSupplyLeaseData()
+            }
+        })
     }
     //三方服务
     private fun supplyThird(view:View) {
@@ -554,11 +530,20 @@ class SupplyInformationFragment : Fragment() {
         view.tv_demand_content.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
                 var m = view.tv_demand_content.layoutManager as LinearLayoutManager
                 if (m.findLastVisibleItemPosition() == m.itemCount - 1) {
                     selectScroll(theflag,view)
                 }
+            }
+        })
+        view.demand_swipe_refresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                mView.demand_swipe_refresh.isRefreshing=false
+                mPageNumberForThird=1
+                mPersonAdapter!!.notifyMovie()
+                valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
+                    supplyVariety) as MutableList<String>
+                _loadSupplyThirdData()
             }
         })
     }
@@ -860,146 +845,37 @@ class SupplyInformationFragment : Fragment() {
                     view.tv_demand_site_clear.visibility = View.VISIBLE
                     when (flag) {
                         1 -> {//三方服务
-                            if (view.tv_demand_type_select.text.toString()!= "选择需求类别") {
-                                keyforsupply =
-                                    arrayListOf("page", "pageSize", "issuerBelongSite", "serveType")
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForThird,
-                                    mCountPerPageForThird,
-                                    supplySite,
-                                    supplyVariety
-                                ) as MutableList<String>
-                            } else {
-                                keyforsupply = arrayListOf("page", "pageSize", "issuerBelongSite")
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForThird,
-                                    mCountPerPageForThird,
-                                    supplySite
-                                ) as MutableList<String>
-                            }
+                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
+                            valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,
+                                supplySite,supplyVariety) as MutableList<String>
                             mPageNumberForThird = 1
                             mIsLastPageForThird = false
                             mPersonAdapter!!.notifyMovie()
                             supplyThird(view)
                         }
                         2 -> {//团队服务
-                            if (view.tv_demand_type_select.text.toString() != "选择需求类别" && view.tv_demand_elect_standard_select.text.toString()!= "选择电压等级") {
-                                keyforsupply = arrayListOf(
-                                    "page",
-                                    "pageSize",
-                                    "issuerBelongSite",
-                                    "name",
-                                    "v1",
-                                    "v2",
-                                    "v3",
-                                    "v4",
-                                    "v5",
-                                    "v6"
-                                )
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForTeam,
-                                    mCountPerPageForTeam,
-                                    supplySite,
-                                    supplyVariety,
-                                    selectContentElect[0],
-                                    selectContentElect[1],
-                                    selectContentElect[2],
-                                    selectContentElect[3],
-                                    selectContentElect[4],
-                                    selectContentElect[5]
-                                ) as MutableList<String>
-                            } else if (view.tv_demand_type_select.text.toString()!= "选择需求类别" && view.tv_demand_elect_standard_select.text.toString() == "选择电压等级") {
-                                keyforsupply =
-                                    arrayListOf("page", "pageSize", "issuerBelongSite", "name")
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForTeam,
-                                    mCountPerPageForTeam,
-                                    supplySite,
-                                    supplyVariety
-                                ) as MutableList<String>
-                            } else if (view.tv_demand_type_select.text.toString() == "选择需求类别" && view.tv_demand_elect_standard_select.text.toString() != "选择电压等级") {
-                                keyforsupply = arrayListOf(
-                                    "page",
-                                    "pageSize",
-                                    "issuerBelongSite",
-                                    "v1",
-                                    "v2",
-                                    "v3",
-                                    "v4",
-                                    "v5",
-                                    "v6"
-                                )
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForTeam,
-                                    mCountPerPageForTeam,
-                                    supplySite,
-                                    selectContentElect[0],
-                                    selectContentElect[1],
-                                    selectContentElect[2],
-                                    selectContentElect[3],
-                                    selectContentElect[4],
-                                    selectContentElect[5]
-                                ) as MutableList<String>
-                            } else {
-                                keyforsupply = arrayListOf("page", "pageSize", "issuerBelongSite")
-                                valueforsupply = arrayListOf(
-                                    mPageNumberForTeam,
-                                    mCountPerPageForTeam,
-                                    supplySite
-                                ) as MutableList<String>
-                            }
+                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                            valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                                selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                                selectContentElect[4],selectContentElect[5]) as MutableList<String>
                             mPageNumberForTeam = 1
                             mIsLastPageForTeam = false
                             mPersonAdapter!!.notifyMovie()
                             supplyTeam(view)
                         }
                         3 -> {//租赁服务
-                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                            {
-                                val  str=view.tv_demand_type_select.text.split(" ")
-                                var flagfortype=0
-                                for(temp in str) {
-                                    flagfortype += 1
-                                    if (flagfortype==1)
-                                    {
-                                        supplyVariety = temp
-                                    }
-                                    else if(flagfortype==2)
-                                    {
-                                        if(temp=="")//不是车辆租赁
-                                        {
-                                            keyforsupply= arrayListOf("page","number","issuerBelongSite","type")
-                                            valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety) as MutableList<String>
-                                        } else//车辆租赁
-                                        {
-                                            keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
-                                            valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,temp) as MutableList<String>
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                keyforsupply= arrayListOf("page","number","issuerBelongSite")
-                                valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite) as MutableList<String>
-                            }
+                            keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
+                            valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                                supplyVehicle) as MutableList<String>
                             mPageNumberForLease = 1
                             mIsLastPageForLease = false
                             mPersonAdapter!!.notifyMovie()
                             supplyLease(view)
                         }
                         4->{//个人劳务
-                            if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                            {
-
-                                keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
-                                valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,supplyVariety) as MutableList<String>
-                            }
-                            else
-                            {
-                                keyforsupply= arrayListOf("page","pageSize","issuerBelongSite")
-                                valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite) as MutableList<String>
-                            }
+                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+                            valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
+                                supplySite,supplyVariety) as MutableList<String>
                             mPageNumberForPerson = 1
                             mIsLastPageForPerson = false
                             mPersonalIssueAdapter!!.notifyData()
@@ -1038,14 +914,14 @@ class SupplyInformationFragment : Fragment() {
                         var flagfortype=0
                         for(temp in str) {
                             flagfortype += 1
-                            if (flagfortype<2) {
+                            if (flagfortype==1) {
                                 supplyVariety=""
-                            } else {
-                                supplyVariety+=temp
+                            } else if(flagfortype==2) {
+                                supplyVariety=temp
                             }
                         }
-                        keyforsupply= arrayListOf("page","pageSize","kind")
-                        valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplyVariety) as MutableList<String>
+                        keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
+                        valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,supplyVariety) as MutableList<String>
                         mPageNumberForPerson = 1
                         mIsLastPageForPerson = false
                         mPersonalIssueAdapter!!.notifyData()
@@ -1053,54 +929,19 @@ class SupplyInformationFragment : Fragment() {
                     }
                     else if(flag==2)//供应租赁
                     {
-                        if(view.tv_demand_site_select.text.toString()!="选择地点")
-                        {
                             val  strfortype=selectContent.split(" ")
                             var flagfortype=0
                             for(temp in strfortype) {
                                 flagfortype += 1
                                 if(flagfortype==1)
-                                    supplyVariety+=temp
-                                else if(flagfortype==2)
-                                {
-                                    if(temp=="")//不是车辆租赁
-                                    {
-                                        keyforsupply= arrayListOf("page","number","issuerBelongSite","type")
-                                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety) as MutableList<String>
-                                    } else//车辆租赁
-                                    {
-                                        supplyVehicle=temp
-                                        keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
-                                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,supplyVehicle) as MutableList<String>
-                                    }
+                                    supplyVariety=temp
+                                else if(flagfortype==2) {
+                                    supplyVehicle = temp
                                 }
                             }
-
-                        }
-                        else
-                        {
-                            val  strfortype=selectContent.split(" ")
-                            var flagfortype=0
-                            for(temp in strfortype) {
-                                flagfortype += 1
-                                if(flagfortype==1)
-                                    supplyVariety+=temp
-                                else if(flagfortype==2)
-                                {
-                                    if(temp=="")//不是车辆租赁
-                                    {
-                                        keyforsupply= arrayListOf("page","number","type")
-                                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety) as MutableList<String>
-
-                                    } else//车辆租赁
-                                    {
-                                        supplyVehicle=temp
-                                        keyforsupply= arrayListOf("page","number","type","carType")
-                                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety,supplyVehicle) as MutableList<String>
-                                    }
-                                }
-                            }
-                        }
+                        keyforsupply= arrayListOf("page","number","issuerBelongSite","type","carType")
+                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                            supplyVehicle) as MutableList<String>
                         mPageNumberForLease = 1
                         mIsLastPageForLease = false
                         mPersonAdapter!!.notifyMovie()
@@ -1129,24 +970,10 @@ class SupplyInformationFragment : Fragment() {
                     view.tv_demand_type_select.text=supplyVariety
                     view.tv_demand_type_clear.visibility=View.VISIBLE
                     if(flag==1){//供应团队
-                        if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
-                        {
-                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
-                            valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
-                                selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                                selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                        }else if(view.tv_demand_site_select.text.toString()!="选择地点"&&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
-                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name")
-                            valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety) as MutableList<String>
-                        }else if(view.tv_demand_site_select.text.toString()=="选择地点"&&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                            keyforsupply= arrayListOf("page","pageSize","name","v1","v2","v3","v4","v5","v6")
-                            valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety,
-                                selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                                selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                        }else{
-                            keyforsupply= arrayListOf("page","pageSize","name")
-                            valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety) as MutableList<String>
-                        }
+                        keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                        valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                            selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                            selectContentElect[4],selectContentElect[5]) as MutableList<String>
                         mPageNumberForTeam = 1
                         mIsLastPageForTeam = false
                         mPersonAdapter!!.notifyMovie()
@@ -1154,16 +981,8 @@ class SupplyInformationFragment : Fragment() {
                     }
                     else if(flag==2)//供应三方
                     {
-                        if(view.tv_demand_site_select.text.toString()!="选择地点")
-                        {
-                            keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
-                            valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,supplyVariety) as MutableList<String>
-                        }
-                        else
-                        {
-                            keyforsupply= arrayListOf("page","pageSize","serveType")
-                            valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplyVariety) as MutableList<String>
-                        }
+                        keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","serveType")
+                        valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,supplyVariety) as MutableList<String>
                         mPageNumberForThird = 1
                         mIsLastPageForThird = false
                         mPersonAdapter!!.notifyMovie()
@@ -1188,6 +1007,7 @@ class SupplyInformationFragment : Fragment() {
                 checkedItems[which]=isChecked
             }
             .setPositiveButton("确定") { dialog, which ->
+                supplyElect=""
                 for (i in checkedItems.indices) {
                     if (checkedItems[i]) {
                         selectContentElect[i] = Option1Items[i]
@@ -1198,26 +1018,10 @@ class SupplyInformationFragment : Fragment() {
                 }
                 view.tv_demand_elect_standard_select.text=supplyElect
                 view.tv_demand_elect_standars_clear.visibility=View.VISIBLE
-                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                {
-                    keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"){
-                    keyforsupply= arrayListOf("page","pageSize","name","v1","v2","v3","v4","v5","v6")
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"){
-                    keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","v1","v2","v3","v4","v5","v6")
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else{
-                    keyforsupply= arrayListOf("page","pageSize","v1","v2","v3","v4","v5","v6")
-                    valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }
+                keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","name","v1","v2","v3","v4","v5","v6")
+                valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
                 mPageNumberForTeam = 1
                 mIsLastPageForTeam = false
                 mPersonAdapter!!.notifyMovie()
@@ -1227,90 +1031,25 @@ class SupplyInformationFragment : Fragment() {
         dialog.show()
     }
     fun selectScroll(theflag:Int,view:View){
-        when(theflag)
+        when(theflag)//number
         {
             1->{
-                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplyVariety,supplySite) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplyVariety) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite) as MutableList<String>
-                }else{
-                    valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson) as MutableList<String>
-                }
+                valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,supplyVariety) as MutableList<String>
                 loadSupplyPersonData()
             }
             2->{
-                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"&&
-                    view.tv_demand_elect_standard_select.text.toString()!="选择电压等级")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"&&
-                    view.tv_demand_elect_standard_select.text.toString()=="选择电压等级")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
-                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"
-                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
-                    &&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplyVariety) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点"
-                    &&view.tv_demand_elect_standard_select.text.toString()=="选择电压等级"){
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite) as MutableList<String>
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点"
-                    &&view.tv_demand_elect_standard_select.text.toString()!="选择电压等级"){
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,
-                        selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
-                        selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                }else{
-                    valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam) as MutableList<String>
-                }
+                valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
+                    selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
+                    selectContentElect[4],selectContentElect[5]) as MutableList<String>
                 loadSupplyTeamData()
             }
             3->{
-                if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                {
-                    if(supplyVehicle==""){//其它租赁
-                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety,supplySite) as MutableList<String>
-                    }else{//车辆租赁
-                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety,supplySite,supplyVehicle) as MutableList<String>
-                    }
-                }else if(view.tv_demand_type_select.text.toString()!="选择需求类别"&&view.tv_demand_site_select.text.toString()=="选择地点")
-                {
-                    if(supplyVehicle==""){//其它租赁
-                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety) as MutableList<String>
-                    }else{//车辆租赁
-                        valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplyVariety,supplyVehicle) as MutableList<String>
-                    }
-                }else if(view.tv_demand_type_select.text.toString()=="选择需求类别"&&view.tv_demand_site_select.text.toString()!="选择地点")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite) as MutableList<String>
-                }else{
-                    valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease) as MutableList<String>
-                }
+                valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
+                    supplyVehicle) as MutableList<String>
                 loadSupplyLeaseData()
             }
             4->{
-                if(view.tv_demand_type_select.text.toString()!="选择需求类别")
-                {
-                    valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplyVariety) as MutableList<String>
-                }else{
-                    valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird) as MutableList<String>
-                }
+                valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,supplyVariety) as MutableList<String>
                 loadSupplyThirdData()
             }
             else->{

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray_bg">
+    android:background="@color/white">
     <View
         android:id="@+id/view_related"
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
 
         android:layout_height="@dimen/general_46"
         android:layout_marginTop="@dimen/top_45"
-        android:background="@color/white"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@id/tv_version_image"
         />
 
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_46"
         android:layout_marginTop="@dimen/top_1"
-        android:background="@color/white"
+        android:background="@drawable/item_background"
         app:layout_constraintTop_toBottomOf="@+id/view_detect_new_version"
          />
     <TextView

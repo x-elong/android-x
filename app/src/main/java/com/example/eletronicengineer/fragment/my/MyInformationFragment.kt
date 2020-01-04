@@ -130,7 +130,7 @@ class MyInformationFragment : Fragment() {
                             if(json.getInt("code")==200){
                                 result = "更新成功"
                                 adapter!!.mData[0].shiftInputPicture = imagePath
-                                adapter!!.notifyItemChanged(0)
+                                adapter!!.notifyDataSetChanged()
                             }else{
                                 result = "更新失败"
                             }
@@ -262,7 +262,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -290,7 +290,7 @@ class MyInformationFragment : Fragment() {
                         val items = arrayListOf("女", "男")
                         var checkedItem = 0
                         if(item.shiftInputContent!="未设置")
-                            items.indexOf(item.shiftInputContent)
+                            checkedItem = items.indexOf(item.shiftInputContent)
                         val dialog = AlertDialog.Builder(context!!)
                             .setTitle("性别")
                             .setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
@@ -321,7 +321,7 @@ class MyInformationFragment : Fragment() {
                                                         if (JSONObject(it.string()).getInt("code") == 200) {
                                                             adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent =
                                                                 items[checkedItem]
-                                                            adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                            adapter!!.notifyDataSetChanged()
                                                         }
                                                     },
                                                     {
@@ -372,7 +372,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         item.shiftInputContent = date.toString()
-                                                        mView.rv_my_information_content.adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        mView.rv_my_information_content.adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -401,7 +401,7 @@ class MyInformationFragment : Fragment() {
                         val items = arrayListOf("A型", "B型", "AB型", "O型","其他")
                         var checkedItem = 0
                         if(item.shiftInputContent!="未设置")
-                            items.indexOf(item.shiftInputContent)
+                            checkedItem = items.indexOf(item.shiftInputContent)
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("血型")
                         builder.setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
@@ -429,7 +429,7 @@ class MyInformationFragment : Fragment() {
                                                 if (JSONObject(it.string()).getInt("code") == 200) {
                                                     adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent =
                                                         items[checkedItem]
-                                                    adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                    adapter!!.notifyDataSetChanged()
                                                 }
                                             },
                                             {
@@ -474,7 +474,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -500,7 +500,7 @@ class MyInformationFragment : Fragment() {
                         val items = arrayListOf("未婚", "已婚")
                         var checkedItem = 0
                             if(item.shiftInputContent!="未设置")
-                                items.indexOf(item.shiftInputContent)
+                                checkedItem = items.indexOf(item.shiftInputContent)
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("婚姻状况")
                         builder.setSingleChoiceItems(items.toTypedArray(), checkedItem, object : DialogInterface.OnClickListener {
@@ -528,7 +528,7 @@ class MyInformationFragment : Fragment() {
                                                 if (JSONObject(it.string()).getInt("code") == 200) {
                                                     adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent =
                                                         items[checkedItem]
-                                                    adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                    adapter!!.notifyDataSetChanged()
                                                 }
                                             },
                                             {
@@ -577,7 +577,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         item.shiftInputContent = date.toString()
-                                                        mView.rv_my_information_content.adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        mView.rv_my_information_content.adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -600,7 +600,7 @@ class MyInformationFragment : Fragment() {
                         val items = arrayListOf("非农户口", "农业户口")
                         var checkedItem = 0
                         if(item.shiftInputContent!="未设置")
-                            items.indexOf(item.shiftInputContent)
+                            checkedItem = items.indexOf(item.shiftInputContent)
                         var isChecked = false
                         val builder = AlertDialog.Builder(context!!)
                         builder.setTitle("户籍类型")
@@ -639,7 +639,7 @@ class MyInformationFragment : Fragment() {
                                                             //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                             if (JSONObject(it.string()).getInt("code") == 200) {
                                                                 adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                                adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                                adapter!!.notifyDataSetChanged()
                                                             }
                                                         },
                                                         {
@@ -653,7 +653,7 @@ class MyInformationFragment : Fragment() {
                             }
                             else{
                                 adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = items[checkedItem]
-                                adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                adapter!!.notifyDataSetChanged()
                             }
                         })
                         val dialog = builder.create()
@@ -694,7 +694,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -739,7 +739,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -784,7 +784,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {
@@ -830,7 +830,7 @@ class MyInformationFragment : Fragment() {
                                                     //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
                                                     if (JSONObject(it.string()).getInt("code") == 200) {
                                                         adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyItemChanged(mMultiStyleItemList.indexOf(item))
+                                                        adapter!!.notifyDataSetChanged()
                                                     }
                                                 },
                                                 {

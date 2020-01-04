@@ -100,7 +100,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
+                        adapter.mData[11].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener {
                             if(data.contactPhone!=null)
@@ -235,7 +235,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.majorNetwork.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.majorNetwork.phone==null) {
                             " " } else{ data.majorNetwork.phone}
-                        adapter.mData[10].singleDisplayRightContent=if(data.majorNetwork.remark==null) {
+                        adapter.mData[10].textAreaContent=if(data.majorNetwork.remark==null) {
                             " " } else{ data.majorNetwork.remark}
                         view.button_supply.setOnClickListener {
                             if(data.majorNetwork.phone!=null)
@@ -379,7 +379,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.distribuionNetwork.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.distribuionNetwork.phone==null) {
                             " " } else{ data.distribuionNetwork.phone}
-                        adapter.mData[10].singleDisplayRightContent=if(data.distribuionNetwork.remark==null) {
+                        adapter.mData[10].textAreaContent=if(data.distribuionNetwork.remark==null) {
                             " " } else{ data.distribuionNetwork.remark}
                         view.button_supply.setOnClickListener {
                             if(data.distribuionNetwork.phone!=null)
@@ -512,7 +512,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.powerTransformation.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.powerTransformation.phone==null) {
                             " " } else{ data.powerTransformation.phone}
-                        adapter.mData[10].singleDisplayRightContent=if(data.powerTransformation.remark==null) {
+                        adapter.mData[10].textAreaContent=if(data.powerTransformation.remark==null) {
                             " " } else{ data.powerTransformation.remark}
                         view.button_supply.setOnClickListener {
                             if(data.powerTransformation.phone!=null)
@@ -630,7 +630,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.measureDesign.issuerName}
                         adapter.mData[9].singleDisplayRightContent=if(data.measureDesign.phone==null) {
                             " " } else{ data.measureDesign.phone}
-                        adapter.mData[10].singleDisplayRightContent=if(data.measureDesign.remark==null) {
+                        adapter.mData[10].textAreaContent=if(data.measureDesign.remark==null) {
                             " " } else{ data.measureDesign.remark}
                         view.button_supply.setOnClickListener {
                             if(data.measureDesign.phone!=null)
@@ -691,7 +691,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.caravanTransport.phone}
                         adapter.mData[6].singleDisplayRightContent=if(data.caravanTransport.issuerBelongSite==null) {
                             " " } else{ data.caravanTransport.issuerBelongSite}
-                        adapter.mData[7].singleDisplayRightContent=if(data.caravanTransport.remark==null) {
+                        adapter.mData[7].textAreaContent=if(data.caravanTransport.remark==null) {
                             " " } else{ data.caravanTransport.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
@@ -821,7 +821,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.pileFoundation.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.pileFoundation.issuerBelongSite==null) {
                             " " } else{ data.pileFoundation.issuerBelongSite}
-                        adapter.mData[11].singleDisplayRightContent=if(data.pileFoundation.remark==null) {
+                        adapter.mData[11].textAreaContent=if(data.pileFoundation.remark==null) {
                             " " } else{ data.pileFoundation.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
@@ -945,7 +945,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        adapter.mData[8].singleDisplayRightContent=if(data.remark==null) {
+                        adapter.mData[8].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener {
 //                            if(data.contactPhone!=null)
@@ -1081,7 +1081,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
+                        adapter.mData[11].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
@@ -1204,7 +1204,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[7].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        adapter.mData[8].singleDisplayRightContent=if(data.remark==null) {
+                        adapter.mData[8].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
 //                            if(data.contactPhone!=null)
@@ -1343,7 +1343,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.phone}
                         adapter.mData[10].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite}
-                        adapter.mData[11].singleDisplayRightContent=if(data.remark==null) {
+                        adapter.mData[11].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener{
                             //                            if(data.contactPhone!=null)
@@ -1432,7 +1432,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.validTime }
                         adapter.mData[16].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                        adapter.mData[17].singleDisplayRightContent=if(data.comment==null) {
+                        adapter.mData[17].textAreaContent=if(data.comment==null) {
                             " " } else{ data.comment }
                         view.button_supply.setOnClickListener{
                             if(data.contactPhone!=null)
@@ -1904,7 +1904,7 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.contactPhone }
                            adapter.mData[11].singleDisplayRightContent=if(data.issuerBelongSite==null) {
                             " " } else{ data.issuerBelongSite }
-                        adapter.mData[12].singleDisplayRightContent=if(data.businessScope==null) {
+                        adapter.mData[12].textAreaContent=if(data.businessScope==null) {
                             " " } else{ data.businessScope }
                            view.button_supply.setOnClickListener{
                                 if(data.contactPhone!=null)

@@ -11,53 +11,40 @@
         android:text="身份证照片"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_20"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-    <View
-        android:id="@+id/view_id_card"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/general_260"
-        android:layout_marginTop="@dimen/general_8"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
-        />
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_8"
-        android:text="身份证正反照:"
-        android:layout_marginTop="@dimen/general_8"
-        android:textSize="@dimen/font_tv_hint_14"
-        app:layout_constraintStart_toStartOf="@+id/view_id_card"
-        app:layout_constraintTop_toTopOf="@+id/view_id_card" />
 
     <ImageView
         android:id="@+id/iv_id_card_people"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
         android:background="@drawable/id_card_people"
-        app:layout_constraintEnd_toEndOf="@+id/view_id_card"
-        app:layout_constraintStart_toStartOf="@+id/view_id_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:layout_marginTop="@dimen/top_10"
+        android:layout_marginStart="@dimen/left_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <ImageView
         android:id="@+id/iv_id_card_nation"
         android:layout_width="@dimen/general_160"
         android:layout_height="@dimen/general_104"
-        android:layout_marginTop="8dp"
         android:background="@drawable/id_card_nation"
-        app:layout_constraintEnd_toEndOf="@+id/iv_id_card_people"
-        app:layout_constraintStart_toStartOf="@+id/iv_id_card_people"
-        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people" />
+        android:layout_marginEnd="@dimen/right_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_id_card_people" />
+
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_10"
         android:text="学历证书"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_20"
-        app:layout_constraintTop_toBottomOf="@+id/view_id_card"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/iv_id_card_people"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -76,6 +63,7 @@
         android:text="学位证书"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/rv_education_content"
         tools:ignore="MissingConstraints" />
 
@@ -95,6 +83,7 @@
         android:text="员工照片"
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_20"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/rv_diploma_content"
         tools:ignore="MissingConstraints" />
 

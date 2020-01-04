@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.fragment.retailstore.YellowPagesDisplayFragment
+import com.example.eletronicengineer.fragment.yellowpages.YellowPagesDisplayFragment
 import com.example.eletronicengineer.utils.FragmentHelper
 
 class YellowPagesDisplayActivity : AppCompatActivity() {

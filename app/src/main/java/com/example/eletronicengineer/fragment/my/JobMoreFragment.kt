@@ -155,7 +155,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[16].singleDisplayRightContent =
                             if (data.validTime.toInt() <= 0) "已过期" else data.validTime
 
-                        adapter.mData[17].singleDisplayRightContent =
+                        if(data.additonalExplain!="")
+                        adapter.mData[17].textAreaContent =
 
                             data.additonalExplain
 
@@ -474,7 +475,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[19].singleDisplayRightContent =
                             if (data.validTime.toInt() <= 0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[20].textAreaContent =
 
                             data.additonalExplain
 
@@ -734,7 +736,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[19].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[20].textAreaContent =
 
                             data.additonalExplain
 
@@ -943,7 +946,8 @@ class JobMoreFragment : Fragment() {
 
                         adapter.mData[19].singleDisplayRightContent = if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent = data.additonalExplain
+                        if(data.additonalExplain!=null)
+                        adapter.mData[20].textAreaContent = data.additonalExplain
 
 
                         mView.rv_job_more_content.adapter = adapter
@@ -1178,7 +1182,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[19].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        if(data.additonalDxplain!=null)
+                        adapter.mData[20].textAreaContent =
 
                             data.additonalDxplain
 
@@ -1394,8 +1399,8 @@ class JobMoreFragment : Fragment() {
 
                         adapter.mData[15].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
-
-                        adapter.mData[16].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[16].textAreaContent =
 
                             data.additonalExplain
 
@@ -1604,7 +1609,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[19].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[20].textAreaContent =
 
                             data.additonalExplain
 
@@ -1814,7 +1820,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[19].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[20].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[20].textAreaContent =
 
                             data.additonalExplain
 
@@ -2042,7 +2049,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[20].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[21].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[21].textAreaContent =
 
                             data.additonalExplain
 
@@ -2262,7 +2270,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[18].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[19].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[19].textAreaContent =
 
                             data.additonalExplain
 
@@ -2491,7 +2500,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[20].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[21].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[21].textAreaContent =
 
                             data.additonalExplain
 
@@ -2705,7 +2715,7 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[13].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
                         if(data.additonalExplain!=null)
-                        adapter.mData[14].singleDisplayRightContent = data.additonalExplain
+                        adapter.mData[14].textAreaContent = data.additonalExplain
                         mView.rv_job_more_content.adapter = adapter
                                                 mView.rv_job_more_content.layoutManager = LinearLayoutManager(mView.context)
 
@@ -2873,7 +2883,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[12].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[13].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[13].textAreaContent =
 
                             data.additonalExplain
 
@@ -3044,7 +3055,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[12].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[13].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[13].textAreaContent =
 
                             data.additonalExplain
 
@@ -3216,7 +3228,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[12].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[13].singleDisplayRightContent =
+                        if(data.additonalExplain!=null)
+                        adapter.mData[13].textAreaContent=
 
                             data.additonalExplain
 
@@ -3365,7 +3378,8 @@ class JobMoreFragment : Fragment() {
                         adapter.mData[7].singleDisplayRightContent =
                             if(data.validTime.toInt()<=0) "已过期" else data.validTime
 
-                        adapter.mData[8].singleDisplayRightContent =
+                        if(data.additionalExplain!=null)
+                        adapter.mData[8].textAreaContent =
 
                             data.additionalExplain
 

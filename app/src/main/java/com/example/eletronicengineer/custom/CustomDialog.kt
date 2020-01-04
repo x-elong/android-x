@@ -116,12 +116,14 @@ class CustomDialog {
     {
       Options.SELECT_DIALOG->
       {
+          var position = 0
         val v=LayoutInflater.from(context).inflate(R.layout.dialog_select,null,false)
         val wheelView=v.wv_dialog_select_container
         wheelView.adapter =ArrayWheelAdapter(contentList)
         wheelView.setCyclic(false)
         val builder=AlertDialog.Builder(context).setView(v)
         builder.setPositiveButton("确认") { dialog, which ->
+            position = wheelView.currentItem
           selectContent=contentList[wheelView.currentItem]
 
           val msg = if (msgWhat!=null) {
@@ -131,6 +133,7 @@ class CustomDialog {
           }
           val data= Bundle()
           data.putString("selectContent",selectContent)
+            data.putInt("position",position)
           msg.data=data
           mHandler.sendMessage(msg)
         }

@@ -93,6 +93,8 @@ class PersonalCertificationFragment :Fragment(){
                 ToastHelper.mToast(mView.context,"身份证姓名不能为空")
                 }else if(mView.et_id_card_number.text.isBlank()){
                 ToastHelper.mToast(mView.context,"身份证号码不能为空")
+            }else if(mView.et_id_card_address.text.isBlank()){
+                ToastHelper.mToast(mView.context,"身份证住址不能为空")
             }else{
                 val result=IDCardValidateUtil.validateEffective(mView.et_id_card_number.text.toString())
                 if (result!="TRUE")
@@ -123,12 +125,13 @@ class PersonalCertificationFragment :Fragment(){
             val json = JSONObject().put("mainType","个人")
                 .put("vipName",mView.et_id_card_name.text)
                 .put("identifyCard",mView.et_id_card_number.text)
+                .put("vipAddress",mView.et_id_card_address.text)
                 .put("identifyCardPathFront",idCardPeopleMap.path)
                 .put("identifyCardPathContrary",idCardNationMap.path)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.personalCertification)
+            val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.personalCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     loadingDialog.dismiss()
                     val jsonObject = JSONObject(it.string())

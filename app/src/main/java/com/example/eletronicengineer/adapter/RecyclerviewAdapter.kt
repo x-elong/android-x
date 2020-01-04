@@ -1388,6 +1388,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                    }else{
+//                    if(mData[position].isAdd){
+//                        (vh.itemView as ViewGroup).removeViewAt(0)
+//                        mData[position].isAdd = false
+//                    }
+//                    mData[position].isAdd = true
                     val tvNecessary=TextView(context)
                     tvNecessary.text="  "
                     tvNecessary.gravity=Gravity.START

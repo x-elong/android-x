@@ -29,9 +29,10 @@
     "singleDisplayRightTitle":"租赁时间:",
     "singleDisplayRightContent":""
   },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"附加信息:",
-    "singleDisplayRightContent":""
+   {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加信息:",
+    "textAreaContent":"",
+    "necessary": false
   }
 ]

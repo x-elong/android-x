@@ -75,36 +75,25 @@ class PersonalReCertificationFragment : Fragment() {
     }
 
     private fun initFragment() {
-        val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("mainType", "个人")
-            val requestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-            it.onNext(requestBody)
-        }.subscribe {
-            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.certificationMore)
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                    val jsonObject = JSONObject(it.string())
-                    Log.i("jsonObject",jsonObject.toString())
-                    val code = jsonObject.getInt("code")
-                    var result = ""
-                    if (code == 200) {
-                        val js = jsonObject.getJSONObject("message")
-                        val identifyCardPathFront = js.getString("identifyCardPathFront")
-                        val identifyCardPathContrary = js.getString("identifyCardPathContrary")
-                        result = "获取数据成功"
-                        mView.et_id_card_name.setText(js.getString("vipName"))
-                        mView.et_id_card_number.setText(js.getString("identifyCard"))
-                        glideImageLoader.displayImage(mView.iv_id_card_people, identifyCardPathFront)
-                        glideImageLoader.displayImage(mView.iv_id_card_nation, identifyCardPathContrary)
-                        idCardPeopleMap.path = identifyCardPathFront
-                        idCardNationMap.path = identifyCardPathContrary
-                    } else
-                        result = "获取数据失败"
-                    ToastHelper.mToast(mView.context, result)
-                }, {
-                    ToastHelper.mToast(mView.context,"服务器异常")
-                    it.printStackTrace()
-                })
-        }
+        val result = NetworkAdapter().getDataUser()
+            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                val user = it.message.user
+                if(user.isCredential){
+                    mView.btn_personal_re_certification.visibility = View.VISIBLE
+                    mView.tv_id_card_name_data.setText(user.name)
+                    mView.tv_id_card_number_data.setText(user.identifyCard)
+                    mView.et_id_card_address.setText(user.vipAddress)
+                    GlideImageLoader().displayImage(mView.iv_id_card_people,user.identifyCardPathFront!!)
+                    GlideImageLoader().displayImage(mView.iv_id_card_nation,user.identifyCardPathContrary!!)
+                    idCardPeopleMap.path = user.identifyCardPathFront!!
+                    idCardNationMap.path = user.identifyCardPathContrary!!
+                }else{
+//                        ToastHelper.mToast(mView.context,"")
+                }
+            },{
+                ToastHelper.mToast(mView.context,"网络异常")
+                it.printStackTrace()
+            })
         mView.tv_personal_re_certification_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
@@ -120,21 +109,14 @@ class PersonalReCertificationFragment : Fragment() {
             val loadingDialog = LoadingDialog(mView.context,"正在验证...")
             loadingDialog.show()
             IDCardValidateUtil.mContext = mView.context
-            if(mView.et_id_card_name.text.isBlank()){
-                ToastHelper.mToast(mView.context,"身份证姓名不能为空")
-            }else if(mView.et_id_card_number.text.isBlank()){
-                ToastHelper.mToast(mView.context,"身份证号码不能为空")
-            }else{
-                val result=IDCardValidateUtil.validateEffective(mView.et_id_card_number.text.toString())
-                if (result!="TRUE")
-                    ToastHelper.mToast(mView.context,result)
-                else if(idCardPeopleMap.path==""||idCardNationMap.path==""){
+            if(mView.et_id_card_address.text.isBlank()){
+                ToastHelper.mToast(mView.context,"身份证住址不能为空")
+            }else if(idCardPeopleMap.path==""||idCardNationMap.path==""){
                     ToastHelper.mToast(mView.context,"身份证正反照不能为空")
                 }
                 else{
                     certification()
                 }
-            }
             loadingDialog.dismiss()
         }
     }
@@ -155,15 +137,16 @@ class PersonalReCertificationFragment : Fragment() {
         loadingDialog.show()
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("mainType", "个人")
-                .put("vipName", mView.et_id_card_name.text)
-                .put("identifyCard", mView.et_id_card_number.text)
+                .put("vipName", mView.tv_id_card_name_data.text)
+                .put("identifyCard", mView.tv_id_card_number_data.text)
+                .put("vipAddress",mView.et_id_card_address.text)
                 .put("identifyCardPathFront", idCardPeopleMap.path)
                 .put("identifyCardPathContrary", idCardNationMap.path)
             val requestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
             it.onNext(requestBody)
         }.subscribe {
             val result =
-                putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.enterpriseReCertification)
+                putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.reCertification)
                     .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                         loadingDialog.dismiss()
                         val jsonObject = JSONObject(it.string())

@@ -24,9 +24,10 @@
     "singleDisplayRightTitle":"报价清单:",
     "singleDisplayRightContent":""
   },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"附加信息:",
-    "singleDisplayRightContent":""
+   {
+    "type":"INPUT_WITH_TEXTAREA",
+    "textAreaTitle":"附加信息:",
+    "textAreaContent":"",
+    "necessary": false
   }
 ]

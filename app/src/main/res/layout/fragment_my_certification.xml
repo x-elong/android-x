@@ -51,28 +51,31 @@
         app:layout_constraintEnd_toEndOf="@+id/view_enterprise_certification"
         app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_certification"
          />
+
     <View
         android:id="@+id/view_sp_company"
-        android:background="@drawable/view_style2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_36"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="@dimen/left_1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_style2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_enterprise_certification"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_enterprise_certification" />
 
     <TextView
         android:id="@+id/tv_company_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:hint="公司名称"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_company_under"
-        app:layout_constraintEnd_toEndOf="@+id/view_sp_company"
+        android:layout_marginStart="@dimen/left_42"
+        app:layout_constraintBottom_toBottomOf="@+id/view_sp_company"
+        app:layout_constraintEnd_toStartOf="@+id/tv_company_under"
         app:layout_constraintStart_toStartOf="@+id/view_sp_company"
-        app:layout_constraintTop_toTopOf="@+id/tv_company_under" />
+        app:layout_constraintTop_toTopOf="@+id/view_sp_company" />
     <TextView
         android:id="@+id/tv_company_under"
         android:layout_width="@dimen/general_36"
@@ -100,12 +103,13 @@
         android:hint="主体类别"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_subject_category_under"
+        app:layout_constraintBottom_toBottomOf="@+id/view_subject_category_sp"
         app:layout_constraintEnd_toEndOf="@+id/view_subject_category_sp"
         app:layout_constraintStart_toStartOf="@+id/view_subject_category_sp"
-        app:layout_constraintTop_toTopOf="@+id/tv_subject_category_under" />
+        app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_subject_category_under"
         android:layout_width="@dimen/general_36"
         android:layout_height="@dimen/general_36"

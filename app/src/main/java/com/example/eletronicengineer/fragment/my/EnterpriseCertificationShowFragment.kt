@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter.Companion.MESSAGE_SELECT_OK
 import com.example.eletronicengineer.custom.CustomDialog
@@ -27,12 +28,17 @@ import org.json.JSONObject
 class EnterpriseCertificationShowFragment :Fragment(){
     var mainType = ""
     var organizationName = ""
+    var index = 0
+    val organizationNameList = ArrayList<String>()
+    val certificationStatusList = ArrayList<String>()
     val mHandler = Handler(Handler.Callback {
         when(it.what)
         {
             MESSAGE_SELECT_OK->
             {
+                mView.btn_enterprise_re_certification.visibility = View.GONE
                 val selectContent=it.data.getString("selectContent")
+                index = it.data.getInt("position")
                 mView.tv_company_content.text=selectContent
                 organizationName = selectContent!!
                 getData()
@@ -53,6 +59,7 @@ class EnterpriseCertificationShowFragment :Fragment(){
     }
 
     private fun initFragment() {
+
         initData()
         mView.tv_enterprise_certification_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
@@ -70,22 +77,12 @@ class EnterpriseCertificationShowFragment :Fragment(){
         mView.tv_enterprise_certification_add.setOnClickListener {
             val loadingDialog = LoadingDialog(mView.context,"正在查询个人认证情况...")
             loadingDialog.show()
-            val result = Observable.create<RequestBody> {
-                val json = JSONObject().put("mainType","个人").put("certificationStatus","1")
-                val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
-                it.onNext(requestBody)
-            }.subscribe {
-                loadingDialog.dismiss()
-                val result = startSendMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                        val jsonObject = JSONObject(it.string())
-                        val code = jsonObject.getInt("code")
-                        val desc = jsonObject.getString("desc")
-                        if(code==200 && desc=="OK"){
+                val result = NetworkAdapter().getDataUser().observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io()).subscribe({
+                        loadingDialog.dismiss()
+                        val isCredential = it.message.user.isCredential
+                        if(isCredential){
                             FragmentHelper.switchFragment(activity!!,EnterpriseCertificationFragment(),R.id.frame_my_certification,"Certification")
-                        }
-                        else if(code==500){
-                            ToastHelper.mToast(context!!,"服务器异常")
                         }
                         else{
                             ToastHelper.mToast(context!!,"未进行过个人认证,请先进行个人认证!")
@@ -96,26 +93,28 @@ class EnterpriseCertificationShowFragment :Fragment(){
                         ToastHelper.mToast(context!!,"获取认证信息异常")
                         it.printStackTrace()
                     })
-            }
         }
 
         mView.btn_enterprise_re_certification.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("organizationName",organizationName)
+            bundle.putString("certificationStatus",certificationStatusList[index])
             FragmentHelper.switchFragment(activity!!,EnterpriseReCertificationFragment.newInstance(bundle),R.id.frame_my_certification,"MyCertification")
         }
     }
 
     private fun initData() {
+        organizationNameList.clear()
+        certificationStatusList.clear()
         val result = getALLOrganizationCertificationDTOList().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                 val json = JSONObject(it.string())
                 if(json.getInt("code")==200){
                     val jsonArray = json.getJSONArray("message")
-                    val organizationNameList = ArrayList<String>()
                     for (j in 0 until jsonArray.length()){
                         val js = jsonArray.getJSONObject(j)
                         organizationNameList.add(js.getString("organizationName"))
+                        certificationStatusList.add(js.getString("certificationStatus"))
                     }
                     mView.view_sp_company.setOnClickListener {
                         val selectDialog= CustomDialog(CustomDialog.Options.SELECT_DIALOG,context!!,organizationNameList,mHandler).dialog
@@ -132,7 +131,7 @@ class EnterpriseCertificationShowFragment :Fragment(){
         val result = Observable.create<RequestBody> {
             val json = JSONObject()
 //                .put("mainType",mainType)
-//                .put("certificationStatus","1")
+                .put("certificationStatus",certificationStatusList[index])
                 .put("organizationName",organizationName)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
@@ -158,14 +157,14 @@ class EnterpriseCertificationShowFragment :Fragment(){
                             result = "获取数据成功"
                             val status = js.getInt("certificationStatus")
                             mView.tv_certification_status.text = "认证状态:" + when(status){
-                                0-> "未处理"
-                                1->"通过"
-                                2->"驳回\n驳回理由:(${js.getString("reason")})"
-                                3->"重新认证"
+                                0,3-> "审核中"
+                                1->"成功"
+                                2->"失败\n驳回理由:(${js.getString("reason")})"
                                 else->"未认证"
                             }
                             if(status==1 || status==2)
                                 mView.btn_enterprise_re_certification.visibility = View.VISIBLE
+                            mView.tv_subject_category_content.text = js.getString("mainType")
                             mView.tv_institution_name_data.text = js.getString("organizationName")
                             mView.tv_social_credit_code_data.text = js.getString("socialCreditCode")
                             mView.tv_main_code_data.text = js.getString("mainBusiness")

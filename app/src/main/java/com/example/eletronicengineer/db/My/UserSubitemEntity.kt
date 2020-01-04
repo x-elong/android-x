@@ -35,7 +35,7 @@ class UserSubitemEntity (
     var identifyCardPathFront:String?,
     var identifyCardPathContrary:String?,
     var vipAddress:String?,
-    var isCredential:Boolean?,
+    var isCredential:Boolean,
     var busyLeisure:Boolean?,
     var mianPartType:String?,
     var totalIntegral:Double?,

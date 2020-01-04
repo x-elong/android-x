@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -21,7 +22,9 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.My.UserSubitemEntity
 import com.example.eletronicengineer.utils.*
+import com.example.eletronicengineer.wxapi.WXShare
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_qrcode.view.*
@@ -207,6 +210,7 @@ class MyFragment : Fragment() {
         }
         mMultiStyleItemList.add(MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"推荐电企通",false))
         mMultiStyleItemList[mMultiStyleItemList.size-1].jumpListener=View.OnClickListener {
+
             val pref = PreferenceManager.getDefaultSharedPreferences(context)
             qrCodePath = pref.getString("qrCodePath","")
             val loadingDialog = LoadingDialog(mView.context,"正在加载...")
@@ -220,8 +224,10 @@ class MyFragment : Fragment() {
                     val dialog = AlertDialog.Builder(context!!).create()
                     val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_qrcode,null)
                     GlideImageLoader().displayImage(dialogView.iv_qr_code,qrCodeUrl)
+                    dialogView.btn_save_qr_code.visibility = View.VISIBLE
                     dialogView.btn_save_qr_code.setOnClickListener {
-                        dialogView.iv_qr_code.apply {
+                        dialogView.cl.apply {
+                            btn_save_qr_code.visibility = View.GONE
                             val image= Bitmap.createBitmap(measuredWidth,measuredHeight,
                                 Bitmap.Config.ARGB_8888)
                             draw(Canvas(image))
@@ -250,28 +256,24 @@ class MyFragment : Fragment() {
                             var result = "二维码保存失败"
                             Log.i("qrCode Url",path)
                             if(File(path).exists()){
+                                MediaStore.Images.Media.insertImage(context.contentResolver,
+                                    path, name, null)
+                                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(path)))
                                 //通知相册更新
-                                val intent = Intent()
-                                intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                                intent.setData(Uri.fromFile(File(path)))
-                                mView.context.sendBroadcast(intent)
+//                                val intent = Intent()
+//                                intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+//                                intent.setData(Uri.fromFile(File(path)))
+//                                mView.context.sendBroadcast(intent)
                                 result = "二维码保存成功"
                                 dialog.dismiss()
                                 val dialog = BottomSheetDialog(context!!)
                                 val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_recommended_application,null)
-                                dialogView.view_sms.setOnClickListener {
+                                dialogView.view_wx_time_line.setOnClickListener {
+                                    WXShare(context).shareImage(path, SendMessageToWX.Req.WXSceneTimeline)
                                     dialog.dismiss()
                                 }
-                                dialogView.view_we_chat.setOnClickListener {
-                                    val wechatIntent = Intent(Intent.ACTION_SEND)
-//                                    val cop = ComponentName("com.tencent.mm","com.tencent.mm.ui.tools.ShareImgUI")
-//                                    wechatIntent.setComponent(cop)
-                                    wechatIntent.setPackage("com.tencent.mm")
-                                    wechatIntent.setType("image/*")
-                                    wechatIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    wechatIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
-
-                                    startActivity(Intent.createChooser(wechatIntent, "推荐电企通"))
+                                dialogView.view_wx_session.setOnClickListener {
+                                    WXShare(context).shareImage(path, SendMessageToWX.Req.WXSceneSession)
                                     dialog.dismiss()
                                 }
                                 dialogView.view_qq.setOnClickListener {
@@ -280,6 +282,9 @@ class MyFragment : Fragment() {
                                     qqIntent.setPackage("com.tencent.mobileqq")
                                     qqIntent.setType("image/*")
                                     qqIntent.putExtra(Intent.EXTRA_STREAM, path)
+                                    qqIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                                    qqIntent.setComponent(ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity"))
                                     startActivity(Intent.createChooser(qqIntent, "推荐电企通"))
                                     dialog.dismiss()
                                 }

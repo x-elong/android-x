@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cl"
     android:background="@color/transparent">
+    <ImageView
+        android:id="@+id/iv_share_qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/share_qrcode"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/iv_qr_code"
-        android:layout_width="@dimen/general_200"
-        android:layout_height="@dimen/general_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="@dimen/general_180"
+        android:layout_height="@dimen/general_190"
+        android:layout_marginBottom="@dimen/bottom_50"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save_qr_code"
+        app:layout_constraintEnd_toEndOf="@+id/iv_share_qrcode"
+        app:layout_constraintStart_toStartOf="@+id/iv_share_qrcode"
+        />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_save_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/general_60"
         android:text="保存二维码"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_share_qrcode"
         app:layout_constraintEnd_toEndOf="@+id/iv_qr_code"
         app:layout_constraintStart_toStartOf="@+id/iv_qr_code"
-        app:layout_constraintTop_toBottomOf="@+id/iv_qr_code" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

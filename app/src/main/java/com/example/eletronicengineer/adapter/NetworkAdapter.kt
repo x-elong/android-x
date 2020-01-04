@@ -5961,7 +5961,7 @@ class NetworkAdapter {
                         when (j.selectTitle) {
                             "项目地点", "孔洞最大直径","岗位类别",
                             "可实施地域","运送财产保险","资质类别及等级" -> {
-                                if (j.selectContent == "") {
+                                if (j.selectContent == ""||j.selectContent.replace(" ","")=="") {
                                     result = "${j.selectTitle.replace("：", "")}没有选择"
                                 }
                             }

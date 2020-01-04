@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyCertificationActivity
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
@@ -44,38 +45,23 @@ class PersonalCertificationShowFragment :Fragment(){
         mView.btn_personal_re_certification.setOnClickListener {
             FragmentHelper.switchFragment(activity!!,PersonalReCertificationFragment(),R.id.frame_my_certification,"MyCertification")
         }
-        val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("mainType","个人")
-            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
-            it.onNext(requestBody)
-        }.subscribe {
-            val result = startSendMessage(it, UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.certificationMore)
+            val result = NetworkAdapter().getDataUser()
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                    val jsonObject = JSONObject(it.string())
-                    val code = jsonObject.getInt("code")
-                    var result = ""
-                    if(code==200){
-                        if(jsonObject.getString("desc")=="FAIL"){
-                            result = jsonObject.getString("message")
-                        }
-                        else{
-                            isCertification = true
-                            mView.btn_personal_re_certification.visibility = View.VISIBLE
-                            val js = jsonObject.getJSONObject("message")
-                            result = "获取数据成功"
-                            mView.tv_id_card_name_data.text = js.getString("vipName")
-                            mView.tv_id_card_number_data.text = js.getString("identifyCard")
-                            GlideImageLoader().displayImage(mView.iv_id_card_people_show,js.getString("identifyCardPathFront"))
-                            GlideImageLoader().displayImage(mView.iv_id_card_nation_show,js.getString("identifyCardPathContrary"))
-                        }
-                    }else if(code==500){
-                        result = "服务器异常"
+                    val user = it.message.user
+                    if(user.isCredential){
+                        isCertification = true
+                        mView.btn_personal_re_certification.visibility = View.VISIBLE
+                        mView.tv_id_card_name_data.text = user.name
+                        mView.tv_id_card_number_data.text = user.identifyCard
+                        mView.tv_id_card_address_data.text = user.vipAddress
+                        GlideImageLoader().displayImage(mView.iv_id_card_people_show,user.identifyCardPathFront!!)
+                        GlideImageLoader().displayImage(mView.iv_id_card_nation_show,user.identifyCardPathContrary!!)
+                    }else{
+//                        ToastHelper.mToast(mView.context,"")
                     }
-                    ToastHelper.mToast(mView.context,result)
                 },{
                     ToastHelper.mToast(mView.context,"网络异常")
                     it.printStackTrace()
                 })
         }
-    }
 }

@@ -5269,7 +5269,7 @@ class AdapterGenerate {
                     val data = Bundle()
                     data.putString("key", mData[5].key)
                     data.putString("title", mData[5].shiftInputTitle)
-                    FragmentHelper.switchFragment(activity, ImageFragment.newInstance(data),R.id.frame_demand_publish,"Capture")
+                    FragmentHelper.switchFragment(activity, ImageFragment.newInstance(data),R.id.frame_display_demand,"Capture")
                 }
             }
             //机械清册详情

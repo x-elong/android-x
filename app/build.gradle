@@ -86,4 +86,5 @@ dependencies {
     //可以手势缩放图片
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.YancyYe:GalleryPick:1.2.1'
+
 }

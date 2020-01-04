@@ -115,7 +115,40 @@
         android:gravity="right"
         android:textSize="@dimen/font_tv_hint_15"
         />
-
+    <View
+        android:layout_marginTop="@dimen/top_4"
+        android:id="@+id/view_id_card_address"
+        android:background="@drawable/item_background"
+        app:layout_constraintTop_toBottomOf="@+id/view_id_card_number"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/left_10"
+        android:layout_marginEnd="@dimen/right_10"
+        android:layout_height="@dimen/general_40"/>
+    <TextView
+        android:id="@+id/tv_id_card_address"
+        android:text="身份证住址:"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/view_id_card_address"
+        app:layout_constraintTop_toTopOf="@+id/view_id_card_address"
+        app:layout_constraintBottom_toBottomOf="@+id/view_id_card_address"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_id_card_address_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/tv_id_card_address"
+        app:layout_constraintEnd_toEndOf="@+id/view_id_card_address"
+        app:layout_constraintTop_toTopOf="@+id/view_id_card_address"
+        app:layout_constraintBottom_toBottomOf="@+id/view_id_card_address"
+        android:gravity="right"
+        android:textSize="@dimen/font_tv_hint_15"
+        />
     <ImageView
         android:id="@+id/iv_id_card_people_show"
         android:layout_width="@dimen/general_160"
@@ -124,7 +157,7 @@
         android:layout_marginStart="@dimen/left_10"
         android:background="@drawable/id_card_people"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_id_card_number" />
+        app:layout_constraintTop_toBottomOf="@+id/view_id_card_address" />
 
     <ImageView
         android:id="@+id/iv_id_card_nation_show"

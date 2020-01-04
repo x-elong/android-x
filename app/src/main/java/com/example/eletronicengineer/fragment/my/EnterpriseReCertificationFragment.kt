@@ -43,6 +43,7 @@ class EnterpriseReCertificationFragment :Fragment(){
     lateinit var mView:View
     lateinit var organizationName:String
     var mainType = ""
+    var certificationStatus = ""
     var businessLicenseMap = BitmapMap("","businessLicense")
     var officialPictureMap = BitmapMap("","officialPicturePath")
     var legalIdCardPeopleMap = BitmapMap("","legalPersonPositivePath")
@@ -85,6 +86,7 @@ class EnterpriseReCertificationFragment :Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_re_certification,container,false)
         organizationName = arguments!!.getString("organizationName").replace("/"," ")
+        certificationStatus = arguments!!.getString("certificationStatus")
         initFragment()
         return mView
     }
@@ -118,6 +120,8 @@ class EnterpriseReCertificationFragment :Fragment(){
         }
         val results = Observable.create<RequestBody> {
             val json = JSONObject().put("organizationName",organizationName)
+                .put("certificationStatus",certificationStatus)
+
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
@@ -144,9 +148,7 @@ class EnterpriseReCertificationFragment :Fragment(){
 
                         administratorIdCardPeopleMap.path = js.getString("identifyCardPathFront")
                         administratorIdCardNationMap.path = js.getString("identifyCardPathContrary")
-                        mView.tv_institution_name.text = js.getString("organizationName")
-                        mView.tv_social_credit_code.text = js.getString("socialCreditCode")
-                        mView.tv_main_code.text = js.getString("mainBusiness")
+
                         GlideImageLoader().displayImage(mView.iv_business_license,businessLicenseMap.path)
                         GlideImageLoader().displayImage(mView.iv_official_picture,officialPictureMap.path)
                         GlideImageLoader().displayImage(mView.iv_legal_id_card_people,legalIdCardPeopleMap.path)
@@ -257,7 +259,7 @@ class EnterpriseReCertificationFragment :Fragment(){
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {
-            val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.enterpriseReCertification)
+            val result = putSimpleMessage(it,UnSerializeDataBase.mineBasePath+ Constants.HttpUrlPath.My.reCertification)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
                     val jsonObject = JSONObject(it.string())
                     val code = jsonObject.getInt("code")

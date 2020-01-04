@@ -279,11 +279,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_administrator_id_card_people_show" />
     <Button
-        android:visibility="gone"
         android:id="@+id/btn_enterprise_re_certification"
         android:layout_width="@dimen/general_268"
         android:layout_height="@dimen/general_43"
         android:layout_marginTop="@dimen/top_20"
+        android:visibility="gone"
         android:text="重新认证"
         android:textSize="@dimen/font_tv_hint_14"
         android:background="@drawable/btn_style3"

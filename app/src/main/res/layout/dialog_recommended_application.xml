@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/dark_gray_bg"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,120 +21,85 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
-        android:id="@+id/view_sms"
-        android:layout_width="@dimen/general_68"
-        android:layout_height="@dimen/general_68"
-        android:layout_marginStart="@dimen/left_32"
+        android:id="@+id/view_qq"
+        android:layout_width="@dimen/general_64"
+        android:layout_height="@dimen/general_64"
+        android:layout_marginStart="@dimen/left_36"
         android:layout_marginTop="@dimen/top_26"
-        android:background="@color/white"
+        android:background="@drawable/qq"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tv_sms"
-        android:layout_width="@dimen/general_41"
-        android:layout_height="@dimen/general_42"
-        android:background="@drawable/sms"
-        app:layout_constraintBottom_toBottomOf="@+id/view_sms"
-        app:layout_constraintEnd_toEndOf="@+id/view_sms"
-        app:layout_constraintStart_toStartOf="@+id/view_sms"
-        app:layout_constraintTop_toTopOf="@+id/view_sms" />
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tv_sms_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/top_10"
-        android:text="短信"
-        android:textSize="@dimen/font_tv_hint_12"
-        app:layout_constraintTop_toBottomOf="@id/view_sms"
-        app:layout_constraintEnd_toEndOf="@+id/view_sms"
-        app:layout_constraintStart_toStartOf="@+id/view_sms" />
-
-
-    <View
-        android:id="@+id/view_we_chat"
-        android:layout_width="@dimen/general_68"
-        android:layout_height="@dimen/general_68"
-        android:layout_marginStart="@dimen/left_46"
-        android:layout_marginTop="@dimen/top_26"
-        android:layout_marginBottom="8dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/tv_qq_name"
-        app:layout_constraintStart_toEndOf="@+id/view_sms"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tv_we_chat"
-        android:layout_width="@dimen/general_41"
-        android:layout_height="@dimen/general_42"
-        android:background="@drawable/we_chat"
-        app:layout_constraintBottom_toBottomOf="@+id/view_we_chat"
-        app:layout_constraintEnd_toEndOf="@+id/view_we_chat"
-        app:layout_constraintStart_toStartOf="@+id/view_we_chat"
-        app:layout_constraintTop_toTopOf="@+id/view_we_chat" />
-
-    <TextView
-        android:id="@+id/tv_we_chat_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/top_10"
-        android:text="微信"
-        android:textSize="@dimen/font_tv_hint_12"
-        app:layout_constraintTop_toBottomOf="@id/view_we_chat"
-        app:layout_constraintEnd_toEndOf="@+id/view_we_chat"
-        app:layout_constraintStart_toStartOf="@+id/view_we_chat" />
-
-    <View
-        android:id="@+id/view_qq"
-        android:layout_width="@dimen/general_68"
-        android:layout_height="@dimen/general_68"
-        android:layout_marginStart="@dimen/left_46"
-        android:layout_marginTop="@dimen/top_26"
-        android:layout_marginEnd="@dimen/right_33"
-        android:background="@color/white"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view_we_chat"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tv_qq"
-        android:layout_width="@dimen/general_41"
-        android:layout_height="@dimen/general_42"
-        android:background="@drawable/qq"
-        app:layout_constraintBottom_toBottomOf="@+id/view_qq"
-        app:layout_constraintEnd_toEndOf="@+id/view_qq"
-        app:layout_constraintStart_toStartOf="@+id/view_qq"
-        app:layout_constraintTop_toTopOf="@+id/view_qq" />
 
     <TextView
         android:id="@+id/tv_qq_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_10"
-        android:text="QQ"
+        android:text="QQ好友"
         android:textSize="@dimen/font_tv_hint_12"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/view_qq"
         app:layout_constraintEnd_toEndOf="@+id/view_qq"
         app:layout_constraintStart_toStartOf="@+id/view_qq" />
+
+
+    <View
+        android:id="@+id/view_wx_session"
+        android:layout_width="@dimen/general_64"
+        android:layout_height="@dimen/general_64"
+        android:background="@drawable/icon64_appwx_logo"
+        app:layout_constraintEnd_toStartOf="@+id/view_wx_time_line"
+        app:layout_constraintStart_toEndOf="@+id/view_qq"
+        app:layout_constraintTop_toTopOf="@+id/view_qq"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/tv_wx_session_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_10"
+        android:text="微信好友"
+        android:textSize="@dimen/font_tv_hint_12"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/view_wx_session"
+        app:layout_constraintEnd_toEndOf="@+id/view_wx_session"
+        app:layout_constraintStart_toStartOf="@+id/view_wx_session" />
+
+    <View
+        android:id="@+id/view_wx_time_line"
+        android:layout_width="@dimen/general_64"
+        android:layout_height="@dimen/general_64"
+        android:layout_marginEnd="@dimen/right_36"
+        android:background="@drawable/icon64_appwx_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_wx_session"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/tv_wx_time_line_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_10"
+        android:text="微信朋友圈"
+        android:textSize="@dimen/font_tv_hint_12"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/view_wx_time_line"
+        app:layout_constraintEnd_toEndOf="@+id/view_wx_time_line"
+        app:layout_constraintStart_toStartOf="@+id/view_wx_time_line" />
 
     <TextView
         android:id="@+id/tv_cancel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_48"
-        android:background="@color/white"
+        android:background="@drawable/background_black_stroke"
         android:gravity="center"
         android:text="取消"
         android:textColor="#3c4a54"
         android:layout_marginTop="@dimen/top_26"
         android:textSize="@dimen/font_tv_normal_16"
-        app:layout_constraintTop_toBottomOf="@+id/tv_we_chat_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_wx_session_name"
          />
 </androidx.constraintlayout.widget.ConstraintLayout>
