@@ -106,55 +106,55 @@ class ProjectImageCheckFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = imageCheckAdapter
     }
-    fun uploadFile(filePath:String){
-        val map=HashMap<String, RequestBody>()
-        map["nodeSubitemId"]=RequestBody.create(MultipartBody.FORM,"1")
-        var fileName = ""
-        val result= Observable.create<HashMap<String,RequestBody>>{
-            val key = "file"
-            val file= File(filePath)
-            fileName = file.name
-            val builder= MultipartBody.Builder()
-            if (file.name.contains("jpg")||file.name.contains("png"))
-            {
-                val requestBody=RequestBody.create(MediaType.parse("image/*"),file)
-                builder.addFormDataPart(key,file.name,requestBody)
-            }
-            else
-            {
-                val requestBody=RequestBody.create(MediaType.parse("application/octet-stream;charset=utf-8"),file)
-                if (file.exists())
-                    Log.i("file","exist")
-                if (file.canRead())
-                    Log.i("file","can read")
-                builder.addFormDataPart(key, URLEncoder.encode(file.name,"utf-8"),requestBody)
-            }
-            map[key]=builder.build()
-            it.onNext(map)
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                uploadFile(it,"http://192.168.1.133:8014"+Constants.HttpUrlPath.Professional.selfInspectionUploadFile).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                    .subscribe({
-                        //Log.i("retrofitMsg", it.string())
-                        val json = JSONObject(it.string()).getJSONObject("message")
-                        val imageCheck = ImageCheck(R.drawable.photo,fileName)
-                        imageCheck.id = json.getLong("id")
-                        imageCheckList.add(imageCheck)
-//                        if (UnSerializeDataBase.imgList[0].needDelete) {
-//                            val file = File(UnSerializeDataBase.imgList[0].path)
-//                            file.delete()
-//                        }
-                        UnSerializeDataBase.imgList.clear()
-                        UnSerializeDataBase.fileList.clear()
-                        imageCheckAdapter.mImageCheckList=imageCheckList
-                        imageCheckAdapter.notifyItemInserted(imageCheckList.size)
-                        Toast.makeText(context,"上传成功！！",Toast.LENGTH_SHORT).show()
-                    },
-                        {
-                            it.printStackTrace()
-                        })
-            }
-    }
+//    fun uploadFile(filePath:String){
+//        val map=HashMap<String, RequestBody>()
+//        map["nodeSubitemId"]=RequestBody.create(MultipartBody.FORM,"1")
+//        var fileName = ""
+//        val result= Observable.create<HashMap<String,RequestBody>>{
+//            val key = "file"
+//            val file= File(filePath)
+//            fileName = file.name
+//            val builder= MultipartBody.Builder()
+//            if (file.name.contains("jpg")||file.name.contains("png"))
+//            {
+//                val requestBody=RequestBody.create(MediaType.parse("image/*"),file)
+//                builder.addFormDataPart(key,file.name,requestBody)
+//            }
+//            else
+//            {
+//                val requestBody=RequestBody.create(MediaType.parse("application/octet-stream;charset=utf-8"),file)
+//                if (file.exists())
+//                    Log.i("file","exist")
+//                if (file.canRead())
+//                    Log.i("file","can read")
+//                builder.addFormDataPart(key, URLEncoder.encode(file.name,"utf-8"),requestBody)
+//            }
+//            map[key]=builder.build()
+//            it.onNext(map)
+//        }
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                uploadFile(it,"http://192.168.1.133:8014"+Constants.HttpUrlPath.Professional.selfInspectionUploadFile).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+//                    .subscribe({
+//                        //Log.i("retrofitMsg", it.string())
+//                        val json = JSONObject(it.string()).getJSONObject("message")
+//                        val imageCheck = ImageCheck(R.drawable.photo,fileName)
+//                        imageCheck.id = json.getLong("id")
+//                        imageCheckList.add(imageCheck)
+////                        if (UnSerializeDataBase.imgList[0].needDelete) {
+////                            val file = File(UnSerializeDataBase.imgList[0].path)
+////                            file.delete()
+////                        }
+//                        UnSerializeDataBase.imgList.clear()
+//                        UnSerializeDataBase.fileList.clear()
+//                        imageCheckAdapter.mImageCheckList=imageCheckList
+//                        imageCheckAdapter.notifyItemInserted(imageCheckList.size)
+//                        Toast.makeText(context,"上传成功！！",Toast.LENGTH_SHORT).show()
+//                    },
+//                        {
+//                            it.printStackTrace()
+//                        })
+//            }
+//    }
 }

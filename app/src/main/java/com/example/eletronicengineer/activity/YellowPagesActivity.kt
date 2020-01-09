@@ -20,7 +20,6 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.fragment.sdf.SupplyFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.fragment.yellowpages.YellowPagesFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap

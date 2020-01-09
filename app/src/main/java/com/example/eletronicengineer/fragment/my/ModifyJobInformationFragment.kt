@@ -465,10 +465,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -527,10 +527,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -585,10 +585,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -647,10 +647,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -707,10 +707,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -769,10 +769,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -828,10 +828,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -890,10 +890,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -999,10 +999,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1081,10 +1081,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1162,10 +1162,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1234,10 +1234,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1294,10 +1294,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1345,10 +1345,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1404,10 +1404,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1454,10 +1454,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","成员清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1522,10 +1522,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","车辆清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1590,10 +1590,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","租赁清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1651,10 +1651,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","租赁清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1714,10 +1714,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","租赁清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }
@@ -1771,10 +1771,10 @@ class ModifyJobInformationFragment :Fragment(){
                     itemMultiStyleItems[0].selected = itemMultiStyleItems.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItems[itemMultiStyleItems.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","三方服务清册发布")
                     FragmentHelper.switchFragment(activity!!,
-                        PublishInventoryItemMoreFragment.newInstance(bundle),
+                        PublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem),
                         R.id.frame_my_release,"")
                 }
             }

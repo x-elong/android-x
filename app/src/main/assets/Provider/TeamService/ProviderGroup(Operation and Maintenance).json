@@ -9,14 +9,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "provideCrewLists",
     "sendFormat": "JsonArray"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆清册",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "provideTransportMachines",
     "sendFormat": "JsonArray"
   },
@@ -30,7 +30,7 @@
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可操作电压等级",
-    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
+    "checkboxNameList":["35kV","110kV","220kV","500kV"],
     "key": "voltage",
     "sendFormat": "String"
   },
@@ -51,7 +51,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"工器具清册",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "constructionToolLists",
     "sendFormat": "JsonArray"
   },

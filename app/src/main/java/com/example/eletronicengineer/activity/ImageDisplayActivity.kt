@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.utils.GlideImageLoader
-import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import kotlinx.android.synthetic.main.activity_image_display.*
 

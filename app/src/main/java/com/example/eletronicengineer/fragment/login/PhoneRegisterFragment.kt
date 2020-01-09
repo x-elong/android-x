@@ -11,9 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.api.BasicCallback
-import com.amap.api.col.sl2.it
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.ServiceTermsActivity
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
@@ -63,7 +61,7 @@ class   PhoneRegisterFragment: Fragment()  {
             }
             else{
                 if(v.tv_get_check.text=="重新获取验证码" || v.tv_get_check.text=="获取验证码"){
-                    val result= sendMobile(phoneNum, UnSerializeDataBase.upmsBasePath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    val result= sendMobile(phoneNum).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         {
                             if(it.desc=="验证码发送成功")
                             {

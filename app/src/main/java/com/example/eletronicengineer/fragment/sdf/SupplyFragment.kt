@@ -313,7 +313,7 @@ class SupplyFragment:Fragment(){
                                     .put("lenghtCar",mAdapter!!.mData[5].inputUnitContent.toLongOrNull().toString())
                                     .put("isDriver",isDriver)
                                     .put("isInsurance",isInsurance)
-                                    .put("carPhotoPath",carPhotoPath)
+                                    .put("carPhotoPath",mAdapter!!.mData[9].shiftInputPicture)
                                     .put("carNumber",carNumber)
                             )
                                 .put("issuerBelongSite",issuerBelongSite)
@@ -555,7 +555,6 @@ class SupplyFragment:Fragment(){
                 var singleDisplayRightContent = "工器具租赁"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath=Constants.HttpUrlPath.Provider.LcTool
-                adapter.mData[13].key="validTime"
             }
             //租赁服务--机械
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
@@ -617,5 +616,13 @@ class SupplyFragment:Fragment(){
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
         Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())
+    }
+    fun refresh(imagePath:String,position:Int){
+        mAdapter!!.mData[position].shiftInputPicture = imagePath
+        mAdapter!!.notifyDataSetChanged()
+    }
+    fun file(filePath:String){
+        mAdapter!!.mData[9].filePath = filePath
+        mAdapter!!.notifyDataSetChanged()
     }
 }

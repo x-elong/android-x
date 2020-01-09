@@ -20,7 +20,6 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap
 import com.example.eletronicengineer.utils.GlideImageLoader
-import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.lcw.library.imagepicker.ImagePicker
 import com.yancy.gallerypick.config.GalleryConfig
@@ -67,6 +66,7 @@ class UploadPhoneFragment:Fragment(){
     lateinit var mView: View
     lateinit var key:String
     var total = 3
+    var imagePath = ""
     val glideImageLoader = GlideImageLoader()
     val galleryConfig = GalleryConfig.Builder()
         .imageLoader(glideImageLoader)    // ImageLoader 加载框架（必填）
@@ -84,76 +84,96 @@ class UploadPhoneFragment:Fragment(){
         key = arguments!!.getString("key")
         //获取当前照片的所在位置 若只有一张照片则不必传值 默认为0
         position=arguments!!.getInt("position",0)
-        total = arguments!!.getInt("total")
+        total = arguments!!.getInt("total",0)
+        imagePath = arguments!!.getString("imagePath","")
         if(activity is MyCertificationActivity){
             mView.tv_upload_photo_title.setText(arguments!!.getString("title")+"上传")
         }
+
         //refresh(mImagePaths!!)
-        if(total==0)total=3
+//        if(total==0)total=3
         mView.tv_upload_photo_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
 
         imageViewContent = mView.iv_uplaod_photo_content
 
-        for (j in 0 until total){
-            mImagePaths.add("")
-        }
-        for (i in UnSerializeDataBase.imgList){
-            if(i.key==key){
-                val ImagesPath = i.path.split("|")
-                mImagePaths[position]=ImagesPath[position]
-                if(mImagePaths[position]!="")
-                refresh(mImagePaths[position])
-                break
-            }
-        }
+//        for (j in 0 until total){
+//            mImagePaths.add("")
+//        }
+//        for (i in UnSerializeDataBase.imgList){
+//            if(i.key==key){
+//                val ImagesPath = i.path.split("|")
+//                mImagePaths[position]=ImagesPath[position]
+//                if(mImagePaths[position]!="")
+//                refresh(mImagePaths[position])
+//                break
+//            }
+//        }
         imageViewContent.setOnClickListener {
-            if(mImagePaths[position]=="") {
+//            if(imagePath=="") {
                 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
-            }else{
-                val intent = Intent(activity,ImageDisplayActivity::class.java)
-                intent.putExtra("imagePath",mImagePaths[0])
-                activity!!.startActivity(intent)
-            }
+//            }
+//            else{
+//                val intent = Intent(activity,ImageDisplayActivity::class.java)
+//                intent.putExtra("imagePath",imagePath)
+//                activity!!.startActivity(intent)
+//            }
+//            if(mImagePaths[position]=="") {
+//                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+//            }else{
+//                val intent = Intent(activity,ImageDisplayActivity::class.java)
+//                intent.putExtra("imagePath",mImagePaths[0])
+//                activity!!.startActivity(intent)
+//            }
             //activity!!.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
 //            val intent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //            activity!!.startActivityForResult(intent,Constants.RequestCode.REQUEST_PICK_IMAGE.ordinal)
+        }
+        if(imagePath!=""){
+            glideImageLoader.displayImage(imageViewContent,imagePath)
         }
         return mView
     }
     fun refresh(imagePaths: String) {
         Log.i("",imagePaths)
-        if(mImagePaths[position]==""){
-            var isInList = false
-            for (j in UnSerializeDataBase.imgList){
-                if(j.key==key){
-                    var imagesPath:ArrayList<String> = ArrayList(j.path.split("|"))
-                    imagesPath[position] = imagePaths
-                    var str = ""
-                    for (i in 0 until imagesPath.size-1){
-                        str +=imagesPath[i]+"|"
-                    }
-                    str+=imagesPath[imagesPath.size-1]
-                    j.path=str
-                    isInList=true
-                    break
-                }
-            }
-            if(!isInList){
-                var imagesPath = ""
-                for (j in 0 until total){
-                    if(j==position)
-                        imagesPath+=imagePaths
-                    if(j!=total-1)
-                    imagesPath+="|"
-                }
-                val Paths = imagesPath.split("|")
-                UnSerializeDataBase.imgList.add(BitmapMap(imagesPath,key))
-            }
-            mImagePaths[position] = imagePaths
-        }
+//        if(mImagePaths[position]==""){
+//            var isInList = false
+//            for (j in UnSerializeDataBase.imgList){
+//                if(j.key==key){
+//                    var imagesPath:ArrayList<String> = ArrayList(j.path.split("|"))
+//                    imagesPath[position] = imagePaths
+//                    var str = ""
+//                    for (i in 0 until imagesPath.size-1){
+//                        str +=imagesPath[i]+"|"
+//                    }
+//                    str+=imagesPath[imagesPath.size-1]
+//                    j.path=str
+//                    isInList=true
+//                    break
+//                }
+//            }
+//            if(!isInList){
+//                var imagesPath = ""
+//                for (j in 0 until total){
+//                    if(j==position)
+//                        imagesPath+=imagePaths
+//                    if(j!=total-1)
+//                    imagesPath+="|"
+//                }
+//                val Paths = imagesPath.split("|")
+//                UnSerializeDataBase.imgList.add(BitmapMap(imagesPath,key))
+//            }
+//            mImagePaths[position] = imagePaths
+//        }
         glideImageLoader.displayImage(imageViewContent,imagePaths)
+        val fragment = activity!!.supportFragmentManager.findFragmentByTag("inventoryMore")
+        if(fragment is SubmitInventoryItemMoreFragment)
+            fragment.refresh(imagePaths,fragment.adapter!!.mData[0].picturePosition)
+        else if(fragment is SupplyPublishInventoryItemMoreFragment)
+            fragment.refresh(imagePaths,fragment.adapter!!.mData[0].picturePosition)
+        else if(fragment is SupplyFragment)
+            fragment.refresh(imagePaths,fragment.mAdapter!!.mData[0].picturePosition)
         glideImageLoader.clearMemoryCache()
     }
 }

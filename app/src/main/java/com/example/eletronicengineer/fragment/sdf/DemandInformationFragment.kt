@@ -108,6 +108,7 @@ class DemandInformationFragment: Fragment(){
             value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
             mPageNumberForPerson = 1
             mIsLastPageForPerson = false
+            mIsLoadingPerson = false
             mPersonAdapter!!.notifyMovie()
             demandPerson(mView)
         }
@@ -119,6 +120,7 @@ class DemandInformationFragment: Fragment(){
             value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
             mPageNumberForPerson = 1
             mIsLastPageForPerson = false
+            mIsLoadingPerson = false
             mPersonAdapter!!.notifyMovie()
             demandPerson(mView)
         }
@@ -155,9 +157,10 @@ class DemandInformationFragment: Fragment(){
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForPerson=1
+                mIsLastPageForPerson=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
-                _loadDemandPersonData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -182,11 +185,12 @@ class DemandInformationFragment: Fragment(){
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForTeam=1
+                mIsLastPageForTeam=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
                     selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
                     selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                _loadDemandTeamData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -212,9 +216,10 @@ class DemandInformationFragment: Fragment(){
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForLease=1
+                mIsLastPageForLease=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
-                _loadDemandLeaseData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -240,10 +245,10 @@ class DemandInformationFragment: Fragment(){
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForThird=1
+                mIsLastPageForThird=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
-
-                _loadDemandThirdData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -300,6 +305,7 @@ class DemandInformationFragment: Fragment(){
                             value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
                             mPageNumberForPerson = 1
                             mIsLastPageForPerson = false
+                            mIsLoadingPerson = false
                             mPersonAdapter!!.notifyMovie()
                             demandPerson(view)
                         }
@@ -311,6 +317,7 @@ class DemandInformationFragment: Fragment(){
                             value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
                             mPageNumberForPerson = 1
                             mIsLastPageForPerson = false
+                            mIsLoadingPerson = false
                             mPersonAdapter!!.notifyMovie()
                             demandPerson(view)
                         }
@@ -322,6 +329,7 @@ class DemandInformationFragment: Fragment(){
                         selectContentElect = arrayOf("", "", "", "", "", "")
                         mPageNumberForTeam = 1
                         mIsLastPageForTeam = false
+                        mIsLoadingTeam = false
                         mPersonAdapter!!.notifyMovie()
                         view.tv_demand_site_select.setOnClickListener {
                             initSite(view, 2)
@@ -341,7 +349,7 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_type_select.visibility=View.VISIBLE
                         view.tv_demand_site_select.visibility=View.VISIBLE
                         val Option1Items= listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护") as MutableList<String>
-                        val Option2Items= listOf("0.4KV","10KV","35KV","110KV","220KV","500KV")
+                        val Option2Items= listOf("35KV","110KV","220KV","500KV")
                         view.tv_demand_type_select.setOnClickListener {
                             initDemandTeam(view,Option1Items,1)
                         }
@@ -361,6 +369,7 @@ class DemandInformationFragment: Fragment(){
                                 selectContentElect[4],selectContentElect[5]) as MutableList<String>
                             mPageNumberForTeam = 1
                             mIsLastPageForTeam = false
+                            mIsLoadingTeam = false
                             mPersonAdapter!!.notifyMovie()
                             demandTeam(view)
                         }
@@ -375,6 +384,7 @@ class DemandInformationFragment: Fragment(){
                                 selectContentElect[4],selectContentElect[5]) as MutableList<String>
                             mPageNumberForTeam = 1
                             mIsLastPageForTeam = false
+                            mIsLoadingTeam = false
                             mPersonAdapter!!.notifyMovie()
                             demandTeam(view)
                         }
@@ -389,6 +399,7 @@ class DemandInformationFragment: Fragment(){
                                 selectContentElect[4],selectContentElect[5]) as MutableList<String>
                             mPageNumberForTeam = 1
                             mIsLastPageForTeam = false
+                            mIsLoadingTeam = false
                             mPersonAdapter!!.notifyMovie()
                             demandTeam(view)
                         }
@@ -400,6 +411,7 @@ class DemandInformationFragment: Fragment(){
                         selectContentElect = arrayOf("", "", "", "", "", "")
                         mPageNumberForLease = 1
                         mIsLastPageForLease = false
+                        mIsLoadingLease = false
                         mPersonAdapter!!.notifyMovie()
                         view.tv_demand_site_select.setOnClickListener {
                             initSite(view, 3)
@@ -428,6 +440,7 @@ class DemandInformationFragment: Fragment(){
                             value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
                             mPageNumberForLease = 1
                             mIsLastPageForLease = false
+                            mIsLoadingLease = false
                             mPersonAdapter!!.notifyMovie()
                             demandLease(view)
                         }
@@ -439,6 +452,7 @@ class DemandInformationFragment: Fragment(){
                             value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
                             mPageNumberForLease = 1
                             mIsLastPageForLease = false
+                            mIsLoadingLease = false
                             mPersonAdapter!!.notifyMovie()
                             demandLease(view)
                         }
@@ -450,6 +464,7 @@ class DemandInformationFragment: Fragment(){
                         selectContentElect = arrayOf("", "", "", "", "", "")
                         mPageNumberForThird = 1
                         mIsLastPageForThird = false
+                        mIsLoadingThird = false
                         mPersonAdapter!!.notifyMovie()
                         key= arrayListOf("page","number","requirementVariety")
                         value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
@@ -473,6 +488,7 @@ class DemandInformationFragment: Fragment(){
                             value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
                             mPageNumberForThird = 1
                             mIsLastPageForThird = false
+                            mIsLoadingThird = false
                             mPersonAdapter!!.notifyMovie()
                             demandThird(view)
                         }
@@ -523,7 +539,6 @@ class DemandInformationFragment: Fragment(){
             return
 
         _loadDemandPersonData()
-        mIsLoadingPerson = false
     }
     fun loadDemandTeamData() {
         if (mIsLastPageForTeam)
@@ -532,7 +547,8 @@ class DemandInformationFragment: Fragment(){
             return
 
         _loadDemandTeamData()
-        mIsLoadingTeam = false
+
+
     }
     fun loadDemandLeaseData() {
         if (mIsLastPageForLease)
@@ -541,7 +557,6 @@ class DemandInformationFragment: Fragment(){
             return
 
         _loadDemandLeaseData()
-        mIsLoadingLease = false
     }
     fun loadDemandThirdData() {
         if (mIsLastPageForThird)
@@ -550,7 +565,6 @@ class DemandInformationFragment: Fragment(){
             return
 
         _loadDemandThirdData()
-        mIsLoadingThird = false
     }
     fun _loadDemandPersonData() {
         val result= Observable.create<RequestBody> {
@@ -570,8 +584,10 @@ class DemandInformationFragment: Fragment(){
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val code = it.code
+                            val desc  =it.desc
                             loadingDialog.dismiss()
-                            if(code=="200"){
+                            mIsLoadingPerson = false
+                            if(code=="200"&&desc=="OK"){
                                 val data = it.message.data
                                 for (j in data) {
                                     var temp1: String
@@ -593,14 +609,15 @@ class DemandInformationFragment: Fragment(){
                                     mIsLastPageForPerson = true
                                 else
                                     mPageNumberForPerson ++
-                            }else if(code=="400" && code=="没有该数据"){
-                                ToastHelper.mToast(context!!,"数据为空")
                             }else{
                                 ToastHelper.mToast(context!!,"加载失败")
                             }
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingPerson){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -625,6 +642,7 @@ class DemandInformationFragment: Fragment(){
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val code = it.code
                             loadingDialog.dismiss()
+                            mIsLoadingTeam = false
                             if(code=="200"){
                                 val data = it.message.data
                                 for (j in data) {
@@ -655,6 +673,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingTeam){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -678,6 +699,7 @@ class DemandInformationFragment: Fragment(){
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val code = it.code
                             loadingDialog.dismiss()
+                            mIsLoadingLease = false
                             if(code=="200"){
                                 val data = it.message.data
                                 for (j in data) {
@@ -729,6 +751,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingLease){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -751,6 +776,7 @@ class DemandInformationFragment: Fragment(){
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val code = it.code
                             loadingDialog.dismiss()
+                            mIsLoadingThird = false
                             if(code=="200"){
                                 val data = it.message.data
                                 for (j in data) {
@@ -810,6 +836,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingThird){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }

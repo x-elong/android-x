@@ -59,7 +59,7 @@ class FamilyInformationFragment :Fragment(){
                 val homeChildrens = it.message
                 jsonArray= JSONArray()
                 for (j in homeChildrens){
-                    jsonArray.put(GsonBuilder().create().toJson(j,HomeChildrensEntity::class.java))
+                    jsonArray.put(JSONObject(GsonBuilder().create().toJson(j,HomeChildrensEntity::class.java)))
                     val sex =if(j.childrenSex.toInt()==1)
                         "男"
                     else "女"
@@ -252,6 +252,7 @@ class FamilyInformationFragment :Fragment(){
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_recyclerview,null)
         for (j in 2 until adapter.mData.size){
             val item = adapter.mData[j]
+            Log.i("j",jsonArray.getJSONObject(adapter.mData.indexOf(item)-2).toString())
             val json = jsonArray.getJSONObject(adapter.mData.indexOf(item)-2)
             adapter.mData[adapter.mData.indexOf(item)].fourDisplayListener = View.OnClickListener {
                 val values: Array<String> = arrayOf("修改", "删除")

@@ -10,10 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.GetQRCodeActivity
+import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.utils.*
-import com.example.eletronicengineer.utils.getOwnIntegral
 import com.example.eletronicengineer.utils.getQRCode
-import com.example.eletronicengineer.utils.getUserIncome
+//import com.example.eletronicengineer.utils.getOwnIntegral
+//import com.example.eletronicengineer.utils.getUserIncome
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_retail_store.view.*
@@ -57,7 +58,7 @@ class RetailStoreFragment:Fragment() {
                     if(path!=null)
                     {
                         //进入二维码活动显示二维码
-                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+                        val intent = Intent(activity, ImageDisplayActivity::class.java)
                         intent.putExtra("mImagePaths", path)
                         activity!!.startActivity(intent)
                     }
@@ -67,52 +68,52 @@ class RetailStoreFragment:Fragment() {
             }
 
         //总积分
-        val resultForTotalScore = getOwnIntegral("http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                if(it.message!= null)
-                {
-                    view.tv_total_score_num.text = it.message.toString()
-                    Log.i("totalNum",it.message.toString())
-                }
-                else{
-                    val temp = 0
-                    view.tv_total_score_num.text = temp.toString()
-                }
-            },{
-                it.printStackTrace()
-            })
-
-        //月收益
-        val resultForMonthBenifit = getUserIncome("month","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                if(it.message!= null)
-                {
-                view.tv_month_income_num.text = it.message
-                Log.i("num", it.message)
-                }
-                else{
-                    val temp = 0
-                    view.tv_month_income_num.text = temp.toString()
-                }
-            },{
-                it.printStackTrace()
-            })
-
-        //日收益
-        val resultForDayBenifit = getUserIncome("day","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
-                if(it.message!= null)
-                {
-                    view.tv_day_income_num.text = it.message
-                    Log.i("num", it.message)
-                }
-                else{
-                    val temp = 0
-                    view.tv_day_income_num.text = temp.toString()
-                }
-            },{
-                it.printStackTrace()
-            })
+//        val resultForTotalScore = getOwnIntegral("http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+//                if(it.message!= null)
+//                {
+//                    view.tv_total_score_num.text = it.message.toString()
+//                    Log.i("totalNum",it.message.toString())
+//                }
+//                else{
+//                    val temp = 0
+//                    view.tv_total_score_num.text = temp.toString()
+//                }
+//            },{
+//                it.printStackTrace()
+//            })
+//
+//        //月收益
+//        val resultForMonthBenifit = getUserIncome("month","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+//                if(it.message!= null)
+//                {
+//                view.tv_month_income_num.text = it.message
+//                Log.i("num", it.message)
+//                }
+//                else{
+//                    val temp = 0
+//                    view.tv_month_income_num.text = temp.toString()
+//                }
+//            },{
+//                it.printStackTrace()
+//            })
+//
+//        //日收益
+//        val resultForDayBenifit = getUserIncome("day","http://10.1.5.141:8022/").subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+//                if(it.message!= null)
+//                {
+//                    view.tv_day_income_num.text = it.message
+//                    Log.i("num", it.message)
+//                }
+//                else{
+//                    val temp = 0
+//                    view.tv_day_income_num.text = temp.toString()
+//                }
+//            },{
+//                it.printStackTrace()
+//            })
         //积分详情按钮监听
         view.tv_score_details_image.setOnClickListener {
               data.putInt("type",1)

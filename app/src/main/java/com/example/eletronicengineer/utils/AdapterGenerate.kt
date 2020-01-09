@@ -190,13 +190,13 @@ class AdapterGenerate {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
             mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.mData[13].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 13
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[13].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,14,18)
         for(i in styleTypeNum){
@@ -319,14 +319,14 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.mData[13].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 13
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[13].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[13].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,14,18)
         for(i in styleTypeNum){
@@ -552,8 +552,8 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,5,6,13,18)
         for(i in styleTypeNum){
@@ -663,8 +663,8 @@ class AdapterGenerate {
         mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,7,8,13,15,19)
         for(i in styleTypeNum){
@@ -770,14 +770,14 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory", as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.mData[14].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 14
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[14].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[14].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[14].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,8,9,15,19)
         for(i in styleTypeNum){
@@ -902,14 +902,14 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata),frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem),frame, "publishInventory")
         })
         adapter.mData[12].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 12
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[12].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,6,7,13,17)
         for(i in styleTypeNum){
@@ -1036,14 +1036,14 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.mData[12].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 12
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[12].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[12].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,5,6,13,17)
         for(i in styleTypeNum){
@@ -1170,8 +1170,8 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,12)
         for(i in styleTypeNum){
@@ -1197,8 +1197,8 @@ class AdapterGenerate {
         adapter.mData[4].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 4
             mdata.putString("type","租赁清册发布")
-            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[4].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(3,11)
         for(i in styleTypeNum){
@@ -1304,8 +1304,8 @@ class AdapterGenerate {
         adapter.mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","三方服务清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+//            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
+            FragmentHelper.switchFragment(activity,PublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         val styleTypeNum = arrayListOf(6)
         for(i in styleTypeNum){
@@ -1435,20 +1435,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[6].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 6
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem), frame, "publishInventory")
         })
 //        adapter.urlPath = Constants.HttpUrlPath.Provider.mainPath
         return adapter
@@ -1502,20 +1499,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[6].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 6
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[6].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.MeasureDesign
         return adapter
@@ -1573,8 +1567,7 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.CaravanTransport
         return adapter
@@ -1603,20 +1596,19 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 7
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.PileFoundation
         return adapter
@@ -1643,20 +1635,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[3].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 3
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[3].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[3].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.Unexcavation
         return adapter
@@ -1684,20 +1673,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 7
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.TestTeam
         return adapter
@@ -1725,20 +1711,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[3].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 3
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[3].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[3].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.SpanWoodenSupprt
         return adapter
@@ -1765,20 +1748,17 @@ class AdapterGenerate {
         mData[1].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 1
             mdata.putString("type","成员清册发布")
-            mdata.putSerializable("inventory",mData[1].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[1].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[2].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected = 2
             mdata.putString("type","车辆清册发布")
-            mdata.putSerializable("inventory",mData[2].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[2].itemMultiStyleItem), frame, "publishInventory")
         })
         mData[7].buttonListener= arrayListOf( View.OnClickListener {
             mData[0].selected =7
             mdata.putString("type","工器具清册发布")
-            mdata.putSerializable("inventory",mData[7].itemMultiStyleItem as Serializable)
-            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+            FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
         })
         adapter.urlPath = Constants.HttpUrlPath.Provider.RunningMaintain
         return adapter
@@ -1803,10 +1783,12 @@ class AdapterGenerate {
             adapter.mData[j].necessary= true
         }
         adapter.mData[9].jumpListener = View.OnClickListener {
+            adapter.mData[0].picturePosition = 9
             val data = Bundle()
             data.putString("key", mData[9].key)
             data.putString("title", mData[9].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
+            data.putString("imagePath",mData[9].shiftInputPicture)
+            FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data), frame, "Capture")
         }
         return adapter
     }
@@ -1819,43 +1801,40 @@ class AdapterGenerate {
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Provider/RentalService/Equipment Leasing/Information entry.json")
         val adapter = RecyclerviewAdapter(mData)
-        mData[12].singleDisplayRightContent = UnSerializeDataBase.idCardName
-        mData[13].singleDisplayRightContent = UnSerializeDataBase.userPhone
-        val styleTypeNum = arrayListOf(15)
+        mData[11].singleDisplayRightContent = UnSerializeDataBase.idCardName
+        mData[12].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        val styleTypeNum = arrayListOf(14)
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(8,1,3,10,11,15)//8 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(7,1,3,9,10,14)//8 true为按钮清册不填可以发布 //其余true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
         when(bundle.getInt("type"))
         {
             Constants.FragmentType.TOOL_LEASING_TYPE.ordinal->{
-                mData[8].singleDisplayRightTitle="工器具租赁清单"
-                mData[8].buttonListener= arrayListOf( View.OnClickListener {
-                    mData[0].selected =8
+                mData[7].singleDisplayRightTitle="工器具租赁清单"
+                mData[7].buttonListener= arrayListOf( View.OnClickListener {
+                    mData[0].selected =7
                     mdata.putString("type","租赁清册发布")
-                    mdata.putSerializable("inventory",mData[8].itemMultiStyleItem as Serializable)
-                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
                 })
             }
             Constants.FragmentType.MACHINERY_LEASING_TYPE.ordinal->{
-                mData[8].singleDisplayRightTitle="机械租赁清单"
-                mData[8].buttonListener= arrayListOf( View.OnClickListener {
-                    mData[0].selected =8
+                mData[7].singleDisplayRightTitle="机械租赁清单"
+                mData[7].buttonListener= arrayListOf( View.OnClickListener {
+                    mData[0].selected =7
                     mdata.putString("type","租赁清册发布")
-                    mdata.putSerializable("inventory",mData[8].itemMultiStyleItem as Serializable)
-                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
                 })
             }
             Constants.FragmentType.EQUIPMENT_LEASING_TYPE.ordinal->{
-                mData[8].singleDisplayRightTitle="设备租赁清单"
-                mData[8].buttonListener= arrayListOf( View.OnClickListener {
-                    mData[0].selected =8
+                mData[7].singleDisplayRightTitle="设备租赁清单"
+                mData[7].buttonListener= arrayListOf( View.OnClickListener {
+                    mData[0].selected =7
                     mdata.putString("type","租赁清册发布")
-                    mdata.putSerializable("inventory",mData[8].itemMultiStyleItem as Serializable)
-                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata), frame, "publishInventory")
+                    FragmentHelper.switchFragment(activity,SupplyPublishInventoryFragment.newInstance(mdata,mData[7].itemMultiStyleItem), frame, "publishInventory")
                 })
             }
         }
@@ -1881,23 +1860,29 @@ class AdapterGenerate {
 //          uploadContractButtonListListeners.add(downloadContractListener)
 //        uploadContractButtonListListeners.add(uploadContractListener)
 
+//        mData[6].jumpListener = View.OnClickListener {
+//            val data = Bundle()
+//            data.putString("key", mData[6].key)
+//            FragmentHelper.switchFragment(activity,UpIdCardFragment.newInstance(data), frame, "Capture")
+//        }
         mData[6].jumpListener = View.OnClickListener {
+            mData[0].picturePosition  = 6
             val data = Bundle()
             data.putString("key", mData[6].key)
-            FragmentHelper.switchFragment(activity,UpIdCardFragment.newInstance(data), frame, "Capture")
-        }
-        mData[7].jumpListener = View.OnClickListener {
-            val data = Bundle()
-            data.putString("key", mData[7].key)
             data.putInt("total", 1)
+            mData[6].shiftInputPicture
             FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data), frame, "Capture")
         }
-        mData[9].jumpListener = View.OnClickListener {
-            val data = Bundle()
-            data.putString("key", mData[9].key)
-            data.putString("title", mData[9].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
-        }
+        mData[8].buttonListener = listOf(View.OnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*"
+            UnSerializeDataBase.fileList.add(FileMap("", mData[8].key))
+            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//            val data = Bundle()
+//            data.putString("key", mData[9].key)
+//            data.putString("title", mData[9].shiftInputTitle)
+//            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
+        })
 //        mData[9].buttonListener = uploadContractButtonListListeners
         return adapter
     }
@@ -1931,17 +1916,23 @@ class AdapterGenerate {
 //            FragmentHelper.switchFragment(activity,UpIdCardFragment.newInstance(data),frame,"Capture")
 //        }
         mData[6].jumpListener = View.OnClickListener {
+            adapter.mData[0].picturePosition = 6
             val data = Bundle()
             data.putString("key", mData[6].key)
             data.putString("title", mData[6].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data),frame,"Capture")
+            data.putString("imagePath",mData[6].shiftInputPicture)
+            FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data),frame,"Capture")
         }
-        mData[9].jumpListener = View.OnClickListener {
-            val data = Bundle()
-            data.putString("key", mData[9].key)
-            data.putString("title", mData[9].shiftInputTitle)
-            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data),frame,"Capture")
-        }
+        mData[9].buttonListener = listOf(View.OnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*"
+            UnSerializeDataBase.fileList.add(FileMap("", mData[9].key))
+            activity.startActivityForResult(intent, Constants.RequestCode.REQUEST_PICK_FILE.ordinal)
+//            val data = Bundle()
+//            data.putString("key", mData[9].key)
+//            data.putString("title", mData[9].shiftInputTitle)
+//            FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
+        })
         adapter.urlPath = Constants.HttpUrlPath.Provider.ThirdServices
         return adapter
     }
@@ -2022,9 +2013,11 @@ class AdapterGenerate {
                 }
                 adapter.mData[7].jumpListener = View.OnClickListener {
                     val data = Bundle()
+                    adapter.mData[0].picturePosition = 7
                     data.putString("key", mData[7].key)
                     data.putString("title", mData[7].shiftInputTitle)
-                    FragmentHelper.switchFragment(activity,ImageFragment.newInstance(data), frame, "Capture")
+                    data.putString("imagePath",adapter.mData[7].shiftInputPicture)
+                    FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data), frame, "Capture")
                 }
             }
             "工器具清册发布"->{
@@ -3956,13 +3949,13 @@ class AdapterGenerate {
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/equipmentLeasing.json")
         when(type){
             "工器具租赁"->{
-                mData[8].singleDisplayRightTitle="工器具租赁清册:"
+                mData[7].singleDisplayRightTitle="工器具租赁清册:"
             }
             "设备租赁"->{
-                mData[8].singleDisplayRightTitle="设备租赁清册:"
+                mData[7].singleDisplayRightTitle="设备租赁清册:"
             }
             "机械租赁"->{
-                mData[8].singleDisplayRightTitle="机械租赁清册:"
+                mData[7].singleDisplayRightTitle="机械租赁清册:"
             }
         }
         val adapter = RecyclerviewAdapter(mData)
@@ -4188,7 +4181,18 @@ class AdapterGenerate {
             "false"->{adapter.mData[7].singleDisplayRightContent = "无保险 "}
             else->{adapter.mData[7].singleDisplayRightContent = ""}
         }
-        adapter.mData[8].singleDisplayRightContent = if(listData8.carPhotoPath==null){" "}else{ listData8.carPhotoPath }
+
+        adapter.mData[8].jumpListener =
+            View.OnClickListener {
+                if(listData8.carPhotoPath==null){
+                    ToastHelper.mToast(activity,"车辆照片为空")
+                }else{
+                    val intent = Intent(activity,ImageDisplayActivity::class.java)
+                    intent.putExtra("imagePath",listData8.carPhotoPath)
+                    activity.startActivity(intent)
+                }
+            }
+
 
         return adapter
     }
@@ -4283,7 +4287,7 @@ class AdapterGenerate {
                     memberListData.add(
                         MultiStyleItem(
                             MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,
-                            "${Listdata.requirementVariety}/${Listdata.requirementMajor}",
+                            "${Listdata.requirementVariety} ${Listdata.requirementMajor}",
                             "${Listdata.needPeopleNumber}人"
                         )
                     )
@@ -4292,6 +4296,7 @@ class AdapterGenerate {
                         val position = memberListData.size
                         val mData1: List<MultiStyleItem>
                         mdata.putString("type", "成员清册")
+                        mdata.putString("positionType","${Listdata.requirementVariety} ${Listdata.requirementMajor}")
                         mData1 = ApplicationSubmitDetailList(mdata).mData
                         memberListData.add(
                             MultiStyleItem(
@@ -4306,14 +4311,14 @@ class AdapterGenerate {
                             View.OnClickListener {
                                 memberListData[0].selected = position
                                 val bundle = Bundle()
-                                bundle.putSerializable(
-                                    "inventoryItem",
-                                    memberListData[position].itemMultiStyleItem as Serializable
-                                )
+//                                bundle.putSerializable(
+//                                    "inventoryItem",
+//                                    memberListData[position].itemMultiStyleItem as Serializable
+//                                )
                                 bundle.putString("type","成员清册")
                                 FragmentHelper.switchFragment(
                                     context as DemandDisplayActivity,
-                                    SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                    SubmitInventoryItemMoreFragment.newInstance(bundle,memberListData[position].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     ""
                                 )
@@ -4326,13 +4331,13 @@ class AdapterGenerate {
                         mData[0].selected = 6
                         mdata.putString("type", "成员清册")
                         mData[6].itemMultiStyleItem = memberListData
-                        mdata.putSerializable(
-                            "inventory",
-                            mData[6].itemMultiStyleItem as Serializable
-                        )
+//                        mdata.putSerializable(
+//                            "inventory",
+//                            mData[6].itemMultiStyleItem as Serializable
+//                        )
                         FragmentHelper.switchFragment(
                             activity as DemandDisplayActivity,
-                            SubmitInventoryFragment.newInstance(mdata),
+                            SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                             R.id.frame_display_demand,
                             "inventory"
                         )
@@ -4366,13 +4371,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4396,13 +4401,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata, mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4426,13 +4431,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4456,13 +4461,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4486,13 +4491,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4516,13 +4521,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4546,13 +4551,13 @@ class AdapterGenerate {
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[6].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[6].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[6].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4577,6 +4582,7 @@ class AdapterGenerate {
                         adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                     } else {
+                        mData[4].necessary =true
                         val sumSize=listData1.size
                         var Temp=0
                         for (j in listData1) {
@@ -4594,7 +4600,6 @@ class AdapterGenerate {
                                 val position = carListData.size
                                 val mData1: List<MultiStyleItem>
                                 mdata.putString("type", "车辆清册")
-                                mdata.putString("name", type)
                                 mData1 = ApplicationSubmitDetailList(mdata).mData
                                 carListData.add(
                                     MultiStyleItem(
@@ -4609,14 +4614,14 @@ class AdapterGenerate {
                                     View.OnClickListener {
                                         carListData[0].selected = position
                                         val bundle = Bundle()
-                                        bundle.putSerializable(
-                                            "inventoryItem",
-                                            carListData[position].itemMultiStyleItem as Serializable
-                                        )
+//                                        bundle.putSerializable(
+//                                            "inventoryItem",
+//                                            carListData[position].itemMultiStyleItem as Serializable
+//                                        )
                                         bundle.putString("type", "车辆清册")
                                         FragmentHelper.switchFragment(
                                             context as DemandDisplayActivity,
-                                            SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                            SubmitInventoryItemMoreFragment.newInstance(bundle,carListData[position].itemMultiStyleItem),
                                             R.id.frame_display_demand,
                                             ""
                                         )
@@ -4630,13 +4635,13 @@ class AdapterGenerate {
                             mData[0].selected = 4
                             mdata.putString("type", "车辆清册")
                             mData[4].itemMultiStyleItem = carListData
-                            mdata.putSerializable(
-                                "inventory",
-                                mData[4].itemMultiStyleItem as Serializable
-                            )
+//                            mdata.putSerializable(
+//                                "inventory",
+//                                mData[4].itemMultiStyleItem as Serializable
+//                            )
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
-                                SubmitInventoryFragment.newInstance(mdata),
+                                SubmitInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem),
                                 R.id.frame_display_demand,
                                 "inventory"
                             )
@@ -4674,7 +4679,7 @@ class AdapterGenerate {
                                         val position = memberListData.size
                                         val mData1: List<MultiStyleItem>
                                         mdata.putString("type", "成员清册")
-                                        mdata.putString("name", type)
+                                        mdata.putString("positionType", type)
                                         mData1 = ApplicationSubmitDetailList(mdata).mData
                                         memberListData.add(
                                             MultiStyleItem(
@@ -4689,14 +4694,14 @@ class AdapterGenerate {
                                             View.OnClickListener {
                                                 memberListData[0].selected = position
                                                 val bundle = Bundle()
-                                                bundle.putSerializable(
-                                                    "inventoryItem",
-                                                    memberListData[position].itemMultiStyleItem as Serializable
-                                                )
+//                                                bundle.putSerializable(
+//                                                    "inventoryItem",
+//                                                    memberListData[position].itemMultiStyleItem as Serializable
+//                                                )
                                                 bundle.putString("type", "成员清册")
                                                 FragmentHelper.switchFragment(
                                                     context as DemandDisplayActivity,
-                                                    SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                                    SubmitInventoryItemMoreFragment.newInstance(bundle,memberListData[position].itemMultiStyleItem),
                                                     R.id.frame_display_demand,
                                                     ""
                                                 )
@@ -4711,13 +4716,13 @@ class AdapterGenerate {
                                 mData[0].selected = 5
                                 mdata.putString("type", "成员清册")
                                 mData[5].itemMultiStyleItem = memberListData
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[5].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[5].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[5].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4745,6 +4750,7 @@ class AdapterGenerate {
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{//非开挖
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPileFoundation.json")
                 lateinit var listData1: List<RequirementCarList>
+                adapter.mData[4].necessary=true
                 val carListData: MutableList<MultiStyleItem> = ArrayList()
                 when (args.getInt("type")) {
                     Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{//桩基
@@ -4755,13 +4761,13 @@ class AdapterGenerate {
                             adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[5].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[5].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[5].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4784,13 +4790,13 @@ class AdapterGenerate {
                             adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
-                                mdata.putSerializable(
-                                    "inventory",
-                                    mData[5].itemMultiStyleItem as Serializable
-                                )
+//                                mdata.putSerializable(
+//                                    "inventory",
+//                                    mData[5].itemMultiStyleItem as Serializable
+//                                )
                                 FragmentHelper.switchFragment(
                                     activity as DemandDisplayActivity,
-                                    SubmitInventoryFragment.newInstance(mdata),
+                                    SubmitInventoryFragment.newInstance(mdata,mData[5].itemMultiStyleItem),
                                     R.id.frame_display_demand,
                                     "inventory"
                                 )
@@ -4847,14 +4853,14 @@ class AdapterGenerate {
                                     View.OnClickListener {
                                         carListData[0].selected = position
                                         val bundle = Bundle()
-                                        bundle.putSerializable(
-                                            "inventoryItem",
-                                            carListData[position].itemMultiStyleItem as Serializable
-                                        )
+//                                        bundle.putSerializable(
+//                                            "inventoryItem",
+//                                            carListData[position].itemMultiStyleItem as Serializable
+//                                        )
                                         bundle.putString("type", "车辆清册")
                                         FragmentHelper.switchFragment(
                                             context as DemandDisplayActivity,
-                                            SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                            SubmitInventoryItemMoreFragment.newInstance(bundle,carListData[position].itemMultiStyleItem),
                                             R.id.frame_display_demand,
                                             ""
                                         )
@@ -4868,13 +4874,13 @@ class AdapterGenerate {
                             mData[0].selected = 4
                             mdata.putString("type", "车辆清册")
                             mData[4].itemMultiStyleItem = carListData
-                            mdata.putSerializable(
-                                "inventory",
-                                mData[4].itemMultiStyleItem as Serializable
-                            )
+//                            mdata.putSerializable(
+//                                "inventory",
+//                                mData[4].itemMultiStyleItem as Serializable
+//                            )
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
-                                SubmitInventoryFragment.newInstance(mdata),
+                                SubmitInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem),
                                 R.id.frame_display_demand,
                                 "inventory"
                             )
@@ -4905,20 +4911,15 @@ class AdapterGenerate {
                     } else {
                         Listdata.requirementVariety
                     }
-                adapter.mData[2].singleDisplayRightContent = if (Listdata.vehicleType == null) {
-                    " "
-                } else {
-                    Listdata.vehicleType
-                }
-                adapter.mData[3].singleDisplayRightContent = UnSerializeDataBase.idCardName
-                adapter.mData[4].singleDisplayRightContent =UnSerializeDataBase.userPhone
+                adapter.mData[2].singleDisplayRightContent = UnSerializeDataBase.idCardName
+                adapter.mData[3].singleDisplayRightContent =UnSerializeDataBase.userPhone
                 /////车辆租赁车辆清册报名
                 //
                 if(args.getSerializable("listData1")!=null) {
                     listData1 = args.getSerializable("listData1") as List<RequirementCarList>
                     if (listData1.isEmpty()) {
-                        mData[5].necessary =true
-                        adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
+                        mData[4].necessary =true
+                        adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                             ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                     } else {
                         val sumSize=listData1.size
@@ -4953,14 +4954,14 @@ class AdapterGenerate {
                                     View.OnClickListener {
                                         carListData[0].selected = position
                                         val bundle = Bundle()
-                                        bundle.putSerializable(
-                                            "inventoryItem",
-                                            carListData[position].itemMultiStyleItem as Serializable
-                                        )
+//                                        bundle.putSerializable(
+//                                            "inventoryItem",
+//                                            carListData[position].itemMultiStyleItem as Serializable
+//                                        )
                                         bundle.putString("type", "车辆租赁车辆清册")
                                         FragmentHelper.switchFragment(
                                             context as DemandDisplayActivity,
-                                            SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                            SubmitInventoryItemMoreFragment.newInstance(bundle,carListData[position].itemMultiStyleItem),
                                             R.id.frame_display_demand,
                                             ""
                                         )
@@ -4970,18 +4971,18 @@ class AdapterGenerate {
                                 carListData.add(MultiStyleItem(MultiStyleItem.Options.BLANK, " "))
                             }
                         }
-                        adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
-                            mData[0].selected = 5
+                        adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
+                            mData[0].selected = 4
                             mdata.putString("type", "车辆租赁车辆清册")
-                            mData[5].itemMultiStyleItem = carListData
-                            mdata.putSerializable(
-                                "inventory",
-                                mData[5].itemMultiStyleItem as Serializable
-                            )
+                            mData[4].itemMultiStyleItem = carListData
+//                            mdata.putSerializable(
+//                                "inventory",
+//                                mData[5].itemMultiStyleItem as Serializable
+//                            )
 
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
-                                SubmitInventoryFragment.newInstance(mdata),
+                                SubmitInventoryFragment.newInstance(mdata,mData[4].itemMultiStyleItem),
                                 R.id.frame_display_demand,
                                 "inventory"
                             )
@@ -4989,8 +4990,8 @@ class AdapterGenerate {
                     }
                 }
                 else{
-                    mData[5].necessary =true
-                    adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
+                    mData[4].necessary =true
+                    adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                 }
             }
@@ -5073,14 +5074,14 @@ class AdapterGenerate {
                                     View.OnClickListener {
                                         besidesVeichleListData[0].selected = position
                                         val bundle = Bundle()
-                                        bundle.putSerializable(
-                                            "inventoryItem",
-                                            besidesVeichleListData[position].itemMultiStyleItem as Serializable
-                                        )
+//                                        bundle.putSerializable(
+//                                            "inventoryItem",
+//                                            besidesVeichleListData[position].itemMultiStyleItem as Serializable
+//                                        )
                                         bundle.putString("type", "租赁清册")
                                         FragmentHelper.switchFragment(
                                             context as DemandDisplayActivity,
-                                            SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                            SubmitInventoryItemMoreFragment.newInstance(bundle,besidesVeichleListData[position].itemMultiStyleItem),
                                             R.id.frame_display_demand,
                                             ""
                                         )
@@ -5093,13 +5094,13 @@ class AdapterGenerate {
                             mData[0].selected = 4
                             mdata.putString("type", "租赁清册")
                             mData[4].itemMultiStyleItem = besidesVeichleListData
-                            mdata.putSerializable(
-                                "inventory",
-                                mData[4].itemMultiStyleItem as Serializable
-                            )
+//                            mdata.putSerializable(
+//                                "inventory",
+//                                mData[4].itemMultiStyleItem as Serializable
+//                            )
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
-                                SubmitInventoryFragment.newInstance(mdata),
+                                SubmitInventoryFragment.newInstance(mdata, mData[4].itemMultiStyleItem),
                                 R.id.frame_display_demand,
                                 "inventory"
                             )
@@ -5166,14 +5167,14 @@ class AdapterGenerate {
                                 View.OnClickListener {
                                     tripartiteListData[0].selected = position
                                     val bundle = Bundle()
-                                    bundle.putSerializable(
-                                        "inventoryItem",
-                                        tripartiteListData[position].itemMultiStyleItem as Serializable
-                                    )
+//                                    bundle.putSerializable(
+//                                        "inventoryItem",
+//                                        tripartiteListData[position].itemMultiStyleItem as Serializable
+//                                    )
                                     bundle.putString("type", "三方清册")
                                     FragmentHelper.switchFragment(
                                         context as DemandDisplayActivity,
-                                        SubmitInventoryItemMoreFragment.newInstance(bundle),
+                                        SubmitInventoryItemMoreFragment.newInstance(bundle,tripartiteListData[position].itemMultiStyleItem),
                                         R.id.frame_display_demand,
                                         ""
                                     )
@@ -5186,13 +5187,13 @@ class AdapterGenerate {
                             mData[0].selected = 3
                             mdata.putString("type", "三方清册")
                             mData[3].itemMultiStyleItem = tripartiteListData
-                            mdata.putSerializable(
-                                "inventory",
-                                mData[3].itemMultiStyleItem as Serializable
-                            )
+//                            mdata.putSerializable(
+//                                "inventory",
+//                                mData[3].itemMultiStyleItem as Serializable
+//                            )
                             FragmentHelper.switchFragment(
                                 activity as DemandDisplayActivity,
-                                SubmitInventoryFragment.newInstance(mdata),
+                                SubmitInventoryFragment.newInstance(mdata,mData[3].itemMultiStyleItem),
                                 R.id.frame_display_demand,
                                 "inventory"
                             )
@@ -5216,9 +5217,16 @@ class AdapterGenerate {
         when(bundle.getString("type")) {
             //成员清册详情
             "成员清册" -> {
+                var positionType=bundle.getString("positionType")
                 mData =
                     itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitMemberList.json")
                 adapter = RecyclerviewAdapter(mData)
+                adapter.mData[3].singleDisplayRightContent =
+                    if (positionType == null) {
+                        " "
+                    } else {
+                        positionType
+                    }
                 val styleTypeNum = arrayListOf(1)
                 for (i in styleTypeNum) {
                     adapter.mData[i].styleType = "NUMBER"//限制为数字类型
@@ -5242,11 +5250,13 @@ class AdapterGenerate {
                     adapter.mData[j].necessary = true//true为必选项
                 }
                 adapter.mData[3].jumpListener = View.OnClickListener {
+                    adapter.mData[0].picturePosition = 3
                     val data = Bundle()
                     data.putString("key", mData[3].key)
                     data.putString("title", mData[3].shiftInputTitle)
+                    data.putString("imagePath",mData[3].shiftInputPicture)
                     (activity as DemandDisplayActivity).switchFragment(
-                        ImageFragment.newInstance(
+                        UploadPhoneFragment.newInstance(
                             data
                         ), R.id.frame_display_demand, "Capture"
                     )
@@ -5266,10 +5276,12 @@ class AdapterGenerate {
                     adapter.mData[j].necessary = true//true为必选项
                 }
                 adapter.mData[5].jumpListener = View.OnClickListener {
+                    adapter.mData[0].picturePosition = 5
                     val data = Bundle()
                     data.putString("key", mData[5].key)
                     data.putString("title", mData[5].shiftInputTitle)
-                    FragmentHelper.switchFragment(activity, ImageFragment.newInstance(data),R.id.frame_display_demand,"Capture")
+                    data.putString("imagePath",mData[5].shiftInputPicture)
+                    FragmentHelper.switchFragment(activity, UploadPhoneFragment.newInstance(data),R.id.frame_display_demand,"Capture")
                 }
             }
             //机械清册详情

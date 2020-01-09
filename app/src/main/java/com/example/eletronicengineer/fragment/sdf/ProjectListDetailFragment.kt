@@ -16,14 +16,14 @@ import kotlinx.android.synthetic.main.fragment_project_display.view.*
 class ProjectListDetailFragment:Fragment() {
     companion
     object {
-        fun newInstance(args: Bundle): ProjectListDetailFragment {
+        fun newInstance(args: Bundle,data:List<MultiStyleItem>): ProjectListDetailFragment {
             val fragment = ProjectListDetailFragment()
+            fragment.mMultiStyleItemList = data
             fragment.arguments = args
             return fragment
         }
     }
-
-
+    lateinit var mMultiStyleItemList:List<MultiStyleItem>
     var type:String=""
     lateinit var listData1: RequirementCarList
     lateinit var listData2: requirementPowerTransformationSalary
@@ -55,58 +55,61 @@ class ProjectListDetailFragment:Fragment() {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         lateinit var adapter: RecyclerviewAdapter
+        adapter = RecyclerviewAdapter(mMultiStyleItemList)
+                mView.rv_project_fragment_content.adapter = adapter
+                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
         when (type) {
-            "车辆清册查看" ->//工程量清册
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            "成员清册查看"->//成员清册
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            "租赁清单查看"->//租赁清单查看
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            "三方清册查看"->//三方清册查看
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            "供应人员清册查看"->//供应人员清册查看
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            "供应运输清册查看"->//供应运输清册查看
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            //供应工器具清册查看
-            "供应工器具清册查看"->//供应工器具清册查看
-            {
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
-            //租赁清册
-            "工器具租赁清册查看",
-            "设备租赁清册查看",
-            "机械租赁清册查看"->{
-                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
-                mView.rv_project_fragment_content.adapter = adapter
-                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
-            }
+//            "车辆清册查看" ->//工程量清册
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            "成员清册查看"->//成员清册
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            "租赁清单查看"->//租赁清单查看
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            "三方清册查看"->//三方清册查看
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            "供应人员清册查看"->//供应人员清册查看
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            "供应运输清册查看"->//供应运输清册查看
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            //供应工器具清册查看
+//            "供应工器具清册查看"->//供应工器具清册查看
+//            {
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
+//            //租赁清册
+//            "工器具租赁清册查看",
+//            "设备租赁清册查看",
+//            "机械租赁清册查看"->{
+//                adapter = RecyclerviewAdapter(arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//                mView.rv_project_fragment_content.adapter = adapter
+//                mView.rv_project_fragment_content.layoutManager = LinearLayoutManager(mView.context)
+//            }
 
 //            2 ->//清工薪资
 //            {

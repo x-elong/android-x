@@ -63,9 +63,6 @@ class HelpCenterMoreFragment :Fragment(){
                         "\t\t\t\t2、支付方式\n" +
                         "\t\t\t\t目前电企通平台支持微信和支付宝支付"
             }
-            "电企通会员协议"->{
-                mView.tv_help_center_content.text = ""
-            }
         }
         return mView
     }

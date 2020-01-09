@@ -102,14 +102,14 @@ class EnterpriseReCertificationFragment :Fragment(){
             selectImage=2
             GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
         }
-        mView.iv_administrator_id_card_people.setOnClickListener{
-            selectImage=3
-            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
-        }
-        mView.iv_administrator_id_card_nation.setOnClickListener {
-            selectImage=4
-            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
-        }
+//        mView.iv_administrator_id_card_people.setOnClickListener{
+//            selectImage=3
+//            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+//        }
+//        mView.iv_administrator_id_card_nation.setOnClickListener {
+//            selectImage=4
+//            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+//        }
         mView.iv_business_license.setOnClickListener{
             selectImage=5
             GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
@@ -256,6 +256,7 @@ class EnterpriseReCertificationFragment :Fragment(){
                 .put("identifyCardPathContrary",administratorIdCardNationMap.path)
                 .put("vipName",mView.tv_administrator_name_data.text)
                 .put("identifyCard",mView.tv_administrator_number_data.text)
+                .put("certificationStatus",3)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
         }.subscribe {

@@ -1190,14 +1190,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvfourDisplayItem1.text=mData[position].fourDisplayContent1
                 vh.tvfourDisplayItem2.text=mData[position].fourDisplayContent2
                 vh.tvfourDisplayItem3.text=mData[position].fourDisplayContent3
-                if (mData[position].fourDisplayContent2.equals("详情"))
+                if (mData[position].fourDisplayContent2==("详情"))
                 {
                     vh.tvfourDisplayItem2.setBackgroundResource(R.drawable.btn_style2)
                     vh.tvfourDisplayItem2.setOnClickListener(mData[position].fourDisplayListener)
                 }
-                if (mData[position].fourDisplayContent3.equals("···"))
+                if (mData[position].fourDisplayContent3=="···")
                 {
                     vh.tvfourDisplayItem3.setOnClickListener(mData[position].fourDisplayListener)
+                    vh.itemView.setOnClickListener(mData[position].fourDisplayListener)
                     vh.tvfourDisplayItem3.setTypeface(Typeface.DEFAULT_BOLD)
                 }
             }
@@ -1364,6 +1365,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.etTextAreaContent.setText(mData[position].textAreaContent)
                 }
                     vh.etTextAreaContent.isEnabled = mData[position].necessary
+                if( !mData[position].necessary){//查看时的布局
+                    vh.etTextAreaContent.setBackgroundResource(R.color.transparent)
+                    vh.etTextAreaContent.setPadding(0,0,0,0)
+                }
             }
             SHIFT_INPUT_TYPE->
             {
@@ -1399,9 +1404,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
                     }
-                if(mData[position].shiftInputPicture!=""){
+                if(mData[position].shiftInputPicture!="" && mData[position].shiftInputTitle=="头像"){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
-                    GlideLoader().loadImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
+                    GlideImageLoader().displayImage(vh.ivShiftInputPicture,mData[position].shiftInputPicture)
                     vh.ivShiftInputPicture.setOnClickListener {
                         val intent = Intent(vh.ivShiftInputPicture.context,ImageDisplayActivity::class.java)
                         intent.putExtra("imagePath",mData[position].shiftInputPicture)
@@ -1415,7 +1420,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 if(mData[position].selectContent==""){
                     mData[position].selectContent=mData[position].selectOption1Items[0]
-                    vh.etDialogSelectItem.setText(mData[position].selectOption1Items[0])
+                    vh.etDialogSelectItem.hint="请选择"
                 }else{
                     vh.etDialogSelectItem.setText(mData[position].selectContent)
                 }
@@ -1667,31 +1672,35 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     sp.setSpan(ForegroundColorSpan(Color.parseColor("#a6a6a6")),startPosition,endPosition,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                 }
                 vh.tvsingleDisplayRightTitle.text=sp
-                if(mData[position].jumpListener!=null){
-                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)
-                }
-                if(mData[position].singleDisplayRightContent.replace(" ","")=="上传"||
-                    mData[position].singleDisplayRightContent.replace(" ","")=="点击查看"){
-                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].buttonListener[0])
-                }
                 val spannable = SpannableStringBuilder(mData[position].singleDisplayRightContent)
                 when(mData[position].singleDisplayRightContent.replace(" ","")) {
-                    "查看", "上传", "点击查看" -> {
-                            spannable.setSpan(
-                                BackgroundColorSpan(Color.parseColor("#248aff")),
-                                0,
-                                mData[position].singleDisplayRightContent.length,
-                                Spanned.SPAN_INCLUSIVE_INCLUSIVE
-                            )
-                            spannable.setSpan(
-                                ForegroundColorSpan(Color.WHITE),
-                                0,
-                                mData[position].singleDisplayRightContent.length,
-                                Spanned.SPAN_INCLUSIVE_INCLUSIVE
-                            )
-                        }
+                    "查看", "上传", "点击查看","录入" -> {
+                        spannable.setSpan(
+                            BackgroundColorSpan(Color.parseColor("#248aff")),
+                            0,
+                            mData[position].singleDisplayRightContent.length,
+                            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                        )
+                        spannable.setSpan(
+                            ForegroundColorSpan(Color.WHITE),
+                            0,
+                            mData[position].singleDisplayRightContent.length,
+                            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                        )
+                    }
                 }
                 vh.tvsingleDisplayRightContent.setText(spannable)
+                if(mData[position].jumpListener!=null){
+                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].jumpListener)
+                    vh.itemView.setOnClickListener(mData[position].jumpListener)
+                }
+                if((mData[position].singleDisplayRightContent.replace(" ","")=="上传"||
+                    mData[position].singleDisplayRightContent.replace(" ","")=="点击查看" ||
+                    mData[position].singleDisplayRightContent.replace(" ","")=="录入")
+                    && mData[position].jumpListener==null){
+                    vh.tvsingleDisplayRightContent.setOnClickListener(mData[position].buttonListener[0])
+                    vh.itemView.setOnClickListener(mData[position].buttonListener[0])
+                }
                  if (mData[position].necessary)
                 {
                     val tvNecessary=TextView(context)
@@ -2013,11 +2022,11 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 vh.tvGoodsName.text = mData[position].goodsName
                 vh.tvGoodsPrice.text="￥${mData[position].goodsprice}"
                 vh.itemView.setOnClickListener(mData[position].itemListener)
-                GlideLoader().loadImage(vh.ivGoodsImage,mData[position].goodsPicture)
+                GlideImageLoader().displayImage(vh.ivGoodsImage,mData[position].goodsPicture)
 
             }
             STORE_TYPE->{
-                GlideLoader().loadImage(vh.ivStoreImage,mData[position].storeImage)
+                GlideImageLoader().displayImage(vh.ivStoreImage,mData[position].storeImage)
                 vh.tvStoreName.text=mData[position].storeName
                 vh.tvStoreAddress.text=mData[position].storeAddress
                 vh.tvStoreMajor.text=mData[position].storeMajor

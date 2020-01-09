@@ -663,49 +663,49 @@ class MyInformationFragment : Fragment() {
                 }
 
                 if(true){
-                    val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"家庭住址","未设置")
+                    val item = MultiStyleItem(MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT,"身份证住址","未设置")
                     if(user.vipAddress!=null)
-                        item.shiftInputContent = user.vipAddress.toString()
+                        item.singleDisplayRightContent = user.vipAddress.toString()
                     mMultiStyleItemList.add(item)
-                    item.jumpListener = View.OnClickListener {
-                        val dialog = AlertDialog.Builder(context!!)
-                        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null)
-                        if(item.shiftInputContent!="未设置")
-                            dialogView.et_dialog.setText(item.shiftInputContent)
-                        dialogView.et_dialog.setSelection(dialogView.et_dialog.text.length)
-                        dialog.setTitle("家庭住址")
-                            .setView(dialogView)
-                            .setNegativeButton("取消",null)
-                            .setPositiveButton("确定",DialogInterface.OnClickListener() { _, _ ->
-                                val result = Observable.create<RequestBody> {
-                                    //json.remove(key)
-                                    //val imagePath = upImage(key)
-                                    //var jsonObject= json.put(key,upImage(key))
-                                    val jsonObject = userJson.put("vipAddress", dialogView.et_dialog.text)
-                                    Log.i("json ,,", jsonObject.toString())
-                                    val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
-                                    it.onNext(requestBody)
-                                }.subscribe {
-                                    val result =
-                                        putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
-                                            .subscribeOn(Schedulers.io())
-                                            .subscribe(
-                                                {
-                                                    //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
-                                                    if (JSONObject(it.string()).getInt("code") == 200) {
-                                                        adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
-                                                        adapter!!.notifyDataSetChanged()
-                                                    }
-                                                },
-                                                {
-                                                    it.printStackTrace()
-                                                }
-                                            )
-                                }
-                            })
-                            .create()
-                            .show()
-                    }
+//                    item.jumpListener = View.OnClickListener {
+//                        val dialog = AlertDialog.Builder(context!!)
+//                        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit,null)
+//                        if(item.shiftInputContent!="未设置")
+//                            dialogView.et_dialog.setText(item.shiftInputContent)
+//                        dialogView.et_dialog.setSelection(dialogView.et_dialog.text.length)
+//                        dialog.setTitle("家庭住址")
+//                            .setView(dialogView)
+//                            .setNegativeButton("取消",null)
+//                            .setPositiveButton("确定",DialogInterface.OnClickListener() { _, _ ->
+//                                val result = Observable.create<RequestBody> {
+//                                    //json.remove(key)
+//                                    //val imagePath = upImage(key)
+//                                    //var jsonObject= json.put(key,upImage(key))
+//                                    val jsonObject = userJson.put("vipAddress", dialogView.et_dialog.text)
+//                                    Log.i("json ,,", jsonObject.toString())
+//                                    val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
+//                                    it.onNext(requestBody)
+//                                }.subscribe {
+//                                    val result =
+//                                        putSimpleMessage(it, UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.upateDTO1).observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribeOn(Schedulers.io())
+//                                            .subscribe(
+//                                                {
+//                                                    //                                                        Toast.makeText(context,it.string(),Toast.LENGTH_SHORT).show()
+//                                                    if (JSONObject(it.string()).getInt("code") == 200) {
+//                                                        adapter!!.mData[mMultiStyleItemList.indexOf(item)].shiftInputContent = dialogView.et_dialog.text.toString()
+//                                                        adapter!!.notifyDataSetChanged()
+//                                                    }
+//                                                },
+//                                                {
+//                                                    it.printStackTrace()
+//                                                }
+//                                            )
+//                                }
+//                            })
+//                            .create()
+//                            .show()
+//                    }
                 }
                 if(true){
                     val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"政治面貌","未设置")

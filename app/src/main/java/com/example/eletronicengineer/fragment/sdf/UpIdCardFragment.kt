@@ -14,7 +14,6 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap
 import com.example.eletronicengineer.utils.GlideImageLoader
-import com.example.eletronicengineer.utils.GlideLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.lcw.library.imagepicker.ImagePicker
 import com.yancy.gallerypick.config.GalleryConfig
@@ -32,7 +31,6 @@ class UpIdCardFragment :Fragment(){
     }
     lateinit var mView: View
     var key:String = ""
-    val glideLoader = GlideLoader()
     var selectImage=-1
     val iHandlerCallBack = object : IHandlerCallBack {
         override fun onFinish() {
@@ -117,10 +115,10 @@ class UpIdCardFragment :Fragment(){
     fun refresh(imagePaths: ArrayList<String>) {
         if(selectImage==-1){
             if(mImagePaths1.size!=0){
-                glideLoader.loadImage(mView.iv_id_people_content,mImagePaths1[0])
+                GlideImageLoader().displayImage(mView.iv_id_people_content,mImagePaths1[0])
             }
             if(mImagePaths2.size!=0){
-                glideLoader.loadImage(mView.iv_id_nation_content,mImagePaths2[0])
+                GlideImageLoader().displayImage(mView.iv_id_nation_content,mImagePaths2[0])
             }
         }else if(selectImage==0){
             if(mImagePaths1.size==0){
@@ -138,7 +136,7 @@ class UpIdCardFragment :Fragment(){
                 if(!isInList)
                 UnSerializeDataBase.imgList.add(BitmapMap(imagePaths[0]+"|",key))
                 mImagePaths1 = imagePaths
-                glideLoader.loadImage(mView.iv_id_people_content,imagePaths[0])
+                GlideImageLoader().displayImage(mView.iv_id_people_content,imagePaths[0])
             }
         }else{
             if(mImagePaths2.size==0){
@@ -157,9 +155,9 @@ class UpIdCardFragment :Fragment(){
                 UnSerializeDataBase.imgList.add(BitmapMap("|"+imagePaths[0],key))
                 mImagePaths2 = imagePaths
 
-                glideLoader.loadImage(mView.iv_id_nation_content,imagePaths[0])
+                GlideImageLoader().displayImage(mView.iv_id_nation_content,imagePaths[0])
             }
         }
-        glideLoader.clearMemoryCache()
+        GlideImageLoader().clearMemoryCache()
     }
 }

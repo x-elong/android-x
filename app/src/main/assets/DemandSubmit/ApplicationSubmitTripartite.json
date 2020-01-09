@@ -17,7 +17,7 @@
    {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"三方服务清册:",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "enrollThirdLists",
     "sendFormat": "JsonArray"
   },

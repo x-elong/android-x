@@ -19,9 +19,9 @@
     "sendFormat": "Long"
   },
   {
-    "type": "SELECT_DIALOG",
-    "selectTitle": "工种",
-    "selectOption1Items": ["负责人","安全员","施工员","材料员","后勤","技工","普工"],
+    "type": "SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle": "工种",
+    "singleDisplayRightContent":"",
     "key":"positionType",
     "sendFormat": "String"
   },

@@ -36,13 +36,6 @@
     "key": "legalPersonPhone",
     "sendFormat": "String"
   },
-    {
-          "type":"SHIFT_INPUT",
-          "shiftInputTitle":"身份证照片",
-          "necessary":false,
-          "key":"legalPersonIdCardPath",
-          "sendFormat": "String"
-    },
   {
 
     "type":"SHIFT_INPUT",
@@ -54,14 +47,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "leaseLists",
     "sendFormat": "JsonArray"
   },
   {
-    "type":"SHIFT_INPUT",
-    "shiftInputTitle":"上传合同",
-    "necessary":false,
+    "type":"SINGLE_DISPLAY_RIGHT",
+    "singleDisplayRightTitle":"租赁合同",
+    "singleDisplayRightContent":"  上传  ",
     "key": "leaseConTractPath",
     "sendFormat": "String"
   },

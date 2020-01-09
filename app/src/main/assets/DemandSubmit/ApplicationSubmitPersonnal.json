@@ -33,10 +33,11 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
+
   {
     "type": "HINT",
     "hintContent": "*同意甲方要求请填写上列清册并报名",

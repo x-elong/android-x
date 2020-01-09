@@ -10,9 +10,11 @@
             android:textSize="@dimen/font_tv_hint_15"/>
     <EditText android:layout_height="@dimen/general_80" android:layout_width="match_parent"
               android:inputType="textMultiLine|textPersonName"
-              android:textSize="@dimen/font_tv_hint_15" android:id="@+id/et_textarea_content" android:gravity="top"
+              android:textSize="@dimen/font_tv_hint_15" android:id="@+id/et_textarea_content" android:gravity="left"
                 android:textColor="#505050"
-              android:minHeight="@dimen/general_200" android:background="@color/transparent"
+               android:paddingStart="@dimen/general_10"
+        android:paddingTop="@dimen/general_5"
+              android:minHeight="@dimen/general_200"  android:background="@drawable/text_style1"
               android:hint=""
               android:ems="10" />
 </LinearLayout>

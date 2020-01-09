@@ -18,15 +18,17 @@ import kotlin.collections.ArrayList
 
 class PublishInventoryItemMoreFragment:Fragment() {
     companion object {
-        fun newInstance(args: Bundle): PublishInventoryItemMoreFragment {
+        fun newInstance(args: Bundle,data:List<MultiStyleItem>): PublishInventoryItemMoreFragment {
             val inventoryItemMoreFragment = PublishInventoryItemMoreFragment()
             inventoryItemMoreFragment.arguments = args
+            inventoryItemMoreFragment.mData = data
             return inventoryItemMoreFragment
         }
     }
 
     lateinit var mView: View
     lateinit var type: String
+    lateinit var mData:List<MultiStyleItem>
     var adapter: RecyclerviewAdapter = RecyclerviewAdapter(ArrayList())
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,7 +98,7 @@ class PublishInventoryItemMoreFragment:Fragment() {
 
         fun copyData(dataList: List<MultiStyleItem>): List<MultiStyleItem> {
             val data = dataList
-            val mData = (arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
+//            val mData = (arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
             data[0].id = mData[0].id
             for (j in mData) {
                 val position = mData.indexOf(j)

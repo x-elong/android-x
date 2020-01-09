@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.model.Constants
-import com.example.eletronicengineer.utils.ToastHelper
-import com.example.eletronicengineer.utils.UnSerializeDataBase
-import com.example.eletronicengineer.utils.startSendMessage
+import com.example.eletronicengineer.utils.*
+import com.example.eletronicengineer.utils.findPasswordByEmail
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,8 +31,10 @@ class ForgetPasswordThreeFragment : Fragment()  {
         }
     }
     lateinit var mView: View
+    var type = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_forget_password_three,container,false)
+        type =  arguments!!.getInt("type",0)
         initFragment()
         return mView
     }
@@ -56,27 +57,57 @@ class ForgetPasswordThreeFragment : Fragment()  {
             else if(password!=rePassword){
                 result="两次输入的密码不相同"
             }else{
-                val result = Observable.create<RequestBody> {
-                    val json = JSONObject().put("username",phoneNumber).put("phoneNumber",phoneNumber)
-                        .put("password",password).put("repassword",rePassword)
-                        val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
-                    it.onNext(requestBody)
-                }.subscribe {
-                    val result = startSendMessage(it,UnSerializeDataBase.upmsBasePath + Constants.HttpUrlPath.Login.findPassword)
-                        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                            val json = JSONObject(it.string())
-                            Log.i("json",json.toString())
-                            if(json.getInt("code")==200){
-                                ToastHelper.mToast(mView.context,"重设密码成功")
-                                activity!!.finish()
-                                activity!!.startActivity(Intent(mView.context,LoginActivity::class.java))
-                            }else
-                                ToastHelper.mToast(mView.context,"重设密码失败")
-                        },{
-                            ToastHelper.mToast(mView.context,"重设密码异常")
-                            it.printStackTrace()
-                        })
+                if(type==1){
+                    val result = Observable.create<RequestBody> {
+                        val str = "mobileNumber=${phoneNumber}&newPassword=${password}&reNewPassword=${rePassword}"
+                        val json = JSONObject().put("mobileNumber",phoneNumber)
+                            .put("newPassword",password).put("reNewPassword",rePassword)
+                        val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=utf-8"),str)
+
+//                        val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+                        it.onNext(requestBody)
+                    }.subscribe {
+                        val result = findPasswordByPhone(phoneNumber,password,rePassword)
+                            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                                val json = JSONObject(it.string())
+                                Log.i("json",json.toString())
+                                if(json.getInt("code")==200){
+                                    ToastHelper.mToast(mView.context,"重设密码成功")
+                                    activity!!.finish()
+                                    activity!!.startActivity(Intent(mView.context,LoginActivity::class.java))
+                                }else
+                                    ToastHelper.mToast(mView.context,"重设密码失败")
+                            },{
+                                ToastHelper.mToast(mView.context,"重设密码异常")
+                                it.printStackTrace()
+                            })
+                    }
+                }else if(type ==2){
+                    val result = Observable.create<RequestBody> {
+                        val str = "mobileNumber=${phoneNumber}&newPassword=${password}&reNewPassword=${rePassword}"
+                        val json = JSONObject().put("emailNumber",phoneNumber)
+                            .put("newPassword",password).put("reNewPassword",rePassword)
+//                        val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+                        val requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=utf-8"),str)
+                        it.onNext(requestBody)
+                    }.subscribe {
+                        val result = findPasswordByEmail(phoneNumber,password,rePassword)
+                            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                                val json = JSONObject(it.string())
+                                Log.i("json",json.toString())
+                                if(json.getInt("code")==200){
+                                    ToastHelper.mToast(mView.context,"重设密码成功")
+                                    activity!!.finish()
+                                    activity!!.startActivity(Intent(mView.context,LoginActivity::class.java))
+                                }else
+                                    ToastHelper.mToast(mView.context,"重设密码失败")
+                            },{
+                                ToastHelper.mToast(mView.context,"重设密码异常")
+                                it.printStackTrace()
+                            })
+                    }
                 }
+
             }
             if(result!="")
                 ToastHelper.mToast(mView.context,result)

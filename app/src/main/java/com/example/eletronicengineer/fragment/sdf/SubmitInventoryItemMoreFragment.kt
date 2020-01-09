@@ -12,50 +12,61 @@ import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.AdapterGenerate
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_inventory_item_more.view.*
-import java.io.Serializable
 
-class SubmitInventoryItemMoreFragment : Fragment(), Serializable {
+class SubmitInventoryItemMoreFragment : Fragment() {
     companion object{
-        fun newInstance(args: Bundle):SubmitInventoryItemMoreFragment{
+        fun newInstance(args: Bundle,data:List<MultiStyleItem>):SubmitInventoryItemMoreFragment{
             val inventoryItemMoreFragment = SubmitInventoryItemMoreFragment()
             inventoryItemMoreFragment.arguments = args
+            inventoryItemMoreFragment.mData = data
             return inventoryItemMoreFragment
         }
     }
     lateinit var mView: View
     lateinit var type: String
-    var adapter: RecyclerviewAdapter = RecyclerviewAdapter(ArrayList())
+    lateinit var mData:List<MultiStyleItem>
+    var adapter: RecyclerviewAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mView = inflater.inflate(R.layout.fragment_inventory_item_more,container,false)
-        initFragment()
-        return mView
-    }
-
-    private fun initFragment() {
-        var mData=arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>
-       mView.tv_inventory_item_more_back.setOnClickListener {
-           activity!!.supportFragmentManager.popBackStackImmediate()
-        }
         type = arguments!!.getString("type")
         mView.tv_inventory_item_more_title.setText(type + "详情")
-       mView.tv_select_ok.setOnClickListener {
-           val networkAdapter= NetworkAdapter(adapter.mData,mView.context)
-           if(networkAdapter.check()) {
-               val fragment =
-                   activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
-               activity!!.supportFragmentManager.popBackStackImmediate()
-               adapter.mData[0].selected = 1
-               fragment.update(adapter.mData)
-           }
+        mView.tv_inventory_item_more_back.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStackImmediate()
         }
-        adapter = RecyclerviewAdapter(copyData(switchAdapter()))
-        mView.rv_inventory_item_more_content.adapter = adapter
-        mView.rv_inventory_item_more_content.layoutManager = LinearLayoutManager(context)
+        mView.tv_select_ok.setOnClickListener {
+            val networkAdapter= NetworkAdapter(adapter!!.mData,mView.context)
+            if(networkAdapter.check()) {
+                val fragment =
+                    activity!!.supportFragmentManager.findFragmentByTag("inventory") as SubmitInventoryFragment
+                activity!!.supportFragmentManager.popBackStackImmediate()
+                adapter!!.mData[0].selected = 1
+                fragment.update(adapter!!.mData)
+            }
+        }
+        if(adapter==null){
+            val result = Observable.create<RecyclerviewAdapter> {
+                it.onNext(RecyclerviewAdapter(copyData(switchAdapter())))
+            }   .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    adapter = it
+                    mView.rv_inventory_item_more_content.adapter = adapter
+                    mView.rv_inventory_item_more_content.layoutManager = LinearLayoutManager(context)
+                }
+        }
+        else{
+            mView.rv_inventory_item_more_content.adapter = adapter
+            mView.rv_inventory_item_more_content.layoutManager = LinearLayoutManager(context)
+        }
+        return mView
     }
     private fun switchAdapter():List<MultiStyleItem>{
         val adapterGenerate = AdapterGenerate()
@@ -100,7 +111,6 @@ class SubmitInventoryItemMoreFragment : Fragment(), Serializable {
     }
     fun copyData(dataList: List<MultiStyleItem>): List<MultiStyleItem> {
         val data = dataList
-        val mData = (arguments!!.getSerializable("inventoryItem") as List<MultiStyleItem>)
         for (j in mData) {
             val position = mData.indexOf(j)
             when (j.options) {
@@ -108,6 +118,9 @@ class SubmitInventoryItemMoreFragment : Fragment(), Serializable {
                 MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG,
                 MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                     data[position].selectContent = j.selectContent
+                }
+                MultiStyleItem.Options.SHIFT_INPUT->{
+                    data[position].shiftInputPicture = j.shiftInputPicture
                 }
                 MultiStyleItem.Options.INPUT_WITH_UNIT -> {
                     data[position].inputUnitContent = j.inputUnitContent
@@ -138,5 +151,9 @@ class SubmitInventoryItemMoreFragment : Fragment(), Serializable {
             }
         }
         return data
+    }
+    fun refresh(imagePath:String,position:Int){
+        adapter!!.mData[position].shiftInputPicture = imagePath
+        adapter!!.notifyDataSetChanged()
     }
 }

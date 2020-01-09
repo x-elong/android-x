@@ -20,10 +20,10 @@ import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.fragment.sdf.SupplyFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap
 import com.example.eletronicengineer.utils.PermissionHelper
+import com.example.eletronicengineer.utils.ToastHelper
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.lcw.library.imagepicker.ImagePicker
 import java.io.File
@@ -58,7 +58,7 @@ class SupplyActivity : AppCompatActivity() {
 	//在当前下增加碎片
 	private fun addFragment(fragment: Fragment) {
 		val transaction = supportFragmentManager.beginTransaction()
-		transaction.add(R.id.frame_supply,fragment,"register")
+		transaction.add(R.id.frame_supply,fragment,"inventoryMore")
 		transaction.commit()
 	}
 	//Fragment切换
@@ -109,18 +109,23 @@ class SupplyActivity : AppCompatActivity() {
 					NetworkAdapter(this).upImage(mImagePaths[0],fragment)
 				}
 				Constants.RequestCode.REQUEST_PICK_FILE.ordinal -> {
+					val fragment=this@SupplyActivity.supportFragmentManager.findFragmentByTag("inventoryMore")!!
 					val uri = data!!.data
 					var path:String?=null
-					if (uri!!.toString().contains("content")) {
+					if(!isWordOrPdf(getRealPathFromURI(uri)!!) && !isWordOrPdf(uri.toString()))
+						ToastHelper.mToast(this,"只能上传word/pdf文件格式！")
+					else if (uri!!.toString().contains("content")) {
 						path = getRealPathFromURI(uri)
 						Log.i("path", path)
 						val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
 						fileMap.path=path!!
 						UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
+						NetworkAdapter(this).uploadFile(path,fragment)
 					}
 					else
 					{
 						val file = File(uri.toString())
+						path = file.path
 						if (file.exists())
 						{
 							Log.i("file", file.name)
@@ -128,8 +133,8 @@ class SupplyActivity : AppCompatActivity() {
 						val fileMap=UnSerializeDataBase.fileList.get(UnSerializeDataBase.fileList.size-1)
 						fileMap.path=uri.toString()
 						UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
+						NetworkAdapter(this).uploadFile(path!!,fragment)
 					}
-
 					//val resultFile= File()
 				}
 			}
@@ -183,5 +188,15 @@ class SupplyActivity : AppCompatActivity() {
 		}
 
 		return res
+	}
+
+	private fun isWordOrPdf(path :String):Boolean{
+		if(path.endsWith(".pdf"))
+			return true
+		else if(path.endsWith(".doc"))
+			return true
+		else if(path.endsWith(".docx"))
+			return true
+		return false
 	}
 }

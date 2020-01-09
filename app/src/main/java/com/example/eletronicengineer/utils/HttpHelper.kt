@@ -278,6 +278,12 @@ interface HttpHelper {
     @GET(Constants.HttpUrlPath.My.sendEmailCode)
     fun sendEmailCode(@Path("receiver") receiver: String): Observable<ResponseBody>
 
+    @GET(Constants.HttpUrlPath.My.retrievePasswordSendMailCode)
+    fun retrievePasswordSendMailCode(@Path("receiver") receiver: String): Observable<HttpResult<String>>
+
+    @GET(Constants.HttpUrlPath.My.retrievePasswordValidMailCode)
+    fun retrievePasswordValidMailCode(@Path("receiver") receiver: String,@Path("mailCode") mailCode: String): Observable<ResponseBody>
+
     @GET(Constants.HttpUrlPath.My.bindEmail)
     fun validBindEmail(@Path("receiver") receiver: String,@Path("mailCode") mailCode: String): Observable<ResponseBody>
 
@@ -444,19 +450,28 @@ interface HttpHelper {
     @POST(Constants.HttpUrlPath.Requirement.excel)
     fun downloadExcel(@Path("fileName") filename: String): Call<ResponseBody>
 
-    @POST("file/uploadFileSample")
+    @POST("file/uploadImageSample")
     @Multipart
     fun uploadImage(@Part data: MultipartBody.Part): Observable<ResponseBody>
 
     @POST(".")
     fun sendSimpleMessage(@Body data: RequestBody): Observable<ResponseBody>
 
+    @POST(Constants.HttpUrlPath.Login.findPasswordByPhone)
+    @FormUrlEncoded
+    fun findPasswordByPhone(@Field("mobileNumber") emailNumber:String,@Field("newPassword") newPassword:String,@Field("reNewPassword") reNewPassword:String): Observable<ResponseBody>
+
+
+    @POST(Constants.HttpUrlPath.Login.findPasswordByEmail)
+    @FormUrlEncoded
+    fun findPasswordByEmail(@Field("emailNumber") emailNumber:String,@Field("newPassword") newPassword:String,@Field("reNewPassword") reNewPassword:String): Observable<ResponseBody>
+
     @Multipart
     @POST(".")
     fun SendMultiPartMessage(@PartMap data: Map<String, @JvmSuppressWildcards RequestBody>): Observable<ResponseBody>
 
     @Multipart
-    @POST(".")
+    @POST("file/uploadFileSample")
     fun uploadFile(@PartMap data: Map<String, @JvmSuppressWildcards RequestBody>): Observable<ResponseBody>
 
     @PUT(".")
@@ -1283,6 +1298,33 @@ internal fun startSendMessage(requestBody: RequestBody, baseUrl: String):Observa
     return httpHelper.sendSimpleMessage(requestBody)
 }
 
+internal fun findPasswordByPhone(phoneNumber:String,password:String,rePassword:String):Observable<ResponseBody> {
+    val interceptor= Interceptor {
+        val request=it.request().newBuilder()
+            .addHeader("zouxiaodong",UnSerializeDataBase.userToken).build()
+        it.proceed(request)
+    }
+    val client=OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.findPasswordByPhone(phoneNumber,password,rePassword)
+}
+
+
+internal fun findPasswordByEmail(phoneNumber:String,password:String,rePassword:String):Observable<ResponseBody> {
+    val interceptor= Interceptor {
+        val request=it.request().newBuilder()
+            .addHeader("zouxiaodong",UnSerializeDataBase.userToken).build()
+        it.proceed(request)
+    }
+    val client=OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.upmsBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.findPasswordByEmail(phoneNumber,password,rePassword)
+}
+
 internal fun uploadImage(data: MultipartBody.Part): Observable<ResponseBody> {
     val retrofit =
         Retrofit.Builder().baseUrl(UnSerializeDataBase.mineBasePath).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1340,7 +1382,7 @@ internal fun putSimpleMessage(requestBody: RequestBody, baseUrl: String): Observ
     return httpHelper.putSimpleMessage(requestBody)
 }
 
-internal fun uploadFile(map: Map<String, RequestBody>, baseUrl: String):Observable<ResponseBody>
+internal fun uploadFile(map: Map<String, RequestBody>):Observable<ResponseBody>
 {
     val interceptor = Interceptor {
         Log.i("body", it.call().request().body().toString())
@@ -1348,14 +1390,14 @@ internal fun uploadFile(map: Map<String, RequestBody>, baseUrl: String):Observab
     }
     val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val retrofit =
-        Retrofit.Builder().baseUrl(baseUrl).client(client).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        Retrofit.Builder().baseUrl(UnSerializeDataBase.mineBasePath).client(client).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
-    return httpHelper.SendMultiPartMessage(map)
+    return httpHelper.uploadFile(map)
 }
 
-internal fun sendMobile(mobileNumber: String, baseUrl: String): Observable<HttpResult<String>> {
-    val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+internal fun sendMobile(mobileNumber: String): Observable<HttpResult<String>> {
+    val retrofit = Retrofit.Builder().baseUrl(UnSerializeDataBase.upmsBasePath).addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.sendMobile(mobileNumber)
@@ -1379,6 +1421,30 @@ internal fun sendEmailCode(receiver: String): Observable<ResponseBody> {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.sendEmailCode(receiver)
+}
+
+internal fun retrievePasswordSendMailCode(receiver: String): Observable<HttpResult<String>> {
+    val interceptor = Interceptor {
+        Log.i("body", it.call().request().body().toString())
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.retrievePasswordSendMailCode(receiver)
+}
+
+internal fun retrievePasswordValidMailCode(receiver: String,mailCode:String): Observable<ResponseBody> {
+    val interceptor = Interceptor {
+        Log.i("body", it.call().request().body().toString())
+        it.proceed(it.request().newBuilder().addHeader("zouxiaodong",UnSerializeDataBase.userToken).build())
+    }
+    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val retrofit = Retrofit.Builder().client(client).baseUrl(UnSerializeDataBase.mineBasePath).addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.retrievePasswordValidMailCode(receiver,mailCode)
 }
 
 internal fun validBindEmail(receiver: String,mailCode:String): Observable<ResponseBody> {

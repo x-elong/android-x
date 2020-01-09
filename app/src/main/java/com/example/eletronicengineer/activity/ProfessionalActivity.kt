@@ -16,7 +16,6 @@ import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragm
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
 import com.example.eletronicengineer.utils.UnSerializeDataBase
@@ -104,7 +103,7 @@ class ProfessionalActivity : AppCompatActivity() {
                         UnSerializeDataBase.fileList.set(UnSerializeDataBase.fileList.size-1,fileMap)
                     }
                     val fragment=this@ProfessionalActivity.supportFragmentManager.findFragmentByTag("fileManager") as ProjectImageCheckFragment
-                    fragment.uploadFile(UnSerializeDataBase.fileList[0].path)
+//                    fragment.uploadFile(UnSerializeDataBase.fileList[0].path)
                     //val resultFile= File()
                 }
             }

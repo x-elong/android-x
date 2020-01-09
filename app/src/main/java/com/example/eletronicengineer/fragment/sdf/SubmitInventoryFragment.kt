@@ -18,12 +18,13 @@ import com.example.eletronicengineer.utils.AdapterGenerate
 import kotlinx.android.synthetic.main.fragment_with_inventory.view.*
 import java.io.Serializable
 
-class SubmitInventoryFragment : Fragment(),Serializable {
+class SubmitInventoryFragment : Fragment() {
     companion object{
-        fun newInstance(args: Bundle): SubmitInventoryFragment
+        fun newInstance(args: Bundle,data:List<MultiStyleItem>): SubmitInventoryFragment
         {
             val submitInventoryFragment= SubmitInventoryFragment()
             submitInventoryFragment.arguments=args
+            submitInventoryFragment.multiStyleItemList = data
             return submitInventoryFragment
         }
     }
@@ -31,6 +32,7 @@ class SubmitInventoryFragment : Fragment(),Serializable {
     private lateinit var type:String
     lateinit var mView: View
     var adapter: RecyclerviewAdapter?=null
+    lateinit var multiStyleItemList:List<MultiStyleItem>
     var frame = R.id.frame_display_demand
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
@@ -43,7 +45,7 @@ class SubmitInventoryFragment : Fragment(),Serializable {
         else if(activity is SupplyDisplayActivity)
             frame = R.id.frame_display_supply
         if(adapter==null){
-            val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
+//            val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
             if(multiStyleItemList.isEmpty())
                 initFragment()
             else{
@@ -76,11 +78,10 @@ class SubmitInventoryFragment : Fragment(),Serializable {
         {
             mView.tv_select_add.setOnClickListener{
             adapter!!.mData[0].selected = -1
-            bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
             bundle.putString("type",type)
             FragmentHelper.switchFragment(
-                activity!!, SubmitInventoryItemMoreFragment.newInstance(bundle),
-                frame, ""
+                activity!!, SubmitInventoryItemMoreFragment.newInstance(bundle,switchAdapter()),
+                frame, "inventoryMore"
             )
            }
         }
@@ -88,14 +89,16 @@ class SubmitInventoryFragment : Fragment(),Serializable {
             mView.tv_select_add.visibility=View.GONE
         }
         for (j in adapter!!.mData){
+            if(adapter!!.mData.indexOf(j)==0)
+                continue
             j.jumpListener = View.OnClickListener {
                 //修改
                 adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
                 val bundle = Bundle()
                 var itemMultiStyleItem = j.itemMultiStyleItem
-                bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+//                bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                 bundle.putString("type",type)
-                FragmentHelper.switchFragment(activity!!,SubmitInventoryItemMoreFragment.newInstance(bundle), frame,"")
+                FragmentHelper.switchFragment(activity!!,SubmitInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), frame,"inventoryMore")
             }
         }
 
@@ -139,16 +142,16 @@ class SubmitInventoryFragment : Fragment(),Serializable {
                 mData[mData.size - 1].jumpListener = View.OnClickListener {
                     mData[0].selected = mData.size - 1
                     val bundle = Bundle()
-                    bundle.putSerializable(
-                        "inventoryItem",
-                        mData[mData.size - 1].itemMultiStyleItem as Serializable
-                    )
+//                    bundle.putSerializable(
+//                        "inventoryItem",
+//                        mData[mData.size - 1].itemMultiStyleItem as Serializable
+//                    )
                     bundle.putString("type", type)
                     FragmentHelper.switchFragment(
                         mView.context as DemandDisplayActivity,
-                        SubmitInventoryItemMoreFragment.newInstance(bundle),
+                        SubmitInventoryItemMoreFragment.newInstance(bundle,mData[mData.size - 1].itemMultiStyleItem),
                         R.id.frame_display_demand,
-                        ""
+                        "inventoryMore"
                     )
                 }
                 adapter!!.mData = mData

@@ -16,7 +16,6 @@ import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
 import com.example.eletronicengineer.utils.startSendMessage
@@ -141,14 +140,14 @@ class EnterpriseCertificationFragment :Fragment(){
             selectImage=2
             GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
         }
-        mView.iv_administrator_id_card_people.setOnClickListener{
-            selectImage=3
-            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
-        }
-        mView.iv_administrator_id_card_nation.setOnClickListener {
-            selectImage=4
-            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
-        }
+//        mView.iv_administrator_id_card_people.setOnClickListener{
+//            selectImage=3
+//            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+//        }
+//        mView.iv_administrator_id_card_nation.setOnClickListener {
+//            selectImage=4
+//            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
+//        }
         mView.iv_business_license.setOnClickListener{
             selectImage=5
             GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(activity)
@@ -173,8 +172,8 @@ class EnterpriseCertificationFragment :Fragment(){
                         result = "管理员已认证"
                         mView.tv_administrator_name_data.setText(js.getString("vipName"))
                         mView.tv_administrator_number_data.setText(js.getString("identifyCard"))
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_people,js.getString("identifyCardPathFront"))
-                        GlideLoader().loadImage(mView.iv_administrator_id_card_nation,js.getString("identifyCardPathContrary"))
+                        GlideImageLoader().displayImage(mView.iv_administrator_id_card_people,js.getString("identifyCardPathFront"))
+                        GlideImageLoader().displayImage(mView.iv_administrator_id_card_nation,js.getString("identifyCardPathContrary"))
                         administratorIdCardPeopleMap.path = js.getString("identifyCardPathFront")
                         administratorIdCardNationMap.path = js.getString("identifyCardPathContrary")
                         isCertification = true
@@ -197,7 +196,27 @@ class EnterpriseCertificationFragment :Fragment(){
                 })
         }
         mView.btn_Enterprise_certification.setOnClickListener {
-            certification()
+            if(mainType==""){
+                ToastHelper.mToast(mView.context,"请选择主体类型")
+            }else if(mView.et_institution_name.text.isBlank()){
+                ToastHelper.mToast(mView.context,"机构名称不能为空!")
+            }
+            else if(mView.et_social_credit_code.text.length!=18){
+                ToastHelper.mToast(mView.context,"社会信用代码必须为18位!")
+            }
+            else if(mView.et_main_code.text.isBlank()){
+                ToastHelper.mToast(mView.context,"主营信息不能为空!")
+            }
+            else if(businessLicenseMap.path==""){
+                ToastHelper.mToast(mView.context,"营业执照不能为空!")
+            }
+            else if(officialPictureMap.path==""){
+                ToastHelper.mToast(mView.context,"公函图片不能为空!")
+            }
+            else if(legalIdCardPeopleMap.path=="" || legalIdCardNationMap.path==""){
+                ToastHelper.mToast(mView.context,"法人身份证正反照不能为空!")
+            }else
+                certification()
         }
 //        mView.btn_information_certification.setOnClickListener {
 //            initImagePath()
@@ -207,7 +226,7 @@ class EnterpriseCertificationFragment :Fragment(){
 
     fun certification(){
         val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("mainType",mainType.replace(" ","/"))
+            val json = JSONObject().put("mainType",mainType.trim().replace(" ","/"))
                 .put("organizationName",mView.et_institution_name.text)
                 .put("mainBusiness",mView.et_main_code.text)
                 .put("socialCreditCode",mView.et_social_credit_code.text)
@@ -240,6 +259,7 @@ class EnterpriseCertificationFragment :Fragment(){
         }
     }
     fun refresh(imagePath:String){
+        Log.i("imagePath",imagePath)
         when(selectImage){
             1->{
                 legalIdCardPeopleMap.path=imagePath

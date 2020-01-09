@@ -35,33 +35,77 @@ class PersonalCertificationShowFragment :Fragment(){
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
         mView.tv_personal_certification_add.setOnClickListener {
-            if(isCertification){
-                ToastHelper.mToast(mView.context,"已经认证过，无法再次认证。\n若想修改认证，请重新认证！")
-            }else{
-                FragmentHelper.switchFragment(activity!!,PersonalCertificationFragment(),R.id.frame_my_certification,"Certification")
+            if (isCertification) {
+                ToastHelper.mToast(mView.context, "已经认证过，无法再次认证。\n若想修改认证，请重新认证！")
+            } else {
+                FragmentHelper.switchFragment(
+                    activity!!,
+                    PersonalCertificationFragment(),
+                    R.id.frame_my_certification,
+                    "Certification"
+                )
             }
         }
 
         mView.btn_personal_re_certification.setOnClickListener {
-            FragmentHelper.switchFragment(activity!!,PersonalReCertificationFragment(),R.id.frame_my_certification,"MyCertification")
+            FragmentHelper.switchFragment(
+                activity!!,
+                PersonalReCertificationFragment(),
+                R.id.frame_my_certification,
+                "MyCertification"
+            )
         }
-            val result = NetworkAdapter().getDataUser()
+        val result = Observable.create<RequestBody> {
+            val json = JSONObject().put("mainType", "个人")
+            val requestBody =
+                RequestBody.create(MediaType.parse("application/json"), json.toString())
+            it.onNext(requestBody)
+        }.subscribe {
+            val result = startSendMessage(
+                it,
+                UnSerializeDataBase.mineBasePath + Constants.HttpUrlPath.My.certificationMore
+            )
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
-                    val user = it.message.user
-                    if(user.isCredential){
-                        isCertification = true
-                        mView.btn_personal_re_certification.visibility = View.VISIBLE
-                        mView.tv_id_card_name_data.text = user.name
-                        mView.tv_id_card_number_data.text = user.identifyCard
-                        mView.tv_id_card_address_data.text = user.vipAddress
-                        GlideImageLoader().displayImage(mView.iv_id_card_people_show,user.identifyCardPathFront!!)
-                        GlideImageLoader().displayImage(mView.iv_id_card_nation_show,user.identifyCardPathContrary!!)
-                    }else{
-//                        ToastHelper.mToast(mView.context,"")
+                    val jsonObject = JSONObject(it.string())
+                    val code = jsonObject.getInt("code")
+                    var result = ""
+                    if (code == 200) {
+                        if (jsonObject.getString("desc") == "FAIL") {
+                            result = jsonObject.getString("message")
+                        } else {
+                            val js = jsonObject.getJSONObject("message")
+                            result = "获取数据成功"
+                            isCertification = true
+                            val status = js.getInt("certificationStatus")
+                            mView.tv_certification_status.text = "认证状态:" + when(status){
+                                0,3-> "审核中"
+                                1->"成功"
+                                2->"失败\n驳回理由:(${js.getString("reason")})"
+                                else->"未认证"
+                            }
+                            if(status==1 || status==2)
+                                mView.btn_personal_re_certification.visibility = View.VISIBLE
+                            mView.tv_id_card_name_data.text = js.getString("vipName")
+                            mView.tv_id_card_number_data.text = js.getString("identifyCard")
+                            mView.tv_id_card_address_data.setText(js.getString("vipAddress"))
+                            GlideImageLoader().displayImage(
+                                mView.iv_id_card_people_show,
+                                js.getString("identifyCardPathFront")
+                            )
+                            GlideImageLoader().displayImage(
+                                mView.iv_id_card_nation_show,
+                                js.getString("identifyCardPathContrary")
+                            )
+                        }
+                    } else if (code == 500) {
+                        result = "服务器异常"
                     }
-                },{
-                    ToastHelper.mToast(mView.context,"网络异常")
+                    if(result!="获取数据成功")
+                        ToastHelper.mToast(mView.context, result)
+                }, {
+                    ToastHelper.mToast(mView.context, "网络异常")
                     it.printStackTrace()
                 })
         }
+    }
 }

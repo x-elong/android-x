@@ -175,6 +175,8 @@ class Constants {
 
                 //邮箱
                 const val sendEmailCode= "Mail/sendMailCode/{receiver}"
+                const val retrievePasswordSendMailCode = "Mail/retrievePasswordSendMailCode/{receiver}"
+                const val retrievePasswordValidMailCode = "Mail/retrievePasswordValidMailCode/{receiver}/{mailCode}"
                 const val bindEmail = "Mail/validMailCode/{receiver}/{mailCode}"
                 //个人学历
                 const val getEducationBackground = "TUpmsUser/getAllEducationBackground/"
@@ -215,7 +217,7 @@ class Constants {
                 const val getDemandTripartite = "RequirementThirdParty/getAllByFounder/"
                 const val updateCheckDemandTripartite = "RequirementThirdLoggingCheck/registrationNumber/{requirementThirdId}"
 
-                const val getPersonalIssue = "PersonalIssue/insertListPersonalIssueBytoken/"
+                const val getPersonalIssue = "PersonalIssue/selectListPersonalIssueBytoken/"
                 const val getTeamService = "RunningMaintain/getRunningMaintainALLDTOPerson/"
                 const val getLeaseService = "Lease/getLeaseDTOListByFounder/"
                 const val getThridService = "Third/selectByToken/"
@@ -719,7 +721,8 @@ class Constants {
                 const val sendRegister="user/regist/"
                 const val sendLogin="user/login"
                 const val validFindCode = "Jmessage/validFindCode/{mobileNumber}/{code}"
-                const val findPassword = "userInfo/findPassword/"
+                const val findPasswordByPhone = "userInfo/findPasswordByPhone/"
+                const val  findPasswordByEmail = "userInfo/findPasswordByEmail/"
             }
         }
         class DisplayForYellowPages{
