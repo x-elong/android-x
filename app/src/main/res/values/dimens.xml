@@ -3010,6 +3010,7 @@
     <dimen name="font_tv_hint_14">14sp</dimen>
     <dimen name="font_tv_hint_15">15sp</dimen>
     <dimen name="font_tv_hint_16">16sp</dimen>
+    <dimen name="font_tv_hint_18">18sp</dimen>
     <dimen name="font_tv_normal_16">16sp</dimen>
     <dimen name="font_tv_normal_17">17sp</dimen>
     <dimen name="font_tv_normal_18">18sp</dimen>

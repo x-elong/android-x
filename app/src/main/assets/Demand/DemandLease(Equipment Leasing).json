@@ -34,32 +34,39 @@
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"财务运输保险",
-    "radioButtonName":["出租方承担","租赁方承担"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"财务运输保险",
+    "selectOption1Items":["出租方承担","租赁方承担"],
     "key":"financeTransportationInsurance",
-    "sendFormat":"String"
+    "sendFormat":"Long"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"配送",
-    "radioButtonName":["出租方承担","租赁方承担"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"配送",
+    "selectOption1Items":["出租方承担","租赁方承担"],
     "key":"distribution",
-    "sendFormat":"String"
+    "sendFormat":"Long"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"合作方属性",
-    "radioButtonName":["单位","个人"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"合作方属性",
+    "selectOption1Items":["单位","个人"],
     "key":"partnerAttribute",
-    "sendFormat":"String"
+    "sendFormat":"Long"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"费用标准",
-    "radioButtonName":["面议","按清单报价"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"合作方属性",
+    "selectOption1Items":["单位","个人"],
+    "key":"partnerAttribute",
+    "sendFormat":"Long"
+  },
+  {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"费用标准",
+    "selectOption1Items":["面议","按清单报价"],
     "key":"hireFareStandard",
-    "sendFormat":"String"
+    "sendFormat":"Long"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

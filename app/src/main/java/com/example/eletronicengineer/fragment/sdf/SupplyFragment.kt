@@ -140,27 +140,27 @@ class SupplyFragment:Fragment(){
                                     }
                                 }
                             }
-                            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
-                                when(i.radioButtonTitle) {
-                                    "是否配驾驶员"->{
-
-                                     val   tmp = i.radioButtonValue
-                                       if(tmp=="1"){
-                                           isDriver=true
-                                       }else{
-                                           isDriver=false
-                                       }
-                                    }
-                                    "保险状态"->{
-                                        val   tmp = i.radioButtonValue
-                                        if(tmp=="1"){
-                                            isInsurance=true
-                                        }else{
-                                            isInsurance=false
-                                        }
-                                    }
-                                }
-                            }
+//                            MultiStyleItem.Options.MULTI_RADIO_BUTTON -> {
+//                                when(i.radioButtonTitle) {
+//                                    "是否配驾驶员"->{
+//
+//                                     val   tmp = i.radioButtonValue
+//                                       if(tmp=="1"){
+//                                           isDriver=true
+//                                       }else{
+//                                           isDriver=false
+//                                       }
+//                                    }
+//                                    "保险状态"->{
+//                                        val   tmp = i.radioButtonValue
+//                                        if(tmp=="1"){
+//                                            isInsurance=true
+//                                        }else{
+//                                            isInsurance=false
+//                                        }
+//                                    }
+//                                }
+//                            }
                             MultiStyleItem.Options.SHIFT_INPUT -> {
                                 when(i.shiftInputTitle) {
                                     "可服务地域"-> {
@@ -194,6 +194,12 @@ class SupplyFragment:Fragment(){
                                     }
                                     "车厢结构"->{
                                         construction = 1-i.selectOption1Items.indexOf(i.selectContent)    //Int
+                                    }
+                                    "是否配驾驶员"->{
+                                        isDriver = if((1-i.selectOption1Items.indexOf(i.selectContent))==1) true else false   //Int
+                                    }
+                                    "保险状态"->{
+                                        isInsurance = if((1-i.selectOption1Items.indexOf(i.selectContent))==1) true else false    //Int
                                     }
                                 }
                             }

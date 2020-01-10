@@ -888,7 +888,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     val checkboxItem=CheckBox(context)
                     checkboxItem.text=name
-                    checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    checkboxItem.scaleX=0.8.toFloat()
+                    checkboxItem.scaleY=0.8.toFloat()
+                    checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_18).toFloat())
                     vh.llContainer.addView(checkboxItem)
                     checkboxItem.setOnCheckedChangeListener{
                             compoundButton, bool ->
@@ -903,7 +905,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         }
                     }
                     val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
-                    params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
+                   // params.leftMargin=context.resources.getDimension(R.dimen.general_1).toInt()
                     checkboxItem.layoutParams=params
                 }
                 for (i in 0 until vh.llContainer.childCount)
@@ -1419,7 +1421,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 val context=vh.itemView.context
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 if(mData[position].selectContent==""){
-                    mData[position].selectContent=mData[position].selectOption1Items[0]
+                  //  mData[position].selectContent=mData[position].selectOption1Items[0]
                     vh.etDialogSelectItem.hint="请选择"
                 }else{
                     vh.etDialogSelectItem.setText(mData[position].selectContent)

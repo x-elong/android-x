@@ -166,7 +166,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(3,4,5,7,11,12,15)
+        val necessaryNum = arrayListOf(1,3,4,5,7,11,12,15)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1398,7 +1398,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(2,4,5,9)
+        val necessaryNum = arrayListOf(1,2,4,5,9)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1778,7 +1778,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(0,1,2,3,4,5,7,8,10,11,14,15)//true为必选项
+        val necessaryNum = arrayListOf(0,1,2,3,4,5,7,8,11,14,15)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
