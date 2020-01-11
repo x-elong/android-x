@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.GetQRCodeActivity
+import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.fragment.my.SupplyModifyJobInformationFragment
@@ -96,7 +97,7 @@ class SupplyJobMoreFragment:Fragment() {
                         {
                             adapter.mData[8].buttonListener = listOf(View.OnClickListener {
                                 //显示图片
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.certificatePath)
                                 startActivity(intent)
                             })
@@ -222,7 +223,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[3].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -384,7 +385,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -534,7 +535,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -827,7 +828,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.caravanTransport.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -898,7 +899,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -975,7 +976,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.pileFoundation.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -1045,7 +1046,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -1115,7 +1116,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -1185,7 +1186,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -1267,7 +1268,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -1337,7 +1338,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -1406,7 +1407,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -1476,7 +1477,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                                else
 //                                {
 //                                    adapter.mData[4].buttonListener = listOf(View.OnClickListener {
-//                                        val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                        val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                        intent.putExtra("imagePath", i.carPhotoPath)
 //                                        startActivity(intent)
 //                                    })
@@ -1561,7 +1562,7 @@ class SupplyJobMoreFragment:Fragment() {
                             bundle.putString("id",data.id)
                             bundle.putSerializable("data",data as Serializable)
                             FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                R.id.frame_my_release,"register")
+                                R.id.frame_my_release,"inventoryMore")
                         }
                         view.rv_job_more_content.adapter = adapter
                         view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)
@@ -1614,18 +1615,18 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.site }
                         if(data.carTable.carPhotoPath==null)
                         {
-                            adapter.mData[14].buttonListener = listOf(View.OnClickListener {
+                            adapter.mData[14].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
+                            }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[14].buttonListener = listOf(View.OnClickListener {
-                                  val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[14].jumpListener = View.OnClickListener {
+                                  val intent = Intent(activity, ImageDisplayActivity::class.java)
                                      intent.putExtra("imagePath", data.carTable.carPhotoPath)
                                     startActivity(intent)
-                                  })
+                                  }
                         }
                         adapter.mData[15].singleDisplayRightContent=if(data.validTime.toInt()<=0) "已过期" else data.validTime
                         adapter.mData[16].singleDisplayRightContent=if(data.issuerBelongSite==null) {
@@ -1669,7 +1670,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 activity!!,
                                 SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                "inventoryMore"
                             )
                         }
                         view.rv_job_more_content.adapter = adapter
@@ -1695,46 +1696,31 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.companyCredential.legalPersonName }
                         adapter.mData[5].singleDisplayRightContent=if(data.companyCredential.legalPersonPhone==null) {
                             " " } else{ data.companyCredential.legalPersonPhone }
-                        if(data.companyCredential.legalPersonIdCardPath==null)
-                        {
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            })
-                        }
-                        else
-                        {
-                            //显示图片
-                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
-                                startActivity(intent)
-                            })
-                        }
 
                         if(data.companyCredential.businessLicensePath==null)
                         {
-                            adapter.mData[7].jumpListener = View.OnClickListener {
+                            adapter.mData[6].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[7].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[6].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.companyCredential.businessLicensePath)
                                 startActivity(intent)
                             }
                         }
                             if(data.leaseList==null)
                             {
-                                adapter.mData[8].jumpListener = View.OnClickListener {
+                                adapter.mData[7].jumpListener = View.OnClickListener {
                                     //工器具
                                     Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 }
                             }
                             else{
-                                adapter.mData[8].jumpListener = View.OnClickListener {  //工器具出租清册
+                                adapter.mData[7].jumpListener = View.OnClickListener {  //工器具出租清册
                                     if(data.leaseList!!.isEmpty())   Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                     else
                                     {
@@ -1749,34 +1735,34 @@ class SupplyJobMoreFragment:Fragment() {
                             }
                         if(data.leaseConstructionTool.leaseConTractPath==null)
                         {
-                            adapter.mData[9].jumpListener = View.OnClickListener {
+                            adapter.mData[8].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[9].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[8].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.leaseConstructionTool.leaseConTractPath)
                                 startActivity(intent)
                             }
                         }
                         if(data.leaseConstructionTool.isDistribution!=null){
                             when(data.leaseConstructionTool.isDistribution){
-                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
-                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
-                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                                "true"->{adapter.mData[9].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[9].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[9].singleDisplayRightContent=""}
                             }
                         }
 
-                        adapter.mData[11].singleDisplayRightContent=if(data.leaseConstructionTool.conveyancePropertyInsurance==null) {
+                        adapter.mData[10].singleDisplayRightContent=if(data.leaseConstructionTool.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseConstructionTool.conveyancePropertyInsurance }
-                        adapter.mData[12].singleDisplayRightContent=if(data.leaseConstructionTool.validTime==null) {
+                        adapter.mData[11].singleDisplayRightContent=if(data.leaseConstructionTool.validTime==null) {
                             " " } else{ data.leaseConstructionTool.validTime }
-                        adapter.mData[13].singleDisplayRightContent =data.leaseConstructionTool.contact
-                        adapter.mData[14].singleDisplayRightContent = data.leaseConstructionTool.contactPhone
-                        adapter.mData[15].singleDisplayRightContent=if(data.leaseConstructionTool.issuerBelongSite==null) {
+                        adapter.mData[12].singleDisplayRightContent =data.leaseConstructionTool.contact
+                        adapter.mData[13].singleDisplayRightContent = data.leaseConstructionTool.contactPhone
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseConstructionTool.issuerBelongSite==null) {
                             " " } else{ data.leaseConstructionTool.issuerBelongSite }
                                                 view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
@@ -1815,7 +1801,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 activity!!,
                                 SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                "inventoryMore"
                             )
                         }
                         view.rv_job_more_content.adapter = adapter
@@ -1841,45 +1827,30 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.companyCredential.legalPersonName }
                         adapter.mData[5].singleDisplayRightContent=if(data.companyCredential.legalPersonPhone==null) {
                             " " } else{ data.companyCredential.legalPersonPhone }
-                        if(data.companyCredential.legalPersonIdCardPath==null)
-                        {
-                            adapter.mData[6].jumpListener = View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        else
-                        {
-                            //显示图片
-                            adapter.mData[6].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
-                                startActivity(intent)
-                            }
-                        }
                         if(data.companyCredential.businessLicensePath==null)
                         {
-                            adapter.mData[7].jumpListener = View.OnClickListener {
+                            adapter.mData[6].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[7].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[6].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.companyCredential.businessLicensePath)
                                 startActivity(intent)
                             }
                         }
                         if(data.leaseList==null)
                         {
-                            adapter.mData[8].jumpListener = View.OnClickListener {
+                            adapter.mData[7].jumpListener = View.OnClickListener {
                                 //设备租赁清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else{
-                            adapter.mData[8].jumpListener = View.OnClickListener {  //设备租赁清册查看
+                            adapter.mData[7].jumpListener = View.OnClickListener {  //设备租赁清册查看
                                 if(data.leaseList!!.isEmpty())   Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -1892,35 +1863,35 @@ class SupplyJobMoreFragment:Fragment() {
                         }
                         if(data.leaseFacility.leaseConTractPath==null)
                         {
-                            adapter.mData[9].jumpListener = View.OnClickListener {
+                            adapter.mData[8].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[9].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[8].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.leaseFacility.leaseConTractPath)
                                 startActivity(intent)
                             }
                         }
                         if(data.leaseFacility.isDistribution!=null){
                             when(data.leaseFacility.isDistribution){
-                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
-                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
-                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                                "true"->{adapter.mData[9].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[9].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[9].singleDisplayRightContent=""}
                             }
                         }
 
-                        adapter.mData[11].singleDisplayRightContent=if(data.leaseFacility.conveyancePropertyInsurance==null) {
+                        adapter.mData[10].singleDisplayRightContent=if(data.leaseFacility.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseFacility.conveyancePropertyInsurance }
-                        adapter.mData[12].singleDisplayRightContent=if(data.leaseFacility.validTime==null) {
+                        adapter.mData[11].singleDisplayRightContent=if(data.leaseFacility.validTime==null) {
                             " " } else{ data.leaseFacility.validTime }
 
-                        adapter.mData[13].singleDisplayRightContent =data.leaseFacility.contact
-                        adapter.mData[14].singleDisplayRightContent = data.leaseFacility.contactPhone
-                        adapter.mData[15].singleDisplayRightContent=if(data.leaseFacility.issuerBelongSite==null) {
+                        adapter.mData[12].singleDisplayRightContent =data.leaseFacility.contact
+                        adapter.mData[13].singleDisplayRightContent = data.leaseFacility.contactPhone
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseFacility.issuerBelongSite==null) {
                             " " } else{ data.leaseFacility.issuerBelongSite }
                                                 view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
@@ -1959,7 +1930,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 activity!!,
                                 SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                "inventoryMore"
                             )
                         }
                         view.rv_job_more_content.adapter = adapter
@@ -1985,45 +1956,30 @@ class SupplyJobMoreFragment:Fragment() {
                             " " } else{ data.companyCredential.legalPersonName }
                         adapter.mData[5].singleDisplayRightContent=if(data.companyCredential.legalPersonPhone==null) {
                             " " } else{ data.companyCredential.legalPersonPhone }
-                        if(data.companyCredential.legalPersonIdCardPath==null)
-                        {
-                            adapter.mData[6].jumpListener = View.OnClickListener {
-                                Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        else
-                        {
-                            //显示图片
-                            adapter.mData[6].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
-                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
-                                startActivity(intent)
-                            }
-                        }
                         if(data.companyCredential.businessLicensePath==null)
                         {
-                            adapter.mData[7].jumpListener = View.OnClickListener {
+                            adapter.mData[6].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[7].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[6].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.companyCredential.businessLicensePath)
                                 startActivity(intent)
                             }
                         }
                         if(data.leaseList==null)
                         {
-                            adapter.mData[8].jumpListener = View.OnClickListener {
+                            adapter.mData[7].jumpListener = View.OnClickListener {
                                 //机械租赁清册查看
                                 Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else{
-                            adapter.mData[8].jumpListener = View.OnClickListener {  //机械租赁清册查看
+                            adapter.mData[7].jumpListener = View.OnClickListener {  //机械租赁清册查看
                                 if(data.leaseList!!.isEmpty())   Toast.makeText(context,"没有数据",Toast.LENGTH_SHORT).show()
                                 else
                                 {
@@ -2036,34 +1992,34 @@ class SupplyJobMoreFragment:Fragment() {
                         }
                         if(data.leaseMachinery.leaseConTractPath==null)
                         {
-                            adapter.mData[9].jumpListener = View.OnClickListener {
+                            adapter.mData[8].jumpListener = View.OnClickListener {
                                 Toast.makeText(context,"无图片",Toast.LENGTH_SHORT).show()
                             }
                         }
                         else
                         {
                             //显示图片
-                            adapter.mData[9].jumpListener = View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                            adapter.mData[8].jumpListener = View.OnClickListener {
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.leaseMachinery.leaseConTractPath)
                                 startActivity(intent)
                             }
                         }
                         if(data.leaseMachinery.isDistribution!=null){
                             when(data.leaseMachinery.isDistribution){
-                                "true"->{adapter.mData[10].singleDisplayRightContent="配送"}
-                                "false"->{adapter.mData[10].singleDisplayRightContent="不配送"}
-                                else->{adapter.mData[10].singleDisplayRightContent=""}
+                                "true"->{adapter.mData[9].singleDisplayRightContent="配送"}
+                                "false"->{adapter.mData[9].singleDisplayRightContent="不配送"}
+                                else->{adapter.mData[9].singleDisplayRightContent=""}
                             }
                         }
 
-                        adapter.mData[11].singleDisplayRightContent=if(data.leaseMachinery.conveyancePropertyInsurance==null) {
+                        adapter.mData[10].singleDisplayRightContent=if(data.leaseMachinery.conveyancePropertyInsurance==null) {
                             " " } else{ data.leaseMachinery.conveyancePropertyInsurance }
-                        adapter.mData[12].singleDisplayRightContent=if(data.leaseMachinery.validTime==null) {
+                        adapter.mData[11].singleDisplayRightContent=if(data.leaseMachinery.validTime==null) {
                             " " } else{ data.leaseMachinery.validTime }
-                        adapter.mData[13].singleDisplayRightContent =data.leaseMachinery.contact
-                        adapter.mData[14].singleDisplayRightContent = data.leaseMachinery.contactPhone
-                        adapter.mData[15].singleDisplayRightContent=if(data.leaseMachinery.issuerBelongSite==null) {
+                        adapter.mData[12].singleDisplayRightContent =data.leaseMachinery.contact
+                        adapter.mData[13].singleDisplayRightContent = data.leaseMachinery.contactPhone
+                        adapter.mData[14].singleDisplayRightContent=if(data.leaseMachinery.issuerBelongSite==null) {
                             " " } else{ data.leaseMachinery.issuerBelongSite }
                         view.btn_delete.setOnClickListener {
                             val loadingDialog = LoadingDialog(
@@ -2101,7 +2057,7 @@ class SupplyJobMoreFragment:Fragment() {
                                 activity!!,
                                 SupplyModifyJobInformationFragment.newInstance(bundle),
                                 R.id.frame_my_release,
-                                "register"
+                                "inventoryMore"
                             )
                         }
                         view.rv_job_more_content.adapter = adapter
@@ -2137,7 +2093,7 @@ class SupplyJobMoreFragment:Fragment() {
 //                        {
 //                            //显示图片
 //                            adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-//                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+//                                val intent = Intent(activity, ImageDisplayActivity::class.java)
 //                                intent.putExtra("imagePath", data.companyCredential.legalPersonIdCardPath)
 //                                startActivity(intent)
 //                            })
@@ -2152,7 +2108,7 @@ class SupplyJobMoreFragment:Fragment() {
                         {
                             //显示图片
                             adapter.mData[6].buttonListener = listOf(View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.companyCredential.businessLicensePath)
                                 startActivity(intent)
                             })
@@ -2167,7 +2123,7 @@ class SupplyJobMoreFragment:Fragment() {
                         {
                             //显示图片
                             adapter.mData[7].buttonListener = listOf(View.OnClickListener {
-                                val intent = Intent(activity, GetQRCodeActivity::class.java)
+                                val intent = Intent(activity, ImageDisplayActivity::class.java)
                                 intent.putExtra("imagePath", data.thirdServicesContractPath)
                                 startActivity(intent)
                             })
@@ -2222,7 +2178,7 @@ class SupplyJobMoreFragment:Fragment() {
                                bundle.putString("id",data.id)
                                bundle.putSerializable("data",data as Serializable)
                                FragmentHelper.switchFragment(activity!!,SupplyModifyJobInformationFragment.newInstance(bundle),
-                                   R.id.frame_my_release,"register")
+                                   R.id.frame_my_release,"inventoryMore")
                             }
                             view.rv_job_more_content.adapter = adapter
                             view.rv_job_more_content.layoutManager = LinearLayoutManager(view.context)

@@ -20,13 +20,11 @@ import com.example.eletronicengineer.custom.CustomDialog
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.db.MajorDistribuionProjectEntity
 import com.example.eletronicengineer.db.My.*
-import com.example.eletronicengineer.fragment.my.EnterpriseCertificationFragment
-import com.example.eletronicengineer.fragment.my.EnterpriseReCertificationFragment
-import com.example.eletronicengineer.fragment.my.PersonalCertificationFragment
-import com.example.eletronicengineer.fragment.my.PersonalReCertificationFragment
+import com.example.eletronicengineer.fragment.my.*
 import com.example.eletronicengineer.fragment.projectdisk.ProjectDiskFragment
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
+import com.example.eletronicengineer.fragment.sdf.SupplyFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
 import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
@@ -447,6 +445,9 @@ class NetworkAdapter {
                     result = data.textAreaContent
                 }
                 MultiStyleItem.Options.SHIFT_INPUT -> {
+                    if(data.shiftInputTitle=="车辆照片" || data.shiftInputTitle=="营业执照"){
+                        result = data.shiftInputPicture
+                    }
                     if(data.shiftInputTitle=="可服务地域"){
                         result=data.shiftInputContent
                     }else {
@@ -494,7 +495,10 @@ class NetworkAdapter {
                     result = data.inputSingleContent
                 }
                 MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT -> {
-                    result = data.singleDisplayRightContent
+                    if(data.singleDisplayRightTitle.contains("合同"))
+                        result = data.filePath
+                    else
+                        result = data.singleDisplayRightContent
                 }
                 MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                     result = data.selectContent
@@ -873,39 +877,14 @@ class NetworkAdapter {
                     ""
             }
             MultiStyleItem.Options.SHIFT_INPUT -> {
+                if(data.shiftInputTitle=="车辆照片")
+                    result = data.shiftInputPicture
+                else
                 for(j in UnSerializeDataBase.imgList){
                     if(j.key==data.key){
                         result=j.path
                     }
                 }
-//                val results = try {
-//                    for (j in UnSerializeDataBase.imgList) {
-//                        if (j.key == data.key) {
-//                            val imagePath = j.path.split("|")
-//                            for (k in imagePath) {
-//                                val file = File(k)
-//                                val imagePart = MultipartBody.Part.createFormData(
-//                                    "file",
-//                                    file.name,
-//                                    RequestBody.create(MediaType.parse("image/*"), file)
-//                                )
-//                                uploadImage(imagePart).observeOn(AndroidSchedulers.mainThread()).subscribe(
-//                                    {
-//                                        //Log.i("responseBody",it.string())
-//                                        if (result != "")
-//                                            result += "|"
-//                                        result += it.string()
-//                                        Log.i("result url", result)
-//                                    },
-//                                    {
-//                                        it.printStackTrace()
-//                                    })
-//                            }
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
             }
             MultiStyleItem.Options.SELECT_DIALOG, MultiStyleItem.Options.TWO_OPTIONS_SELECT_DIALOG, MultiStyleItem.Options.THREE_OPTIONS_SELECT_DIALOG -> {
                 result = if (data.selectContent != "")
@@ -5676,6 +5655,64 @@ class NetworkAdapter {
         }
     }
 
+    fun uploadFile(filePath:String,fragment:Fragment){
+        val loadingDialog = LoadingDialog(context,"正在上传...")
+        loadingDialog.show()
+        val map=HashMap<String, RequestBody>()
+        map["nodeSubitemId"]=RequestBody.create(MultipartBody.FORM,"1")
+        var fileName = ""
+        val result= Observable.create<HashMap<String,RequestBody>>{
+            val key = "file"
+            val file= File(filePath)
+            fileName = file.name
+            val builder= MultipartBody.Builder()
+            if (file.name.contains("jpg")||file.name.contains("png"))
+            {
+                val requestBody=RequestBody.create(MediaType.parse("image/*"),file)
+                builder.addFormDataPart(key,file.name,requestBody)
+            }
+            else
+            {
+                val requestBody=RequestBody.create(MediaType.parse("application/octet-stream;charset=utf-8"),file)
+                if (file.exists())
+                    Log.i("file","exist")
+                if (file.canRead())
+                    Log.i("file","can read")
+                builder.addFormDataPart(key, URLEncoder.encode(file.name,"utf-8"),requestBody)
+            }
+            map[key]=builder.build()
+            it.onNext(map)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                uploadFile(it).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                    .subscribe({
+                        loadingDialog.dismiss()
+                        //Log.i("retrofitMsg", it.string())
+                        val json = JSONObject(it.string())
+                        if(json.getBoolean("success")){
+                            val filePath = json.getString("httpUrl")
+                            if(fragment is SupplyFragment){
+                                fragment.file(filePath)
+                            }else if(fragment is SupplyModifyJobInformationFragment){
+                                fragment.file(filePath)
+                            }
+                        }
+//                        if (UnSerializeDataBase.imgList[0].needDelete) {
+//                            val file = File(UnSerializeDataBase.imgList[0].path)
+//                            file.delete()
+//                        }
+                        UnSerializeDataBase.fileList.clear()
+                        ToastHelper.mToast(context,"上传成功！")
+                    },
+                        {
+                            loadingDialog.dismiss()
+                            ToastHelper.mToast(context,"网络异常！")
+                            it.printStackTrace()
+                        })
+            }
+    }
     fun upImage(imagePath: String,fragment:Fragment){
         val loadingDialog = LoadingDialog(context,"正在上传...")
         loadingDialog.show()
@@ -5698,6 +5735,16 @@ class NetworkAdapter {
                         fragment.refresh(mImagePaths)
                     }else if(fragment is ImageFragment){
                         fragment.refresh(mImagePaths)
+                    }else if(fragment is PersonalMaterialsFragment){
+                        fragment.insertCertificate(mImagePaths[0])
+                    }else if(fragment is PersonalCertificationFragment){
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is PersonalReCertificationFragment){
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is EnterpriseCertificationFragment){
+                        fragment.refresh(mImagePaths[0])
+                    }else if(fragment is EnterpriseReCertificationFragment){
+                        fragment.refresh(mImagePaths[0])
                     }
                 }else{
                     ToastHelper.mToast(context,"上传失败")
@@ -5833,7 +5880,13 @@ class NetworkAdapter {
                                 }
                             }
                         }
+                    }else{
+                        if(j.singleDisplayRightTitle.contains("清册")&&!j.necessary){
+                            result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写"
+
+                        } else { result = "" }
                     }
+
                     if (result != "") {
                         ToastHelper.mToast(context,result)
                         return false

@@ -9,11 +9,7 @@
     "singleDisplayRightTitle":"需求类型:",
     "singleDisplayRightContent":""
   },
-  {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"车辆类型:",
-    "singleDisplayRightContent":" "
-  },
+
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人姓名:",
@@ -27,7 +23,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆清册:",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "enrollCar",
     "sendFormat": "JsonArray"
   },

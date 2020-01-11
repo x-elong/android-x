@@ -15,10 +15,9 @@ import com.example.eletronicengineer.fragment.projectdisk.ProjectImageCheckFragm
 import com.example.eletronicengineer.fragment.projectdisk.ProjectMoreFragment
 import com.example.eletronicengineer.fragment.sdf.ImageFragment
 import com.example.eletronicengineer.fragment.sdf.UpIdCardFragment
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.AdapterGenerate
-import com.example.eletronicengineer.utils.GlideLoader
+import com.example.eletronicengineer.utils.GlideImageLoader
 import com.example.eletronicengineer.utils.UnSerializeDataBase
 import com.lcw.library.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_get_qr_code.*
@@ -40,6 +39,6 @@ class GetQRCodeActivity : AppCompatActivity() {
                 finish()
             }
             Log.i("imagePath",mImagePath)
-            GlideLoader().loadPreImage(tv_get_qr_code_content,mImagePath)
+        GlideImageLoader().displayImage(tv_get_qr_code_content,mImagePath)
         }
 }

@@ -283,9 +283,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                         val bundle = Bundle()
-                        bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                         bundle.putString("type",type)
-                        FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                        FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                             frame,"")
                     }
             }
@@ -302,9 +301,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -321,9 +319,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -340,9 +337,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -359,9 +355,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -378,9 +373,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -398,9 +392,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
             }
@@ -419,9 +412,8 @@ class ProjectListFragment:Fragment() {
                 multiStyleItemList[position].itemMultiStyleItem = itemMultiStyleItem
                 multiStyleItemList[position].jumpListener = View.OnClickListener {
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",multiStyleItemList[position].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle),
+                    FragmentHelper.switchFragment(activity!!,ProjectListDetailFragment.newInstance(bundle,multiStyleItemList[position].itemMultiStyleItem),
                         frame,"")
                 }
 

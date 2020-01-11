@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.ServiceTermsActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.utils.FragmentHelper
 import io.reactivex.Observable
@@ -17,26 +19,33 @@ import kotlinx.android.synthetic.main.fragment_help_center.view.*
 
 class HelpCenterFragment :Fragment(){
     lateinit var mView: View
+    var adapter: RecyclerviewAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mView = inflater.inflate(R.layout.fragment_help_center,container,false)
-        Observable.create<RecyclerviewAdapter> {
-            it.onNext(initFragment())
-        }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-            .subscribe {
-                mView.rv_help_center_content.adapter = it
-                mView.rv_help_center_content.layoutManager = LinearLayoutManager(mView.context)
-            }
+        mView.tv_help_center_back.setOnClickListener {
+            activity!!.finish()
+        }
+        if(adapter==null){
+            Observable.create<RecyclerviewAdapter> {
+                it.onNext(initFragment())
+            }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe {
+                    adapter = it
+                    mView.rv_help_center_content.adapter = adapter
+                    mView.rv_help_center_content.layoutManager = LinearLayoutManager(mView.context)
+                }
+        }else{
+            mView.rv_help_center_content.adapter = adapter
+            mView.rv_help_center_content.layoutManager = LinearLayoutManager(mView.context)
+        }
         return mView
     }
 
     private fun initFragment():RecyclerviewAdapter {
-        mView.tv_help_center_back.setOnClickListener {
-            activity!!.finish()
-        }
         val bundle = Bundle()
         val mMultiStyleItemList = ArrayList<MultiStyleItem>()
         if(true){
@@ -114,8 +123,7 @@ class HelpCenterFragment :Fragment(){
         if(true){
             val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT,"电企通会员协议",false)
             item.jumpListener = View.OnClickListener {
-                bundle.putString("title",item.shiftInputTitle)
-                FragmentHelper.switchFragment(activity!!,HelpCenterMoreFragment.newInstance(bundle),R.id.frame_help_center,"")
+                activity!!.startActivity(Intent(activity!!,ServiceTermsActivity::class.java))
             }
             mMultiStyleItemList.add(item)
         }

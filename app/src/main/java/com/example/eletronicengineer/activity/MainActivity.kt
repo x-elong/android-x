@@ -17,7 +17,6 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.eletronicengineer.fragment.main.*
-import com.example.eletronicengineer.fragment.sdf.UploadPhoneFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.PermissionHelper
 import com.example.eletronicengineer.utils.SysApplication

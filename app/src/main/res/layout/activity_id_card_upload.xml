@@ -89,16 +89,16 @@
         app:layout_constraintVertical_bias="0.8"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_tv_hint_12"
-        android:text="@信息仅用于实名认证，游村网络将保护您的信息隐私！"
-        app:layout_constraintVertical_bias="0.98"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="@dimen/font_tv_hint_12"-->
+<!--        android:text="@信息仅用于实名认证，游村网络将保护您的信息隐私！"-->
+<!--        app:layout_constraintVertical_bias="0.98"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

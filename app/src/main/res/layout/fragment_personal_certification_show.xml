@@ -53,10 +53,23 @@
         app:layout_constraintEnd_toEndOf="@+id/view_personal_certification"
         app:layout_constraintBottom_toBottomOf="@+id/view_personal_certification"
         />
+
+    <TextView
+        android:id="@+id/tv_certification_status"
+        android:text="认证状态:未认证"
+        android:textSize="@dimen/font_tv_normal_16"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_10"
+        app:layout_constraintTop_toBottomOf="@+id/view_personal_certification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <View
         android:id="@+id/view_id_card_name"
         android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/view_personal_certification"
+        app:layout_constraintTop_toBottomOf="@+id/tv_certification_status"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/left_10"
         android:layout_marginEnd="@dimen/right_10"

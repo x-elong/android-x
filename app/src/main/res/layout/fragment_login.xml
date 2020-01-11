@@ -86,6 +86,7 @@
         android:id="@+id/tv_login_down_list"
         android:layout_width="@dimen/general_30"
         android:layout_height="@dimen/general_30"
+        android:visibility="invisible"
         android:layout_marginRight="@dimen/general_15"
         android:background="@drawable/under"
         app:layout_constraintBottom_toTopOf="@id/line2"

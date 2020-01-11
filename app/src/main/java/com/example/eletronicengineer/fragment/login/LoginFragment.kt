@@ -5,16 +5,13 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.InputType
-import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
-import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MainActivity
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.utils.*

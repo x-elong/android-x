@@ -1,26 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_background"
     android:padding="@dimen/general_10">
 
     <TextView
+        android:id="@+id/tv_extension_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="十二月"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:padding="@dimen/general_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:textSize="@dimen/font_tv_hint_15"
-        android:id="@+id/tv_extension_month"
-        android:text="TextView"
-        android:layout_weight="1"
+        android:id="@+id/tv_extension_return"
+        android:text="返利积分"
+        android:layout_marginStart="@dimen/general_10"
+        android:padding="@dimen/general_5"
+        app:layout_constraintStart_toEndOf="@id/tv_extension_month"
+        app:layout_constraintTop_toTopOf="@id/tv_extension_month"
+        app:layout_constraintBottom_toBottomOf="@id/tv_extension_month"
         />
 
     <TextView
-        android:id="@+id/tv_extension_month_mark"
+        android:id="@+id/tv_extension_month_mark1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/general_5"
+        android:text=""
+        android:textColor="@color/red"
+        android:textSize="@dimen/font_tv_hint_15"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_extension_month"
+        app:layout_constraintEnd_toStartOf="@+id/tv_extension_spread"
+        app:layout_constraintStart_toEndOf="@+id/tv_extension_return"
+        app:layout_constraintTop_toTopOf="@+id/tv_extension_month" />
+
+    <TextView
+        android:id="@+id/tv_extension_spread"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:gravity="center"
-        android:layout_marginRight="@dimen/general_10"
-        android:text="+50"
-        android:textColor="#d43030"
-        android:textSize="@dimen/font_tv_hint_15" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="推广积分"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:padding="@dimen/general_5"
+        app:layout_constraintStart_toEndOf="@id/tv_extension_month_mark1"
+        app:layout_constraintTop_toTopOf="@+id/tv_extension_month"
+        app:layout_constraintEnd_toStartOf="@id/tv_extension_month_mark2"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_extension_month"/>
+
+    <TextView
+        android:id="@+id/tv_extension_month_mark2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/red"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:padding="@dimen/general_5"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_extension_month"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_extension_spread"
+        app:layout_constraintTop_toTopOf="@+id/tv_extension_month" />
+</androidx.constraintlayout.widget.ConstraintLayout>

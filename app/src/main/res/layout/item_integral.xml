@@ -4,49 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/general_5"
-    android:padding="@dimen/general_5"
+    android:padding="@dimen/general_10"
     android:background="@drawable/item_background">
 
-    <TextView
+    <ImageView
         android:visibility="gone"
         android:layout_width="@dimen/general_50"
-        android:layout_height="@dimen/general_50"
-        android:background="@drawable/certify"
-        android:id="@+id/tv_integral_image"/>
+        android:layout_height="0dp"
+        android:src="@drawable/certify"
+        android:id="@+id/iv_integral_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="xxxxxxxxxxxxx"
+        android:text=""
         android:textSize="@dimen/font_tv_hint_15"
         android:layout_marginLeft="@dimen/general_10"
         android:id="@+id/tv_item_integral_title"
-        app:layout_constraintStart_toEndOf="@+id/tv_integral_image"
-
+        android:layout_marginEnd="@dimen/general_10"
+        app:layout_constraintStart_toEndOf="@+id/iv_integral_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_integral_mark"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_tv_hint_14"
-        android:text="时间 2019-08-05        一级会员"
+        android:text=""
         android:layout_marginLeft="@dimen/general_10"
-        app:layout_constraintStart_toEndOf="@+id/tv_integral_image"
+        app:layout_constraintStart_toEndOf="@+id/iv_integral_image"
         app:layout_constraintTop_toBottomOf="@id/tv_item_integral_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_integral_mark"
         android:layout_marginTop="@dimen/general_7"
+        android:layout_marginEnd="@dimen/general_10"
         android:id="@+id/tv_integral_content"/>
     <TextView
         android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:text="+5"
+        android:layout_height="wrap_content"
+        android:text=""
         android:gravity="center"
         android:textSize="@dimen/font_tv_hint_15"
-        android:textColor="#d43030"
+        android:textColor="@color/red"
         android:id="@+id/tv_integral_mark"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_item_integral_title"
+        android:layout_marginEnd="@dimen/general_8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

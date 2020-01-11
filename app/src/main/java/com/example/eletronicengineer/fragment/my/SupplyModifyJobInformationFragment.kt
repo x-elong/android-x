@@ -165,7 +165,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("issuerBelongSite",mAdapter!!.mData[5].shiftInputContent)
                                     .put("issuerName",UnSerializeDataBase.idCardName)
                                     .put("phone",UnSerializeDataBase.userPhone)
-                                    .put("remark","")
                                     .put("id",id)
                                     .put("teamServeId",UnSerializeDataBase.inventoryId)
                                     .put("remark",mAdapter!!.mData[8].textAreaContent)
@@ -235,7 +234,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                     .put("lenghtCar",mAdapter!!.mData[5].inputUnitContent.toLongOrNull().toString())
                                     .put("isDriver",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[7]))
                                     .put("isInsurance",NetworkAdapter.Provider().parseToBoolean(mAdapter!!.mData[8]))
-                                    .put("carPhotoPath","")
+                                    .put("carPhotoPath",mAdapter!!.mData[9].shiftInputPicture)
                                     .put("carNumber",NetworkAdapter.Provider().parseToString(mAdapter!!.mData[2]))
                                     .put("comment",mAdapter!!.mData[17].textAreaContent)
                                     .put("id",UnSerializeDataBase.inventoryIdKey)
@@ -312,7 +311,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
                                         Log.i("json",json.toString())
                                         if (json.getString("desc") == "OK") {
                                             ToastHelper.mToast(mView.context,"${message}成功")
-                                                mView.tv_modify_job_information_back.callOnClick()
+                                            UnSerializeDataBase.imgList.clear()
+                                            mView.tv_modify_job_information_back.callOnClick()
                                         }else if(json.getInt("code") == 403){
                                             ToastHelper.mToast(mView.context,"${json.getString("desc")} 请升级为更高级会员")
                                         } else if (json.getString("desc") == "FAIL") {
@@ -630,7 +630,6 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[2].radioButtonValue = supplyPersonDetail.sex
         adapter.mData[3].inputUnitContent = supplyPersonDetail.age
         adapter.mData[4].inputUnitContent = supplyPersonDetail.workExperience
-
         if(supplyPersonDetail.salaryUnit!="面议" || supplyPersonDetail.workMoney!="-1.0" ){
             adapter.mData[5].inputMultiContent = supplyPersonDetail.workMoney
             adapter.mData[5].inputMultiSelectUnit = supplyPersonDetail.salaryUnit
@@ -640,9 +639,19 @@ class SupplyModifyJobInformationFragment:Fragment(){
 
         adapter.mData[6].singleDisplayRightContent = UnSerializeDataBase.idCardName
         adapter.mData[7].singleDisplayRightContent = UnSerializeDataBase.userPhone
+        if(supplyPersonDetail.certificatePath!=null && supplyPersonDetail.certificatePath!="")
+            UnSerializeDataBase.imgList.add(BitmapMap(supplyPersonDetail.certificatePath,adapter.mData[8].key))
         //专业证书附件上传 8
         adapter.mData[9].inputUnitContent = supplyPersonDetail.validTime
-        // 10
+        if(supplyPersonDetail.issuerBelongSite!=null){
+            val issuerBelongSite = supplyPersonDetail.issuerBelongSite.split("、")
+            for (j in issuerBelongSite){
+                val position = adapter.mData[10].placeCheckArray.indexOf(j)
+                if(position>=0)
+                    adapter.mData[10].placeCheckBoolenArray[position] = true
+            }
+            adapter.mData[10].shiftInputContent = supplyPersonDetail.issuerBelongSite
+        }
         if(supplyPersonDetail.remark!=null)
             adapter.mData[11].textAreaContent = supplyPersonDetail.remark
         validTime = supplyPersonDetail.validTime
@@ -692,9 +701,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].necessary = false
@@ -723,16 +732,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -793,9 +803,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
@@ -849,9 +859,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -879,16 +889,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -949,9 +960,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
@@ -1005,9 +1016,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1035,16 +1046,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1105,9 +1117,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
@@ -1161,9 +1173,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1191,16 +1203,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1261,9 +1274,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[6].itemMultiStyleItem = itemMultiStyleItem
@@ -1318,9 +1331,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1386,9 +1399,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1415,17 +1428,20 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[4].inputUnitContent = j.maxWeight
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
-                    if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    if(j.carPhotoPath!=null && j.carPhotoPath!=""){
+                        mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                    }
+
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1475,9 +1491,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
@@ -1532,9 +1548,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1562,16 +1578,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1600,9 +1617,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
@@ -1665,9 +1682,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1695,16 +1712,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1766,9 +1784,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
@@ -1823,9 +1841,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1853,16 +1871,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -1891,9 +1910,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[3].itemMultiStyleItem = itemMultiStyleItem
@@ -1957,9 +1976,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","成员清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[1].itemMultiStyleItem = itemMultiStyleItem
@@ -1987,16 +2006,17 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     mData[5].inputUnitContent = j.lenghtCar
                     mData[6].selectContent = if(j.isDriver=="true") "是" else "否"
                     if(j.carPhotoPath!=null && j.carPhotoPath!="")
-                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
+                                                mData[7].shiftInputPicture = j.carPhotoPath
+//                        UnSerializeDataBase.imgList.add(BitmapMap(j.carPhotoPath,mData[7].key))
                     mData[8].selectContent = if(j.isInsurance=="true") "有" else "无"
                     itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem = mData
                     itemMultiStyleItem[itemMultiStyleItem.size-1].jumpListener = View.OnClickListener {
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","车辆清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[2].itemMultiStyleItem = itemMultiStyleItem
@@ -2058,9 +2078,9 @@ class SupplyModifyJobInformationFragment:Fragment(){
                         itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                         val bundle = Bundle()
                         val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                        bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                        //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                         bundle.putString("type","工器具清册发布")
-                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                        FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                     }
                 }
             adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
@@ -2141,9 +2161,11 @@ class SupplyModifyJobInformationFragment:Fragment(){
             "工器具租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseConstructionTool.leaseServeId
                 companyCredentialId = otherLease.leaseConstructionTool.companyCredentialId
-                adapter.mData[10].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
-                adapter.mData[11].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
-                adapter.mData[15].inputUnitContent = otherLease.leaseConstructionTool.validTime
+                if(otherLease.leaseConstructionTool.leaseConTractPath!=null)
+                    adapter.mData[8].filePath = otherLease.leaseConstructionTool.leaseConTractPath
+                adapter.mData[9].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
+                adapter.mData[10].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
+                adapter.mData[14].inputUnitContent = otherLease.leaseConstructionTool.validTime
                 validTime = otherLease.leaseConstructionTool.validTime
                 if(validTime.toInt()<=0)
                     adapter.urlPath = Constants.HttpUrlPath.Provider.LcTool
@@ -2151,19 +2173,21 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 if(otherLease.leaseConstructionTool.issuerBelongSite!=null){
                     val issuerBelongSite = otherLease.leaseConstructionTool.issuerBelongSite.split("、")
                     for (j in issuerBelongSite){
-                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        val position = adapter.mData[13].placeCheckArray.indexOf(j)
                         if(position>=0)
-                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                            adapter.mData[13].placeCheckBoolenArray[position] = true
                     }
-                    adapter.mData[14].shiftInputContent = otherLease.leaseConstructionTool.issuerBelongSite
+                    adapter.mData[13].shiftInputContent = otherLease.leaseConstructionTool.issuerBelongSite
                 }
             }
             "机械租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseMachinery.leaseServeId
                 companyCredentialId = otherLease.leaseMachinery.companyCredentialId
-                adapter.mData[10].radioButtonValue = if(otherLease.leaseMachinery.isDistribution=="true") "1" else "0"
-                adapter.mData[11].selectContent = otherLease.leaseMachinery.conveyancePropertyInsurance
-                adapter.mData[15].inputUnitContent = otherLease.leaseMachinery.validTime
+                if(otherLease.leaseMachinery.leaseConTractPath!=null)
+                adapter.mData[8].filePath = otherLease.leaseMachinery.leaseConTractPath
+                adapter.mData[9].radioButtonValue = if(otherLease.leaseMachinery.isDistribution=="true") "1" else "0"
+                adapter.mData[10].selectContent = otherLease.leaseMachinery.conveyancePropertyInsurance
+                adapter.mData[14].inputUnitContent = otherLease.leaseMachinery.validTime
                 validTime = otherLease.leaseMachinery.validTime
                 if(validTime.toInt()<=0)
                     adapter.urlPath = Constants.HttpUrlPath.Provider.LeaseMachinery
@@ -2171,19 +2195,21 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 if(otherLease.leaseMachinery.issuerBelongSite!=null){
                     val issuerBelongSite = otherLease.leaseMachinery.issuerBelongSite.split("、")
                     for (j in issuerBelongSite){
-                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        val position = adapter.mData[13].placeCheckArray.indexOf(j)
                         if(position>=0)
-                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                            adapter.mData[13].placeCheckBoolenArray[position] = true
                     }
-                    adapter.mData[14].shiftInputContent = otherLease.leaseMachinery.issuerBelongSite
+                    adapter.mData[13].shiftInputContent = otherLease.leaseMachinery.issuerBelongSite
                 }
             }
             "设备租赁"-> {
                 UnSerializeDataBase.inventoryId = otherLease.leaseFacility.leaseServeId
                 companyCredentialId = otherLease.leaseFacility.companyCredentialId
-                adapter.mData[10].radioButtonValue = if(otherLease.leaseFacility.isDistribution=="true") "1" else "0"
-                adapter.mData[11].selectContent = otherLease.leaseFacility.conveyancePropertyInsurance
-                adapter.mData[15].inputUnitContent = otherLease.leaseFacility.validTime
+                if(otherLease.leaseFacility.leaseConTractPath!=null)
+                    adapter.mData[8].filePath = otherLease.leaseFacility.leaseConTractPath
+                adapter.mData[9].radioButtonValue = if(otherLease.leaseFacility.isDistribution=="true") "1" else "0"
+                adapter.mData[10].selectContent = otherLease.leaseFacility.conveyancePropertyInsurance
+                adapter.mData[14].inputUnitContent = otherLease.leaseFacility.validTime
                 validTime = otherLease.leaseFacility.validTime
                 if(validTime.toInt()<=0)
                     adapter.urlPath = Constants.HttpUrlPath.Provider.LeaseFacility
@@ -2191,11 +2217,11 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 if(otherLease.leaseFacility.issuerBelongSite!=null){
                     val issuerBelongSite = otherLease.leaseFacility.issuerBelongSite.split("、")
                     for (j in issuerBelongSite){
-                        val position = adapter.mData[14].placeCheckArray.indexOf(j)
+                        val position = adapter.mData[13].placeCheckArray.indexOf(j)
                         if(position>=0)
-                            adapter.mData[14].placeCheckBoolenArray[position] = true
+                            adapter.mData[13].placeCheckBoolenArray[position] = true
                     }
-                    adapter.mData[14].shiftInputContent = otherLease.leaseFacility.issuerBelongSite
+                    adapter.mData[13].shiftInputContent = otherLease.leaseFacility.issuerBelongSite
                 }
             }
         }
@@ -2205,11 +2231,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         adapter.mData[3].inputSingleContent = otherLease.companyCredential.companyAddress
         adapter.mData[4].inputSingleContent = otherLease.companyCredential.legalPersonName
         adapter.mData[5].inputSingleContent = otherLease.companyCredential.legalPersonPhone
-        if(otherLease.companyCredential.legalPersonIdCardPath!=null && otherLease.companyCredential.legalPersonIdCardPath!=""){
-            UnSerializeDataBase.imgList.add(BitmapMap(otherLease.companyCredential.legalPersonIdCardPath, adapter.mData[6].key))
-        }
         if(otherLease.companyCredential.businessLicensePath!=null && otherLease.companyCredential.businessLicensePath!=""){
-            UnSerializeDataBase.imgList.add(BitmapMap(otherLease.companyCredential.businessLicensePath, adapter.mData[7].key))
+            UnSerializeDataBase.imgList.add(BitmapMap(otherLease.companyCredential.businessLicensePath, adapter.mData[6].key))
         }
 //        adapter.mData[7].radioButtonValue = if(supplyLeaseCar.carTable.isDriver=="true") "1" else "0"
 //        adapter.mData[8].radioButtonValue = if(supplyLeaseCar.carTable.isInsurance=="true") "1" else "0"
@@ -2237,12 +2260,12 @@ class SupplyModifyJobInformationFragment:Fragment(){
                     itemMultiStyleItem[0].selected = itemMultiStyleItem.size-1
                     val bundle = Bundle()
                     val itemMultiStyleItem = itemMultiStyleItem[itemMultiStyleItem.size-1].itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+                    //bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type","工器具清册发布")
-                    FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle), R.id.frame_my_release,"")
+                    FragmentHelper.switchFragment(activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), R.id.frame_my_release,"inventoryMore")
                 }
             }
-        adapter.mData[8].itemMultiStyleItem = itemMultiStyleItem
+        adapter.mData[7].itemMultiStyleItem = itemMultiStyleItem
 
 
     }
@@ -2273,6 +2296,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
             UnSerializeDataBase.imgList.add(BitmapMap(supplyThirdParty.companyCredential.businessLicensePath, adapter.mData[6].key))
         }
         //9
+        if(supplyThirdParty.thirdServicesContractPath!=null)
+            adapter.mData[9].filePath = supplyThirdParty.thirdServicesContractPath
         if(supplyThirdParty.issuerBelongSite!=null){
             val issuerBelongSite = supplyThirdParty.issuerBelongSite.split("、")
             for (j in issuerBelongSite){
@@ -2295,5 +2320,13 @@ class SupplyModifyJobInformationFragment:Fragment(){
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
         Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())
+    }
+    fun refresh(imagePath:String,position:Int){
+        mAdapter!!.mData[position].shiftInputPicture = imagePath
+        mAdapter!!.notifyDataSetChanged()
+    }
+    fun file(filePath:String){
+        mAdapter!!.mData[9].filePath = filePath
+        mAdapter!!.notifyDataSetChanged()
     }
 }

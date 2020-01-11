@@ -19,23 +19,26 @@ class ExtensionAdapter: RecyclerView.Adapter<ExtensionAdapter.ViewHolder> {
 
     inner class ViewHolder : RecyclerView.ViewHolder {
         var extensionMonth : TextView
-        var extensionMonthMark : TextView
+        var extensionMonthMark1 : TextView
+        var extensionMonthMark2 : TextView
 
         constructor(view: View):super (view){
             extensionMonth = view.tv_extension_month
-            extensionMonthMark = view.tv_extension_month_mark
+            extensionMonthMark1 = view.tv_extension_month_mark1
+            extensionMonthMark2 = view.tv_extension_month_mark2
         }
     }
 
     @NonNull
-    override fun onCreateViewHolder(@NonNull viewGroup: ViewGroup, viewType: Int): ExtensionAdapter.ViewHolder {
+    override fun onCreateViewHolder(@NonNull viewGroup: ViewGroup, viewType: Int): ViewHolder {
         mView= LayoutInflater.from(viewGroup.context).inflate(R.layout.item_extension_earn, viewGroup, false)
         return ViewHolder(mView)
     }
     override fun onBindViewHolder(@NonNull viewHolder: ViewHolder, i: Int) {
         var extensionStyle = mExtensionList[i]
         viewHolder.extensionMonth.text = extensionStyle.extensionMonth
-        viewHolder.extensionMonthMark.text = extensionStyle.extensionMonthEarn
+        viewHolder.extensionMonthMark1.text = extensionStyle.mark1
+        viewHolder.extensionMonthMark2.text = extensionStyle.mark2
     }
     override fun getItemCount(): Int {
         return mExtensionList.size

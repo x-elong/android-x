@@ -86,7 +86,7 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/general_5"
         android:layout_marginStart="@dimen/general_25"
-        android:text="08月"
+        android:text=""
         android:textColor="@color/black"
         android:id="@+id/tv_time_integral"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +98,8 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_tv_hint_15"
         android:gravity="center"
-        android:text="+50"
-        android:textColor="#d43030"
+        android:text=""
+        android:textColor="@color/red"
         android:id="@+id/tv_mark_integral"
         android:layout_marginTop="@dimen/general_5"
         android:layout_marginStart="@dimen/general_10"
@@ -107,14 +107,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_extended"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="@dimen/general_10"
-        android:background="@color/white"
         android:id="@+id/recycler_integral"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/general_10"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_time_integral"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:layout_editor_absoluteX="11dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

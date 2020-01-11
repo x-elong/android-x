@@ -20,13 +20,15 @@ class ServiceTermsActivity : AppCompatActivity() {
         wv_service_terms.setBackgroundColor(0)
         //允许执行JavaScript脚本
         wv_service_terms.settings.setJavaScriptEnabled(true)
-
+        wv_service_terms.settings.setBuiltInZoomControls(true)
         wv_service_terms.settings.setLoadWithOverviewMode(true)
+        wv_service_terms.settings.setSupportZoom(true)
         //跳转至另一网站时 仍在当前WebView中显示 而不是打开系统浏览器
-        wv_service_terms.settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN)
+//        wv_service_terms.settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN)
 //        wv_service_terms.settings.setSupportZoom(true)
-        wv_service_terms.settings.setLoadWithOverviewMode(true)
         wv_service_terms.settings.setUseWideViewPort(true)
+        wv_service_terms.settings.setLoadWithOverviewMode(true)
+
         wv_service_terms.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,

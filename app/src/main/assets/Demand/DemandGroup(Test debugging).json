@@ -29,14 +29,14 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆清册",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "requirementCarLists",
     "sendFormat": "JsonArray"
   },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"电压等级",
-    "checkboxNameList":["0.4kV","10kV","35kV","110kV","220kV","500kV"],
+    "checkboxNameList":["35kV","110kV","220kV","500kV"],
     "key":"requirementTeamVoltageClasses",
     "sendFormat":"String"
   },
@@ -99,7 +99,7 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "requirementMembersLists",
     "sendFormat": "JsonArray"
   },

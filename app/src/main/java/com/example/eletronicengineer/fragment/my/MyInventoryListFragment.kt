@@ -187,7 +187,15 @@ class MyInventoryListFragment :Fragment(){
                         itemMultiStyleItem[0].singleDisplayRightContent = j.carType
                         itemMultiStyleItem[1].singleDisplayRightContent = j.carNumber
                         itemMultiStyleItem[2].singleDisplayRightContent = j.maxPassengers
-                        //3
+                        itemMultiStyleItem[3].jumpListener = View.OnClickListener {
+                            if(j.carPhotoPath!=null && j.carPhotoPath!=""){
+                                val intent = Intent(activity,ImageDisplayActivity::class.java)
+                                intent.putExtra("imagePath",j.carPhotoPath)
+                                activity!!.startActivity(intent)
+                            }else{
+                                ToastHelper.mToast(mView.context,"照片为空")
+                            }
+                        }
                         if(j.maxWeight!=null)
                             itemMultiStyleItem[4].singleDisplayRightContent = j.maxWeight
                         if(j.lenghtCar!=null)

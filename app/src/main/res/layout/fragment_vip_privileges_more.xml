@@ -74,6 +74,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_vip_information"
         app:layout_constraintEnd_toEndOf="@+id/view_vip_information" />
     <TextView
+        android:id="@+id/tv_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_style4"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/top_8"
+        android:text="说明:√:有权限;⊙:可查看，无联系方式:—:无权限"
+        android:layout_marginStart="@dimen/left_6"
+        android:layout_marginEnd="@dimen/right_6"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_tv_normal_16"
+        app:layout_constraintTop_toBottomOf="@+id/view_vip_information" />
+    <TextView
         android:id="@+id/tv_equity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +96,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_vip_information" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_explain" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_vip_privileges_content"

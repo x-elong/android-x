@@ -1,16 +1,16 @@
 package com.example.eletronicengineer.db.DistributionFileSave
 
 class OwnExtendUAndI(
-    var januaryValue:Double,
-    var februaryValue:Double,
-    var marchValue: Double,
-    var aprilValue: Double,
-    var mayValue: Double,
-    var juneValue: Double,
-    var julyValue: Double,
-    var augustValue: Double,
-    var septemberValue: Double,
-    var octoberValue: Double,
-    var novemberValue: Double,
-    var decemberValue: Double
+    var januaryValue:List<Double>,
+    var februaryValue:List<Double>,
+    var marchValue: List<Double>,
+    var aprilValue: List<Double>,
+    var mayValue: List<Double>,
+    var juneValue: List<Double>,
+    var julyValue: List<Double>,
+    var augustValue: List<Double>,
+    var septemberValue: List<Double>,
+    var octoberValue: List<Double>,
+    var novemberValue: List<Double>,
+    var decemberValue: List<Double>
 )

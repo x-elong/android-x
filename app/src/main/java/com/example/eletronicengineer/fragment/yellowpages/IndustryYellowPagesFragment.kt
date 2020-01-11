@@ -61,7 +61,7 @@ class IndustryYellowPagesFragment: Fragment(){
     val mCountPerPageForPerson = 30
     var mPageNumberForYellowPages = 1
     var mIsLastPageForYellowPages = false
-    var mIsLoadingPerson = false
+    var mIsLoadingYellowPages = false
     lateinit var mView: View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,6 +186,7 @@ class IndustryYellowPagesFragment: Fragment(){
                 yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
             mPageNumberForYellowPages = 1
             mIsLastPageForYellowPages = false
+            mIsLoadingYellowPages = false
             mPersonalIssueAdapter!!.notifyData()
             demandYellowPages(mView)
         }
@@ -201,6 +202,7 @@ class IndustryYellowPagesFragment: Fragment(){
                 yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
             mPageNumberForYellowPages = 1
             mIsLastPageForYellowPages = false
+            mIsLoadingYellowPages = false
             mPersonalIssueAdapter!!.notifyData()
             demandYellowPages(mView)
         }
@@ -214,6 +216,7 @@ class IndustryYellowPagesFragment: Fragment(){
                 yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
             mPageNumberForYellowPages = 1
             mIsLastPageForYellowPages = false
+            mIsLoadingYellowPages = false
             mPersonalIssueAdapter!!.notifyData()
             demandYellowPages(mView)
         }
@@ -227,6 +230,7 @@ class IndustryYellowPagesFragment: Fragment(){
                 yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
             mPageNumberForYellowPages = 1
             mIsLastPageForYellowPages = false
+            mIsLoadingYellowPages = false
             mPersonalIssueAdapter!!.notifyData()
             demandYellowPages(mView)
         }
@@ -262,10 +266,11 @@ class IndustryYellowPagesFragment: Fragment(){
             override fun onRefresh() {
                 mView.yellow_pages_swipe_refresh.isRefreshing=false
                 mPageNumberForYellowPages=1
+                mIsLastPageForYellowPages=false
                 mPersonalIssueAdapter!!.notifyData()
                 value = arrayListOf(mPageNumberForYellowPages,mCountPerPageForPerson, yellowPagesGrade[0],yellowPagesGrade[1],yellowPagesGrade[2],
                     yellowPagesType, yellowPagesSite, yellowPagesName) as MutableList<String>
-                _loadYellowPagesData()
+                selectScroll(theflag)
             }
         })
     }
@@ -273,9 +278,9 @@ class IndustryYellowPagesFragment: Fragment(){
 
 
     @Synchronized fun setLoadingYellowPages() : Boolean {
-        if (mIsLoadingPerson)
+        if (mIsLoadingYellowPages)
             return false
-        mIsLoadingPerson = true
+        mIsLoadingYellowPages = true
         return true
     }
     fun loadYellowPagesData() {
@@ -285,7 +290,7 @@ class IndustryYellowPagesFragment: Fragment(){
             return
 
         _loadYellowPagesData()
-        mIsLoadingPerson = false
+
     }
     fun _loadYellowPagesData() {
         val result= Observable.create<RequestBody> {
@@ -305,8 +310,10 @@ class IndustryYellowPagesFragment: Fragment(){
                         subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
                             val code = it.code
+                            val desc=it.desc
                             loadingDialog.dismiss()
-                                if(code=="200"){
+                           mIsLoadingYellowPages = false
+                                if(code=="200"&&desc=="OK"){
                                     val data = it.message.data
                                     for (j in data) {
                                         var temp1: String
@@ -337,8 +344,6 @@ class IndustryYellowPagesFragment: Fragment(){
                                         mIsLastPageForYellowPages = true
                                     else
                                         mPageNumberForYellowPages ++
-                                }else if(code=="400" && code=="没有该数据"){
-                                    ToastHelper.mToast(context!!,"数据为空")
                                 }else{
                                     ToastHelper.mToast(context!!,"加载失败")
                                 }

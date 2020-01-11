@@ -32,22 +32,22 @@
    {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"法人身份证照片:",
-    "singleDisplayRightContent":" 查看 "
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"营业执照:",
-    "singleDisplayRightContent":" 查看 "
+    "singleDisplayRightContent":"点击查看"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"租赁清册:",
-    "singleDisplayRightContent":" 查看 "
+    "singleDisplayRightContent":"点击查看"
   },
   {
   "type":"SINGLE_DISPLAY_RIGHT",
   "singleDisplayRightTitle":"租赁合同:",
-  "singleDisplayRightContent":" 查看 "
+  "singleDisplayRightContent":"点击查看"
    },
   {
     "type":"SINGLE_DISPLAY_RIGHT",

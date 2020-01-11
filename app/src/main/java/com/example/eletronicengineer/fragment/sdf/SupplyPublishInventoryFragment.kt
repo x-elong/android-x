@@ -22,10 +22,11 @@ import java.io.Serializable
 
 class SupplyPublishInventoryFragment:Fragment() {
         companion object{
-            fun newInstance(args: Bundle): SupplyPublishInventoryFragment
+            fun newInstance(args: Bundle,data:List<MultiStyleItem>): SupplyPublishInventoryFragment
             {
                 val submitInventoryFragment= SupplyPublishInventoryFragment()
                 submitInventoryFragment.arguments=args
+                submitInventoryFragment.multiStyleItemList = data
                 return submitInventoryFragment
             }
         }
@@ -34,6 +35,7 @@ class SupplyPublishInventoryFragment:Fragment() {
         lateinit var mView: View
         var adapter: RecyclerviewAdapter?=null
         var frame = R.id.frame_supply
+        lateinit var multiStyleItemList:List<MultiStyleItem>
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             mView = inflater.inflate(R.layout.fragment_with_inventory, container, false)
             type = arguments!!.getString("type")
@@ -45,7 +47,6 @@ class SupplyPublishInventoryFragment:Fragment() {
             else if(activity is SupplyDisplayActivity)
                 frame = R.id.frame_display_supply
             if(adapter==null){
-                val multiStyleItemList = arguments!!.getSerializable("inventory") as List<MultiStyleItem>
                 if(multiStyleItemList.isEmpty())
                     initFragment()
                 else{
@@ -76,11 +77,11 @@ class SupplyPublishInventoryFragment:Fragment() {
             }
             mView.tv_select_add.setOnClickListener{
                 adapter!!.mData[0].selected = -1
-                bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
+//                bundle.putSerializable("inventoryItem", switchAdapter() as Serializable)
                 bundle.putString("type",type)
                 FragmentHelper.switchFragment(
-                    activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
-                    frame, ""
+                    activity!!, SupplyPublishInventoryItemMoreFragment.newInstance(bundle,switchAdapter()),
+                    frame, "inventoryMore"
                 )
             }
             for (j in adapter!!.mData){
@@ -89,9 +90,9 @@ class SupplyPublishInventoryFragment:Fragment() {
                     adapter!!.mData[0].selected = adapter!!.mData.indexOf(j)
                     val bundle = Bundle()
                     var itemMultiStyleItem = j.itemMultiStyleItem
-                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
+//                    bundle.putSerializable("inventoryItem",itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle), frame,"")
+                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle,itemMultiStyleItem), frame,"inventoryMore")
                 }
             }
         }
@@ -160,10 +161,9 @@ class SupplyPublishInventoryFragment:Fragment() {
                 mData[mData.size-1].jumpListener = View.OnClickListener {
                     mData[0].selected = mData.size-1
                     val bundle = Bundle()
-                    bundle.putSerializable("inventoryItem",mData[mData.size-1].itemMultiStyleItem as Serializable)
                     bundle.putString("type",type)
-                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle),
-                        frame,"")
+                    FragmentHelper.switchFragment(activity!!,SupplyPublishInventoryItemMoreFragment.newInstance(bundle,mData[mData.size-1].itemMultiStyleItem),
+                        frame,"inventoryMore")
                 }
                 adapter!!.mData = mData
                 adapter!!.notifyItemInserted(mData.size-1)

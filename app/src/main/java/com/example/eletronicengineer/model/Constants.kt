@@ -175,6 +175,8 @@ class Constants {
 
                 //邮箱
                 const val sendEmailCode= "Mail/sendMailCode/{receiver}"
+                const val retrievePasswordSendMailCode = "Mail/retrievePasswordSendMailCode/{receiver}"
+                const val retrievePasswordValidMailCode = "Mail/retrievePasswordValidMailCode/{receiver}/{mailCode}"
                 const val bindEmail = "Mail/validMailCode/{receiver}/{mailCode}"
                 //个人学历
                 const val getEducationBackground = "TUpmsUser/getAllEducationBackground/"
@@ -215,7 +217,7 @@ class Constants {
                 const val getDemandTripartite = "RequirementThirdParty/getAllByFounder/"
                 const val updateCheckDemandTripartite = "RequirementThirdLoggingCheck/registrationNumber/{requirementThirdId}"
 
-                const val getPersonalIssue = "PersonalIssue/insertListPersonalIssueBytoken/"
+                const val getPersonalIssue = "PersonalIssue/selectListPersonalIssueBytoken/"
                 const val getTeamService = "RunningMaintain/getRunningMaintainALLDTOPerson/"
                 const val getLeaseService = "Lease/getLeaseDTOListByFounder/"
                 const val getThridService = "Third/selectByToken/"
@@ -686,13 +688,15 @@ class Constants {
                 //获取二维码
                 const val QRCode="sale/getQRCode/"
                 //获取个人总积分
-                const val OwnIntegral="sale/getOwnIntegral/"
+                const val OwnSpreadIntegral="sale/getOwnIntegral"
+                const val OwnReturnIntegral="sale/getOwnCashPoints"
                 //获取收益（本月收益加今日收益）
                 //type( day)
-                const val UserIncome="sale/getUserIncome/{type}"
+                const val UserSpreadIncome="sale/getIncomeByIntegral/{type}"
+                const val UserReturnIncome="sale/getIncomeByCashPoints/{type}"
                 //获取积分详情
                 //date(二级选择器的selectContent)
-                const val OwnIntegralOfRebate="sale/getOwnIntegralOfRebate/{date}"
+                const val OwnIntegralOfRebate="sale/getOwnIntegralOfRebate/{date}/{type}"
                 //获取下级会员
                 //vipLevel(1 2)
                 const val OwnExtendUser="sale/getOwnExtendUser/{vipLevel}"
@@ -719,7 +723,8 @@ class Constants {
                 const val sendRegister="user/regist/"
                 const val sendLogin="user/login"
                 const val validFindCode = "Jmessage/validFindCode/{mobileNumber}/{code}"
-                const val findPassword = "userInfo/findPassword/"
+                const val findPasswordByPhone = "userInfo/findPasswordByPhone/"
+                const val  findPasswordByEmail = "userInfo/findPasswordByEmail/"
             }
         }
         class DisplayForYellowPages{

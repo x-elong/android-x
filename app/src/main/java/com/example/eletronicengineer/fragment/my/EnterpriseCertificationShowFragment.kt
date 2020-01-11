@@ -109,7 +109,7 @@ class EnterpriseCertificationShowFragment :Fragment(){
         val result = getALLOrganizationCertificationDTOList().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                 val json = JSONObject(it.string())
-                if(json.getInt("code")==200){
+                if(json.getInt("code")==200 && json.getString("desc")=="OK"){
                     val jsonArray = json.getJSONArray("message")
                     for (j in 0 until jsonArray.length()){
                         val js = jsonArray.getJSONObject(j)

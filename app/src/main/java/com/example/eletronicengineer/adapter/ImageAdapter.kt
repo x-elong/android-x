@@ -12,7 +12,6 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.utils.GlideImageLoader
-import com.example.eletronicengineer.utils.GlideLoader
 import kotlinx.android.synthetic.main.image.view.*
 
 class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>{
@@ -58,7 +57,6 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>{
             holder.ivImage.setOnClickListener {
                 val intent = Intent(holder.ivImage.context, ImageDisplayActivity::class.java)
                 intent.putExtra("imagePath",image.imagePath)
-                val data = Bundle()
                 holder.ivImage.context!!.startActivity(intent)
             }
         }

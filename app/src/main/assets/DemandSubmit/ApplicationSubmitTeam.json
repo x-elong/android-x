@@ -22,22 +22,22 @@
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"车辆清册:",
-    "singleDisplayRightContent":"  上传  ",
-    "key": "enrollProvideCrewList",
+    "singleDisplayRightContent":"  录入  ",
+    "key": "enrollCars",
     "sendFormat": "JsonArray"
   },
  {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
-    "singleDisplayRightContent":"  上传  ",
+    "singleDisplayRightContent":"  录入  ",
     "key": "enrollProvideCrewList",
     "sendFormat": "JsonArray"
   },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"机械清册:",
-    "singleDisplayRightContent":"  上传  ",
-    "key": "enrollProvideCrewList",
+    "singleDisplayRightContent":"  录入  ",
+    "key": "enrollMachineries",
     "sendFormat": "JsonArray"
    },
   {

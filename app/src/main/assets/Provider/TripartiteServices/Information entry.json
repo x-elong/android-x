@@ -58,9 +58,9 @@
         "sendFormat": "String"
     },
     {
-        "type":"SHIFT_INPUT",
-        "shiftInputTitle":"三方服务合同",
-        "necessary":false,
+        "type":"SINGLE_DISPLAY_RIGHT",
+        "singleDisplayRightTitle":"三方服务合同",
+        "singleDisplayRightContent":"  上传  ",
         "key": "thirdServicesContractPath",
         "sendFormat": "String"
     },

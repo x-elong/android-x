@@ -120,6 +120,7 @@ class SupplyInformationFragment : Fragment() {
               supplySite,supplyVariety) as MutableList<String>
           mPageNumberForPerson = 1
           mIsLastPageForPerson = false
+          mIsLoadingPerson=false
           mPersonalIssueAdapter!!.notifyData()
           supplyPerson(mView)
       }
@@ -132,6 +133,7 @@ class SupplyInformationFragment : Fragment() {
               supplySite,supplyVariety) as MutableList<String>
           mPageNumberForPerson = 1
           mIsLastPageForPerson = false
+          mIsLoadingPerson=false
           mPersonalIssueAdapter!!.notifyData()
           supplyPerson(mView)
       }
@@ -166,6 +168,7 @@ class SupplyInformationFragment : Fragment() {
                supplyVehicle=""
               mPageNumberForPerson = 1
               mIsLastPageForPerson = false
+              mIsLoadingPerson=false
               mPersonalIssueAdapter!!.notifyData()
               keyforsupply= arrayListOf("page","pageSize","issuerBelongSite","kind")
               valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,
@@ -207,6 +210,7 @@ class SupplyInformationFragment : Fragment() {
                       supplySite,supplyVariety) as MutableList<String>
                   mPageNumberForPerson = 1
                   mIsLastPageForPerson = false
+                  mIsLoadingPerson=false
                   mPersonalIssueAdapter!!.notifyData()
                   supplyPerson(view)
               }
@@ -220,6 +224,7 @@ class SupplyInformationFragment : Fragment() {
                       supplySite,supplyVariety) as MutableList<String>
                   mPageNumberForPerson = 1
                   mIsLastPageForPerson = false
+                  mIsLoadingPerson=false
                   mPersonalIssueAdapter!!.notifyData()
                   supplyPerson(view)
               }
@@ -232,6 +237,7 @@ class SupplyInformationFragment : Fragment() {
               supplyVehicle=""
               mPageNumberForTeam = 1
               mIsLastPageForTeam = false
+              mIsLoadingTeam=false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 2)
@@ -251,7 +257,7 @@ class SupplyInformationFragment : Fragment() {
               view.tv_demand_type_select.visibility=View.VISIBLE
               view.tv_demand_site_select.visibility=View.VISIBLE
               val Option1Items= listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护") as MutableList<String>
-              val Option2Items= listOf("0.4KV","10KV","35KV","110KV","220KV","500KV")
+              val Option2Items= listOf("35KV","110KV","220KV","500KV")
               view.tv_demand_type_select.setOnClickListener {
                   initDemandTeam(view,Option1Items,1)
               }
@@ -271,6 +277,7 @@ class SupplyInformationFragment : Fragment() {
                       selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
+                  mIsLoadingTeam=false
                   mPersonAdapter!!.notifyMovie()
                   supplyTeam(view)
               }
@@ -287,6 +294,7 @@ class SupplyInformationFragment : Fragment() {
                       selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
+                  mIsLoadingTeam=false
                   mPersonAdapter!!.notifyMovie()
                   supplyTeam(view)
               }
@@ -300,6 +308,7 @@ class SupplyInformationFragment : Fragment() {
                       selectContentElect[4],selectContentElect[5]) as MutableList<String>
                   mPageNumberForTeam = 1
                   mIsLastPageForTeam = false
+                  mIsLoadingTeam=false
                   mPersonAdapter!!.notifyMovie()
                   supplyTeam(view)
               }
@@ -312,6 +321,7 @@ class SupplyInformationFragment : Fragment() {
               supplyVehicle=""
               mPageNumberForLease = 1
               mIsLastPageForLease = false
+              mIsLoadingLease=false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 3)
@@ -346,6 +356,7 @@ class SupplyInformationFragment : Fragment() {
                       supplyVehicle) as MutableList<String>
                   mPageNumberForLease = 1
                   mIsLastPageForLease = false
+                  mIsLoadingLease=false
                   mPersonAdapter!!.notifyMovie()
                   supplyLease(view)
               }
@@ -359,6 +370,7 @@ class SupplyInformationFragment : Fragment() {
                       supplyVehicle) as MutableList<String>
                   mPageNumberForLease = 1
                   mIsLastPageForLease = false
+                  mIsLoadingLease=false
                   mPersonAdapter!!.notifyMovie()
                   supplyLease(view)
               }
@@ -371,6 +383,7 @@ class SupplyInformationFragment : Fragment() {
               supplyVehicle=""
               mPageNumberForThird = 1
               mIsLastPageForThird = false
+              mIsLoadingThird=false
               mPersonAdapter!!.notifyMovie()
               view.tv_demand_site_select.setOnClickListener {
                   initSite(view, 1)
@@ -399,6 +412,7 @@ class SupplyInformationFragment : Fragment() {
                       supplyVariety) as MutableList<String>
                   mPageNumberForThird = 1
                   mIsLastPageForThird = false
+                  mIsLoadingThird=false
                   mPersonAdapter!!.notifyMovie()
                   supplyThird(view)
               }
@@ -414,6 +428,7 @@ class SupplyInformationFragment : Fragment() {
                       supplyVariety) as MutableList<String>
                   mPageNumberForThird = 1
                   mIsLastPageForThird = false
+                  mIsLoadingThird=false
                   mPersonAdapter!!.notifyMovie()
                   supplyThird(view)
               }
@@ -453,10 +468,11 @@ class SupplyInformationFragment : Fragment() {
           override fun onRefresh() {
               mView.demand_swipe_refresh.isRefreshing=false
               mPageNumberForPerson=1
+              mIsLastPageForPerson=false
               mPersonalIssueAdapter!!.notifyData()
               valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,
                   supplyVariety) as MutableList<String>
-              _loadSupplyPersonData()
+              selectScroll(theflag,view)
           }
       })
   }
@@ -482,11 +498,12 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForTeam=1
+                mIsLastPageForTeam=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
                     selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
                     selectContentElect[4],selectContentElect[5]) as MutableList<String>
-                _loadSupplyTeamData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -512,10 +529,11 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForLease=1
+                mIsLastPageForLease=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
                     supplyVehicle) as MutableList<String>
-                _loadSupplyLeaseData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -540,10 +558,11 @@ class SupplyInformationFragment : Fragment() {
             override fun onRefresh() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForThird=1
+                mIsLastPageForThird=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
                     supplyVariety) as MutableList<String>
-                _loadSupplyThirdData()
+                selectScroll(theflag,view)
             }
         })
     }
@@ -580,7 +599,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyPersonData()
-        mIsLoadingPerson = false
     }
     fun loadSupplyTeamData() {
         if (mIsLastPageForTeam)
@@ -589,7 +607,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyTeamData()
-        mIsLoadingTeam = false
     }
     fun loadSupplyLeaseData() {
         if (mIsLastPageForLease)
@@ -598,7 +615,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyLeaseData()
-        mIsLoadingLease = false
     }
     fun loadSupplyThirdData() {
         if (mIsLastPageForThird)
@@ -607,7 +623,6 @@ class SupplyInformationFragment : Fragment() {
             return
 
         _loadSupplyThirdData()
-        mIsLoadingThird = false
     }
 
   fun _loadSupplyPersonData() {
@@ -627,8 +642,10 @@ class SupplyInformationFragment : Fragment() {
           getSupplyPerson(it, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
+                  val desc=it.desc
                   loadingDialog.dismiss()
-                  if(code=="200"){
+                  mIsLoadingPerson = false
+                  if(code=="200"&&desc=="OK"){
                       val data = it.message.data
                       for (j in data) {
                           var temp1=""
@@ -653,8 +670,6 @@ class SupplyInformationFragment : Fragment() {
                           mIsLastPageForPerson = true
                       else
                           mPageNumberForPerson ++
-                  }else if(code=="400" && code=="没有该数据"){
-                      ToastHelper.mToast(context!!,"数据为空")
                   }else{
                       ToastHelper.mToast(context!!,"加载失败")
                   }
@@ -685,6 +700,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingTeam = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -731,6 +747,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingLease = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -789,6 +806,7 @@ class SupplyInformationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                   val code = it.code
                   loadingDialog.dismiss()
+                  mIsLoadingThird = false
                   if(code=="200"){
                       val data = it.message.data
                       for (j in data) {
@@ -839,8 +857,6 @@ class SupplyInformationFragment : Fragment() {
                     mPageNumberForLease=1
                     mPageNumberForThird=1
                     supplySite=it.data.getString("selectContent")
-                    val selectContent1=it.data.getBooleanArray("selectContent1")
-                    mData.placeCheckBoolenArray=selectContent1
                     view.tv_demand_site_select.text = supplySite
                     view.tv_demand_site_clear.visibility = View.VISIBLE
                     when (flag) {
