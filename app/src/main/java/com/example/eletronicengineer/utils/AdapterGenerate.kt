@@ -4270,8 +4270,8 @@ class AdapterGenerate {
                 adapter.mData[2].singleDisplayRightContent = if (Listdata.requirementMajor == null) {" "} else { Listdata.requirementMajor }
                 adapter.mData[3].singleDisplayRightContent = UnSerializeDataBase.idCardName
                 adapter.mData[4].singleDisplayRightContent =UnSerializeDataBase.userPhone
-                if(Listdata.salaryUnit=="面议"){
-                    adapter.mData[5].singleDisplayRightContent= Listdata.salaryUnit
+                if(Listdata.salaryUnit=="面议"||Listdata.salaryStandard=="-1.00"){
+                    adapter.mData[5].singleDisplayRightContent= "面议"
                 }else {
                     adapter.mData[5].singleDisplayRightContent= "${Listdata.salaryStandard} ${Listdata.salaryUnit}"
                 }

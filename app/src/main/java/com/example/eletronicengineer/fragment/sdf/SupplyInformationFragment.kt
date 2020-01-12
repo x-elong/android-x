@@ -469,6 +469,7 @@ class SupplyInformationFragment : Fragment() {
               mView.demand_swipe_refresh.isRefreshing=false
               mPageNumberForPerson=1
               mIsLastPageForPerson=false
+              mIsLoadingPerson=false
               mPersonalIssueAdapter!!.notifyData()
               valueforsupply= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,supplySite,
                   supplyVariety) as MutableList<String>
@@ -499,6 +500,7 @@ class SupplyInformationFragment : Fragment() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForTeam=1
                 mIsLastPageForTeam=false
+                mIsLoadingTeam=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,supplySite,supplyVariety,
                     selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
@@ -530,6 +532,7 @@ class SupplyInformationFragment : Fragment() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForLease=1
                 mIsLastPageForLease=false
+                mIsLoadingLease=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForLease,mCountPerPageForLease,supplySite,supplyVariety,
                     supplyVehicle) as MutableList<String>
@@ -559,6 +562,7 @@ class SupplyInformationFragment : Fragment() {
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForThird=1
                 mIsLastPageForThird=false
+                mIsLoadingThird=false
                 mPersonAdapter!!.notifyMovie()
                 valueforsupply= arrayListOf(mPageNumberForThird,mCountPerPageForThird,supplySite,
                     supplyVariety) as MutableList<String>
@@ -838,6 +842,10 @@ class SupplyInformationFragment : Fragment() {
                               temp3 =if(j.id == null) { " " } else{ j.id }
                               mPersonAdapter?.addMovie(Movie(temp1,temp2,temp3,"供应三方服务"))
                           }
+                      }
+                      if(data.size==0)
+                      {
+                          ToastHelper.mToast(mView.context,"无数据")
                       }
                       if (data.size < mCountPerPageForThird)
                           mIsLastPageForThird = true

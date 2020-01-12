@@ -130,6 +130,57 @@ interface HttpHelper {
     @GET(Constants.HttpUrlPath.DisplayForRequirement.RequirementThirdPartyDetail)
     fun getRequirementThirdPartyDetail(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<RequirementThirdPartyDetail>>
 
+     // 电话号码
+      //个人劳务
+     @GET(Constants.HttpUrlPath.DisplayForSupply.PersonalIssuePhoneDetail)
+     fun getPersonalIssuePhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //主网
+    @GET(Constants.HttpUrlPath.DisplayForSupply.MajorNetworkPhoneDetail)
+    fun getMajorNetworkPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //配网
+    @GET(Constants.HttpUrlPath.DisplayForSupply.DistribuionNetworkPhoneDetail)
+    fun getDistribuionNetworkPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //变电
+    @GET(Constants.HttpUrlPath.DisplayForSupply.PowerTransformationPhoneDetail)
+    fun getPowerTransformationPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //马帮
+    @GET(Constants.HttpUrlPath.DisplayForSupply.CaravanTransportPhoneDetail)
+    fun getCaravanTransportPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //桩基
+    @GET(Constants.HttpUrlPath.DisplayForSupply.PileFoundationPhoneDetail)
+    fun getPileFoundationPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //测量设计
+    @GET(Constants.HttpUrlPath.DisplayForSupply.MeasureDesignPhoneDetail)
+    fun getMeasureDesignPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //非开挖
+    @GET(Constants.HttpUrlPath.DisplayForSupply.UnexcavationPhoneDetail)
+    fun getUnexcavationPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //试验调试
+    @GET(Constants.HttpUrlPath.DisplayForSupply.TestTeamPhoneDetail)
+    fun getTestTeamPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //跨越架
+    @GET(Constants.HttpUrlPath.DisplayForSupply.SpanWoodenSupprtPhoneDetail)
+    fun getSpanWoodenSupprtPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //运行维护
+    @GET(Constants.HttpUrlPath.DisplayForSupply.RunningMaintainPhoneDetail)
+    fun getRunningMaintainPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //车辆租赁
+    @GET(Constants.HttpUrlPath.DisplayForSupply.LeaseCarPhoneDetail)
+    fun getLeaseCarPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //工器具租赁
+    @GET(Constants.HttpUrlPath.DisplayForSupply.LeaseConstructionToolPhoneDetail)
+    fun getLeaseConstructionToolPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //设备租赁
+    @GET(Constants.HttpUrlPath.DisplayForSupply.LeaseFacilityPhoneDetail)
+    fun getLeaseFacilityPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //机械租赁
+    @GET(Constants.HttpUrlPath.DisplayForSupply.LeaseMachineryPhoneDetail)
+    fun getLeaseMachineryPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+    //三方
+    @GET(Constants.HttpUrlPath.DisplayForSupply.ThirdPhoneDetail)
+    fun getThirdPhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
+
+
 
     //个人劳务
     @POST(Constants.HttpUrlPath.DisplayForSupply.PersonalIssue)
@@ -1953,9 +2004,157 @@ internal fun getRequirementThirdPartyDetail(id: String,token: String,baseUrl: St
 
 
 
+//供应电话id查询
+//个人劳务电话号码id查询
+internal fun getPersonalIssuePhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPersonalIssuePhoneDetail(id,token)
+}
+//主网电话号码id查询
+internal fun getMajorNetworkPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getMajorNetworkPhoneDetail(id,token)
+}
+//配网 电话号码id查询
+internal fun getDistribuionNetworkPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getDistribuionNetworkPhoneDetail(id,token)
+}
+//变电 电话号码id查询
+internal fun getPowerTransformationPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPowerTransformationPhoneDetail(id,token)
+}
+//马帮 电话号码id查询
+internal fun getCaravanTransportPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getCaravanTransportPhoneDetail(id,token)
+}
+//桩基 电话号码id查询
+internal fun getPileFoundationPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getPileFoundationPhoneDetail(id,token)
+}
+//测量设计 电话号码id查询
+internal fun getMeasureDesignPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getMeasureDesignPhoneDetail(id,token)
+}
+//非开挖 电话号码id查询
+internal fun getUnexcavationPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getUnexcavationPhoneDetail(id,token)
+}
+//试验调试 电话号码id查询
+internal fun getTestTeamPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getTestTeamPhoneDetail(id,token)
+}
+//跨越架 电话号码id查询
+internal fun getSpanWoodenSupprtPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getSpanWoodenSupprtPhoneDetail(id,token)
+}
+//运行维护 电话号码id查询
+internal fun getRunningMaintainPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getRunningMaintainPhoneDetail(id,token)
+}
+//车辆租赁 电话号码id查询
+internal fun getLeaseCarPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getLeaseCarPhoneDetail(id,token)
+}
+//工器具租赁 电话号码id查询
+internal fun getLeaseConstructionToolPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getLeaseConstructionToolPhoneDetail(id,token)
+}
+//设备租赁 电话号码id查询
+internal fun getLeaseFacilityPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getLeaseFacilityPhoneDetail(id,token)
+}
+//机械租赁 电话号码id查询
+internal fun getLeaseMachineryPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getLeaseMachineryPhoneDetail(id,token)
+}
+//三方 电话号码id查询
+internal fun getThirdPhoneDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getThirdPhoneDetail(id,token)
+}
+
+
 
 
 //供应
+
 //个人劳务
 internal fun getSupplyPerson(requestBody: RequestBody,token: String,baseUrl: String): Observable<HttpResult<Supply<SupplyPersonDetail>>>
 {

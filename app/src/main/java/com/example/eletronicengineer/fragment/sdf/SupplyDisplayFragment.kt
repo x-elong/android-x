@@ -16,6 +16,7 @@ import com.example.eletronicengineer.activity.GetQRCodeActivity
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -75,8 +76,8 @@ class SupplyDisplayFragment:Fragment() {
                         }else{ adapter.mData[4].singleDisplayRightContent=data.age }
                         adapter.mData[5].singleDisplayRightContent=if(data.workExperience==null) {
                             " " } else{ data.workExperience}
-                        if(data.salaryUnit=="面议"||data.workMoney=="-1"){
-                            adapter.mData[6].singleDisplayRightContent= data.salaryUnit
+                        if(data.salaryUnit=="面议"||data.workMoney=="-1.00"){
+                            adapter.mData[6].singleDisplayRightContent= "面议"
                         }else {
                             adapter.mData[6].singleDisplayRightContent= "${data.workMoney} ${data.salaryUnit}"
                         }
@@ -110,17 +111,33 @@ class SupplyDisplayFragment:Fragment() {
                         view.button_supply.setOnClickListener {
                             if(data.contactPhone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getPersonalIssuePhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                      val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                         else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -244,20 +261,36 @@ class SupplyDisplayFragment:Fragment() {
                         view.button_supply.setOnClickListener {
                             if(data.majorNetwork.phone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.majorNetwork.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.majorNetwork.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getMajorNetworkPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
                         view.rv_supply_display_content.adapter = adapter
@@ -388,17 +421,33 @@ class SupplyDisplayFragment:Fragment() {
                         view.button_supply.setOnClickListener {
                             if(data.distribuionNetwork.phone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.distribuionNetwork.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.distribuionNetwork.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getDistribuionNetworkPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -521,17 +570,33 @@ class SupplyDisplayFragment:Fragment() {
                         view.button_supply.setOnClickListener {
                             if(data.powerTransformation.phone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.powerTransformation.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.powerTransformation.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getPowerTransformationPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -639,17 +704,33 @@ class SupplyDisplayFragment:Fragment() {
                         view.button_supply.setOnClickListener {
                             if(data.measureDesign.phone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.measureDesign.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.measureDesign.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getMeasureDesignPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -697,24 +778,40 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.caravanTransport.issuerBelongSite}
                         adapter.mData[7].textAreaContent=if(data.caravanTransport.remark==null) {
                             " " } else{ data.caravanTransport.remark}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
-                                    .setMessage(data.caravanTransport.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.caravanTransport.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.button_supply.setOnClickListener {
+                            if(data.caravanTransport.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getCaravanTransportPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -827,24 +924,40 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.pileFoundation.issuerBelongSite}
                         adapter.mData[11].textAreaContent=if(data.pileFoundation.remark==null) {
                             " " } else{ data.pileFoundation.remark}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
-                                    .setMessage(data.pileFoundation.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.pileFoundation.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.button_supply.setOnClickListener {
+                            if(data.pileFoundation.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getPileFoundationPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -952,24 +1065,39 @@ class SupplyDisplayFragment:Fragment() {
                         adapter.mData[8].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
                         view.button_supply.setOnClickListener {
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setTitle("对方联系电话：")
-                                    .setMessage(data.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                            if(data.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getUnexcavationPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -1087,24 +1215,40 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite}
                         adapter.mData[11].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
-                                    .setMessage(data.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.button_supply.setOnClickListener {
+                            if(data.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getTestTeamPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -1210,24 +1354,40 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite}
                         adapter.mData[8].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
-                        view.button_supply.setOnClickListener{
-//                            if(data.contactPhone!=null)
-//                            {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话：")
-                                    .setMessage(data.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.button_supply.setOnClickListener {
+                            if(data.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getSpanWoodenSupprtPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -1349,24 +1509,40 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite}
                         adapter.mData[11].textAreaContent=if(data.remark==null) {
                             " " } else{ data.remark}
-                        view.button_supply.setOnClickListener{
-                            //                            if(data.contactPhone!=null)
-//                            {
-                            var dialog = AlertDialog.Builder(this.context)
-                                .setTitle("对方联系电话：")
-                                .setMessage(data.phone)
-                                .setNegativeButton("联系对方") { dialog, which ->
-                                    val intent = Intent(Intent.ACTION_DIAL)
-                                    intent.setData(Uri.parse("tel:${data.phone}"))
-                                    startActivity(intent)
-                                }
-                                .setPositiveButton("确定") { dialog, which ->
-                                    dialog.dismiss() }.create()
-                            dialog.show()
-//                            }
-//                            else{
-//Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-//                            }
+                        view.button_supply.setOnClickListener {
+                            if(data.phone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getRunningMaintainPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         view.rv_supply_display_content.adapter = adapter
                         view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
@@ -1406,8 +1582,8 @@ class SupplyDisplayFragment:Fragment() {
                             "false"->{adapter.mData[8].singleDisplayRightContent="脱保"}
                             else->{adapter.mData[8].singleDisplayRightContent=""}
                         }
-                        if(data.salaryUnit=="面议"||data.money=="-1"){
-                            adapter.mData[9].singleDisplayRightContent= data.salaryUnit
+                        if(data.salaryUnit=="面议"||data.money=="-1.00"){
+                            adapter.mData[9].singleDisplayRightContent= "面议"
                         }else {
                             adapter.mData[9].singleDisplayRightContent= "${data.money} ${data.salaryUnit}"
                         }
@@ -1438,20 +1614,36 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite }
                         adapter.mData[17].textAreaContent=if(data.comment==null) {
                             " " } else{ data.comment }
-                        view.button_supply.setOnClickListener{
+                        view.button_supply.setOnClickListener {
                             if(data.contactPhone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getLeaseCarPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -1549,20 +1741,36 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseConstructionTool.contactPhone }
                         adapter.mData[14].singleDisplayRightContent=if(data.leaseConstructionTool.issuerBelongSite==null) {
                             " " } else{ data.leaseConstructionTool.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
+                        view.button_supply.setOnClickListener {
                             if(data.leaseConstructionTool.contactPhone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseConstructionTool.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseConstructionTool.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getLeaseConstructionToolPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -1658,20 +1866,36 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseFacility.contactPhone }
                         adapter.mData[14].singleDisplayRightContent=if(data.leaseFacility.issuerBelongSite==null) {
                             " " } else{ data.leaseFacility.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
+                        view.button_supply.setOnClickListener {
                             if(data.leaseFacility.contactPhone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseFacility.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseFacility.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getLeaseFacilityPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -1767,20 +1991,36 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.leaseMachinery.contactPhone }
                         adapter.mData[14].singleDisplayRightContent=if(data.leaseMachinery.issuerBelongSite==null) {
                             " " } else{ data.leaseMachinery.issuerBelongSite }
-                        view.button_supply.setOnClickListener{
+                        view.button_supply.setOnClickListener {
                             if(data.leaseMachinery.contactPhone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.leaseMachinery.contactPhone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.leaseMachinery.contactPhone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getLeaseMachineryPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
                             else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
@@ -1865,25 +2105,41 @@ class SupplyDisplayFragment:Fragment() {
                             " " } else{ data.issuerBelongSite }
                         adapter.mData[12].textAreaContent=if(data.businessScope==null) {
                             " " } else{ data.businessScope }
-                           view.button_supply.setOnClickListener{
-                                if(data.contactPhone!=null)
-                                {
-                                    var dialog = AlertDialog.Builder(this.context)
-                                            .setTitle("对方联系电话:")
-                                            .setMessage(data.contactPhone)
-                                            .setNegativeButton("联系对方") { dialog, which ->
-                                                val intent = Intent(Intent.ACTION_DIAL)
-                                                intent.setData(Uri.parse("tel:${data.contactPhone}"))
-                                                startActivity(intent)
-                                            }
-                                            .setPositiveButton("确定") { dialog, which ->
-                                                dialog.dismiss() }.create()
-                                    dialog.show()
-                                }
-                                else{
-                                    Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
-                                }
+                        view.button_supply.setOnClickListener {
+                            if(data.contactPhone!=null)
+                            {
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getThirdPhoneDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else{
+                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
+                            else{
+                                Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
+                            }
+                        }
                             view.rv_supply_display_content.adapter = adapter
                             view.rv_supply_display_content.layoutManager = LinearLayoutManager(view.context)
                         },{

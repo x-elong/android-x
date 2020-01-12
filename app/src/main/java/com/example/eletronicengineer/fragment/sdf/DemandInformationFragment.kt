@@ -158,6 +158,7 @@ class DemandInformationFragment: Fragment(){
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForPerson=1
                 mIsLastPageForPerson=false
+                mIsLoadingPerson=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForPerson,mCountPerPageForPerson,demandSite,demandVariety) as MutableList<String>
                 selectScroll(theflag,view)
@@ -186,6 +187,7 @@ class DemandInformationFragment: Fragment(){
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForTeam=1
                 mIsLastPageForTeam=false
+                mIsLoadingTeam=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForTeam,mCountPerPageForTeam,demandSite,demandVariety,
                     selectContentElect[0],selectContentElect[1],selectContentElect[2],selectContentElect[3],
@@ -217,6 +219,7 @@ class DemandInformationFragment: Fragment(){
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForLease=1
                 mIsLastPageForLease=false
+                mIsLoadingLease=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForLease,mCountPerPageForLease,demandSite,demandVariety) as MutableList<String>
                 selectScroll(theflag,view)
@@ -246,6 +249,7 @@ class DemandInformationFragment: Fragment(){
                 mView.demand_swipe_refresh.isRefreshing=false
                 mPageNumberForThird=1
                 mIsLastPageForThird=false
+                mIsLoadingThird=false
                 mPersonAdapter!!.notifyMovie()
                 value= arrayListOf(mPageNumberForThird,mCountPerPageForThird,demandVariety) as MutableList<String>
                 selectScroll(theflag,view)
@@ -822,6 +826,10 @@ class DemandInformationFragment: Fragment(){
                                             j.id
                                         mPersonAdapter?.addMovie(Movie(temp1,str, temp3,"需求三方"))
                                     }
+                                }
+                                if(data.size==0)
+                                {
+                                    ToastHelper.mToast(mView.context,"无数据")
                                 }
                                 if (data.size < mCountPerPageForThird)
                                     mIsLastPageForThird = true
