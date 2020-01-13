@@ -228,7 +228,7 @@ class ModifyJobInformationFragment :Fragment(){
                 adapter.mData[1].inputSingleContent = adapter.mData[1].selectContent
             }
             Constants.FragmentType.SUBSTATION_CONSTRUCTION_TYPE.ordinal -> {
-                adapter = adapterGenerate.DemandGroupSubstationConstruction()
+                adapter = adapterGenerate.DemandGroupSubstationConstruction(Type)
                 val singleDisplayRightContent = "变电施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementPowerTransformation
@@ -237,7 +237,7 @@ class ModifyJobInformationFragment :Fragment(){
                 initDemandGroupPowerTransformation(adapter,arguments!!.getSerializable("data") as RequirementPowerTransformation)
             }
             Constants.FragmentType.MAINNET_CONSTRUCTION_TYPE.ordinal -> {
-                adapter = adapterGenerate.DemandGroupSubstationConstruction()
+                adapter = adapterGenerate.DemandGroupSubstationConstruction(Type)
                 val singleDisplayRightContent = "主网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementMajorNetwork
@@ -246,7 +246,7 @@ class ModifyJobInformationFragment :Fragment(){
                 initDemandGroupMajorNetwork(adapter,arguments!!.getSerializable("data") as RequirementMajorNetWork)
             }
             Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal -> {
-                adapter = adapterGenerate.DemandGroupSubstationConstruction()
+                adapter = adapterGenerate.DemandGroupSubstationConstruction(Type)
                 val singleDisplayRightContent = "配网施工队"
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.urlPath = Constants.HttpUrlPath.Requirement.updateRequirementDistribuionNetwork

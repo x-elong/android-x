@@ -176,12 +176,15 @@ class AdapterGenerate {
     }
 
     //需求团队——变电施工
-    fun DemandGroupSubstationConstruction(): RecyclerviewAdapter {
+    fun DemandGroupSubstationConstruction(type:Int): RecyclerviewAdapter {
 
         val frame = if(activity is DemandActivity) R.id.frame_demand_publish else R.id.frame_my_release
         val itemGenerate = ItemGenerate()
         itemGenerate.context = context
         val mData = itemGenerate.getJsonFromAsset("Demand/DemandGroup(Substation Construction).json")
+        if(type==Constants.FragmentType.DISTRIBUTIONNET_CONSTRUCTION_TYPE.ordinal){
+            mData[5].checkboxNameList= listOf("0.4kV","10kV")
+        }
         val adapter = RecyclerviewAdapter(mData)
         adapter.mData[16].singleDisplayRightContent = UnSerializeDataBase.idCardName
         adapter.mData[17].singleDisplayRightContent = UnSerializeDataBase.userPhone
@@ -4263,6 +4266,7 @@ class AdapterGenerate {
 //                var MutableListenerMember:MutableList<OnClickListener> =ArrayList()
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPersonnal.json")
                 adapter = RecyclerviewAdapter(mData)
+                adapter.mData[6].necessary =true
                 val memberListData: MutableList<MultiStyleItem> = ArrayList()
                 val Listdata = args.getSerializable("RequirementPersonDetail") as RequirementPersonDetail
                 adapter.mData[0].singleDisplayRightContent = if (Listdata.projectName == null) {" "} else { Listdata.projectName }
@@ -4281,7 +4285,7 @@ class AdapterGenerate {
                 {
                     mData[6].buttonListener= arrayListOf( View.OnClickListener {
                         ToastHelper.mToast(context,"成员清册人数为空 不能填写")})
-                    mData[6].necessary =true
+                    adapter.mData[6].SubmitIsNecessary =true
                 }
                 else{
                     memberListData.add(
@@ -4301,7 +4305,7 @@ class AdapterGenerate {
                         memberListData.add(
                             MultiStyleItem(
                                 MultiStyleItem.Options.SHIFT_INPUT,
-                                "",
+                                "${Listdata.requirementVariety} ${Listdata.requirementMajor}",
                                 false
                             )
                         )
@@ -4356,6 +4360,7 @@ class AdapterGenerate {
             Constants.FragmentType.OPERATION_AND_MAINTENANCE_TYPE.ordinal->
             {
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTeam.json")
+                mData[5].necessary=true
                 lateinit var listData1: List<RequirementCarList>
                 lateinit var listData2: List<RequirementMembersList>
                 val carListData: MutableList<MultiStyleItem> = ArrayList()
@@ -4367,7 +4372,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementMajorNetWork") as RequirementMajorNetWork
                         if(Listdata.constructionEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4397,7 +4401,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementDistributionNetwork") as RequirementDistributionNetwork
                         if(Listdata.constructionEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4427,7 +4430,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementPowerTransformation") as RequirementPowerTransformation
                         if(Listdata.constructionEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4457,7 +4459,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementMeasureDesign") as RequirementMeasureDesign
                         if(Listdata.equipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4487,7 +4488,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementTest") as RequirementTest
                         if(Listdata.machineEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4517,7 +4517,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementSpanWoodenSupprt") as RequirementSpanWoodenSupprt
                         if(Listdata.machineEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4547,7 +4546,6 @@ class AdapterGenerate {
                         val Listdata =args.getSerializable("RequirementRunningMaintain") as RequirementRunningMaintain
                         if(Listdata.machineEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[6].necessary=true
                             adapter.mData[6].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 6
                                 mdata.putString("type", "机械清册")
@@ -4578,11 +4576,9 @@ class AdapterGenerate {
                 if(args.getSerializable("listData1")!=null) {
                     listData1 = args!!.getSerializable("listData1") as List<RequirementCarList>
                     if (listData1!!.isEmpty()) {
-                        mData[4].necessary =true
                         adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                     } else {
-                        mData[4].necessary =true
                         val sumSize=listData1.size
                         var Temp=0
                         for (j in listData1) {
@@ -4649,7 +4645,6 @@ class AdapterGenerate {
                     }
                 }
                 else{
-                    mData[4].necessary =true
                     adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                 }
@@ -4658,7 +4653,7 @@ class AdapterGenerate {
                 if(args.getSerializable("listData2")!=null) {
                     listData2 = args.getSerializable("listData2") as List<RequirementMembersList>
                     if (listData2.isEmpty()) {
-                        mData[5].necessary =true
+                        mData[5].SubmitIsNecessary =true
                         adapter.mData[5].buttonListener= arrayListOf( View.OnClickListener {
                             ToastHelper.mToast(context,"成员清册为空 不能填写")})
                     } else {
@@ -4730,7 +4725,7 @@ class AdapterGenerate {
                     }
                 }
                 else{
-                    mData[5].necessary =true
+                    mData[5].SubmitIsNecessary =true
                     mData[5].buttonListener= arrayListOf( View.OnClickListener {
                     ToastHelper.mToast(context,"成员清册为空 不能填写")})
                 }
@@ -4750,14 +4745,12 @@ class AdapterGenerate {
             Constants.FragmentType.NON_EXCAVATION_TYPE.ordinal->{//非开挖
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitPileFoundation.json")
                 lateinit var listData1: List<RequirementCarList>
-                adapter.mData[4].necessary=true
                 val carListData: MutableList<MultiStyleItem> = ArrayList()
                 when (args.getInt("type")) {
                     Constants.FragmentType.PILE_FOUNDATION_TYPE.ordinal->{//桩基
                         val Listdata = args.getSerializable("RequirementPileFoundation") as RequirementPileFoundation
                         if(Listdata.otherMachineEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[5].necessary=true
                             adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
@@ -4777,6 +4770,7 @@ class AdapterGenerate {
                             mutableData.removeAt(5)
                             adapter = RecyclerviewAdapter(mutableData as List<MultiStyleItem>)
                         }
+                        adapter.mData[4].necessary=true
                         adapter.mData[0].singleDisplayRightContent = if (Listdata.projectName == null) { " " } else { Listdata.projectName }
                         adapter . mData [1].singleDisplayRightContent = if (Listdata.requirementVariety == null) { " " } else { Listdata.requirementVariety }
                         adapter.mData[2].singleDisplayRightContent = UnSerializeDataBase.idCardName
@@ -4786,7 +4780,6 @@ class AdapterGenerate {
                         val Listdata = args.getSerializable("RequirementUnexcavation") as RequirementUnexcavation
                         if(Listdata.otherMachineEquipment =="0"){
                             adapter = RecyclerviewAdapter(mData)
-                            adapter.mData[5].necessary=true
                             adapter.mData[5].buttonListener = arrayListOf(View.OnClickListener {
                                 mData[0].selected = 5
                                 mdata.putString("type", "机械清册")
@@ -4817,7 +4810,6 @@ class AdapterGenerate {
                 if(args.getSerializable("listData1")!=null) {
                     listData1 = args.getSerializable("listData1") as List<RequirementCarList>
                     if (listData1.isEmpty()) {
-                        mData[4].necessary =true
                         adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                             ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                     } else {
@@ -4888,7 +4880,6 @@ class AdapterGenerate {
                     }
                 }
                 else{
-                    mData[4].necessary =true
                     adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                 }
@@ -4896,6 +4887,7 @@ class AdapterGenerate {
             //车辆租赁
             Constants.FragmentType.VEHICLE_LEASING_TYPE.ordinal-> {//车辆
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitVeichleHire.json")
+                mData[4].necessary=true
                 adapter = RecyclerviewAdapter(mData)
                 lateinit var listData1: List<RequirementCarList>
                 val carListData: MutableList<MultiStyleItem> = ArrayList()
@@ -4918,7 +4910,7 @@ class AdapterGenerate {
                 if(args.getSerializable("listData1")!=null) {
                     listData1 = args.getSerializable("listData1") as List<RequirementCarList>
                     if (listData1.isEmpty()) {
-                        mData[4].necessary =true
+                        mData[4].SubmitIsNecessary =true
                         adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                             ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                     } else {
@@ -4990,7 +4982,7 @@ class AdapterGenerate {
                     }
                 }
                 else{
-                    mData[4].necessary =true
+                    mData[4].SubmitIsNecessary =true
                     adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "车辆清册为空 不能填写")})
                 }
@@ -5002,6 +4994,7 @@ class AdapterGenerate {
             ->{
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitBesidesVeichleHire.json")
                 adapter = RecyclerviewAdapter(mData)
+                adapter.mData[4].necessary =true
                 lateinit var listData4: List<requirementLeaseProjectList>
                 val besidesVeichleListData: MutableList<MultiStyleItem> = ArrayList()
                 var typeName:String=""//项目名称
@@ -5037,7 +5030,7 @@ class AdapterGenerate {
                 if (args.getSerializable("listData4") != null) {
                     listData4 = args.getSerializable("listData4") as List<requirementLeaseProjectList>
                     if (listData4.isEmpty()) {
-                        adapter.mData[4].necessary=true
+                        adapter.mData[4].SubmitIsNecessary=true
                         adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                             ToastHelper.mToast(context, "租赁清册为空 不能填写")
                         })
@@ -5107,7 +5100,7 @@ class AdapterGenerate {
                         })
                     }
                 } else {
-                    adapter.mData[4].necessary=true
+                    adapter.mData[4].SubmitIsNecessary=true
                     adapter.mData[4].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "租赁清册为空 不能填写")
                     })
@@ -5117,6 +5110,7 @@ class AdapterGenerate {
             Constants.FragmentType.TRIPARTITE_OTHER_TYPE.ordinal->{//三方
                 mData = itemGenerate.getJsonFromAsset("DemandSubmit/ApplicationSubmitTripartite.json")
                 adapter = RecyclerviewAdapter(mData)
+                adapter.mData[3].necessary=true
                 lateinit var listData5: List<thirdLists>
                 val tripartiteListData: MutableList<MultiStyleItem> = ArrayList()
                 var requirementType:String=""//项目类型
@@ -5130,7 +5124,7 @@ class AdapterGenerate {
                 if (args.getSerializable("listData5") != null) {
                     listData5 = args.getSerializable("listData5") as List<thirdLists>
                     if (listData5.isEmpty()) {
-                        adapter.mData[3].necessary=true
+                        adapter.mData[3].SubmitIsNecessary=true
                         adapter.mData[3].buttonListener = arrayListOf(View.OnClickListener {
                             ToastHelper.mToast(context, "三方清册为空 不能填写")
                         })
@@ -5200,7 +5194,7 @@ class AdapterGenerate {
                         })
                     }
                 } else {
-                    adapter.mData[3].necessary=true
+                    adapter.mData[3].SubmitIsNecessary=true
                     adapter.mData[3].buttonListener = arrayListOf(View.OnClickListener {
                         ToastHelper.mToast(context, "三方清册为空 不能填写")
                     })

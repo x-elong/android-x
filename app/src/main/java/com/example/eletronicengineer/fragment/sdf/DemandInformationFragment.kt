@@ -353,7 +353,7 @@ class DemandInformationFragment: Fragment(){
                         view.tv_demand_type_select.visibility=View.VISIBLE
                         view.tv_demand_site_select.visibility=View.VISIBLE
                         val Option1Items= listOf("变电施工队","主网施工队","配网施工队","测量设计","马帮运输","桩基服务","非开挖顶拉管作业","试验调试","跨越架","运行维护") as MutableList<String>
-                        val Option2Items= listOf("35KV","110KV","220KV","500KV")
+                        val Option2Items= listOf("0.4KV","10KV","35KV","110KV","220KV","500KV")
                         view.tv_demand_type_select.setOnClickListener {
                             initDemandTeam(view,Option1Items,1)
                         }

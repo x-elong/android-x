@@ -360,7 +360,7 @@ class ApplicationSubmitFragment:Fragment() {
 //        }
         if(check(itemMultiStyleItem))
         {
-            adapter!!.mData[adapter!!.mData[0].selected].necessary = true
+            adapter!!.mData[adapter!!.mData[0].selected].SubmitIsNecessary = true
         }
 
 

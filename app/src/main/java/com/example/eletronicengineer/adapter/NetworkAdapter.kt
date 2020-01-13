@@ -5885,12 +5885,15 @@ class NetworkAdapter {
                                     result = "请至少填写一条成员清册数据"
                                 }
                             }
-                        }
-                    }else{
-                        if(j.singleDisplayRightTitle.contains("清册")&&!j.necessary&&j.singleDisplayRightTitle!="车辆清册"){
-                            result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写"
+                            else -> {
+                                if (j.singleDisplayRightTitle.contains("清册") && !j.SubmitIsNecessary) {
+                                    result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写完整"
 
-                        } else { result = "" }
+                                } else {
+                                    result = ""
+                                }
+                            }
+                        }
                     }
 
                     if (result != "") {

@@ -14,8 +14,10 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.DemandDisplayActivity
 import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MyCertificationActivity
+import com.example.eletronicengineer.activity.SupplyActivity
 import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.BitmapMap
@@ -86,7 +88,7 @@ class UploadPhoneFragment:Fragment(){
         position=arguments!!.getInt("position",0)
         total = arguments!!.getInt("total",0)
         imagePath = arguments!!.getString("imagePath","")
-        if(activity is MyCertificationActivity){
+        if(activity is MyCertificationActivity||activity is DemandDisplayActivity||activity is SupplyActivity){
             mView.tv_upload_photo_title.setText(arguments!!.getString("title")+"上传")
         }
 

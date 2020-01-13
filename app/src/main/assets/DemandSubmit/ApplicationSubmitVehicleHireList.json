@@ -13,9 +13,9 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["男","女"],
-    "radioButtonTitle":"驾驶员性别",
+    "type":"SELECT_DIALOG",
+    "selectTitle":"驾驶员性别",
+    "selectOption1Items":["男","女"],
     "key":"sex",
     "sendFormat":"Long"
   },
