@@ -1180,7 +1180,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(2,3,5,9,12)
+        val necessaryNum = arrayListOf(2,3,4,5,9,12)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1207,7 +1207,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(2,3,5,6,7,8,11)
+        val necessaryNum = arrayListOf(2,3,4,5,6,7,8,11)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1314,7 +1314,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(2,6)
+        val necessaryNum = arrayListOf(1,2,6)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1430,7 +1430,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,6,4,5,9)//1,2,6 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,4,5,9)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1495,7 +1495,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,6,4,5,9)//1,2,6 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,4,5,9)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1563,7 +1563,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,3)//1 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,2,3)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1592,7 +1592,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,7,4,5,10)//1,2,7 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,4,5,10)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1631,7 +1631,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,3,7)//1,2,3 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,7)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1669,7 +1669,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,7,4,5,6,10)//1,2,7 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,4,5,6,10)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1707,7 +1707,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,3,7)//1,2,3 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,7)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1744,7 +1744,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(1,2,7,4,5,6,10)//1,2,7true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(1,4,5,6,10)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1810,7 +1810,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(7,1,3,9,10,14)//8 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(7,1,3,9,10,14)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }

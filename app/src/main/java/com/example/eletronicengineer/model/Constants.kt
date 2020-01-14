@@ -731,6 +731,8 @@ class Constants {
                 const val YellowPages="IndustryYellowPages/getIndustryYellowPagesDTOList"
                 //                //根据id查询黄页详情
                 const val YellowPagesDetail="IndustryYellowPages/getIndustryYellowPages/{id}"
+                // 电话号码id查询
+                const val IndustryYellowPagesPhoneDetail="IndustryYellowPages/getPhone/{id}"
             }
         }
         class DisplayForRequirement {

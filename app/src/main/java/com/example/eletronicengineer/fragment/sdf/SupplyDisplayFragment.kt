@@ -129,8 +129,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -279,8 +279,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -439,8 +439,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -588,8 +588,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -722,8 +722,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -799,8 +799,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -945,8 +945,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1085,8 +1085,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1236,8 +1236,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1375,8 +1375,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1530,8 +1530,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1635,8 +1635,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1762,8 +1762,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -1887,8 +1887,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -2012,8 +2012,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{
@@ -2126,8 +2126,8 @@ class SupplyDisplayFragment:Fragment() {
                                                 .setPositiveButton("取消")  { dialog, which ->
                                                     dialog.dismiss() }.create()
                                             dialog.show()
-                                        }else{
-                                            ToastHelper.mToast(context!!,"获取失败")
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
                                         }
 
                                     },{

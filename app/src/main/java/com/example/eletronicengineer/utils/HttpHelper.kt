@@ -131,6 +131,9 @@ interface HttpHelper {
     fun getRequirementThirdPartyDetail(@Path("id")id:String,@Header("zouxiaodong")token: String):Observable<HttpResult<RequirementThirdPartyDetail>>
 
      // 电话号码
+    //黄页
+     @GET(Constants.HttpUrlPath.DisplayForYellowPages.IndustryYellowPagesPhoneDetail)
+     fun getIndustryYellowPagesDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
       //个人劳务
      @GET(Constants.HttpUrlPath.DisplayForSupply.PersonalIssuePhoneDetail)
      fun getPersonalIssuePhoneDetail(@Path("id")id:String,@Header("zouxiaodong")token:String):Observable<HttpResult<String>>
@@ -2001,7 +2004,15 @@ internal fun getRequirementThirdPartyDetail(id: String,token: String,baseUrl: St
     val httpHelper = retrofit.create(HttpHelper::class.java)
     return httpHelper.getRequirementThirdPartyDetail(id,token)
 }
-
+//黄页电话id查询
+internal fun getIndustryYellowPagesDetail(id: String,token: String,baseUrl: String):Observable<HttpResult<String>>
+{
+    val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create()).build()
+    val httpHelper = retrofit.create(HttpHelper::class.java)
+    return httpHelper.getIndustryYellowPagesDetail(id,token)
+}
 
 
 //供应电话id查询

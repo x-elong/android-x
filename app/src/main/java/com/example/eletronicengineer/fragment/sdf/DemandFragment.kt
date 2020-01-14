@@ -480,7 +480,7 @@ fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
 //        }
         if(check(itemMultiStyleItem))
         {
-            mAdapter!!.mData[mAdapter!!.mData[0].selected].necessary = true
+            mAdapter!!.mData[mAdapter!!.mData[0].selected].SubmitIsNecessary = true
         }
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem

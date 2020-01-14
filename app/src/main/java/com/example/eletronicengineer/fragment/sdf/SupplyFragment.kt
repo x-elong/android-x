@@ -618,7 +618,26 @@ class SupplyFragment:Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
     }
+    fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
+
+        for(j in itemMultiStyleItem)
+        {
+            when (j.options) {
+                MultiStyleItem.Options.SHIFT_INPUT -> {
+                    if (j.necessary == false) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        return true
+    }
     fun update(itemMultiStyleItem:List<MultiStyleItem>){
+        if(check(itemMultiStyleItem))
+        {
+            mAdapter!!.mData[mAdapter!!.mData[0].selected].SubmitIsNecessary = true
+        }
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
         Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())

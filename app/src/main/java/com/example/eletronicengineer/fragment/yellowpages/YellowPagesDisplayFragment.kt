@@ -15,6 +15,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.GetQRCodeActivity
 import com.example.eletronicengineer.activity.SupplyDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -85,19 +86,35 @@ class YellowPagesDisplayFragment:Fragment() {
                         view.button_yellow_pages.setOnClickListener {
                             if(data.phone!=null)
                             {
-                                var dialog = AlertDialog.Builder(this.context)
-                                    .setTitle("对方联系电话:")
-                                    .setMessage(data.phone)
-                                    .setNegativeButton("联系对方") { dialog, which ->
-                                        val intent = Intent(Intent.ACTION_DIAL)
-                                        intent.setData(Uri.parse("tel:${data.phone}"))
-                                        startActivity(intent)
-                                    }
-                                    .setPositiveButton("确定") { dialog, which ->
-                                        dialog.dismiss() }.create()
-                                dialog.show()
+                                val loadingDialog = LoadingDialog(context!!, "请稍等...", R.mipmap.ic_dialog_loading)
+                                loadingDialog.show()
+                                val result = getIndustryYellowPagesDetail(id, UnSerializeDataBase.userToken, UnSerializeDataBase.dmsBasePath).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread()).subscribe ({
+                                        val  phone = it.message
+                                        loadingDialog.dismiss()
+                                        if(it.code=="200"&&it.desc=="OK"){
+                                            val dialog = AlertDialog.Builder(this.context)
+                                                .setTitle("对方联系电话:")
+                                                .setMessage(phone)
+                                                .setNegativeButton("联系对方") { dialog, which ->
+                                                    val intent = Intent(Intent.ACTION_DIAL)
+                                                    intent.setData(Uri.parse("tel:${phone}"))
+                                                    startActivity(intent)
+                                                }
+                                                .setPositiveButton("取消")  { dialog, which ->
+                                                    dialog.dismiss() }.create()
+                                            dialog.show()
+                                        }else if(it.code=="400"&&it.desc=="FAIL"){
+                                            ToastHelper.mToast(context!!,it.message)
+                                        }
+
+                                    },{
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(context!!,"获取异常")
+                                        it.printStackTrace()
+                                    })
                             }
-                        else{
+                            else{
                                 Toast.makeText(context,"对方未留联系方式",Toast.LENGTH_SHORT).show()
                             }
                         }
