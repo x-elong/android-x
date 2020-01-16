@@ -421,6 +421,9 @@ class NetworkAdapter {
                     } else
                         10
                 }
+                MultiStyleItem.Options.SELECT_DIALOG -> {
+                    result = (1-data.selectOption1Items.indexOf(data.selectContent)).toLong()
+                }
             }
             return result
         }
@@ -972,6 +975,9 @@ class NetworkAdapter {
                     tmp
                 } else
                     10
+            }
+            MultiStyleItem.Options.SELECT_DIALOG -> {
+                result = (1-data.selectOption1Items.indexOf(data.selectContent)).toLong()
             }
         }
         return result
@@ -5686,7 +5692,7 @@ class NetworkAdapter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                uploadFile(it).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+               uploadFile(it).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                     .subscribe({
                         loadingDialog.dismiss()
                         //Log.i("retrofitMsg", it.string())
@@ -5813,7 +5819,7 @@ class NetworkAdapter {
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
                             "报价清单(按单价)","个人证件名称","工作经验" ,
                             "项目","项目特征描述","计量单位",
-                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量",
+                            "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量","所在地址",
                             "公司名称","注册地址","经营范围"->{
                                 if (j.inputSingleContent == "") { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                             }
@@ -5881,7 +5887,7 @@ class NetworkAdapter {
                             }
                         }
                     }else{
-                        if(j.singleDisplayRightTitle.contains("清册")&&!j.necessary){
+                        if(j.singleDisplayRightTitle.contains("清册")&&!j.necessary&&j.singleDisplayRightTitle!="车辆清册"){
                             result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写"
 
                         } else { result = "" }
@@ -5916,7 +5922,7 @@ class NetworkAdapter {
                                     result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-90天"
                                 }
                             }
-                            "计划工期", "需要桩基","需求人数","需要人数","马匹数量","施工工期","车辆" -> {
+                            "计划工期", "需要桩基","需求人数","需要人数","马匹数量","施工工期","车辆","需要马匹" -> {
                                 if (j.inputUnitContent == "") {
                                     result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 }
@@ -6013,7 +6019,11 @@ class NetworkAdapter {
                     if(j.necessary==true) {//为true此项为必填需检验
                         when (j.selectTitle) {
                             "项目地点", "孔洞最大直径","岗位类别",
-                            "可实施地域","运送财产保险","资质类别及等级" -> {
+                            "可实施地域","运送财产保险","资质类别及等级",
+                                "性别要求", "机械设备", "跨越架材质", "财务运输保险",
+                        "配送", "合作方属性", "薪资标准","费用标准","性别",
+                        "可作业范围","是否配送","驾驶员性别","需求专业","车辆类型","是否配驾驶员","保险状态",
+                            "专业工种"-> {
                                 if (j.selectContent == ""||j.selectContent.replace(" ","")=="") {
                                     result = "${j.selectTitle.replace("：", "")}没有选择"
                                 }
@@ -6059,6 +6069,7 @@ class NetworkAdapter {
                         return false
                     }
                 }
+
 
 
             }

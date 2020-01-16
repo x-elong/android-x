@@ -125,10 +125,6 @@ class RetailStoreFragment:Fragment() {
                                 context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(path)))
                                 result = "二维码保存成功"
                                 dialog.dismiss()
-                                val dialog = BottomSheetDialog(context!!)
-                                dialog.setCanceledOnTouchOutside(false)
-//                                dialog.setContentView(dialogView)
-                                dialog.show()
                             }
                             ToastHelper.mToast(view.context,result)
                         }

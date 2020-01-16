@@ -32,8 +32,9 @@
         android:layout_width="@dimen/general_15"
         android:layout_height="@dimen/general_15"
         android:background="@drawable/ic_clear_black_24dp"
+        android:layout_marginEnd="@dimen/general_10"
         app:layout_constraintBottom_toBottomOf="@+id/et_yellow_pages_name"
-        app:layout_constraintStart_toEndOf="@+id/et_yellow_pages_name"
+        app:layout_constraintEnd_toEndOf="@+id/et_yellow_pages_name"
         app:layout_constraintTop_toTopOf="@+id/et_yellow_pages_name" />
 
     <TextView

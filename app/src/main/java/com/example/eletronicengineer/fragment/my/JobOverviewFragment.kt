@@ -15,6 +15,7 @@ import com.example.eletronicengineer.activity.MyReleaseActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.adapter.StoreTypeAdapter
 import com.example.eletronicengineer.aninterface.StoresName
+import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.FragmentHelper
 import com.example.eletronicengineer.utils.ToastHelper
@@ -70,7 +71,8 @@ class JobOverviewFragment :Fragment(){
         }
         mView.rv_registration_list_content.adapter=adapter
         mView.rv_registration_list_content.layoutManager=LinearLayoutManager(context)
-        getData()
+        if(page<=pageCount)
+            getData()
     }
 
     private fun getData() {
@@ -98,6 +100,8 @@ class JobOverviewFragment :Fragment(){
                 dbType = Constants.FragmentType.DEMAND_TRIPARTITE_TYPE.ordinal
             }
         }
+        val loadingDialog = LoadingDialog(mView.context,"正在获取报名列表...")
+        loadingDialog.show()
         val result = Observable.create<RequestBody> {
             val json = JSONObject().put("checkId",checkId).put("page",page).put("pageSize",5)
                 val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
@@ -105,6 +109,7 @@ class JobOverviewFragment :Fragment(){
         }.subscribe {
             val result = startSendMessage(it,baseUrl)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                    loadingDialog.dismiss()
                     val jsonObject = JSONObject(it.string())
                     Log.i("jsonObject",jsonObject.toString())
                     val code = jsonObject.getInt("code")
@@ -139,8 +144,10 @@ class JobOverviewFragment :Fragment(){
                     }else if(code == 500){
                         result = jsonObject.getString("message")
                     }
-                    Toast.makeText(context,result, Toast.LENGTH_SHORT).show()
+                    if(result!="当前数据获取成功")
+                        ToastHelper.mToast(mView.context,result)
                 },{
+                    loadingDialog.dismiss()
                     ToastHelper.mToast(mView.context,"获取报名列表异常")
                     it.printStackTrace()
                 })

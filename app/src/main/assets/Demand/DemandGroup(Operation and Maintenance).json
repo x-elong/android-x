@@ -48,12 +48,12 @@
     "sendFormat":"Long[]"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"性别要求",
-    "radioButtonName":["男","女","男女不限"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"性别要求",
+    "selectOption1Items":["男","女","男女不限"],
     "key":"sexDemand",
     "sendFormat":"Long"
-  },
+    },
   {
     "type":"MULTI_CHECKBOX",
     "checkboxTitle":"可实施范围",
@@ -61,10 +61,10 @@
     "key":"requirementConstructionWorkKind",
     "sendFormat":"String"
   },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"食宿标准",
-    "radioButtonName":["全包","自理"],
+    {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"食宿标准",
+    "selectOption1Items":["全包","自理"],
     "key":"roomBoardStandard",
     "sendFormat":"Long"
   },
@@ -96,13 +96,13 @@
     "key":"needPeopleNumber",
     "sendFormat":"String"
   },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"机械设备",
-    "radioButtonName":["提供","不需提供"],
-    "key":"machineEquipment",
-    "sendFormat":"Long"
-  },
+ {
+        "type":"SELECT_DIALOG",
+        "selectTitle":"机械设备",
+        "selectOption1Items":["提供","不提供"],
+        "key":"machineEquipment",
+        "sendFormat":"Long"
+    },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"联系人",

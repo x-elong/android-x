@@ -7,6 +7,7 @@ import android.os.Message
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.utils.UpdateApplication
 
 class SplashActivity : AppCompatActivity() {
     private val handler = object : Handler() {
@@ -25,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
 
         //去除状态栏
         window.setFlags(

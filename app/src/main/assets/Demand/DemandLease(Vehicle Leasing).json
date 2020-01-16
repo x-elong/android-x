@@ -40,10 +40,10 @@
     "key":"workerExperience",
     "sendFormat":"Long"
   },
-  {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"食宿标准",
-    "radioButtonName":["全包","自理"],
+    {
+    "type":"SELECT_DIALOG",
+    "selectTitle":"食宿标准",
+    "selectOption1Items":["全包","自理"],
     "key":"roomBoardStandard",
     "sendFormat":"Long"
   },

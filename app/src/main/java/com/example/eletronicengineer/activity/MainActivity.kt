@@ -1,6 +1,9 @@
 package com.example.eletronicengineer.activity
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -16,11 +19,10 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import com.example.eletronicengineer.adapter.NetworkAdapter
 import com.example.eletronicengineer.fragment.main.*
 import com.example.eletronicengineer.model.Constants
-import com.example.eletronicengineer.utils.PermissionHelper
-import com.example.eletronicengineer.utils.SysApplication
-import com.example.eletronicengineer.utils.ToastHelper
+import com.example.eletronicengineer.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.sdf.*
 import com.lcw.library.imagepicker.ImagePicker
@@ -93,7 +95,32 @@ class MainActivity : AppCompatActivity() {
         val endTime = System.currentTimeMillis()
         Log.i("main run time is",(endTime-startTime).toString())
         initFragment()
+        getData()
         supportActionBar?.hide()
+    }
+
+    private fun getData() {
+        val result = NetworkAdapter().getDataUser().subscribe( {
+            UnSerializeDataBase.userName = it.message.user.userName
+            UnSerializeDataBase.userPhone = it.message.user.phone
+            if(it.message.user.name!=null)
+                UnSerializeDataBase.idCardName = it.message.user.name!!
+            if(!it.message.user.isCredential){
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("个人认证")
+                    .setMessage("当前未进行个人认证，是否立即前往认证？")
+                    .setNegativeButton("暂不认证", null)
+                    .setPositiveButton("立即前往", DialogInterface.OnClickListener() { _, _ ->
+                        UnSerializeDataBase.isCertificate = false
+                        val intent = Intent(this,MyCertificationActivity::class.java)
+                        startActivity(intent)
+                    })
+                    .create().show()
+            }
+        },{
+            ToastHelper.mToast(this,"网络异常")
+            it.printStackTrace()
+        })
     }
 
     override fun onBackPressed() {

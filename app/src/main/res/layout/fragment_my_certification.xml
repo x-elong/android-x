@@ -51,8 +51,18 @@
         app:layout_constraintEnd_toEndOf="@+id/view_enterprise_certification"
         app:layout_constraintBottom_toBottomOf="@+id/view_enterprise_certification"
          />
-
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/view_enterprise_certification"
+        android:textSize="@dimen/font_tv_normal_20"
+        android:text="暂无认证数据"
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
     <View
+        android:visibility="gone"
         android:id="@+id/view_sp_company"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_36"
@@ -64,6 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_enterprise_certification" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_company_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -77,6 +88,7 @@
         app:layout_constraintStart_toStartOf="@+id/view_sp_company"
         app:layout_constraintTop_toTopOf="@+id/view_sp_company" />
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_company_under"
         android:layout_width="@dimen/general_36"
         android:layout_height="@dimen/general_36"
@@ -86,6 +98,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view_sp_company"
         app:layout_constraintTop_toTopOf="@+id/view_sp_company" />
     <View
+        android:visibility="gone"
         android:id="@+id/view_subject_category_sp"
         android:background="@drawable/view_style2"
         android:layout_width="match_parent"
@@ -97,6 +110,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_sp_company"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_subject_category_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,6 +134,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_subject_category_sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_certification_status"
         android:text="认证状态:未认证"
         android:textSize="@dimen/font_tv_normal_16"
@@ -131,6 +146,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <ScrollView
+        android:visibility="gone"
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

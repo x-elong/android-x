@@ -58,7 +58,7 @@ class SupplyActivity : AppCompatActivity() {
 	//在当前下增加碎片
 	private fun addFragment(fragment: Fragment) {
 		val transaction = supportFragmentManager.beginTransaction()
-		transaction.add(R.id.frame_supply,fragment,"inventoryMore")
+		transaction.add(R.id.frame_supply,fragment,"register")
 		transaction.commit()
 	}
 	//Fragment切换

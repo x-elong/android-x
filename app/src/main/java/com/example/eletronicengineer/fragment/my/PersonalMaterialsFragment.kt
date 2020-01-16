@@ -13,6 +13,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
+import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.aninterface.Image
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -65,6 +66,7 @@ class PersonalMaterialsFragment :Fragment(){
         }
     }
     val glideImageLoader = GlideImageLoader()
+    val adapter:RecyclerviewAdapter? =null
     val galleryConfig = GalleryConfig.Builder()
         .imageLoader(glideImageLoader)    // ImageLoader 加载框架（必填）
         .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
@@ -78,6 +80,7 @@ class PersonalMaterialsFragment :Fragment(){
         .build()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_personal_materials,container,false)
+
         initFragment()
         return mView
     }

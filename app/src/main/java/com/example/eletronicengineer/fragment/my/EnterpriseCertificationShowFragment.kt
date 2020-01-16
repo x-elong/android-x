@@ -116,6 +116,25 @@ class EnterpriseCertificationShowFragment :Fragment(){
                         organizationNameList.add(js.getString("organizationName"))
                         certificationStatusList.add(js.getString("certificationStatus"))
                     }
+                    if(jsonArray.length()==0){
+                        mView.view_sp_company.visibility = View.GONE
+                        mView.tv_company_content.visibility = View.GONE
+                        mView.tv_company_under.visibility = View.GONE
+                        mView.view_subject_category_sp.visibility = View.GONE
+                        mView.tv_subject_category_content.visibility = View.GONE
+                        mView.tv_certification_status.visibility = View.GONE
+                        mView.sv.visibility = View.GONE
+                        mView.tv_null.visibility = View.VISIBLE
+                    }else{
+                        mView.view_sp_company.visibility = View.VISIBLE
+                        mView.tv_company_content.visibility = View.VISIBLE
+                        mView.tv_company_under.visibility = View.VISIBLE
+                        mView.view_subject_category_sp.visibility = View.VISIBLE
+                        mView.tv_subject_category_content.visibility = View.VISIBLE
+                        mView.tv_certification_status.visibility = View.VISIBLE
+                        mView.sv.visibility = View.VISIBLE
+                        mView.tv_null.visibility = View.GONE
+                    }
                     mView.view_sp_company.setOnClickListener {
                         val selectDialog= CustomDialog(CustomDialog.Options.SELECT_DIALOG,context!!,organizationNameList,mHandler).dialog
                         selectDialog.show()
@@ -178,7 +197,7 @@ class EnterpriseCertificationShowFragment :Fragment(){
                             GlideImageLoader().displayImage(mView.iv_administrator_id_card_nation_show,js.getString("identifyCardPathContrary"))
                         }
                     }
-                    ToastHelper.mToast(mView.context,result)
+//                    ToastHelper.mToast(mView.context,result)
                 },{
                     ImageLoadUtil.loadBackgound(mView.iv_business_license_show,mView.context,R.drawable.business_license)
                     ImageLoadUtil.loadBackgound(mView.iv_official_picture_show,mView.context,R.drawable.official_picture)

@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/item_background">
+    <View
+        android:id="@+id/view_shift_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/general_40"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_shift_input_necessary"
+        android:layout_width="wrap_content"
+        android:text="*"
+        android:textSize="@dimen/font_tv_hint_15"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="@+id/view_shift_input"
+        app:layout_constraintTop_toTopOf="@+id/view_shift_input"
+        app:layout_constraintBottom_toBottomOf="@+id/view_shift_input"
+        android:layout_height="wrap_content"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -15,6 +32,9 @@
             android:textSize="@dimen/font_tv_hint_15"
             android:hint="xxxx"
             android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@+id/tv_shift_input_necessary"
+            app:layout_constraintTop_toTopOf="@+id/view_shift_input"
+            app:layout_constraintBottom_toBottomOf="@+id/view_shift_input"
             android:textColor="@android:color/black" />
     <EditText
             android:layout_width="0dp"
@@ -26,11 +46,12 @@
             android:enabled="false"
             android:focusable="false"
             android:singleLine="true"
-            android:gravity="center|right"
-            android:textColor="@color/black"
-            android:layout_marginTop="@dimen/top_10"
-           android:layout_marginStart="@dimen/left_5"
-           android:layout_marginBottom="@dimen/bottom_10"/>
+        android:layout_marginEnd="@dimen/right_2"
+        app:layout_constraintEnd_toStartOf="@+id/iv_shift_input_picture"
+        app:layout_constraintTop_toTopOf="@+id/view_shift_input"
+        app:layout_constraintBottom_toBottomOf="@+id/view_shift_input"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
     <de.hdodenhof.circleimageview.CircleImageView
         android:visibility="gone"
         android:id="@+id/iv_shift_input_picture"
@@ -40,18 +61,23 @@
         android:layout_height="@dimen/general_20"
         android:src="@drawable/header_mall"
         app:civ_border_color="@color/colorPrimary"
-        android:layout_marginRight="@dimen/right_4"
-        />
+        android:layout_marginEnd="@dimen/right_4"
+        app:layout_constraintEnd_toStartOf="@+id/tv_shift_input_show"
+        app:layout_constraintTop_toTopOf="@+id/view_shift_input"
+        app:layout_constraintBottom_toBottomOf="@+id/view_shift_input"
+        tools:ignore="MissingConstraints" />
     <TextView
             android:layout_gravity="center"
             android:layout_width="@dimen/general_10"
             android:layout_height="@dimen/general_15"
             android:id="@+id/tv_shift_input_show"
            android:layout_marginTop="@dimen/top_10"
-           android:layout_marginStart="@dimen/left_5"
             android:layout_marginBottom="@dimen/bottom_10"
             android:layout_marginEnd="@dimen/right_10"
             android:background="@drawable/jump"
             android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/view_shift_input"
+        app:layout_constraintTop_toTopOf="@+id/view_shift_input"
+        app:layout_constraintBottom_toBottomOf="@+id/view_shift_input"
             android:textSize="@dimen/font_tv_hint_15"/>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

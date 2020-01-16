@@ -350,6 +350,9 @@ class IndustryYellowPagesFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingYellowPages){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }

@@ -402,8 +402,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[5].inputUnitContent = requirementPersonDetail.workerExperience
         adapter.mData[6].inputRangeValue1 = requirementPersonDetail.minAgeDemand
         adapter.mData[6].inputRangeValue2 = requirementPersonDetail.maxAgeDemand
-        adapter.mData[7].radioButtonValue = requirementPersonDetail.sexDemand
-        adapter.mData[8].radioButtonValue = requirementPersonDetail.roomBoardStandard
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementPersonDetail.sexDemand.toInt()]
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementPersonDetail.roomBoardStandard.toInt()]
         adapter.mData[9].selectContent = requirementPersonDetail.journeySalary
         adapter.mData[10].selectContent = requirementPersonDetail.journeyCarFare
         adapter.mData[11].inputUnitContent = requirementPersonDetail.needPeopleNumber
@@ -498,8 +498,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[8].inputRangeValue1 = requirementPowerTransformation.minAgeDemand
         adapter.mData[8].inputRangeValue2 =  requirementPowerTransformation.maxAgeDemand
-        adapter.mData[9].radioButtonValue = requirementPowerTransformation.sexDemand
-        adapter.mData[10].radioButtonValue = requirementPowerTransformation.roomBoardStandard
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementPowerTransformation.sexDemand.toInt()]
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementPowerTransformation.roomBoardStandard.toInt()]
         adapter.mData[11].selectContent = requirementPowerTransformation.journeyCarFare
         adapter.mData[12].selectContent = requirementPowerTransformation.journeySalary
 
@@ -537,7 +537,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[14].singleDisplayRightContent = requirementPowerTransformation.needPeopleNumber
-        adapter.mData[15].radioButtonValue = requirementPowerTransformation.constructionEquipment
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementPowerTransformation.constructionEquipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementPowerTransformation.validTime
         validTime = requirementPowerTransformation.validTime
         adapter.mData[20].textAreaContent = requirementPowerTransformation.additonalExplain
@@ -618,8 +618,10 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[8].inputRangeValue1 = requirementMajorNetWork.minAgeDemand
         adapter.mData[8].inputRangeValue2 =  requirementMajorNetWork.maxAgeDemand
-        adapter.mData[9].radioButtonValue = requirementMajorNetWork.sexDemand
-        adapter.mData[10].radioButtonValue = requirementMajorNetWork.roomBoardStandard
+
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementMajorNetWork.sexDemand.toInt()]
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementMajorNetWork.roomBoardStandard.toInt()]
+
         adapter.mData[11].selectContent = requirementMajorNetWork.journeyCarFare
         adapter.mData[12].selectContent = requirementMajorNetWork.journeySalary
 
@@ -657,7 +659,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[14].singleDisplayRightContent = requirementMajorNetWork.needPeopleNumber
-        adapter.mData[15].radioButtonValue = requirementMajorNetWork.constructionEquipment
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementMajorNetWork.constructionEquipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementMajorNetWork.validTime
         validTime = requirementMajorNetWork.validTime
         adapter.mData[20].textAreaContent = requirementMajorNetWork.additonalExplain
@@ -740,8 +742,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[8].inputRangeValue1 = requirementDistributionNetwork.minAgeDemand
         adapter.mData[8].inputRangeValue2 =  requirementDistributionNetwork.maxAgeDemand
-        adapter.mData[9].radioButtonValue = requirementDistributionNetwork.sexDemand
-        adapter.mData[10].radioButtonValue = requirementDistributionNetwork.roomBoardStandard
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementDistributionNetwork.sexDemand.toInt()]
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementDistributionNetwork.roomBoardStandard.toInt()]
         adapter.mData[11].selectContent = requirementDistributionNetwork.journeyCarFare
         adapter.mData[12].selectContent = requirementDistributionNetwork.journeySalary
 
@@ -779,7 +781,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[14].singleDisplayRightContent = requirementDistributionNetwork.needPeopleNumber
-        adapter.mData[15].radioButtonValue = requirementDistributionNetwork.constructionEquipment
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementDistributionNetwork.constructionEquipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementDistributionNetwork.validTime
         validTime = requirementDistributionNetwork.validTime
         adapter.mData[20].textAreaContent = requirementDistributionNetwork.additonalExplain
@@ -861,8 +863,8 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[8].inputRangeValue1 = requirementMeasureDesign.minAgeDemand
         adapter.mData[8].inputRangeValue2 =  requirementMeasureDesign.maxAgeDemand
-        adapter.mData[9].radioButtonValue = requirementMeasureDesign.sexDemand
-        adapter.mData[10].radioButtonValue = requirementMeasureDesign.roomBoardStandard
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementMeasureDesign.sexDemand.toInt()]
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementMeasureDesign.roomBoardStandard.toInt()]
         adapter.mData[11].selectContent = requirementMeasureDesign.journeyCarFare
         adapter.mData[12].selectContent = requirementMeasureDesign.journeySalary
 
@@ -900,7 +902,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[13].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[14].singleDisplayRightContent = requirementMeasureDesign.needPeopleNumber
-        adapter.mData[15].radioButtonValue = requirementMeasureDesign.equipment
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementMeasureDesign.equipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementMeasureDesign.validTime
         validTime = requirementMeasureDesign.validTime
         adapter.mData[20].textAreaContent = requirementMeasureDesign.additonalDxplain
@@ -941,14 +943,14 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[6].inputRangeValue1 = requirementCaravanTransport.minAgeDemand
         adapter.mData[6].inputRangeValue2 =  requirementCaravanTransport.maxAgeDemand
-        adapter.mData[7].radioButtonValue = requirementCaravanTransport.sexDemand
-        adapter.mData[8].radioButtonValue = requirementCaravanTransport.roomBoardStandard
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementCaravanTransport.sexDemand.toInt()]
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementCaravanTransport.roomBoardStandard.toInt()]
         adapter.mData[9].selectContent = requirementCaravanTransport.journeyCarFare
         adapter.mData[10].selectContent = requirementCaravanTransport.journeySalary
 
         adapter.mData[11].inputUnitContent = requirementCaravanTransport.needHorseNumber
         if(requirementCaravanTransport.salaryStandard!=null)
-        adapter.mData[12].radioButtonValue = requirementCaravanTransport.salaryStandard
+        adapter.mData[12].selectContent = adapter.mData[12].selectOption1Items[1-requirementCaravanTransport.salaryStandard.toInt()]
         adapter.mData[15].inputUnitContent = requirementCaravanTransport.validTime
         validTime = requirementCaravanTransport.validTime
         adapter.mData[17].textAreaContent = requirementCaravanTransport.additonalExplain
@@ -1012,7 +1014,7 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[6].inputRangeValue1 = requirementPileFoundation.minAgeDemand
         adapter.mData[6].inputRangeValue2 =  requirementPileFoundation.maxAgeDemand
-        adapter.mData[7].radioButtonValue = requirementPileFoundation.sexDemand
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementPileFoundation.sexDemand.toInt()]
         adapter.mData[8].checkboxValueList = ArrayList(adapter.mData[8].checkboxNameList.size)
         val requirementConstructionWorkKind = requirementPileFoundation.requirementConstructionWorkKind.split("、")
         for (j in adapter.mData[8].checkboxNameList){
@@ -1025,13 +1027,13 @@ class ModifyJobInformationFragment :Fragment(){
         }
 
         adapter.mData[9].selectContent = requirementPileFoundation.roleMaxType
-        adapter.mData[10].radioButtonValue = requirementPileFoundation.roomBoardStandard
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementPileFoundation.roomBoardStandard.toInt()]
         adapter.mData[11].selectContent = requirementPileFoundation.journeyCarFare
         adapter.mData[12].selectContent = requirementPileFoundation.journeySalary
 
         adapter.mData[13].inputUnitContent = requirementPileFoundation.needPileFoundationEquipment
-        adapter.mData[14].radioButtonValue = requirementPileFoundation.salaryStandard
-        adapter.mData[15].radioButtonValue = requirementPileFoundation.otherMachineEquipment
+        adapter.mData[14].selectContent = adapter.mData[14].selectOption1Items[1-requirementPileFoundation.salaryStandard.toInt()]
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementPileFoundation.otherMachineEquipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementPileFoundation.validTime
         validTime = requirementPileFoundation.validTime
         adapter.mData[20].textAreaContent = requirementPileFoundation.additonalExplain
@@ -1105,15 +1107,15 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[7].inputUnitContent = requirementUnexcavation.workerExperience
         adapter.mData[8].inputRangeValue1 = requirementUnexcavation.minAgeDemand
         adapter.mData[8].inputRangeValue2 =  requirementUnexcavation.maxAgeDemand
-        adapter.mData[9].radioButtonValue = requirementUnexcavation.sexDemand
 
-        adapter.mData[10].radioButtonValue = requirementUnexcavation.roomBoardStandard
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementUnexcavation.sexDemand.toInt()]
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementUnexcavation.roomBoardStandard.toInt()]
         adapter.mData[11].selectContent = requirementUnexcavation.journeyCarFare
         adapter.mData[12].selectContent = requirementUnexcavation.journeySalary
 
         adapter.mData[13].inputUnitContent = requirementUnexcavation.needPileFoundation
-        adapter.mData[14].radioButtonValue = requirementUnexcavation.salaryStandard
-        adapter.mData[15].radioButtonValue = requirementUnexcavation.otherMachineEquipment
+        adapter.mData[14].selectContent = adapter.mData[14].selectOption1Items[1-requirementUnexcavation.salaryStandard.toInt()]
+        adapter.mData[15].selectContent = adapter.mData[15].selectOption1Items[1-requirementUnexcavation.otherMachineEquipment.toInt()]
         adapter.mData[18].inputUnitContent = requirementUnexcavation.validTime
         validTime = requirementUnexcavation.validTime
         adapter.mData[20].textAreaContent = requirementUnexcavation.additonalExplain
@@ -1205,8 +1207,10 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[9].inputRangeValue1 = requirementTest.minAgeDemand
         adapter.mData[9].inputRangeValue2 =  requirementTest.maxAgeDemand
-        adapter.mData[10].radioButtonValue = requirementTest.sexDemand
-        adapter.mData[11].radioButtonValue = requirementTest.roomBoardStandard
+        adapter.mData[10].selectContent = adapter.mData[10].selectOption1Items[1-requirementTest.sexDemand.toInt()]
+
+        adapter.mData[11].selectContent = adapter.mData[11].selectOption1Items[1-requirementTest.roomBoardStandard.toInt()]
+
         adapter.mData[12].selectContent = requirementTest.journeyCarFare
         adapter.mData[13].selectContent = requirementTest.journeySalary
 
@@ -1244,7 +1248,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[14].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[15].singleDisplayRightContent = requirementTest.needPeopleNumber
-        adapter.mData[16].radioButtonValue = requirementTest.machineEquipment
+        adapter.mData[16].selectContent = adapter.mData[16].selectOption1Items[1-requirementTest.machineEquipment.toInt()]
+
         adapter.mData[19].inputUnitContent = requirementTest.validTime
         validTime = requirementTest.validTime
         adapter.mData[21].textAreaContent = requirementTest.additonalExplain
@@ -1316,8 +1321,10 @@ class ModifyJobInformationFragment :Fragment(){
 
         adapter.mData[7].inputRangeValue1 = requirementSpanWoodenSupprt.minAgeDemand
         adapter.mData[7].inputRangeValue2 =  requirementSpanWoodenSupprt.maxAgeDemand
-        adapter.mData[8].radioButtonValue = requirementSpanWoodenSupprt.sexDemand
-        adapter.mData[9].radioButtonValue = requirementSpanWoodenSupprt.roomBoardStandard
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementSpanWoodenSupprt.sexDemand.toInt()]
+
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementSpanWoodenSupprt.roomBoardStandard.toInt()]
+
         adapter.mData[10].selectContent = requirementSpanWoodenSupprt.journeyCarFare
         adapter.mData[11].selectContent = requirementSpanWoodenSupprt.journeySalary
 
@@ -1355,7 +1362,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[12].itemMultiStyleItem = itemMultiStyleItems
         adapter.mData[12].itemMultiStyleItem[0].PeopleNumber = requirementSpanWoodenSupprt.needPeopleNumber.toInt()
         adapter.mData[13].singleDisplayRightContent = requirementSpanWoodenSupprt.needPeopleNumber
-        adapter.mData[14].radioButtonValue = requirementSpanWoodenSupprt.machineEquipment
+        adapter.mData[14].selectContent = adapter.mData[14].selectOption1Items[1-requirementSpanWoodenSupprt.machineEquipment.toInt()]
         adapter.mData[17].inputUnitContent = requirementSpanWoodenSupprt.validTime
         validTime = requirementSpanWoodenSupprt.validTime
         adapter.mData[19].textAreaContent = requirementSpanWoodenSupprt.additonalExplain
@@ -1415,7 +1422,8 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[5].inputUnitContent = requirementRunningMaintain.workerExperience
         adapter.mData[6].inputRangeValue1 = requirementRunningMaintain.minAgeDemand
         adapter.mData[6].inputRangeValue2 =  requirementRunningMaintain.maxAgeDemand
-        adapter.mData[7].radioButtonValue = requirementRunningMaintain.sexDemand
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementRunningMaintain.sexDemand.toInt()]
+
 
         val requirementConstructionWorkKind = requirementRunningMaintain.requirementConstructionWorkKind.split("、")
         for (j in adapter.mData[8].checkboxNameList){
@@ -1426,7 +1434,7 @@ class ModifyJobInformationFragment :Fragment(){
             else
                 adapter.mData[8].checkboxValueList.add(false)
         }
-        adapter.mData[9].radioButtonValue = requirementRunningMaintain.roomBoardStandard
+        adapter.mData[9].selectContent = adapter.mData[9].selectOption1Items[1-requirementRunningMaintain.roomBoardStandard.toInt()]
         adapter.mData[10].selectContent = requirementRunningMaintain.journeyCarFare
         adapter.mData[11].selectContent = requirementRunningMaintain.journeySalary
 
@@ -1464,7 +1472,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[12].itemMultiStyleItem = itemMultiStyleItems
 
         adapter.mData[13].singleDisplayRightContent = requirementRunningMaintain.needPeopleNumber
-        adapter.mData[14].radioButtonValue = requirementRunningMaintain.machineEquipment
+        adapter.mData[14].selectContent = adapter.mData[14].selectOption1Items[1-requirementRunningMaintain.machineEquipment.toInt()]
         adapter.mData[17].inputUnitContent = requirementRunningMaintain.validTime
         validTime = requirementRunningMaintain.validTime
         val requirementTeamVoltageClasses = requirementRunningMaintain.requirementTeamVoltageClasses.split("、")
@@ -1532,7 +1540,7 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[4].itemMultiStyleItem = itemMultiStyleItem
         adapter.mData[5].inputUnitContent = requirementLeaseCar.workerExperience
 
-        adapter.mData[6].radioButtonValue = requirementLeaseCar.roomBoardStandard
+        adapter.mData[6].selectContent = adapter.mData[6].selectOption1Items[1-requirementLeaseCar.roomBoardStandard.toInt()]
         adapter.mData[7].selectContent = requirementLeaseCar.journeyCarFare
         adapter.mData[8].selectContent = requirementLeaseCar.journeySalary
 
@@ -1599,10 +1607,12 @@ class ModifyJobInformationFragment :Fragment(){
             }
 
         adapter.mData[4].itemMultiStyleItem = itemMultiStyleItems
-        adapter.mData[5].radioButtonValue = requirementLeaseConstructionTool.financeTransportationInsurance
-        adapter.mData[6].radioButtonValue = requirementLeaseConstructionTool.distribution
-        adapter.mData[7].radioButtonValue = requirementLeaseConstructionTool.partnerAttribute
-        adapter.mData[8].radioButtonValue = requirementLeaseConstructionTool.hireFareStandard
+
+        adapter.mData[5].selectContent = adapter.mData[5].selectOption1Items[1-requirementLeaseConstructionTool.financeTransportationInsurance.toInt()]
+        adapter.mData[6].selectContent = adapter.mData[6].selectOption1Items[1-requirementLeaseConstructionTool.distribution.toInt()]
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementLeaseConstructionTool.partnerAttribute.toInt()]
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementLeaseConstructionTool.hireFareStandard.toInt()]
+
 
         adapter.mData[11].inputUnitContent = requirementLeaseConstructionTool.validTime
         validTime = requirementLeaseConstructionTool.validTime
@@ -1661,11 +1671,10 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[4].itemMultiStyleItem = itemMultiStyleItems
 
 
-        adapter.mData[5].radioButtonValue = requirementLeaseMachinery.financeTransportationInsurance
-        adapter.mData[6].radioButtonValue = requirementLeaseMachinery.distribution
-        adapter.mData[7].radioButtonValue = requirementLeaseMachinery.partnerAttribute
-        adapter.mData[8].radioButtonValue = requirementLeaseMachinery.hireFareStandard
-
+        adapter.mData[5].selectContent = adapter.mData[5].selectOption1Items[1-requirementLeaseMachinery.financeTransportationInsurance.toInt()]
+        adapter.mData[6].selectContent = adapter.mData[6].selectOption1Items[1-requirementLeaseMachinery.distribution.toInt()]
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementLeaseMachinery.partnerAttribute.toInt()]
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementLeaseMachinery.hireFareStandard.toInt()]
 
         adapter.mData[11].inputUnitContent = requirementLeaseMachinery.validTime
         validTime = requirementLeaseMachinery.validTime
@@ -1724,10 +1733,10 @@ class ModifyJobInformationFragment :Fragment(){
         adapter.mData[4].itemMultiStyleItem = itemMultiStyleItems
 
 
-        adapter.mData[5].radioButtonValue = requirementLeaseFacility.financeTransportationInsurance
-        adapter.mData[6].radioButtonValue = requirementLeaseFacility.distribution
-        adapter.mData[7].radioButtonValue = requirementLeaseFacility.partnerAttribute
-        adapter.mData[8].radioButtonValue = requirementLeaseFacility.hireFareStandard
+        adapter.mData[5].selectContent = adapter.mData[5].selectOption1Items[1-requirementLeaseFacility.financeTransportationInsurance.toInt()]
+        adapter.mData[6].selectContent = adapter.mData[6].selectOption1Items[1-requirementLeaseFacility.distribution.toInt()]
+        adapter.mData[7].selectContent = adapter.mData[7].selectOption1Items[1-requirementLeaseFacility.partnerAttribute.toInt()]
+        adapter.mData[8].selectContent = adapter.mData[8].selectOption1Items[1-requirementLeaseFacility.hireFareStandard.toInt()]
 
 
         adapter.mData[11].inputUnitContent = requirementLeaseFacility.validTime
@@ -1780,8 +1789,8 @@ class ModifyJobInformationFragment :Fragment(){
             }
         adapter.mData[1].itemMultiStyleItem = itemMultiStyleItems
 
-        adapter.mData[2].radioButtonValue = requirementThirdPartyDetail.partnerAttribute
-        adapter.mData[3].radioButtonValue = requirementThirdPartyDetail.fareStandard
+        adapter.mData[2].selectContent = adapter.mData[2].selectOption1Items[1-requirementThirdPartyDetail.partnerAttribute.toInt()]
+        adapter.mData[3].selectContent = adapter.mData[3].selectOption1Items[1-requirementThirdPartyDetail.fareStandard.toInt()]
         adapter.mData[6].inputUnitContent = requirementThirdPartyDetail.validTime
         validTime = requirementThirdPartyDetail.validTime
         adapter.mData[8].textAreaContent = requirementThirdPartyDetail.additionalExplain

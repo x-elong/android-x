@@ -14,10 +14,7 @@ import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.LoginActivity
 import com.example.eletronicengineer.activity.MySettingActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
-import com.example.eletronicengineer.utils.CacheUtil
-import com.example.eletronicengineer.utils.FragmentHelper
-import com.example.eletronicengineer.utils.SysApplication
-import com.example.eletronicengineer.utils.ToastHelper
+import com.example.eletronicengineer.utils.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,6 +50,7 @@ class MySettingFragment :Fragment() {
             val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_log_out,null)
             dialogView.btn_switch_login.setOnClickListener {
                 dialog.dismiss()
+                UnSerializeDataBase.isLogined=true
                 val intent = Intent(context,LoginActivity::class.java)
                 intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)

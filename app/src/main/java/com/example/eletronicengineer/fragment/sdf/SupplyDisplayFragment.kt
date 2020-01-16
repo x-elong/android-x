@@ -92,9 +92,13 @@ class SupplyDisplayFragment:Fragment() {
                         {
                             adapter.mData[8].buttonListener = listOf(View.OnClickListener {
                                 //显示图片
-                                val intent = Intent(activity, ImageDisplayActivity::class.java)
-                                intent.putExtra("imagePath", data.certificatePath)
-                                startActivity(intent)
+                                val bundle = Bundle()
+                                bundle.putString("imagePath", data.certificatePath)
+                                bundle.putString("title",adapter.mData[8].singleDisplayRightTitle)
+                                FragmentHelper.switchFragment(activity!!,ImageDisplayFragment.newInstance(bundle),R.id.frame_display_supply,"")
+//                                val intent = Intent(activity, ImageDisplayActivity::class.java)
+//                                intent.putExtra("imagePath", data.certificatePath)
+//                                startActivity(intent)
                             })
                         }
                         adapter.mData[9].singleDisplayRightContent=if(data.validTime==null) {

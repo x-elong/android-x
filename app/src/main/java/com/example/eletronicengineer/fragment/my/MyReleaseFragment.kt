@@ -86,8 +86,9 @@ class MyReleaseFragment :Fragment(){
             activity!!.finish()
         }
         mView.view_sp.setOnClickListener{
-            val Option1Items = listOf("需求","供应")
-            val Option2Items:List<List<String>> = listOf(listOf("需求个人","需求团队","需求租赁","需求三方"), listOf("个人劳务","团队服务","租赁服务","三方服务"))
+            val Option1Items = listOf("需求","供应","行业黄页")
+            val Option2Items:List<List<String>> = listOf(listOf("需求个人","需求团队","需求租赁","需求三方"), listOf("个人劳务","团队服务","租赁服务","三方服务"),
+                listOf())
             val selectDialog= CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,context!!,mHandler,Option1Items,Option2Items).multiDialog
             selectDialog.show()
         }
@@ -115,6 +116,9 @@ class MyReleaseFragment :Fragment(){
     }
     fun initData(){
         when(tvMode){
+            "需求 需求个人"->{
+                getDataDemandIndividual()
+            }
             "需求 需求团队"->{
                 getDataDemandGroup()
             }
@@ -137,7 +141,7 @@ class MyReleaseFragment :Fragment(){
                 getDataThridService()
             }
             else->{
-                getDataDemandIndividual()
+//                getDataIndustryYellowPages()
             }
         }
     }
@@ -1413,6 +1417,99 @@ class MyReleaseFragment :Fragment(){
                     }
                     if(result!="当前数据获取成功")
                     ToastHelper.mToast(mView.context, result)
+                }, {
+                    it.printStackTrace()
+                })
+        }
+    }
+
+    private fun getDataIndustryYellowPages() {
+        val result = Observable.create<RequestBody> {
+            val json = JSONObject().put("page",page).put("pageSize",4)
+                .put("historyFlag",mView.checkbox_history.isChecked)
+            val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
+            it.onNext(requestBody)
+        }.subscribe {
+            val result = startSendMessage(
+                it,
+                UnSerializeDataBase.dmsBasePath + Constants.HttpUrlPath.My.getIndustryYellowPages
+            )
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
+                    val jsonObject = JSONObject(it.string())
+                    val code = jsonObject.getInt("code")
+                    var result = ""
+                    if (code == 200) {
+                        result = "当前数据获取成功"
+                        page++
+                        val json = jsonObject.getJSONObject("message")
+                        pageCount = json.getInt("pageCount")
+                        val jsonArray = json.getJSONArray("data")
+                        if (jsonArray.length() == 0)
+                            result = "当前数据为空"
+                        val size = adapter.mData.size
+                        val data = adapter.mData.toMutableList()
+                        for (j in 0 until jsonArray.length()) {
+                            val js = jsonArray.getJSONObject(j)
+                            val item = MultiStyleItem(
+                                MultiStyleItem.Options.REGISTRATION_ITEM,
+                                "三方服务",
+                                "服务类型:" + js.getString("serveType"),
+                                "有效期:${js.getString("validTime")}天"
+                            )
+                            val id = js.getString("id")
+                            item.deleteListener = View.OnClickListener {
+                                val loadingDialog =
+                                    LoadingDialog(
+                                        mView.context,
+                                        "正在删除中...",
+                                        R.mipmap.ic_dialog_loading
+                                    )
+                                loadingDialog.show()
+                                deleteThirdServices(id).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe({
+                                        loadingDialog.dismiss()
+                                        val json = JSONObject(it.string())
+                                        Log.i("json", json.toString())
+                                        if (json.getString("desc") == "OK") {
+                                            ToastHelper.mToast(mView.context, "删除成功")
+                                            val mData = adapter.mData.toMutableList()
+                                            mData.removeAt(mData.indexOf(item))
+                                            adapter.mData = mData
+                                            adapter.notifyDataSetChanged()
+                                        } else
+                                            ToastHelper.mToast(mView.context, "删除失败")
+                                    }, {
+                                        loadingDialog.dismiss()
+                                        ToastHelper.mToast(mView.context, "删除信息异常")
+                                        it.printStackTrace()
+                                    })
+                            }
+
+                            item.jumpListener = View.OnClickListener {
+                                val bundle = Bundle()
+                                bundle.putInt(
+                                    "type",
+                                    Constants.FragmentType.TRIPARTITE_TYPE.ordinal
+                                )
+                                bundle.putString("id", id)
+                                FragmentHelper.switchFragment(
+                                    activity!!,
+                                    SupplyJobMoreFragment.newInstance(bundle),
+                                    R.id.frame_my_release,
+                                    ""
+                                )
+                            }
+                            data.add(item)
+                        }
+                        adapter.mData = data
+                        adapter.notifyItemRangeInserted(size, adapter.mData.size - size)
+                    } else if (code == 400 && jsonObject.getString("message") == "没有该数据") {
+                        result = "当前数据为空"
+                        pageCount = 0
+                    }
+                    if(result!="当前数据获取成功")
+                        ToastHelper.mToast(mView.context, result)
                 }, {
                     it.printStackTrace()
                 })

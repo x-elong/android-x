@@ -59,9 +59,9 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"是否配送",
-    "radioButtonName":["是","否"],
+    "type": "SELECT_DIALOG",
+    "selectTitle": "是否配送",
+    "selectOption1Items":["是","否"],
     "key": "isDistribution",
     "sendFormat": "Boolean"
   },

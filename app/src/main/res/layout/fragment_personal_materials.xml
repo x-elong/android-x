@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <View
         android:id="@+id/view_personal_materials"
@@ -41,14 +42,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/view_personal_materials"
         tools:ignore="MissingConstraints" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView15"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="身份证照片"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/font_tv_normal_20"-->
+<!--            android:layout_marginStart="@dimen/left_10"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/view_personal_materials"-->
+<!--            tools:ignore="MissingConstraints" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_id_card_people"-->
+<!--            android:layout_width="@dimen/general_160"-->
+<!--            android:layout_height="@dimen/general_104"-->
+<!--            android:background="@drawable/id_card_people"-->
+<!--            android:layout_marginTop="@dimen/top_10"-->
+<!--            android:layout_marginStart="@dimen/left_10"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView15" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_id_card_nation"-->
+<!--            android:layout_width="@dimen/general_160"-->
+<!--            android:layout_height="@dimen/general_104"-->
+<!--            android:background="@drawable/id_card_nation"-->
+<!--            android:layout_marginEnd="@dimen/right_10"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/iv_id_card_people" />-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rv_personal_materials_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:overScrollMode="never"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/iv_id_card_people"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_personal_materials"
-        tools:ignore="MissingConstraints">
-<include layout="@layout/personal_materials"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/personal_materials"/>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,14 +36,14 @@
     "selectOption1Items": ["厢式","敞篷"]
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["是","否"],
-    "radioButtonTitle":"是否配驾驶员"
+    "type": "SELECT_DIALOG",
+    "selectTitle": "是否配驾驶员",
+    "selectOption1Items": ["是","否"]
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonName":["在保","脱保"],
-    "radioButtonTitle":"保险状态"
+    "type": "SELECT_DIALOG",
+    "selectTitle": "保险状态",
+    "selectOption1Items":["在保","脱保"]
   },
   {
     "type":"SHIFT_INPUT",
@@ -55,7 +55,7 @@
   {
     "type":"SHIFT_INPUT",
     "shiftInputTitle":"可服务地域",
-    "necessary":true,
+    "necessary":false,
     "key": "issuerBelongSite",
     "sendFormat": "String"
   },

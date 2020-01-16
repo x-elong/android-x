@@ -627,8 +627,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         }
         adapter.mData[0].singleDisplayRightContent = supplyPersonDetail.issuerWorkType
         adapter.mData[1].selectContent = supplyPersonDetail.issuerWorkerKind
-        adapter.mData[2].radioButtonValue = supplyPersonDetail.sex
-        adapter.mData[3].inputUnitContent = supplyPersonDetail.age
+        adapter.mData[2].selectContent = adapter.mData[2].selectOption1Items[1-supplyPersonDetail.sex.toInt()]
+        adapter.mData[3].inputUnitContent = supplyPersonDetail.sex
         adapter.mData[4].inputUnitContent = supplyPersonDetail.workExperience
         if(supplyPersonDetail.salaryUnit!="面议" || supplyPersonDetail.workMoney!="-1.0" ){
             adapter.mData[5].inputMultiContent = supplyPersonDetail.workMoney
@@ -2117,8 +2117,8 @@ class SupplyModifyJobInformationFragment:Fragment(){
         if(supplyLeaseCar.carTable.lenghtCar!=null)
             adapter.mData[5].inputUnitContent = supplyLeaseCar.carTable.lenghtCar
         adapter.mData[6].selectContent = if(supplyLeaseCar.carTable.construction=="1") "箱式" else "敞篷"
-        adapter.mData[7].radioButtonValue = if(supplyLeaseCar.carTable.isDriver=="true") "1" else "0"
-        adapter.mData[8].radioButtonValue = if(supplyLeaseCar.carTable.isInsurance=="true") "1" else "0"
+        adapter.mData[7].selectContent = if(supplyLeaseCar.carTable.isDriver=="true") "是" else "否"
+        adapter.mData[8].selectContent = if(supplyLeaseCar.carTable.isInsurance=="true") "在保" else "脱保"
         if(supplyLeaseCar.carTable.carPhotoPath!=null &&  supplyLeaseCar.carTable.carPhotoPath!="")
             UnSerializeDataBase.imgList.add(BitmapMap(supplyLeaseCar.carTable.carPhotoPath, adapter.mData[9].key))
         adapter.mData[14].inputSingleContent = supplyLeaseCar.site
@@ -2163,7 +2163,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 companyCredentialId = otherLease.leaseConstructionTool.companyCredentialId
                 if(otherLease.leaseConstructionTool.leaseConTractPath!=null)
                     adapter.mData[8].filePath = otherLease.leaseConstructionTool.leaseConTractPath
-                adapter.mData[9].radioButtonValue = if(otherLease.leaseConstructionTool.isDistribution=="true") "1" else "0"
+                adapter.mData[9].selectContent = if(otherLease.leaseConstructionTool.isDistribution=="true") "是" else "否"
                 adapter.mData[10].selectContent = otherLease.leaseConstructionTool.conveyancePropertyInsurance
                 adapter.mData[14].inputUnitContent = otherLease.leaseConstructionTool.validTime
                 validTime = otherLease.leaseConstructionTool.validTime
@@ -2185,7 +2185,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 companyCredentialId = otherLease.leaseMachinery.companyCredentialId
                 if(otherLease.leaseMachinery.leaseConTractPath!=null)
                 adapter.mData[8].filePath = otherLease.leaseMachinery.leaseConTractPath
-                adapter.mData[9].radioButtonValue = if(otherLease.leaseMachinery.isDistribution=="true") "1" else "0"
+                adapter.mData[9].selectContent = if(otherLease.leaseMachinery.isDistribution=="true") "是" else "否"
                 adapter.mData[10].selectContent = otherLease.leaseMachinery.conveyancePropertyInsurance
                 adapter.mData[14].inputUnitContent = otherLease.leaseMachinery.validTime
                 validTime = otherLease.leaseMachinery.validTime
@@ -2207,7 +2207,7 @@ class SupplyModifyJobInformationFragment:Fragment(){
                 companyCredentialId = otherLease.leaseFacility.companyCredentialId
                 if(otherLease.leaseFacility.leaseConTractPath!=null)
                     adapter.mData[8].filePath = otherLease.leaseFacility.leaseConTractPath
-                adapter.mData[9].radioButtonValue = if(otherLease.leaseFacility.isDistribution=="true") "1" else "0"
+                adapter.mData[9].selectContent = if(otherLease.leaseFacility.isDistribution=="true") "是" else "否"
                 adapter.mData[10].selectContent = otherLease.leaseFacility.conveyancePropertyInsurance
                 adapter.mData[14].inputUnitContent = otherLease.leaseFacility.validTime
                 validTime = otherLease.leaseFacility.validTime

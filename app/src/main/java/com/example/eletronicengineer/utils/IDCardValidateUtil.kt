@@ -15,8 +15,8 @@ import java.util.*
 class IDCardValidateUtil {
 
     companion object{
-        val ValCodeArr = arrayListOf("1", "0", "x", "9", "8", "7", "6", "5", "4", "3", "2" )
-        val Wi = arrayListOf( "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2" )
+        val ValCodeArr = arrayListOf("1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" )
+        val Wi = arrayListOf( 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 )
         val MINIMAL_BIRTH_DATE = Date(-2209017600000L) //身份证的最小出生日期,1900年1月1日
         val BIRTH_DATE_FORMAT="yyyyMMdd"
         val CARD_NUMBER_LENGTH = 18
@@ -36,7 +36,8 @@ class IDCardValidateUtil {
                 if(idCardNumber[j]=='X')
                     return NUMBER_ERROR
             }
-
+            if(idCardNumber[0]=='0')
+                return AREA_ERROR
             val now = Date(System.currentTimeMillis())
             val birthStr = getBirthDayPart(idCardNumber)
             if(birthStr==DATE_ERROR)
@@ -44,22 +45,22 @@ class IDCardValidateUtil {
             val birth = SimpleDateFormat(BIRTH_DATE_FORMAT).parse(birthStr)
             if(birth.after(now))
                 return DATE_ERROR
-            if(areaCode.isEmpty())
-                getAreaCode()
-            if(areaCode.indexOf(idCardNumber.substring(0,6))<0)
-                return AREA_ERROR
-            Log.i("areaCode", areaCode[areaCode.indexOf(idCardNumber.substring(0,6))])
-            if(calculateVerifyCode(idCardNumber)!=idCardNumber[CARD_NUMBER_LENGTH-1].toString())
-                return CHECKCODE_ERROR
+//            if(areaCode.isEmpty())
+//                getAreaCode()
+//            if(areaCode.indexOf(idCardNumber.substring(0,6))<0)
+//                return AREA_ERROR
+//            Log.i("areaCode", areaCode[areaCode.indexOf(idCardNumber.substring(0,6))])
+//            if(calculateVerifyCode(idCardNumber)!=idCardNumber[CARD_NUMBER_LENGTH-1].toString())
+//                return CHECKCODE_ERROR
             return "TRUE"
         }
 
-        private fun calculateVerifyCode(cardNumber:CharSequence):String{
+        private fun calculateVerifyCode(cardNumber:String):String{
             var sum = 0
             for (j in 0 until CARD_NUMBER_LENGTH-1){
-                sum += (cardNumber[j]-'0') * Wi[j].toInt()
+                sum += cardNumber[j].toInt() * Wi[j]
             }
-            Log.i("ValCode",ValCodeArr[sum%11])
+            Log.i("mod ValCode", "${sum%11},${ValCodeArr[sum%11]}")
             return ValCodeArr[sum%11]
         }
         /**

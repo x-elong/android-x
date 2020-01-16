@@ -16,6 +16,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_personal_certification_show.view.*
+import kotlinx.android.synthetic.main.personal_certification_show.view.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -71,10 +72,14 @@ class PersonalCertificationShowFragment :Fragment(){
                     var result = ""
                     if (code == 200) {
                         if (jsonObject.getString("desc") == "FAIL") {
-                            result = jsonObject.getString("message")
+//                            result = jsonObject.getString("message")
+                            mView.sv.visibility = View.GONE
+                            mView.tv_null.visibility = View.VISIBLE
                         } else {
+                            mView.sv.visibility = View.VISIBLE
+                            mView.tv_null.visibility = View.GONE
                             val js = jsonObject.getJSONObject("message")
-                            result = "获取数据成功"
+//                            result = "获取数据成功"
                             isCertification = true
                             val status = js.getInt("certificationStatus")
                             mView.tv_certification_status.text = "认证状态:" + when(status){
@@ -100,12 +105,16 @@ class PersonalCertificationShowFragment :Fragment(){
                     } else if (code == 500) {
                         result = "服务器异常"
                     }
-                    if(result!="获取数据成功")
+                    if(result!="")
                         ToastHelper.mToast(mView.context, result)
                 }, {
                     ToastHelper.mToast(mView.context, "网络异常")
                     it.printStackTrace()
                 })
+        }
+        if(!UnSerializeDataBase.isCertificate){
+            mView.tv_personal_certification_add.callOnClick()
+            UnSerializeDataBase.isCertificate = true
         }
     }
 }

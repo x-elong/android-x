@@ -29,11 +29,6 @@
     "singleDisplayRightTitle":"联系电话:",
     "singleDisplayRightContent":""
   },
-   {
-    "type":"SINGLE_DISPLAY_RIGHT",
-    "singleDisplayRightTitle":"法人身份证照片:",
-    "singleDisplayRightContent":"点击查看"
-  },
   {
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"营业执照:",

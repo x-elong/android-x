@@ -14,11 +14,11 @@
     "sendFormat": "String"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"性别",
-    "radioButtonName":["男","女"],
-    "key": "sex",
-    "sendFormat": "Long"
+    "type":"SELECT_DIALOG",
+    "selectTitle":"性别",
+    "selectOption1Items":["男","女"],
+    "key":"sex",
+    "sendFormat":"Long"
   },
   {
     "type":"INPUT_WITH_UNIT",

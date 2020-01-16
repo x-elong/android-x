@@ -37,8 +37,8 @@ class ExtensionAdapter: RecyclerView.Adapter<ExtensionAdapter.ViewHolder> {
     override fun onBindViewHolder(@NonNull viewHolder: ViewHolder, i: Int) {
         var extensionStyle = mExtensionList[i]
         viewHolder.extensionMonth.text = extensionStyle.extensionMonth
-        viewHolder.extensionMonthMark1.text = extensionStyle.mark1
-        viewHolder.extensionMonthMark2.text = extensionStyle.mark2
+//        viewHolder.extensionMonthMark1.text = extensionStyle.mark1
+//        viewHolder.extensionMonthMark2.text = extensionStyle.mark2
     }
     override fun getItemCount(): Int {
         return mExtensionList.size

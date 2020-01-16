@@ -75,7 +75,7 @@
         android:layout_height="@dimen/general_48"
         android:layout_gravity="center"
         android:background="#2a82e4"
-        android:text="报名详情"
+        android:text="报名列表"
         android:textColor="@color/white"
         android:textSize="@dimen/font_tv_normal_16"
         app:layout_constraintEnd_toStartOf="@+id/btn_edit_job_information"

@@ -676,6 +676,9 @@ class SupplyInformationFragment : Fragment() {
 
                   }, {
                    loadingDialog.dismiss()
+                  if(mIsLoadingPerson){
+                      ToastHelper.mToast(mView.context,"无数据")
+                  }
                     it.printStackTrace()
                    })
       }
@@ -724,6 +727,9 @@ class SupplyInformationFragment : Fragment() {
 
                     }, {
                          loadingDialog.dismiss()
+                  if(mIsLoadingTeam){
+                      ToastHelper.mToast(mView.context,"无数据")
+                  }
                         it.printStackTrace()
                     })
       }
@@ -783,6 +789,9 @@ class SupplyInformationFragment : Fragment() {
                   }
             }, {
                   loadingDialog.dismiss()
+                  if(mIsLoadingLease){
+                      ToastHelper.mToast(mView.context,"无数据")
+                  }
                 it.printStackTrace()
             })
       }
@@ -842,6 +851,9 @@ class SupplyInformationFragment : Fragment() {
 
             }, {
                   loadingDialog.dismiss()
+                  if(mIsLoadingThird){
+                      ToastHelper.mToast(mView.context,"无数据")
+                  }
               it.printStackTrace()
             })
       }

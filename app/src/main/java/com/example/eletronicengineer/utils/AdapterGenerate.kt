@@ -166,7 +166,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(3,4,5,7,11,12,15)
+        val necessaryNum = arrayListOf(1,3,4,5,7,11,12,15)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1398,7 +1398,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(2,4,5,9)
+        val necessaryNum = arrayListOf(1,2,4,5,9)
         for(j in necessaryNum){
             adapter.mData[j].necessary= true//true为必选项
         }
@@ -1778,7 +1778,7 @@ class AdapterGenerate {
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(0,1,2,3,4,5,7,8,10,11,14,15)//true为必选项
+        val necessaryNum = arrayListOf(0,1,2,3,4,5,7,8,11,14,15)//true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1803,11 +1803,11 @@ class AdapterGenerate {
         val adapter = RecyclerviewAdapter(mData)
         mData[11].singleDisplayRightContent = UnSerializeDataBase.idCardName
         mData[12].singleDisplayRightContent = UnSerializeDataBase.userPhone
-        val styleTypeNum = arrayListOf(15)
+        val styleTypeNum = arrayListOf(14)
         for(i in styleTypeNum){
             adapter.mData[i].styleType="NUMBER"//限制为数字类型
         }
-        val necessaryNum = arrayListOf(7,1,3,9,10,11)//8 true为按钮清册不填可以发布 //其余true为必选项
+        val necessaryNum = arrayListOf(7,1,3,9,10,14)//8 true为按钮清册不填可以发布 //其余true为必选项
         for(j in necessaryNum){
             adapter.mData[j].necessary= true
         }
@@ -1870,7 +1870,6 @@ class AdapterGenerate {
             val data = Bundle()
             data.putString("key", mData[6].key)
             data.putInt("total", 1)
-            data.putString("title", mData[6].shiftInputTitle)
             mData[6].shiftInputPicture
             FragmentHelper.switchFragment(activity,UploadPhoneFragment.newInstance(data), frame, "Capture")
         }
@@ -1950,7 +1949,6 @@ class AdapterGenerate {
         mData[8].jumpListener = View.OnClickListener {
             val data = Bundle()
             data.putString("key", "CarPicture8")
-            data.putString("title", mData[8].shiftInputTitle)
             (activity as SupplyActivity).switchFragment(
                 UploadPhoneFragment.newInstance(data),
                 R.id.frame_supply,
@@ -1971,7 +1969,6 @@ class AdapterGenerate {
         mData[10].jumpListener = View.OnClickListener {
             val data = Bundle()
             data.putString("key", "CarPicture10")
-            data.putString("title", mData[10].shiftInputTitle)
             (activity as SupplyActivity).switchFragment(
                 UploadPhoneFragment.newInstance(data),
                 R.id.frame_supply,
@@ -2305,7 +2302,6 @@ class AdapterGenerate {
             expandList[4].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[4].shiftInputTitle)
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             //
@@ -2961,8 +2957,6 @@ class AdapterGenerate {
             expandList[5].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[5].shiftInputTitle)
-
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             val expandListAdapter = RecyclerviewAdapter(expandList)
@@ -3270,7 +3264,6 @@ class AdapterGenerate {
             expandList[5].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[5].shiftInputTitle)
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             val expandListAdapter = RecyclerviewAdapter(expandList)
@@ -3324,7 +3317,6 @@ class AdapterGenerate {
             expandList[7].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[7].shiftInputTitle)
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             val expandListAdapter = RecyclerviewAdapter(expandList)
@@ -3365,7 +3357,6 @@ class AdapterGenerate {
             expandList[4].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[4].shiftInputTitle)
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             val expandListAdapter = RecyclerviewAdapter(expandList)
@@ -3396,7 +3387,6 @@ class AdapterGenerate {
             expandList[2].jumpListener = View.OnClickListener {
                 val data = Bundle()
                 data.putString("key", "CarPicture")
-                data.putString("title", mData[2].shiftInputTitle)
                 (activity as ProfessionalActivity).switchFragment(UploadPhoneFragment.newInstance(data), "Capture")
             }
             val expandListAdapter = RecyclerviewAdapter(expandList)
@@ -3959,13 +3949,13 @@ class AdapterGenerate {
         val mData = itemGenerate.getJsonFromAsset("DisplaySupply/equipmentLeasing.json")
         when(type){
             "工器具租赁"->{
-                mData[8].singleDisplayRightTitle="工器具租赁清册:"
+                mData[7].singleDisplayRightTitle="工器具租赁清册:"
             }
             "设备租赁"->{
-                mData[8].singleDisplayRightTitle="设备租赁清册:"
+                mData[7].singleDisplayRightTitle="设备租赁清册:"
             }
             "机械租赁"->{
-                mData[8].singleDisplayRightTitle="机械租赁清册:"
+                mData[7].singleDisplayRightTitle="机械租赁清册:"
             }
         }
         val adapter = RecyclerviewAdapter(mData)

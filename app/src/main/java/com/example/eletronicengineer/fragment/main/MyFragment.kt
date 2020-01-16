@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -14,6 +15,7 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.electric.engineering.model.MultiStyleItem
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.*
@@ -169,7 +171,13 @@ class MyFragment : Fragment() {
 //        getDataUser()
 //        glideImageLoader.displayImage(mView.iv_my_bg,R.drawable.my_big_bg)
 //        glideImageLoader.displayImage(mView.view_my,R.drawable.my_small_bg)
-
+        mView.demand_swipe_refresh.setColorSchemeColors(Color.rgb(47,223,189))
+        mView.demand_swipe_refresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                mView.demand_swipe_refresh.isRefreshing=false
+                onStart()
+            }
+        })
         mView.view_my_title_bg.viewTreeObserver.addOnGlobalLayoutListener {
             ImageLoadUtil.loadBackgound(mView.view_my_title_bg,mView.context,R.drawable.my_big_bg)
         }
@@ -312,7 +320,7 @@ class MyFragment : Fragment() {
             })
         }
         mView.rv_my_other_function_content.adapter = RecyclerviewAdapter(mMultiStyleItemList)
-        mView.rv_my_other_function_content.layoutManager = LinearLayoutManager(context)
+        mView.rv_my_other_function_content.layoutManager = LinearLayoutManager(mView.context)
     }
 
     override fun onDestroy() {

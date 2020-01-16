@@ -222,6 +222,9 @@ class Constants {
                 const val getLeaseService = "Lease/getLeaseDTOListByFounder/"
                 const val getThridService = "Third/selectByToken/"
 
+                //行业黄页
+                const val getIndustryYellowPages="IndustryYellowPages/getIndustryYellowPagesDTOListByFounder/"
+
                 const val  getPersonalIssueMore = "PersonalIssue/insertPersonalIssue/{id}"
                 const val getRequirementPersonMore = "RequirementPerson/getRequirementPerson/{id}"
                 /**

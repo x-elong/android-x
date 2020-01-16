@@ -548,6 +548,7 @@ class DemandInformationFragment: Fragment(){
 
         _loadDemandTeamData()
 
+
     }
     fun loadDemandLeaseData() {
         if (mIsLastPageForLease)
@@ -614,6 +615,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingPerson){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -669,6 +673,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingTeam){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -744,6 +751,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingLease){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }
@@ -826,6 +836,9 @@ class DemandInformationFragment: Fragment(){
 
                         }, {
                             loadingDialog.dismiss()
+                            if(mIsLoadingThird){
+                                ToastHelper.mToast(mView.context,"无数据")
+                            }
                             it.printStackTrace()
                         })
             }

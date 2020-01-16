@@ -13,7 +13,7 @@
         android:textSize="@dimen/font_tv_normal_20"
         android:layout_marginStart="@dimen/left_10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_personal_materials"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -34,7 +34,6 @@
         android:layout_marginEnd="@dimen/right_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_id_card_people" />
-
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"

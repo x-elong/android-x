@@ -18,6 +18,7 @@ import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.adapter.RecyclerviewAdapter
 import com.example.eletronicengineer.custom.LoadingDialog
 import com.example.eletronicengineer.fragment.my.SupplyModifyJobInformationFragment
+import com.example.eletronicengineer.fragment.sdf.ImageDisplayFragment
 import com.example.eletronicengineer.fragment.sdf.ProjectListFragment
 import com.example.eletronicengineer.model.Constants
 import com.example.eletronicengineer.utils.*
@@ -97,9 +98,11 @@ class SupplyJobMoreFragment:Fragment() {
                         {
                             adapter.mData[8].buttonListener = listOf(View.OnClickListener {
                                 //显示图片
-                                val intent = Intent(activity, ImageDisplayActivity::class.java)
-                                intent.putExtra("imagePath", data.certificatePath)
-                                startActivity(intent)
+                                val bundle = Bundle()
+                                bundle.putString("imagePath", data.certificatePath)
+                                bundle.putString("title",adapter.mData[8].singleDisplayRightTitle)
+                                FragmentHelper.switchFragment(activity!!,
+                                    ImageDisplayFragment.newInstance(bundle),R.id.frame_my_release,"")
                             })
                         }
                         adapter.mData[9].singleDisplayRightContent=if(data.validTime.toInt()<=0) "已过期" else data.validTime

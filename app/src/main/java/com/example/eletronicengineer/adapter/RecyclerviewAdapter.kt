@@ -227,6 +227,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
         lateinit var tvShiftInputContent:TextView
         lateinit var tvShiftInputShow:TextView
         lateinit var ivShiftInputPicture:CircleImageView
+        lateinit var viewShiftInputShow:View
+        lateinit var tvShiftInputNecessary:TextView
 
         lateinit var tvTwoPairInputTitle:TextView
         lateinit var tvTwoPairInputItem1:TextView
@@ -557,6 +559,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvShiftInputContent=v.et_shift_input_item
                     tvShiftInputShow=v.tv_shift_input_show
                     ivShiftInputPicture=v.iv_shift_input_picture
+                    viewShiftInputShow=v.view_shift_input
+                    tvShiftInputNecessary=v.tv_shift_input_necessary
+
                 }
                 SELECT_DIALOG_TYPE->
                 {
@@ -888,7 +893,9 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 {
                     val checkboxItem=CheckBox(context)
                     checkboxItem.text=name
-                    checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
+                    checkboxItem.scaleX=0.8.toFloat()
+                    checkboxItem.scaleY=0.8.toFloat()
+                    checkboxItem.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_18).toFloat())
                     vh.llContainer.addView(checkboxItem)
                     checkboxItem.setOnCheckedChangeListener{
                             compoundButton, bool ->
@@ -903,7 +910,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         }
                     }
                     val params=checkboxItem.layoutParams as ViewGroup.MarginLayoutParams
-                    params.leftMargin=context.resources.getDimension(R.dimen.general_10).toInt()
+                   // params.leftMargin=context.resources.getDimension(R.dimen.general_1).toInt()
                     checkboxItem.layoutParams=params
                 }
                 for (i in 0 until vh.llContainer.childCount)
@@ -1365,6 +1372,10 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.etTextAreaContent.setText(mData[position].textAreaContent)
                 }
                     vh.etTextAreaContent.isEnabled = mData[position].necessary
+                if( !mData[position].necessary){//查看时的布局
+                    vh.etTextAreaContent.setBackgroundResource(R.color.transparent)
+                    vh.etTextAreaContent.setPadding(0,0,0,0)
+                }
             }
             SHIFT_INPUT_TYPE->
             {
@@ -1373,32 +1384,24 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     vh.tvShiftInputContent.text=mData[position].shiftInputContent
                 vh.tvShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 vh.itemView.setOnClickListener(mData[position].jumpListener)
+                vh.viewShiftInputShow.setOnClickListener(mData[position].jumpListener)
                 if(mData[position].shiftInputTitle=="可服务地域"){
                     vh.tvShiftInputShow.setOnClickListener{
                         val selectDialog=CustomDialog(CustomDialog.Options.SELECT_CHECK_DIALOG,vh.itemView.context,mData[position].placeCheckArray,mData[position].shiftInputContent,vh.mHandler).dialog
                         selectDialog.show()
                     }
-                    vh.itemView.setOnClickListener{vh.tvShiftInputShow.callOnClick()}
+                    vh.itemView.setOnClickListener{
+                        vh.tvShiftInputShow.callOnClick()
+                    }
+                    vh.viewShiftInputShow.setOnClickListener{
+                        vh.tvShiftInputShow.callOnClick()
+                    }
                 }
                 if (mData[position].necessary)
                 {
-                    val tvNecessary=TextView(context)
-                    tvNecessary.text="*"
-                    tvNecessary.gravity=Gravity.START
-                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
-                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                    vh.tvShiftInputNecessary.visibility = View.VISIBLE
                    }else{
-//                    if(mData[position].isAdd){
-//                        (vh.itemView as ViewGroup).removeViewAt(0)
-//                        mData[position].isAdd = false
-//                    }
-//                    mData[position].isAdd = true
-                    val tvNecessary=TextView(context)
-                    tvNecessary.text="  "
-                    tvNecessary.gravity=Gravity.START
-                    tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
-                    (vh.itemView as ViewGroup).addView(tvNecessary,0)
+                    vh.tvShiftInputNecessary.visibility = View.INVISIBLE
                     }
                 if(mData[position].shiftInputPicture!="" && mData[position].shiftInputTitle=="头像"){
                     vh.ivShiftInputPicture.visibility=View.VISIBLE
@@ -1408,6 +1411,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         intent.putExtra("imagePath",mData[position].shiftInputPicture)
                         vh.ivShiftInputPicture.context.startActivity(intent)
                     }
+                    vh.itemView.setOnClickListener{
+                        vh.ivShiftInputPicture.callOnClick()
+                    }
+                    vh.viewShiftInputShow.setOnClickListener{
+                        vh.ivShiftInputPicture.callOnClick()
+                    }
                 }
             }
             SELECT_DIALOG_TYPE->
@@ -1415,8 +1424,8 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 val context=vh.itemView.context
                 vh.tvDialogSelectTitle.text=mData[position].selectTitle
                 if(mData[position].selectContent==""){
-                    mData[position].selectContent=mData[position].selectOption1Items[0]
-                    vh.etDialogSelectItem.setText(mData[position].selectOption1Items[0])
+                  //  mData[position].selectContent=mData[position].selectOption1Items[0]
+                    vh.etDialogSelectItem.hint="请选择"
                 }else{
                     vh.etDialogSelectItem.setText(mData[position].selectContent)
                 }

@@ -14,16 +14,16 @@
     "sendFormat": "JsonArray"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"合作方属性",
-    "radioButtonName":["单位","个人"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"合作方属性",
+    "selectOption1Items":["单位","个人"],
     "key":"partnerAttribute",
     "sendFormat":"Long"
   },
   {
-    "type":"MULTI_RADIO_BUTTON",
-    "radioButtonTitle":"费用标准",
-    "radioButtonName":["面议","按清单报价"],
+    "type":"SELECT_DIALOG",
+    "selectTitle":"费用标准",
+    "selectOption1Items":["面议","按清单报价"],
     "key":"fareStandard",
     "sendFormat":"Long"
   },
