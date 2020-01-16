@@ -217,7 +217,7 @@ class DemandFragment:Fragment() {
             Constants.FragmentType.PERSONAL_REGISTRATION_CLASS_TYPE.ordinal -> {
                 adapter = adapterGenerate.DemandIndividual()
                 var singleDisplayRightContent = "注册类"
-                var selectOption1Items: List<String> = listOf("造价工程师", "一级建造师", "安全工程师", "电气工程师")
+                var selectOption1Items: List<String> = listOf("造价工程师", "一级建造师","二级建造师", "安全工程师", "电气工程师")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
             }

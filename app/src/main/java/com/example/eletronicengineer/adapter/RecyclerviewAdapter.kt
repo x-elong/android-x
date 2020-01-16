@@ -1177,7 +1177,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                   } else{
+                   }else{
                      val tvNecessary=TextView(context)
                      tvNecessary.text="  "
                      tvNecessary.gravity=Gravity.START
@@ -1340,10 +1340,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if (mData[position].inputRangeValue1!="")
                 {
                     vh.etRangeValue1.setText(mData[position].inputRangeValue1)
+                }else{
+                    vh.etRangeValue1.setText("16")
                 }
                 if (mData[position].inputRangeValue2!="")
                 {
                     vh.etRangeValue2.setText(mData[position].inputRangeValue2)
+                }else{
+                    vh.etRangeValue2.setText("60")
                 }
 
             }
