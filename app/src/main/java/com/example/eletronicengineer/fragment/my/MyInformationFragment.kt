@@ -200,7 +200,12 @@ class MyInformationFragment : Fragment() {
 
                     item.jumpListener = View.OnClickListener {
                         val bundle = Bundle()
-                        bundle.putString("email",email)
+                        bundle.putString("email",
+                            if(item.shiftInputContent!="未绑定")
+                                item.shiftInputContent
+                            else
+                                ""
+                        )
                         FragmentHelper.switchFragment(activity!!,BindEmailFragment.newInstance(bundle),R.id.frame_my_information,"bindEmail")
                     }
                     mMultiStyleItemList.add(item)

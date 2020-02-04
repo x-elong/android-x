@@ -17,6 +17,6 @@
         android:id="@+id/iv_delete"
         android:layout_width="@dimen/general_10"
         android:layout_alignParentRight="true"
-        android:src="@drawable/delete_image"
+        android:src="@drawable/delete_round"
         android:layout_height="@dimen/general_10" />
 </RelativeLayout>

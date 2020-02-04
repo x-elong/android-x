@@ -43,6 +43,7 @@ class JobOverviewFragment :Fragment(){
     var pageCount = 1
     lateinit var mView: View
     lateinit var type:String
+    var applyNumber = ""
     var adapter = RecyclerviewAdapter(ArrayList())
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_job_overview,container,false)
@@ -66,6 +67,7 @@ class JobOverviewFragment :Fragment(){
         })
     }
     private fun initFragment() {
+        mView.tv_apply_number.text="(${applyNumber})"
         mView.tv_job_overview_back.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
         }
@@ -119,7 +121,8 @@ class JobOverviewFragment :Fragment(){
                         page++
                         val json = jsonObject.getJSONObject("message")
                         pageCount = json.getInt("pageCount")
-                        mView.tv_apply_number.text="(${json.getInt("sum")})"
+                        applyNumber = json.getString("sum")
+                        mView.tv_apply_number.text="(${applyNumber})"
                         val jsonArray = json.getJSONArray("data")
                         val size = adapter.mData.size
                         val data = adapter.mData.toMutableList()

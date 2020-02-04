@@ -289,7 +289,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
 
 
         lateinit var tvsingleDisplayRightTitle:TextView
-        lateinit var tvsingleDisplayRightContent:TextView
+        lateinit var tvsingleDisplayRightContent:EditText
 
         //带菜单项的标题
         lateinit var tvTitle2:TextView
@@ -380,7 +380,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                             }
                         })
                     }else{
-                        etDialogSelectItem.isEnabled=false
+                        etDialogSelectItem.isCursorVisible=false
                         etDialogSelectItem.setText(selectContent)
                         mData[itemPosition].selectContent=selectContent!!
                     }
@@ -1055,11 +1055,15 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
                         vh.etSingleInputContent.hint="16-60岁"
                     }
-                    "单价","报价清单(按单价)","数量","工作经验"->{
+                    "单价","报价清单(按单价)","数量"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
                     }
                     "法人代表电话","电话","手机号码"->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_PHONE
+                    }
+                    "工作经验"->{
+                        vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_NUMBER
+                        vh.etSingleInputContent.hint="0-45年"
                     }
                     else->{
                         vh.etSingleInputContent.inputType=InputType.TYPE_CLASS_TEXT
@@ -1093,6 +1097,12 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     }
                     "车厢长度"->{
                         vh.etInputUnitValue.hint="0-15"
+                    }
+                    "计划工期","施工工期"->{
+                        vh.etInputUnitValue.hint="1-60"
+                    }
+                    "年龄要求"->{
+                        vh.etInputUnitValue.hint="16-60"
                     }
                 }
                 vh.etInputUnitValue.addTextChangedListener(object :TextWatcher{
@@ -1182,7 +1192,7 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                     tvNecessary.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.resources.getDimensionPixelSize(R.dimen.font_tv_hint_15).toFloat())
                     tvNecessary.setTextColor(ContextCompat.getColor(context,R.color.red))
                     (vh.itemView as ViewGroup).addView(tvNecessary,0)
-                   } else{
+                   }else{
                      val tvNecessary=TextView(context)
                      tvNecessary.text="  "
                      tvNecessary.gravity=Gravity.START
@@ -1345,10 +1355,14 @@ class RecyclerviewAdapter: RecyclerView.Adapter<RecyclerviewAdapter.VH> {
                 if (mData[position].inputRangeValue1!="")
                 {
                     vh.etRangeValue1.setText(mData[position].inputRangeValue1)
+                }else{
+                    vh.etRangeValue1.setText("16")
                 }
                 if (mData[position].inputRangeValue2!="")
                 {
                     vh.etRangeValue2.setText(mData[position].inputRangeValue2)
+                }else{
+                    vh.etRangeValue2.setText("60")
                 }
 
             }

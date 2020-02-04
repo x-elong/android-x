@@ -9,8 +9,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_input_multi_unit_title"
             android:layout_weight="1"
-            android:textSize="@dimen/font_tv_hint_15" android:layout_marginTop="@dimen/top_10"
-            android:layout_marginStart="@dimen/left_5" android:layout_marginBottom="@dimen/bottom_10"
+            android:textSize="@dimen/font_tv_hint_15"
+        android:layout_marginTop="@dimen/top_5"
+            android:layout_marginStart="@dimen/left_5"
+        android:layout_marginBottom="@dimen/bottom_5"
             android:textColor="@android:color/black"/>
     <EditText
             android:layout_width="wrap_content"
@@ -22,10 +24,10 @@
             android:hint="请输入"
             android:id="@+id/et_input_multi_unit_content"
             android:layout_marginLeft="@dimen/left_10"
-            android:layout_marginTop="@dimen/top_10"
+            android:layout_marginTop="@dimen/top_5"
             android:textSize="@dimen/font_tv_hint_15"
             android:paddingLeft="@dimen/right_10"
-            android:layout_marginBottom="@dimen/bottom_10" android:background="@color/transparent"
+            android:layout_marginBottom="@dimen/bottom_5" android:background="@color/transparent"
     />
     <Spinner
             android:layout_width="wrap_content"
@@ -34,10 +36,10 @@
             android:spinnerMode="dropdown"
             android:gravity="center"
             android:dropDownVerticalOffset="@dimen/general_25"
-            android:layout_marginTop="@dimen/top_10"
+            android:layout_marginTop="@dimen/top_5"
             android:layout_marginEnd="@dimen/general_8"
             android:layout_marginStart="@dimen/left_10"
-            android:layout_marginBottom="@dimen/bottom_10"/>
+            android:layout_marginBottom="@dimen/bottom_5"/>
     <TextView
         android:visibility="gone"
         android:layout_width="wrap_content"

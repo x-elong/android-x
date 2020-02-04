@@ -346,7 +346,7 @@ class SupplyFragment:Fragment(){
                         }
                     }
                     provider.generateJsonRequestBody(json).subscribe {
-                        val loadingDialog = LoadingDialog(mView.context, "正在请求...", R.mipmap.ic_dialog_loading)
+                        val loadingDialog = LoadingDialog(mView.context, "正在发布...", R.mipmap.ic_dialog_loading)
                         loadingDialog.show()
                         val result = startSendMessage(it, UnSerializeDataBase.dmsBasePath+mAdapter!!.urlPath).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
@@ -354,12 +354,12 @@ class SupplyFragment:Fragment(){
                                         loadingDialog.dismiss()
                                         val json = JSONObject(it.string())
                                         if (json.getInt("code") == 200) {
-                                                Toast.makeText(context, "请求成功", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show()
                                                 mView.tv_title_back.callOnClick()
                                         }else if(json.getInt("code") == 403){
                                             Toast.makeText(context, "${json.getString("desc")} 请升级为更高级会员", Toast.LENGTH_SHORT).show()
                                         } else if (json.getInt("code") == 400) {
-                                            Toast.makeText(context, "请求失败", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, "发布失败", Toast.LENGTH_SHORT).show()
                                         }
                                     },
                                     {
@@ -452,7 +452,7 @@ class SupplyFragment:Fragment(){
             Constants.FragmentType.PERSONAL_REGISTRATION_CLASS_TYPE.ordinal->{
                 adapter=adapterGenerate.PersonalService()
                 val singleDisplayRightContent = "注册类"
-                val selectOption1Items: List<String> = listOf("造价工程师", "一级建造师", "安全工程师", "电气工程师")
+                val selectOption1Items: List<String> = listOf("造价工程师", "一级建造师","二级建造师", "安全工程师", "电气工程师")
                 adapter.mData[0].singleDisplayRightContent = singleDisplayRightContent
                 adapter.mData[1].selectOption1Items = selectOption1Items
             }
@@ -618,7 +618,26 @@ class SupplyFragment:Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
     }
+    fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
+
+        for(j in itemMultiStyleItem)
+        {
+            when (j.options) {
+                MultiStyleItem.Options.SHIFT_INPUT -> {
+                    if (j.necessary == false) {
+                        return false
+                    }
+                }
+            }
+        }
+
+        return true
+    }
     fun update(itemMultiStyleItem:List<MultiStyleItem>){
+        if(check(itemMultiStyleItem))
+        {
+            mAdapter!!.mData[mAdapter!!.mData[0].selected].submitIsNecessary = true
+        }
         Log.i("position is",mAdapter!!.mData[0].selected.toString())
         mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
         Log.i("item size",mAdapter!!.mData[mAdapter!!.mData[0].selected].itemMultiStyleItem.size.toString())

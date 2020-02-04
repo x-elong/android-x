@@ -121,11 +121,14 @@ class AddEducationInformationFragment :Fragment(){
         }
         mMultiStyleItemList.add(item)
         item = MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"学历","")
+        item.necessary = true
         mMultiStyleItemList.add(item)
         item = MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"毕业院校","")
+        item.necessary = true
         mMultiStyleItemList.add(item)
         if(true) {
             val item = MultiStyleItem(MultiStyleItem.Options.SHIFT_INPUT, "毕业时间", "")
+            item.necessary = true
             mMultiStyleItemList.add(item)
             item.jumpListener = View.OnClickListener {
                 val dialog = AlertDialog.Builder(context!!)
@@ -147,6 +150,7 @@ class AddEducationInformationFragment :Fragment(){
             }
         }
         item = MultiStyleItem(MultiStyleItem.Options.SINGLE_INPUT,"所学专业","")
+        item.necessary = true
         mMultiStyleItemList.add(item)
         if(type==1){
             mView.btn_delete_education.visibility = View.VISIBLE

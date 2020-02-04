@@ -125,13 +125,23 @@ class SubmitInventoryFragment : Fragment() {
         if (type == "机械清册"||type=="成员清册") {
             if (adapter!!.mData[0].selected == -1) {
                 val mData = adapter!!.mData.toMutableList()
-                mData.add(
-                    MultiStyleItem(
-                        MultiStyleItem.Options.SHIFT_INPUT,
-                        itemMultiStyleItem[0].inputSingleContent,
-                        false
+                if(type=="成员清册"){
+                    mData.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SHIFT_INPUT,
+                            itemMultiStyleItem[3].singleDisplayRightContent,
+                            false
+                        )
                     )
-                )
+                }else{
+                    mData.add(
+                        MultiStyleItem(
+                            MultiStyleItem.Options.SHIFT_INPUT,
+                            itemMultiStyleItem[0].inputSingleContent,
+                            false
+                        )
+                    )
+                }
                 mData[0].selected = mData.size - 1
                 if (itemMultiStyleItem[0].selected == 0) {
                     mData[mData[0].selected].necessary = false
@@ -158,7 +168,7 @@ class SubmitInventoryFragment : Fragment() {
                 adapter!!.notifyItemInserted(mData.size - 1)
             } else {
                 adapter!!.mData[adapter!!.mData[0].selected].shiftInputTitle =
-                    itemMultiStyleItem[0].inputSingleContent
+                    itemMultiStyleItem[3].singleDisplayRightContent
                 adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem = itemMultiStyleItem
                 adapter!!.notifyItemChanged(adapter!!.mData[0].selected)
                 if (itemMultiStyleItem[0].selected == 0) {

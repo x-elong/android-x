@@ -11,7 +11,7 @@
         android:id="@+id/view_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_37"
-        android:background="#218bfc"
+        android:background="#248bfe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
@@ -68,19 +68,22 @@
         app:layout_constraintTop_toBottomOf="@id/line1"
         app:layout_constraintBottom_toTopOf="@id/line2"
         />
+
     <EditText
         android:id="@+id/et_login_name"
-        android:layout_width="@dimen/general_250"
-        android:layout_height="wrap_content"
-        android:hint="请输入手机号或邮箱"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/general_15"
+        android:layout_marginEnd="@dimen/right_10"
         android:background="@color/white"
+        android:drawableRight="@mipmap/collapse"
+        android:hint="请输入手机号或邮箱"
         android:inputType="number"
         android:textSize="@dimen/font_tv_normal_16"
-        android:layout_marginLeft="@dimen/general_15"
-        app:layout_constraintStart_toEndOf="@+id/login_people"
-        app:layout_constraintTop_toBottomOf="@id/line1"
         app:layout_constraintBottom_toTopOf="@id/line2"
-        />
+        app:layout_constraintEnd_toEndOf="@+id/tv_login_down_list"
+        app:layout_constraintStart_toEndOf="@+id/login_people"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
     <TextView
         android:visibility="invisible"
         android:id="@+id/tv_login_down_list"
@@ -92,18 +95,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line1" />
 
-    <Spinner
-        android:visibility="invisible"
-        android:id="@+id/spinner_account"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/general_30"
-        android:spinnerMode="dropdown"
-        android:dropDownVerticalOffset="@dimen/general_30"
-
-        app:layout_constraintBottom_toTopOf="@id/line2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1"
-        tools:ignore="MissingConstraints" />
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
@@ -128,7 +119,7 @@
     <EditText
         android:id="@+id/et_login_password"
         android:layout_width="@dimen/general_250"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:hint="请输入登录密码"
         android:inputType="textPassword"
         android:textSize="@dimen/font_tv_normal_16"
@@ -162,7 +153,7 @@
         android:id="@+id/tv_login_confirm"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_35"
-        android:background="#218bfc"
+        android:background="#248bfe"
         android:gravity="center"
         android:text="登录"
         android:textColor="@color/white"
@@ -180,7 +171,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="注册"
-        android:textColor="#218bfc"
+        android:textColor="#248bfe"
         android:textStyle="bold"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginRight="@dimen/general_12"
@@ -204,7 +195,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="忘记密码"
-        android:textColor="#218bfc"
+        android:textColor="#248bfe"
         android:textStyle="bold"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginTop="@dimen/general_25"
@@ -228,7 +219,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="遇到问题"
-        android:textColor="#218bfc"
+        android:textColor="#248bfe"
         android:textStyle="bold"
         android:textSize="@dimen/font_tv_normal_16"
         android:layout_marginLeft="@dimen/general_12"

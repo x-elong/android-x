@@ -37,28 +37,33 @@
 
     <TextView
         android:id="@+id/tv_information1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_20"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="@dimen/left_40"
         android:text="需求类别:普工"
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@id/tv_information2"
+        app:layout_constraintEnd_toStartOf="@+id/tv_type"
         app:layout_constraintStart_toStartOf="@+id/view9"
         app:layout_constraintTop_toTopOf="@+id/view9" />
 
     <TextView
         android:id="@+id/tv_information2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/left_40"
         android:layout_marginBottom="@dimen/bottom_16"
         android:text="需求专业:普工  "
         android:textColor="#505050"
         android:textSize="@dimen/font_tv_normal_16"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/view7"
-        app:layout_constraintStart_toStartOf="@+id/view9" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_information1" />
 
     <TextView
         android:id="@+id/tv_type"

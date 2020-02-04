@@ -42,7 +42,7 @@ class MyReleaseFragment :Fragment(){
                 adapter = RecyclerviewAdapter(ArrayList())
                 mView.rv_my_release_content.adapter=adapter
                 mView.rv_my_release_content.layoutManager=LinearLayoutManager(context)
-                val selectContent=it.data.getString("selectContent")
+                val selectContent=it.data.getString("selectContent").trim()
                 tvMode = selectContent
                 mView.tv_mode_content.text=selectContent
                 initData()
@@ -88,7 +88,7 @@ class MyReleaseFragment :Fragment(){
         mView.view_sp.setOnClickListener{
             val Option1Items = listOf("需求","供应","行业黄页")
             val Option2Items:List<List<String>> = listOf(listOf("需求个人","需求团队","需求租赁","需求三方"), listOf("个人劳务","团队服务","租赁服务","三方服务"),
-                listOf())
+                listOf(""))
             val selectDialog= CustomDialog(CustomDialog.Options.TWO_OPTIONS_SELECT_DIALOG,context!!,mHandler,Option1Items,Option2Items).multiDialog
             selectDialog.show()
         }
@@ -141,7 +141,7 @@ class MyReleaseFragment :Fragment(){
                 getDataThridService()
             }
             else->{
-//                getDataIndustryYellowPages()
+                getDataIndustryYellowPages()
             }
         }
     }
@@ -1425,7 +1425,7 @@ class MyReleaseFragment :Fragment(){
 
     private fun getDataIndustryYellowPages() {
         val result = Observable.create<RequestBody> {
-            val json = JSONObject().put("page",page).put("pageSize",4)
+            val json = JSONObject().put("page",page).put("number",4)
                 .put("historyFlag",mView.checkbox_history.isChecked)
             val requestBody = RequestBody.create(MediaType.parse("application/json"),json.toString())
             it.onNext(requestBody)
@@ -1450,11 +1450,25 @@ class MyReleaseFragment :Fragment(){
                         val data = adapter.mData.toMutableList()
                         for (j in 0 until jsonArray.length()) {
                             val js = jsonArray.getJSONObject(j)
+                            var qualification = ""
+                            if(!js.isNull("firstQualification")){
+                                qualification+=js.getString("firstQualification")
+                            }
+                            if(!js.isNull("secondQualification")){
+                                if(qualification!="")
+                                    qualification+="|"
+                                qualification+=js.getString("secondQualification")
+                            }
+                            if(!js.isNull("thirdQualification")){
+                                if(qualification!="")
+                                    qualification+="|"
+                                qualification+=js.getString("thirdQualification")
+                            }
                             val item = MultiStyleItem(
                                 MultiStyleItem.Options.REGISTRATION_ITEM,
-                                "三方服务",
-                                "服务类型:" + js.getString("serveType"),
-                                "有效期:${js.getString("validTime")}天"
+                                js.getString("companyType"),
+                                js.getString("companyName"),
+                                qualification
                             )
                             val id = js.getString("id")
                             item.deleteListener = View.OnClickListener {
@@ -1490,12 +1504,12 @@ class MyReleaseFragment :Fragment(){
                                 val bundle = Bundle()
                                 bundle.putInt(
                                     "type",
-                                    Constants.FragmentType.TRIPARTITE_TYPE.ordinal
+                                    Constants.FragmentType.INDUSTRYYELLOWPAGES_TYPE.ordinal
                                 )
                                 bundle.putString("id", id)
                                 FragmentHelper.switchFragment(
                                     activity!!,
-                                    SupplyJobMoreFragment.newInstance(bundle),
+                                    YellowPagesJobMoreFragment.newInstance(bundle),
                                     R.id.frame_my_release,
                                     ""
                                 )

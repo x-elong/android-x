@@ -1,5 +1,6 @@
 package com.example.eletronicengineer.fragment.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.eletronicengineer.R
+import com.example.eletronicengineer.activity.ImageDisplayActivity
 import com.example.eletronicengineer.activity.MyInformationActivity
 import com.example.eletronicengineer.adapter.ImageAdapter
 import com.example.eletronicengineer.adapter.NetworkAdapter
@@ -43,6 +45,7 @@ class PersonalMaterialsFragment :Fragment(){
     lateinit var professionalCertificateAdapter: ImageAdapter
     lateinit var otherCertificateAdapter: ImageAdapter
     lateinit var mView: View
+    var imagePath = arrayListOf("","")
     var selectImage=-1
     val names = arrayListOf("","学历证书","学位证书","员工照片","专业证书","其他证书")
     lateinit var adapterList:List<ImageAdapter>
@@ -88,6 +91,24 @@ class PersonalMaterialsFragment :Fragment(){
     private fun initFragment() {
         mView.view_personal_materials.setOnClickListener {
             activity!!.supportFragmentManager.popBackStackImmediate()
+        }
+        mView.iv_id_card_people.setOnClickListener {
+            if(imagePath[0]=="")
+                ToastHelper.mToast(mView.context,"当前照片为空")
+            else{
+                val intent = Intent(activity,ImageDisplayActivity::class.java)
+                intent.putExtra("imagePath",imagePath[0])
+                startActivity(intent)
+            }
+        }
+        mView.iv_id_card_nation.setOnClickListener {
+            if(imagePath[1]=="")
+                ToastHelper.mToast(mView.context,"当前照片为空")
+            else{
+                val intent = Intent(activity,ImageDisplayActivity::class.java)
+                intent.putExtra("imagePath",imagePath[1])
+                startActivity(intent)
+            }
         }
         val imageList1:MutableList<Image> = ArrayList()
         imageList1.add(Image("",View.OnClickListener {
@@ -145,7 +166,7 @@ class PersonalMaterialsFragment :Fragment(){
                     for (j in certificates){
                         when(j.name){
                             "身份证照片(双面)"->{
-                                val imagePath = j.certificatePath.split("|")
+                                imagePath = ArrayList(j.certificatePath.split("|"))
                                 GlideImageLoader().displayImage(mView.iv_id_card_people,imagePath[0])
                                 GlideImageLoader().displayImage(mView.iv_id_card_nation,imagePath[0])
                             }

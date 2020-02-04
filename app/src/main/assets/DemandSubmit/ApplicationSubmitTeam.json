@@ -30,7 +30,7 @@
     "type":"SINGLE_DISPLAY_RIGHT",
     "singleDisplayRightTitle":"成员清册:",
     "singleDisplayRightContent":"  录入  ",
-    "key": "enrollProvideCrewList",
+    "key": "enrollProvideCrewLists",
     "sendFormat": "JsonArray"
   },
   {

@@ -1,22 +1,22 @@
 [
     {
         "type":"SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"名称",
+        "singleDisplayRightTitle":"名称:",
         "singleDisplayRightContent": ""
     },
     {
         "type":"SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"规格型号",
+        "singleDisplayRightTitle":"规格型号:",
         "singleDisplayRightContent": ""
     },
     {
         "type":"SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"数量",
+        "singleDisplayRightTitle":"数量:",
         "singleDisplayRightContent": ""
     },
     {
         "type":"SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle":"单位",
+        "singleDisplayRightTitle":"单位:",
         "singleDisplayRightContent": ""
     },
     {

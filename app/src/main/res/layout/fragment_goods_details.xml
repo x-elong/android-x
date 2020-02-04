@@ -151,7 +151,7 @@
         android:id="@+id/tv_goods_buy"
         android:layout_width="match_parent"
         android:layout_height="@dimen/general_45"
-        android:background="#218bfc"
+        android:background="#248bfe"
         android:text="立即购买"
         android:gravity="center"
         android:textStyle="bold"

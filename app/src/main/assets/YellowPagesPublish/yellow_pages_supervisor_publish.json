@@ -27,7 +27,7 @@
   {
     "type": "SELECT_DIALOG",
     "selectTitle": "资质类别及等级",
-    "selectOption1Items": ["工程监理电力工程专业甲级","电子与智能化工程专业承包乙级","电子与智能化工程专业承包丙级"],
+    "selectOption1Items": ["工程监理电力工程专业甲级","工程监理电力工程专业乙级","工程监理电力工程专业丙级"],
     "key":"firstQualification",
     "sendFormat": "String"
   },

@@ -5814,10 +5814,16 @@ class NetworkAdapter {
                                 if (j.inputSingleContent == "")
                                 { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
                                 else if(j.inputSingleContent.toInt()>60||j.inputSingleContent.toInt()<16)
-                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围"}
+                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围16-60年"}
+                            }
+                            "工作经验"->{
+                                if (j.inputSingleContent == "")
+                                { result = "${j.inputSingleTitle.replace("：", "")}不能为空" }
+                                else if(j.inputSingleContent.toInt()>45||j.inputSingleContent.toInt()<0)
+                                { result = "请输入正确${j.inputSingleTitle.replace("：", "")}范围0-45年"}
                             }
                             "名称","规格型号","数量","单位","牌照号码","单价","姓名",
-                            "报价清单(按单价)","个人证件名称","工作经验" ,
+                            "报价清单(按单价)","个人证件名称" ,
                             "项目","项目特征描述","计量单位",
                             "出租方单位名称","单位地址","单位名称","法人代表姓名","车辆数量","所在地址",
                             "公司名称","注册地址","经营范围"->{
@@ -5878,19 +5884,26 @@ class NetworkAdapter {
                     }
                 }
                 MultiStyleItem.Options.SINGLE_DISPLAY_RIGHT->{
-                    if(j.necessary==true) {//为true此项为必填需检验
+                    if(j.necessary) {//为true此项为必填需检验
                         when (j.singleDisplayRightTitle) {
                             "需要人数(人)" -> {
                                 if (j.singleDisplayRightContent.toInt() == 0) {
                                     result = "请至少填写一条成员清册数据"
                                 }
                             }
-                        }
-                    }else{
-                        if(j.singleDisplayRightTitle.contains("清册")&&!j.necessary&&j.singleDisplayRightTitle!="车辆清册"){
-                            result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写"
+                            else -> {
+                                if(j.singleDisplayRightTitle.contains("成员清册") && mData[1].singleDisplayRightContent in listOf("普工","负责人","工程师","设计员","特种作业","专业操作","勘测员","驾驶员","九大员","注册类","其他")){
+                                    if(j.submitNecessarySize==0)
+                                    result = "${j.singleDisplayRightTitle.replace("：", "")}至少填写一个"
+                                }
+                                else if (j.singleDisplayRightTitle.contains("清册") && !j.submitIsNecessary) {
+                                    result = "${j.singleDisplayRightTitle.replace("：", "")}没有填写完整"
 
-                        } else { result = "" }
+                                } else {
+                                    result = ""
+                                }
+                            }
+                        }
                     }
 
                     if (result != "") {
@@ -5908,6 +5921,20 @@ class NetworkAdapter {
                                     result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围0-45年"
                                 }
                             }
+                            "年龄要求" -> {//需求发布限制
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 16 || j.inputUnitContent.toInt() > 60) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围16-60岁"
+                                }
+                            }
+                            "计划工期","施工工期"->{
+                                if (j.inputUnitContent == "") {
+                                    result = "${j.inputUnitTitle.replace("：", "")}不能为空"
+                                } else if (j.inputUnitContent.toInt() < 1 || j.inputUnitContent.toInt() > 60) {
+                                    result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-60月"
+                                }
+                            }
                             "车辆数量"->{
                                 if (j.inputUnitContent == "") {
                                     result = "${j.inputUnitTitle.replace("：", "")}不能为空"
@@ -5922,7 +5949,7 @@ class NetworkAdapter {
                                     result = "请输入正确${j.inputUnitTitle.replace("：", "")}范围1-90天"
                                 }
                             }
-                            "计划工期", "需要桩基","需求人数","需要人数","马匹数量","施工工期","车辆","需要马匹" -> {
+                            "需要桩基","需求人数","需要人数","马匹数量","车辆","需要马匹" -> {
                                 if (j.inputUnitContent == "") {
                                     result = "${j.inputUnitTitle.replace("：", "")}不能为空"
                                 }

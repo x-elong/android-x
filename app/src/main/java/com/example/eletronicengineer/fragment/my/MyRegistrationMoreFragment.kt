@@ -167,10 +167,15 @@ class MyRegistrationMoreFragment :Fragment(){
                                 it.printStackTrace()
                             })
                 }
+                if(adapter.mData[5].singleDisplayRightTitle=="机械设备" && requirementTeamRegistrationEntity.enrollMachineries==null){
+                    val mData = adapter.mData.toMutableList()
+                    mData.removeAt(5)
+                    adapter.mData = mData
+                }
                 when(requirementTeamRegistrationEntity.requirementTeamLoggingCheck.type){
                     "马帮运输"->{
                         val mData = adapter.mData.toMutableList()
-                        for (j in 0 until 3)
+                        for (j in 0 until 2)
                             mData.removeAt(3)
                         adapter.mData = mData
                     }

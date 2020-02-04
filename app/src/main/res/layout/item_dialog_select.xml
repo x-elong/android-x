@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
               android:layout_height="wrap_content"
     android:id="@+id/ll_select"
     android:background="@drawable/item_background">
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_dialog_select_title" android:layout_weight="1"
+            android:layout_height="wrap_content"
+        android:id="@+id/tv_dialog_select_title"
             android:layout_marginTop="@dimen/top_10"
             android:layout_marginStart="@dimen/left_5"
             android:layout_marginBottom="@dimen/bottom_10"
@@ -16,11 +18,15 @@
     <EditText
             android:layout_width="wrap_content"
             android:background="@color/transparent"
-            android:enabled="false"
-            android:layout_height="wrap_content" android:id="@+id/et_dialog_select_item" android:layout_weight="2"
+            android:cursorVisible="false"
+        android:singleLine="true"
+            android:layout_height="wrap_content"
+        android:id="@+id/et_dialog_select_item" android:layout_weight="2"
             android:layout_margin="@dimen/general_10" android:textSize="@dimen/font_tv_hint_15"
             android:hint="请选择"
-            android:textColor="@color/black" android:gravity="right"/>
+            android:textColor="@color/black" android:gravity="end"
+        android:inputType="none"
+        tools:ignore="Autofill" />
     <TextView
             android:layout_width="@dimen/general_10"
             android:layout_height="@dimen/general_15"

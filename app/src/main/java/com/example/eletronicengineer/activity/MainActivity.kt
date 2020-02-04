@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
                         switchFragment(fragmentList[1],R.id.frame_main)
                     }
                     supportFragmentManager.popBackStackImmediate(null,1)
-                    return_iv.visibility=View.INVISIBLE
-                    tv_title.text="招投供需"
+                    view14.visibility=View.GONE
+//                    tv_title.text="招投供需"
                     return@OnNavigationItemSelectedListener true
                 }
 

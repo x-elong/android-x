@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/item_background">
 
@@ -13,16 +14,15 @@
             android:layout_height="wrap_content" android:id="@+id/tv_single_display_title"
             android:gravity="center" android:textColor="@android:color/black"
             android:textSize="@dimen/font_tv_hint_15"/>
-    <TextView
+    <EditText
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_single_display_content"
-            android:gravity="right"
+        android:cursorVisible="false"
+            android:gravity="end"
             android:singleLine="true"
             android:inputType="none"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
             android:focusable="false"
             android:focusableInTouchMode="true"
             android:layout_marginTop="@dimen/top_10"
@@ -31,5 +31,6 @@
             android:layout_marginEnd="@dimen/right_10"
             android:background="@color/transparent"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_tv_hint_15"/>
+            android:textSize="@dimen/font_tv_hint_15"
+        tools:ignore="Autofill,LabelFor" />
 </LinearLayout>

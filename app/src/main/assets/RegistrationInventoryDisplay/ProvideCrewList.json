@@ -16,17 +16,17 @@
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "工种",
+        "singleDisplayRightTitle": "工种:",
         "singleDisplayRightContent":""
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "工作经验",
+        "singleDisplayRightTitle": "工作经验:",
         "singleDisplayRightContent":""
     },
     {
         "type": "SINGLE_DISPLAY_RIGHT",
-        "singleDisplayRightTitle": "薪资标准",
+        "singleDisplayRightTitle": "薪资标准:",
         "singleDisplayRightContent":""
     },
     {

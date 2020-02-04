@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_option_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/general_40"
+    android:layout_alignParentStart="true"
+    android:gravity="center_vertical"
+    android:text="TextView"
+    android:textSize="@dimen/font_tv_hint_16"
+   />
+
+<!--    <ImageView-->
+<!--        android:layout_width="@dimen/general_20"-->
+<!--        android:layout_height="@dimen/general_20"-->
+<!--        android:layout_marginEnd="@dimen/right_10"-->
+<!--        android:layout_marginTop="@dimen/top_5"-->
+<!--        android:layout_alignEnd="@id/tv_option_content"-->
+<!--        android:src="@drawable/delete_round"-->
+<!--        />-->

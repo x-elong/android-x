@@ -155,6 +155,7 @@ class Constants {
         class My{
             companion object{
 
+                const val insertFeedback = "Feedback/insertFeedback/"
                 const val getRemoteCode = "UserGoodsPower/getRemoteCode/"
                 /**
                  * @VIP会员
@@ -223,7 +224,8 @@ class Constants {
                 const val getThridService = "Third/selectByToken/"
 
                 //行业黄页
-                const val getIndustryYellowPages="IndustryYellowPages/getIndustryYellowPagesDTOListByFounder/"
+                const val getIndustryYellowPages = "IndustryYellowPages/getIndustryYellowPagesDTOListByFounder/"
+                const val deleteIndustryYellowPages = "IndustryYellowPages/deleteIndustryYellowPages/{id}"
 
                 const val  getPersonalIssueMore = "PersonalIssue/insertPersonalIssue/{id}"
                 const val getRequirementPersonMore = "RequirementPerson/getRequirementPerson/{id}"
@@ -402,6 +404,7 @@ class Constants {
         class YellowPages{
             companion object{
                 const val yellowPagesPublish = "IndustryYellowPages/insertIndustryYellowPages/"
+                const val updateIndustryYellowPages = "IndustryYellowPages/updateIndustryYellowPages/"
             }
         }
 
@@ -736,6 +739,8 @@ class Constants {
                 const val YellowPages="IndustryYellowPages/getIndustryYellowPagesDTOList"
                 //                //根据id查询黄页详情
                 const val YellowPagesDetail="IndustryYellowPages/getIndustryYellowPages/{id}"
+                // 电话号码id查询
+                const val IndustryYellowPagesPhoneDetail="IndustryYellowPages/getPhone/{id}"
             }
         }
         class DisplayForRequirement {
@@ -787,6 +792,42 @@ class Constants {
         }
         class DisplayForSupply{
             companion object{
+                //电话号码id查询
+                  //个人劳务
+                const val PersonalIssuePhoneDetail="PersonalIssue/getPhone/{id}"
+                 //主网
+                 const val MajorNetworkPhoneDetail="MajorNetwork/getPhone/{id}"
+                //配网
+                const val DistribuionNetworkPhoneDetail="DistribuionNetwork/getPhone/{id}"
+                //变电
+                const val PowerTransformationPhoneDetail="PowerTransformation/getPhone/{id}"
+                //马帮
+                const val CaravanTransportPhoneDetail="CaravanTransport/getPhone/{id}"
+                //桩基
+                const val PileFoundationPhoneDetail="PileFoundation/getPhone/{id}"
+                //测量设计
+                const val MeasureDesignPhoneDetail="MeasureDesign/getPhone/{id}"
+                //非开挖
+                const val UnexcavationPhoneDetail="Unexcavation/getPhone/{id}"
+                //试验调试
+                const val TestTeamPhoneDetail="TestTeam/getPhone/{id}"
+                //跨越架
+                const val SpanWoodenSupprtPhoneDetail="SpanWoodenSupprt/getPhone/{id}"
+                //运行维护
+                const val RunningMaintainPhoneDetail="RunningMaintain/getPhone/{id}"
+                //车辆租赁
+                const val LeaseCarPhoneDetail="LeaseCar/getPhone/{id}"
+                //工器具租赁
+                const val LeaseConstructionToolPhoneDetail="LeaseConstructionTool/getPhone/{id}"
+                //设备租赁
+                const val LeaseFacilityPhoneDetail="LeaseFacility/getPhone/{id}"
+                //机械租赁
+                const val LeaseMachineryPhoneDetail="LeaseMachinery/getPhone/{id}"
+                //三方
+                const val ThirdPhoneDetail="Third/getPhone/{id}"
+
+
+
                 //个人劳务根据查询条件查询数量
                 const val PersonalIssue="PersonalIssue/selectListPersonalIssue"
                 //个人劳务根据id查询

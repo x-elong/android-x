@@ -77,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

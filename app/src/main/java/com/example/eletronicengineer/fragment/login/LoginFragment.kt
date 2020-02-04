@@ -7,11 +7,11 @@ import android.preference.PreferenceManager
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import com.example.eletronicengineer.R
 import com.example.eletronicengineer.activity.MainActivity
@@ -26,6 +26,9 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 class LoginFragment: Fragment() {
 
@@ -35,16 +38,15 @@ class LoginFragment: Fragment() {
     lateinit var passwordList:MutableList<String>
     private lateinit var pref: SharedPreferences
     lateinit var mView: View
-    var index = -1
+    lateinit var lpw: ListPopupWindow
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         mView = inflater.inflate(R.layout.fragment_login, container, false)
-
-
         initFragment()
         return mView
     }
 
     private fun initFragment() {
+        lpw = ListPopupWindow(mView.context)
         pref = PreferenceManager.getDefaultSharedPreferences(context)
         username = pref.getString("username","")
         password = pref.getString("password","")
@@ -55,6 +57,18 @@ class LoginFragment: Fragment() {
         mView.tv_login_back.setOnClickListener {
             activity!!.finish()
         }
+
+        mView.et_login_name.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(view: View, event: MotionEvent): Boolean {
+                if(event.action == MotionEvent.ACTION_UP){
+                    if(event.x >=  (mView.et_login_name.width - mView.et_login_name.compoundDrawables[2].bounds.width())){
+                        lpw.show()
+                        return true
+                    }
+                }
+                return false
+            }
+        })
         mView.tv_login_confirm.setOnClickListener {
             username = mView.et_login_name.text.toString()
             password = mView.et_login_password.text.toString()
@@ -68,7 +82,7 @@ class LoginFragment: Fragment() {
 //                startActivity(intent)
             }
             else {
-                Toast.makeText(context,"请输入登陆账号及密码",Toast.LENGTH_SHORT).show()
+                ToastHelper.mToast(mView.context,"请输入登陆账号及密码")
             }
         }
         mView.tv_login_register.setOnClickListener {
@@ -94,24 +108,32 @@ class LoginFragment: Fragment() {
         }
 //        if(username!="" && password!="")
 //            v.tv_login_confirm.callOnClick()
-        val mAdapter = ArrayAdapter(mView.context,R.layout.item_dropdown,usernameList)
-        mView.spinner_account.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                index = p2
-                mView.et_login_name.setText(mAdapter.getItem(p2).toString())
-                mView.et_login_password.setText(passwordList[p2])
-            }
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-        mView.spinner_account.adapter = mAdapter
     }
 
     private fun initData() {
-        val usernameSet= pref.getStringSet("usernameSet",HashSet<String>())!!
-        val passwordSet = pref.getStringSet("passwordSet",HashSet<String>())!!
-        usernameList = ArrayList(usernameSet)
-        passwordList = ArrayList(passwordSet)
+        val userSet= pref.getStringSet("userSet",HashSet<String>())!!
+        val userList = ArrayList(userSet)
+//        Collections.reverse(userList)
+        usernameList = ArrayList()
+        passwordList = ArrayList()
+        for (j in userList){
+            val list = j.split("+")
+            usernameList.add(list[0])
+            passwordList.add(list[1])
+        }
+        lpw.setAdapter(ArrayAdapter<String>(mView.context,R.layout.login_dropdown_option,usernameList))
+        lpw.setAnchorView(mView.et_login_name)
+        lpw.setModal(true)
+        lpw.setOnItemClickListener { adapterView, view, i, l ->
+            mView.et_login_password.setText(passwordList[i])
+            mView.et_login_name.setText(usernameList[i])
+            mView.et_login_name.setSelection(usernameList[i].length)
+            mView.et_login_name.setFocusable(true)
+            mView.et_login_name.setFocusableInTouchMode(true)
+            mView.et_login_name.requestFocus()
+            lpw.dismiss()
+        }
+
     }
 
     fun sendLoginForHttp(key:ArrayList<String>,value:ArrayList<String>) {
@@ -133,14 +155,18 @@ class LoginFragment: Fragment() {
                         Log.i("111hy",it.code)
                         if(it.code=="200")
                         {
-
-                            if(index<0){
-                                usernameList.add(username)
-                                passwordList.add(password)
-                            }else{
-                                usernameList[index] = username
-                                passwordList[index] = password
+                            val index = usernameList.indexOf(username)
+                            if(index>=0){
+                                usernameList.removeAt(index)
+                                passwordList.removeAt(index)
                             }
+                            usernameList.add(username)
+                            passwordList.add(password)
+                            val userList:MutableList<String> = ArrayList()
+                            for (j in 0 until usernameList.size){
+                                userList.add("${usernameList[j]}+${passwordList[j]}")
+                            }
+//                            Collections.reverse(userList)
                             Log.i("cookie",UnSerializeDataBase.cookie)
                             UnSerializeDataBase.userToken = it.message.token
                             UnSerializeDataBase.userName = it.message.user.userName
@@ -153,8 +179,7 @@ class LoginFragment: Fragment() {
                             editor.putLong("lastLoginTime",System.currentTimeMillis())
                             editor.putString("username",username)
                             editor.putString("password",password)
-                            editor.putStringSet("usernameSet",HashSet(usernameList))
-                            editor.putStringSet("passwordSet",HashSet(passwordList))
+                            editor.putStringSet("userSet",HashSet(userList))
                             editor.apply()
                             ToastHelper.mToast(mView.context,"登录成功")
                             val intent = Intent(context, MainActivity::class.java)

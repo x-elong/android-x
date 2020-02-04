@@ -336,20 +336,19 @@ class ApplicationSubmitFragment:Fragment() {
             }
         }
     }
-    fun check(itemMultiStyleItem:List<MultiStyleItem>):Boolean{
-
+    fun check(itemMultiStyleItem:List<MultiStyleItem>):Int{
+        var sum = 0
         for(j in itemMultiStyleItem)
         {
             when (j.options) {
                 MultiStyleItem.Options.SHIFT_INPUT -> {
-                    if (j.necessary == false) {
-                        return false
-                    }
+                    if (j.necessary)
+                        sum++
                 }
             }
         }
 
-        return true
+        return sum
     }
 
     fun update(itemMultiStyleItem:List<MultiStyleItem>){
@@ -358,9 +357,11 @@ class ApplicationSubmitFragment:Fragment() {
 //            "车辆清册"->VehicleDataSize
 //            else ->0
 //        }
-        if(check(itemMultiStyleItem))
+        val sum = check(itemMultiStyleItem)
+        adapter!!.mData[adapter!!.mData[0].selected].submitNecessarySize = sum
+        if(sum==adapter!!.mData[adapter!!.mData[0].selected].itemMultiStyleItem.size)
         {
-            adapter!!.mData[adapter!!.mData[0].selected].necessary = true
+            adapter!!.mData[adapter!!.mData[0].selected].submitIsNecessary = true
         }
 
 
